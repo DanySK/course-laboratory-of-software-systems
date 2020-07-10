@@ -1,0 +1,55 @@
+@-webkit-keyframes blur-animation {
+  0% {
+    -webkit-filter: blur(0px) ;
+    -moz-filter: blur(0px);
+    -o-filter: blur(0px);
+    -ms-filter: blur(0px);
+    filter: blur(0px);
+
+  }
+  100% {
+    -webkit-filter: blur(4px) saturate(.5) brightness(.8);
+    -moz-filter: blur(5px) saturate(.7) brightness(.9);
+    -o-filter: blur(5px) saturate(.7) brightness(.9);
+    -ms-filter: blur(5px)saturate(.7) brightness(.9);
+    filter: blur(6px) saturate(1) brightness(.2);
+  }
+}
+
+html.blur-animation .backgrounds {
+   -webkit-animation-name: blur-animation;
+   -webkit-animation-duration: 1s;
+   -webkit-animation-iteration-count: 1;
+   -webkit-animation-direction: alternate;
+   -webkit-animation-timing-function: ease-out;
+   -webkit-animation-fill-mode: forwards;
+   -webkit-animation-delay: 0s;
+ }
+
+ @-webkit-keyframes blur-animation-light {
+  0% {
+    -webkit-filter: blur(0px) ;
+    -moz-filter: blur(0px);
+    -o-filter: blur(0px);
+    -ms-filter: blur(0px);
+    filter: blur(0px);
+
+  }
+  100% {
+    -webkit-filter: blur(6px) contrast(0.5) saturate(3) brightness(2) contrast(0.5) brightness(1.3) ;
+    -moz-filter: blur(6px) contrast(0.5) saturate(3) brightness(2) contrast(0.5) brightness(1.3) ;
+    -o-filter: blur(6px) contrast(0.5) saturate(3) brightness(2) contrast(0.5) brightness(1.3) ;
+    -ms-filter: blur(6px) contrast(0.5) saturate(3) brightness(2) contrast(0.5) brightness(1.3) ;
+    filter: blur(6px) contrast(0.5) saturate(3) brightness(2) contrast(0.5) brightness(1.3) ;
+  }
+}
+
+html.blur-animation-light .backgrounds {
+   -webkit-animation-name: blur-animation-light;
+   -webkit-animation-duration: 1s;
+   -webkit-animation-iteration-count: 1;
+   -webkit-animation-direction: alternate;
+   -webkit-animation-timing-function: ease-out;
+   -webkit-animation-fill-mode: forwards;
+   -webkit-animation-delay: 0s;
+ }

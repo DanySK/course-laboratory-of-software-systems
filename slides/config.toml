@@ -1,0 +1,29 @@
+baseURL = "."
+languageCode = "en-us"
+title = "Time Fluid Field Based Coordination"
+disableKinds = ["sitemap", "RSS"]
+theme = "reveal-hugo"
+relativeURLs = "true"
+# uglyURLs = "true"
+publishDir = "build"
+
+[author]
+name = "Danilo Pianini"
+
+[outputFormats.Reveal]
+baseName = "index"
+mediaType = "text/html"
+isHTML = true
+
+[params.reveal_hugo]
+theme = "white"
+width = '90%'
+height = '100%'
+
+[markup.goldmark.renderer]
+unsafe = true
+
+[markup.highlight]
+#style = "monokailight"
+style = "pastie"
+#style = "pygments"
