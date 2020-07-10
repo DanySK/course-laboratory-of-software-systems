@@ -22,3 +22,11 @@ script:
     - hugo version
     - tree -a
     - hugo
+
+notifications
+    email:
+        recipients:
+            - danilo.pianini@unibo.it
+            - angelo.croatti@unibo.it
+        on_success: never
+        
