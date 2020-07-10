@@ -3,12 +3,6 @@ language: minimal
 git:
     depth: false
 
-addons:
-  apt:
-    update: true
-    packages:
-      - tree
-
 env:
     global:
         - HUGO_VERSION="0.73.0"
@@ -20,7 +14,6 @@ install:
 script:
     - cd slides
     - hugo version
-    - tree -a
     - hugo
 
 notifications
