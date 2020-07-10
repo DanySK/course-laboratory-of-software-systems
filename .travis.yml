@@ -16,7 +16,7 @@ script:
     - hugo version
     - hugo
 
-notifications
+notifications:
     email:
         recipients:
             - danilo.pianini@unibo.it
