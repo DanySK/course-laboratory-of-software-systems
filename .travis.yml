@@ -1,0 +1,11 @@
+git:
+    depth: false
+
+addons:
+  apt:
+    update: true
+    packages: hugo
+
+script:
+    - cd slides
+    - hugo
