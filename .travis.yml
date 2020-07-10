@@ -27,4 +27,4 @@ deploy:
     provider: pages:git
     edge: true
     project_name: "LSS slides"
-    local_dir: slides/build
+    local_dir: build
