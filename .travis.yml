@@ -22,4 +22,8 @@ notifications:
             - danilo.pianini@unibo.it
             - angelo.croatti@unibo.it
         on_success: never
-        
+
+deploy:
+    provider: pages:git
+    project_name: "LSS slides"
+    local_dir: slides/build
