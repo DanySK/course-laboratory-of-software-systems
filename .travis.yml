@@ -7,8 +7,15 @@ addons:
   apt:
     update: true
     packages:
-      - hugo
       - tree
+
+env:
+    global:
+        - HUGO_VERSION="0.73.0"
+
+install:
+    - curl --retry -sL https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_${HUGO_VERSION}_Linux-64bit.deb --output $HOME/hugo.deb
+    - sudo apt install $HOME/hugo.deb
 
 script:
     - cd slides
