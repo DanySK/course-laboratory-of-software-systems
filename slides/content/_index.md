@@ -1,7 +1,7 @@
  
 +++
 
-title = "My presentation"
+title = "Introduction to Laboratory of Software Systems"
 description = "A Hugo theme for creating Reveal.js presentations"
 outputs = ["Reveal"]
 
@@ -17,7 +17,7 @@ enableSourceMap = true
 
 +++
 
-# Laboratorio di sistemi software
+# Laboratory of Software Systems
 
 ## Practical software systems
 
