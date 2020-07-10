@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>My presentation</title>
+<meta name="description" content="A Hugo theme for creating Reveal.js presentations">
+<meta name="author" content="Danilo Pianini">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../reveal-js/css/reset.css">
+<link rel="stylesheet" href="../reveal-js/css/reveal.css">
+  <link rel="stylesheet" href="../_.min.fcbf3e3bfa08cd2bfd0d5ef34a4116376b680ad87ae240edb522d2cb94ac210c.css" id="theme"><link rel="stylesheet" href="../highlight-js/default.min.css">
+    
+<link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
+
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+  
+
+    <section><h1 id="short-guide-to-writing-slides-in-markdown">Short guide to writing slides in Markdown</h1>
+</section><section>
+<h1 id="headers">Headers</h1>
+<h1 id="h1">H1</h1>
+<h2 id="h2">H2</h2>
+<h3 id="h3">H3</h3>
+<h4 id="h4">H4</h4>
+</section><section>
+<h1 id="text">Text</h1>
+<p>normal text</p>
+<p><code>inline code</code></p>
+<p><em>italic</em></p>
+<p><strong>bold</strong></p>
+<p><strong><em>emphasized</em></strong></p>
+<p><em><strong>emphasized alternative</strong></em></p>
+<p><del>strikethrough</del></p>
+<p><a href="http://www.google.com">link</a></p>
+</section><section>
+<h1 id="lists-and-enums">Lists and enums</h1>
+<ol>
+<li>First ordered list item</li>
+<li>Another item
+<ul>
+<li>Unordered sub-list.</li>
+<li>with two items
+<ul>
+<li>another sublist
+<ol>
+<li>With a sub-enum</li>
+<li>yay!</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Actual numbers don&rsquo;t matter, just that it&rsquo;s a number</li>
+<li>Ordered sub-list</li>
+<li>And another item.</li>
+</ol>
+</section><section>
+<h1 id="inline-images">Inline images</h1>
+<p><img src="https://images.unsplash.com/photo-1530878955558-a6c31b9c97db?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9" alt="Alternative text"></p>
+</section>
+
+<section data-noprocess data-shortcode-slide
+      data-background-image="https://images.unsplash.com/photo-1530878955558-a6c31b9c97db?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9">
+  
+<h1 id="large-images-as-background">Large images as background</h1>
+<h2 id="warning-hard-to-print">(warning: hard to print)</h2>
+</section>
+
+<section data-noprocess data-shortcode-slide
+      data-background-image="https://images.unsplash.com/photo-1530878955558-a6c31b9c97db?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9"
+      data-state="blur-animation-light"
+      data-transition="fade-in fade-out">
+  
+<h1 id="also-available-with-blur-and-custom-transitions">Also available with blur and custom transitions</h1>
+<h2 id="printing-is-destroyed-avoid-on-printable-decks">(Printing is destroyed, avoid on printable decks)</h2>
+</section><section>
+<h1 id="latex">$$\LaTeX{}$$</h1>
+<p>Inline equations like $E=mc^2$</p>
+<p>$$\frac{n!}{k!(n-k)!} = \binom{n}{k}$$</p>
+</section><section>
+<h1 id="code-snippets">Code snippets</h1>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">x</span> = pippo
+</code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">package</span> main
+ 
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#d20;background-color:#fff0f0">&#34;fmt&#34;</span>
+ 
+<span style="color:#080;font-weight:bold">func</span> <span style="color:#06b;font-weight:bold">main</span>() {
+    fmt.<span style="color:#06b;font-weight:bold">Println</span>(<span style="color:#d20;background-color:#fff0f0">&#34;Hello world!&#34;</span>)
+}
+</code></pre></div></section><section>
+<h1 id="tables">Tables</h1>
+<p>Colons can be used to align columns.</p>
+<table>
+<thead>
+<tr>
+<th>Tables</th>
+<th align="center">Are</th>
+<th align="right">Cool</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>col 3 is</td>
+<td align="center">right-aligned</td>
+<td align="right">$1600</td>
+</tr>
+<tr>
+<td>col 2 is</td>
+<td align="center">centered</td>
+<td align="right">$12</td>
+</tr>
+<tr>
+<td>zebra stripes</td>
+<td align="center">are neat</td>
+<td align="right">$1</td>
+</tr>
+</tbody>
+</table>
+<p>There must be at least 3 dashes separating each header cell.
+The outer pipes (|) are optional, and you don&rsquo;t need to make the
+raw Markdown line up prettily. You can also use inline Markdown.</p>
+</section><section>
+<h1 id="quotes">Quotes</h1>
+<blockquote>
+<p>Multiple
+lines
+of
+a
+single
+quote
+get
+joined</p>
+</blockquote>
+<blockquote>
+<p>Very long one liners of Markdown text automatically get broken into a multiline quotation, which is then rendered in the slides.</p>
+</blockquote>
+</section>
+
+  
+
+
+</div>
+      
+
+    </div>
+<script type="text/javascript" src=../reveal-hugo/object-assign.js></script>
+
+<a href="../reveal-js/css/print/" id="print-location" style="display: none;"></a>
+<script type="text/javascript">
+  var printLocationElement = document.getElementById('print-location');
+  var link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = printLocationElement.href + (window.location.search.match(/print-pdf/gi) ? 'pdf.css' : 'paper.css');
+  document.getElementsByTagName('head')[0].appendChild(link);
+</script>
+
+<script type="application/json" id="reveal-hugo-site-params">{"height":"100%","theme":"white","width":"90%"}</script>
+<script type="application/json" id="reveal-hugo-page-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"transition":"slide","transition_speed":"fast"}</script>
+
+<script src="../reveal-js/js/reveal.js"></script>
+
+<script type="text/javascript">
+  
+  
+  function camelize(map) {
+    if (map) {
+      Object.keys(map).forEach(function(k) {
+        newK = k.replace(/(\_\w)/g, function(m) { return m[1].toUpperCase() });
+        if (newK != k) {
+          map[newK] = map[k];
+          delete map[k];
+        }
+      });
+    }
+    return map;
+  }
+  
+  var revealHugoDefaults = { center: true, controls: true, history: true, progress: true, transition: "slide" };
+  var revealHugoSiteParams = JSON.parse(document.getElementById('reveal-hugo-site-params').innerHTML);
+  var revealHugoPageParams = JSON.parse(document.getElementById('reveal-hugo-page-params').innerHTML);
+  
+  var options = Object.assign({},
+    camelize(revealHugoDefaults),
+    camelize(revealHugoSiteParams),
+    camelize(revealHugoPageParams));
+  Reveal.initialize(options);
+</script>
+
+
+  
+  
+  <script type="text/javascript" src="../reveal-js/plugin/markdown/marked.js"></script>
+  
+  <script type="text/javascript" src="../reveal-js/plugin/markdown/markdown.js"></script>
+  
+  <script type="text/javascript" src="../reveal-js/plugin/highlight/highlight.js"></script>
+  
+  <script type="text/javascript" src="../reveal-js/plugin/zoom-js/zoom.js"></script>
+  
+  
+  <script type="text/javascript" src="../reveal-js/plugin/notes/notes.js"></script>
+
+
+
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+</script>
+
+<script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+
+    
+  </body>
+</html>
