@@ -19,11 +19,52 @@ enableSourceMap = true
 
 # Laboratory of Software Systems
 
-## Practical software systems
+## Introduction to the course
 
 ### Danilo Pianini -- Angelo Croatti
 
 {{< today >}}
+
+---
+
+# Professors
+
+---
+
+# Forum and contacts
+
+---
+
+# Resources
+
+---
+
+# Organization
+
+---
+
+# Overview
+
+---
+
+# Suggested books and readings
+## (no need to buy them)
+
+---
+
+# Software
+
+---
+
+# Goals
+
+---
+
+# Exam
+
+---
+
+# Prerequisites
 
 ---
 
