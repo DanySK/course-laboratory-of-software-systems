@@ -1,11 +1,17 @@
+language: minimal
+
 git:
     depth: false
 
 addons:
   apt:
     update: true
-    packages: hugo
+    packages:
+      - hugo
+      - tree
 
 script:
     - cd slides
+    - hugo version
+    - tree -a
     - hugo
