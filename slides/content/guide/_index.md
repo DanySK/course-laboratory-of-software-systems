@@ -14,6 +14,10 @@ transition_speed = "fast"
 custom_theme = "custom-theme.scss"
 custom_theme_compile = true
 
+[reveal_hugo.custom_theme_options]
+targetPath = "css/custom-theme.css"
+enableSourceMap = true
+
 +++
 
 # Short guide to writing slides in Markdown
