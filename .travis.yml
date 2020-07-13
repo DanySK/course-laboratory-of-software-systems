@@ -20,7 +20,7 @@ notifications:
     email:
         recipients:
             - danilo.pianini@unibo.it
-            - angelo.croatti@unibo.it
+            - a.croatti@unibo.it
         on_success: never
 
 deploy:
