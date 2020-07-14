@@ -144,3 +144,11 @@ raw Markdown line up prettily. You can also use inline Markdown.
 > joined
 
 > Very long one liners of Markdown text automatically get broken into a multiline quotation, which is then rendered in the slides.
+
+---
+
+# Fragments
+
+* {{< frag c="pluto" >}}
+* {{< frag c="pluto" >}}
+* {{< frag c="pluto" >}}
