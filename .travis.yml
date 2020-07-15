@@ -44,14 +44,13 @@ _correct_repo: &correct_repo
 
 _deploy_on_github_releases: &deploy_on_github_releases
   provider: releases
-    edge: true
-    file: "*.pdf"
-    overwrite: true
-    draft: true
-    on:
-      << : *correct_repo
-      tags: false
-
+  edge: true
+  file: "*.pdf"
+  overwrite: true
+  draft: true
+  on:
+    << : *correct_repo
+    tags: false
 
 deploy:
   - provider: pages:git
@@ -59,7 +58,7 @@ deploy:
     project_name: "LSS slides"
     local_dir: build
     on:
-      repo: DanySK/Course-Laboratory-of-Software-Systems
+      << : *correct_repo
   - *deploy_on_github_releases
   - << : *deploy_on_github_releases
     draft: false
