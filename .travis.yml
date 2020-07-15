@@ -22,7 +22,7 @@ before_install:
 install:
   - curl --retry 100 -sL https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_Linux-64bit.deb --output $HOME/hugo.deb
   - sudo apt install $HOME/hugo.deb
-  - sudo npm install -g decktape
+  - npm install -g decktape
 
 script:
   - cd slides
