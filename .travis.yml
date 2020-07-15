@@ -8,11 +8,7 @@ branches:
     - /^untagged/
     - /^\d+\.\d+\.\d+-\w*/ 
 
-addons:
-  apt:
-    update: true
-    packages:
-      - npm
+node_js: lts/*
 
 env:
   global:
@@ -26,7 +22,7 @@ before_install:
 install:
   - curl --retry 100 -sL https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_Linux-64bit.deb --output $HOME/hugo.deb
   - sudo apt install $HOME/hugo.deb
-  - npm install -g decktape
+  - sudo npm install -g decktape
 
 script:
   - cd slides
@@ -72,3 +68,5 @@ notifications:
       - danilo.pianini@unibo.it
       - a.croatti@unibo.it
     on_success: never
+
+cache: npm
