@@ -22,7 +22,7 @@ before_install:
 install:
   - curl --retry 100 -sL https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_Linux-64bit.deb --output $HOME/hugo.deb
   - sudo apt install $HOME/hugo.deb
-  - npm install -g decktape
+  - sudo $(which npm) install -g decktape
 
 script:
   - cd slides
@@ -38,16 +38,6 @@ before_deploy:
 _correct_repo: &correct_repo
   repo: DanySK/Course-Laboratory-of-Software-Systems
 
-_deploy_on_github_releases: &deploy_on_github_releases
-  provider: releases
-  edge: true
-  file: "*.pdf"
-  overwrite: true
-  draft: true
-  on:
-    << : *correct_repo
-    tags: false
-
 deploy:
   - provider: pages:git
     edge: true
@@ -55,12 +45,12 @@ deploy:
     local_dir: build
     on:
       << : *correct_repo
-  - *deploy_on_github_releases
-  - << : *deploy_on_github_releases
-    draft: false
+  - provider: releases
+    edge: true
+    file: "*.pdf"
+    overwrite: true
     on:
       << : *correct_repo
-      tags: true
 
 notifications:
   email:
