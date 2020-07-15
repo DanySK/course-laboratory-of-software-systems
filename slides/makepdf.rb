@@ -1,7 +1,8 @@
+#!/usr/bin/env ruby
 log_file_name = "hugo.log"
 `touch #{log_file_name}`
 log_file = File.open(log_file_name, "r")
-log_file.seek(0,IO::SEEK_END)
+log_file.seek(0, IO::SEEK_END)
 server = fork {
     exec("hugo server --log --logFile #{log_file_name}")
 }
@@ -33,5 +34,9 @@ end
 `decktape http://localhost:1313/Course-Laboratory-of-Software-Systems/ slides.pdf`
 # Terminate the server
 Process.kill("TERM", server)
-Process.wait(server)
+begin
+    Process.wait(server)
+rescue SystemCallError
+    puts "The server terminated before I could wait for it."
+end
 File.delete(log_file)
