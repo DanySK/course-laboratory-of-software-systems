@@ -1,30 +1,75 @@
 language: minimal
 
 git:
-    depth: false
+  depth: false
+
+branches:
+  except:
+    - /^untagged/
+    - /^\d+\.\d+\.\d+-\w*/ 
+
+addons:
+  apt:
+    update: true
+    packages:
+      - npm
 
 env:
-    global:
-        - HUGO_VERSION="0.73.0"
+  global:
+    - HUGO_VERSION="0.73.0"
+    - GRAVIS_REPO="https://github.com/DanySK/Gravis-CI.git"
+    - GRAVIS="$HOME/gravis"
+
+before_install:
+  - travis_retry git clone --depth 1 $GRAVIS_REPO $GRAVIS
 
 install:
-    - curl --retry 100 -sL https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_Linux-64bit.deb --output $HOME/hugo.deb
-    - sudo apt install $HOME/hugo.deb
+  - curl --retry 100 -sL https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_Linux-64bit.deb --output $HOME/hugo.deb
+  - sudo apt install $HOME/hugo.deb
+  - npm install -g decktape
 
 script:
-    - cd slides
-    - hugo version
-    - hugo
+  - cd slides
+  - hugo version
+  - hugo
+  - ruby makepdf.rb
 
-notifications:
-    email:
-        recipients:
-            - danilo.pianini@unibo.it
-            - a.croatti@unibo.it
-        on_success: never
+before_deploy:
+  - git config --local user.name "Danilo Pianini"
+  - git config --local user.email "danilo.pianini@gmail.com"
+  - $GRAVIS/autotag
+
+_correct_repo: &correct_repo
+  repo: DanySK/Course-Laboratory-of-Software-Systems
+
+_deploy_on_github_releases: &deploy_on_github_releases
+  provider: releases
+    edge: true
+    file: "*.pdf"
+    overwrite: true
+    draft: true
+    on:
+      << : *correct_repo
+      tags: false
+
 
 deploy:
-    provider: pages:git
+  - provider: pages:git
     edge: true
     project_name: "LSS slides"
     local_dir: build
+    on:
+      repo: DanySK/Course-Laboratory-of-Software-Systems
+  - *deploy_on_github_releases
+  - << : *deploy_on_github_releases
+    draft: false
+    on:
+      << : *correct_repo
+      tags: true
+
+notifications:
+  email:
+    recipients:
+      - danilo.pianini@unibo.it
+      - a.croatti@unibo.it
+    on_success: never
