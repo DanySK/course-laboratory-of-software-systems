@@ -34,7 +34,7 @@ enableSourceMap = true
   * homepage: [`https://www.unibo.it/sitoweb/danilo.pianini/en`](https://www.unibo.it/sitoweb/danilo.pianini/en)
 
 ### Angelo Croatti
-  * email: [`angelo.croatti@unibo.it`](mailto:angelo.croatti@unibo.it)
+  * email: [`a.croatti@unibo.it`](mailto:a.croatti@unibo.it)
   * homepage: [`https://www.unibo.it/sitoweb/angelo.croatti/en`](https://www.unibo.it/sitoweb/angelo.croatti/en)
 
 
@@ -52,7 +52,7 @@ enableSourceMap = true
   * Danilo Pianini
     * Check [the teacher webpage](https://www.unibo.it/sitoweb/danilo.pianini/en)
   * Angelo Croatti
-    * To be announced
+    * Check [the teacher webpage](https://www.unibo.it/sitoweb/a.croatti)
 
 
 ---
