@@ -2,7 +2,7 @@
 +++
 
 title = "Introduction to Laboratory of Software Systems"
-description = "A Hugo theme for creating Reveal.js presentations"
+description = "Description of the course"
 outputs = ["Reveal"]
 
 [reveal_hugo]
@@ -21,7 +21,7 @@ enableSourceMap = true
 
 ## Introduction to the course
 
-### Danilo Pianini -- Angelo Croatti
+### [Danilo Pianini](mailto:danilo.pianini@unibo.it) -- Angelo Croatti
 
 {{< today >}}
 
