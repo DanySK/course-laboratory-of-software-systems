@@ -23,7 +23,7 @@ def generate_slides(target)
     pdf_name = target || "00-introduction"
     target ||= ""
     puts "Using decktape to generate #{pdf_name}.pdf from /#{target}"
-    `decktape http://localhost:1313/Course-Laboratory-of-Software-Systems/#{target} #{pdf_name}.pdf`
+    `decktape -s 1920x1080 http://localhost:1313/Course-Laboratory-of-Software-Systems/#{target} #{pdf_name}.pdf`
 end
 
 generate_slides nil
