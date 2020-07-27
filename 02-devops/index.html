@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>Development and Operations</title>
+<meta name="description" content="Introduction to DevOps">
+<meta name="author" content="Danilo Pianini">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/css/reset.css">
+<link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/css/reveal.css">
+  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.fcbf3e3bfa08cd2bfd0d5ef34a4116376b680ad87ae240edb522d2cb94ac210c.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
+    
+<link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
+
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+  
+
+    <section><h1 id="laboratory-of-software-systems">Laboratory of Software Systems</h1>
+<h2 id="development-and-operations">Development and operations</h2>
+<h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
+</section><section>
+<h1 id="development">Development</h1>
+<ul>
+<li>Analysis of a domain</li>
+<li>Design of a solution</li>
+<li>Implementation</li>
+<li>Testing</li>
+</ul>
+</section><section>
+<h1 id="operations">Operations</h1>
+<ul>
+<li>IT infrastructure</li>
+<li>Deployment</li>
+<li>Maintenance</li>
+</ul>
+</section><section>
+<h1 id="silo-mentality">Silo mentality</h1>
+<img src="assets/silos.svg" style='height: 80vh; width: 100vh; object-fit: contain'>
+</section><section>
+<h1 id="no-silos"><strong>No</strong> silos</h1>
+<img src="assets/no-silos.svg" style='height: 80vh; width: 100vh; object-fit: contain'>
+</section><section>
+<h1 id="the-devops-culture">The DevOps culture</h1>
+<ul>
+<li>
+<p><strong>Increased collaboration</strong></p>
+<ul>
+<li>Dev and Ops should <em>exchange information</em> and <em>work together</em></li>
+</ul>
+</li>
+<li>
+<p><strong>Shared responsibility</strong></p>
+<ul>
+<li>A team is responsible for the (sub) product for its <em>whole lifetime</em></li>
+<li><em>No handing over</em> projects from devs to ops</li>
+</ul>
+</li>
+<li>
+<p><strong>Autonomous teams</strong></p>
+<ul>
+<li><em>Lightweight decision making</em> process</li>
+<li>Minimization of manual interventions</li>
+</ul>
+</li>
+<li>
+<p><strong>Focus on the process, not just the product</strong></p>
+<ul>
+<li>Promote small, <em>incremental changes</em></li>
+<li><em>Automate</em> as much as possible</li>
+<li>Leverage the right <em>tool</em> for the job at hand</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h1 id="devops-principles">DevOps principles</h1>
+<ul>
+<li>Collaboration</li>
+<li>Reproducibility</li>
+<li>Automation</li>
+<li>Incrementality</li>
+<li>Robustness</li>
+</ul>
+</section><section>
+<h1 id="devops-practices">DevOps practices</h1>
+<ul>
+<li>Workflow organization</li>
+<li>Self-testing code</li>
+<li>Code quality control</li>
+<li>Continuous Integration</li>
+<li>Continuous Delivery</li>
+<li>Continuous Deployment</li>
+<li>Continuous Monitoring</li>
+</ul>
+</section><section>
+<h1 id="devops-tools">DevOps tools</h1>
+<ul>
+<li>
+<p>Version control systems</p>
+<ul>
+<li>Reproducible project history</li>
+<li>Enable several workflows</li>
+</ul>
+</li>
+<li>
+<p>Workflow management tools</p>
+<ul>
+<li>Tracking of progress, issues, proposals</li>
+<li>Activities are linked to code</li>
+</ul>
+</li>
+<li>
+<p>Build automators</p>
+<ul>
+<li>Compile, test, and run QA on software</li>
+</ul>
+</li>
+<li>
+<p>Continuous Integration platforms</p>
+<ul>
+<li>Run the automation pipeline on reference environments</li>
+<li>Promotes infrastructure as code</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h1 id="why-bother">Why bother?</h1>
+<ol>
+<li>
+<p><strong>Risk management</strong></p>
+<ul>
+<li>Reduce the probability of <em>failure</em></li>
+<li>Detect <em>defects</em> before hitting the market</li>
+<li>Quickly <em>react</em> to problems</li>
+</ul>
+</li>
+<li>
+<p><strong>Resource exploitation</strong></p>
+<ul>
+<li>Use <em>human resources</em> for human-y work</li>
+<li>Reduce <em>time to market</em></li>
+<li>Embrace <em>innovation</em></li>
+<li>Exploit <em>emerging technologies</em></li>
+</ul>
+</li>
+</ol>
+</section><section>
+<h1 id="workflow-organization">Workflow organization</h1>
+<ul>
+<li>Participants should have clear roles</li>
+<li>Lifecycle phases should be mapped into the workflow</li>
+</ul>
+</section><section>
+<h2 id="gitflow">Gitflow</h2>
+<p><img src="assets/gitflow.png" alt="gitflow"></p>
+</section><section>
+<h2 id="forks-and-pull-requests">Forks and pull requests</h2>
+<p><img src="assets/fork-and-pr.svg" alt="gitflow"></p>
+</section><section>
+<h1 id="self-testing-code">Self-testing code</h1>
+<h4 id="code-includes-tests"><strong>Code includes tests</strong></h4>
+<ul>
+<li>Several testing levels
+<ul>
+<li>Unit, acceptance, integration, etc.</li>
+</ul>
+</li>
+<li>Testing is <strong>entirely automated</strong></li>
+<li>Solving an issue implies the creation of a <em>regression test</em></li>
+<li>Tests are executed <em>for every change</em></li>
+</ul>
+</section><section>
+<h1 id="code-quality-control">Code quality control</h1>
+<h4 id="code-is-coherent-and-understandable"><strong>Code is coherent and understandable</strong></h4>
+<ul>
+<li>Consistent code style across the board
+<ul>
+<li>Improved readability</li>
+<li>Much cleaner diffs</li>
+<li>Improved bisection / regression tracking</li>
+</ul>
+</li>
+<li>Complete documentation
+<ul>
+<li>Newbies can be productive more quickly</li>
+</ul>
+</li>
+<li>A large part of code QA can be automated!</li>
+</ul>
+</section><section>
+<h1 id="continuous-integration">Continuous integration</h1>
+<h4 id="code-must-not-diverge"><strong>Code must not diverge</strong></h4>
+<ul>
+<li>Working copies are <em>kept in sync</em> with the mainline
+<ul>
+<li>How to strictly relaes with the workflow organization</li>
+</ul>
+</li>
+<li>Build and test <em>automatically</em> on a fresh machine</li>
+<li>Build and test <em>on all the target platforms</em></li>
+<li>Promptly intercept (feedback) failures and issues</li>
+<li>Deploy successful artifacts</li>
+</ul>
+</section><section>
+<h1 id="continuous-integration-1">Continuous integration</h1>
+<h4 id="risk-reduction"><strong>Risk reduction</strong></h4>
+<img src="assets/integration-traditional.png" style='height: 50vh; width: 50vh; object-fit: contain'>
+<img src="assets/integration-continuous.png" style='height: 50vh; width: 50vh; object-fit: contain'>
+</section><section>
+<h1 id="continuous-delivery">Continuous Delivery</h1>
+<h4 id="every-working-build-should-produce-a-potential-release"><strong>Every working build should produce a potential release</strong></h4>
+<ul>
+<li>The CI pipeline should produce final artifact</li>
+<li>Artifacts should be available for quick deployment</li>
+</ul>
+</section><section>
+<h1 id="continuous-deployment">Continuous Deployment</h1>
+<h4 id="actual-deployment-should-be-automatic"><strong>Actual deployment should be automatic</strong></h4>
+<ul>
+<li>There should be a strategy for delivered code to enter in production</li>
+<li>The infrastructure should be defined</li>
+</ul>
+</section><section>
+<h1 id="devops-at-work">DevOps at work</h1>
+<h3 id="an-internal-project-where-techniques-are-applied">An internal project where techniques are applied</h3>
+<ul>
+<li><a href="https://github.com/AlchemistSimulator/Alchemist/">&ldquo;Truth&rdquo; Repository</a></li>
+<li><a href="https://github.com/AlchemistSimulator/Alchemist/branches">Branches</a></li>
+<li><a href="https://github.com/AlchemistSimulator/Alchemist/network/members">Forks</a></li>
+<li><a href="https://github.com/AlchemistSimulator/Alchemist/pull/469">Example pull request</a></li>
+<li><a href="https://github.com/AlchemistSimulator/Alchemist/pull/479">Example automatic update</a></li>
+<li><a href="https://travis-ci.org/github/AlchemistSimulator/Alchemist">CI/CD pipeline</a></li>
+<li><a href="https://github.com/AlchemistSimulator/Alchemist/blob/develop/.travis.yml">(Build) Infrastructure as code</a></li>
+</ul>
+</section>
+
+  
+
+
+</div>
+      
+
+    </div>
+<script type="text/javascript" src=/Course-Laboratory-of-Software-Systems/reveal-hugo/object-assign.js></script>
+
+<a href="/Course-Laboratory-of-Software-Systems/reveal-js/css/print/" id="print-location" style="display: none;"></a>
+<script type="text/javascript">
+  var printLocationElement = document.getElementById('print-location');
+  var link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = printLocationElement.href + (window.location.search.match(/print-pdf/gi) ? 'pdf.css' : 'paper.css');
+  document.getElementsByTagName('head')[0].appendChild(link);
+</script>
+
+<script type="application/json" id="reveal-hugo-site-params">{"height":"100%","theme":"white","width":"90%"}</script>
+<script type="application/json" id="reveal-hugo-page-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"custom_theme_options":{"enablesourcemap":true,"targetpath":"css/custom-theme.css"},"transition":"slide","transition_speed":"fast"}</script>
+
+<script src="/Course-Laboratory-of-Software-Systems/reveal-js/js/reveal.js"></script>
+
+<script type="text/javascript">
+  
+  
+  function camelize(map) {
+    if (map) {
+      Object.keys(map).forEach(function(k) {
+        newK = k.replace(/(\_\w)/g, function(m) { return m[1].toUpperCase() });
+        if (newK != k) {
+          map[newK] = map[k];
+          delete map[k];
+        }
+      });
+    }
+    return map;
+  }
+  
+  var revealHugoDefaults = { center: true, controls: true, history: true, progress: true, transition: "slide" };
+  var revealHugoSiteParams = JSON.parse(document.getElementById('reveal-hugo-site-params').innerHTML);
+  var revealHugoPageParams = JSON.parse(document.getElementById('reveal-hugo-page-params').innerHTML);
+  
+  var options = Object.assign({},
+    camelize(revealHugoDefaults),
+    camelize(revealHugoSiteParams),
+    camelize(revealHugoPageParams));
+  Reveal.initialize(options);
+</script>
+
+
+  
+  
+  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/markdown/marked.js"></script>
+  
+  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/markdown/markdown.js"></script>
+  
+  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/highlight/highlight.js"></script>
+  
+  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/zoom-js/zoom.js"></script>
+  
+  
+  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/notes/notes.js"></script>
+
+
+
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+</script>
+
+<script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+
+    
+  </body>
+</html>
