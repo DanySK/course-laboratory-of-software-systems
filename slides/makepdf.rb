@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+
 log_file_name = "hugo.log"
 `touch #{log_file_name}`
 log_file = File.open(log_file_name, "r")
@@ -7,7 +8,7 @@ server = fork {
     exec("hugo server --log --logFile #{log_file_name}")
 }
 contents = Dir["content/**/_index.md"].map { |f|
-    File.expand_path("..", f).split('/').last
+    f.split('/')[1...-1].join('/')
 }
 puts "Contents will be generated for #{contents}"
 puts "Server launched, monitoring log!"
@@ -20,13 +21,12 @@ end
 puts "Generation complete!"
 
 def generate_slides(target)
-    pdf_name = target || "00-introduction"
-    target ||= ""
+    proposed_name = target&.gsub('/', '-') || ""
+    pdf_name = proposed_name&.empty? ? "00-introduction" : proposed_name
     puts "Using decktape to generate #{pdf_name}.pdf from /#{target}"
     `decktape -s 1440x900 http://localhost:1313/Course-Laboratory-of-Software-Systems/#{target} #{pdf_name}.pdf`
 end
 
-generate_slides nil
 for pack in contents
     generate_slides pack
 end
