@@ -283,5 +283,5 @@ enableSourceMap = true
 * [CI/CD pipeline](https://travis-ci.org/github/AlchemistSimulator/Alchemist)
 * [(Build) Infrastructure as code](https://github.com/AlchemistSimulator/Alchemist/blob/develop/.travis.yml)
 
-[**These slides are in CD/CI as well!**](https://github.com/DanySK/Course-Laboratory-of-Software-Systems)
+[**These slides are in CI/CD as well!**](https://github.com/DanySK/Course-Laboratory-of-Software-Systems)
 * [This is the latest build](https://travis-ci.com/github/DanySK/Course-Laboratory-of-Software-Systems)
