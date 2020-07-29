@@ -40,12 +40,26 @@
 </ul>
 </section><section>
 <h1 id="silo-mentality">Silo mentality</h1>
-<img src="assets/silos.svg" style='height: 80vh; width: 100vh; object-fit: contain'>
+<img src="assets/silos.svg" style='
+    
+    
+    max-width: 100%;
+    max-height: 70vh;
+    object-fit: contain
+'>
+
 </section><section>
 <h1 id="no-silos"><strong>No</strong> silos</h1>
-<img src="assets/no-silos.svg" style='height: 80vh; width: 100vh; object-fit: contain'>
+<img src="assets/no-silos.svg" style='
+    
+    
+    max-width: 100%;
+    max-height: 70vh;
+    object-fit: contain
+'>
+
 </section><section>
-<h1 id="the-devops-culture">The DevOps culture</h1>
+<h1 id="devops-culture">DevOps culture</h1>
 <ul>
 <li>
 <p><strong>Increased collaboration</strong></p>
@@ -64,7 +78,6 @@
 <p><strong>Autonomous teams</strong></p>
 <ul>
 <li><em>Lightweight decision making</em> process</li>
-<li>Minimization of manual interventions</li>
 </ul>
 </li>
 <li>
@@ -73,57 +86,6 @@
 <li>Promote small, <em>incremental changes</em></li>
 <li><em>Automate</em> as much as possible</li>
 <li>Leverage the right <em>tool</em> for the job at hand</li>
-</ul>
-</li>
-</ul>
-</section><section>
-<h1 id="devops-principles">DevOps principles</h1>
-<ul>
-<li>Collaboration</li>
-<li>Reproducibility</li>
-<li>Automation</li>
-<li>Incrementality</li>
-<li>Robustness</li>
-</ul>
-</section><section>
-<h1 id="devops-practices">DevOps practices</h1>
-<ul>
-<li>Workflow organization</li>
-<li>Self-testing code</li>
-<li>Code quality control</li>
-<li>Continuous Integration</li>
-<li>Continuous Delivery</li>
-<li>Continuous Deployment</li>
-<li>Continuous Monitoring</li>
-</ul>
-</section><section>
-<h1 id="devops-tools">DevOps tools</h1>
-<ul>
-<li>
-<p>Version control systems</p>
-<ul>
-<li>Reproducible project history</li>
-<li>Enable several workflows</li>
-</ul>
-</li>
-<li>
-<p>Workflow management tools</p>
-<ul>
-<li>Tracking of progress, issues, proposals</li>
-<li>Activities are linked to code</li>
-</ul>
-</li>
-<li>
-<p>Build automators</p>
-<ul>
-<li>Compile, test, and run QA on software</li>
-</ul>
-</li>
-<li>
-<p>Continuous Integration platforms</p>
-<ul>
-<li>Run the automation pipeline on reference environments</li>
-<li>Promotes infrastructure as code</li>
 </ul>
 </li>
 </ul>
@@ -149,19 +111,82 @@
 </li>
 </ol>
 </section><section>
-<h1 id="workflow-organization">Workflow organization</h1>
+<h1 id="devops">DevOps</h1>
+<ol>
+<li><strong>Principles</strong></li>
+<li><strong>Practices</strong></li>
+<li><strong>Tools</strong></li>
+</ol>
+<p><strong>Principles</strong> <em>inspire</em> <strong>practices</strong></p>
+<p><strong>Practices</strong> <em>require</em> <strong>tools</strong></p>
+</section><section>
+<h1 id="devops-principles">DevOps principles</h1>
+<h3 id="not-exhaustive">(not exhaustive)</h3>
+<ul>
+<li>Collaboration</li>
+<li>Reproducibility</li>
+<li>Automation</li>
+<li>Incrementality</li>
+<li>Robustness</li>
+</ul>
+</section><section>
+<h1 id="devops-practices">DevOps practices</h1>
+<ul>
+<li>Workflow organization</li>
+<li>Self-testing code</li>
+<li>Code quality control</li>
+<li>Continuous Integration</li>
+<li>Continuous Delivery</li>
+<li>Continuous Deployment</li>
+<li>Continuous Monitoring</li>
+</ul>
+</section><section>
+<h1 id="devops-practices-1">DevOps practices</h1>
+<h2 id="workflow-organization"><em>Workflow organization</em></h2>
+<h4 id="lightweight-processes-and-shared-responsibility">Lightweight processes and shared responsibility</h4>
 <ul>
 <li>Participants should have clear roles</li>
 <li>Lifecycle phases should be mapped into the workflow</li>
 </ul>
+<p>
+<h3 id="tools"><strong>Tools</strong></h3>
+<ul>
+<li>Version control systems
+<ul>
+<li>Reproducible project history</li>
+<li>Enable several workflows</li>
+</ul>
+</li>
+<li>Workflow management platforms
+<ul>
+<li>Tracking of progress, issues, proposals</li>
+<li>Activities are linked to code</li>
+</ul>
+</li>
+</ul>
 </section><section>
 <h2 id="gitflow">Gitflow</h2>
-<p><img src="assets/gitflow.png" alt="gitflow"></p>
+<img src="assets/gitflow.png" style='
+    
+    
+    max-width: 100%;
+    max-height: 70vh;
+    object-fit: contain
+'>
+
 </section><section>
 <h2 id="forks-and-pull-requests">Forks and pull requests</h2>
-<p><img src="assets/fork-and-pr.svg" alt="gitflow"></p>
+<img src="assets/fork-and-pr.svg" style='
+    
+    height: 70vh;
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain
+'>
+
 </section><section>
-<h1 id="self-testing-code">Self-testing code</h1>
+<h1 id="devops-practices-2">DevOps practices</h1>
+<h2 id="self-testing-code"><em>Self-testing code</em></h2>
 <h4 id="code-includes-tests"><strong>Code includes tests</strong></h4>
 <ul>
 <li>Several testing levels
@@ -173,8 +198,18 @@
 <li>Solving an issue implies the creation of a <em>regression test</em></li>
 <li>Tests are executed <em>for every change</em></li>
 </ul>
+<p>
+<h3 id="tools-1"><strong>Tools</strong></h3>
+<ul>
+<li>Build automators
+<ul>
+<li>Compile, test, and run QA on software</li>
+</ul>
+</li>
+</ul>
 </section><section>
-<h1 id="code-quality-control">Code quality control</h1>
+<h1 id="devops-practices-3">DevOps practices</h1>
+<h2 id="code-quality-control"><em>Code quality control</em></h2>
 <h4 id="code-is-coherent-and-understandable"><strong>Code is coherent and understandable</strong></h4>
 <ul>
 <li>Consistent code style across the board
@@ -184,20 +219,31 @@
 <li>Improved bisection / regression tracking</li>
 </ul>
 </li>
-<li>Complete documentation
+<li>Extremely <strong>clean code</strong> <em>reduces</em> the need for documentation
 <ul>
 <li>Newbies can be productive more quickly</li>
 </ul>
 </li>
 <li>A large part of code QA can be automated!</li>
 </ul>
+<p>
+<h3 id="tools-2"><strong>Tools</strong></h3>
+<ul>
+<li>Build automators</li>
+<li>Static analyzers
+<ul>
+<li>Verify metrics and rules without execution</li>
+</ul>
+</li>
+</ul>
 </section><section>
-<h1 id="continuous-integration">Continuous integration</h1>
+<h1 id="devops-practices-4">DevOps practices</h1>
+<h2 id="continuous-integration"><em>Continuous integration</em></h2>
 <h4 id="code-must-not-diverge"><strong>Code must not diverge</strong></h4>
 <ul>
 <li>Working copies are <em>kept in sync</em> with the mainline
 <ul>
-<li>How to strictly relaes with the workflow organization</li>
+<li>How its done depends on the workflow organization</li>
 </ul>
 </li>
 <li>Build and test <em>automatically</em> on a fresh machine</li>
@@ -205,24 +251,77 @@
 <li>Promptly intercept (feedback) failures and issues</li>
 <li>Deploy successful artifacts</li>
 </ul>
+<p>
+<h3 id="tools-3"><strong>Tools</strong></h3>
+<ul>
+<li>Continuous Integration platforms
+<ul>
+<li>Run the automation pipeline on reference environments</li>
+<li>Promotes infrastructure as code
+<ul>
+<li>(at least for the build/test/check phase)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 </section><section>
 <h1 id="continuous-integration-1">Continuous integration</h1>
 <h4 id="risk-reduction"><strong>Risk reduction</strong></h4>
-<img src="assets/integration-traditional.png" style='height: 50vh; width: 50vh; object-fit: contain'>
-<img src="assets/integration-continuous.png" style='height: 50vh; width: 50vh; object-fit: contain'>
+<p><img src="assets/integration-traditional.png" style='
+    
+    
+    max-width: 40%;
+    max-height: 80vh;
+    object-fit: contain
+'>
+
+<img src="assets/integration-continuous.png" style='
+    
+    
+    max-width: 40%;
+    max-height: 80vh;
+    object-fit: contain
+'>
+</p>
 </section><section>
-<h1 id="continuous-delivery">Continuous Delivery</h1>
+<h1 id="devops-practices-5">DevOps practices</h1>
+<h2 id="continuous-delivery"><em>Continuous Delivery</em></h2>
 <h4 id="every-working-build-should-produce-a-potential-release"><strong>Every working build should produce a potential release</strong></h4>
 <ul>
 <li>The CI pipeline should produce final artifact</li>
 <li>Artifacts should be available for quick deployment</li>
 </ul>
+<p>
+<h3 id="tools-4"><strong>Tools</strong></h3>
+<ul>
+<li>Build automators</li>
+<li>Continuous Integration platforms</li>
+</ul>
 </section><section>
-<h1 id="continuous-deployment">Continuous Deployment</h1>
+<h1 id="devops-practices-6">DevOps practices</h1>
+<h2 id="continuous-deployment"><em>Continuous Deployment</em></h2>
 <h4 id="actual-deployment-should-be-automatic"><strong>Actual deployment should be automatic</strong></h4>
 <ul>
-<li>There should be a strategy for delivered code to enter in production</li>
-<li>The infrastructure should be defined</li>
+<li>There should be a strategy for delivered code to enter production
+<ul>
+<li>Reversibly (e.g. <a href="https://martinfowler.com/bliki/BlueGreenDeployment.html">blue <em>green</em> deployment</a>)</li>
+<li>Gradually (e.g. <a href="https://martinfowler.com/bliki/CanaryRelease.html">canary release</a>)</li>
+</ul>
+</li>
+<li><em>Infrastructure</em> should be <em>defined by software</em></li>
+<li>Deliverability <em>before</em> new features</li>
+</ul>
+<p>
+<h3 id="tools-5"><strong>Tools</strong></h3>
+<ul>
+<li>Continuous Integration platforms</li>
+<li>Configuration management software
+<ul>
+<li>Enables <em>Continuous configuration automation</em></li>
+<li>Defines infrastructure via software with zero human interaction</li>
+</ul>
+</li>
 </ul>
 </section><section>
 <h1 id="devops-at-work">DevOps at work</h1>
@@ -235,6 +334,10 @@
 <li><a href="https://github.com/AlchemistSimulator/Alchemist/pull/479">Example automatic update</a></li>
 <li><a href="https://travis-ci.org/github/AlchemistSimulator/Alchemist">CI/CD pipeline</a></li>
 <li><a href="https://github.com/AlchemistSimulator/Alchemist/blob/develop/.travis.yml">(Build) Infrastructure as code</a></li>
+</ul>
+<p><a href="https://github.com/DanySK/Course-Laboratory-of-Software-Systems"><strong>These slides are in CD/CI as well!</strong></a></p>
+<ul>
+<li><a href="https://travis-ci.com/github/DanySK/Course-Laboratory-of-Software-Systems">This is the latest build</a></li>
 </ul>
 </section>
 
