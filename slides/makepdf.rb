@@ -6,7 +6,7 @@ log_file.seek(0, IO::SEEK_END)
 server = fork {
     exec("hugo server --log --logFile #{log_file_name}")
 }
-contents = Dir["content/*/_index.md"].map { |f|
+contents = Dir["content/**/_index.md"].map { |f|
     File.expand_path("..", f).split('/').last
 }
 puts "Contents will be generated for #{contents}"
@@ -23,14 +23,14 @@ def generate_slides(target)
     pdf_name = target || "00-introduction"
     target ||= ""
     puts "Using decktape to generate #{pdf_name}.pdf from /#{target}"
-    `decktape -s 1920x1080 http://localhost:1313/Course-Laboratory-of-Software-Systems/#{target} #{pdf_name}.pdf`
+    `decktape -s 1440x900 http://localhost:1313/Course-Laboratory-of-Software-Systems/#{target} #{pdf_name}.pdf`
 end
 
 generate_slides nil
 for pack in contents
     generate_slides pack
 end
-# Site is generated and is being server. Launch decktape
+# Site has been generated and is being served. Launch decktape
 `decktape http://localhost:1313/Course-Laboratory-of-Software-Systems/ slides.pdf`
 # Terminate the server
 Process.kill("TERM", server)
