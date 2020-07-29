@@ -43,17 +43,18 @@ enableSourceMap = true
 
 # Silo mentality
 
-<img src="assets/silos.svg" style='height: 80vh; width: 100vh; object-fit: contain'>
+
+{{< image src="assets/silos.svg" h="70" >}}
 
 ---
 
 # **No** silos
 
-<img src="assets/no-silos.svg" style='height: 80vh; width: 100vh; object-fit: contain'>
+{{< image src="assets/no-silos.svg" h="70" >}}
 
 ---
 
-# The DevOps culture
+# DevOps culture
 
 * **Increased collaboration**
   * Dev and Ops should *exchange information* and *work together*
@@ -64,7 +65,6 @@ enableSourceMap = true
 
 * **Autonomous teams**
   * *Lightweight decision making* process
-  * Minimization of manual interventions
 
 * **Focus on the process, not just the product**
   * Promote small, *incremental changes*
@@ -73,7 +73,36 @@ enableSourceMap = true
 
 ---
 
+# Why bother?
+
+1. **Risk management**
+    * Reduce the probability of *failure*
+    * Detect *defects* before hitting the market
+    * Quickly *react* to problems
+
+2. **Resource exploitation**
+    * Use *human resources* for human-y work
+    * Reduce *time to market*
+    * Embrace *innovation*
+    * Exploit *emerging technologies*
+
+---
+
+# DevOps
+
+1. **Principles**
+2. **Practices**
+3. **Tools**
+
+**Principles** *inspire* **practices**
+
+**Practices** *require* **tools**
+
+---
+
 # DevOps principles
+### (not exhaustive)
+
 
 * Collaboration
 * Reproducibility
@@ -95,61 +124,43 @@ enableSourceMap = true
 
 ---
 
-# DevOps tools
+# DevOps practices
+
+## *Workflow organization*
+
+#### Lightweight processes and shared responsibility 
+
+* Participants should have clear roles
+* Lifecycle phases should be mapped into the workflow
+
+<p>
+
+### **Tools**
 
 * Version control systems
   * Reproducible project history
   * Enable several workflows
-
-* Workflow management tools
+* Workflow management platforms
   * Tracking of progress, issues, proposals
   * Activities are linked to code
-
-* Build automators
-  * Compile, test, and run QA on software
-
-* Continuous Integration platforms
-  * Run the automation pipeline on reference environments
-  * Promotes infrastructure as code
-
----
-
-# Why bother?
-
-1. **Risk management**
-    * Reduce the probability of *failure*
-    * Detect *defects* before hitting the market
-    * Quickly *react* to problems
-
-2. **Resource exploitation**
-    * Use *human resources* for human-y work
-    * Reduce *time to market*
-    * Embrace *innovation*
-    * Exploit *emerging technologies*
-
----
-
-# Workflow organization
-
-* Participants should have clear roles
-* Lifecycle phases should be mapped into the workflow
 
 ---
 
 ## Gitflow
 
-![gitflow](assets/gitflow.png)
+
+{{< image src="assets/gitflow.png" h="70" >}}
 
 ---
 
 ## Forks and pull requests
 
-![gitflow](assets/fork-and-pr.svg)
-
+{{< image src="assets/fork-and-pr.svg" height=70 >}}
 
 ---
 
-# Self-testing code
+# DevOps practices
+## *Self-testing code*
 
 #### **Code includes tests**
 
@@ -159,9 +170,16 @@ enableSourceMap = true
 * Solving an issue implies the creation of a *regression test*
 * Tests are executed *for every change*
 
+<p>
+
+### **Tools**
+* Build automators
+  * Compile, test, and run QA on software
+
 ---
 
-# Code quality control
+# DevOps practices
+## *Code quality control*
 
 #### **Code is coherent and understandable**
 
@@ -169,22 +187,39 @@ enableSourceMap = true
     * Improved readability
     * Much cleaner diffs
     * Improved bisection / regression tracking
-* Complete documentation
+* Extremely **clean code** *reduces* the need for documentation
     * Newbies can be productive more quickly
 * A large part of code QA can be automated!
 
+<p>
+
+### **Tools**
+* Build automators
+* Static analyzers
+  * Verify metrics and rules without execution
+
 ---
 
-# Continuous integration
+# DevOps practices
+## *Continuous integration*
 
 #### **Code must not diverge**
 
 * Working copies are *kept in sync* with the mainline
-    * How to strictly relaes with the workflow organization
+    * How its done depends on the workflow organization
 * Build and test *automatically* on a fresh machine
 * Build and test *on all the target platforms*
 * Promptly intercept (feedback) failures and issues
 * Deploy successful artifacts
+
+<p>
+
+### **Tools**
+
+* Continuous Integration platforms
+  * Run the automation pipeline on reference environments
+  * Promotes infrastructure as code
+    * (at least for the build/test/check phase)
 
 ---
 
@@ -192,26 +227,47 @@ enableSourceMap = true
 
 #### **Risk reduction**
 
-<img src="assets/integration-traditional.png" style='height: 50vh; width: 50vh; object-fit: contain'>
-<img src="assets/integration-continuous.png" style='height: 50vh; width: 50vh; object-fit: contain'>
+{{< image src="assets/integration-traditional.png" w=40 >}}
+{{< image src="assets/integration-continuous.png" w=40 >}}
 
 ---
 
-# Continuous Delivery 
+# DevOps practices
+## *Continuous Delivery*
 
 #### **Every working build should produce a potential release**
 
 * The CI pipeline should produce final artifact
 * Artifacts should be available for quick deployment
 
+<p>
+
+### **Tools**
+
+* Build automators
+* Continuous Integration platforms
+
 ---
 
-# Continuous Deployment
+# DevOps practices
+## *Continuous Deployment*
 
 #### **Actual deployment should be automatic**
 
-* There should be a strategy for delivered code to enter in production
-* The infrastructure should be defined 
+* There should be a strategy for delivered code to enter production
+  * Reversibly (e.g. [blue *green* deployment](https://martinfowler.com/bliki/BlueGreenDeployment.html))
+  * Gradually (e.g. [canary release](https://martinfowler.com/bliki/CanaryRelease.html))
+* *Infrastructure* should be *defined by software*
+* Deliverability *before* new features
+
+<p>
+
+### **Tools**
+
+* Continuous Integration platforms
+* Configuration management software
+  * Enables *Continuous configuration automation*
+  * Defines infrastructure via software with zero human interaction
 
 ---
 
@@ -226,3 +282,6 @@ enableSourceMap = true
 * [Example automatic update](https://github.com/AlchemistSimulator/Alchemist/pull/479)
 * [CI/CD pipeline](https://travis-ci.org/github/AlchemistSimulator/Alchemist)
 * [(Build) Infrastructure as code](https://github.com/AlchemistSimulator/Alchemist/blob/develop/.travis.yml)
+
+[**These slides are in CD/CI as well!**](https://github.com/DanySK/Course-Laboratory-of-Software-Systems)
+* [This is the latest build](https://travis-ci.com/github/DanySK/Course-Laboratory-of-Software-Systems)

@@ -17,11 +17,11 @@ enableSourceMap = true
 
 +++
 
-# Laboratory of Software Systems
+# {{< course_name >}}
 
 ## Introduction to the course
 
-### [Danilo Pianini](mailto:danilo.pianini@unibo.it) -- Angelo Croatti
+### [Danilo Pianini](mailto:danilo.pianini@unibo.it) -- [Angelo Croatti](a.croatti@unibo.it)
 
 {{< today >}}
 
@@ -92,5 +92,9 @@ enableSourceMap = true
 
 # Extra
 
-* [Guide for authors](guide)
+There is some additional material not involving the course, that gets shipped together with it though.
+
+Typically, because it's somewhat related.
+
+* [Extra content](extra)
 

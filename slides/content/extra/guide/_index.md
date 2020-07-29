@@ -20,7 +20,8 @@ enableSourceMap = true
 
 +++
 
-# Short guide to writing slides in Markdown
+# {{< course_name >}}
+## Short guide to writing slides in Markdown
 
 ---
 
@@ -74,17 +75,36 @@ normal text
 
 ---
 
+## Fallback to HTML for resizing
+
+(prefer vh/vw sizes)
+
+<img src="https://images.unsplash.com/photo-1530878955558-a6c31b9c97db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9" style='width: vw; height: 60vh; object-fit: contain'>
+
+---
+
+## Or (better) use my new shortcode!
+
+Autoresize specifying
+
+* `w` (percent of parent element width) and/or `h` (percent of viewport height) as max sizes , and
+* `width` and/or `height` as *exact* sizes (as percent of viewport size)
+
+{{< image src="https://images.unsplash.com/photo-1530878955558-a6c31b9c97db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9" h="50" >}}
+
+---
+
 {{< slide background-image="https://images.unsplash.com/photo-1530878955558-a6c31b9c97db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9" >}}
 
 # Large images as background
-## (warning: hard to print)
+## (May affect printing)
 
 ---
 
 {{< slide background-image="https://images.unsplash.com/photo-1530878955558-a6c31b9c97db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9" state="blur-animation-light"  transition="fade-in fade-out" >}}
 
 # Also available with blur and custom transitions
-## (Printing is destroyed, avoid on printable decks)
+## (May affect printing)
 
 ---
 
