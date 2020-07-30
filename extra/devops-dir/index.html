@@ -324,7 +324,7 @@
 </li>
 </ul>
 </section><section>
-<h1 id="devops-at-work">DevOps at work</h1>
+<h1 id="devops-at-work">DevOps <em>at work</em></h1>
 <h3 id="an-internal-project-where-techniques-are-applied">An internal project where techniques are applied</h3>
 <ul>
 <li><a href="https://github.com/AlchemistSimulator/Alchemist/">&ldquo;Truth&rdquo; Repository</a></li>
@@ -338,6 +338,84 @@
 <p><a href="https://github.com/DanySK/Course-Laboratory-of-Software-Systems"><strong>These slides are in CI/CD as well!</strong></a></p>
 <ul>
 <li><a href="https://travis-ci.com/github/DanySK/Course-Laboratory-of-Software-Systems">This is the latest build</a></li>
+</ul>
+</section><section>
+<h1 id="devops-for-dir">DevOps for DIR</h1>
+<h2 id="version-control"><em>Version control</em></h2>
+<ul>
+<li><strong>Basics</strong> of distributed version control
+<ul>
+<li>including <em>SVN <a href="http://archive.is/LYwng">&ldquo;reeducation&rdquo;</a></em></li>
+<li>Repository creation and <em>local</em> maintenance</li>
+<li>Basics of <em>collaboration</em> (branching, merging)</li>
+<li><em>Multi-repo</em> (forks, review, pull requests)</li>
+</ul>
+</li>
+<li>Agile <strong>workflows</strong> depending on specific needs</li>
+<li><strong>Advanced</strong> distributed version control
+<ul>
+<li>History alteration (Rebasing / Squashing)</li>
+<li>Bisection</li>
+<li>Cherry picking</li>
+<li>DVCS sub-modularization
+<ul>
+<li>(used in these slides)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h1 id="devops-for-dir-1">DevOps for DIR</h1>
+<h2 id="automation"><em>Automation</em></h2>
+<ul>
+<li>Software lifecycle organization and build automation
+<ul>
+<li>From <em>source</em> to <em>tested and deployable</em> in one command</li>
+<li><a href="https://gradle.org/">Gradle</a> is the house speciality
+<ul>
+<li>Basics</li>
+<li>Build organization</li>
+<li>Customization and advanced</li>
+<li>Custom plugin development</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Advanced automation
+<ul>
+<li><strong>Requires working CI</strong> <em>and</em> <strong>comprehensive testing</strong> or it&rsquo;s going to burn</li>
+<li><a href="https://github.com/DanySK/upgradle/pull/122">Automated software updates</a></li>
+<li><a href="https://github.com/AlchemistSimulator/Alchemist/pull/464">Automated build infrastructure updates</a></li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h1 id="devops-for-dir-2">DevOps for DIR</h1>
+<h2 id="continuous-integration--deployment--delivery"><em>Continuous Integration / Deployment / Delivery</em></h2>
+<ul>
+<li>Adding <strong>CI</strong> to existing projects
+<ul>
+<li>Needs a <em>committment to</em> the <em>DevOps</em> philosophy</li>
+</ul>
+</li>
+<li><em>Multiplatform</em> testing
+<ul>
+<li>OS type and version</li>
+<li>Platform (JDK, CLR, Python interpreter) version</li>
+<li>Multi-stage</li>
+</ul>
+</li>
+<li>Continuous <em>deployment</em>
+<ul>
+<li>&ldquo;One click away from production&rdquo;</li>
+</ul>
+</li>
+<li>Continuous <em>delivery</em>
+<ul>
+<li>From code to production automagically</li>
+</ul>
+</li>
 </ul>
 </section>
 
