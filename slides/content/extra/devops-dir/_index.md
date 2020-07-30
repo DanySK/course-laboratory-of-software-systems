@@ -271,7 +271,7 @@ enableSourceMap = true
 
 ---
 
-# DevOps at work
+# DevOps *at work*
 
 ### An internal project where techniques are applied
 
@@ -285,3 +285,57 @@ enableSourceMap = true
 
 [**These slides are in CI/CD as well!**](https://github.com/DanySK/Course-Laboratory-of-Software-Systems)
 * [This is the latest build](https://travis-ci.com/github/DanySK/Course-Laboratory-of-Software-Systems)
+
+---
+
+# DevOps for DIR
+
+## *Version control*
+
+* **Basics** of distributed version control
+  * including *SVN ["reeducation"](http://archive.is/LYwng)*
+  * Repository creation and *local* maintenance
+  * Basics of *collaboration* (branching, merging)
+  * *Multi-repo* (forks, review, pull requests)
+* Agile **workflows** depending on specific needs
+* **Advanced** distributed version control
+  * History alteration (Rebasing / Squashing)
+  * Bisection
+  * Cherry picking
+  * DVCS sub-modularization
+    * (used in these slides)
+
+---
+
+# DevOps for DIR
+
+## *Automation*
+
+* Software lifecycle organization and build automation
+  * From *source* to *tested and deployable* in one command 
+  * [Gradle](https://gradle.org/) is the house speciality
+    * Basics
+    * Build organization
+    * Customization and advanced
+    * Custom plugin development
+* Advanced automation
+  * **Requires working CI** *and* **comprehensive testing** or it's going to burn
+  * [Automated software updates](https://github.com/DanySK/upgradle/pull/122)
+  * [Automated build infrastructure updates](https://github.com/AlchemistSimulator/Alchemist/pull/464)
+
+---
+
+# DevOps for DIR
+
+## *Continuous Integration / Deployment / Delivery* 
+
+* Adding **CI** to existing projects
+  * Needs a *committment to* the *DevOps* philosophy
+* *Multiplatform* testing
+  * OS type and version
+  * Platform (JDK, CLR, Python interpreter) version
+  * Multi-stage
+* Continuous *deployment*
+  * "One click away from production"
+* Continuous *delivery*
+  * From code to production automagically
