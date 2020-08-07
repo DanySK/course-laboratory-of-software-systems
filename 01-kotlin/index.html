@@ -23,10 +23,84 @@
     <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
 <h2 id="kotlin-for-scala-developers">Kotlin (for Scala developers)</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2020-08-04
+2020-08-07
 
 </section><section>
-</section>
+<h1 id="why-kotlin">Why Kotlin</h1>
+<p>JetBrains-made modern programming language</p>
+<ul>
+<li>Focused on &ldquo;practical use&rdquo; (whatever that means)</li>
+</ul>
+<p>Gaining momentum since Google adopted is as <em>official Android language</em> (along with Java and C++)</p>
+<p>Clearly inspired by a mixture of Java, C#, Scala, and Groovy</p>
+<p><strong>In this course</strong> &ndash; we&rsquo;ll need it for Gradle and <em>internal</em> domain specific languages</p>
+</section><section>
+<h1 id="philosophy-kotlin-vs-scala">Philosophy: Kotlin vs. Scala</h1>
+<p><strong>Sca</strong><em>la</em> is a <strong>scalable</strong> <em>language</em></p>
+<ul>
+<li>Few core constructs that enable a huge variety of programming patterns</li>
+<li>Born in academia</li>
+<li>State of the art type checker with advanced features
+<ul>
+<li>Higher Kinded Types</li>
+<li>Type lambdas</li>
+<li>Enough to do type programming&hellip;</li>
+</ul>
+</li>
+</ul>
+<p><strong>Kotlin</strong> is somewhat <em>a better java</em></p>
+<ul>
+<li>Born in industry, for the industry</li>
+<li>Many more &ldquo;core&rdquo; constructs and keywords than Scala</li>
+<li>Focused on getting productive quickly and reducing programming errors</li>
+<li>Focus on multi-target (can compile towards JVM, JavaScript, and native)
+<ul>
+<li>Scala can as well by the way</li>
+<li>Kotlin puts more care into bidirectional compatibility</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h1 id="kotlin-101">Kotlin 101</h1>
+<h2 id="defining-functions-constant-variables">Defining functions, constant, variables</h2>
+<p>Similar to Scala. The keyword <code>def</code> is replaced by <code>fun</code></p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">x</span> = <span style="color:#00d;font-weight:bold">10</span> <span style="color:#888">// constant
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">y</span> = <span style="color:#00d;font-weight:bold">20</span> <span style="color:#888">// variable, can be reassigned
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">foo</span>() = <span style="color:#00d;font-weight:bold">20</span> <span style="color:#888">// function definition, single expression
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">foo</span>() { <span style="color:#888">// same as above with multiple expression
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">return</span> <span style="color:#00d;font-weight:bold">20</span> <span style="color:#888">// requires return in this form
+</span><span style="color:#888"></span>}
+</code></pre></div></section><section>
+<h1 id="kotlin-101-1">Kotlin 101</h1>
+<h2 id="function-parameters-return-types">Function parameters, return types</h2>
+<p>Much like Scala:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">foo</span>(): Int = <span style="color:#00d;font-weight:bold">10</span> <span style="color:#888">// types are annotated with a column and the type name
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">foo</span>() = <span style="color:#00d;font-weight:bold">10</span> <span style="color:#888">// return type annotation can be omitted (if the compiler can infer it)
+</span></code></pre></div></section><section>
+<h1 id="kotlin-101-2">Kotlin 101</h1>
+<h2 id="top-level-functions">Top level functions</h2>
+<p>Kotlin supports top level functions</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">foo</span>() {
+    ...
+}
+</code></pre></div><p>By contrast, Scala requires to put them in an <code>object</code></p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">Foo</span> {
+    <span style="color:#080;font-weight:bold">def</span> foo() {
+        ...
+    }
+}
+</code></pre></div><p>When targeting the JVM, Kotlin simply generates a <code>FileNameKt</code> class behind the scenes where the function is stored.
+The behaviour can be controlled via annotations.</p>
+</section><section>
+<h1 id="kotlin-101-3">Kotlin 101</h1>
+<h2 id="program-entry-point">Program entry point</h2>
+<p>Naming a function <code>main</code> makes it a valid entry point:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">main</span>() = println(<span style="color:#d20;background-color:#fff0f0">&#34;Hello World&#34;</span>) <span style="color:#888">// Valid entry point
+</span></code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">main</span>(arguments: Array&lt;String&gt;) = println(<span style="color:#d20;background-color:#fff0f0">&#34;Hello World&#34;</span>) <span style="color:#888">// Valid entry point
+</span></code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">main</span>(arguments: Array&lt;String&gt;) {
+    println(<span style="color:#d20;background-color:#fff0f0">&#34;Hello World&#34;</span>) <span style="color:#888">// Return type is Unit, no need to return
+</span><span style="color:#888"></span>} 
+</code></pre></div></section>
 
   
 
