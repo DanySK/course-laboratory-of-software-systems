@@ -62,7 +62,7 @@ enableSourceMap = true
 
 * Although DDD understands the need for software patterns, principles, methodologies, and frameworks, it values developers and domain experts working together to understand domain concepts, policies, and logic equally.
 
-* With greater knowledge of the problem domain and a synergy with the business, developers are more likely to build software that is more readable and easier to adapt for future enhancement.
+* With greater knowledge of the problem domain and synergy with the business, developers are more likely to build software that is more readable and easier to adapt for future enhancement.
 
 * **Following the DDD philosophy will give developers the knowledge and skills they need to tackle
 large or complex business systems effectively.**
@@ -93,7 +93,7 @@ large or complex business systems effectively.**
 
 ---
 
-## Foundamental Concepts of DDD (in a nutshell)
+## Fundamental Concepts of DDD (in a nutshell)
 
 1. Distill a large problem domain into **smaller sub-domains**.
 
@@ -198,13 +198,13 @@ $$C = \sum_{p}^{}c_pt_p$$
 ## Software Complexity Challenges (2/3)
 ### A Lack of Organization
 
-{{< plain_image src="ddd_lack_of_organization.png" h="45" >}}
-
 * The initial incarnation of a system is fast to produce and often a well‐rounded success...
 
     * ... but because there is little focus based on the design of an application around a model of the problem domain, subsequent enhancements are troublesome.
 
 * The codebase lacks the required synergy with the business behavior to make change manageable.
+
+{{< plain_image src="ddd_lack_of_organization.png" h="45" >}}
 
 ---
 
@@ -212,7 +212,6 @@ $$C = \sum_{p}^{}c_pt_p$$
 ### A Lack of Focus on the Problem Domain
 
 * Software projects fail when you don’t understand the business domain you are working within well enough. 
-
 
 * Coding is the easy part of development. 
 
@@ -231,7 +230,193 @@ $$C = \sum_{p}^{}c_pt_p$$
 * **Domain experts must work with the development team** to focus on the areas of the domain that are useful to be able to produce valuable software.
 
 * For example:
-    * _when writing software for the healthcare it is not important to learn to become a doctor. What is important to understand is the terminology of the health industry, how different departments view patients and care, what information doctors gather, and what they do with it_.
+    * _when writing software for healthcare it is not important to learn to become a doctor. What is important to understand is the terminology of the health industry, how different departments view patients and care, what information doctors gather, and what they do with it_.
 
 ---
 
+## Strategic Patterns of the DDD
+
+* Domain-Driven Design deals with both the challenge of
+    1. understanding a problem domain, and
+    1. creating a maintainable solution that is useful to solve problems within it. 
+
+* It achieves this by utilizing a number of strategic patterns.
+
+--- 
+
+## Strategic Patterns of the DDD (1/5)
+### Distilling the Problem Domain to Reveal What Is Important
+
+* Not all of a large software product needs be perfectly designed.
+
+* Development teams and domain experts use analysis patterns and knowledge crunching to distill large problem domains into more manageable subdomains.
+    * This distillation reveals the core sub-domain
+
+* DDD emphasizes the need to focus effort and talent on the core
+subdomain(s).
+    * This is the area that holds the most value and is key to the success of the application.
+
+* Discovering the core domain helps teams understand why they’re producing the software and what it means for the software to be successful for the business. 
+    * As the business evolves, so in turn must the software; it needs to be adaptable.
+    * Investment in code quality for the key areas of an application will help it change with the business. 
+
+---
+
+## Strategic Patterns of the DDD (2/5)
+### Creating a Model to Solve Domain Problems
+
+* A software model is built for each subdomain to handle domain problems and to align the software with the business boundaries.
+    * Each model should be an abstraction satisfying requirements and use cases...
+    * ... while still retaining the rules and logic of the business domain.
+    
+* The development team should focus as much energy and effort on the model and domain logic as it does on the pure technical aspects of the application.
+
+* To avoid accidental technical complexity the model is kept isolated from code.
+
+---
+
+## Strategic Patterns of the DDD (3/5)
+### Using a Shared Language to Enable Modeling Collaboration
+
+* Models are built through the collaboration of domain experts and the development team.
+
+* Communication is achieved using an ever‐evolving shared language known as the **ubiquitous language (UL)** to efficiently and effectively connect a software model to a conceptual analysis model.
+
+* The software model is bound to the analysis model by using the same terms of the UL for its structure and class design.
+
+* Insights, concepts, and terms that are discovered at a coding level are replicated in the UL and therefore the analytical model. Likewise when the business reveals hidden concepts at the analysis model level this insight is fed back into the code model
+    * This is the key that enables the domain experts and development teams to evolve the model in collaboration.
+
+---
+
+## Strategic Patterns of the DDD (4/5)
+### Isolate Models from Ambiguity and Corruption
+
+* Models sit within a **bounded context**, which defines the applicability of the model and ensures that its integrity is retained.
+    * Larger models can be split into smaller models and defined within separate bounded contexts
+    * ... when ambiguity in terminology exists
+    * ... when multiple teams are a working in order to further reduce complexity.
+
+* Bounded contexts are used to form a protective boundary around models
+    * allowing the different models of the overall solution to evolve within well‐defined business contexts.
+
+* Models are isolated from infrastructure code to avoid the accidental complexity of merging technical and business concepts.
+
+* Bounded contexts also prevent the integrity of
+models being corrupt by isolating them from third-party code.
+
+---
+
+## Strategic Patterns of the DDD (5/5)
+### Understanding the Relationships between Contexts
+
+* In Domain-Driven Design it is important understanding how separate models and contexts work together to solve domain problems that span across subdomains.
+
+* **Context maps help you to understand the bigger picture**;
+    * to understand what models exist
+    * what they are responsible for, and 
+    * where their applicability boundaries are. 
+
+* These maps reveal how different models interact and what data they exchange to fulfill business processes.
+    * The relationships between the connections and (more importantly) the grey area of processes is often not captured or well understood by the business.
+
+---
+
+## Problem Space vs. Solution Space
+
+* All of the strategic patterns of the DDD help to manage the complexity of a problem (the **problem space**) or they manage complexity in the solution (the **solution space**).
+
+* The problem space distils the problem domain into more manageable subdomains. DDD’s impact in the problem space is to reveal what is important and where to focus effort.
+
+* The solution space of DDD covers patterns that can shape the architecture of your applications and make it easier to manage.
+
+---
+
+## The Problem Space
+
+{{< plain_image src="ddd_problem_space.png" h="90" >}}
+
+---
+
+## The Solution Space
+
+{{< plain_image src="ddd_solution_space.png" h="90" >}}
+
+---
+
+## Popular Misconceptions of DDD
+
+1. *Tactical Patterns are key to DDD! No, they aren't!*
+    * DDD is less about software design patterns and more about problem solving through collaboration.
+    
+    * DDD is not code centric: its purpose is not to make elegant code. **Software is merely an artifact of DDD**.
+
+1. *DDD is a Framework! No, it isn't!*
+    * DDD is architecturally agnostic in that there is no single architectural style you must follow to implement it.
+    * Architectural styles can vary because they should apply at the bounded context level and not the application level.
+
+1. *DDD is a Silver Bullet! No, it isn't!*
+    * DDD can take a lot of effort, it requires an iterative development methodology, an engaged business, and smart developers.
+    * Not all software systems fit with this approach. Trivial domains don’t warrant the level of sophistication as they have little or no domain logic. 
+
+---
+
+## Why Domain-Driven Solutions often fail to deliver?
+
+* The reason that solutions fail to deliver is not because of a lack of programming ability or technical expertise, but rather because of a lack of understanding, communication, and business knowledge. 
+
+* If developers and customers cannot effectively communicate, aren’t aligned on the same overarching goals then even with the most accomplished programmers in the world, you ultimately cannot produce meaningful outcomes.
+
+* Some common mistakes:
+    1. *Looking for Tactical Pattern perfection*
+    1. *Overvaluing sample applications*
+    1. *Missing the real value of DDD*
+
+---
+
+## (Avoid to) Looking for Tactical Pattern perfection
+
+* Teams concerned only with writing code focus on the tactical patterns of DDD.
+    * Building block patterns are a guide, not a bible!
+
+* DDD is about discovering what you need to write, why you need to write it, and how much effort you should use. 
+
+* Understanding the what and the why of problem-solving is a more important process to get correct than how you are going to implement it in code.
+
+---
+
+## (Avoid to) Overvaluing sample applications
+
+* One of the most often-asked questions on software development forums is "Can I see a sample application?"
+    * There are probably many good solutions that show the result of a product developed under a DDD process, but much of the benefit of DDD is not revealed when you only examine the code artifacts. 
+
+* DDD is performed on whiteboards, over coffee, and in the corridors with business experts.
+    * A sample application does not reveal the many conversations and collaborations between domain experts and the development team.
+
+* The code artifact is the product of months and months of hard work, but it only represents the last iteration.
+
+---
+
+## Missing the real value of DDD
+
+* A team focusing too much on the tactical patterns is missing the point of DDD.
+
+* The true value of DDD lies in the creation of a shared language, specific for a context that enables developers and
+domain experts to collaborate on solutions effectively.
+    * The removal of ambiguity in conversations and effortless communication is the goal. 
+    * These foundations must be in place before any coding takes place to give teams the best chance of solving problems.
+
+* Problems are solved not only in code but through collaboration, communication, and exploration with domain experts.
+    * Developers should not be judged on how quickly they can churn out code; they must be judged on how they solve problems with or without code.
+
+---
+
+## Summing up
+
+* DDD is as a development philosophy: it promotes a new domain‐centric way of thinking and design software systems.
+
+* It is the learning process, not the end goal, which is the greatest strength of DDD. 
+
+* Any team can write a software product to meet the needs of a set of use cases, but teams that put time and effort into the problem domain they are working on can consistently evolve the product to meet new business use cases.
+
+* DDD is not a strict methodology in itself but must be used with some form of iterative software project methodology to build and evolve a useful model.
