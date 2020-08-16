@@ -23,7 +23,7 @@
     <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
 <h2 id="kotlin-for-scala-developers">Kotlin (for Scala developers)</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2020-08-14
+2020-08-16
 
 </section><section>
 <h1 id="why-kotlin">Why Kotlin</h1>
@@ -67,15 +67,28 @@
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">x</span> = <span style="color:#00d;font-weight:bold">10</span> <span style="color:#888">// constant
 </span><span style="color:#888"></span><span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">y</span> = <span style="color:#00d;font-weight:bold">20</span> <span style="color:#888">// variable, can be reassigned
 </span><span style="color:#888"></span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">foo</span>() = <span style="color:#00d;font-weight:bold">20</span> <span style="color:#888">// function definition, single expression
-</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">foo</span>() { <span style="color:#888">// same as above with multiple expression
-</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">return</span> <span style="color:#00d;font-weight:bold">20</span> <span style="color:#888">// requires return in this form
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">bar</span>(): Int { <span style="color:#888">// same as above with multiple expression
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">return</span> <span style="color:#00d;font-weight:bold">20</span> <span style="color:#888">// requires a return in this form...
 </span><span style="color:#888"></span>}
+<span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">baz</span>() { } <span style="color:#888">// Unless it returns Unit
+</span><span style="color:#888"></span>
 </code></pre></div></section><section>
 <h1 id="kotlin-101-1">Kotlin 101</h1>
-<h2 id="function-parameters-return-types">Function parameters, return types</h2>
+<h2 id="function-parameters-and-return-types">Function parameters and return types</h2>
 <p>Much like Scala:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">foo</span>(): Int = <span style="color:#00d;font-weight:bold">10</span> <span style="color:#888">// types are annotated with a column and the type name
-</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">foo</span>() = <span style="color:#00d;font-weight:bold">10</span> <span style="color:#888">// return type annotation can be omitted (if the compiler can infer it)
+<ul>
+<li>All parameters are named, but can be invoked positionally as well</li>
+<li>Parameters can have defaults</li>
+<li>Types are annotatedd after the parameter name</li>
+<li>Invocation can be positional or by name, with the rule that once a named parameter is used, subsequent parameters must be named as well</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">foo</span>(a: Int, b: String): Int = TODO() <span style="color:#888">// TODO() is a builtin
+</span><span style="color:#888">// MANCANO I DEFAULT!!!!
+</span><span style="color:#888"></span>function throwing a `NotImplementedError`
+foo(<span style="color:#00d;font-weight:bold">1</span>, <span style="color:#d20;background-color:#fff0f0">&#34;bar&#34;</span>) <span style="color:#888">// OK, positional
+</span><span style="color:#888"></span>foo(a = <span style="color:#00d;font-weight:bold">1</span>, b = <span style="color:#d20;background-color:#fff0f0">&#34;bar&#34;</span>) <span style="color:#888">// OK, named
+</span><span style="color:#888"></span>foo(<span style="color:#00d;font-weight:bold">1</span>, b = <span style="color:#d20;background-color:#fff0f0">&#34;bar&#34;</span>) <span style="color:#888">// OK, hybrid
+</span><span style="color:#888"></span>foo(a = <span style="color:#00d;font-weight:bold">1</span>, <span style="color:#d20;background-color:#fff0f0">&#34;bar&#34;</span>) <span style="color:#888">// error: no value passed for parameter &#39;b&#39;
 </span></code></pre></div></section><section>
 <h1 id="kotlin-101-2">Kotlin 101</h1>
 <h2 id="top-level-functions">Top level functions</h2>
@@ -100,7 +113,129 @@ The behaviour can be controlled via annotations.</p>
 </span></code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">main</span>(arguments: Array&lt;String&gt;) {
     println(<span style="color:#d20;background-color:#fff0f0">&#34;Hello World&#34;</span>) <span style="color:#888">// Return type is Unit, no need to return
 </span><span style="color:#888"></span>} 
-</code></pre></div></section>
+</code></pre></div></section><section>
+<h1 id="kotlin-101-4">Kotlin 101</h1>
+<h2 id="program-entry-point-1">Program entry point</h2>
+</section><section>
+<h1 id="todos">TODOS</h1>
+<h2 id="101">101</h2>
+<p>type hierarchy (top and bottom types)
+nullable types
+boolean types
+numeric types
+unsigned integers
+string templates
+multiline strings
+packages and imports
+compile time constants
+varargs
+infix
+local functions
+inline functions</p>
+<h2 id="flow-control">flow control</h2>
+<p>if
+for
+while
+break and continue
+when vs. pattern matching
+labeled jumping (incl. qualified return)</p>
+<h2 id="oop">oop</h2>
+<p>classes and members (methods and properties)
+object creation (no new)
+access to members (invoke vs named access)
+inheritance and open
+inheritance and override
+abstract
+inheritance and disambiguation by <code>super&lt;Class&gt;</code>
+interfaces and subtyping
+implementation of members in interfaces (no backing field)
+constructors
+init blocks
+secondary constructors
+nullability and <code>lateinit</code>
+getters
+setters
+accessors in interfaces
+backing fields, <code>field</code>
+objects
+companion objects
+visibility
+controlling visibility of properties (<code>private set</code>)
+equality / hashing / toString</p>
+<h2 id="generics">generics</h2>
+<p>syntax for functions
+syntax for classes
+type bounds
+<code>where</code>
+variance
+use site variance and type projection
+declaration site variance
+star-projection
+reified types
+invocation of reified types</p>
+<h2 id="basic-collections">basic collections?</h2>
+<p>list / mutablelist
+set / mutableset
+map / mutablemap
+<code>in</code></p>
+<h2 id="extended-oop">extended OOP</h2>
+<p>data classes
+copy / equals / toString
+destructuring declarations
+Pair / Triple
+sealed classes
+sealing and when
+nested classes
+inner classes
+enum classes
+anonymous classes via object expression
+type aliasing
+delegation and <code>by</code>
+contract implementation by delegation (favor composition over inheritance)
+delegated properties and variables
+delegated properties <a href="https://kotlinlang.org/docs/reference/delegated-properties.html">https://kotlinlang.org/docs/reference/delegated-properties.html</a>
+lazy
+observable
+delegation via map (mutability via MutableMap)
+implementing a custom delegate for properties</p>
+<h2 id="functional-kotlin">functional kotlin</h2>
+<p>function types
+function types and nullability
+lambda expressions
+trailing lambdas
+implicit single parameters
+closures
+destructuring in lambdas
+anonymous functions (rarely used)
+invoke convention
+inline functions</p>
+<h2 id="extensions">extensions</h2>
+<p>extension functions vs implicits
+extension properties (no backing field)
+nullable receivers
+companion extensions
+generic extensions
+extensions resolution
+extension members (scope control)
+visibility of private members</p>
+<h2 id="extensions--functional">extensions + functional</h2>
+<p>function types with receiver</p>
+<h2 id="standard-library">standard library</h2>
+<p>let / run / apply / with
+arrays
+primitive arrays
+ranges</p>
+<h2 id="performance">performance</h2>
+<p>tail recursion
+inline functions
+noinline
+crossinline
+inline classes &ndash; mentioned and skipped, ref to <a href="https://kotlinlang.org/docs/reference/inline-classes.html">https://kotlinlang.org/docs/reference/inline-classes.html</a></p>
+<h2 id="java-interop">java interop</h2>
+<p>@JvmOverloads
+@JvmDefault</p>
+<h2 id="dsls-in-kotlin-type-safe-builders">DSLs in Kotlin (type-safe builders)</h2>
+</section>
 
   
 
