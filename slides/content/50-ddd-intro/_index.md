@@ -71,7 +71,9 @@ large or complex business systems effectively.**
 
 ## The Art of the Possible
 
-{{< plain_image src="art_of_possible.png" h="70" >}}
+<!--{{< plain_image src="art_of_possible.png">}}-->
+
+<img src="art_of_possible.png" style='width: vw; object-fit: contain; border:0px; box-shadow: none'>
 
 ---
 
@@ -79,7 +81,9 @@ large or complex business systems effectively.**
 
 <div class='left' style='float:left;width:30%'>
 
-[{{< plain_image src="https://m.media-amazon.com/images/I/51OWGtzQLLL.jpg" h="50" >}}](https://www.oreilly.com/library/view/domain-driven-design-tackling/0321125215/)
+<!--[{{< plain_image src="https://m.media-amazon.com/images/I/51OWGtzQLLL.jpg" h="50" >}}](https://www.oreilly.com/library/view/domain-driven-design-tackling/0321125215/)-->
+
+<img src="https://m.media-amazon.com/images/I/51OWGtzQLLL.jpg" style='width: vw; object-fit: contain; border:0px; box-shadow: none'>
 
 </div>
 
@@ -93,7 +97,8 @@ large or complex business systems effectively.**
 
 ---
 
-## Fundamental Concepts of DDD (in a nutshell)
+## Fundamental Concepts of DDD
+### (in a nutshell)
 
 1. Distill a large problem domain into **smaller sub-domains**.
 
@@ -109,13 +114,15 @@ large or complex business systems effectively.**
     * Enclose the model within a **boundary** to protect the
 models integrity.
 
-1. Keep a **context map** to understand the relationships, social and technical, of all models in play.
+1. Keep a **context map** to understand the relationships of all models in play.
 
 ---
 
 ## DDD "Conceptual Space"
 
-{{< plain_image src="ddd_conceptual_space.png" h="80" >}}
+<!--{{< plain_image src="ddd_conceptual_space.png" >}}-->
+
+<img src="ddd_conceptual_space.png" style='width: 60vw; object-fit: contain; border:0px; box-shadow: none'>
 
 ---
 
@@ -129,7 +136,7 @@ models integrity.
 
 $$C = \sum_{p}^{}c_pt_p$$ 
 
-* Decomposing a software system into subparts, for each part $p$ its own real complexity is given by the complexity of the part ($c_p$) weighted by the fraction of time spent by developers on it ($t_p$).
+* Decomposing a software system into subparts, for each part $p$ its real complexity is given by the complexity of the part ($c_p$) weighted by the fraction of time spent by developers on it ($t_p$).
 
 * In terms of _costs/benefits_: in a complex system it takes a lot of work to implements even small improvements, while in a simple system larger improvements can be implemented with less effort. 
 
@@ -164,7 +171,9 @@ $$C = \sum_{p}^{}c_pt_p$$
 
 ## Complex Problem Domains
 
-{{< plain_image src="ddd_software_complexity.png" h="100" >}}
+<img src="ddd_software_complexity.png" style='width: vw; object-fit: contain; border:0px; box-shadow: none'>
+
+<!--{{< plain_image src="ddd_software_complexity.png" >}}-->
 
 ---
 
@@ -198,13 +207,15 @@ $$C = \sum_{p}^{}c_pt_p$$
 ## Software Complexity Challenges (2/3)
 ### A Lack of Organization
 
+<!--{{< plain_image src="ddd_lack_of_organization.png" h="45">}}-->
+
+<img src="ddd_lack_of_organization.png" style='width: 40vw; object-fit: contain; border:0px; box-shadow: none'>
+
 * The initial incarnation of a system is fast to produce and often a well‐rounded success...
 
     * ... but because there is little focus based on the design of an application around a model of the problem domain, subsequent enhancements are troublesome.
 
-* The codebase lacks the required synergy with the business behavior to make change manageable.
-
-{{< plain_image src="ddd_lack_of_organization.png" h="45" >}}
+* The codebase lacks the required synergy with the business behavior
 
 ---
 
@@ -334,13 +345,17 @@ models being corrupt by isolating them from third-party code.
 
 ## The Problem Space
 
-{{< plain_image src="ddd_problem_space.png" h="90" >}}
+<!--{{< plain_image src="ddd_problem_space.png" w="100vw" >}}-->
+
+<img src="ddd_problem_space.png" style='width: vw; object-fit: contain; border:0px; box-shadow: none'>
 
 ---
 
 ## The Solution Space
 
-{{< plain_image src="ddd_solution_space.png" h="90" >}}
+<!--{{< plain_image src="ddd_solution_space.png" w="100vw" >}}-->
+
+<img src="ddd_solution_space.png" style='width: vw; object-fit: contain; border:0px; box-shadow: none'>
 
 ---
 
@@ -356,8 +371,8 @@ models being corrupt by isolating them from third-party code.
     * Architectural styles can vary because they should apply at the bounded context level and not the application level.
 
 1. *DDD is a Silver Bullet! No, it isn't!*
-    * DDD can take a lot of effort, it requires an iterative development methodology, an engaged business, and smart developers.
-    * Not all software systems fit with this approach. Trivial domains don’t warrant the level of sophistication as they have little or no domain logic. 
+    * DDD can take a lot of effort: it requires an iterative development methodology, an engaged business, etc.
+    * Not all software systems fit with this approach (e.g. those with trivial domains with little or no domain logic). 
 
 ---
 
