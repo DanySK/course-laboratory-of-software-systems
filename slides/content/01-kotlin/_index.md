@@ -88,13 +88,17 @@ Much like Scala:
 * Invocation can be positional or by name, with the rule that once a named parameter is used, subsequent parameters must be named as well
 
 ```kotlin
-fun foo(a: Int, b: String): Int = TODO() // TODO() is a builtin
+fun foo(a: Int = 0, b: String = "foo"): Int = TODO() // TODO() is a builtin
 // MANCANO I DEFAULT!!!!
 function throwing a `NotImplementedError`
 foo(1, "bar") // OK, positional
 foo(a = 1, b = "bar") // OK, named
 foo(1, b = "bar") // OK, hybrid
 foo(a = 1, "bar") // error: no value passed for parameter 'b'
+foo() // OK, both defaults
+foo(1) // OK, same as foo(1, "foo")
+foo("bar") // error: type mismatch: inferred type is String but Int was expected
+foo(b = "bar") // OK, same as foo(0, "bar")
 ```
 
 ---

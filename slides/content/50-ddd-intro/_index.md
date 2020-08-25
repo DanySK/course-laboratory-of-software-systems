@@ -71,17 +71,50 @@ large or complex business systems effectively.**
 
 ## The Art of the Possible
 
-<!--{{< plain_image src="art_of_possible.png">}}-->
+![](art_of_possible.png)
+
+---
+
+## The Art of the Possible
+
+{{< image src="art_of_possible.png" max-w="100" >}}
+
+---
+
+## The Art of the Possible
 
 <img src="art_of_possible.png" style='width: vw; object-fit: contain; border:0px; box-shadow: none'>
+
+---
+
+## The Art of the Possible
+
+{{< image src="memelr.jpeg" max-w="100">}}
+
+---
+
+## The Art of the Possible
+
+<img src="memelr.jpeg" style='width: vw; object-fit: contain; border:0px; box-shadow: none'>
+
+---
+
+## The Art of the Possible
+
+{{< image src="4k.jpeg" max-w="100">}}
+
+---
+
+## The Art of the Possible
+
+<img src="4k.jpeg" style='width: vw; object-fit: contain; border:0px; box-shadow: none'>
 
 ---
 
 ## Domain-Driven Design: A first Definition
 
 <div class='left' style='float:left;width:30%'>
-
-<!--[{{< plain_image src="https://m.media-amazon.com/images/I/51OWGtzQLLL.jpg" h="50" >}}](https://www.oreilly.com/library/view/domain-driven-design-tackling/0321125215/)-->
+<!--[{{< image src="https://m.media-amazon.com/images/I/51OWGtzQLLL.jpg" h="50" >}}](https://www.oreilly.com/library/view/domain-driven-design-tackling/0321125215/)-->
 
 <img src="https://m.media-amazon.com/images/I/51OWGtzQLLL.jpg" style='width: vw; object-fit: contain; border:0px; box-shadow: none'>
 
@@ -120,7 +153,7 @@ models integrity.
 
 ## DDD "Conceptual Space"
 
-<!--{{< plain_image src="ddd_conceptual_space.png" >}}-->
+<!--{{< image src="ddd_conceptual_space.png" >}}-->
 
 <img src="ddd_conceptual_space.png" style='width: 60vw; object-fit: contain; border:0px; box-shadow: none'>
 
@@ -173,7 +206,7 @@ $$C = \sum_{p}^{}c_pt_p$$
 
 <img src="ddd_software_complexity.png" style='width: vw; object-fit: contain; border:0px; box-shadow: none'>
 
-<!--{{< plain_image src="ddd_software_complexity.png" >}}-->
+<!--{{< image src="ddd_software_complexity.png" >}}-->
 
 ---
 
@@ -207,7 +240,7 @@ $$C = \sum_{p}^{}c_pt_p$$
 ## Software Complexity Challenges (2/3)
 ### A Lack of Organization
 
-<!--{{< plain_image src="ddd_lack_of_organization.png" h="45">}}-->
+<!--{{< image src="ddd_lack_of_organization.png" h="45">}}-->
 
 <img src="ddd_lack_of_organization.png" style='width: 40vw; object-fit: contain; border:0px; box-shadow: none'>
 
@@ -345,7 +378,7 @@ models being corrupt by isolating them from third-party code.
 
 ## The Problem Space
 
-<!--{{< plain_image src="ddd_problem_space.png" w="100vw" >}}-->
+<!--{{< image src="ddd_problem_space.png" w="100vw" >}}-->
 
 <img src="ddd_problem_space.png" style='width: vw; object-fit: contain; border:0px; box-shadow: none'>
 
@@ -353,7 +386,7 @@ models being corrupt by isolating them from third-party code.
 
 ## The Solution Space
 
-<!--{{< plain_image src="ddd_solution_space.png" w="100vw" >}}-->
+<!--{{< image src="ddd_solution_space.png" w="100vw" >}}-->
 
 <img src="ddd_solution_space.png" style='width: vw; object-fit: contain; border:0px; box-shadow: none'>
 

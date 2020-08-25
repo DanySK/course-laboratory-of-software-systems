@@ -17,8 +17,14 @@ isHTML = true
 
 [params.reveal_hugo]
 theme = "white"
-width = '90%'
+width = '100%'
 height = '100%'
+# width = '1440'
+#height = '900'
+# embedded = 'true'
+# disableLayout = 'true'
+
+
 
 [markup.goldmark.renderer]
 unsafe = true

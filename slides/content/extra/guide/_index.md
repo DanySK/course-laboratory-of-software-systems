@@ -75,22 +75,74 @@ normal text
 
 ---
 
-## Fallback to HTML for resizing
-
-(prefer vh/vw sizes)
-
-<img src="https://images.unsplash.com/photo-1530878955558-a6c31b9c97db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9" style='width: vw; height: 60vh; object-fit: contain'>
-
----
-
-## Or (better) use my new shortcode!
+## Fallback to shortcodes for resizing
 
 Autoresize specifying
 
-* `w` (percent of parent element width) and/or `h` (percent of viewport height) as max sizes , and
+* `max-w` (percent of parent element width) and/or `max-h` (percent of viewport height) as max sizes , and
 * `width` and/or `height` as *exact* sizes (as percent of viewport size)
 
-{{< image src="https://images.unsplash.com/photo-1530878955558-a6c31b9c97db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9" h="50" >}}
+{{< image src="https://images.unsplash.com/photo-1530878955558-a6c31b9c97db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9" max-h="40">}}
+
+---
+
+## Low res, plain markdown
+
+![](memelr.jpeg)
+
+---
+
+## Hi res, plain markdown
+
+![](hires.png)
+
+---
+
+## Low res, default
+
+{{< image src="memelr.jpeg" >}}
+
+---
+
+## Hi res, default
+
+{{< image src="hires.png" >}}
+
+---
+
+## Low res, enlarged horizontally
+
+{{< image src="memelr.jpeg" width="100">}}
+
+---
+
+## Low res, enlarged vertically
+
+{{< image src="memelr.jpeg" height="100">}}
+
+---
+
+## Hi res, reduced horizontally
+
+{{< image src="hires.png" width="50">}}
+
+---
+
+## Hi res, reduced vertically
+
+{{< image src="hires.png" height="50">}}
+
+---
+
+## Hi res, reducing maximum expansion horizontally
+
+{{< image src="hires.png" max-w="50">}}
+
+---
+
+## Hi res, reducing maximum expansion vertically
+
+{{< image src="hires.png" max-h="50">}}
 
 ---
 
