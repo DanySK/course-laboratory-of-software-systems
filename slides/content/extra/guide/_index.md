@@ -71,7 +71,7 @@ normal text
 
 # Inline images
 
-![Alternative text](https://images.unsplash.com/photo-1530878955558-a6c31b9c97db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9)
+![Alternative text](hires.png)
 
 ---
 
@@ -82,7 +82,7 @@ Autoresize specifying
 * `max-w` (percent of parent element width) and/or `max-h` (percent of viewport height) as max sizes , and
 * `width` and/or `height` as *exact* sizes (as percent of viewport size)
 
-{{< image src="https://images.unsplash.com/photo-1530878955558-a6c31b9c97db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9" max-h="40">}}
+{{< image src="hires.png" max-h="40">}}
 
 ---
 
@@ -146,14 +146,14 @@ Autoresize specifying
 
 ---
 
-{{< slide background-image="https://images.unsplash.com/photo-1530878955558-a6c31b9c97db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9" >}}
+{{< slide background-image="hires.png" >}}
 
 # Large images as background
 ## (May affect printing)
 
 ---
 
-{{< slide background-image="https://images.unsplash.com/photo-1530878955558-a6c31b9c97db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9" state="blur-animation-light"  transition="fade-in fade-out" >}}
+{{< slide background-image="hires.png" state="blur-animation-light"  transition="fade-in fade-out" >}}
 
 # Also available with blur and custom transitions
 ## (May affect printing)
