@@ -51,3 +51,10 @@ section.has-light-background {
 	border: 0em;
 	box-shadow: none;
 }
+
+.reveal code {
+	color: #006900;
+	line-height: 140%;
+	// font-size: 130%;
+	font-family: "Oxygen Mono", "Roboto Mono", "Ubuntu Mono", "Courier New", Courier, monospace;
+}
