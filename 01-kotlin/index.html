@@ -164,11 +164,11 @@ baz?.length <span style="color:#888">// returns null, return type is still &#34;
 </li>
 </ul>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">baz</span>: String? = <span style="color:#d20;background-color:#fff0f0">&#34;foo&#34;</span>
-baz!! <span style="color:#888">// Returns &#34;foo&#34;, type String (non nullable)
-</span><span style="color:#888"></span>baz!!.length <span style="color:#888">// returns 3, return type is Int
-</span><span style="color:#888"></span>baz = <span style="color:#080;font-weight:bold">null</span>
-baz!! <span style="color:#888">// throws a KotlinNullPointerException, like the good ol&#39;times!
-</span></code></pre></div></section><section>
+baz!!<span class='fragment '  style="color: #888;"> // Returns &#39;foo&#39;, type String (non nullable)</span>
+baz!!.length<span class='fragment '  style="color: #888;"> // returns 3, return type is Int</span>
+baz = <span style="color:#080;font-weight:bold">null</span>
+baz!!<span class='fragment '  style="color: #888;"> // throws a KotlinNullPointerException, like the good ol&#39;times!</span>
+</code></pre></div></section><section>
 <h1 id="kotlin-101-7">Kotlin 101</h1>
 <h3 id="elvis-operator-">Elvis operator <code>?:</code></h3>
 <p>Yeah it&rsquo;s actually named after Elvis Presley due to his haircut 😉
@@ -223,16 +223,131 @@ baz ?: <span style="color:#d20;background-color:#fff0f0">&#34;bar&#34;</span> <s
 </li>
 </ul>
 </section><section>
+<h1 id="kotlin-101-10">Kotlin 101</h1>
+<h2 id="type-hierarchy">Type hierarchy</h2>
+<ul>
+<li>In Java
+<ul>
+<li>top type: <code>Object</code></li>
+<li>bottom type: no bottom type</li>
+</ul>
+</li>
+<li>In Scala
+<ul>
+<li>top type: <code>Any</code></li>
+<li>bottom type: <code>Nothing</code></li>
+</ul>
+</li>
+<li>In Kotlin:
+<ul>
+<li>top type: <code><span class='fragment '
+  >
+  Any
+</span></code></li>
+<li>bottom type:</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h1 id="kotlin-101-11">Kotlin 101</h1>
+<h2 id="type-hierarchy-1">Type hierarchy</h2>
+<ul>
+<li>In Java
+<ul>
+<li>top type: <code>Object</code></li>
+<li>bottom type: no bottom type</li>
+</ul>
+</li>
+<li>In Scala
+<ul>
+<li>top type: <code>Any</code></li>
+<li>bottom type: <code>Nothing</code></li>
+</ul>
+</li>
+<li>In Kotlin:
+<ul>
+<li>top type: <del><code>Any</code></del> <code><span class='fragment '
+  >
+  Any?
+</span></code></li>
+<li>bottom type: <code><span class='fragment '
+  >
+  Nothing
+</span></code></li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h1 id="kotlin-101-12">Kotlin 101</h1>
+<h2 id="booleans"><code>Boolean</code>s</h2>
+<p>Exactly as Java/Scala, but with nullability:</p>
+<ul>
+<li><code>Boolean</code>: <code>true</code>/<code>false</code></li>
+<li><code>Boolean?</code>: <code>true</code>/<code>false</code>/<code>null</code></li>
+<li><code>&amp;&amp;</code>, <code>!!</code>, and <code>!</code> operators work for <em>non-nullable</em> <code>Boolean</code>s.</li>
+</ul>
+<p>Likewise Scala, boxing under the JVM is dealt with by the compiler
+<br/>
+<code>Boolean?</code> are always boxed (to be able to account for <code>null</code>)</p>
+</section><section>
+<h1 id="kotlin-101-13">Kotlin 101</h1>
+<h2 id="numeric-types">Numeric types</h2>
+<p>Same as Scala, +nullability, +<em>unsigned experimental types</em>:</p>
+<ul>
+<li><code>Byte</code>, <code>Short</code>, <code>Int</code>, <code>Long</code>, <code>Float</code>, <code>Double</code>
+<ul>
+<li>And nullable equivalents, always boxed under the JVM</li>
+</ul>
+</li>
+<li><code>UByte</code>, <code>UShort</code>, <code>UInt</code>, <code>ULong</code></li>
+</ul>
+</section><section>
+<h1 id="kotlin-101-14">Kotlin 101</h1>
+<h2 id="issues-of-implicit-numeric-types-conversion">Issues of implicit numeric types conversion</h2>
+<p>Implicit type conversion to &ldquo;bigger&rdquo; types is source of nasty errors when automatic boxing is involved.
+<br/>
+Consider the following Scala code:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#b06;font-weight:bold">Double</span>.<span style="color:#b06;font-weight:bold">NaN</span> == <span style="color:#b06;font-weight:bold">Double</span>.<span style="color:#b06;font-weight:bold">NaN</span> <span style="color:#888">// false, OK, as every sane language
+</span><span style="color:#888"></span><span style="color:#b06;font-weight:bold">Double</span>.<span style="color:#b06;font-weight:bold">NaN</span> equals <span style="color:#b06;font-weight:bold">Double</span>.<span style="color:#b06;font-weight:bold">NaN</span> <span style="color:#888">// true! Boxing + Singleton make equality inconsistent!
+</span></code></pre></div><p>Another example:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> a<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Int</span> = <span style="color:#00d;font-weight:bold">1</span>
+<span style="color:#080;font-weight:bold">val</span> b<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Long</span> = a
+a == b <span style="color:#888">// true
+</span><span style="color:#888"></span>a equals b <span style="color:#888">// false
+</span></code></pre></div><p>This causes a chain of issues, as <code>==</code> and <code>equals</code> do a different job, as do <code>##</code> and <code>hashCode</code>: <code>Map</code>s can become very surprising!</p>
+</section><section>
+<h1 id="kotlin-101-15">Kotlin 101</h1>
+<h2 id="numeric-type-conversions-in-kotlin">Numeric type conversions in Kotlin</h2>
+<p>Kotlin numeric types are converted manually to prevent these issues:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">i</span>: Int = <span style="color:#00d;font-weight:bold">1</span>
+<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">l</span>: Long = <span style="color:#00d;font-weight:bold">1</span>
+<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">l</span>: Long = i<span class='fragment '  style="color: #888;"> // error: type mismatch: inferred type is Int but Long was expected</span>
+<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">l</span>: Long = i.toLong()<span class='fragment '  style="color: #888;"> // OK</span>
+i + l<span class='fragment '  style="color: #888;"> // OK, operators are overloaded</span>
+l + i<span class='fragment '  style="color: #888;"> // OK, operators are overloaded</span>
+</code></pre></div></section><section>
+<h1 id="kotlin-101-16">Kotlin 101</h1>
+<h2 id="numeric-literals">Numeric literals</h2>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#00d;font-weight:bold">1234567</span> <span style="color:#888">// Literal Int
+</span><span style="color:#888"></span><span style="color:#00d;font-weight:bold">1</span>_234_567 <span style="color:#888">// Literal Int, underscored syntax (preferable)
+</span><span style="color:#888"></span><span style="color:#00d;font-weight:bold">123L</span> <span style="color:#888">// Literal Long
+</span><span style="color:#888"></span><span style="color:#00d;font-weight:bold">1.0</span> <span style="color:#888">// Literal Double
+</span><span style="color:#888"></span><span style="color:#00d;font-weight:bold">123</span>e4 <span style="color:#888">// Literal Double in scientific notation
+</span><span style="color:#888"></span><span style="color:#00d;font-weight:bold">1</span>d <span style="color:#888">// Nope :)
+</span><span style="color:#888"></span><span style="color:#00d;font-weight:bold">1f</span> <span style="color:#888">// Literal Float
+</span><span style="color:#888"></span><span style="color:#00d;font-weight:bold">1u</span> <span style="color:#888">// Literal UInt
+</span><span style="color:#888"></span><span style="color:#00d;font-weight:bold">0123</span> <span style="color:#888">// error: unsupported [literal prefixes and suffixes] (no octal)
+</span><span style="color:#888"></span><span style="color:#00d;font-weight:bold">0xCAFE</span> <span style="color:#888">// Hex literal Int
+</span><span style="color:#888"></span><span style="color:#00d;font-weight:bold">0xCAFEBABE</span> <span style="color:#888">// Hex literal Long (automatic, as it does not fit an Int)
+</span><span style="color:#888"></span><span style="color:#00d;font-weight:bold">0x0000000</span> <span style="color:#888">// Hex literal Int, even it&#39;d fit a Byte
+</span><span style="color:#888"></span><span style="color:#00d;font-weight:bold">0</span>b1111111_11111111_11111111_11111111 <span style="color:#888">// Binary Int (Integer.MAX_INT)
+</span><span style="color:#888"></span><span style="color:#00d;font-weight:bold">0</span>b11111111_11111111_11111111_11111111 <span style="color:#888">// Binary Long
+</span><span style="color:#888"></span><span style="color:#00d;font-weight:bold">0</span>b11111111_11111111_11111111_11111111u <span style="color:#888">// Binary UInt!
+</span><span style="color:#888"></span><span style="color:#00d;font-weight:bold">0xFFFF</span>_FFFF_FFFFu <span style="color:#888">// ULong
+</span></code></pre></div></section><section>
 <h1 id="todos">TODOS</h1>
 <h2 id="101">101</h2>
-<p>nullable types
-nullable types as paramters
-platform types
-type hierarchy (top and bottom types)
-boolean types
-numeric types
-unsigned integers
-string templates
+<p>string templates
 multiline strings
 packages and imports
 compile time constants
