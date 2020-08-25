@@ -82,17 +82,13 @@
 <li>Types are annotatedd after the parameter name</li>
 <li>Invocation can be positional or by name, with the rule that once a named parameter is used, subsequent parameters must be named as well</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">foo</span>(a: Int = <span style="color:#00d;font-weight:bold">0</span>, b: String = <span style="color:#d20;background-color:#fff0f0">&#34;foo&#34;</span>): Int = TODO() <span style="color:#888">// TODO() is a builtin
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">foo</span>(a: Int, b: String): Int = TODO() <span style="color:#888">// TODO() is a builtin
 </span><span style="color:#888">// MANCANO I DEFAULT!!!!
 </span><span style="color:#888"></span>function throwing a `NotImplementedError`
 foo(<span style="color:#00d;font-weight:bold">1</span>, <span style="color:#d20;background-color:#fff0f0">&#34;bar&#34;</span>) <span style="color:#888">// OK, positional
 </span><span style="color:#888"></span>foo(a = <span style="color:#00d;font-weight:bold">1</span>, b = <span style="color:#d20;background-color:#fff0f0">&#34;bar&#34;</span>) <span style="color:#888">// OK, named
 </span><span style="color:#888"></span>foo(<span style="color:#00d;font-weight:bold">1</span>, b = <span style="color:#d20;background-color:#fff0f0">&#34;bar&#34;</span>) <span style="color:#888">// OK, hybrid
 </span><span style="color:#888"></span>foo(a = <span style="color:#00d;font-weight:bold">1</span>, <span style="color:#d20;background-color:#fff0f0">&#34;bar&#34;</span>) <span style="color:#888">// error: no value passed for parameter &#39;b&#39;
-</span><span style="color:#888"></span>foo() <span style="color:#888">// OK, both defaults
-</span><span style="color:#888"></span>foo(<span style="color:#00d;font-weight:bold">1</span>) <span style="color:#888">// OK, same as foo(1, &#34;foo&#34;)
-</span><span style="color:#888"></span>foo(<span style="color:#d20;background-color:#fff0f0">&#34;bar&#34;</span>) <span style="color:#888">// error: type mismatch: inferred type is String but Int was expected
-</span><span style="color:#888"></span>foo(b = <span style="color:#d20;background-color:#fff0f0">&#34;bar&#34;</span>) <span style="color:#888">// OK, same as foo(0, &#34;bar&#34;)
 </span></code></pre></div></section><section>
 <h1 id="kotlin-101-2">Kotlin 101</h1>
 <h2 id="top-level-functions">Top level functions</h2>
@@ -260,7 +256,7 @@ inline classes &ndash; mentioned and skipped, ref to <a href="https://kotlinlang
   document.getElementsByTagName('head')[0].appendChild(link);
 </script>
 
-<script type="application/json" id="reveal-hugo-site-params">{"height":"100%","theme":"white","width":"100%"}</script>
+<script type="application/json" id="reveal-hugo-site-params">{"height":"100%","theme":"white","width":"90%"}</script>
 <script type="application/json" id="reveal-hugo-page-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"custom_theme_options":{"enablesourcemap":true,"targetpath":"css/custom-theme.css"},"transition":"slide","transition_speed":"fast"}</script>
 
 <script src="/Course-Laboratory-of-Software-Systems/reveal-js/js/reveal.js"></script>
