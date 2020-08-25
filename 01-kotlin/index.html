@@ -85,13 +85,15 @@
 <li>Types are annotatedd after the parameter name</li>
 <li>Invocation can be positional or by name, with the rule that once a named parameter is used, subsequent parameters must be named as well</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">foo</span>(a: Int, b: String): Int = TODO() <span style="color:#888">// TODO() is a builtin
-</span><span style="color:#888">// MANCANO I DEFAULT!!!!
-</span><span style="color:#888"></span>function throwing a `NotImplementedError`
-foo(<span style="color:#00d;font-weight:bold">1</span>, <span style="color:#d20;background-color:#fff0f0">&#34;bar&#34;</span>) <span style="color:#888">// OK, positional
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">foo</span>(a: Int = <span style="color:#00d;font-weight:bold">0</span>, b: String = <span style="color:#d20;background-color:#fff0f0">&#34;foo&#34;</span>): Int = TODO() <span style="color:#888">// TODO() is a builtin function throwing a `NotImplementedError`
+</span><span style="color:#888"></span>foo(<span style="color:#00d;font-weight:bold">1</span>, <span style="color:#d20;background-color:#fff0f0">&#34;bar&#34;</span>) <span style="color:#888">// OK, positional
 </span><span style="color:#888"></span>foo(a = <span style="color:#00d;font-weight:bold">1</span>, b = <span style="color:#d20;background-color:#fff0f0">&#34;bar&#34;</span>) <span style="color:#888">// OK, named
 </span><span style="color:#888"></span>foo(<span style="color:#00d;font-weight:bold">1</span>, b = <span style="color:#d20;background-color:#fff0f0">&#34;bar&#34;</span>) <span style="color:#888">// OK, hybrid
 </span><span style="color:#888"></span>foo(a = <span style="color:#00d;font-weight:bold">1</span>, <span style="color:#d20;background-color:#fff0f0">&#34;bar&#34;</span>) <span style="color:#888">// error: no value passed for parameter &#39;b&#39;
+</span><span style="color:#888"></span>foo() <span style="color:#888">// OK, both defaults
+</span><span style="color:#888"></span>foo(<span style="color:#00d;font-weight:bold">1</span>) <span style="color:#888">// OK, same as foo(1, &#34;foo&#34;)
+</span><span style="color:#888"></span>foo(<span style="color:#d20;background-color:#fff0f0">&#34;bar&#34;</span>) <span style="color:#888">// error: type mismatch: inferred type is String but Int was expected
+</span><span style="color:#888"></span>foo(b = <span style="color:#d20;background-color:#fff0f0">&#34;bar&#34;</span>) <span style="color:#888">// OK, same as foo(0, &#34;bar&#34;)
 </span></code></pre></div></section><section>
 <h1 id="kotlin-101-2">Kotlin 101</h1>
 <h2 id="top-level-functions">Top level functions</h2>
@@ -118,12 +120,115 @@ The behaviour can be controlled via annotations.</p>
 </span><span style="color:#888"></span>} 
 </code></pre></div></section><section>
 <h1 id="kotlin-101-4">Kotlin 101</h1>
-<h2 id="program-entry-point-1">Program entry point</h2>
+<h2 id="nullable-types">Nullable types</h2>
+<p>Every Kotlin type exists in two forms: normal, and nullable (likely inspired by Ceylon).
+<br/>
+Nullable types are suffixed by a <code>?</code> and require special handling
+<br/>
+<code>null</code> can&rsquo;t be assigned to non nullable types!</p>
+<ul>
+<li>Nullables are the Kotlin way to deal with <code>Option</code> types</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">foo</span> = <span style="color:#d20;background-color:#fff0f0">&#34;bar&#34;</span> <span style="color:#888">// Okay, type is String
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">baz</span>: String? = foo <span style="color:#888">// Okay, normal types can be assigned to nullables
+</span><span style="color:#888"></span>foo = baz <span style="color:#888">// error: type mismatch: inferred type is String? but String was expected
+</span><span style="color:#888"></span>foo = <span style="color:#080;font-weight:bold">null</span> <span style="color:#888">// error: null can not be a value of a non-null type String
+</span></code></pre></div></section><section>
+<h1 id="kotlin-101-5">Kotlin 101</h1>
+<h2 id="accessing-nullable-types">Accessing nullable types</h2>
+<p>Nullable types memebers can&rsquo;t be accessed by <code>.</code>.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">baz</span>: String? = <span style="color:#d20;background-color:#fff0f0">&#34;foo&#34;</span>
+baz.length <span style="color:#888">// error: only safe (?.) or non-null asserted (!!.) calls are allowed...
+</span><span style="color:#888">// on a nullable receiver of type String?
+</span></code></pre></div><h3 id="safe-call-operator-">Safe call operator <code>?.</code></h3>
+<p>Performs runtime access to a member of a nullable object if it&rsquo;s not <code>null</code>, otherwise returns <code>null</code></p>
+<ul>
+<li>Somewhat similar to Scala&rsquo;s <code>Option</code>'s <code>map</code> (but no monad involved)</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">baz</span>: String? = <span style="color:#d20;background-color:#fff0f0">&#34;foo&#34;</span>
+baz?.length <span style="color:#888">// returns 3, return type is &#34;Int?&#34;, in fact...
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">bar</span>: Int = baz?.length <span style="color:#888">// ...error: type mismatch: inferred type is Int? but Int was expected
+</span><span style="color:#888"></span>baz = <span style="color:#080;font-weight:bold">null</span>
+baz?.length <span style="color:#888">// returns null, return type is still &#34;Int?&#34;
+</span></code></pre></div></section><section>
+<h1 id="kotlin-101-6">Kotlin 101</h1>
+<h3 id="non-null-assertion-">Non-null assertion <code>!!</code></h3>
+<p>Also known as: <em>I want my code to break badly at runtime</em>
+<br/></p>
+<ul>
+<li>Invalidates the whole point of having nullable types by asserting that the nullable object is not <code>null</code> at runtime</li>
+<li>It should be <strong>never</strong> used
+<ul>
+<li>In fact its ugly syntax is so <em>ugly by purpose</em></li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">baz</span>: String? = <span style="color:#d20;background-color:#fff0f0">&#34;foo&#34;</span>
+baz!! <span style="color:#888">// Returns &#34;foo&#34;, type String (non nullable)
+</span><span style="color:#888"></span>baz!!.length <span style="color:#888">// returns 3, return type is Int
+</span><span style="color:#888"></span>baz = <span style="color:#080;font-weight:bold">null</span>
+baz!! <span style="color:#888">// throws a KotlinNullPointerException, like the good ol&#39;times!
+</span></code></pre></div></section><section>
+<h1 id="kotlin-101-7">Kotlin 101</h1>
+<h3 id="elvis-operator-">Elvis operator <code>?:</code></h3>
+<p>Yeah it&rsquo;s actually named after Elvis Presley due to his haircut 😉
+<br/></p>
+<ul>
+<li>Returns the left operand if it&rsquo;s not <code>null</code>, otherwise the right one</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">baz</span>: String? = <span style="color:#d20;background-color:#fff0f0">&#34;foo&#34;</span>
+baz ?: <span style="color:#d20;background-color:#fff0f0">&#34;bar&#34;</span> <span style="color:#888">// Returns &#34;foo&#34;, type String
+</span><span style="color:#888"></span>baz?.length ?: <span style="color:#00d;font-weight:bold">0</span> <span style="color:#888">// returns 3, return type is Int
+</span><span style="color:#888"></span>baz = <span style="color:#080;font-weight:bold">null</span>
+baz ?: <span style="color:#d20;background-color:#fff0f0">&#34;bar&#34;</span> <span style="color:#888">// Returns &#34;bar&#34;, type String
+</span><span style="color:#888"></span>baz?.length ?: <span style="color:#00d;font-weight:bold">0</span> <span style="color:#888">// returns 0, return type is Int
+</span></code></pre></div></section><section>
+<h1 id="kotlin-101-8">Kotlin 101</h1>
+<h2 id="platform-types">Platform types</h2>
+<p>Kotlin targets the JVM, JavaScript, and native code
+<br/>
+<em>None of them has nullable types!</em></p>
+<p>Nullability is unknown for types coming from the target platform, how to deal with them?</p>
+<ol>
+<li><span class='fragment '
+  >
+  Always consider them nullable (safe, but very unpleasant)
+</span></li>
+<li><span class='fragment '
+  >
+  Always consider them non nullable (code is lightweight and nice, but unsafe)
+</span></li>
+</ol>
+</section><section>
+<h1 id="kotlin-101-9">Kotlin 101</h1>
+<h2 id="platform-types-1">Platform types</h2>
+<p>Kotlin considers all foreign values whose nullability is unknown as <em>platform types</em></p>
+<ul>
+<li>Their type is suffixed by <code>!</code> (e.g., <code>java.util.Date!</code>)</li>
+<li>At first use, their type is <em>implicitly disambiguated</em> (either nullable or non-nullable)
+<ul>
+<li>Namely, platform types can be used as non-nullable&hellip;</li>
+</ul>
+</li>
+<li>Runtime nullability checks are put in place by the compiler (<em>fail fast!</em>)
+<ul>
+<li>&hellip;but their actual nullablity is checked at use-site</li>
+</ul>
+</li>
+<li>Platform types <em>can&rsquo;t be created</em> in Kotlin! They only come from interaction with &ldquo;platform code&rdquo;</li>
+<li>If the target platform offers some way to assert nullability, Kotlin tries to use it
+<ul>
+<li>e.g., if a Java method/parameter is annotated with <code>@NotNull</code> (or similar common alternatives) it will be interpreted as a non-nullable type</li>
+</ul>
+</li>
+</ul>
 </section><section>
 <h1 id="todos">TODOS</h1>
 <h2 id="101">101</h2>
-<p>type hierarchy (top and bottom types)
-nullable types
+<p>nullable types
+nullable types as paramters
+platform types
+type hierarchy (top and bottom types)
 boolean types
 numeric types
 unsigned integers
