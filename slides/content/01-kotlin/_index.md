@@ -200,10 +200,10 @@ Also known as: *I want my code to break badly at runtime*
 
 ```kotlin
 var baz: String? = "foo"
-baz!! // Returns "foo", type String (non nullable)
-baz!!.length // returns 3, return type is Int
+baz!!{{<comment_frag " // Returns 'foo', type String (non nullable)" >}}
+baz!!.length{{<comment_frag " // returns 3, return type is Int" >}}
 baz = null
-baz!! // throws a KotlinNullPointerException, like the good ol'times!
+baz!!{{<comment_frag " // throws a KotlinNullPointerException, like the good ol'times!" >}}
 ```
 
 ---
@@ -254,16 +254,130 @@ Kotlin considers all foreign values whose nullability is unknown as *platform ty
 
 ---
 
+# Kotlin 101
+
+## Type hierarchy
+
+* In Java
+    * top type: `Object`
+    * bottom type: no bottom type
+* In Scala
+    * top type: `Any`
+    * bottom type: `Nothing`
+* In Kotlin:
+    * top type: `{{<frag c="Any">}}`
+    * bottom type:
+
+---
+
+# Kotlin 101
+
+## Type hierarchy
+
+* In Java
+    * top type: `Object`
+    * bottom type: no bottom type
+* In Scala
+    * top type: `Any`
+    * bottom type: `Nothing`
+* In Kotlin:
+    * top type: ~~`Any`~~ `{{<frag c="Any?">}}`
+    * bottom type: `{{<frag c="Nothing">}}`
+
+---
+
+# Kotlin 101
+
+## `Boolean`s
+
+Exactly as Java/Scala, but with nullability:
+* `Boolean`: `true`/`false`
+* `Boolean?`: `true`/`false`/`null`
+*  `&&`, `!!`, and `!` operators work for *non-nullable* `Boolean`s.
+
+Likewise Scala, boxing under the JVM is dealt with by the compiler
+<br/>
+`Boolean?` are always boxed (to be able to account for `null`)
+
+---
+
+# Kotlin 101
+
+## Numeric types
+
+Same as Scala, +nullability, +*unsigned experimental types*:
+* `Byte`, `Short`, `Int`, `Long`, `Float`, `Double`
+    * And nullable equivalents, always boxed under the JVM
+* `UByte`, `UShort`, `UInt`, `ULong`
+
+---
+
+# Kotlin 101
+
+## Issues of implicit numeric types conversion
+
+Implicit type conversion to "bigger" types is source of nasty errors when automatic boxing is involved.
+<br/>
+Consider the following Scala code:
+```scala
+Double.NaN == Double.NaN // false, OK, as every sane language
+Double.NaN equals Double.NaN // true! Boxing + Singleton make equality inconsistent!
+```
+Another example:
+```scala
+val a: Int = 1
+val b: Long = a
+a == b // true
+a equals b // false
+```
+This causes a chain of issues, as `==` and `equals` do a different job, as do `##` and `hashCode`: `Map`s can become very surprising!
+
+
+---
+# Kotlin 101
+
+## Numeric type conversions in Kotlin
+
+Kotlin numeric types are converted manually to prevent these issues:
+```kotlin
+val i: Int = 1
+val l: Long = 1
+val l: Long = i{{<comment_frag " // error: type mismatch: inferred type is Int but Long was expected" >}}
+val l: Long = i.toLong(){{<comment_frag " // OK" >}}
+i + l{{<comment_frag " // OK, operators are overloaded" >}}
+l + i{{<comment_frag " // OK, operators are overloaded" >}}
+```
+
+---
+
+# Kotlin 101
+
+## Numeric literals
+
+```kotlin
+1234567 // Literal Int
+1_234_567 // Literal Int, underscored syntax (preferable)
+123L // Literal Long
+1.0 // Literal Double
+123e4 // Literal Double in scientific notation
+1d // Nope :)
+1f // Literal Float
+1u // Literal UInt
+0123 // error: unsupported [literal prefixes and suffixes] (no octal)
+0xCAFE // Hex literal Int
+0xCAFEBABE // Hex literal Long (automatic, as it does not fit an Int)
+0x0000000 // Hex literal Int, even it'd fit a Byte
+0b1111111_11111111_11111111_11111111 // Binary Int (Integer.MAX_INT)
+0b11111111_11111111_11111111_11111111 // Binary Long
+0b11111111_11111111_11111111_11111111u // Binary UInt!
+0xFFFF_FFFF_FFFFu // ULong
+```
+
+---
+
 # TODOS
 
 ## 101
-nullable types
-nullable types as paramters
-platform types
-type hierarchy (top and bottom types)
-boolean types
-numeric types
-unsigned integers
 string templates
 multiline strings
 packages and imports
