@@ -53,8 +53,12 @@ section.has-light-background {
 }
 
 .reveal code {
-	color: #006900;
+	color: deeppink;
 	line-height: 140%;
 	// font-size: 130%;
 	font-family: "Oxygen Mono", "Roboto Mono", "Ubuntu Mono", "Courier New", Courier, monospace;
+}
+
+.reveal pre code {
+	color: black;
 }
