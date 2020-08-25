@@ -88,13 +88,15 @@ Much like Scala:
 * Invocation can be positional or by name, with the rule that once a named parameter is used, subsequent parameters must be named as well
 
 ```kotlin
-fun foo(a: Int, b: String): Int = TODO() // TODO() is a builtin
-// MANCANO I DEFAULT!!!!
-function throwing a `NotImplementedError`
+fun foo(a: Int = 0, b: String = "foo"): Int = TODO() // TODO() is a builtin function throwing a `NotImplementedError`
 foo(1, "bar") // OK, positional
 foo(a = 1, b = "bar") // OK, named
 foo(1, b = "bar") // OK, hybrid
 foo(a = 1, "bar") // error: no value passed for parameter 'b'
+foo() // OK, both defaults
+foo(1) // OK, same as foo(1, "foo")
+foo("bar") // error: type mismatch: inferred type is String but Int was expected
+foo(b = "bar") // OK, same as foo(0, "bar")
 ```
 
 ---
@@ -146,16 +148,119 @@ fun main(arguments: Array<String>) {
 ---
 
 # Kotlin 101
-## Program entry point
+## Nullable types
 
+Every Kotlin type exists in two forms: normal, and nullable (likely inspired by Ceylon).
+<br/>
+Nullable types are suffixed by a `?` and require special handling
+<br/>
+`null` can't be assigned to non nullable types!
+* Nullables are the Kotlin way to deal with `Option` types
+
+```kotlin
+var foo = "bar" // Okay, type is String
+var baz: String? = foo // Okay, normal types can be assigned to nullables
+foo = baz // error: type mismatch: inferred type is String? but String was expected
+foo = null // error: null can not be a value of a non-null type String
+```
+
+---
+
+# Kotlin 101
+## Accessing nullable types
+
+Nullable types memebers can't be accessed by `.`.
+```kotlin
+var baz: String? = "foo"
+baz.length // error: only safe (?.) or non-null asserted (!!.) calls are allowed...
+// on a nullable receiver of type String?
+```
+
+### Safe call operator `?.`
+Performs runtime access to a member of a nullable object if it's not `null`, otherwise returns `null`
+* Somewhat similar to Scala's `Option`'s `map` (but no monad involved)
+```kotlin
+var baz: String? = "foo"
+baz?.length // returns 3, return type is "Int?", in fact...
+val bar: Int = baz?.length // ...error: type mismatch: inferred type is Int? but Int was expected
+baz = null
+baz?.length // returns null, return type is still "Int?"
+```
+
+---
+
+# Kotlin 101
+
+### Non-null assertion `!!`
+Also known as: *I want my code to break badly at runtime*
+<br/>
+* Invalidates the whole point of having nullable types by asserting that the nullable object is not `null` at runtime
+* It should be **never** used
+    * In fact its ugly syntax is so *ugly by purpose*
+
+```kotlin
+var baz: String? = "foo"
+baz!! // Returns "foo", type String (non nullable)
+baz!!.length // returns 3, return type is Int
+baz = null
+baz!! // throws a KotlinNullPointerException, like the good ol'times!
+```
+
+---
+
+# Kotlin 101
+
+### Elvis operator `?:`
+Yeah it's actually named after Elvis Presley due to his haircut 😉
+<br/>
+* Returns the left operand if it's not `null`, otherwise the right one
+
+```kotlin
+var baz: String? = "foo"
+baz ?: "bar" // Returns "foo", type String
+baz?.length ?: 0 // returns 3, return type is Int
+baz = null
+baz ?: "bar" // Returns "bar", type String
+baz?.length ?: 0 // returns 0, return type is Int
+```
+
+---
+
+# Kotlin 101
+
+## Platform types
+Kotlin targets the JVM, JavaScript, and native code
+<br/>
+*None of them has nullable types!*
+
+Nullability is unknown for types coming from the target platform, how to deal with them?
+1. {{< frag c="Always consider them nullable (safe, but very unpleasant)" >}}
+1. {{< frag c="Always consider them non nullable (code is lightweight and nice, but unsafe)" >}}
+
+---
+
+# Kotlin 101
+
+## Platform types
+Kotlin considers all foreign values whose nullability is unknown as *platform types*
+* Their type is suffixed by `!` (e.g., `java.util.Date!`)
+* At first use, their type is *implicitly disambiguated* (either nullable or non-nullable)
+    * Namely, platform types can be used as non-nullable...
+* Runtime nullability checks are put in place by the compiler (*fail fast!*)
+    * ...but their actual nullablity is checked at use-site
+* Platform types *can't be created* in Kotlin! They only come from interaction with "platform code"
+* If the target platform offers some way to assert nullability, Kotlin tries to use it
+    * e.g., if a Java method/parameter is annotated with `@NotNull` (or similar common alternatives) it will be interpreted as a non-nullable type
 
 ---
 
 # TODOS
 
 ## 101
-type hierarchy (top and bottom types)
 nullable types
+nullable types as paramters
+platform types
+type hierarchy (top and bottom types)
 boolean types
 numeric types
 unsigned integers
