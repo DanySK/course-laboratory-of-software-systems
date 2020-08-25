@@ -65,21 +65,103 @@
 <h1 id="inline-images">Inline images</h1>
 <p><img src="https://images.unsplash.com/photo-1530878955558-a6c31b9c97db?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9" alt="Alternative text"></p>
 </section><section>
-<h2 id="fallback-to-html-for-resizing">Fallback to HTML for resizing</h2>
-<p>(prefer vh/vw sizes)</p>
-<img src="https://images.unsplash.com/photo-1530878955558-a6c31b9c97db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9" style='width: vw; height: 60vh; object-fit: contain'>
-</section><section>
-<h2 id="or-better-use-my-new-shortcode">Or (better) use my new shortcode!</h2>
+<h2 id="fallback-to-shortcodes-for-resizing">Fallback to shortcodes for resizing</h2>
 <p>Autoresize specifying</p>
 <ul>
-<li><code>w</code> (percent of parent element width) and/or <code>h</code> (percent of viewport height) as max sizes , and</li>
+<li><code>max-w</code> (percent of parent element width) and/or <code>max-h</code> (percent of viewport height) as max sizes , and</li>
 <li><code>width</code> and/or <code>height</code> as <em>exact</em> sizes (as percent of viewport size)</li>
 </ul>
 <img src="https://images.unsplash.com/photo-1530878955558-a6c31b9c97db?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9" style='
     
     
     max-width: 95vw;
+    max-height: 40vh;
+    object-fit: contain;
+'>
+
+</section><section>
+<h2 id="low-res-plain-markdown">Low res, plain markdown</h2>
+<p><img src="memelr.jpeg" alt=""></p>
+</section><section>
+<h2 id="hi-res-plain-markdown">Hi res, plain markdown</h2>
+<p><img src="hires.png" alt=""></p>
+</section><section>
+<h2 id="low-res-default">Low res, default</h2>
+<img src="memelr.jpeg" style='
+    
+    
+    max-width: 95vw;
     max-height: 80vh;
+    object-fit: contain;
+'>
+
+</section><section>
+<h2 id="hi-res-default">Hi res, default</h2>
+<img src="hires.png" style='
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</section><section>
+<h2 id="low-res-enlarged-horizontally">Low res, enlarged horizontally</h2>
+<img src="memelr.jpeg" style='
+    width: 100vw;
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</section><section>
+<h2 id="low-res-enlarged-vertically">Low res, enlarged vertically</h2>
+<img src="memelr.jpeg" style='
+    
+    height: 100vh;
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</section><section>
+<h2 id="hi-res-reduced-horizontally">Hi res, reduced horizontally</h2>
+<img src="hires.png" style='
+    width: 50vw;
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</section><section>
+<h2 id="hi-res-reduced-vertically">Hi res, reduced vertically</h2>
+<img src="hires.png" style='
+    
+    height: 50vh;
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</section><section>
+<h2 id="hi-res-reducing-maximum-expansion-horizontally">Hi res, reducing maximum expansion horizontally</h2>
+<img src="hires.png" style='
+    
+    
+    max-width: 50vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</section><section>
+<h2 id="hi-res-reducing-maximum-expansion-vertically">Hi res, reducing maximum expansion vertically</h2>
+<img src="hires.png" style='
+    
+    
+    max-width: 95vw;
+    max-height: 50vh;
     object-fit: contain;
 '>
 
@@ -197,7 +279,7 @@ joined</p>
   document.getElementsByTagName('head')[0].appendChild(link);
 </script>
 
-<script type="application/json" id="reveal-hugo-site-params">{"height":"100%","theme":"white","width":"90%"}</script>
+<script type="application/json" id="reveal-hugo-site-params">{"height":"100%","theme":"white","width":"100%"}</script>
 <script type="application/json" id="reveal-hugo-page-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"custom_theme_options":{"enablesourcemap":true,"targetpath":"css/custom-theme.css"},"transition":"slide","transition_speed":"fast"}</script>
 
 <script src="/Course-Laboratory-of-Software-Systems/reveal-js/js/reveal.js"></script>
