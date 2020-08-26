@@ -375,17 +375,136 @@ l + i{{<comment_frag " // OK, operators are overloaded" >}}
 
 ---
 
-# TODOS
+# Kotlin 101
 
-## 101
-string templates
-multiline strings
-packages and imports
-compile time constants
-varargs
-infix
-local functions
-inline functions
+## Strings and templating
+
+Spiced up version of Java strings, Groovy-style templating:
+* `$` begins a template expression
+* Curly brackets must be used to disambiguate in case of calls inside the template: `${}`
+
+```kotlin
+val batman = "Batman"
+// Groovy templating and Java-style concatenation both work
+"${Double.NaN}".repeat(10) + " $batman!"{{<comment_frag " // NaNNaNNaNNaNNaNNaNNaNNaNNaNaN Batman!" >}}
+"Batman is $batman.length characters long"{{<comment_frag " // Batman is Batman.length characters long" >}}
+"Batman is ${batman.length} characters long"{{<comment_frag " // Batman is 6 characters long" >}}
+```
+---
+
+# Kotlin 101
+
+## Raw Strings
+
+Triple-double-quoted strings are considered *raw strings*
+* `\` is a normal character
+* newlines are intended as part of the string
+* Very handy for writing regular expressions
+* `$`-templating still works
+    * writing a dollar symbols requires some tricks
+
+```kotlin
+val dante = """
+    Tanto gentile e tanto onesta pare
+    la donna mia quand'ella altrui saluta,
+    ch'ogne lingua devèn, tremando, muta
+    e li occhi non l'ardiscon di guardare.
+    """.trimIndent() // Indentation can be trimmed
+val finalWordsEndingInA = """\W*(\w*a)\W*${'$'}""".toRegex(RegexOption.MULTILINE) // See how $ must be escaped
+finalWordsEndingInA.findAll(dante).map { it.groups[1]?.value }.toList() {{<comment_frag " // [saluta, muta]" >}}
+```
+
+---
+
+# Kotlin 101
+
+## Packages and imports
+
+Same as Java, plus aliasing.
+<br/>
+Imports go at the top of file, no locally scoped imports as in Scala
+* There are no `implicit`s in Kotlin, the `import` statement does not modify context
+
+
+```kotlin
+package it.unibo.lss.experiments
+import it.unibo.lss.ddd.Entity // Available as Entity locally
+import org.company.someproduct.Entity as SomeProductEntity // Aliasing, accessible as SomeProductEntity
+```
+
+---
+
+# Kotlin 101
+
+## Varargs
+
+Functions can have a parameter marked as `vararg `, accepting multiple entries
+* Typically the last one (but not mandatorily as in Java)
+* Maps to an `Array<out >
+
+```kotlin
+fun printall(vararg strings: String) {
+    strings.forEach { println(it) } // We'll discuss this syntax later...
+}
+printall("Lorem", "ipsum", "dolor", "sit", "amet")
+```
+
+---
+
+# Kotlin 101
+
+## Naming in Kotlin
+
+Kotlin is less permissive than Scala:
+* Arbitrary symbols are not accepted as valid function names
+* ...unless you explicitly surround them with backtics
+
+```scala
+def ##°@??%&@^^() = 1 // Super ok for Scala: def $hash$hash$u00B0$at$qmark$qmark$percent$amp$at$up$up(): Int
+```
+```kotlin
+fun `##°@??%&@^^`() = 1 // OK
+`##°@??%&@^^`() // 1. Must be invoked with backticks!
+val `val` = "Hey look I can name things with keywords!"
+val `names can also contain spaces` = 1
+```
+
+* General rule: **avoid it**
+* It might be needed for interoperability with other languages, e.g. if a Java field is named `val`
+* Tolerated in tests with Junit (but Kotlin-native suites as Kotest do not need it)
+
+```kotlin
+class JunitTest {
+    @Test
+    fun `404 errors should cause a wait and retry`() { // Nice and very clear name
+        TODO()
+    }
+}
+```
+
+---
+
+# Kotlin 101
+
+## Local functions
+
+Functions can contain other functions (as in Scala)
+
+```kotlin
+fun factorial(n: UInt): ULong {
+    // tailrec forces optimization of tail recursion (and blocks compilation if recursion is non-tail)
+    tailrec fun factorialWithAccumulator(current: UInt, accumulator: ULong): ULong = when {
+        current >= n -> accumulator * current
+        else -> factorialWithAccumulator(current + 1u, accumulator * current)
+    }
+    return factorialWithAccumulator(1u, 1u)
+}
+```
+Warning: local functions often hinder clarity
+
+---
+
+# TODOS
 
 ## flow control
 if
@@ -418,6 +537,8 @@ companion objects
 visibility
 controlling visibility of properties (`private set`)
 equality / hashing / toString
+infix
+conventions (invoke, get, operators...)
 
 ## generics
 syntax for functions
@@ -428,6 +549,7 @@ variance
 use site variance and type projection
 declaration site variance
 star-projection
+inline functions
 reified types
 invocation of reified types
 
