@@ -71,7 +71,7 @@ large or complex business systems effectively.**
 
 ## The Art of the Possible
 
-<img src="art_of_possible.png" style='width: vw; object-fit: contain; border:0px; box-shadow: none'>
+{{< image src="art_of_possible.png" >}}
 
 ---
 
@@ -79,7 +79,7 @@ large or complex business systems effectively.**
 
 <div class='left' style='float:left;width:30%'>
 
-<img src="https://m.media-amazon.com/images/I/51OWGtzQLLL.jpg" style='width: vw; object-fit: contain; border:0px; box-shadow: none'>
+{{< image src="https://m.media-amazon.com/images/I/51OWGtzQLLL.jpg" >}}
 
 </div>
 
@@ -99,12 +99,11 @@ large or complex business systems effectively.**
 1. Distill a large problem domain into **smaller sub-domains**.
 
 1. Identify the core sub-domains to reveal what is important.
-    * The core domains are those of greater value to the business which requires more focus, effort, and time.
+    * The core domains are those of greater value to the business which requires more focus and time.
 
 1. Collaborate with experts to discover an analysis model that will provide solutions to solve problems or reveal opportunities particularly in the core domain.
 
 1. Use the same **ubiquitous language** to bind the analysis model to the code model.
-    * Use **tactical patterns** to separate technical code from domain code to prevent accidental complexity.
 
 1. Split the model into smaller models
     * Enclose the model within a **boundary** to protect the
@@ -116,7 +115,7 @@ models integrity.
 
 ## DDD "Conceptual Space"
 
-<img src="ddd_conceptual_space.png" style='width: 60vw; object-fit: contain; border:0px; box-shadow: none'>
+{{< image src="ddd_conceptual_space.png" >}}
 
 ---
 
@@ -165,7 +164,7 @@ $$C = \sum_{p}^{}c_pt_p$$
 
 ## Complex Problem Domains
 
-<img src="ddd_software_complexity.png" style='width: vw; object-fit: contain; border:0px; box-shadow: none'>
+{{< image src="ddd_software_complexity.png" >}}
 
 ---
 
@@ -199,7 +198,7 @@ $$C = \sum_{p}^{}c_pt_p$$
 ## Software Complexity Challenges (2/3)
 ### A Lack of Organization
 
-<img src="ddd_lack_of_organization.png" style='width: 40vw; object-fit: contain; border:0px; box-shadow: none'>
+{{< image src="ddd_lack_of_organization.png" width="40">}}
 
 * The initial incarnation of a system is fast to produce and often a well‐rounded success...
 
@@ -335,13 +334,13 @@ models being corrupt by isolating them from third-party code.
 
 ## The Problem Space
 
-<img src="ddd_problem_space.png" style='width: vw; object-fit: contain; border:0px; box-shadow: none'>
+{{< image src="ddd_problem_space.png">}}
 
 ---
 
 ## The Solution Space
 
-<img src="ddd_solution_space.png" style='width: vw; object-fit: contain; border:0px; box-shadow: none'>
+{{< image src="ddd_solution_space.png" >}}
 
 ---
 
@@ -362,7 +361,8 @@ models being corrupt by isolating them from third-party code.
 
 ---
 
-## Why Domain-Driven Solutions often fail to deliver?
+## Why Domain-Driven Solutions
+## often fail to deliver?
 
 * The reason that solutions fail to deliver is not because of a lack of programming ability or technical expertise, but rather because of a lack of understanding, communication, and business knowledge. 
 
