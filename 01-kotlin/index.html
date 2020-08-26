@@ -26,7 +26,7 @@
     <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
 <h2 id="kotlin-for-scala-developers">Kotlin (for Scala developers)</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2020-08-25
+2020-08-26
 
 </section><section>
 <h1 id="why-kotlin">Why Kotlin</h1>
@@ -345,16 +345,103 @@ l + i<span class='fragment '  style="color: #888;"> // OK, operators are overloa
 </span><span style="color:#888"></span><span style="color:#00d;font-weight:bold">0</span>b11111111_11111111_11111111_11111111u <span style="color:#888">// Binary UInt!
 </span><span style="color:#888"></span><span style="color:#00d;font-weight:bold">0xFFFF</span>_FFFF_FFFFu <span style="color:#888">// ULong
 </span></code></pre></div></section><section>
+<h1 id="kotlin-101-17">Kotlin 101</h1>
+<h2 id="strings-and-templating">Strings and templating</h2>
+<p>Spiced up version of Java strings, Groovy-style templating:</p>
+<ul>
+<li><code>$</code> begins a template expression</li>
+<li>Curly brackets must be used to disambiguate in case of calls inside the template: <code>${}</code></li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">batman</span> = <span style="color:#d20;background-color:#fff0f0">&#34;Batman&#34;</span>
+<span style="color:#888">// Groovy templating and Java-style concatenation both work
+</span><span style="color:#888"></span><span style="color:#d20;background-color:#fff0f0">&#34;${Double.NaN}&#34;</span>.repeat(<span style="color:#00d;font-weight:bold">10</span>) + <span style="color:#d20;background-color:#fff0f0">&#34; $batman!&#34;</span><span class='fragment '  style="color: #888;"> // NaNNaNNaNNaNNaNNaNNaNNaNNaNaN Batman!</span>
+<span style="color:#d20;background-color:#fff0f0">&#34;Batman is $batman.length characters long&#34;</span><span class='fragment '  style="color: #888;"> // Batman is Batman.length characters long</span>
+<span style="color:#d20;background-color:#fff0f0">&#34;Batman is ${batman.length} characters long&#34;</span><span class='fragment '  style="color: #888;"> // Batman is 6 characters long</span>
+</code></pre></div></section><section>
+<h1 id="kotlin-101-18">Kotlin 101</h1>
+<h2 id="raw-strings">Raw Strings</h2>
+<p>Triple-double-quoted strings are considered <em>raw strings</em></p>
+<ul>
+<li><code>\</code> is a normal character</li>
+<li>newlines are intended as part of the string</li>
+<li>Very handy for writing regular expressions</li>
+<li><code>$</code>-templating still works
+<ul>
+<li>writing a dollar symbols requires some tricks</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">dante</span> = <span style="color:#d20;background-color:#fff0f0">&#34;&#34;&#34;
+</span><span style="color:#d20;background-color:#fff0f0">    Tanto gentile e tanto onesta pare
+</span><span style="color:#d20;background-color:#fff0f0">    la donna mia quand&#39;ella altrui saluta,
+</span><span style="color:#d20;background-color:#fff0f0">    ch&#39;ogne lingua devèn, tremando, muta
+</span><span style="color:#d20;background-color:#fff0f0">    e li occhi non l&#39;ardiscon di guardare.
+</span><span style="color:#d20;background-color:#fff0f0">    &#34;&#34;&#34;</span>.trimIndent() <span style="color:#888">// Indentation can be trimmed
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">finalWordsEndingInA</span> = <span style="color:#d20;background-color:#fff0f0">&#34;&#34;&#34;\W*(\w*a)\W*${&#39;$&#39;}&#34;&#34;&#34;</span>.toRegex(RegexOption.MULTILINE) <span style="color:#888">// See how $ must be escaped
+</span><span style="color:#888"></span>finalWordsEndingInA.findAll(dante).map { it.groups[<span style="color:#00d;font-weight:bold">1</span>]?.value }.toList() <span class='fragment '  style="color: #888;"> // [saluta, muta]</span>
+</code></pre></div></section><section>
+<h1 id="kotlin-101-19">Kotlin 101</h1>
+<h2 id="packages-and-imports">Packages and imports</h2>
+<p>Same as Java, plus aliasing.
+<br/>
+Imports go at the top of file, no locally scoped imports as in Scala</p>
+<ul>
+<li>There are no <code>implicit</code>s in Kotlin, the <code>import</code> statement does not modify context</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">package</span> <span style="color:#b06;font-weight:bold">it.unibo.lss.experiments</span>
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">it.unibo.lss.ddd.Entity</span> <span style="color:#888">// Available as Entity locally
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.company.someproduct.Entity</span> <span style="color:#080;font-weight:bold">as</span> SomeProductEntity <span style="color:#888">// Aliasing, accessible as SomeProductEntity
+</span></code></pre></div></section><section>
+<h1 id="kotlin-101-20">Kotlin 101</h1>
+<h2 id="varargs">Varargs</h2>
+<p>Functions can have a parameter marked as <code>vararg </code>, accepting multiple entries</p>
+<ul>
+<li>Typically the last one (but not mandatorily as in Java)</li>
+<li>Maps to an `Array<out ></li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">printall</span>(<span style="color:#080;font-weight:bold">vararg</span> strings: String) {
+    strings.forEach { println(it) } <span style="color:#888">// We&#39;ll discuss this syntax later...
+</span><span style="color:#888"></span>}
+printall(<span style="color:#d20;background-color:#fff0f0">&#34;Lorem&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;ipsum&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;dolor&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;sit&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;amet&#34;</span>)
+</code></pre></div></section><section>
+<h1 id="kotlin-101-21">Kotlin 101</h1>
+<h2 id="naming-in-kotlin">Naming in Kotlin</h2>
+<p>Kotlin is less permissive than Scala:</p>
+<ul>
+<li>Arbitrary symbols are not accepted as valid function names</li>
+<li>&hellip;unless you explicitly surround them with backtics</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">def</span> ##<span style="color:#a61717;background-color:#e3d2d2">°</span>@??%&amp;@^^() <span style="color:#080;font-weight:bold">=</span> <span style="color:#00d;font-weight:bold">1</span> <span style="color:#888">// Super ok for Scala: def $hash$hash$u00B0$at$qmark$qmark$percent$amp$at$up$up(): Int
+</span></code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#a61717;background-color:#e3d2d2">`##°@??%&amp;@^^`() = 1 // </span><span style="color:#06b;font-weight:bold">OK</span>
+<span style="color:#a61717;background-color:#e3d2d2">`##°@</span>??%&amp;<span style="color:#a61717;background-color:#e3d2d2">@</span>^^<span style="color:#a61717;background-color:#e3d2d2">`</span>() <span style="color:#888">// 1. Must be invoked with backticks!
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">`val`</span> = <span style="color:#d20;background-color:#fff0f0">&#34;Hey look I can name things with keywords!&#34;</span>
+<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">`names can also contain spaces`</span> = <span style="color:#00d;font-weight:bold">1</span>
+</code></pre></div><ul>
+<li>General rule: <strong>avoid it</strong></li>
+<li>It might be needed for interoperability with other languages, e.g. if a Java field is named <code>val</code></li>
+<li>Tolerated in tests with Junit (but Kotlin-native suites as Kotest do not need it)</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">JunitTest</span> {
+    @Test
+    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#a61717;background-color:#e3d2d2">`404 </span><span style="color:#06b;font-weight:bold">errors</span> should cause a wait and retry<span style="color:#a61717;background-color:#e3d2d2">`</span>() { <span style="color:#888">// Nice and very clear name
+</span><span style="color:#888"></span>        TODO()
+    }
+}
+</code></pre></div></section><section>
+<h1 id="kotlin-101-22">Kotlin 101</h1>
+<h2 id="local-functions">Local functions</h2>
+<p>Functions can contain other functions (as in Scala)</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">factorial</span>(n: UInt): ULong {
+    <span style="color:#888">// tailrec forces optimization of tail recursion (and blocks compilation if recursion is non-tail)
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">tailrec</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">factorialWithAccumulator</span>(current: UInt, accumulator: ULong): ULong = <span style="color:#080;font-weight:bold">when</span> {
+        current &gt;= n -&gt; accumulator * current
+        <span style="color:#080;font-weight:bold">else</span> -&gt; factorialWithAccumulator(current + <span style="color:#00d;font-weight:bold">1u</span>, accumulator * current)
+    }
+    <span style="color:#080;font-weight:bold">return</span> factorialWithAccumulator(<span style="color:#00d;font-weight:bold">1u</span>, <span style="color:#00d;font-weight:bold">1u</span>)
+}
+</code></pre></div><p>Warning: local functions often hinder clarity</p>
+</section><section>
 <h1 id="todos">TODOS</h1>
-<h2 id="101">101</h2>
-<p>string templates
-multiline strings
-packages and imports
-compile time constants
-varargs
-infix
-local functions
-inline functions</p>
 <h2 id="flow-control">flow control</h2>
 <p>if
 for
@@ -384,7 +471,9 @@ objects
 companion objects
 visibility
 controlling visibility of properties (<code>private set</code>)
-equality / hashing / toString</p>
+equality / hashing / toString
+infix
+conventions (invoke, get, operators&hellip;)</p>
 <h2 id="generics">generics</h2>
 <p>syntax for functions
 syntax for classes
@@ -394,6 +483,7 @@ variance
 use site variance and type projection
 declaration site variance
 star-projection
+inline functions
 reified types
 invocation of reified types</p>
 <h2 id="basic-collections">basic collections?</h2>
