@@ -26,7 +26,7 @@
     <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
 <h2 id="kotlin-for-scala-developers">Kotlin (for Scala developers)</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2020-08-26
+2020-08-27
 
 </section><section>
 <h1 id="why-kotlin">Why Kotlin</h1>
@@ -441,39 +441,780 @@ printall(<span style="color:#d20;background-color:#fff0f0">&#34;Lorem&#34;</span
 }
 </code></pre></div><p>Warning: local functions often hinder clarity</p>
 </section><section>
-<h1 id="todos">TODOS</h1>
-<h2 id="flow-control">flow control</h2>
-<p>if
-for
-while
-break and continue
-when vs. pattern matching
-labeled jumping (incl. qualified return)</p>
-<h2 id="oop">oop</h2>
-<p>classes and members (methods and properties)
-object creation (no new)
-access to members (invoke vs named access)
-inheritance and open
-inheritance and override
-abstract
-inheritance and disambiguation by <code>super&lt;Class&gt;</code>
-interfaces and subtyping
-implementation of members in interfaces (no backing field)
-constructors
-init blocks
-secondary constructors
-nullability and <code>lateinit</code>
-getters
-setters
-accessors in interfaces
-backing fields, <code>field</code>
-objects
-companion objects
-visibility
-controlling visibility of properties (<code>private set</code>)
-equality / hashing / toString
-infix
-conventions (invoke, get, operators&hellip;)</p>
+<h1 id="kotlin-101----flow-control">Kotlin 101 &ndash; Flow control</h1>
+<h2 id="if"><code>if</code></h2>
+<ul>
+<li><code>if</code>/<code>else</code> is an expression and works just as in Scala</li>
+<li>No ternary operator</li>
+<li><code>if</code> alone is not an expression</li>
+</ul>
+</section><section>
+<h1 id="kotlin-101----flow-control-1">Kotlin 101 &ndash; Flow control</h1>
+<h3 id="for"><code>for</code></h3>
+<ul>
+<li><strong>No classic</strong> <code>for(init; condition; then) { block }</code> loop</li>
+<li>Only available as <code>for</code>/<code>in</code>: <code>for (element in collection) { block }</code></li>
+<li><strong>Not a powerful combinator</strong> like Scala&rsquo;s <code>for</code></li>
+<li><em>Rarely used</em> (I think I might have used it twice in my career)</li>
+</ul>
+</section><section>
+<h1 id="kotlin-101----flow-control-2">Kotlin 101 &ndash; Flow control</h1>
+<h3 id="while-and-dowhile"><code>while</code> and <code>do</code>/<code>while</code></h3>
+<ul>
+<li>Same as Java, but with <em>visibility of variables defined in the <code>do</code>-block</em></li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">kotlin.random.Random</span>
+<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">lucky</span> = <span style="color:#00d;font-weight:bold">6</span>
+<span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">attempts</span> = <span style="color:#00d;font-weight:bold">0</span>
+<span style="color:#080;font-weight:bold">do</span> {
+    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">draw</span> = Random.nextInt(lucky + <span style="color:#00d;font-weight:bold">1</span>)
+    attempts++
+} <span style="color:#080;font-weight:bold">while</span> (draw != lucky) <span style="color:#888">// draw is visible here
+</span><span style="color:#888"></span>println(<span style="color:#d20;background-color:#fff0f0">&#34;Launched $attempts dice before a lucky shot&#34;</span>)
+</code></pre></div></section><section>
+<h1 id="kotlin-101----flow-control-3">Kotlin 101 &ndash; Flow control</h1>
+<h3 id="when"><code>when</code></h3>
+<p>Kotlin <em>does not support pattern matching</em> as Scala does (unfortunately)
+<br/>
+The <code>when</code> block is somewhat a mild surrogate, more similar to a <code>switch</code> on steroids
+<br/>
+The base version (without subject) is a more elegant &ldquo;<code>if</code>/<code>else if</code>/<code>else</code>&rdquo; chain</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">countBatmans</span>(subject: String) = <span style="color:#080;font-weight:bold">when</span> {
+    subject.length &lt; <span style="color:#d20;background-color:#fff0f0">&#34;batman&#34;</span>.length -&gt; <span style="color:#00d;font-weight:bold">0</span>
+    subject.length &lt; <span style="color:#00d;font-weight:bold">2</span> * <span style="color:#d20;background-color:#fff0f0">&#34;batman&#34;</span>.length &amp;&amp; subject.contains(<span style="color:#d20;background-color:#fff0f0">&#34;batman&#34;</span>) -&gt; <span style="color:#00d;font-weight:bold">1</span>
+    <span style="color:#080;font-weight:bold">else</span> -&gt; <span style="color:#d20;background-color:#fff0f0">&#34;.*?(batman)&#34;</span>.toRegex().findAll(subject).count().toInt()
+}
+</code></pre></div><ul>
+<li><code>when</code> is an expression in any case</li>
+</ul>
+</section><section>
+<h1 id="kotlin-101----flow-control-4">Kotlin 101 &ndash; Flow control</h1>
+<h3 id="when-subject"><code>when (subject)</code></h3>
+<p>Checks if the value of subjects is the same of the expression on the right</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">baseForSingleDigitOrNull</span>(digit: UInt) = <span style="color:#080;font-weight:bold">when</span>(digit) {
+    <span style="color:#00d;font-weight:bold">0u</span>, <span style="color:#00d;font-weight:bold">1u</span> -&gt; <span style="color:#d20;background-color:#fff0f0">&#34;binary&#34;</span>
+    <span style="color:#00d;font-weight:bold">2u</span> -&gt; <span style="color:#d20;background-color:#fff0f0">&#34;ternary&#34;</span>
+    <span style="color:#080;font-weight:bold">in</span> <span style="color:#00d;font-weight:bold">0u</span>..<span style="color:#00d;font-weight:bold">7u</span> -&gt; <span style="color:#d20;background-color:#fff0f0">&#34;octal&#34;</span> <span style="color:#888">// This is a range!
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">in</span> <span style="color:#00d;font-weight:bold">0u</span>..<span style="color:#00d;font-weight:bold">15u</span> -&gt; <span style="color:#d20;background-color:#fff0f0">&#34;hexadecimal&#34;</span>
+    <span style="color:#080;font-weight:bold">in</span> <span style="color:#00d;font-weight:bold">0u</span>..<span style="color:#00d;font-weight:bold">36u</span> -&gt; <span style="color:#d20;background-color:#fff0f0">&#34;base36&#34;</span>
+    <span style="color:#080;font-weight:bold">else</span> -&gt; <span style="color:#080;font-weight:bold">null</span>
+}
+</code></pre></div><ul>
+<li><code>when</code> with subject can be used to elegantly check for subtypes</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">splitAnything</span>(input: Any) = <span style="color:#080;font-weight:bold">when</span>(input) {
+    <span style="color:#080;font-weight:bold">is</span> Int -&gt; input / <span style="color:#00d;font-weight:bold">2</span> <span style="color:#888">// No need to cast! The compiler infers type automatically (smart cast)
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">is</span> String -&gt; input.substring(input.length / <span style="color:#00d;font-weight:bold">2</span>)
+    <span style="color:#080;font-weight:bold">is</span> Double -&gt; input / <span style="color:#00d;font-weight:bold">2</span>
+    <span style="color:#080;font-weight:bold">else</span> -&gt; TODO()
+}
+</code></pre></div></section><section>
+<h1 id="kotlin-101----flow-control-5">Kotlin 101 &ndash; Flow control</h1>
+<h3 id="when-1"><code>when</code></h3>
+<p>Checks if the value of subjects is the same of the expression on the right</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">baseForSingleDigitOrNull</span>(digit: UInt) = <span style="color:#080;font-weight:bold">when</span>(digit) {
+    <span style="color:#00d;font-weight:bold">0u</span>, <span style="color:#00d;font-weight:bold">1u</span> -&gt; <span style="color:#d20;background-color:#fff0f0">&#34;binary&#34;</span>
+    <span style="color:#00d;font-weight:bold">2u</span> -&gt; <span style="color:#d20;background-color:#fff0f0">&#34;ternary&#34;</span>
+    <span style="color:#080;font-weight:bold">in</span> <span style="color:#00d;font-weight:bold">0u</span>..<span style="color:#00d;font-weight:bold">7u</span> -&gt; <span style="color:#d20;background-color:#fff0f0">&#34;octal&#34;</span> <span style="color:#888">// This is a range!
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">in</span> <span style="color:#00d;font-weight:bold">0u</span>..<span style="color:#00d;font-weight:bold">15u</span> -&gt; <span style="color:#d20;background-color:#fff0f0">&#34;hexadecimal&#34;</span>
+    <span style="color:#080;font-weight:bold">in</span> <span style="color:#00d;font-weight:bold">0u</span>..<span style="color:#00d;font-weight:bold">36u</span> -&gt; <span style="color:#d20;background-color:#fff0f0">&#34;base36&#34;</span>
+    <span style="color:#080;font-weight:bold">else</span> -&gt; <span style="color:#080;font-weight:bold">null</span>
+}
+</code></pre></div><ul>
+<li><code>when</code> is an expression in any case</li>
+</ul>
+</section><section>
+<h1 id="kotlin-101----flow-control-6">Kotlin 101 &ndash; Flow control</h1>
+<h3 id="jumping">Jumping</h3>
+<p><strong>Jumping is awful, imperative, and you should not use it</strong>
+<br/>
+&hellip;but someone might and you must be able to understand it&hellip;</p>
+<ul>
+<li><code>break</code> and <code>continue</code> work as in Java</li>
+<li><code>return</code> does not, as we will see when discussing higher order functions&hellip;</li>
+</ul>
+<h4 id="labeling">labeling</h4>
+<ul>
+<li>Any expression can be labeled: <code>label@ 1</code> is a valid expression</li>
+<li><code>break</code>, <code>continue</code>, and <code>return</code> can be <em>qualified</em> with a label</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>outerloop<span style="color:#a61717;background-color:#e3d2d2">@</span> <span style="color:#080;font-weight:bold">for</span> (i <span style="color:#080;font-weight:bold">in</span> <span style="color:#00d;font-weight:bold">1.</span>.<span style="color:#00d;font-weight:bold">100</span>) {
+    <span style="color:#080;font-weight:bold">for</span> (j <span style="color:#080;font-weight:bold">in</span> <span style="color:#00d;font-weight:bold">1.</span>.<span style="color:#00d;font-weight:bold">100</span>) {
+        <span style="color:#080;font-weight:bold">if</span> (i * j == i + j) {
+            println(<span style="color:#d20;background-color:#fff0f0">&#34;$i * $j equals $i + $j&#34;</span>)
+            <span style="color:#080;font-weight:bold">break</span>@outerloop <span style="color:#888">// Qualified break
+</span><span style="color:#888"></span>        }
+    }
+}
+</code></pre></div></section><section>
+<h1 id="kotlin-102----oop">Kotlin 102 &ndash; OOP</h1>
+<h2 id="classes">Classes</h2>
+<ul>
+<li>Similar to Scala, the keyword <code>class</code> introduces a class definition</li>
+<li>Object construction does not require <code>new</code>
+<ul>
+<li><code>new</code> is not a Kotlin keyword at all</li>
+</ul>
+</li>
+<li>Objecs get built from classes by just invoking the class name:</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Foo</span>
+Foo() <span style="color:#888">// a new Foo is created, no new keyword
+</span></code></pre></div></section><section>
+<h1 id="kotlin-102----oop-1">Kotlin 102 &ndash; OOP</h1>
+<h2 id="classes-and-members">Classes and members</h2>
+<p>Kotlin classes have two types of members: <strong>methods</strong> and <strong>properties</strong></p>
+<table>
+<thead>
+<tr>
+<th>Language / Member Type</th>
+<th align="center">Fields</th>
+<th>Methods</th>
+<th>Properties</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Java</td>
+<td align="center"><em>Yes</em></td>
+<td><em>Yes</em></td>
+<td><strong>No</strong></td>
+</tr>
+<tr>
+<td>Scala</td>
+<td align="center"><em>Yes</em></td>
+<td><em>Yes</em></td>
+<td><strong>No</strong></td>
+</tr>
+<tr>
+<td>Kotlin</td>
+<td align="center"><strong>No</strong> (Hidden)</td>
+<td><em>Yes</em></td>
+<td><em>Yes</em></td>
+</tr>
+<tr>
+<td>C#</td>
+<td align="center"><em>Yes</em></td>
+<td><em>Yes</em></td>
+<td><em>Yes</em></td>
+</tr>
+</tbody>
+</table>
+<p>In Scala, at the caller site, methods and fields are hard to distinguish, as parentheses for 0-ary method calls are optional</p>
+<p>In Kotlin, methods/functions (except when defined <code>infix</code>) are invoked with mandatory parentheses
+<br/>
+properties are instead invoked without parentheses</p>
+</section><section>
+<h1 id="kotlin-102----oop-2">Kotlin 102 &ndash; OOP</h1>
+<h2 id="properties-vs-fields">Properties vs. fields</h2>
+<p>Properties and fields are conceptually different</p>
+<ul>
+<li><em>fields</em> <strong>are</strong> the object&rsquo;s state</li>
+<li><em>properties</em> are a way to <strong>access/change</strong> the object&rsquo;s state</li>
+</ul>
+<p>It&rsquo;s considered a good practice in languages without properties (Java in particular) to hide (<em>incapsulate</em>) fields (Object&rsquo;s actual state)
+and provide access only via <code>get</code>/<code>set</code> methods: the actual state representation may change with no change to the API.</p>
+<p>In Kotlin, fields are entirely hidden, and cannot be exposed in any way, enforcing the aforementioned convention at the language level.</p>
+</section><section>
+<h1 id="kotlin-102----oop-3">Kotlin 102 &ndash; OOP</h1>
+<h2 id="defining-properties-for-classes">Defining properties for classes</h2>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Foo</span> {
+    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">bar</span> = <span style="color:#00d;font-weight:bold">1</span>
+    <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">baz</span>: String? = <span style="color:#080;font-weight:bold">null</span>
+    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">bazLength</span>: Int
+        <span style="color:#080;font-weight:bold">get</span>() = baz?.length ?: <span style="color:#00d;font-weight:bold">0</span>
+    <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">stringRepresentation</span>: String = <span style="color:#d20;background-color:#fff0f0">&#34;&#34;</span>
+        <span style="color:#080;font-weight:bold">get</span>() = baz ?: field
+        <span style="color:#080;font-weight:bold">set</span>(value) {
+            field = <span style="color:#d20;background-color:#fff0f0">&#34;custom: $value&#34;</span>
+        }
+
+}
+<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">foo</span> = Foo()
+foo.bar = <span style="color:#00d;font-weight:bold">3</span><span class='fragment '  style="color: #888;"> // error: val cannot be reassigned</span>
+foo.stringRepresentation<span class='fragment '  style="color: #888;"> // empty string</span>
+foo.stringRepresentation = <span style="color:#d20;background-color:#fff0f0">&#34;zed&#34;</span><span class='fragment '  style="color: #888;"> // &#39;custom: zed&#39;</span>
+</code></pre></div></section><section>
+<h1 id="kotlin-102----oop-4">Kotlin 102 &ndash; OOP</h1>
+<h2 id="backing-fields">Backing fields</h2>
+<p>The keyword <code>field</code> allows access to a backing field of a property
+<br/>
+<strong>in case it is present</strong></p>
+<p>The Kotlin compiler, in fact, generates backing fields only where it&rsquo;s needed</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Student</span> {
+    <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">id</span>: String? = <span style="color:#080;font-weight:bold">null</span> <span style="color:#888">// Backing field generated
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">identifier</span>: String = <span style="color:#d20;background-color:#fff0f0">&#34;Student[${id ?: &#34;</span>unknown<span style="color:#d20;background-color:#fff0f0">&#34;}]&#34;</span> <span style="color:#888">// No backing field
+</span><span style="color:#888"></span>}
+</code></pre></div><p>When designing with Kotlin, you must consider methods and properties, and forget about fields.</p>
+</section><section>
+<h1 id="kotlin-102----oop-5">Kotlin 102 &ndash; OOP</h1>
+<h2 id="defining-methods">Defining methods</h2>
+<p>Methods are defined as <code>fun</code>ctions within the scope of a class</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MutableComplex</span> {
+    <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">real</span>: Double = <span style="color:#00d;font-weight:bold">0.0</span>
+    <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">imaginary</span>: Double = <span style="color:#00d;font-weight:bold">0.0</span>
+    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">plus</span>(other: MutableComplex): MutableComplex = MutableComplex().also {
+        it.real = real + other.real
+        it.imaginary = imaginary + other.imaginary
+    }
+}
+<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">foo</span> = MutableComplex()
+foo.real = <span style="color:#00d;font-weight:bold">1.0</span>
+foo.imaginary = <span style="color:#00d;font-weight:bold">2.0</span>
+<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">bar</span> = MutableComplex()
+bar.real = <span style="color:#00d;font-weight:bold">4.1</span>
+bar.imaginary = <span style="color:#00d;font-weight:bold">0.1</span>
+<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">baz</span> = foo.plus(bar)
+<span style="color:#d20;background-color:#fff0f0">&#34;${baz.real}+${baz.imaginary}i&#34;</span><span class='fragment '  style="color: #888;"> // 5.1&#43;2.1i</span>
+</code></pre></div></section><section>
+<h1 id="kotlin-102----oop-6">Kotlin 102 &ndash; OOP</h1>
+<h2 id="interfaces">Interfaces</h2>
+<ul>
+<li>Similar to Java 8+</li>
+<li>Methods can be implemented</li>
+<li>Can host properties
+<ul>
+<li>And their accessors can be implemented</li>
+<li>Properties in interfaces <em>do not have backing fields</em></li>
+</ul>
+</li>
+<li>Both properties and methods can be implemented there</li>
+<li>Scala-like mixins not supported
+<ul>
+<li>A Kotlin <code>interface</code> cannot be a subclass of a Kotlin <code>class</code></li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">A</span>
+<span style="color:#080;font-weight:bold">trait</span> <span style="color:#b06;font-weight:bold">B</span> <span style="color:#080;font-weight:bold">extends</span> A <span style="color:#888">// All fine in Scala
+</span></code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">open</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">A</span>
+<span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">B</span> : A <span style="color:#888">// error: an interface cannot inherit from a class
+</span></code></pre></div><p>So, no mixins</p>
+</section><section>
+<h1 id="kotlin-102----oop-7">Kotlin 102 &ndash; OOP</h1>
+<h2 id="implementing-interfaces">Implementing interfaces</h2>
+<p>Much like Java. Subtyping keyword is <code>:</code>, overrides must be marked with <code>override</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">Shape</span> {
+    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">area</span>: Double
+    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">perimeter</span>: Double
+}
+<span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">Shrinkable</span> {
+    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">shrink</span>(): Unit
+}
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MutableCircle</span> : Shape, Shrinkable {
+    <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">radius</span> = <span style="color:#00d;font-weight:bold">1.0</span>
+    <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">area</span> <span style="color:#080;font-weight:bold">get</span>() = Math.PI * radius * radius
+    <span style="color:#888">// What if we remove &#34;get()&#34;?
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">perimeter</span> <span style="color:#080;font-weight:bold">get</span>() = <span style="color:#00d;font-weight:bold">2</span> * Math.PI * radius
+    <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">shrink</span>() {
+        radius /= <span style="color:#00d;font-weight:bold">2</span>
+    }
+}
+</code></pre></div></section><section>
+<h1 id="kotlin-102----oop-8">Kotlin 102 &ndash; OOP</h1>
+<h2 id="superclass-disambiguation">Superclass disambiguation</h2>
+<p>A call to <code>super</code> can be qualified to disambiguate between conflincting interface declarations:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">A</span> {
+    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">foo</span>() = <span style="color:#d20;background-color:#fff0f0">&#34;foo&#34;</span>
+}
+<span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">B</span> {
+    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">foo</span>() = <span style="color:#d20;background-color:#fff0f0">&#34;bar&#34;</span>
+}
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">C</span> : A, B {
+    <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">foo</span>() = <span style="color:#080;font-weight:bold">super</span>&lt;A&gt;.foo() + <span style="color:#080;font-weight:bold">super</span>&lt;B&gt;.foo()
+}
+C().foo()<span class='fragment '  style="color: #888;"> // foobar</span>
+</code></pre></div></section><section>
+<h1 id="kotlin-102----oop-9">Kotlin 102 &ndash; OOP</h1>
+<h2 id="primary-constructors-and-init">Primary constructors and <code>init</code></h2>
+<p>Similar to Scala, but code in the class body is not part of a constructor
+<br/>
+Primary constructor code (if any) must be in an <code>init</code> block</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Foo</span>(
+    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">bar</span>: String, <span style="color:#888">// This is a val property of the class
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">baz</span>: Int, <span style="color:#888">// This is a var property of the class
+</span><span style="color:#888"></span>    greeting: String = <span style="color:#d20;background-color:#fff0f0">&#34;Hello from constructor&#34;</span> <span style="color:#888">// Constructor parameter, not a property. Default values allowed.
+</span><span style="color:#888"></span>) {
+    init {
+        println(greeting)
+    }
+}
+Foo(<span style="color:#d20;background-color:#fff0f0">&#34;bar&#34;</span>, <span style="color:#00d;font-weight:bold">0</span>)
+</code></pre></div></section><section>
+<h1 id="kotlin-102----oop-10">Kotlin 102 &ndash; OOP</h1>
+<h2 id="secondary-constructors">Secondary <code>constructor</code>s</h2>
+<p>More constructors can be added to a class, but them:</p>
+<ol>
+<li>Must call another constructor</li>
+<li>The primary constructor must be in its <em>delegation calls chain</em></li>
+</ol>
+<p>Call to another constructor is performed using <code>:</code></p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Foo</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">bar</span>: String) {
+    <span style="color:#080;font-weight:bold">constructor</span>(longBar: Long) : <span style="color:#080;font-weight:bold">this</span>(<span style="color:#d20;background-color:#fff0f0">&#34;number ${longBar.toString()}&#34;</span>)
+    <span style="color:#080;font-weight:bold">constructor</span>(intBar: Int) : <span style="color:#080;font-weight:bold">this</span>(intBar.toLong())
+}
+Foo(<span style="color:#00d;font-weight:bold">1</span>).bar <span style="color:#888">// number 1
+</span></code></pre></div><p>The primary constructor can be written in a longer form with the <code>constructor</code> keyword as well</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Foo</span> <span style="color:#080;font-weight:bold">constructor</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">bar</span>: String) <span style="color:#888">// OK
+</span></code></pre></div></section><section>
+<h1 id="kotlin-102----oop-11">Kotlin 102 &ndash; OOP</h1>
+<h2 id="nullability-and-lateinit">Nullability and <code>lateinit</code></h2>
+<p>It is possible that some <code>var</code> property needs to get initialized after the object construction:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Son</span>(<span style="color:#080;font-weight:bold">val</span>: Father)
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Father</span>(<span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">son</span>: Son) <span style="color:#888">// Impossible to build either
+</span></code></pre></div><p>Solution 1: allow nullability (<strong>BAD</strong>)</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Son</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">father</span>: Father)
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Father</span>(<span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">son</span>: Son? = <span style="color:#080;font-weight:bold">null</span>)
+<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">father</span> = Father()
+<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">son</span> = Son(father)
+father.son = son
+father.son.father <span style="color:#888">// error, needs ?.
+</span></code></pre></div><p>Solution 1: take responsibility from the compiler (<em>less bad</em>)</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Son</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">father</span>: Father)
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Father</span> { <span style="color:#080;font-weight:bold">lateinit</span> <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">son</span>: Son } <span style="color:#888">// lateinit: I will initialize it later, stay cool
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">father</span> = Father()
+father.son <span style="color:#888">// UninitializedPropertyAccessException: lateinit property son has not been initialized
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">son</span> = Son(father)
+father.son = son
+father.son.father <span style="color:#888">// OK!
+</span></code></pre></div></section><section>
+<h1 id="kotlin-102----oop-12">Kotlin 102 &ndash; OOP</h1>
+<blockquote>
+<p><strong>Design and document for inheritance or else prohibit it</strong><br/>
+<em>J. Bloch, Effective Java, Item 17</em></p>
+</blockquote>
+<h2 id="closed-hierarchies-and-open">Closed hierarchies and <code>open</code></h2>
+<p>Kotlin enforces EJ-17 by design: all classes are final if the keyword <code>open</code> is not specified</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">A</span>
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">B</span> : A() <span style="color:#888">// error: this type is final, so it cannot be inherited from
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">open</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">A</span>
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">B</span> : A() <span style="color:#888">// OK
+</span></code></pre></div><p>As in Scala, <em>the constructor of the superclass must be called at extension site</em>
+<br/>
+Differently than Scala, such invocatin <em>always requires parentheses</em></p>
+</section><section>
+<h1 id="kotlin-102----oop-13">Kotlin 102 &ndash; OOP</h1>
+<h2 id="abstract-vs-open"><code>abstract</code> vs. <code>open</code></h2>
+<p>The same effect of <code>open</code> can be achieved with <code>abstract</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">abstract</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">A</span>
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">B</span> : A() <span style="color:#888">// Perfectly fine
+</span></code></pre></div><p>With abstract, however, the superclass cannot be created
+<br/>
+(and it should have actual <code>abstract</code> memebers anyway)</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">open</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Open</span>
+<span style="color:#080;font-weight:bold">abstract</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Abstract</span>
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">FromOpen</span> : Open()
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">FromAbstract</span> : Abstract()
+FromAbstract() <span style="color:#888">// OK
+</span><span style="color:#888"></span>FromOpen() <span style="color:#888">// OK
+</span><span style="color:#888"></span>Open() <span style="color:#888">// OK
+</span><span style="color:#888"></span>Abstract() <span style="color:#888">// error: cannot create an instance of an abstract class
+</span></code></pre></div></section><section>
+<h1 id="kotlin-102----oop-14">Kotlin 102 &ndash; OOP</h1>
+<h2 id="singleton-objects">Singleton <code>object</code>s</h2>
+<p>Same as Scala, but with explicit <code>companion</code>s
+<br/>
+In Scala</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">A</span>
+<span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">A</span> <span style="color:#888">// Same file and same name identify a companion
+</span></code></pre></div><p>In Kotlin</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">A</span> {
+    <span style="color:#080;font-weight:bold">companion</span> <span style="color:#080;font-weight:bold">object</span> <span style="color:#888">// Companions are inner to classes 
+</span><span style="color:#888"></span>}
+A <span style="color:#888">// refers to A.Companion
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">A</span> <span style="color:#888">// This is an independent object
+</span><span style="color:#888"></span>A <span style="color:#888">// refers to the previously defined object
+</span></code></pre></div></section><section>
+<h1 id="kotlin-102----oop-15">Kotlin 102 &ndash; OOP</h1>
+<h2 id="information-hiding">Information hiding</h2>
+<p>Simpler than Scala, more coherent than Java</p>
+<ul>
+<li><code>public</code> &ndash; default visibility, visible everywhere (API)</li>
+<li><code>internal</code> &ndash; visible to everything in this <em>&ldquo;module&rdquo;</em>
+<ul>
+<li>module $\Rightarrow$ a set of Kotlin files compiled together</li>
+</ul>
+</li>
+<li><code>protected</code> &ndash; visible to subclasses (but <em>not</em> to other members of the package)</li>
+<li><code>private</code> &ndash; visible inside this class and its members</li>
+</ul>
+</section><section>
+<h1 id="kotlin-102----oop-16">Kotlin 102 &ndash; OOP</h1>
+<h2 id="visibility-control">Visibility control</h2>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Visibility</span> <span style="color:#080;font-weight:bold">internal</span> <span style="color:#080;font-weight:bold">constructor</span>( <span style="color:#888">// constructor is required to apply visibility restrictionss
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">id</span>: Int <span style="color:#888">// Same as Scala
+</span><span style="color:#888"></span>) { 
+    <span style="color:#080;font-weight:bold">protected</span> <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">state</span> = <span style="color:#00d;font-weight:bold">0</span>
+        <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">set</span> <span style="color:#888">// visibility restriction for properties in get/set methods
+</span><span style="color:#888"></span>}
+</code></pre></div></section><section>
+<h1 id="kotlin-102----oop-conventions">Kotlin 102 &ndash; OOP Conventions</h1>
+<h2 id="equality-hashing-string-version">Equality, hashing, string version</h2>
+<p>Same as Java, but for equality:</p>
+<ul>
+<li><code>==</code> calls <code>equals</code></li>
+<li>Java&rsquo;s stack variable comparison (<code>==</code>) is Kotlin&rsquo;s <code>===</code></li>
+</ul>
+<p>Kotlin does not suffer of Scala&rsquo;s equality issues
+(no automatic conversion of types)</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> a<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Int</span> = <span style="color:#00d;font-weight:bold">1</span>
+<span style="color:#080;font-weight:bold">val</span> b<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Long</span> = a
+a == b <span style="color:#888">// true
+</span><span style="color:#888"></span>a equals b <span style="color:#888">// false O_O
+</span></code></pre></div><p>Kotlin:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">a</span>: Int = <span style="color:#00d;font-weight:bold">1</span>
+<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">b</span>: Long = a <span style="color:#888">// error: type mismatch: inferred type is Int but Long was expected
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">b</span>: Long = a.toLong()
+a == b <span style="color:#888">// error: operator &#39;==&#39; cannot be applied to &#39;Int&#39; and &#39;Long&#39;
+</span><span style="color:#888"></span>a.toLong() == b <span style="color:#888">// true
+</span><span style="color:#888"></span>a == b.toInt() <span style="color:#888">// true
+</span></code></pre></div></section><section>
+<h1 id="kotlin-102----oop-conventions-1">Kotlin 102 &ndash; OOP Conventions</h1>
+<h2 id="infix-calls"><code>infix</code> calls</h2>
+<p>Kotlin is less permissive than scala:</p>
+<ul>
+<li>In Scala, every instance method with a single parameter can be invoked as infix operator:</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#00d;font-weight:bold">1</span> equals <span style="color:#00d;font-weight:bold">1</span> <span style="color:#888">// infix invocation of 1.equals(1)
+</span></code></pre></div><ul>
+<li>In Kotlin, this is not allowed:</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#00d;font-weight:bold">1</span> equals <span style="color:#00d;font-weight:bold">1</span> <span style="color:#888">// error: &#39;infix&#39; modifier is required on &#39;equals&#39; in &#39;kotlin.Int&#39;
+</span></code></pre></div><ul>
+<li>Kotlin requires that the <code>infix</code> keyword for a method to be usable as infix</li>
+<li><code>infix</code> functions have <em>lower precedence</em> than operators</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Infix</span> {
+    <span style="color:#080;font-weight:bold">infix</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">andThen</span>(s: String) = <span style="color:#d20;background-color:#fff0f0">&#34;in... $s ...fix!&#34;</span>
+}
+Infix() andThen <span style="color:#d20;background-color:#fff0f0">&#34;Foo&#34;</span> <span style="color:#888">// in... Foo ...fix!
+</span><span style="color:#888"></span>Infix() andThen <span style="color:#d20;background-color:#fff0f0">&#34;Foo&#34;</span> + <span style="color:#d20;background-color:#fff0f0">&#34;Bar&#34;</span> <span class='fragment '  style="color: #888;"> // in... FooBar ...fix</span>
+Infix() andThen <span style="color:#d20;background-color:#fff0f0">&#34;Foo&#34;</span> + <span style="color:#d20;background-color:#fff0f0">&#34;Bar&#34;</span> + Infix() andThen <span style="color:#d20;background-color:#fff0f0">&#34;Baz&#34;</span> <span class='fragment '  style="color: #888;"> // error: unresolved reference: andThen (searched in String)</span>
+</code></pre></div></section><section>
+<h1 id="kotlin-102----oop-conventions-2">Kotlin 102 &ndash; OOP Conventions</h1>
+<h2 id="operator-creation">Operator creation</h2>
+<p>In Scala, operator names are valid method names, and prefix and infix calls are automatic:</p>
+<ul>
+<li>Very much the whole language philosophy: few concepts, high scalability</li>
+<li>Easy to abuse, degenerating to esoteric operators
+<ul>
+<li>Especially when software is written by people with different background</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>executer(<span style="color:#080;font-weight:bold">:</span><span style="color:#888;font-weight:bold">/</span>(<span style="color:#888;font-weight:bold">host</span>, <span style="color:#888;font-weight:bold">port</span>) / target &lt;&lt; reqBody &gt;- { fromRespStr }) <span style="color:#888">// Using Databinder Dispatch
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> graph <span style="color:#080;font-weight:bold">=</span> <span style="color:#b06;font-weight:bold">Graph</span>((jfc ~+#&gt; fra)(<span style="color:#b06;font-weight:bold">Any</span>()), (fra ~+#&gt; dme)(<span style="color:#b06;font-weight:bold">Any</span>()) <span style="color:#888">// Using ScalaGraph
+</span></code></pre></div><p>Operators are succint, but cryptic, and their meaning changes with context</p>
+<p>This has been a source of cricism, Kotlin <strong>does not allow to define custom operators</strong></p>
+<ul>
+<li>At most, back-ticked names, but some characters are disallowed (<code>&gt;</code>, <code>/</code>, <code>:</code>, etc.)</li>
+<li>Clumsy, defies the reason why one would use them (terse and succint code)</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">A</span> { <span style="color:#080;font-weight:bold">infix</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#a61717;background-color:#e3d2d2">`~+#-`(</span><span style="color:#06b;font-weight:bold">other</span>: A) = <span style="color:#d20;background-color:#fff0f0">&#34;I&#39;m an arcane operator&#34;</span> }
+A() <span style="color:#a61717;background-color:#e3d2d2">`</span>~+<span style="color:#a61717;background-color:#e3d2d2">#</span>-<span style="color:#a61717;background-color:#e3d2d2">`</span> A() <span style="color:#888">// I&#39;m an arcane operator
+</span></code></pre></div></section><section>
+<h1 id="kotlin-102----oop-conventions-3">Kotlin 102 &ndash; OOP Conventions</h1>
+<h2 id="operator-overloading">Operator overloading</h2>
+<p>Kotlin allows for a limited set of operators to be defined/overloaded</p>
+<ul>
+<li>Method names must match a convention</li>
+<li>Methods must be annotated with the <code>operator</code> keyword</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Complex</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">real</span>: Double, <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">imaginary</span>: Double) {
+    <span style="color:#080;font-weight:bold">operator</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">plus</span>(other: Complex) = Complex(real + other.real, imaginary + other.imaginary)
+    <span style="color:#080;font-weight:bold">operator</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">plus</span>(other: Double) = plus(Complex(other, <span style="color:#00d;font-weight:bold">0.0</span>))
+    <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">toString</span>() = real.toString() + <span style="color:#080;font-weight:bold">when</span> {
+        imaginary == <span style="color:#00d;font-weight:bold">0.0</span> -&gt; <span style="color:#d20;background-color:#fff0f0">&#34;&#34;</span>
+        imaginary &gt; <span style="color:#00d;font-weight:bold">0.0</span> -&gt; <span style="color:#d20;background-color:#fff0f0">&#34;+${imaginary}i&#34;</span>
+        <span style="color:#080;font-weight:bold">else</span> -&gt; <span style="color:#d20;background-color:#fff0f0">&#34;${imaginary}i&#34;</span>
+    }
+}
+Complex(<span style="color:#00d;font-weight:bold">1.0</span>, <span style="color:#00d;font-weight:bold">1.0</span>) + <span style="color:#00d;font-weight:bold">3.4</span> <span style="color:#888">// 4.4+1.0i
+</span></code></pre></div></section><section>
+<h1 id="kotlin-102----oop-conventions-4">Kotlin 102 &ndash; OOP Conventions</h1>
+<h2 id="unary-operator-overloading-table">Unary Operator overloading table</h2>
+<table>
+<thead>
+<tr>
+<th>Expression</th>
+<th align="center">Method Name</th>
+<th>Translation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>+x</code></td>
+<td align="center"><code>unaryPlus</code></td>
+<td><code>x.unaryPlus()</code></td>
+</tr>
+<tr>
+<td><code>-x</code></td>
+<td align="center"><code>unaryMinus</code></td>
+<td><code>x.unaryMinus()</code></td>
+</tr>
+<tr>
+<td><code>++x</code></td>
+<td align="center"><code>inc</code></td>
+<td><code>x.inc().also { x = it }</code></td>
+</tr>
+<tr>
+<td><code>x++</code></td>
+<td align="center"><code>inc</code></td>
+<td><code>x.also { x = it.inc() }</code></td>
+</tr>
+<tr>
+<td><code>--x</code></td>
+<td align="center"><code>dec</code></td>
+<td><code>x.dec().also { x = it }</code></td>
+</tr>
+<tr>
+<td><code>x--</code></td>
+<td align="center"><code>dec</code></td>
+<td><code>x.also { x = it.dec() }</code></td>
+</tr>
+<tr>
+<td><code>!x</code></td>
+<td align="center"><code>not</code></td>
+<td><code>x.not()</code></td>
+</tr>
+<tr>
+<td><code>x()</code></td>
+<td align="center"><code>invoke</code></td>
+<td><code>x.invoke()</code></td>
+</tr>
+</tbody>
+</table>
+<p>Function invocation is an operator and can be overloaded!
+<br/>
+This will turn useful in future&hellip;</p>
+</section><section>
+<h1 id="kotlin-102----oop-conventions-5">Kotlin 102 &ndash; OOP Conventions</h1>
+<h2 id="binary-operator-overloading-arithmetic">Binary Operator overloading: arithmetic</h2>
+<table>
+<thead>
+<tr>
+<th>Expression</th>
+<th align="center">Method Name</th>
+<th>Translation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>x + y</code></td>
+<td align="center"><code>plus</code></td>
+<td><code>x.plus(y)</code></td>
+</tr>
+<tr>
+<td><code>x - y</code></td>
+<td align="center"><code>minus</code></td>
+<td><code>x.minus(y)</code></td>
+</tr>
+<tr>
+<td><code>x * y</code></td>
+<td align="center"><code>times</code></td>
+<td><code>x.times(y)</code></td>
+</tr>
+<tr>
+<td><code>x / y</code></td>
+<td align="center"><code>div</code></td>
+<td><code>x.div(y)</code></td>
+</tr>
+<tr>
+<td><code>x % y</code></td>
+<td align="center"><code>rem</code></td>
+<td><code>x.rem(y)</code></td>
+</tr>
+</tbody>
+</table>
+</section><section>
+<h1 id="kotlin-102----oop-conventions-6">Kotlin 102 &ndash; OOP Conventions</h1>
+<h2 id="binary-operator-overloading-assignment">Binary Operator overloading: assignment</h2>
+<table>
+<thead>
+<tr>
+<th>Expression</th>
+<th align="center">Method Name</th>
+<th>Translation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>x += y</code></td>
+<td align="center"><code>plusAssign</code></td>
+<td><code>x.plusAssign(y)</code></td>
+</tr>
+<tr>
+<td><code>x -= y</code></td>
+<td align="center"><code>minusAssign</code></td>
+<td><code>x.minusAssign(y)</code></td>
+</tr>
+<tr>
+<td><code>x *= y</code></td>
+<td align="center"><code>timesAssign</code></td>
+<td><code>x.timesAssign(y)</code></td>
+</tr>
+<tr>
+<td><code>x /= y</code></td>
+<td align="center"><code>divAssign</code></td>
+<td><code>x.divAssign(y)</code></td>
+</tr>
+<tr>
+<td><code>x %= y</code></td>
+<td align="center"><code>remAssign</code></td>
+<td><code>x.remAssign(y)</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Assignment functions <em>can be defined only if their arithmetic equivalent is undefined</em>.</li>
+<li>If an aritmetic operator <code>op</code> is defined, the compiler infers the assign version as:
+<ul>
+<li><code>a op= b</code> $\Rightarrow$ <code>a = a op b</code></li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h1 id="kotlin-102----oop-conventions-7">Kotlin 102 &ndash; OOP Conventions</h1>
+<h2 id="binary-operator-overloading-comparison">Binary Operator overloading: comparison</h2>
+<table>
+<thead>
+<tr>
+<th>Expression</th>
+<th align="center">Method Name</th>
+<th>Translation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>x == y</code></td>
+<td align="center"><code>equals</code></td>
+<td><code>x?.equals(y) ?: (b === null)</code></td>
+</tr>
+<tr>
+<td><code>x != y</code></td>
+<td align="center"><code>equals</code></td>
+<td><code>!(x?.equals(y) ?: (b === null))</code></td>
+</tr>
+<tr>
+<td><code>x &gt; y</code></td>
+<td align="center"><code>compareTo</code></td>
+<td><code>x.compareTo(y) &gt; 0</code></td>
+</tr>
+<tr>
+<td><code>x &lt; y</code></td>
+<td align="center"><code>compareTo</code></td>
+<td><code>x.compareTo(y) &lt; 0</code></td>
+</tr>
+<tr>
+<td><code>x &gt;= y</code></td>
+<td align="center"><code>compareTo</code></td>
+<td><code>x.compareTo(y) &gt;= 0</code></td>
+</tr>
+<tr>
+<td><code>x &lt;= y</code></td>
+<td align="center"><code>compareTo</code></td>
+<td><code>x.compareTo(y) &lt;= 0</code></td>
+</tr>
+</tbody>
+</table>
+</section><section>
+<h1 id="kotlin-102----oop-conventions-8">Kotlin 102 &ndash; OOP Conventions</h1>
+<h2 id="binary-operator-overloading-others">Binary Operator overloading: others</h2>
+<table>
+<thead>
+<tr>
+<th>Expression</th>
+<th align="center">Method Name</th>
+<th>Translation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>x..y</code></td>
+<td align="center"><code>rangeTo</code></td>
+<td><code>x.rangeTo(y)</code></td>
+</tr>
+<tr>
+<td><code>x in y</code></td>
+<td align="center"><code>contains</code></td>
+<td><code>y.contains(x)</code></td>
+</tr>
+<tr>
+<td><code>x !in y</code></td>
+<td align="center"><code>contains</code></td>
+<td><code>!y.contains(x)</code></td>
+</tr>
+<tr>
+<td><code>x[y]</code></td>
+<td align="center"><code>get</code></td>
+<td><code>x.get(y)</code></td>
+</tr>
+<tr>
+<td><code>x(y)</code></td>
+<td align="center"><code>invoke</code></td>
+<td><code>x.invoke(y)</code></td>
+</tr>
+</tbody>
+</table>
+</section><section>
+<h1 id="kotlin-102----oop-conventions-9">Kotlin 102 &ndash; OOP Conventions</h1>
+<h2 id="ternary-operator-overloading">Ternary Operator overloading</h2>
+<table>
+<thead>
+<tr>
+<th>Expression</th>
+<th align="center">Method Name</th>
+<th>Translation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>x[y, z]</code></td>
+<td align="center"><code>get</code></td>
+<td><code>x.get(y, z)</code></td>
+</tr>
+<tr>
+<td><code>x[y] = z</code></td>
+<td align="center"><code>set</code></td>
+<td><code>x.set(y) = z</code></td>
+</tr>
+<tr>
+<td><code>x(y, z)</code></td>
+<td align="center"><code>invoke</code></td>
+<td><code>x.invoke(y, z)</code></td>
+</tr>
+</tbody>
+</table>
+</section><section>
+<h1 id="kotlin-102----oop-conventions-10">Kotlin 102 &ndash; OOP Conventions</h1>
+<h2 id="n-ary-operator-overloading">n-ary Operator overloading</h2>
+<table>
+<thead>
+<tr>
+<th>Expression</th>
+<th align="center">Method Name</th>
+<th>Translation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>x[y, ..., z]</code></td>
+<td align="center"><code>get</code></td>
+<td><code>x.get(y, ..., z)</code></td>
+</tr>
+<tr>
+<td><code>x[y, ..., z] = a</code></td>
+<td align="center"><code>set</code></td>
+<td><code>x.set(y, ..., z) = a</code></td>
+</tr>
+<tr>
+<td><code>x(y, ..., z)</code></td>
+<td align="center"><code>invoke</code></td>
+<td><code>x.invoke(y, ..., z)</code></td>
+</tr>
+</tbody>
+</table>
+</section><section>
 <h2 id="generics">generics</h2>
 <p>syntax for functions
 syntax for classes
@@ -518,6 +1259,8 @@ lambda expressions
 trailing lambdas
 implicit single parameters
 closures
+return from lambda
+return at label
 destructuring in lambdas
 anonymous functions (rarely used)
 invoke convention
