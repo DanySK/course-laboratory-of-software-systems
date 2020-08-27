@@ -504,41 +504,716 @@ Warning: local functions often hinder clarity
 
 ---
 
-# TODOS
+# Kotlin 101 -- Flow control
 
-## flow control
-if
-for
-while
-break and continue
-when vs. pattern matching
-labeled jumping (incl. qualified return)
+## `if`
+* `if`/`else` is an expression and works just as in Scala
+* No ternary operator
+* `if` alone is not an expression
 
-## oop
-classes and members (methods and properties)
-object creation (no new)
-access to members (invoke vs named access)
-inheritance and open
-inheritance and override
-abstract
-inheritance and disambiguation by `super<Class>`
-interfaces and subtyping
-implementation of members in interfaces (no backing field)
-constructors
-init blocks
-secondary constructors
-nullability and `lateinit`
-getters
-setters
-accessors in interfaces
-backing fields, `field`
-objects
-companion objects
-visibility
-controlling visibility of properties (`private set`)
-equality / hashing / toString
-infix
-conventions (invoke, get, operators...)
+---
+
+# Kotlin 101 -- Flow control
+
+### `for`
+* **No classic** `for(init; condition; then) { block }` loop
+* Only available as `for`/`in`: `for (element in collection) { block }`
+* **Not a powerful combinator** like Scala's `for`
+* *Rarely used* (I think I might have used it twice in my career)
+
+---
+
+# Kotlin 101 -- Flow control
+
+### `while` and `do`/`while`
+* Same as Java, but with *visibility of variables defined in the `do`-block*
+
+```kotlin
+import kotlin.random.Random
+val lucky = 6
+var attempts = 0
+do {
+    val draw = Random.nextInt(lucky + 1)
+    attempts++
+} while (draw != lucky) // draw is visible here
+println("Launched $attempts dice before a lucky shot")
+```
+
+---
+
+# Kotlin 101 -- Flow control
+
+### `when`
+Kotlin *does not support pattern matching* as Scala does (unfortunately)
+<br/>
+The `when` block is somewhat a mild surrogate, more similar to a `switch` on steroids
+<br/>
+The base version (without subject) is a more elegant "`if`/`else if`/`else`" chain
+
+```kotlin
+fun countBatmans(subject: String) = when {
+    subject.length < "batman".length -> 0
+    subject.length < 2 * "batman".length && subject.contains("batman") -> 1
+    else -> ".*?(batman)".toRegex().findAll(subject).count().toInt()
+}
+```
+* `when` is an expression in any case
+
+---
+
+# Kotlin 101 -- Flow control
+
+### `when (subject)`
+Checks if the value of subjects is the same of the expression on the right
+
+```kotlin
+fun baseForSingleDigitOrNull(digit: UInt) = when(digit) {
+    0u, 1u -> "binary"
+    2u -> "ternary"
+    in 0u..7u -> "octal" // This is a range!
+    in 0u..15u -> "hexadecimal"
+    in 0u..36u -> "base36"
+    else -> null
+}
+```
+* `when` with subject can be used to elegantly check for subtypes
+```kotlin
+fun splitAnything(input: Any) = when(input) {
+    is Int -> input / 2 // No need to cast! The compiler infers type automatically (smart cast)
+    is String -> input.substring(input.length / 2)
+    is Double -> input / 2
+    else -> TODO()
+}
+```
+
+---
+
+# Kotlin 101 -- Flow control
+
+### `when` 
+Checks if the value of subjects is the same of the expression on the right
+
+```kotlin
+fun baseForSingleDigitOrNull(digit: UInt) = when(digit) {
+    0u, 1u -> "binary"
+    2u -> "ternary"
+    in 0u..7u -> "octal" // This is a range!
+    in 0u..15u -> "hexadecimal"
+    in 0u..36u -> "base36"
+    else -> null
+}
+```
+* `when` is an expression in any case
+
+---
+
+# Kotlin 101 -- Flow control
+
+### Jumping
+**Jumping is awful, imperative, and you should not use it**
+<br/>
+...but someone might and you must be able to understand it...
+
+* `break` and `continue` work as in Java
+* `return` does not, as we will see when discussing higher order functions...
+
+#### labeling
+* Any expression can be labeled: `label@ 1` is a valid expression
+* `break`, `continue`, and `return` can be *qualified* with a label
+
+```kotlin
+outerloop@ for (i in 1..100) {
+    for (j in 1..100) {
+        if (i * j == i + j) {
+            println("$i * $j equals $i + $j")
+            break@outerloop // Qualified break
+        }
+    }
+}
+```
+
+---
+
+# Kotlin 102 -- OOP
+
+## Classes
+
+* Similar to Scala, the keyword `class` introduces a class definition
+* Object construction does not require `new`
+    * `new` is not a Kotlin keyword at all
+* Objecs get built from classes by just invoking the class name:
+
+```Kotlin
+class Foo
+Foo() // a new Foo is created, no new keyword
+```
+
+---
+
+# Kotlin 102 -- OOP
+
+## Classes and members
+
+Kotlin classes have two types of members: **methods** and **properties**
+
+| Language / Member Type |            Fields            | Methods | Properties |
+|------------------------|:----------------------------:|---------|------------|
+| Java                   | *Yes*                        | *Yes*   | **No**     |
+| Scala                  | *Yes*                        | *Yes*   | **No**     |
+| Kotlin                 | **No** (Hidden)              | *Yes*   | *Yes*      |
+| C#                     | *Yes*                        | *Yes*   | *Yes*      |
+
+In Scala, at the caller site, methods and fields are hard to distinguish, as parentheses for 0-ary method calls are optional
+
+In Kotlin, methods/functions (except when defined `infix`) are invoked with mandatory parentheses
+<br/>
+properties are instead invoked without parentheses
+
+---
+
+# Kotlin 102 -- OOP
+
+## Properties vs. fields
+
+Properties and fields are conceptually different
+* *fields* **are** the object's state
+* *properties* are a way to **access/change** the object's state
+
+It's considered a good practice in languages without properties (Java in particular) to hide (*incapsulate*) fields (Object's actual state)
+and provide access only via `get`/`set` methods: the actual state representation may change with no change to the API.
+
+In Kotlin, fields are entirely hidden, and cannot be exposed in any way, enforcing the aforementioned convention at the language level.
+
+---
+
+# Kotlin 102 -- OOP
+
+## Defining properties for classes
+
+```kotlin
+class Foo {
+    val bar = 1
+    var baz: String? = null
+    val bazLength: Int
+        get() = baz?.length ?: 0
+    var stringRepresentation: String = ""
+        get() = baz ?: field
+        set(value) {
+            field = "custom: $value"
+        }
+
+}
+val foo = Foo()
+foo.bar = 3{{<comment_frag " // error: val cannot be reassigned" >}}
+foo.stringRepresentation{{<comment_frag " // empty string" >}}
+foo.stringRepresentation = "zed"{{<comment_frag " // 'custom: zed'" >}}
+```
+
+---
+
+# Kotlin 102 -- OOP
+
+## Backing fields
+
+The keyword `field` allows access to a backing field of a property
+<br/>
+**in case it is present**
+
+The Kotlin compiler, in fact, generates backing fields only where it's needed
+
+```kotlin
+class Student {
+    var id: String? = null // Backing field generated
+    val identifier: String = "Student[${id ?: "unknown"}]" // No backing field
+}
+```
+
+When designing with Kotlin, you must consider methods and properties, and forget about fields.
+
+---
+
+# Kotlin 102 -- OOP
+
+## Defining methods
+
+Methods are defined as `fun`ctions within the scope of a class
+
+```kotlin
+class MutableComplex {
+    var real: Double = 0.0
+    var imaginary: Double = 0.0
+    fun plus(other: MutableComplex): MutableComplex = MutableComplex().also {
+        it.real = real + other.real
+        it.imaginary = imaginary + other.imaginary
+    }
+}
+val foo = MutableComplex()
+foo.real = 1.0
+foo.imaginary = 2.0
+val bar = MutableComplex()
+bar.real = 4.1
+bar.imaginary = 0.1
+val baz = foo.plus(bar)
+"${baz.real}+${baz.imaginary}i"{{<comment_frag " // 5.1+2.1i" >}}
+```
+
+---
+
+# Kotlin 102 -- OOP
+
+## Interfaces
+
+* Similar to Java 8+
+* Methods can be implemented
+* Can host properties
+    * And their accessors can be implemented
+    * Properties in interfaces *do not have backing fields*
+* Both properties and methods can be implemented there
+* Scala-like mixins not supported
+    * A Kotlin `interface` cannot be a subclass of a Kotlin `class`
+```scala
+class A
+trait B extends A // All fine in Scala
+```
+```kotlin
+open class A
+interface B : A // error: an interface cannot inherit from a class
+```
+So, no mixins
+
+---
+
+# Kotlin 102 -- OOP
+
+## Implementing interfaces
+
+Much like Java. Subtyping keyword is `:`, overrides must be marked with `override`:
+```kotlin
+interface Shape {
+    val area: Double
+    val perimeter: Double
+}
+interface Shrinkable {
+    fun shrink(): Unit
+}
+class MutableCircle : Shape, Shrinkable {
+    var radius = 1.0
+    override val area get() = Math.PI * radius * radius
+    // What if we remove "get()"?
+    override val perimeter get() = 2 * Math.PI * radius
+    override fun shrink() {
+        radius /= 2
+    }
+}
+```
+---
+
+# Kotlin 102 -- OOP
+
+## Superclass disambiguation
+
+A call to `super` can be qualified to disambiguate between conflincting interface declarations:
+
+```kotlin
+interface A {
+    fun foo() = "foo"
+}
+interface B {
+    fun foo() = "bar"
+}
+class C : A, B {
+    override fun foo() = super<A>.foo() + super<B>.foo()
+}
+C().foo(){{<comment_frag " // foobar" >}}
+```
+
+---
+
+# Kotlin 102 -- OOP
+
+## Primary constructors and `init`
+
+Similar to Scala, but code in the class body is not part of a constructor
+<br/>
+Primary constructor code (if any) must be in an `init` block
+
+```kotlin
+class Foo(
+    val bar: String, // This is a val property of the class
+    var baz: Int, // This is a var property of the class
+    greeting: String = "Hello from constructor" // Constructor parameter, not a property. Default values allowed.
+) {
+    init {
+        println(greeting)
+    }
+}
+Foo("bar", 0)
+```
+
+---
+
+# Kotlin 102 -- OOP
+
+## Secondary `constructor`s
+
+More constructors can be added to a class, but them:
+1. Must call another constructor
+2. The primary constructor must be in its *delegation calls chain*
+
+Call to another constructor is performed using `:`
+
+```kotlin
+class Foo(val bar: String) {
+    constructor(longBar: Long) : this("number ${longBar.toString()}")
+    constructor(intBar: Int) : this(intBar.toLong())
+}
+Foo(1).bar // number 1
+```
+
+The primary constructor can be written in a longer form with the `constructor` keyword as well
+```kotlin
+class Foo constructor(val bar: String) // OK
+```
+
+---
+
+# Kotlin 102 -- OOP
+
+## Nullability and `lateinit`
+
+It is possible that some `var` property needs to get initialized after the object construction:
+```kotlin
+class Son(val: Father)
+class Father(var son: Son) // Impossible to build either
+```
+Solution 1: allow nullability (**BAD**)
+```kotlin
+class Son(val father: Father)
+class Father(var son: Son? = null)
+val father = Father()
+val son = Son(father)
+father.son = son
+father.son.father // error, needs ?.
+```
+Solution 1: take responsibility from the compiler (*less bad*)
+```kotlin
+class Son(val father: Father)
+class Father { lateinit var son: Son } // lateinit: I will initialize it later, stay cool
+val father = Father()
+father.son // UninitializedPropertyAccessException: lateinit property son has not been initialized
+val son = Son(father)
+father.son = son
+father.son.father // OK!
+```
+
+---
+
+# Kotlin 102 -- OOP
+
+> **Design and document for inheritance or else prohibit it**<br/>
+> *J. Bloch, Effective Java, Item 17*
+
+## Closed hierarchies and `open`
+
+Kotlin enforces EJ-17 by design: all classes are final if the keyword `open` is not specified
+```kotlin
+class A
+class B : A() // error: this type is final, so it cannot be inherited from
+open class A
+class B : A() // OK
+```
+As in Scala, *the constructor of the superclass must be called at extension site*
+<br/>
+Differently than Scala, such invocatin *always requires parentheses*
+
+---
+
+# Kotlin 102 -- OOP
+
+## `abstract` vs. `open`
+
+The same effect of `open` can be achieved with `abstract`:
+```kotlin
+abstract class A
+class B : A() // Perfectly fine
+```
+With abstract, however, the superclass cannot be created
+<br/>
+(and it should have actual `abstract` memebers anyway)
+```kotlin
+open class Open
+abstract class Abstract
+class FromOpen : Open()
+class FromAbstract : Abstract()
+FromAbstract() // OK
+FromOpen() // OK
+Open() // OK
+Abstract() // error: cannot create an instance of an abstract class
+```
+
+---
+
+# Kotlin 102 -- OOP
+
+## Singleton `object`s
+
+Same as Scala, but with explicit `companion`s
+<br/>
+In Scala
+```scala
+class A
+object A // Same file and same name identify a companion
+```
+In Kotlin
+```kotlin
+class A {
+    companion object // Companions are inner to classes 
+}
+A // refers to A.Companion
+object A // This is an independent object
+A // refers to the previously defined object
+```
+
+---
+
+# Kotlin 102 -- OOP
+
+## Information hiding
+
+Simpler than Scala, more coherent than Java
+* `public` -- default visibility, visible everywhere (API)
+* `internal` -- visible to everything in this *"module"*
+    * module $\Rightarrow$ a set of Kotlin files compiled together
+* `protected` -- visible to subclasses (but *not* to other members of the package)
+* `private` -- visible inside this class and its members
+
+---
+
+# Kotlin 102 -- OOP
+
+## Visibility control
+
+```kotlin
+class Visibility internal constructor( // constructor is required to apply visibility restrictionss
+    private val id: Int // Same as Scala
+) { 
+    protected var state = 0
+        private set // visibility restriction for properties in get/set methods
+}
+```
+
+---
+
+# Kotlin 102 -- OOP Conventions
+
+## Equality, hashing, string version
+
+Same as Java, but for equality:
+* `==` calls `equals`
+* Java's stack variable comparison (`==`) is Kotlin's `===`
+
+Kotlin does not suffer of Scala's equality issues
+(no automatic conversion of types)
+
+```scala
+val a: Int = 1
+val b: Long = a
+a == b // true
+a equals b // false O_O
+```
+Kotlin:
+```kotlin
+val a: Int = 1
+val b: Long = a // error: type mismatch: inferred type is Int but Long was expected
+val b: Long = a.toLong()
+a == b // error: operator '==' cannot be applied to 'Int' and 'Long'
+a.toLong() == b // true
+a == b.toInt() // true
+```
+
+---
+
+# Kotlin 102 -- OOP Conventions
+
+## `infix` calls
+
+Kotlin is less permissive than scala:
+* In Scala, every instance method with a single parameter can be invoked as infix operator:
+```scala
+1 equals 1 // infix invocation of 1.equals(1)
+```
+* In Kotlin, this is not allowed:
+```kotlin
+1 equals 1 // error: 'infix' modifier is required on 'equals' in 'kotlin.Int'
+```
+* Kotlin requires that the `infix` keyword for a method to be usable as infix
+* `infix` functions have *lower precedence* than operators
+
+```kotlin
+class Infix {
+    infix fun andThen(s: String) = "in... $s ...fix!"
+}
+Infix() andThen "Foo" // in... Foo ...fix!
+Infix() andThen "Foo" + "Bar" {{<comment_frag " // in... FooBar ...fix" >}}
+Infix() andThen "Foo" + "Bar" + Infix() andThen "Baz" {{<comment_frag " // error: unresolved reference: andThen (searched in String)" >}}
+```
+
+---
+
+# Kotlin 102 -- OOP Conventions
+
+## Operator creation
+
+In Scala, operator names are valid method names, and prefix and infix calls are automatic:
+* Very much the whole language philosophy: few concepts, high scalability
+* Easy to abuse, degenerating to esoteric operators
+    * Especially when software is written by people with different background
+```scala
+executer(:/(host, port) / target << reqBody >- { fromRespStr }) // Using Databinder Dispatch
+val graph = Graph((jfc ~+#> fra)(Any()), (fra ~+#> dme)(Any()) // Using ScalaGraph
+```
+Operators are succint, but cryptic, and their meaning changes with context
+
+This has been a source of cricism, Kotlin **does not allow to define custom operators**
+* At most, back-ticked names, but some characters are disallowed (`>`, `/`, `:`, etc.)
+* Clumsy, defies the reason why one would use them (terse and succint code)
+
+```kotlin
+class A { infix fun `~+#-`(other: A) = "I'm an arcane operator" }
+A() `~+#-` A() // I'm an arcane operator
+```
+
+---
+
+# Kotlin 102 -- OOP Conventions
+
+## Operator overloading
+
+Kotlin allows for a limited set of operators to be defined/overloaded
+* Method names must match a convention
+* Methods must be annotated with the `operator` keyword
+
+```kotlin
+class Complex(val real: Double, val imaginary: Double) {
+    operator fun plus(other: Complex) = Complex(real + other.real, imaginary + other.imaginary)
+    operator fun plus(other: Double) = plus(Complex(other, 0.0))
+    override fun toString() = real.toString() + when {
+        imaginary == 0.0 -> ""
+        imaginary > 0.0 -> "+${imaginary}i"
+        else -> "${imaginary}i"
+    }
+}
+Complex(1.0, 1.0) + 3.4 // 4.4+1.0i
+```
+
+---
+
+# Kotlin 102 -- OOP Conventions
+
+## Unary Operator overloading table
+
+| Expression | Method Name | Translation |
+|------------|:-----------:|-------------|
+| `+x`       | `unaryPlus`     | `x.unaryPlus()` |
+| `-x`       | `unaryMinus`    | `x.unaryMinus()` |
+| `++x`      | `inc`           | `x.inc().also { x = it }` |
+| `x++`      | `inc`           | `x.also { x = it.inc() }` |
+| `--x`      | `dec`           | `x.dec().also { x = it }` |
+| `x--`      | `dec`           | `x.also { x = it.dec() }` |
+| `!x`       | `not`           | `x.not()`    |
+| `x()`      | `invoke`           | `x.invoke()`    |
+
+Function invocation is an operator and can be overloaded!
+<br/>
+This will turn useful in future...
+
+---
+
+# Kotlin 102 -- OOP Conventions
+
+## Binary Operator overloading: arithmetic
+
+| Expression | Method Name | Translation |
+|------------|:-----------:|-------------|
+| `x + y` | `plus` | `x.plus(y)` |
+| `x - y` | `minus` | `x.minus(y)` |
+| `x * y` | `times` | `x.times(y)` |
+| `x / y` | `div` | `x.div(y)` |
+| `x % y` | `rem` | `x.rem(y)` |
+
+---
+
+# Kotlin 102 -- OOP Conventions
+
+## Binary Operator overloading: assignment
+
+| Expression | Method Name | Translation |
+|------------|:-----------:|-------------|
+| `x += y` | `plusAssign` | `x.plusAssign(y)` |
+| `x -= y` | `minusAssign` | `x.minusAssign(y)` |
+| `x *= y` | `timesAssign` | `x.timesAssign(y)` |
+| `x /= y` | `divAssign` | `x.divAssign(y)` |
+| `x %= y` | `remAssign` | `x.remAssign(y)` |
+
+* Assignment functions *can be defined only if their arithmetic equivalent is undefined*.
+* If an aritmetic operator `op` is defined, the compiler infers the assign version as:
+    * `a op= b` $\Rightarrow$ `a = a op b`
+
+
+---
+
+# Kotlin 102 -- OOP Conventions
+
+## Binary Operator overloading: comparison
+
+| Expression | Method Name | Translation |
+|------------|:-----------:|-------------|
+| `x == y` | `equals` | `x?.equals(y) ?: (b === null)` |
+| `x != y` | `equals` | `!(x?.equals(y) ?: (b === null))` |
+| `x > y` | `compareTo` | `x.compareTo(y) > 0` |
+| `x < y` | `compareTo` | `x.compareTo(y) < 0` |
+| `x >= y` | `compareTo` | `x.compareTo(y) >= 0` |
+| `x <= y` | `compareTo` | `x.compareTo(y) <= 0` |
+
+---
+
+# Kotlin 102 -- OOP Conventions
+
+## Binary Operator overloading: others
+
+| Expression | Method Name | Translation |
+|------------|:-----------:|-------------|
+| `x..y` | `rangeTo` | `x.rangeTo(y)` |
+| `x in y` | `contains` | `y.contains(x)` |
+| `x !in y` | `contains` | `!y.contains(x)` |
+| `x[y]` | `get` | `x.get(y)` |
+| `x(y)` | `invoke` | `x.invoke(y)` |
+
+---
+
+# Kotlin 102 -- OOP Conventions
+
+## Ternary Operator overloading
+
+| Expression | Method Name | Translation |
+|------------|:-----------:|-------------|
+| `x[y, z]` | `get` | `x.get(y, z)` |
+| `x[y] = z` | `set` | `x.set(y) = z` |
+| `x(y, z)` | `invoke` | `x.invoke(y, z)` |
+
+---
+
+# Kotlin 102 -- OOP Conventions
+
+## n-ary Operator overloading
+
+| Expression | Method Name | Translation |
+|------------|:-----------:|-------------|
+| `x[y, ..., z]` | `get` | `x.get(y, ..., z)` |
+| `x[y, ..., z] = a` | `set` | `x.set(y, ..., z) = a` |
+| `x(y, ..., z)` | `invoke` | `x.invoke(y, ..., z)` |
+
+---
 
 ## generics
 syntax for functions
@@ -587,6 +1262,8 @@ lambda expressions
 trailing lambdas
 implicit single parameters
 closures
+return from lambda
+return at label
 destructuring in lambdas
 anonymous functions (rarely used)
 invoke convention
