@@ -1266,6 +1266,25 @@ Kotlin provides a <code>where</code> keyword to specify type bounds separately f
           L : ConvexGeometricShape&lt;P, A&gt;,
           N : ConvexGeometricShape&lt;P, A&gt; = TODO()
 </code></pre></div></section><section>
+<h1 id="kotlin-103----generics-3">Kotlin 103 &ndash; Generics</h1>
+<h2 id="variance">Variance</h2>
+<p>Kotlin supports (co/contro)variance using:</p>
+<ul>
+<li><code>out</code> to mark covariance (similar to Java&rsquo;s <code>? extends</code>)</li>
+<li><code>in</code> to mark controvariance (similar to Java&rsquo;s <code>? super</code>)</li>
+</ul>
+<p>Type variant in Kotlin is expressed <em>at declaration site</em>!</p>
+<ul>
+<li>In Java type variance is only for methods</li>
+<li>In Kotlin type variance is only for classes and interfaces</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">ProduceAndConsume</span>&lt;<span style="color:#080;font-weight:bold">in</span> X, <span style="color:#080;font-weight:bold">out</span> Y&gt; {
+    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">consume</span>(x: X): Any = TODO()<span class='fragment '  style="color: #888;"> // OK</span>
+    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">consume2</span>(y: Y): Any = TODO()<span class='fragment '  style="color: #888;"> // type parameter Y is declared as &#39;out&#39; but occurs in &#39;in&#39; position in type Y</span>
+    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">produce</span>(): Y = TODO()<span class='fragment '  style="color: #888;"> // OK</span>
+    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">produce2</span>(): X = TODO()<span class='fragment '  style="color: #888;"> // error: type parameter X is declared as &#39;in&#39; but occurs in &#39;out&#39; position in type X</span>
+}
+</code></pre></div></section><section>
 <h2 id="generics">generics</h2>
 <p>variance
 use site variance and type projection
