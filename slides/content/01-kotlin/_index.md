@@ -1285,6 +1285,30 @@ fun <T, P, A, L, R, N, E> navigationStrategy()
 ```
 ---
 
+# Kotlin 103 -- Generics
+
+## Variance
+
+Kotlin supports (co/contro)variance using:
+* `out` to mark covariance (similar to Java's `? extends`)
+* `in` to mark controvariance (similar to Java's `? super`)
+
+Type variant in Kotlin is expressed *at declaration site*!
+* In Java type variance is only for methods
+* In Kotlin type variance is only for classes and interfaces
+
+```kotlin
+interface ProduceAndConsume<in X, out Y> {
+    fun consume(x: X): Any = TODO(){{<comment_frag " // OK" >}}
+    fun consume2(y: Y): Any = TODO(){{<comment_frag " // type parameter Y is declared as 'out' but occurs in 'in' position in type Y" >}}
+    fun produce(): Y = TODO(){{<comment_frag " // OK" >}}
+    fun produce2(): X = TODO(){{<comment_frag " // error: type parameter X is declared as 'in' but occurs in 'out' position in type X" >}}
+}
+```
+
+
+---
+
 ## generics
 variance
 use site variance and type projection
