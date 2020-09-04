@@ -1365,29 +1365,159 @@ Similar to Scala, but based (for the JVM target) on the Java implementation
     * Type is lost, no higher kinded types in Kotlin to express it
 * `Sequence`s prevent a collection creation at each step
 * `Flow`s represent collections that are processed in parallel
+* Creation usually via functions `flowOf`/`listOf`/`mapOf`/`sequenceOf`/`setOf`
 
 ---
 
 # Kotlin 201 -- Advanced OOP
 
+## Data classes
 
+Very similar to Scala's `case class`es:
+* inheritance prohibited (Scala allows non-`case` classes to inherit from `case` classes)
+* `equals`, `hashCode`, `toString` for free
+* `copy` function, to be used to generate new immutable objects
+* `component1`, `component2`, ..., `componentN` functions, called in case of destructuring
+
+`Pair` and `Triple` provided by the standard library
+<br/>
+(`Tuple4`, `Tuple5`, and so on are not in standard library as opposed as Scala)
 
 ---
 
+# Kotlin 201 -- Advanced OOP
 
+## Destructuring declarations
+
+If a class has `operator` functions named called `componentX` with `X` an integer from `1`,
+they can be "destructured".
+<br>
+This feature is *way* less powerful than Scala's pattern matching.
+
+```kotlin
+// to is an inline function that creates a Pair, similar to Scala's ->
+val ferrari2021 = "Ferrari" to Pair("Sainz", "Leclerc")
+val (team, lineup) = ferrari2021
+team // "Ferrari"
+lineup // Sainz to Leclerc
+val (driver1, driver2) = lineup
+driver1 // Sainz
+driver2 // Leclerc
+```
+```kotlin
+class A {
+    operator fun component1() = 1
+    operator fun component2() = 2
+    operator fun component3() = 3
+}
+val (a, b, c) = A()
+"$a$b$c"
+```
+
+---
+
+# Kotlin 201 -- Advanced OOP
+
+## Sealed hierarchies
+
+Similar to Scala's `sealed trait`s:
+* `class`es, not supported for `interface`s
+* subtypes must be defined inside the sealed class
+* sealed hierarchies proved *exhaustive checking* inside `where` clauses
+
+```kotlin
+sealed class Booze {
+    class Rum : Booze()
+    class Whisky : Booze()
+    class Vodka : Booze()
+}
+fun goGetMeA(beverage: Booze) = when (beverage) {
+    is Booze.Rum -> "Diplomatico"
+    is Booze.Whisky -> "Caol Ila"
+    is Booze.Vodka -> "Zubrowka"
+}
+goGetMeA(Booze.Rum())
+```
+
+---
+
+# Kotlin 201 -- Advanced OOP
+
+## Nested and inner classes
+
+* Nesting a class inside another does not allow access to outer members
+    * It's equivalent to a Java's `static` inner class
+* To create an inner class, the `inner` modifier must be explicit
+
+```kotlin
+class Outer {
+    private val readMeIfYouCan = 1
+    class Nested {
+        init { println(readMeIfYouCan) } // error: unresolved reference: readMeIfYouCan
+    }
+}
+```
+```kotlin
+class Outer { class Nested }
+Outer.Nested() // OK
+```
+```kotlin
+class Outer {
+    private val readMeIfYouCan = 1
+    inner class Inner {
+        init { println(readMeIfYouCan) } // ok
+    }
+}
+Outer.Inner() // error: constructor of inner class Inner can be called only with receiver of containing class
+Outer().Inner() // OK
+```
+---
+
+# Kotlin 201 -- Advanced OOP
+
+## Enum classes
+
+Same as Java, with Kotlin syntax
+
+## Object expressions
+
+`object` expressions replace anonymous classes
+
+```kotlin
+interface Test {
+    fun first(): Unit
+    fun second(): Unit
+}
+object : Test {
+    override fun first() { }
+    override fun second() { }
+}
+```
+---
+
+# Kotlin 201 -- Advanced OOP
+
+## Type aliases
+* Types can be aliased
+* Only at the top level
+* Type aliases in kotlin **are not** Scala's `type` definitions
+* Kotlin has no equivalent of Scala's `type`
+
+```kotlin
+typealias Drivers = Pair<String, String>
+typealias Team = Pair<String, Drivers>
+typealias Formula1 = Map<String, Team>
+val `f1 2020` = mapOf(
+    Team("Ferrari", Drivers("Vettel", "Leclerc")),
+    Team("RedBull", Drivers("Versbatten", "Albon")),
+    Team("Merdeces", Drivers("Hamilton", "Bottas")),
+)
+`f1 2020` // Map<String, Pair<String, Pair<String, String>>>
+```
+
+---
 
 ## extended OOP
-data classes
-copy / equals / toString
-destructuring declarations
-Pair / Triple
-sealed classes
-sealing and when
-nested classes
-inner classes
-enum classes
-anonymous classes via object expression
-type aliasing
 delegation and `by`
 contract implementation by delegation (favor composition over inheritance)
 delegated properties and variables
@@ -1430,15 +1560,12 @@ arrays
 primitive arrays
 ranges
 
-## performance
-tail recursion
-inline functions
+# left out
+enum classes
 noinline
 crossinline
+coroutines
+java interoperability
 inline classes -- mentioned and skipped, ref to https://kotlinlang.org/docs/reference/inline-classes.html
-
-## java interop
-@JvmOverloads
-@JvmDefault
 
 ## DSLs in Kotlin (type-safe builders)
