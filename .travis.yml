@@ -1,8 +1,15 @@
 language: node_js
 
+dist: bionic
+
 git:
   depth: false
 
+addons:
+  apt:
+    update: true
+    packages: chromium
+  
 branches:
   except:
     - /^untagged/
