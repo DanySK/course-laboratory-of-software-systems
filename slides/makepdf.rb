@@ -23,9 +23,22 @@ class DecktapeGenerator < Generator
     end
 end
 class ChromiumGenerator < Generator
+
+    def initialize
+        puts "Searching for the Chromium or Google Chrome executable"
+        command = `eval compgen -c`
+            .split(/\n/)
+            .filter { | it | /.*chrom(?:e|ium).*/ =~ it }
+            .uniq
+            .filter { | it | /.*driver.*/ !~ it }
+        puts "Found candidates: #{command}"
+        @chromium = command.first
+        puts "Selected #{@chromium}"
+    end
+
     def generation_command(url, file_name, options)
         options += '--disable-gpu --virtual-time-budget=10000 --window-size=1440,900'
-        command = "chromium --headless --run-all-compositor-stages-before-draw #{options} --print-to-pdf=#{file_name} #{url}?print-pdf"
+        command = "#{@chromium} --headless --run-all-compositor-stages-before-draw #{options} --print-to-pdf=#{file_name} #{url}?print-pdf"
         puts "Launching: #{command}"
         puts `#{command}`
     end
