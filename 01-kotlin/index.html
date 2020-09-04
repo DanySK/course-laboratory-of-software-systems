@@ -26,7 +26,7 @@
     <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
 <h2 id="kotlin-for-scala-developers">Kotlin (for Scala developers)</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2020-08-27
+2020-09-04
 
 </section><section>
 <h1 id="why-kotlin">Why Kotlin</h1>
@@ -1215,12 +1215,59 @@ This will turn useful in future&hellip;</p>
 </tbody>
 </table>
 </section><section>
+<h1 id="kotlin-103----generics">Kotlin 103 &ndash; Generics</h1>
+<h2 id="compared-with-java-and-scala">Compared with Java and Scala</h2>
+<p>Kotlin&rsquo;s type system supports generics</p>
+<ul>
+<li>Handier than Java&rsquo;s</li>
+<li><strong>way</strong> less powerful than Scala&rsquo;s</li>
+<li>No higher kinded types (they are in Scala)</li>
+<li>No type lambdas (they are in Scala)</li>
+<li>Declaration-site variance (absent in Java)</li>
+<li>Generic type reification via inlining (not found in Java nor Scala)</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">trait</span> <span style="color:#b06;font-weight:bold">Functor</span>[<span style="color:#888;font-weight:bold">F</span>[<span style="color:#080;font-weight:bold">_</span>]] <span style="color:#888">// There is no Kotlin equivalent for these lines
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">type</span> <span style="color:#888;font-weight:bold">MapFunctor</span> = <span style="color:#b06;font-weight:bold">Functor</span>[({ <span style="color:#080;font-weight:bold">type</span> <span style="color:#888;font-weight:bold">T</span>[<span style="color:#888;font-weight:bold">A</span>] <span style="color:#888;font-weight:bold">=</span> <span style="color:#888;font-weight:bold">Map</span>[<span style="color:#888;font-weight:bold">Int</span>, <span style="color:#888;font-weight:bold">A</span>] })<span style="color:#080;font-weight:bold">#</span><span style="color:#888;font-weight:bold">T</span>]
+</code></pre></div></section><section>
+<h1 id="kotlin-103----generics-1">Kotlin 103 &ndash; Generics</h1>
+<h2 id="base-syntax">Base syntax</h2>
+<p>Syntax similar to Java generics</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Foo</span>&lt;A, B : CharSequence&gt;
+<span style="color:#080;font-weight:bold">fun</span> <span style="color:#a61717;background-color:#e3d2d2">&lt;</span><span style="color:#06b;font-weight:bold">T</span> : Comparable&lt;T&gt;&gt; maxOf3(first: T, second: T, third: T): T = <span style="color:#080;font-weight:bold">when</span> {
+    first &gt;= second &amp;&amp; first &gt;= third -&gt; first
+    second &gt;= third -&gt; second
+    <span style="color:#080;font-weight:bold">else</span> -&gt; third
+}
+</code></pre></div><ul>
+<li>type upper bounds can be specified with <code>:</code></li>
+<li>if no bound is specified, the generic is <em>nullable</em>!</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> &lt;T&gt; <span style="color:#06b;font-weight:bold">className</span>(receiver: T) = receiver::<span style="color:#080;font-weight:bold">class</span>.simpleName
+<span style="color:#888">// error: expression in a class literal has a nullable type &#39;T&#39;, use !! to make the type non-nullable
+</span></code></pre></div></section><section>
+<h1 id="kotlin-103----generics-2">Kotlin 103 &ndash; Generics</h1>
+<h2 id="where"><code>where</code></h2>
+<p>In case multiple bounds are present, the definition can become cumbersome
+<br/>
+Kotlin provides a <code>where</code> keyword to specify type bounds separately from the rest of the signature</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#888">// From an actual Alchemist interface
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">NavigationStrategy</span>&lt;T, P, A, L, R, N, E&gt;
+    <span style="color:#080;font-weight:bold">where</span> P : Position&lt;P&gt;, P : Vector&lt;P&gt;,
+          A : GeometricTransformation&lt;P&gt;,
+          L : ConvexGeometricShape&lt;P, A&gt;,
+          N : ConvexGeometricShape&lt;P, A&gt; {
+<span style="color:#888">// Interface content, if any
+</span><span style="color:#888"></span>}
+
+<span style="color:#888">// Function syntax
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">fun</span> &lt;T, P, A, L, R, N, E&gt; <span style="color:#06b;font-weight:bold">navigationStrategy</span>()
+    <span style="color:#080;font-weight:bold">where</span> P : Position&lt;P&gt;, P : Vector&lt;P&gt;,
+          A : GeometricTransformation&lt;P&gt;,
+          L : ConvexGeometricShape&lt;P, A&gt;,
+          N : ConvexGeometricShape&lt;P, A&gt; = TODO()
+</code></pre></div></section><section>
 <h2 id="generics">generics</h2>
-<p>syntax for functions
-syntax for classes
-type bounds
-<code>where</code>
-variance
+<p>variance
 use site variance and type projection
 declaration site variance
 star-projection
@@ -1230,8 +1277,7 @@ invocation of reified types</p>
 <h2 id="basic-collections">basic collections?</h2>
 <p>list / mutablelist
 set / mutableset
-map / mutablemap
-<code>in</code></p>
+map / mutablemap</p>
 <h2 id="extended-oop">extended OOP</h2>
 <p>data classes
 copy / equals / toString
