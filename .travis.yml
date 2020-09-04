@@ -8,7 +8,7 @@ git:
 addons:
   apt:
     update: true
-    packages: chromium
+    packages: chromium-browser
   
 branches:
   except:
