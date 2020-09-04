@@ -1639,6 +1639,93 @@ operator fun setValue(thisRef: T, property: KProperty<*>, value: P): R
 ```
 where T and R are the same as in `getValue`, and P is a supertype of R
 
+---
+
+# Kotlin 201 -- Functional Kotlin
+
+## Lambda expressions
+
+Kotlin lambda expression's syntax is inspired by Groovy
+<br/>
+and is similar to Smalltalk / Ceylon / Xtend / Ruby as well
+* Enclosing an expression in curly brackets creates a lambda expression
+* Parameters are listed *inside* the brackets, a `->` separates them from the body
+* If there is one single parameter, it can be unspecified and referred with the keyword `it`
+
+```kotlin
+val myLambda = {
+    println("Hey I'm computing")
+}
+fun whatsMyReturnType() = { 
+    "A string"
+}
+myLambda.invoke() // Java-style invocation
+myLambda() // Decent-style invocation (invoke is an operator!)
+myLambda()() // Guess {{<comment_frag "error: expression 'myLambda()' of type 'Unit' cannot be invoked as a function." >}}
+whatsMyReturnType() // Guess {{<comment_frag "Subtle, but the compiler raises warnings" >}}
+whatsMyReturnType()() // Guess {{<comment_frag "A string" >}}
+```
+
+---
+
+# Kotlin 201 -- Functional Kotlin
+
+## Function type literals
+
+Just as Scala, Kotlin supports function type literals
+<br/>
+No need for verbose interfaces such as `Function<T, R>`, `BiConsumer<T, R>`, etc.
+
+Function type literals have parameter types between parentheses, a `->`, and the result parameter
+* `() -> Any` -- A 0-ary function returning `Any`
+* `(String) -> Any` -- A unary function taking a `String` and returning `Any`
+* `(String, Int) -> Unit` -- A binary function taking a `String` and an `Int` and not returning
+
+Function type literals allow for writing cleaner *higher-order functions*
+
+
+```kotlin
+fun <T, I, R> compose(f: (I) -> R, g: (T) -> I): (T) -> R = { f(g(it)) }
+compose({v: Int -> v * v}, {v: Double -> v.toInt()})(3.9) // 9
+```
+
+---
+
+# Kotlin 201 -- Functional Kotlin
+
+## Function references
+
+Functions can be referred by using `::`
+<br/>
+the left operand is the receiver (if present)
+<br/>
+the right operand is the function name
+
+```kotlin
+fun <T, I, R> compose(f: (I) -> R, g: (T) -> I): (T) -> R = { f(g(it)) }
+fun square(v: Int) = v * v
+fun floor(v: Double) = v.toInt()
+compose(::square, ::floor)(3.9)
+```
+
+---
+
+# Kotlin 201 -- Functional Kotlin
+
+## The **trailing lambda** convention
+A simple special rule that enables very elegant syntactic forms:
+<br/>
+*if a lambda expression is the last parameter in a function call*
+<br/>
+*then it can be placed outside of the parentheses*
+
+```kotlin
+fun <T, R> delayed(
+```
+
+Very 
+
+
 
 ---
 
