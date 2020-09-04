@@ -32,7 +32,7 @@ class ChromiumGenerator < Generator
             .uniq
             .filter { | it | /.*driver.*/ !~ it }
         puts "Found candidates: #{command}"
-        @chromium = command.first || raise 'No candidate for chrome / chromium'
+        @chromium = command.first || raise RuntimeError.new 'No candidate for chrome / chromium'
         puts "Selected #{@chromium}"
     end
 
