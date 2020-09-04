@@ -1345,23 +1345,125 @@ the function code is <em>copied</em> on call site, and the compiler must know ho
 </li>
 <li><code>Sequence</code>s prevent a collection creation at each step</li>
 <li><code>Flow</code>s represent collections that are processed in parallel</li>
+<li>Creation usually via functions <code>flowOf</code>/<code>listOf</code>/<code>mapOf</code>/<code>sequenceOf</code>/<code>setOf</code></li>
 </ul>
 </section><section>
 <h1 id="kotlin-201----advanced-oop">Kotlin 201 &ndash; Advanced OOP</h1>
+<h2 id="data-classes">Data classes</h2>
+<p>Very similar to Scala&rsquo;s <code>case class</code>es:</p>
+<ul>
+<li>inheritance prohibited (Scala allows non-<code>case</code> classes to inherit from <code>case</code> classes)</li>
+<li><code>equals</code>, <code>hashCode</code>, <code>toString</code> for free</li>
+<li><code>copy</code> function, to be used to generate new immutable objects</li>
+<li><code>component1</code>, <code>component2</code>, &hellip;, <code>componentN</code> functions, called in case of destructuring</li>
+</ul>
+<p><code>Pair</code> and <code>Triple</code> provided by the standard library
+<br/>
+(<code>Tuple4</code>, <code>Tuple5</code>, and so on are not in standard library as opposed as Scala)</p>
 </section><section>
+<h1 id="kotlin-201----advanced-oop-1">Kotlin 201 &ndash; Advanced OOP</h1>
+<h2 id="destructuring-declarations">Destructuring declarations</h2>
+<p>If a class has <code>operator</code> functions named called <code>componentX</code> with <code>X</code> an integer from <code>1</code>,
+they can be &ldquo;destructured&rdquo;.
+<br>
+This feature is <em>way</em> less powerful than Scala&rsquo;s pattern matching.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#888">// to is an inline function that creates a Pair, similar to Scala&#39;s -&gt;
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">ferrari2021</span> = <span style="color:#d20;background-color:#fff0f0">&#34;Ferrari&#34;</span> to Pair(<span style="color:#d20;background-color:#fff0f0">&#34;Sainz&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;Leclerc&#34;</span>)
+<span style="color:#080;font-weight:bold">val</span> <span style="color:#a61717;background-color:#e3d2d2">(</span><span style="color:#369;font-weight:bold">team</span>, lineup) = ferrari2021
+team <span style="color:#888">// &#34;Ferrari&#34;
+</span><span style="color:#888"></span>lineup <span style="color:#888">// Sainz to Leclerc
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#a61717;background-color:#e3d2d2">(</span><span style="color:#369;font-weight:bold">driver1</span>, driver2) = lineup
+driver1 <span style="color:#888">// Sainz
+</span><span style="color:#888"></span>driver2 <span style="color:#888">// Leclerc
+</span></code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">A</span> {
+    <span style="color:#080;font-weight:bold">operator</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">component1</span>() = <span style="color:#00d;font-weight:bold">1</span>
+    <span style="color:#080;font-weight:bold">operator</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">component2</span>() = <span style="color:#00d;font-weight:bold">2</span>
+    <span style="color:#080;font-weight:bold">operator</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">component3</span>() = <span style="color:#00d;font-weight:bold">3</span>
+}
+<span style="color:#080;font-weight:bold">val</span> <span style="color:#a61717;background-color:#e3d2d2">(</span><span style="color:#369;font-weight:bold">a</span>, b, c) = A()
+<span style="color:#d20;background-color:#fff0f0">&#34;$a$b$c&#34;</span>
+</code></pre></div></section><section>
+<h1 id="kotlin-201----advanced-oop-2">Kotlin 201 &ndash; Advanced OOP</h1>
+<h2 id="sealed-hierarchies">Sealed hierarchies</h2>
+<p>Similar to Scala&rsquo;s <code>sealed trait</code>s:</p>
+<ul>
+<li><code>class</code>es, not supported for <code>interface</code>s</li>
+<li>subtypes must be defined inside the sealed class</li>
+<li>sealed hierarchies proved <em>exhaustive checking</em> inside <code>where</code> clauses</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">sealed</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Booze</span> {
+    <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Rum</span> : Booze()
+    <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Whisky</span> : Booze()
+    <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Vodka</span> : Booze()
+}
+<span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">goGetMeA</span>(beverage: Booze) = <span style="color:#080;font-weight:bold">when</span> (beverage) {
+    <span style="color:#080;font-weight:bold">is</span> Booze.Rum -&gt; <span style="color:#d20;background-color:#fff0f0">&#34;Diplomatico&#34;</span>
+    <span style="color:#080;font-weight:bold">is</span> Booze.Whisky -&gt; <span style="color:#d20;background-color:#fff0f0">&#34;Caol Ila&#34;</span>
+    <span style="color:#080;font-weight:bold">is</span> Booze.Vodka -&gt; <span style="color:#d20;background-color:#fff0f0">&#34;Zubrowka&#34;</span>
+}
+goGetMeA(Booze.Rum())
+</code></pre></div></section><section>
+<h1 id="kotlin-201----advanced-oop-3">Kotlin 201 &ndash; Advanced OOP</h1>
+<h2 id="nested-and-inner-classes">Nested and inner classes</h2>
+<ul>
+<li>Nesting a class inside another does not allow access to outer members
+<ul>
+<li>It&rsquo;s equivalent to a Java&rsquo;s <code>static</code> inner class</li>
+</ul>
+</li>
+<li>To create an inner class, the <code>inner</code> modifier must be explicit</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Outer</span> {
+    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">readMeIfYouCan</span> = <span style="color:#00d;font-weight:bold">1</span>
+    <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Nested</span> {
+        init { println(readMeIfYouCan) } <span style="color:#888">// error: unresolved reference: readMeIfYouCan
+</span><span style="color:#888"></span>    }
+}
+</code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Outer</span> { <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Nested</span> }
+Outer.Nested() <span style="color:#888">// OK
+</span></code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Outer</span> {
+    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">readMeIfYouCan</span> = <span style="color:#00d;font-weight:bold">1</span>
+    <span style="color:#080;font-weight:bold">inner</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Inner</span> {
+        init { println(readMeIfYouCan) } <span style="color:#888">// ok
+</span><span style="color:#888"></span>    }
+}
+Outer.Inner() <span style="color:#888">// error: constructor of inner class Inner can be called only with receiver of containing class
+</span><span style="color:#888"></span>Outer().Inner() <span style="color:#888">// OK
+</span></code></pre></div></section><section>
+<h1 id="kotlin-201----advanced-oop-4">Kotlin 201 &ndash; Advanced OOP</h1>
+<h2 id="enum-classes">Enum classes</h2>
+<p>Same as Java, with Kotlin syntax</p>
+<h2 id="object-expressions">Object expressions</h2>
+<p><code>object</code> expressions replace anonymous classes</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">Test</span> {
+    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">first</span>(): Unit
+    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">second</span>(): Unit
+}
+<span style="color:#080;font-weight:bold">object</span> <span style="color:#a61717;background-color:#e3d2d2">: </span><span style="color:#b06;font-weight:bold">Test</span> {
+    <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">first</span>() { }
+    <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">second</span>() { }
+}
+</code></pre></div></section><section>
+<h1 id="kotlin-201----advanced-oop-5">Kotlin 201 &ndash; Advanced OOP</h1>
+<h2 id="type-aliases">Type aliases</h2>
+<ul>
+<li>Types can be aliased</li>
+<li>Only at the top level</li>
+<li>Type aliases in kotlin <strong>are not</strong> Scala&rsquo;s <code>type</code> definitions</li>
+<li>Kotlin has no equivalent of Scala&rsquo;s <code>type</code></li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>typealias Drivers = Pair&lt;String, String&gt;
+typealias Team = Pair&lt;String, Drivers&gt;
+typealias Formula1 = Map&lt;String, Team&gt;
+<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">`f1 2020`</span> = mapOf(
+    Team(<span style="color:#d20;background-color:#fff0f0">&#34;Ferrari&#34;</span>, Drivers(<span style="color:#d20;background-color:#fff0f0">&#34;Vettel&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;Leclerc&#34;</span>)),
+    Team(<span style="color:#d20;background-color:#fff0f0">&#34;RedBull&#34;</span>, Drivers(<span style="color:#d20;background-color:#fff0f0">&#34;Versbatten&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;Albon&#34;</span>)),
+    Team(<span style="color:#d20;background-color:#fff0f0">&#34;Merdeces&#34;</span>, Drivers(<span style="color:#d20;background-color:#fff0f0">&#34;Hamilton&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;Bottas&#34;</span>)),
+)
+<span style="color:#a61717;background-color:#e3d2d2">`</span>f1 <span style="color:#00d;font-weight:bold">2020</span><span style="color:#a61717;background-color:#e3d2d2">`</span> <span style="color:#888">// Map&lt;String, Pair&lt;String, Pair&lt;String, String&gt;&gt;&gt;
+</span></code></pre></div></section><section>
 <h2 id="extended-oop">extended OOP</h2>
-<p>data classes
-copy / equals / toString
-destructuring declarations
-Pair / Triple
-sealed classes
-sealing and when
-nested classes
-inner classes
-enum classes
-anonymous classes via object expression
-type aliasing
-delegation and <code>by</code>
+<p>delegation and <code>by</code>
 contract implementation by delegation (favor composition over inheritance)
 delegated properties and variables
 delegated properties <a href="https://kotlinlang.org/docs/reference/delegated-properties.html">https://kotlinlang.org/docs/reference/delegated-properties.html</a>
@@ -1398,15 +1500,13 @@ visibility of private members</p>
 arrays
 primitive arrays
 ranges</p>
-<h2 id="performance">performance</h2>
-<p>tail recursion
-inline functions
+<h1 id="left-out">left out</h1>
+<p>enum classes
 noinline
 crossinline
+coroutines
+java interoperability
 inline classes &ndash; mentioned and skipped, ref to <a href="https://kotlinlang.org/docs/reference/inline-classes.html">https://kotlinlang.org/docs/reference/inline-classes.html</a></p>
-<h2 id="java-interop">java interop</h2>
-<p>@JvmOverloads
-@JvmDefault</p>
 <h2 id="dsls-in-kotlin-type-safe-builders">DSLs in Kotlin (type-safe builders)</h2>
 </section>
 
