@@ -1267,11 +1267,12 @@ Kotlin provides a <code>where</code> keyword to specify type bounds separately f
           N : ConvexGeometricShape&lt;P, A&gt; = TODO()
 </code></pre></div></section><section>
 <h1 id="kotlin-103----generics-3">Kotlin 103 &ndash; Generics</h1>
-<h2 id="variance">Variance</h2>
+<h2 id="variance-and-type-projection">Variance and type projection</h2>
 <p>Kotlin supports (co/contro)variance using:</p>
 <ul>
-<li><code>out</code> to mark covariance (similar to Java&rsquo;s <code>? extends</code>)</li>
-<li><code>in</code> to mark controvariance (similar to Java&rsquo;s <code>? super</code>)</li>
+<li><code>&lt;out T&gt;</code> to mark covariance (similar to Java&rsquo;s <code>&lt;? extends T&gt;</code>)</li>
+<li><code>&lt;in T&gt;</code> to mark controvariance (similar to Java&rsquo;s <code>&lt;? super T&gt;</code>)</li>
+<li><code>&lt;*&gt;</code> to mark that only the bound is known for the type (similar to Java&rsquo;s <code>&lt;?&gt;</code>)</li>
 </ul>
 <p>Type variant in Kotlin is expressed <em>at declaration site</em>!</p>
 <ul>
@@ -1285,18 +1286,69 @@ Kotlin provides a <code>where</code> keyword to specify type bounds separately f
     <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">produce2</span>(): X = TODO()<span class='fragment '  style="color: #888;"> // error: type parameter X is declared as &#39;in&#39; but occurs in &#39;out&#39; position in type X</span>
 }
 </code></pre></div></section><section>
-<h2 id="generics">generics</h2>
-<p>variance
-use site variance and type projection
-declaration site variance
-star-projection
-inline functions
-reified types
-invocation of reified types</p>
-<h2 id="basic-collections">basic collections?</h2>
-<p>list / mutablelist
-set / mutableset
-map / mutablemap</p>
+<h1 id="kotlin-103----generics-4">Kotlin 103 &ndash; Generics</h1>
+<h2 id="type-reification">Type reification</h2>
+<p>Generics at runtime can be dealt with two strategies:</p>
+<ul>
+<li><strong>erasure</strong>: generic information is used by the compiler, but it&rsquo;s discarded at runtime
+<ul>
+<li>Java / Scala</li>
+</ul>
+</li>
+<li><strong>monomorphization</strong>: concrete type are emitted when generic types are actually used
+<ul>
+<li>Rust / C#</li>
+</ul>
+</li>
+</ul>
+<p>Delicate balance between executable size, performance, and usability</p>
+<p>Kotlin uses erasure, but allows to control inlining via the <code>inline</code> keyword.
+<br>
+In inlined functions, <em>types can be locally monomorphized</em>!
+<br>
+Local monomorphization is expressed with the <code>reified</code> keyword.</p>
+</section><section>
+<h1 id="kotlin-103----generics-5">Kotlin 103 &ndash; Generics</h1>
+<h2 id="type-reification-example">Type reification example</h2>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">inline</span> <span style="color:#080;font-weight:bold">fun</span> &lt;reified T&gt; <span style="color:#06b;font-weight:bold">checkIsType</span>(a: Any): T = a <span style="color:#080;font-weight:bold">is</span> T <span style="color:#888">// instance check on a generic!
+</span><span style="color:#888"></span>checkIsType&lt;Long&gt;(<span style="color:#00d;font-weight:bold">1</span>) <span style="color:#888">// false
+</span><span style="color:#888"></span>checkIsType&lt;Long&gt;(<span style="color:#00d;font-weight:bold">1L</span>) <span style="color:#888">// true
+</span></code></pre></div><p>Note on Java interoperability:</p>
+<ul>
+<li><code>inline</code> functions get inlined if the caller is Kotlin-compiled code,
+they don&rsquo;t if they are called by other bytecode-targeting compilers (<code>javac</code>, <code>scalac</code>&hellip;)</li>
+<li><code>reified</code> types <em>requires</em> inlining to perform the local monorphization:
+the function code is <em>copied</em> on call site, and the compiler must know how to do it</li>
+</ul>
+<p>$\Rightarrow$ Can&rsquo;t be used if interoperability is a concern</p>
+<ul>
+<li>or a wrapper must be provided</li>
+</ul>
+</section><section>
+<h1 id="kotlin-103----collections">Kotlin 103 &ndash; Collections</h1>
+<p>Similar to Scala, but based (for the JVM target) on the Java implementation</p>
+<ul>
+<li>No <code>toJava()</code>/<code>toScala()</code> equivalent</li>
+<li><code>List</code>, <code>Set</code>, <code>Map</code> are <em>unmodifiable</em> but not guaranteed <em>immutable</em>
+<ul>
+<li>e.g., at runtime, <code>List</code> may be backed by an <code>ArrayList</code></li>
+<li>clients calling from Java will see mutable collections</li>
+<li>Under the JVM, the immutable interfaces are erased at runtime</li>
+</ul>
+</li>
+<li>Mutable collections are available via <code>Mutable</code>(<code>List</code>/<code>Set</code>/<code>Map</code>)</li>
+<li>As in Scala, invocation of functional manipulation on collections returns a new collection</li>
+<li>Differently than Scala, when a collection is returned, the type is usually <code>List</code>
+<ul>
+<li>Type is lost, no higher kinded types in Kotlin to express it</li>
+</ul>
+</li>
+<li><code>Sequence</code>s prevent a collection creation at each step</li>
+<li><code>Flow</code>s represent collections that are processed in parallel</li>
+</ul>
+</section><section>
+<h1 id="kotlin-201----advanced-oop">Kotlin 201 &ndash; Advanced OOP</h1>
+</section><section>
 <h2 id="extended-oop">extended OOP</h2>
 <p>data classes
 copy / equals / toString
