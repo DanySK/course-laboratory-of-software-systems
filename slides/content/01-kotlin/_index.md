@@ -1215,11 +1215,77 @@ This will turn useful in future...
 
 ---
 
+# Kotlin 103 -- Generics
+
+## Compared with Java and Scala
+
+Kotlin's type system supports generics
+* Handier than Java's
+* **way** less powerful than Scala's
+* No higher kinded types (they are in Scala)
+* No type lambdas (they are in Scala)
+* Declaration-site variance (absent in Java)
+* Generic type reification via inlining (not found in Java nor Scala)
+```scala
+trait Functor[F[_]] // There is no Kotlin equivalent for these lines
+type MapFunctor = Functor[({ type T[A] = Map[Int, A] })#T]
+```
+
+---
+
+# Kotlin 103 -- Generics
+
+## Base syntax
+
+Syntax similar to Java generics
+
+```kotlin
+class Foo<A, B : CharSequence>
+fun <T : Comparable<T>> maxOf3(first: T, second: T, third: T): T = when {
+    first >= second && first >= third -> first
+    second >= third -> second
+    else -> third
+}
+```
+
+* type upper bounds can be specified with `:`
+* if no bound is specified, the generic is *nullable*!
+
+```kotlin
+fun <T> className(receiver: T) = receiver::class.simpleName
+// error: expression in a class literal has a nullable type 'T', use !! to make the type non-nullable
+```
+
+---
+
+# Kotlin 103 -- Generics
+
+## `where`
+
+In case multiple bounds are present, the definition can become cumbersome
+<br/>
+Kotlin provides a `where` keyword to specify type bounds separately from the rest of the signature
+
+```kotlin
+// From an actual Alchemist interface
+interface NavigationStrategy<T, P, A, L, R, N, E>
+    where P : Position<P>, P : Vector<P>,
+          A : GeometricTransformation<P>,
+          L : ConvexGeometricShape<P, A>,
+          N : ConvexGeometricShape<P, A> {
+// Interface content, if any
+}
+
+// Function syntax
+fun <T, P, A, L, R, N, E> navigationStrategy()
+    where P : Position<P>, P : Vector<P>,
+          A : GeometricTransformation<P>,
+          L : ConvexGeometricShape<P, A>,
+          N : ConvexGeometricShape<P, A> = TODO()
+```
+---
+
 ## generics
-syntax for functions
-syntax for classes
-type bounds
-`where`
 variance
 use site variance and type projection
 declaration site variance
@@ -1232,7 +1298,6 @@ invocation of reified types
 list / mutablelist
 set / mutableset
 map / mutablemap
-`in`
 
 ## extended OOP
 data classes
