@@ -1287,11 +1287,12 @@ fun <T, P, A, L, R, N, E> navigationStrategy()
 
 # Kotlin 103 -- Generics
 
-## Variance
+## Variance and type projection
 
 Kotlin supports (co/contro)variance using:
-* `out` to mark covariance (similar to Java's `? extends`)
-* `in` to mark controvariance (similar to Java's `? super`)
+* `<out T>` to mark covariance (similar to Java's `<? extends T>`)
+* `<in T>` to mark controvariance (similar to Java's `<? super T>`)
+* `<*>` to mark that only the bound is known for the type (similar to Java's `<?>`)
 
 Type variant in Kotlin is expressed *at declaration site*!
 * In Java type variance is only for methods
@@ -1306,22 +1307,74 @@ interface ProduceAndConsume<in X, out Y> {
 }
 ```
 
+---
+
+# Kotlin 103 -- Generics
+
+## Type reification
+
+Generics at runtime can be dealt with two strategies:
+* **erasure**: generic information is used by the compiler, but it's discarded at runtime
+    * Java / Scala
+* **monomorphization**: concrete type are emitted when generic types are actually used
+    * Rust / C#
+
+Delicate balance between executable size, performance, and usability
+
+Kotlin uses erasure, but allows to control inlining via the `inline` keyword.
+<br>
+In inlined functions, *types can be locally monomorphized*!
+<br>
+Local monomorphization is expressed with the `reified` keyword.
+
 
 ---
 
-## generics
-variance
-use site variance and type projection
-declaration site variance
-star-projection
-inline functions
-reified types
-invocation of reified types
+# Kotlin 103 -- Generics
 
-## basic collections?
-list / mutablelist
-set / mutableset
-map / mutablemap
+## Type reification example
+
+```kotlin
+inline fun <reified T> checkIsType(a: Any): T = a is T // instance check on a generic!
+checkIsType<Long>(1) // false
+checkIsType<Long>(1L) // true
+```
+
+Note on Java interoperability:
+* `inline` functions get inlined if the caller is Kotlin-compiled code,
+they don't if they are called by other bytecode-targeting compilers (`javac`, `scalac`...)
+* `reified` types *requires* inlining to perform the local monorphization:
+the function code is *copied* on call site, and the compiler must know how to do it
+
+$\Rightarrow$ Can't be used if interoperability is a concern
+* or a wrapper must be provided
+
+---
+
+# Kotlin 103 -- Collections
+
+Similar to Scala, but based (for the JVM target) on the Java implementation
+* No `toJava()`/`toScala()` equivalent
+* `List`, `Set`, `Map` are *unmodifiable* but not guaranteed *immutable*
+    * e.g., at runtime, `List` may be backed by an `ArrayList`
+    * clients calling from Java will see mutable collections
+    * Under the JVM, the immutable interfaces are erased at runtime
+* Mutable collections are available via `Mutable`(`List`/`Set`/`Map`)
+* As in Scala, invocation of functional manipulation on collections returns a new collection
+* Differently than Scala, when a collection is returned, the type is usually `List`
+    * Type is lost, no higher kinded types in Kotlin to express it
+* `Sequence`s prevent a collection creation at each step
+* `Flow`s represent collections that are processed in parallel
+
+---
+
+# Kotlin 201 -- Advanced OOP
+
+
+
+---
+
+
 
 ## extended OOP
 data classes
