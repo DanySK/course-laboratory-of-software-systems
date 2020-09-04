@@ -1561,18 +1561,86 @@ exam.clear()
 exam // []
 ```
 
+---
+
+# Kotlin 201 -- Advanced OOP
+
+## Delegated properties and variables
+
+Properties and variables can be delegated as well
+<br/>
+some delegates are built-in, e.g. `lazy`
+
+```kotlin
+val someLazyString by lazy {
+    println("I'm initializing myself")
+    "I'm intialized"
+}
+println("Doing stuff")
+println(someLazyString) // "I'm initializing myself" gets printed here
+```
 
 ---
 
-## extended OOP
-delegation and `by`
-contract implementation by delegation (favor composition over inheritance)
-delegated properties and variables
-delegated properties https://kotlinlang.org/docs/reference/delegated-properties.html
-lazy
-observable
-delegation via map (mutability via MutableMap)
-implementing a custom delegate for properties
+# Kotlin 201 -- Advanced OOP
+
+## Delegation via maps
+
+Class properties can be stored in an appropriate `Map`
+<br/>
+Useful when dealing with dynamic languages or untyped serialization (e.g. JSON or YAML)
+
+```kotlin
+val fromJson = mapOf("name" to "John Smith", "birthYear" to 2020)
+class Person(val jsonRepresentation: Map<String, Any>) {
+    val name by jsonRepresentation
+    val birthYear: Int by jsonRepresentation
+    override fun toString() = "$name born in $birthYear"
+}
+Person(fromJson)
+```
+
+---
+
+# Kotlin 201 -- Advanced OOP
+
+## Delegation via maps and mutability
+
+In case of mutable properties, a `MutableMap` is required as delegate
+
+```kotlin
+val janesJson: MutableMap<String, Any> = mutableMapOf("name" to "Jane Smith", "birthYear" to 1999)
+class MutablePerson(val jsonRepresentation: MutableMap<String, Any>) {
+    var name by jsonRepresentation
+    var birthYear: Int by jsonRepresentation
+    override fun toString() = "$name born in $birthYear"
+}
+val jane = MutablePerson(janesJson)
+jane.toString()
+jane.name = "Janet Smitherson"
+jane.toString()
+janesJson // Does it change? {{<comment_frag "{name=Janet Smitherson, birthYear=1999} -- YES! Bidirectional" >}}
+```
+---
+
+# Kotlin 201 -- Advanced OOP
+
+## Custom delegates 
+
+A valid delegate for a `val` is a `class` with a method:
+```kotlin
+operator fun getValue(thisRef: T, property: KProperty<*>): R
+```
+where T is the "owner" type, and R is the type of the property
+
+A valid delegate for a `var` must also have a `setValue` method:
+```kotlin
+operator fun setValue(thisRef: T, property: KProperty<*>, value: P): R
+```
+where T and R are the same as in `getValue`, and P is a supertype of R
+
+
+---
 
 ## functional kotlin
 function types
