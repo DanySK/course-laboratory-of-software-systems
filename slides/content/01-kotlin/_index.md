@@ -1517,6 +1517,53 @@ val `f1 2020` = mapOf(
 
 ---
 
+# Kotlin 201 -- Advanced OOP
+
+## Delegation
+> **Favour composition over inheritance**<br/>
+> `A` should extend `B` only if `A` truly ‘is-a’ a `B`, if not, *use composition* instead, which means A should hold a reference of B and expose a simpler API.<br/>
+> *J. Bloch, Effective Java, Item 16*
+
+**Delegation** is one of the mechanisms to implement composition,
+see the [delegation pattern](https://en.wikipedia.org/wiki/Delegation_pattern)
+<br/>
+Delegation is often verbose and very mechanic in implementation
+
+```kotlin
+data class Student(val name: String, val surname: String, val id: String)
+class Exam : MutableCollection<Student> {
+    private val representation = mutableListOf<Student>()
+    override fun add(e E) = representation.add(e)
+    override fun addAll(e E) = representation.addAll(e)
+    override fun clear() = representation.clear()
+    ... // BOOOOOOORING
+}
+```
+
+---
+
+# Kotlin 201 -- Advanced OOP
+
+## Delegation via `by`
+
+Kotlin supports delegation at the language level
+
+```kotlin
+data class Student(val name: String, val surname: String, val id: String)
+class Exam : MutableCollection<Student> by mutableListOf<Student>() {
+    fun register(name: String, surname: String, id: String) = add(Student(name, surname, id))
+    override fun toString() = toList().toString() // No access to the delegate! Can't call toString on it!
+}
+val exam = Exam()
+exam.register("Luca", "Ghiotto", "00000025")
+exam // [Student(name=Luca, surname=Ghiotto, id=00000025)]
+exam.clear()
+exam // []
+```
+
+
+---
+
 ## extended OOP
 delegation and `by`
 contract implementation by delegation (favor composition over inheritance)
