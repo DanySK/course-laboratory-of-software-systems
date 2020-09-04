@@ -26,13 +26,13 @@ class ChromiumGenerator < Generator
 
     def initialize
         puts "Searching for the Chromium or Google Chrome executable"
-        command = `eval compgen -c`
+        command = `bash -c "eval compgen -c"`
             .split(/\n/)
             .filter { | it | /.*chrom(?:e|ium).*/ =~ it }
             .uniq
             .filter { | it | /.*driver.*/ !~ it }
         puts "Found candidates: #{command}"
-        @chromium = command.first
+        @chromium = command.first || raise 'No candidate for chrome / chromium'
         puts "Selected #{@chromium}"
     end
 
