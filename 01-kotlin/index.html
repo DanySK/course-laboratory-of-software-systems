@@ -26,7 +26,7 @@
     <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
 <h2 id="kotlin-for-scala-developers">Kotlin (for Scala developers)</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2020-09-04
+2020-09-07
 
 </section><section>
 <h1 id="why-kotlin">Why Kotlin</h1>
@@ -1462,15 +1462,148 @@ typealias Formula1 = Map&lt;String, Team&gt;
 )
 <span style="color:#a61717;background-color:#e3d2d2">`</span>f1 <span style="color:#00d;font-weight:bold">2020</span><span style="color:#a61717;background-color:#e3d2d2">`</span> <span style="color:#888">// Map&lt;String, Pair&lt;String, Pair&lt;String, String&gt;&gt;&gt;
 </span></code></pre></div></section><section>
-<h2 id="extended-oop">extended OOP</h2>
-<p>delegation and <code>by</code>
-contract implementation by delegation (favor composition over inheritance)
-delegated properties and variables
-delegated properties <a href="https://kotlinlang.org/docs/reference/delegated-properties.html">https://kotlinlang.org/docs/reference/delegated-properties.html</a>
-lazy
-observable
-delegation via map (mutability via MutableMap)
-implementing a custom delegate for properties</p>
+<h1 id="kotlin-201----advanced-oop-6">Kotlin 201 &ndash; Advanced OOP</h1>
+<h2 id="delegation">Delegation</h2>
+<blockquote>
+<p><strong>Favour composition over inheritance</strong><br/>
+<code>A</code> should extend <code>B</code> only if <code>A</code> truly ‘is-a’ a <code>B</code>, if not, <em>use composition</em> instead, which means A should hold a reference of B and expose a simpler API.<br/>
+<em>J. Bloch, Effective Java, Item 16</em></p>
+</blockquote>
+<p><strong>Delegation</strong> is one of the mechanisms to implement composition,
+see the <a href="https://en.wikipedia.org/wiki/Delegation_pattern">delegation pattern</a>
+<br/>
+Delegation is often verbose and very mechanic in implementation</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">data</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Student</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">name</span>: String, <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">surname</span>: String, <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">id</span>: String)
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Exam</span> : MutableCollection&lt;Student&gt; {
+    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">representation</span> = mutableListOf&lt;Student&gt;()
+    <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">add</span>(e E) = representation.add(e)
+    <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">addAll</span>(e E) = representation.addAll(e)
+    <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">clear</span>() = representation.clear()
+    ... <span style="color:#888">// BOOOOOOORING
+</span><span style="color:#888"></span>}
+</code></pre></div></section><section>
+<h1 id="kotlin-201----advanced-oop-7">Kotlin 201 &ndash; Advanced OOP</h1>
+<h2 id="delegation-via-by">Delegation via <code>by</code></h2>
+<p>Kotlin supports delegation at the language level</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">data</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Student</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">name</span>: String, <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">surname</span>: String, <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">id</span>: String)
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Exam</span> : MutableCollection&lt;Student&gt; <span style="color:#080;font-weight:bold">by</span> mutableListOf&lt;Student&gt;() {
+    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">register</span>(name: String, surname: String, id: String) = add(Student(name, surname, id))
+    <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">toString</span>() = toList().toString() <span style="color:#888">// No access to the delegate! Can&#39;t call toString on it!
+</span><span style="color:#888"></span>}
+<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">exam</span> = Exam()
+exam.register(<span style="color:#d20;background-color:#fff0f0">&#34;Luca&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;Ghiotto&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;00000025&#34;</span>)
+exam <span style="color:#888">// [Student(name=Luca, surname=Ghiotto, id=00000025)]
+</span><span style="color:#888"></span>exam.clear()
+exam <span style="color:#888">// []
+</span></code></pre></div></section><section>
+<h1 id="kotlin-201----advanced-oop-8">Kotlin 201 &ndash; Advanced OOP</h1>
+<h2 id="delegated-properties-and-variables">Delegated properties and variables</h2>
+<p>Properties and variables can be delegated as well
+<br/>
+some delegates are built-in, e.g. <code>lazy</code></p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">someLazyString</span> <span style="color:#080;font-weight:bold">by</span> lazy {
+    println(<span style="color:#d20;background-color:#fff0f0">&#34;I&#39;m initializing myself&#34;</span>)
+    <span style="color:#d20;background-color:#fff0f0">&#34;I&#39;m intialized&#34;</span>
+}
+println(<span style="color:#d20;background-color:#fff0f0">&#34;Doing stuff&#34;</span>)
+println(someLazyString) <span style="color:#888">// &#34;I&#39;m initializing myself&#34; gets printed here
+</span></code></pre></div></section><section>
+<h1 id="kotlin-201----advanced-oop-9">Kotlin 201 &ndash; Advanced OOP</h1>
+<h2 id="delegation-via-maps">Delegation via maps</h2>
+<p>Class properties can be stored in an appropriate <code>Map</code>
+<br/>
+Useful when dealing with dynamic languages or untyped serialization (e.g. JSON or YAML)</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">fromJson</span> = mapOf(<span style="color:#d20;background-color:#fff0f0">&#34;name&#34;</span> to <span style="color:#d20;background-color:#fff0f0">&#34;John Smith&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;birthYear&#34;</span> to <span style="color:#00d;font-weight:bold">2020</span>)
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Person</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">jsonRepresentation</span>: Map&lt;String, Any&gt;) {
+    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">name</span> <span style="color:#080;font-weight:bold">by</span> jsonRepresentation
+    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">birthYear</span>: Int <span style="color:#080;font-weight:bold">by</span> jsonRepresentation
+    <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">toString</span>() = <span style="color:#d20;background-color:#fff0f0">&#34;$name born in $birthYear&#34;</span>
+}
+Person(fromJson)
+</code></pre></div></section><section>
+<h1 id="kotlin-201----advanced-oop-10">Kotlin 201 &ndash; Advanced OOP</h1>
+<h2 id="delegation-via-maps-and-mutability">Delegation via maps and mutability</h2>
+<p>In case of mutable properties, a <code>MutableMap</code> is required as delegate</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">janesJson</span>: MutableMap&lt;String, Any&gt; = mutableMapOf(<span style="color:#d20;background-color:#fff0f0">&#34;name&#34;</span> to <span style="color:#d20;background-color:#fff0f0">&#34;Jane Smith&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;birthYear&#34;</span> to <span style="color:#00d;font-weight:bold">1999</span>)
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MutablePerson</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">jsonRepresentation</span>: MutableMap&lt;String, Any&gt;) {
+    <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">name</span> <span style="color:#080;font-weight:bold">by</span> jsonRepresentation
+    <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">birthYear</span>: Int <span style="color:#080;font-weight:bold">by</span> jsonRepresentation
+    <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">toString</span>() = <span style="color:#d20;background-color:#fff0f0">&#34;$name born in $birthYear&#34;</span>
+}
+<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">jane</span> = MutablePerson(janesJson)
+jane.toString()
+jane.name = <span style="color:#d20;background-color:#fff0f0">&#34;Janet Smitherson&#34;</span>
+jane.toString()
+janesJson <span style="color:#888">// Does it change? <span class='fragment '  style="color: #888;">{name=Janet Smitherson, birthYear=1999} -- YES! Bidirectional</span>
+</span></code></pre></div></section><section>
+<h1 id="kotlin-201----advanced-oop-11">Kotlin 201 &ndash; Advanced OOP</h1>
+<h2 id="custom-delegates">Custom delegates</h2>
+<p>A valid delegate for a <code>val</code> is a <code>class</code> with a method:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">operator</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">getValue</span>(thisRef: T, property: KProperty&lt;*&gt;): R
+</code></pre></div><p>where T is the &ldquo;owner&rdquo; type, and R is the type of the property</p>
+<p>A valid delegate for a <code>var</code> must also have a <code>setValue</code> method:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">operator</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">setValue</span>(thisRef: T, property: KProperty&lt;*&gt;, value: P): R
+</code></pre></div><p>where T and R are the same as in <code>getValue</code>, and P is a supertype of R</p>
+</section><section>
+<h1 id="kotlin-201----functional-kotlin">Kotlin 201 &ndash; Functional Kotlin</h1>
+<h2 id="lambda-expressions">Lambda expressions</h2>
+<p>Kotlin lambda expression&rsquo;s syntax is inspired by Groovy
+<br/>
+and is similar to Smalltalk / Ceylon / Xtend / Ruby as well</p>
+<ul>
+<li>Enclosing an expression in curly brackets creates a lambda expression</li>
+<li>Parameters are listed <em>inside</em> the brackets, a <code>-&gt;</code> separates them from the body</li>
+<li>If there is one single parameter, it can be unspecified and referred with the keyword <code>it</code></li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">myLambda</span> = {
+    println(<span style="color:#d20;background-color:#fff0f0">&#34;Hey I&#39;m computing&#34;</span>)
+}
+<span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">whatsMyReturnType</span>() = { 
+    <span style="color:#d20;background-color:#fff0f0">&#34;A string&#34;</span>
+}
+myLambda.invoke() <span style="color:#888">// Java-style invocation
+</span><span style="color:#888"></span>myLambda() <span style="color:#888">// Decent-style invocation (invoke is an operator!)
+</span><span style="color:#888"></span>myLambda()() <span style="color:#888">// Guess <span class='fragment '  style="color: #888;">error: expression &#39;myLambda()&#39; of type &#39;Unit&#39; cannot be invoked as a function.</span>
+</span><span style="color:#888"></span>whatsMyReturnType() <span style="color:#888">// Guess <span class='fragment '  style="color: #888;">Subtle, but the compiler raises warnings</span>
+</span><span style="color:#888"></span>whatsMyReturnType()() <span style="color:#888">// Guess <span class='fragment '  style="color: #888;">A string</span>
+</span></code></pre></div></section><section>
+<h1 id="kotlin-201----functional-kotlin-1">Kotlin 201 &ndash; Functional Kotlin</h1>
+<h2 id="function-type-literals">Function type literals</h2>
+<p>Just as Scala, Kotlin supports function type literals
+<br/>
+No need for verbose interfaces such as <code>Function&lt;T, R&gt;</code>, <code>BiConsumer&lt;T, R&gt;</code>, etc.</p>
+<p>Function type literals have parameter types between parentheses, a <code>-&gt;</code>, and the result parameter</p>
+<ul>
+<li><code>() -&gt; Any</code> &ndash; A 0-ary function returning <code>Any</code></li>
+<li><code>(String) -&gt; Any</code> &ndash; A unary function taking a <code>String</code> and returning <code>Any</code></li>
+<li><code>(String, Int) -&gt; Unit</code> &ndash; A binary function taking a <code>String</code> and an <code>Int</code> and not returning</li>
+</ul>
+<p>Function type literals allow for writing cleaner <em>higher-order functions</em></p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> &lt;T, I, R&gt; <span style="color:#06b;font-weight:bold">compose</span>(f: (I) -&gt; R, g: (T) -&gt; I): (T) -&gt; R = { f(g(it)) }
+compose({v: Int -&gt; v * v}, {v: Double -&gt; v.toInt()})(<span style="color:#00d;font-weight:bold">3.9</span>) <span style="color:#888">// 9
+</span></code></pre></div></section><section>
+<h1 id="kotlin-201----functional-kotlin-2">Kotlin 201 &ndash; Functional Kotlin</h1>
+<h2 id="function-references">Function references</h2>
+<p>Functions can be referred by using <code>::</code>
+<br/>
+the left operand is the receiver (if present)
+<br/>
+the right operand is the function name</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> &lt;T, I, R&gt; <span style="color:#06b;font-weight:bold">compose</span>(f: (I) -&gt; R, g: (T) -&gt; I): (T) -&gt; R = { f(g(it)) }
+<span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">square</span>(v: Int) = v * v
+<span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">floor</span>(v: Double) = v.toInt()
+compose(::square, ::floor)(<span style="color:#00d;font-weight:bold">3.9</span>)
+</code></pre></div></section><section>
+<h1 id="kotlin-201----functional-kotlin-3">Kotlin 201 &ndash; Functional Kotlin</h1>
+<h2 id="the-trailing-lambda-convention">The <strong>trailing lambda</strong> convention</h2>
+<p>A simple special rule that enables very elegant syntactic forms:
+<br/>
+<em>if a lambda expression is the last parameter in a function call</em>
+<br/>
+<em>then it can be placed outside of the parentheses</em></p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> &lt;T, R&gt; <span style="color:#06b;font-weight:bold">delayed</span>(
+</code></pre></div><p>Very</p>
+</section><section>
 <h2 id="functional-kotlin">functional kotlin</h2>
 <p>function types
 function types and nullability
