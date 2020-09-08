@@ -94,7 +94,7 @@ If you are following remotely, make sure you can experiment using your local sys
 # Overview
 
 * [Kotlin for Scala developers](01-kotlin)
-  * Internal DSL construction
+  * [Internal DSLs construction](02-internal-dsls)
 * Build automation
 * Version control
 * Continuous integration/deployment/delivery
