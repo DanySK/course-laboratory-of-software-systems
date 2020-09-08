@@ -1,8 +1,8 @@
  
 +++
 
-title = "Introduction to Laboratory of Software Systems"
-description = "Description of the course"
+title = "Kotlin (for Scala developers)"
+description = "A fast Kotlin primer for people who already know Java and Scala"
 outputs = ["Reveal"]
 
 [reveal_hugo]
@@ -1679,7 +1679,8 @@ No need for verbose interfaces such as `Function<T, R>`, `BiConsumer<T, R>`, etc
 Function type literals have parameter types between parentheses, a `->`, and the result parameter
 * `() -> Any` -- A 0-ary function returning `Any`
 * `(String) -> Any` -- A unary function taking a `String` and returning `Any`
-* `(String, Int) -> Unit` -- A binary function taking a `String` and an `Int` and not returning
+* `(String, Int) -> Unit` -- A binary function taking a `String` and an `Int` and returning `Unit`
+* `(String, Int?) -> Any?` -- A binary function taking a `String` and a nullable `Int?` returning a nullable `Any?`
 
 Function type literals allow for writing cleaner *higher-order functions*
 
@@ -1719,55 +1720,328 @@ A simple special rule that enables very elegant syntactic forms:
 <br/>
 *then it can be placed outside of the parentheses*
 
+If used correctly, feels like adding custom blocks to a language
+
 ```kotlin
-fun <T, R> delayed(
+ // Java's thread + trailing lambda + SAM conversion
+fun delayed(delay: Long = 1000L, operation: () -> Unit) = Thread {
+    Thread.sleep(delay)
+    operation()
+}.start()
+println("Start")
+// Now we have a delayed block!
+delayed {
+    println("I was waiting")
+}
+delayed(300) { println("I wait less") }
+println("Finished")
 ```
-
-Very 
-
-
 
 ---
 
-## functional kotlin
-function types
-function types and nullability
-lambda expressions
-trailing lambdas
-implicit single parameters
-closures
-return from lambda
-return at label
-destructuring in lambdas
-anonymous functions (rarely used)
-invoke convention
-inline functions
+# Kotlin 201 -- Functional Kotlin
 
-## extensions
-extension functions vs implicits
-extension properties (no backing field)
-nullable receivers
-companion extensions
-generic extensions
-extensions resolution
-extension members (scope control)
-visibility of private members
+## Closures
 
-## extensions + functional
-function types with receiver
+Closures are supoorted
+<br/>
+They are allowed on `var`s as well as on `val`s
 
-## standard library
-let / run / apply / with
-arrays
-primitive arrays
-ranges
+```kotlin
+// Side effecting from functional manipulation is bad though
+var sum = 0
+(0..100).map {
+    sum += it
+    it * 2
+}
+sum
+sum == (0..100).sum()
+```
 
-# left out
-enum classes
-noinline
-crossinline
-coroutines
-java interoperability
-inline classes -- mentioned and skipped, ref to https://kotlinlang.org/docs/reference/inline-classes.html
+---
 
-## DSLs in Kotlin (type-safe builders)
+# Kotlin 201 -- Functional Kotlin
+
+## Flow control with lambdas
+
+Kotlin rule: `return` returns from the closest *named* `fun`ction
+
+```kotlin
+fun breakingFlow(): List<Int> = (0..10).toList().map {
+    if (it > 4) {
+        return (0..it).toList() // returns from breakingFlow
+    }
+    it
+}
+breakingFlow()
+```
+
+A *qualified `return`* can be used to return from lambdas:
+
+```kotlin
+fun breakingFlow(): List<Int> = (0..10).toList().map {
+    if (it > 4) {
+        return@map it * 10 // returns from the lambda
+    }
+    it
+}
+breakingFlow()
+```
+
+---
+
+# Kotlin 201 -- Functional Kotlin
+
+## Destructuring lambda parameters
+
+Lambda parameters can be destructured
+
+```kotlin
+mapOf(46 to "Rossi", 4 to "Dovizioso").map { (number, rider) ->
+    // destructured Pair
+    "$rider has number $number"
+}
+```
+
+---
+
+# Kotlin 201 -- Functional Kotlin
+
+## Extension functions
+
+Kotlin allows to extend any type capabilities from anywhere
+<br/>
+via **extension functions**
+
+```kotlin
+fun String.containsBatman(): Boolean = ".*b.*a.*t.*m.*a.*n.*".toRegex().matches(this)
+"battere le mani".containsBatman() // true
+```
+
+Inside extension functions, the *receiver* of the method is overridden
+<br/>
+Any type, including nullables, can be extended
+<br/>
+`object`s and `companion`s can be extended as well 
+
+**IMPORTANT**: calls to extension methods are resolved *statically*.
+<br/>
+Namely, *the receiver type is determined at compile time*.
+
+**IMPORTANT/2**: Extensions cannot shadow members,
+*members always take priority* 
+
+---
+
+# Kotlin 201 -- Functional Kotlin
+
+## Extension properties
+
+Same as functions, but for properties
+
+```kotlin
+val String.containsBatman get(): Boolean = ".*b.*a.*t.*m.*a.*n.*".toRegex().matches(this)
+"battere le mani".containsBatman // true
+```
+
+Note:
+1. extension properties cannot have backing fields
+2. extension properties can't get initialized,
+their behaviour is entirely specified by `get` and `set` accessors.
+
+---
+
+# Kotlin 201 -- Functional Kotlin
+
+## Extension function type literals
+
+Extensions functions are... functions, like any other
+<br/>
+as such, their type can be legally expressed by:
+* prefixing the *receiver type
+* following by a `.`
+* then list parameters and return types as for any function type literal
+
+```kotlin
+// Extension function taking an extension function as parameter
+fun <T> MutableList<T>.configure(configuration: MutableList<T>.() -> Unit): MutableList<T> {
+    configuration()
+    return this
+}
+// We are creating a configuration block!
+mutableListOf<String>().configure {
+    add("Pippo")
+    add("Pluto")
+    add("Paperino")
+}
+```
+
+...sounds easy to write DSLs...
+
+---
+
+# Kotlin 201 -- Functional Kotlin
+
+## Extension members and implicit receivers
+
+When extensions are defined as members, there are multiple *implicit recevers*:
+1. **dispatch receiver**: the `object` or instance of the `class` in which the extension is declared 
+2. **extension receiver** the instance of the *receiver type* of the extension is called 
+
+*Extension receivers have priority*, dispatch receivers access requires the *qualified `this`* syntax
+<br/>
+
+
+```kotlin
+object Batman { // the Batman object is the dispatch receiver
+    val name = "Batman"
+    val String.Companion.intro get() = generateSequence { Double.NaN } // String.Companion is extension receiver
+        .take(10)
+        .joinToString(separator = "")
+    fun String.withBatman() = "$this ${this@Batman.name}!" // Qualified this access to the dispatch receiver
+}
+```
+
+---
+
+# Kotlin 201 -- Functional Kotlin
+
+## DSL scope control via extension members
+
+Extension members are visible only when the dispatch receiver is the type where the extensions were defined
+<br/>
+This enables a powerful form of *scope control*
+
+```kotlin
+object Batman { // Batman is the dispatch receiver
+    val name = "Batman"
+    val String.Companion.intro get() = generateSequence { Double.NaN } // String is extension receiver
+        .take(10)
+        .joinToString(separator = "")
+    fun String.withBatman() = "$this ${this@Batman.name}!" // Qualified this access to the dispatch receiver
+}
+// Extension members are actual members! They require a receiver!
+String.intro.withBatman() // error: unresolved reference: intro
+fun <T, R> insideTheScopeOf(receiver: T, method: T.() -> R): R = receiver.method() 
+insideTheScopeOf(Batman) { // inside this function, Batman is the dispatch receiver!
+    String.intro.withBatman() // OK!
+}
+```
+
+---
+
+# Kotlin 201 -- Functional Kotlin
+
+## Scope functions
+
+Kotlin provides a number of built-in functions that run a lambda expression in a custom scope:
+* by changing the receiver (as we've done with `insideTheScopeOf` in the previous slide)
+* by creating an implicit `it` parameter
+* by changing the return type
+
+---
+
+# Kotlin 201 -- Functional Kotlin
+
+## Scope functions
+
+#### `let` : `T.((T) -> R) R`
+
+Can be invoked on an object, passing a lambda expression.
+<br/>
+The method receiver is bound to the lambda parameter
+<br/>
+the return type is the result of the function
+
+```kotlin
+1.let { "${it + 1}1" } // 21: String
+1.let { one -> "${one + 1}1" } // Same as above: it's a normal lambda
+```
+
+---
+
+# Kotlin 201 -- Functional Kotlin
+
+## Scope functions
+
+#### `run` : `T.(T.() -> R) -> R`
+
+Can be invoked on an object, passing a lambda expression.
+<br/>
+The method receiver is bound to the implicit receiver `this`
+<br/>
+the return type is the result of the function
+
+```kotlin
+1.run { "${this + 1}1" } // 21: String
+```
+
+---
+
+# Kotlin 201 -- Functional Kotlin
+
+## Scope functions
+
+#### `with` : `(T.() -> R) -> R`
+
+Non-extension version of `run`,
+the context object is passed as first parameter
+<br/>
+The method receiver is bound to the implicit receiver `this`
+<br/>
+the return type is the result of the function
+
+```kotlin
+with(1) { "${this + 1}1" } // 21: String
+```
+
+---
+
+# Kotlin 201 -- Functional Kotlin
+
+## Scope functions
+
+#### `apply` : `T.(T.() -> Unit) -> T`
+
+Similar to `run`,
+but returns the context object
+<br/>
+Used to cause side effects from a specific context,
+and returning the original object
+
+```kotlin
+1.apply { println("${this + 1}1") } // Prints 21, returns 1
+mutableListOf<Int>().apply {
+    addAll((1..10).toList())
+} // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+```
+---
+
+# Kotlin 201 -- Functional Kotlin
+
+## Scope functions
+
+#### `also` : `T.(() -> Unit) -> T`
+
+Similar to `apply`, but does not change the context,
+<br/>
+the context object is bound to the first lambda parameter
+<br/>
+Used to cause side effects and returning the original object
+
+```kotlin
+1.also { println("${it + 1}1") } // Prints 21, returns 1
+```
+
+---
+
+# Extra content
+
+A lot of language details have been left out of this guide, non complete list:
+* arrays
+* enum classes
+* spread operator
+* `noinline` and `crossinline`
+* coroutines
+* interoperatibility with Java
+* `inline class`es
