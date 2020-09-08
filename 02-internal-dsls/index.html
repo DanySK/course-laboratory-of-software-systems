@@ -30,6 +30,45 @@
 2020-09-08
 
 </section><section>
+<h1 id="dsls">DSLs</h1>
+<p>Languages that capture a <em>specific domain</em></p>
+<ul>
+<li>Usually not meant for general purpose computation
+<ul>
+<li>Even if some could support it</li>
+</ul>
+</li>
+<li>Provide language level support for expressing <em>domain entities</em>
+<ul>
+<li>their <em>structure</em></li>
+<li>their <em>behavior</em></li>
+<li>their <em>interactions</em></li>
+</ul>
+</li>
+</ul>
+<p>Being able to express a DSL requires a <strong>formalization of the domain</strong>
+<br/>
+which in turn requires a <strong>deep understanding of the domain</strong></p>
+</section><section>
+<h1 id="dsls-in-kotlin">DSLs in Kotlin</h1>
+<p>Languages with a flexible syntax are good candidates to host DSLs:</p>
+<ul>
+<li>Scala (via <code>implicit</code>s, infixing, currying, mixed brackets)</li>
+<li>Groovy (trailing lambdas, extension methods, invoke convention)</li>
+<li>Ruby (powerful metaprogramming, dynamicity)</li>
+<li>of course, Kotlin (whose syntax is a mix of Groovy and Scala)</li>
+</ul>
+<p>Key features for building DSLs:</p>
+<ul>
+<li>Invoke convention</li>
+<li>Trailing lambda convention</li>
+<li>Operator definition and overloading</li>
+<li><code>infix</code> calls</li>
+<li>Extension functions</li>
+<li>Lambda and function types with receiver</li>
+<li>Extension members</li>
+</ul>
+</section><section>
 <h1 id="kotlin-202----dsls">Kotlin 202 &ndash; DSLs</h1>
 <h2 id="aka-type-safe-builders">a.k.a. Type safe builders</h2>
 <p>Domain-specific languages require, as first step, to have a <strong>domain model</strong>.
@@ -38,33 +77,27 @@ Once the domain entities are available,
 they will be elegantly instanced via DSL.
 <br/>
 The business logic will then be bound to the domain model inextricably.</p>
-<p>The domain is modelled with <code>interface</code>s,
-the DSL is built around them and their implementations by leveraging the mechanisms we have seen:</p>
-<ul>
-<li>trailing lambda convention</li>
-<li>functions with receiver</li>
-<li>member extension functions</li>
-</ul>
+<p>The domain is better modelled with <code>interface</code>s,
+<br/>
+whose implementations are manipulated by an infrastructure exposing the DSL</p>
 </section><section>
 <h1 id="kotlin-202----dsls-1">Kotlin 202 &ndash; DSLs</h1>
-<h2 id="example">Example</h2>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">main</span>() {
-    println(
-        html {
-            head { title { +<span style="color:#d20;background-color:#fff0f0">&#34;A link to the unibo webpage&#34;</span> } }
-            body {
-                p {
-                    a(href = <span style="color:#d20;background-color:#fff0f0">&#34;http://www.unibo.it&#34;</span>) {
-                        +<span style="color:#d20;background-color:#fff0f0">&#34;Unibo Website&#34;</span>
-                    }
-                }
-            }
-        }.render()
-    )
-}
+<h2 id="a-simple-html-dsl">A simple HTML DSL</h2>
+<p>Desired syntax:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>html {
+    head {
+        title { -<span style="color:#d20;background-color:#fff0f0">&#34;A link to the unibo webpage&#34;</span> }
+    }
+    body {
+        p(<span style="color:#d20;background-color:#fff0f0">&#34;class&#34;</span> to <span style="color:#d20;background-color:#fff0f0">&#34;myCustomCssClass&#34;</span>) {
+            a(href = <span style="color:#d20;background-color:#fff0f0">&#34;http://www.unibo.it&#34;</span>) { -<span style="color:#d20;background-color:#fff0f0">&#34;Unibo Website&#34;</span> }
+        }
+    }
+}.render()
 </code></pre></div></section><section>
 <h1 id="kotlin-202----dsls-2">Kotlin 202 &ndash; DSLs</h1>
-<h2 id="example-1">Example</h2>
+<h2 id="a-simple-html-dsl-1">A simple HTML DSL</h2>
+<p>Result:</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>&lt;<span style="color:#b06;font-weight:bold">html</span>&gt;
 	&lt;<span style="color:#b06;font-weight:bold">head</span>&gt;
 		&lt;<span style="color:#b06;font-weight:bold">title</span>&gt;
@@ -72,7 +105,7 @@ the DSL is built around them and their implementations by leveraging the mechani
 		&lt;/<span style="color:#b06;font-weight:bold">title</span>&gt;
 	&lt;/<span style="color:#b06;font-weight:bold">head</span>&gt;
 	&lt;<span style="color:#b06;font-weight:bold">body</span>&gt;
-		&lt;<span style="color:#b06;font-weight:bold">p</span>&gt;
+		&lt;<span style="color:#b06;font-weight:bold">p</span> <span style="color:#369">class</span>=<span style="color:#d20;background-color:#fff0f0">&#34;myCustomCssClass&#34;</span>&gt;
 			&lt;<span style="color:#b06;font-weight:bold">a</span> <span style="color:#369">href</span>=<span style="color:#d20;background-color:#fff0f0">&#34;http://www.unibo.it&#34;</span>&gt;
 				Unibo Website
 			&lt;/<span style="color:#b06;font-weight:bold">a</span>&gt;
@@ -80,18 +113,21 @@ the DSL is built around them and their implementations by leveraging the mechani
 	&lt;/<span style="color:#b06;font-weight:bold">body</span>&gt;
 &lt;/<span style="color:#b06;font-weight:bold">html</span>&gt;
 </code></pre></div></section><section>
-<h1 id="extra-content">Extra content</h1>
-<p>A lot of language details have been left out of this guide, non complete list:</p>
+<h1 id="kotlin-202----dsls-3">Kotlin 202 &ndash; DSLs</h1>
+<h2 id="the-html-abstract-domain">The HTML abstract domain</h2>
 <ul>
-<li>arrays</li>
-<li>enum classes</li>
-<li>spread operator</li>
-<li><code>noinline</code> and <code>crossinline</code></li>
-<li>coroutines</li>
-<li>interoperatibility with Java</li>
-<li><code>inline class</code>es</li>
+<li>An HTML document is made of text <code>Element</code>s</li>
+<li>These <code>Element</code>s can be either <code>Tag</code>s or plain <code>Text</code></li>
+<li>Some <code>Element</code>s can be <code>Repeatable</code></li>
+<li><code>Text</code> elements are always <code>Repeatable</code></li>
+<li>Some <code>Tag</code>s can be <code>Repeatable</code></li>
 </ul>
-</section>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">Element</span>
+<span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">RepeatableElement</span> : Element
+<span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">Tag</span> : Element
+<span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">RepeatableTag</span> : Tag, RepeatableElement
+<span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">TextElement</span> : RepeatableElement
+</code></pre></div></section>
 
   
 
