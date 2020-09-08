@@ -2,8 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-<title>Introduction to Laboratory of Software Systems</title>
-<meta name="description" content="Description of the course">
+<title>Kotlin (for Scala developers)</title>
+<meta name="description" content="A fast Kotlin primer for people who already know Java and Scala">
 <meta name="author" content="Danilo Pianini">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -26,7 +26,7 @@
     <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
 <h2 id="kotlin-for-scala-developers">Kotlin (for Scala developers)</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2020-09-07
+2020-09-08
 
 </section><section>
 <h1 id="why-kotlin">Why Kotlin</h1>
@@ -1576,7 +1576,8 @@ No need for verbose interfaces such as <code>Function&lt;T, R&gt;</code>, <code>
 <ul>
 <li><code>() -&gt; Any</code> &ndash; A 0-ary function returning <code>Any</code></li>
 <li><code>(String) -&gt; Any</code> &ndash; A unary function taking a <code>String</code> and returning <code>Any</code></li>
-<li><code>(String, Int) -&gt; Unit</code> &ndash; A binary function taking a <code>String</code> and an <code>Int</code> and not returning</li>
+<li><code>(String, Int) -&gt; Unit</code> &ndash; A binary function taking a <code>String</code> and an <code>Int</code> and returning <code>Unit</code></li>
+<li><code>(String, Int?) -&gt; Any?</code> &ndash; A binary function taking a <code>String</code> and a nullable <code>Int?</code> returning a nullable <code>Any?</code></li>
 </ul>
 <p>Function type literals allow for writing cleaner <em>higher-order functions</em></p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> &lt;T, I, R&gt; <span style="color:#06b;font-weight:bold">compose</span>(f: (I) -&gt; R, g: (T) -&gt; I): (T) -&gt; R = { f(g(it)) }
@@ -1601,46 +1602,225 @@ compose(::square, ::floor)(<span style="color:#00d;font-weight:bold">3.9</span>)
 <em>if a lambda expression is the last parameter in a function call</em>
 <br/>
 <em>then it can be placed outside of the parentheses</em></p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> &lt;T, R&gt; <span style="color:#06b;font-weight:bold">delayed</span>(
-</code></pre></div><p>Very</p>
+<p>If used correctly, feels like adding custom blocks to a language</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape> <span style="color:#888">// Java&#39;s thread + trailing lambda + SAM conversion
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">delayed</span>(delay: Long = <span style="color:#00d;font-weight:bold">1000L</span>, operation: () -&gt; Unit) = Thread {
+    Thread.sleep(delay)
+    operation()
+}.start()
+println(<span style="color:#d20;background-color:#fff0f0">&#34;Start&#34;</span>)
+<span style="color:#888">// Now we have a delayed block!
+</span><span style="color:#888"></span>delayed {
+    println(<span style="color:#d20;background-color:#fff0f0">&#34;I was waiting&#34;</span>)
+}
+delayed(<span style="color:#00d;font-weight:bold">300</span>) { println(<span style="color:#d20;background-color:#fff0f0">&#34;I wait less&#34;</span>) }
+println(<span style="color:#d20;background-color:#fff0f0">&#34;Finished&#34;</span>)
+</code></pre></div></section><section>
+<h1 id="kotlin-201----functional-kotlin-4">Kotlin 201 &ndash; Functional Kotlin</h1>
+<h2 id="closures">Closures</h2>
+<p>Closures are supoorted
+<br/>
+They are allowed on <code>var</code>s as well as on <code>val</code>s</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#888">// Side effecting from functional manipulation is bad though
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">sum</span> = <span style="color:#00d;font-weight:bold">0</span>
+(<span style="color:#00d;font-weight:bold">0.</span>.<span style="color:#00d;font-weight:bold">100</span>).map {
+    sum += it
+    it * <span style="color:#00d;font-weight:bold">2</span>
+}
+sum
+sum == (<span style="color:#00d;font-weight:bold">0.</span>.<span style="color:#00d;font-weight:bold">100</span>).sum()
+</code></pre></div></section><section>
+<h1 id="kotlin-201----functional-kotlin-5">Kotlin 201 &ndash; Functional Kotlin</h1>
+<h2 id="flow-control-with-lambdas">Flow control with lambdas</h2>
+<p>Kotlin rule: <code>return</code> returns from the closest <em>named</em> <code>fun</code>ction</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">breakingFlow</span>(): List&lt;Int&gt; = (<span style="color:#00d;font-weight:bold">0.</span>.<span style="color:#00d;font-weight:bold">10</span>).toList().map {
+    <span style="color:#080;font-weight:bold">if</span> (it &gt; <span style="color:#00d;font-weight:bold">4</span>) {
+        <span style="color:#080;font-weight:bold">return</span> (<span style="color:#00d;font-weight:bold">0.</span>.it).toList() <span style="color:#888">// returns from breakingFlow
+</span><span style="color:#888"></span>    }
+    it
+}
+breakingFlow()
+</code></pre></div><p>A <em>qualified <code>return</code></em> can be used to return from lambdas:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">breakingFlow</span>(): List&lt;Int&gt; = (<span style="color:#00d;font-weight:bold">0.</span>.<span style="color:#00d;font-weight:bold">10</span>).toList().map {
+    <span style="color:#080;font-weight:bold">if</span> (it &gt; <span style="color:#00d;font-weight:bold">4</span>) {
+        <span style="color:#080;font-weight:bold">return</span>@map it * <span style="color:#00d;font-weight:bold">10</span> <span style="color:#888">// returns from the lambda
+</span><span style="color:#888"></span>    }
+    it
+}
+breakingFlow()
+</code></pre></div></section><section>
+<h1 id="kotlin-201----functional-kotlin-6">Kotlin 201 &ndash; Functional Kotlin</h1>
+<h2 id="destructuring-lambda-parameters">Destructuring lambda parameters</h2>
+<p>Lambda parameters can be destructured</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>mapOf(<span style="color:#00d;font-weight:bold">46</span> to <span style="color:#d20;background-color:#fff0f0">&#34;Rossi&#34;</span>, <span style="color:#00d;font-weight:bold">4</span> to <span style="color:#d20;background-color:#fff0f0">&#34;Dovizioso&#34;</span>).map { (number, rider) -&gt;
+    <span style="color:#888">// destructured Pair
+</span><span style="color:#888"></span>    <span style="color:#d20;background-color:#fff0f0">&#34;$rider has number $number&#34;</span>
+}
+</code></pre></div></section><section>
+<h1 id="kotlin-201----functional-kotlin-7">Kotlin 201 &ndash; Functional Kotlin</h1>
+<h2 id="extension-functions">Extension functions</h2>
+<p>Kotlin allows to extend any type capabilities from anywhere
+<br/>
+via <strong>extension functions</strong></p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">String</span>.containsBatman(): Boolean = <span style="color:#d20;background-color:#fff0f0">&#34;.*b.*a.*t.*m.*a.*n.*&#34;</span>.toRegex().matches(<span style="color:#080;font-weight:bold">this</span>)
+<span style="color:#d20;background-color:#fff0f0">&#34;battere le mani&#34;</span>.containsBatman() <span style="color:#888">// true
+</span></code></pre></div><p>Inside extension functions, the <em>receiver</em> of the method is overridden
+<br/>
+Any type, including nullables, can be extended
+<br/>
+<code>object</code>s and <code>companion</code>s can be extended as well</p>
+<p><strong>IMPORTANT</strong>: calls to extension methods are resolved <em>statically</em>.
+<br/>
+Namely, <em>the receiver type is determined at compile time</em>.</p>
+<p><strong>IMPORTANT/2</strong>: Extensions cannot shadow members,
+<em>members always take priority</em></p>
 </section><section>
-<h2 id="functional-kotlin">functional kotlin</h2>
-<p>function types
-function types and nullability
-lambda expressions
-trailing lambdas
-implicit single parameters
-closures
-return from lambda
-return at label
-destructuring in lambdas
-anonymous functions (rarely used)
-invoke convention
-inline functions</p>
-<h2 id="extensions">extensions</h2>
-<p>extension functions vs implicits
-extension properties (no backing field)
-nullable receivers
-companion extensions
-generic extensions
-extensions resolution
-extension members (scope control)
-visibility of private members</p>
-<h2 id="extensions--functional">extensions + functional</h2>
-<p>function types with receiver</p>
-<h2 id="standard-library">standard library</h2>
-<p>let / run / apply / with
-arrays
-primitive arrays
-ranges</p>
-<h1 id="left-out">left out</h1>
-<p>enum classes
-noinline
-crossinline
-coroutines
-java interoperability
-inline classes &ndash; mentioned and skipped, ref to <a href="https://kotlinlang.org/docs/reference/inline-classes.html">https://kotlinlang.org/docs/reference/inline-classes.html</a></p>
-<h2 id="dsls-in-kotlin-type-safe-builders">DSLs in Kotlin (type-safe builders)</h2>
+<h1 id="kotlin-201----functional-kotlin-8">Kotlin 201 &ndash; Functional Kotlin</h1>
+<h2 id="extension-properties">Extension properties</h2>
+<p>Same as functions, but for properties</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">String</span>.containsBatman <span style="color:#080;font-weight:bold">get</span>(): Boolean = <span style="color:#d20;background-color:#fff0f0">&#34;.*b.*a.*t.*m.*a.*n.*&#34;</span>.toRegex().matches(<span style="color:#080;font-weight:bold">this</span>)
+<span style="color:#d20;background-color:#fff0f0">&#34;battere le mani&#34;</span>.containsBatman <span style="color:#888">// true
+</span></code></pre></div><p>Note:</p>
+<ol>
+<li>extension properties cannot have backing fields</li>
+<li>extension properties can&rsquo;t get initialized,
+their behaviour is entirely specified by <code>get</code> and <code>set</code> accessors.</li>
+</ol>
+</section><section>
+<h1 id="kotlin-201----functional-kotlin-9">Kotlin 201 &ndash; Functional Kotlin</h1>
+<h2 id="extension-function-type-literals">Extension function type literals</h2>
+<p>Extensions functions are&hellip; functions, like any other
+<br/>
+as such, their type can be legally expressed by:</p>
+<ul>
+<li>prefixing the *receiver type</li>
+<li>following by a <code>.</code></li>
+<li>then list parameters and return types as for any function type literal</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#888">// Extension function taking an extension function as parameter
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">fun</span> &lt;T&gt; <span style="color:#06b;font-weight:bold">MutableList</span>&lt;T&gt;.configure(configuration: MutableList&lt;T&gt;.() -&gt; Unit): MutableList&lt;T&gt; {
+    configuration()
+    <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">this</span>
+}
+<span style="color:#888">// We are creating a configuration block!
+</span><span style="color:#888"></span>mutableListOf&lt;String&gt;().configure {
+    add(<span style="color:#d20;background-color:#fff0f0">&#34;Pippo&#34;</span>)
+    add(<span style="color:#d20;background-color:#fff0f0">&#34;Pluto&#34;</span>)
+    add(<span style="color:#d20;background-color:#fff0f0">&#34;Paperino&#34;</span>)
+}
+</code></pre></div><p>&hellip;sounds easy to write DSLs&hellip;</p>
+</section><section>
+<h1 id="kotlin-201----functional-kotlin-10">Kotlin 201 &ndash; Functional Kotlin</h1>
+<h2 id="extension-members-and-implicit-receivers">Extension members and implicit receivers</h2>
+<p>When extensions are defined as members, there are multiple <em>implicit recevers</em>:</p>
+<ol>
+<li><strong>dispatch receiver</strong>: the <code>object</code> or instance of the <code>class</code> in which the extension is declared</li>
+<li><strong>extension receiver</strong> the instance of the <em>receiver type</em> of the extension is called</li>
+</ol>
+<p><em>Extension receivers have priority</em>, dispatch receivers access requires the <em>qualified <code>this</code></em> syntax
+<br/></p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">Batman</span> { <span style="color:#888">// the Batman object is the dispatch receiver
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">name</span> = <span style="color:#d20;background-color:#fff0f0">&#34;Batman&#34;</span>
+    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">String</span>.Companion.intro <span style="color:#080;font-weight:bold">get</span>() = generateSequence { Double.NaN } <span style="color:#888">// String.Companion is extension receiver
+</span><span style="color:#888"></span>        .take(<span style="color:#00d;font-weight:bold">10</span>)
+        .joinToString(separator = <span style="color:#d20;background-color:#fff0f0">&#34;&#34;</span>)
+    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">String</span>.withBatman() = <span style="color:#d20;background-color:#fff0f0">&#34;$this ${this@Batman.name}!&#34;</span> <span style="color:#888">// Qualified this access to the dispatch receiver
+</span><span style="color:#888"></span>}
+</code></pre></div></section><section>
+<h1 id="kotlin-201----functional-kotlin-11">Kotlin 201 &ndash; Functional Kotlin</h1>
+<h2 id="dsl-scope-control-via-extension-members">DSL scope control via extension members</h2>
+<p>Extension members are visible only when the dispatch receiver is the type where the extensions were defined
+<br/>
+This enables a powerful form of <em>scope control</em></p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">Batman</span> { <span style="color:#888">// Batman is the dispatch receiver
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">name</span> = <span style="color:#d20;background-color:#fff0f0">&#34;Batman&#34;</span>
+    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">String</span>.Companion.intro <span style="color:#080;font-weight:bold">get</span>() = generateSequence { Double.NaN } <span style="color:#888">// String is extension receiver
+</span><span style="color:#888"></span>        .take(<span style="color:#00d;font-weight:bold">10</span>)
+        .joinToString(separator = <span style="color:#d20;background-color:#fff0f0">&#34;&#34;</span>)
+    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">String</span>.withBatman() = <span style="color:#d20;background-color:#fff0f0">&#34;$this ${this@Batman.name}!&#34;</span> <span style="color:#888">// Qualified this access to the dispatch receiver
+</span><span style="color:#888"></span>}
+<span style="color:#888">// Extension members are actual members! They require a receiver!
+</span><span style="color:#888"></span>String.intro.withBatman() <span style="color:#888">// error: unresolved reference: intro
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">fun</span> &lt;T, R&gt; <span style="color:#06b;font-weight:bold">insideTheScopeOf</span>(receiver: T, method: T.() -&gt; R): R = receiver.method() 
+insideTheScopeOf(Batman) { <span style="color:#888">// inside this function, Batman is the dispatch receiver!
+</span><span style="color:#888"></span>    String.intro.withBatman() <span style="color:#888">// OK!
+</span><span style="color:#888"></span>}
+</code></pre></div></section><section>
+<h1 id="kotlin-201----functional-kotlin-12">Kotlin 201 &ndash; Functional Kotlin</h1>
+<h2 id="scope-functions">Scope functions</h2>
+<p>Kotlin provides a number of built-in functions that run a lambda expression in a custom scope:</p>
+<ul>
+<li>by changing the receiver (as we&rsquo;ve done with <code>insideTheScopeOf</code> in the previous slide)</li>
+<li>by creating an implicit <code>it</code> parameter</li>
+<li>by changing the return type</li>
+</ul>
+</section><section>
+<h1 id="kotlin-201----functional-kotlin-13">Kotlin 201 &ndash; Functional Kotlin</h1>
+<h2 id="scope-functions-1">Scope functions</h2>
+<h4 id="let--tt---r-r"><code>let</code> : <code>T.((T) -&gt; R) R</code></h4>
+<p>Can be invoked on an object, passing a lambda expression.
+<br/>
+The method receiver is bound to the lambda parameter
+<br/>
+the return type is the result of the function</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#00d;font-weight:bold">1.l</span>et { <span style="color:#d20;background-color:#fff0f0">&#34;${it + 1}1&#34;</span> } <span style="color:#888">// 21: String
+</span><span style="color:#888"></span><span style="color:#00d;font-weight:bold">1.l</span>et { one -&gt; <span style="color:#d20;background-color:#fff0f0">&#34;${one + 1}1&#34;</span> } <span style="color:#888">// Same as above: it&#39;s a normal lambda
+</span></code></pre></div></section><section>
+<h1 id="kotlin-201----functional-kotlin-14">Kotlin 201 &ndash; Functional Kotlin</h1>
+<h2 id="scope-functions-2">Scope functions</h2>
+<h4 id="run--tt---r---r"><code>run</code> : <code>T.(T.() -&gt; R) -&gt; R</code></h4>
+<p>Can be invoked on an object, passing a lambda expression.
+<br/>
+The method receiver is bound to the implicit receiver <code>this</code>
+<br/>
+the return type is the result of the function</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#00d;font-weight:bold">1.</span>run { <span style="color:#d20;background-color:#fff0f0">&#34;${this + 1}1&#34;</span> } <span style="color:#888">// 21: String
+</span></code></pre></div></section><section>
+<h1 id="kotlin-201----functional-kotlin-15">Kotlin 201 &ndash; Functional Kotlin</h1>
+<h2 id="scope-functions-3">Scope functions</h2>
+<h4 id="with--t---r---r"><code>with</code> : <code>(T.() -&gt; R) -&gt; R</code></h4>
+<p>Non-extension version of <code>run</code>,
+the context object is passed as first parameter
+<br/>
+The method receiver is bound to the implicit receiver <code>this</code>
+<br/>
+the return type is the result of the function</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>with(<span style="color:#00d;font-weight:bold">1</span>) { <span style="color:#d20;background-color:#fff0f0">&#34;${this + 1}1&#34;</span> } <span style="color:#888">// 21: String
+</span></code></pre></div></section><section>
+<h1 id="kotlin-201----functional-kotlin-16">Kotlin 201 &ndash; Functional Kotlin</h1>
+<h2 id="scope-functions-4">Scope functions</h2>
+<h4 id="apply--tt---unit---t"><code>apply</code> : <code>T.(T.() -&gt; Unit) -&gt; T</code></h4>
+<p>Similar to <code>run</code>,
+but returns the context object
+<br/>
+Used to cause side effects from a specific context,
+and returning the original object</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#00d;font-weight:bold">1.</span>apply { println(<span style="color:#d20;background-color:#fff0f0">&#34;${this + 1}1&#34;</span>) } <span style="color:#888">// Prints 21, returns 1
+</span><span style="color:#888"></span>mutableListOf&lt;Int&gt;().apply {
+    addAll((<span style="color:#00d;font-weight:bold">1.</span>.<span style="color:#00d;font-weight:bold">10</span>).toList())
+} <span style="color:#888">// [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+</span></code></pre></div></section><section>
+<h1 id="kotlin-201----functional-kotlin-17">Kotlin 201 &ndash; Functional Kotlin</h1>
+<h2 id="scope-functions-5">Scope functions</h2>
+<h4 id="also--t---unit---t"><code>also</code> : <code>T.(() -&gt; Unit) -&gt; T</code></h4>
+<p>Similar to <code>apply</code>, but does not change the context,
+<br/>
+the context object is bound to the first lambda parameter
+<br/>
+Used to cause side effects and returning the original object</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#00d;font-weight:bold">1.</span>also { println(<span style="color:#d20;background-color:#fff0f0">&#34;${it + 1}1&#34;</span>) } <span style="color:#888">// Prints 21, returns 1
+</span></code></pre></div></section><section>
+<h1 id="extra-content">Extra content</h1>
+<p>A lot of language details have been left out of this guide, non complete list:</p>
+<ul>
+<li>arrays</li>
+<li>enum classes</li>
+<li>spread operator</li>
+<li><code>noinline</code> and <code>crossinline</code></li>
+<li>coroutines</li>
+<li>interoperatibility with Java</li>
+<li><code>inline class</code>es</li>
+</ul>
 </section>
 
   
