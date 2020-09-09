@@ -2041,6 +2041,7 @@ A lot of language details have been left out of this guide, non complete list:
 * arrays
 * enum classes
 * spread operator
+* annotations
 * `noinline` and `crossinline`
 * coroutines
 * interoperatibility with Java
