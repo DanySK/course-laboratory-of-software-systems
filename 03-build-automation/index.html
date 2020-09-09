@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>Introduction to Laboratory of Software Systems</title>
+<meta name="description" content="Description of the course">
+<meta name="author" content="Danilo Pianini">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/css/reset.css">
+<link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/css/reveal.css">
+  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.1e2604bf0c24e445faa3ae7d68b2f0146c34bc9e7b9bd6aee2b7187115560e96.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
+    
+<link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
+<link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Oxygen Mono' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Ubuntu Mono' rel='stylesheet'>
+
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+  
+
+    <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
+<h2 id="build-automation">Build Automation</h2>
+<h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
+2020-09-09
+
+</section><section>
+<h1 id="build-automation-1">Build automation</h1>
+<p>The process of automating the creation of <em>software artifacts</em>
+<br/>
+going from <em>source</em> code to <em>tested</em> deployable artifact</p>
+<p>May include, depending on the system specifics:</p>
+<ul>
+<li>Automated <em>source code manipulation</em> and generation</li>
+<li>Source code <em>quality assurance</em></li>
+<li><em>Dependency management</em></li>
+<li><em>Compilation</em>, linking</li>
+<li><em>Binary manipulation</em></li>
+<li><em>Test execution</em></li>
+<li>Test <em>quality assurance</em> (e.g., coverage)</li>
+<li>API <em>documentation</em></li>
+<li><em>Packaging</em></li>
+<li><em>Delivery</em></li>
+</ul>
+</section><section>
+<h1 id="overview">Overview</h1>
+<ul>
+<li>Build automation: basics, styles</li>
+<li>Gradle as paradigmatic build automator
+<ul>
+<li>Core concepts and basics</li>
+<li>Dependency management and configurations</li>
+<li>The build system as a dependency</li>
+<li>Hierarchial organization</li>
+<li>Isolation of imperativity</li>
+<li>Declarativity via DSLs</li>
+<li>Reuse via plug-ins</li>
+<li>Testing plug-ins</li>
+<li>Existing plugins</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="build-automation-basics-and-styles">Build automation: basics and styles</h2>
+</section>
+
+  
+
+
+</div>
+      
+
+    </div>
+<script type="text/javascript" src=/Course-Laboratory-of-Software-Systems/reveal-hugo/object-assign.js></script>
+
+<a href="/Course-Laboratory-of-Software-Systems/reveal-js/css/print/" id="print-location" style="display: none;"></a>
+<script type="text/javascript">
+  var printLocationElement = document.getElementById('print-location');
+  var link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = printLocationElement.href + (window.location.search.match(/print-pdf/gi) ? 'pdf.css' : 'paper.css');
+  document.getElementsByTagName('head')[0].appendChild(link);
+</script>
+
+<script type="application/json" id="reveal-hugo-site-params">{"height":"100%","pdfseparatefragments":false,"theme":"white","width":"100%"}</script>
+<script type="application/json" id="reveal-hugo-page-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"custom_theme_options":{"enablesourcemap":true,"targetpath":"css/custom-theme.css"},"transition":"slide","transition_speed":"fast"}</script>
+
+<script src="/Course-Laboratory-of-Software-Systems/reveal-js/js/reveal.js"></script>
+
+<script type="text/javascript">
+  
+  
+  function camelize(map) {
+    if (map) {
+      Object.keys(map).forEach(function(k) {
+        newK = k.replace(/(\_\w)/g, function(m) { return m[1].toUpperCase() });
+        if (newK != k) {
+          map[newK] = map[k];
+          delete map[k];
+        }
+      });
+    }
+    return map;
+  }
+  
+  var revealHugoDefaults = { center: true, controls: true, history: true, progress: true, transition: "slide" };
+  var revealHugoSiteParams = JSON.parse(document.getElementById('reveal-hugo-site-params').innerHTML);
+  var revealHugoPageParams = JSON.parse(document.getElementById('reveal-hugo-page-params').innerHTML);
+  
+  var options = Object.assign({},
+    camelize(revealHugoDefaults),
+    camelize(revealHugoSiteParams),
+    camelize(revealHugoPageParams));
+  Reveal.initialize(options);
+</script>
+
+
+  
+  
+  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/markdown/marked.js"></script>
+  
+  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/markdown/markdown.js"></script>
+  
+  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/highlight/highlight.js"></script>
+  
+  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/zoom-js/zoom.js"></script>
+  
+  
+  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/notes/notes.js"></script>
+
+
+
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+</script>
+
+<script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+
+    
+  </body>
+</html>
