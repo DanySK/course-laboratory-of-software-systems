@@ -27,7 +27,7 @@
 <h2 id="internal-domain-specific-languages">Internal Domain-Specific Languages</h2>
 <h2 id="in-kotlin">In Kotlin</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2020-09-08
+2020-09-09
 
 </section><section>
 <h1 id="dsls">DSLs</h1>
@@ -127,7 +127,229 @@ whose implementations are manipulated by an infrastructure exposing the DSL</p>
 <span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">Tag</span> : Element
 <span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">RepeatableTag</span> : Tag, RepeatableElement
 <span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">TextElement</span> : RepeatableElement
-</code></pre></div></section>
+</code></pre></div></section><section>
+<h1 id="kotlin-202----dsls-4">Kotlin 202 &ndash; DSLs</h1>
+<h2 id="detailing-the-domain">Detailing the domain</h2>
+<ul>
+<li>All <code>Element</code>s can be rendered to plain text, possibly with some indentation</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">Element</span> {
+    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">render</span>(indent: String = <span style="color:#d20;background-color:#fff0f0">&#34;&#34;</span>): String
+}
+</code></pre></div><ul>
+<li><code>TextElement</code>s are composed of simple <code>text</code>, possibly rendered with intentation</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">TextElement</span> : RepeatableElement {
+    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">text</span>: String
+    <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">render</span>(indent: String) = <span style="color:#d20;background-color:#fff0f0">&#34;$indent$text\n&#34;</span>
+}
+</code></pre></div><ul>
+<li>Tags have a <code>name</code>, they can have <code>children Element</code>s, and key/value <code>attributes</code></li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">Tag</span> : Element {
+    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">name</span>: String
+    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">children</span>: List&lt;Element&gt;
+    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">attributes</span>: Map&lt;String, String&gt;
+}
+</code></pre></div></section><section>
+<h1 id="kotlin-202----dsls-5">Kotlin 202 &ndash; DSLs</h1>
+<h2 id="domain-implementation">Domain implementation</h2>
+<ul>
+<li>Let&rsquo;s pick a <code>String</code> as indentation</li>
+<li>The abstract domain uses a map to define attributes,
+but working with <code>Pair</code>s is not very clean:
+we convey a better meaning to what we are doing by relying on a <code>typealias Attribute</code></li>
+<li><code>TextElement</code> is trivial to implement, it&rsquo;s just text</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">const</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">INDENT</span> = <span style="color:#d20;background-color:#fff0f0">&#34;\t&#34;</span> <span style="color:#888">// Compile time constant
+</span><span style="color:#888"></span>typealias Attribute = Pair&lt;String, String&gt; <span style="color:#888">// Just to avoid writing Pair&lt;String, String&gt;
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">data</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Text</span>(<span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">text</span>: String) : TextElement
+</code></pre></div></section><section>
+<h1 id="kotlin-202----dsls-6">Kotlin 202 &ndash; DSLs</h1>
+<h2 id="domain-implementation-tag">Domain implementation: <code>Tag</code></h2>
+<p><code>Tag</code> is a bit more complex, let&rsquo;s try to factor the common part of all <code>Tag</code>s into an <code>AbtractTag</code></p>
+<ul>
+<li><code>name</code> is easy</li>
+<li><code>Attribute</code>s get registered at creation time. We use a <code>vararg</code> to make the construction nicer</li>
+<li>We decide for a mutable implementation of <code>children</code></li>
+<li>Subclasses are allowed to <code>register</code> sub elements
+<ul>
+<li>We can check if an element is <code>Repeatable</code> or not</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">abstract</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">AbstractTag</span>(<span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">name</span>: String, <span style="color:#080;font-weight:bold">vararg</span> attributes: Attribute) : Tag {
+    <span style="color:#080;font-weight:bold">final</span> <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">children</span>: List&lt;Element&gt; = emptyList() <span style="color:#888">// Override val with var
+</span><span style="color:#888"></span>        <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">set</span>(value) { field = value } <span style="color:#888">// Write access only from this class
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">final</span> <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">attributes</span>: Map&lt;String, String&gt; = attributes.associate { it }
+    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">registerElement</span>(element: Element) {
+        <span style="color:#080;font-weight:bold">if</span> (element <span style="color:#080;font-weight:bold">is</span> RepeatableElement || members.none { it::<span style="color:#080;font-weight:bold">class</span> <span style="color:#a61717;background-color:#e3d2d2">== </span><span style="color:#b06;font-weight:bold">element</span>::<span style="color:#080;font-weight:bold">class</span> <span style="color:#a61717;background-color:#e3d2d2">}) {</span>
+            members = members + element
+        } <span style="color:#080;font-weight:bold">else</span> {
+            <span style="color:#080;font-weight:bold">throw</span> IllegalStateException(<span style="color:#d20;background-color:#fff0f0">&#34;cannot repeat tag ${element::class.simpleName} multiple times:\n$element&#34;</span>)
+        }
+    }
+}
+</code></pre></div></section><section>
+<h1 id="kotlin-202----dsls-7">Kotlin 202 &ndash; DSLs</h1>
+<h2 id="domain-implementation-tags-rendering">Domain implementation: <code>Tag</code>'s rendering</h2>
+<ul>
+<li>We can now write how an HTML <code>Tag</code> is rendered</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">abstract</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">AbstractTag</span>(<span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">name</span>: String, <span style="color:#080;font-weight:bold">vararg</span> attributes: Attribute) : Tag {
+        ...
+        <span style="color:#080;font-weight:bold">final</span> <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">render</span>(indent: String) = <span style="color:#888">// Rendering by multiline string!
+</span><span style="color:#888"></span>            <span style="color:#d20;background-color:#fff0f0">&#34;&#34;&#34;
+</span><span style="color:#d20;background-color:#fff0f0">            |$indent&lt;$name${renderAttributes()}&gt;
+</span><span style="color:#d20;background-color:#fff0f0">            |${renderChildren(indent + INDENT)}
+</span><span style="color:#d20;background-color:#fff0f0">            |$indent&lt;/$name&gt;
+</span><span style="color:#d20;background-color:#fff0f0">            &#34;&#34;&#34;</span>
+            .trimMargin() <span style="color:#888">// Trims what&#39;s left of a |
+</span><span style="color:#888"></span>            .replace(<span style="color:#d20;background-color:#fff0f0">&#34;&#34;&#34;\R+&#34;&#34;&#34;</span>.toRegex(), <span style="color:#d20;background-color:#fff0f0">&#34;\n&#34;</span>) <span style="color:#888">// In case there are no children, no empty lines
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">renderChildren</span>(indent: String): String =
+        children.map { it.render(indent) }.joinToString(separator = <span style="color:#d20;background-color:#fff0f0">&#34;\n&#34;</span>)
+    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">renderAttributes</span>(): String = attributes.takeIf { it.isNotEmpty() }
+        ?.map { (attribute, value) -&gt; <span style="color:#d20;background-color:#fff0f0">&#34;$attribute=\&#34;$value\&#34;&#34;</span> } <span style="color:#888">// Safe fluent calls
+</span><span style="color:#888"></span>        ?.joinToString(separator = <span style="color:#d20;background-color:#fff0f0">&#34; &#34;</span>, prefix = <span style="color:#d20;background-color:#fff0f0">&#34; &#34;</span>)
+        ?: <span style="color:#d20;background-color:#fff0f0">&#34;&#34;</span> <span style="color:#888">// Elvis operator
+</span><span style="color:#888"></span>}
+</code></pre></div></section><section>
+<h1 id="kotlin-202----dsls-8">Kotlin 202 &ndash; DSLs</h1>
+<h2 id="dsl-entry-point">DSL: entry point</h2>
+<p>We will now:</p>
+<ol>
+<li>Define the language entities</li>
+<li>Find out a way to nest them nicely</li>
+</ol>
+<p><strong>Note:</strong> In this example we mix the language and model implementation.
+<br/>
+It&rsquo;d be cleaner to define a complete API (favoring immutability),
+and then wrap it in a DSL (where mutability is mandatory)</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">HTML</span>(<span style="color:#080;font-weight:bold">vararg</span> attributes: Attribute = arrayOf()) : AbstractTag(<span style="color:#d20;background-color:#fff0f0">&#34;html&#34;</span>, *attributes)
+<span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">html</span>(<span style="color:#080;font-weight:bold">vararg</span> attributes: Attribute, init: HTML.() -&gt; Unit): HTML = HTML(*attributes).apply(init)
+</code></pre></div><ul>
+<li>A top level function to access the DSL</li>
+<li>Mandatory parameter first (but with a <code>vararg</code> they are implicitly optional)</li>
+<li>Configuration function in form of function with receiver</li>
+<li>A <code>class</code> representing our entry point</li>
+</ul>
+</section><section>
+<h1 id="kotlin-202----dsls-9">Kotlin 202 &ndash; DSLs</h1>
+<h2 id="dsl-entry-point-1">DSL: entry point</h2>
+<p>We can now write:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>html { }.render()
+html(<span style="color:#d20;background-color:#fff0f0">&#34;lang&#34;</span> to <span style="color:#d20;background-color:#fff0f0">&#34;en&#34;</span>) { }.render()
+</code></pre></div><p>producing:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>&lt;<span style="color:#b06;font-weight:bold">html</span>&gt;
+&lt;/<span style="color:#b06;font-weight:bold">html</span>&gt;
+&lt;<span style="color:#b06;font-weight:bold">html</span> <span style="color:#369">lang</span>=<span style="color:#d20;background-color:#fff0f0">&#34;en&#34;</span>&gt;
+&lt;/<span style="color:#b06;font-weight:bold">html</span>&gt;
+</code></pre></div></section><section>
+<h1 id="kotlin-202----dsls-10">Kotlin 202 &ndash; DSLs</h1>
+<h2 id="dsl-adding-elements">DSL: adding elements</h2>
+<ul>
+<li>The base system is always the same!</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Head</span> : AbstractTag(<span style="color:#d20;background-color:#fff0f0">&#34;head&#34;</span>) {
+    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">title</span>(configuration: Title.() -&gt; Unit = { }) = registerElement(Title().apply(configuration))
+}
+<span style="color:#080;font-weight:bold">abstract</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">TagWithText</span>(name: String, <span style="color:#080;font-weight:bold">vararg</span> attributes: Attribute) : AbstractTag(name, *attributes) {
+    <span style="color:#888">// Scoping via member extensions! 
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">operator</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">String</span>.unaryMinus() = registerElement(Text(<span style="color:#080;font-weight:bold">this</span>)) <span style="color:#888">// Syntax for writing plain text
+</span><span style="color:#888"></span>}
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Title</span> : TagWithText(<span style="color:#d20;background-color:#fff0f0">&#34;title&#34;</span>)
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Body</span>(<span style="color:#080;font-weight:bold">vararg</span> attributes: Attribute) : TagWithText(<span style="color:#d20;background-color:#fff0f0">&#34;body&#34;</span>, *attributes)
+<span style="color:#080;font-weight:bold">const</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">newline</span> = <span style="color:#d20;background-color:#fff0f0">&#34;&lt;br/&gt;&#34;</span>
+</code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>html(<span style="color:#d20;background-color:#fff0f0">&#34;lang&#34;</span> to <span style="color:#d20;background-color:#fff0f0">&#34;en&#34;</span>) {
+    head { title { -<span style="color:#d20;background-color:#fff0f0">&#34;An experiment&#34;</span> } }
+    body {
+        -<span style="color:#d20;background-color:#fff0f0">&#34;My contents&#34;</span>
+        -newline
+        -<span style="color:#d20;background-color:#fff0f0">&#34;And some more contents&#34;</span>
+    }
+}
+</code></pre></div></section><section>
+<h1 id="kotlin-202----dsls-11">Kotlin 202 &ndash; DSLs</h1>
+<h2 id="dsl-reusing-elements">DSL: reusing elements</h2>
+<ul>
+<li>Common DSL elements can be factored and reused via inheritance</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">abstract</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">BodyTag</span>(name: String, <span style="color:#080;font-weight:bold">vararg</span> attributes: Attribute) : TagWithText(name, *attributes) {
+    <span style="color:#888">// &lt;a&gt; and &lt;p&gt; can be nested everywhere in the body
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">p</span>(<span style="color:#080;font-weight:bold">vararg</span> attributes: Attribute, configuration: P.() -&gt; Unit) =
+        registerElement(P(*attributes).apply(configuration))
+    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">a</span>(href: String? = <span style="color:#080;font-weight:bold">null</span>, <span style="color:#080;font-weight:bold">vararg</span> attributes: Attribute, configuration: Anchor.() -&gt; Unit) =
+        registerElement(Anchor(href, *attributes).apply(configuration))
+}
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Body</span>(<span style="color:#080;font-weight:bold">vararg</span> attributes: Attribute) : BodyTag(<span style="color:#d20;background-color:#fff0f0">&#34;body&#34;</span>, *attributes) <span style="color:#888">// Changed hierarchy
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">P</span>(<span style="color:#080;font-weight:bold">vararg</span> attributes: Attribute) : BodyTag(<span style="color:#d20;background-color:#fff0f0">&#34;p&#34;</span>, *attributes), RepeatableElement <span style="color:#888">// Repeatable
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Anchor</span>(
+    href: String? = <span style="color:#080;font-weight:bold">null</span>,
+    <span style="color:#080;font-weight:bold">vararg</span> attributes: Attribute
+) : BodyTag(<span style="color:#d20;background-color:#fff0f0">&#34;a&#34;</span>, *(<span style="color:#080;font-weight:bold">if</span> (href == <span style="color:#080;font-weight:bold">null</span>) emptyArray() <span style="color:#080;font-weight:bold">else</span> arrayOf(<span style="color:#d20;background-color:#fff0f0">&#34;href&#34;</span> to href)) + attributes),
+    RepeatableElement <span style="color:#888">// Repeatable
+</span></code></pre></div></section><section>
+<h1 id="kotlin-202----dsls-12">Kotlin 202 &ndash; DSLs</h1>
+<h2 id="preventing-scope-leaking">Preventing scope leaking</h2>
+<p>Right now, this is valid:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>html { head { head { title { title { } } } } }
+</code></pre></div><p>But it produces invalid HTML!
+<br/>
+The reason is that Kotlin&rsquo;s method resolution automatically searches in &ldquo;outer&rdquo; <em>implicit receivers</em>.
+<br/>
+The code is equivalent to:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>html { <span style="color:#080;font-weight:bold">this</span>.head { <span style="color:#080;font-weight:bold">this</span>@html.head { <span style="color:#080;font-weight:bold">this</span>.title { <span style="color:#080;font-weight:bold">this</span>@head.title { } } } } }
+</code></pre></div><p>Inside a DSL, we usually (but not always) do not want the <em>implicit receiver</em> to &ldquo;escape&rdquo; its scope
+<br/>
+Kotlin provides an annotation used to create scope-blocking annotations:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>@DslMarker <span style="color:#888">// I&#39;m defining an annotation that will prevent scope leaking
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">annotation</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">HtmlTagMarker</span> <span style="color:#888">// I&#39;m calling it HtmlTagMarker
+</span><span style="color:#888"></span>@HtmlTagMarker <span style="color:#888">// All entities whose this should not get called automatically get annotated
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">HTML</span>(<span style="color:#080;font-weight:bold">vararg</span> attributes: Attribute = arrayOf()) : AbstractTag(<span style="color:#d20;background-color:#fff0f0">&#34;html&#34;</span>, *attributes) { ... }
+@HtmlTagMarker
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Head</span> : AbstractTag(<span style="color:#d20;background-color:#fff0f0">&#34;head&#34;</span>) { ... }
+@HtmlTagMarker <span style="color:#888">// Annotating the common superclass suffices
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">abstract</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">TagWithText</span>(name: String, <span style="color:#080;font-weight:bold">vararg</span> attributes: Attribute) : AbstractTag(name, *attributes) { ... }
+
+</code></pre></div></section><section>
+<h1 id="kotlin-202----dsls-13">Kotlin 202 &ndash; DSLs</h1>
+<h2 id="preventing-scope-leaking-1">Preventing scope leaking</h2>
+<p>With the DslMarker:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>html {
+    head {
+<span style="color:#888">// &#39;fun head(configuration: Head.() -&gt; Unit): Unit&#39; can&#39;t be called in this context by implicit receiver.
+</span><span style="color:#888"></span>        head { <span style="color:#888">// Compilation Error
+</span><span style="color:#888"></span>            title {
+<span style="color:#888">// &#39;fun title(configuration: Title.() -&gt; Unit = ...): Unit&#39; can&#39;t be called in this context by implicit receiver.
+</span><span style="color:#888"></span>                title { } <span style="color:#888">// Compilation Error
+</span><span style="color:#888"></span>            }
+        }
+    }
+}
+</code></pre></div><p>You can still do this manually of course:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>html { head { <span style="color:#080;font-weight:bold">this</span>@html.head { title { <span style="color:#080;font-weight:bold">this</span>@head.title { } } } } } <span style="color:#888">// compiles
+</span></code></pre></div><p>But you must be <em>explicitly willing</em> to access an outer receiver</p>
+</section><section>
+<h1 id="kotlin-202----dsls-14">Kotlin 202 &ndash; DSLs</h1>
+<h2 id="summing-up">Summing up</h2>
+<ol>
+<li>First and foremost <strong>model the domain</strong>
+<ul>
+<li>A domain model is a <em>prerequisite</em> to write a DSL</li>
+<li>Focus on a <em>clean programming API</em></li>
+</ul>
+</li>
+<li>Provide an implementation for your domain elements</li>
+<li>Compose the API elements into DSL blocks
+<ul>
+<li>Functions with receiver as configuration blocks</li>
+<li>Member extensions to control scope</li>
+<li>Reuse by inheritance</li>
+<li>Receiver &ldquo;leakage&rdquo; via annotations</li>
+</ul>
+</li>
+</ol>
+</section>
 
   
 
