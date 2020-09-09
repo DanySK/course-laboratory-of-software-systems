@@ -95,8 +95,8 @@ If you are following remotely, make sure you can experiment using your local sys
 
 * [Kotlin for Scala developers](01-kotlin)
   * [Internal DSLs construction](02-internal-dsls)
-* Build automation
-* Version control
+* [Build automation](03-build-automation)
+* Advanced version control
 * Continuous integration/deployment/delivery
 * Containerization
 * Distributed software systems engineering
