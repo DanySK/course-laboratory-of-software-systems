@@ -26,7 +26,7 @@
     <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
 <h2 id="build-automation">Build Automation</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2020-09-09
+2020-09-19
 
 </section><section>
 <h1 id="build-automation-1">Build automation</h1>
@@ -66,6 +66,78 @@ going from <em>source</em> code to <em>tested</em> deployable artifact</p>
 </ul>
 </section><section>
 <h2 id="build-automation-basics-and-styles">Build automation: basics and styles</h2>
+<p>It&rsquo;s just a software that automates the building of some software
+<br/>
+hence, all concerns that hold for sofware creation hold for build systems creation.</p>
+<p><strong>Imperative style</strong>: write a script that tells the system what to do to get
+from code to artifacts</p>
+<ul>
+<li><em>Examples</em>: make, cmake, Apache Ant</li>
+<li>Verbose, repetitive</li>
+<li>Configuration (declarative) and actionable (imperative) logics mixed together</li>
+<li>Highly configurable</li>
+</ul>
+<p><strong>Declartive style</strong>: adhere to some convention, specify additional configuration,
+and let the tool decide what to do actually</p>
+<ul>
+<li><em>Examples</em>: Apache Maven</li>
+<li>Separation between <em>what</em> to do and <em>how</em> to do it</li>
+<li>Configuration limited by the provided options</li>
+</ul>
+</section><section>
+<h2 id="hybrid-automators">Hybrid automators</h2>
+<p>Create a <em>declarative infrastructure</em> upon an <em>imperative basis</em>, and
+<em>allow easy access to the underlying machinery</em></p>
+<p><strong>DSL</strong>s are helpful in this context: they can &ldquo;hide&rdquo; imperativity without ruling it out</p>
+<p>Still, many challenges remain open:</p>
+<ul>
+<li>How to reuse the build logic?
+<ul>
+<li>within a project, and among projects</li>
+</ul>
+</li>
+<li>How to structure multiple logical and interdependent parts?</li>
+</ul>
+</section><section>
+<h1 id="gradle">Gradle</h1>
+<p>A paradigmatic example of a hybrid automator:</p>
+<ul>
+<li>Written mostly in Java</li>
+<li>with an outer Groovy DSL</li>
+<li>&hellip;and, more recently, a Kotlin DSL</li>
+</ul>
+<h3 id="our-approach-to-gradle">Our approach to Gradle</h3>
+<ul>
+<li>We are <strong>not</strong> going to learn &ldquo;how to use Gradle&rdquo;</li>
+<li>We are going to <em>learn Gradle</em></li>
+</ul>
+</section><section>
+<h2 id="gradle-main-concepts">Gradle: main concepts</h2>
+<ul>
+<li><strong>Project</strong> &ndash; A collection of files comprising the software
+<ul>
+<li>A project can contain another project:</li>
+<li>the container project is the <strong>root project</strong></li>
+<li>the contained projects are <strong>subproject</strong>s</li>
+</ul>
+</li>
+<li><strong>Task</strong> &ndash; An atomic operation on the project, which can
+<ul>
+<li>have input and output files</li>
+<li>depend on other tasks (can be executed only if those are completed)</li>
+</ul>
+</li>
+<li><strong>Build file</strong> &ndash; A special file instructing Gradle on the actual organization of projects and available tasks</li>
+</ul>
+</section><section>
+<pre><code>* Dependency management and configurations
+* The build system as a dependency
+* Hierarchial organization
+* Isolation of imperativity
+* Declarativity via DSLs
+* Reuse via plug-ins
+* Testing plug-ins
+* Existing plugins</code></pre>
 </section>
 
   
