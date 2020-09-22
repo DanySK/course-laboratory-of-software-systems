@@ -309,10 +309,47 @@ Hello, World!
 
 ---
 
+## Gradle: task types
+
+Gradle offers some facilities to make it easier writing new tasks
+<br>
+An example is the [`org.gradle.api.Exec`](https://docs.gradle.org/current/javadoc/org/gradle/api/tasks/Exec.html) task type, representing a command to be executed on the underlying command line
+
+At task registration time, it is possible to specify the task type.
+<br>
+Any `open class` implementing [`org.gradle.api.Task`](https://docs.gradle.org/current/javadoc/org/gradle/api/Task.html) can be instanced
+
+```gradle
+import org.gradle.internal.jvm.Jvm // Jvm is part of the Gradle API
+tasks.register<Exec>("printJavaVersion") { // Do you Recognize this? inline function with reified type!
+    // Configuration action is of type T.() -> Unit, in this case Exec.T() -> Unit
+    val javaExecutable = Jvm.current().javaExecutable.absolutePath 
+    commandLine( // this is a method of class org.gradle.api.Exec
+        javaExecutable, "-version"
+    )
+    // There is no need of doLast / doFirst, actions are already configured
+    // Still, we may want to do something before or after the task has been executed
+    doLast { println("$javaExecutable invocation complete") }
+    doFirst { println("Ready to invoke $javaExecutable") }
+}
+```
+
+```
+> Task :printJavaVersion
+Ready to invoke /usr/lib/jvm/java-11-openjdk/bin/java
+openjdk version "11.0.8" 2020-07-14
+OpenJDK Runtime Environment (build 11.0.8+10)
+OpenJDK 64-Bit Server VM (build 11.0.8+10, mixed mode)
+/usr/lib/jvm/java-11-openjdk/bin/java invocation complete
+```
+
+---
+
 
 
     * Dependency management and configurations
     * The build system as a dependency
+    * Task dependencies
     * Hierarchial organization
     * Isolation of imperativity
     * Declarativity via DSLs
