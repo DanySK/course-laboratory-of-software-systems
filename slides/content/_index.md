@@ -88,10 +88,17 @@ Lectures in lab with immedate hands-on.
 <br>
 If you are following remotely, make sure you can experiment using your local system.
 
+## Anti-coronavirus measures
+
+* **Mandatory face masks** (sorry, no way around)
+* **Immuni** app warmly recommended to all those with a compatible device
+
 ## Timetable
 
 * **Thursday 14:00--17:00** --- Lab 3.1 
 * **Friday 14:00--17:00** --- Lab 3.1
+<br>
+Changes will be published on [the forum](http://bit.ly/lss-2020)
 
 ---
 
