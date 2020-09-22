@@ -43,7 +43,7 @@
 </ul>
 </section><section>
 <h1 id="forum-and-contacts">Forum and contacts</h1>
-<h4 id="prioritize-the-forum-tbdtbd">Prioritize the forum <a href="TBD"><code>TBD</code></a>:</h4>
+<h4 id="prioritize-the-forum-httpbitlylss-2020httpbitlylss-2020">Prioritize the forum <a href="http://bit.ly/lss-2020"><code>http://bit.ly/lss-2020</code></a>:</h4>
 <ul>
 <li>All technical question</li>
 <li>Any other non personal question</li>
@@ -65,13 +65,16 @@
 <p>These <em>slides</em> should contain everything you need
 <br>
 code examples produced during the lecture will be available right after</p>
+<p>Slides will be produced with a <em>rolling release</em> model.
+<br>
+(of course trying to get them ready at least the day before the lecture)</p>
 <h2 id="books">Books</h2>
 <p>No mandatory books, but there are both:</p>
 <ul>
 <li>Recommended readings</li>
-<li>Additional useful books
-On <a href="https://www.unibo.it/it/didattica/insegnamenti/insegnamento/2020/412677">the course webpage</a></li>
+<li>Additional useful books</li>
 </ul>
+<p>On <a href="https://www.unibo.it/it/didattica/insegnamenti/insegnamento/2020/412677">the course webpage</a></p>
 </section><section>
 <h1 id="organization">Organization</h1>
 <p>Lectures in lab with immedate hands-on.
@@ -83,42 +86,6 @@ If you are following remotely, make sure you can experiment using your local sys
 <li><strong>Friday 14:00&ndash;17:00</strong> &mdash; Lab 3.1</li>
 </ul>
 </section><section>
-<h1 id="overview">Overview</h1>
-<ul>
-<li><a href="01-kotlin">Kotlin for Scala developers</a>
-<ul>
-<li><a href="02-internal-dsls">Internal DSLs construction</a></li>
-</ul>
-</li>
-<li><a href="03-build-automation">Build automation</a></li>
-<li>Advanced version control</li>
-<li>Continuous integration/deployment/delivery</li>
-<li>Containerization</li>
-<li>Distributed software systems engineering</li>
-<li>Domain driven design
-<ul>
-<li>Including external DSL construction</li>
-</ul>
-</li>
-<li>Cyber-physical systems</li>
-</ul>
-</section><section>
-<h1 id="software">Software</h1>
-<h2 id="required">Required</h2>
-<ul>
-<li>A working JDK installation
-<ul>
-<li>Consider using <a href="https://github.com/shyiko/jabba">Jabba</a></li>
-</ul>
-</li>
-</ul>
-<p>
-<h2 id="recommended">Recommended</h2>
-<ul>
-<li>IntelliJ Idea</li>
-<li>A decent Unix terminal</li>
-</ul>
-</section><section>
 <h1 id="goals">Goals</h1>
 <ol>
 <li>Design systems top down, from the <strong>domain</strong></li>
@@ -126,6 +93,39 @@ If you are following remotely, make sure you can experiment using your local sys
 <li><em>Agile</em> development practices, <em>DevOps</em> phylosophy</li>
 <li><em>High automation</em> + <em>technical excellence</em></li>
 </ol>
+</section><section>
+<h1 id="prerequisites">Prerequisites</h1>
+<ul>
+<li>Knowledge of <em>Java</em> and <em>Scala</em></li>
+<li>Minimal ability with <code>git</code>
+<ul>
+<li>initializing and managing the repository options</li>
+<li>committing</li>
+<li>branching and merging</li>
+<li>fetching and pushing</li>
+</ul>
+</li>
+<li>A <em>curious mindset</em>
+<ul>
+<li>Never stop when it works, stop when you know <em>why</em> it does</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h1 id="help-me-help-you">Help me help you</h1>
+<iframe src="https://giphy.com/embed/fdLR6LGwAiVNhGQNvf" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p></p>
+<ul>
+<li><a href="https://virtuale.unibo.it/mod/choice/view.php?id=363641">Language survey at https://virtuale.unibo.it/mod/choice/view.php?id=363641</a>
+<ul>
+<li>We might switch to full English, but we don&rsquo;t want to scare people away</li>
+</ul>
+</li>
+<li><a href="https://virtuale.unibo.it/mod/survey/view.php?id=363472">ATTLS Survey at https://virtuale.unibo.it/mod/survey/view.php?id=363472</a>
+<ul>
+<li>Helps the teachers understand the best way to present information</li>
+</ul>
+</li>
+</ul>
 </section><section>
 <h1 id="exam">Exam</h1>
 <h3 id="discussion-of-a-group-project"><strong>Discussion</strong> of a <strong>group project</strong></h3>
@@ -145,17 +145,66 @@ If you are following remotely, make sure you can experiment using your local sys
 </li>
 </ul>
 </section><section>
-<h1 id="prerequisites">Prerequisites</h1>
+<h1 id="software">Software</h1>
+<h2 id="required">Required</h2>
 <ul>
-<li>Knowledge of <em>Java</em> and <em>Scala</em></li>
-<li>Minimal ability with <em><code>git</code></em>
+<li>A working internet connection</li>
+<li>A working JDK installation
 <ul>
-<li>initializing and managing the repository options</li>
-<li>committing</li>
-<li>branching and merging</li>
-<li>fetching and pushing</li>
+<li>Consider using <a href="https://github.com/shyiko/jabba">Jabba</a></li>
 </ul>
 </li>
+<li>Kotlin (kotlinc REPL working)</li>
+<li>Gradle</li>
+<li>Docker</li>
+</ul>
+<h2 id="recommended">Recommended</h2>
+<ul>
+<li>IntelliJ Idea</li>
+<li>Visual Studio Code</li>
+<li>A decent Unix terminal</li>
+<li>Ruby Gem</li>
+</ul>
+</section><section>
+<h1 id="course-container">Course Container</h1>
+<p>Feeling lazy?
+We prepared a container with all the course&rsquo;s software:</p>
+<ul>
+<li><a href="https://hub.docker.com/repository/docker/danysk/linux-didattica">https://hub.docker.com/repository/docker/danysk/linux-didattica</a></li>
+</ul>
+<p>Follow the instructons at <a href="https://github.com/DanySK/docker-linux-didattica">https://github.com/DanySK/docker-linux-didattica</a></p>
+</section><section>
+<h1 id="software-in-lab">Software in lab</h1>
+<p>The PCs are equipped with the docker</p>
+<ol>
+<li>Lauch docker</li>
+<li>Launch the script on the Desktop</li>
+<li>Wait for it to start</li>
+<li>Close it, stop docker</li>
+<li>Restart docker</li>
+<li>Launch the X Server</li>
+<li>Now use the container freely</li>
+</ol>
+<p>Note: data is not persisted automatically, at end of session you need to copy it in your home folder</p>
+</section><section>
+<h1 id="overview">Overview</h1>
+<ul>
+<li><a href="01-kotlin">Kotlin for Scala developers</a>
+<ul>
+<li><a href="02-internal-dsls">Internal DSLs construction</a></li>
+</ul>
+</li>
+<li><a href="03-build-automation">Build automation</a></li>
+<li>Advanced version control</li>
+<li>Continuous integration/deployment/delivery</li>
+<li>Containerization</li>
+<li>Distributed software systems engineering</li>
+<li>Domain driven design
+<ul>
+<li>Including external DSL construction</li>
+</ul>
+</li>
+<li>Cyber-physical systems</li>
 </ul>
 </section><section>
 <h1 id="extra">Extra</h1>
