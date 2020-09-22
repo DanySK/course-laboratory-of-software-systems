@@ -1,8 +1,8 @@
  
 +++
 
-title = "Introduction to Laboratory of Software Systems"
-description = "Description of the course"
+title = "Build Automation"
+description = "The art of letting machines do the job for you, with Gradle as example"
 outputs = ["Reveal"]
 
 [reveal_hugo]
