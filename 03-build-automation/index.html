@@ -262,8 +262,35 @@ tasks.<span style="color:#369">getByName</span>(<span style="color:#d20;backgrou
 Configured later, executed first.
 Hello, World!
 </code></pre></div></section><section>
+<h2 id="gradle-task-types">Gradle: task types</h2>
+<p>Gradle offers some facilities to make it easier writing new tasks
+<br>
+An example is the <a href="https://docs.gradle.org/current/javadoc/org/gradle/api/tasks/Exec.html"><code>org.gradle.api.Exec</code></a> task type, representing a command to be executed on the underlying command line</p>
+<p>At task registration time, it is possible to specify the task type.
+<br>
+Any <code>open class</code> implementing <a href="https://docs.gradle.org/current/javadoc/org/gradle/api/Task.html"><code>org.gradle.api.Task</code></a> can be instanced</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.gradle.internal.jvm.Jvm</span> <span style="color:#888">// Jvm is part of the Gradle API
+</span><span style="color:#888"></span>tasks.<span style="color:#369">register</span>&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">&#34;printJavaVersion&#34;</span>) { <span style="color:#888">// Do you Recognize this? inline function with reified type!
+</span><span style="color:#888"></span>    <span style="color:#888">// Configuration action is of type T.() -&gt; Unit, in this case Exec.T() -&gt; Unit
+</span><span style="color:#888"></span>    val javaExecutable = Jvm.<span style="color:#369">current</span>().<span style="color:#369">javaExecutable</span>.<span style="color:#369">absolutePath</span> 
+    commandLine( <span style="color:#888">// this is a method of class org.gradle.api.Exec
+</span><span style="color:#888"></span>        javaExecutable, <span style="color:#d20;background-color:#fff0f0">&#34;-version&#34;</span>
+    )
+    <span style="color:#888">// There is no need of doLast / doFirst, actions are already configured
+</span><span style="color:#888"></span>    <span style="color:#888">// Still, we may want to do something before or after the task has been executed
+</span><span style="color:#888"></span>    doLast { println(<span style="color:#d20;background-color:#fff0f0">&#34;$javaExecutable invocation complete&#34;</span>) }
+    doFirst { println(<span style="color:#d20;background-color:#fff0f0">&#34;Ready to invoke $javaExecutable&#34;</span>) }
+}
+</code></pre></div><pre><code>&gt; Task :printJavaVersion
+Ready to invoke /usr/lib/jvm/java-11-openjdk/bin/java
+openjdk version &quot;11.0.8&quot; 2020-07-14
+OpenJDK Runtime Environment (build 11.0.8+10)
+OpenJDK 64-Bit Server VM (build 11.0.8+10, mixed mode)
+/usr/lib/jvm/java-11-openjdk/bin/java invocation complete
+</code></pre></section><section>
 <pre><code>* Dependency management and configurations
 * The build system as a dependency
+* Task dependencies
 * Hierarchial organization
 * Isolation of imperativity
 * Declarativity via DSLs
