@@ -119,12 +119,197 @@ A paradigmatic example of a hybrid automator:
     * A project can contain another project:
     * the container project is the **root project**
     * the contained projects are **subproject**s
+* **Build file** -- A special file, situated in the root directory of a project,
+instructing Gradle on the actual organization of the project projects
+* **Dependency** -- A resource required by some operation.
+    * May have dependencies itself
+    * Dependencies of dependencies are called *transitive* dependencies
+* **Configuration** -- A group of dependencies with *three roles*:
+    1. *Declare* dependencies
+    2. *Resolve* dependency declarations to actual artifacts/resources
+    2. *Present* the dependencies to consumer in a suitable format
 * **Task** -- An atomic operation on the project, which can
   * have input and output files
   * depend on other tasks (can be executed only if those are completed)
-* **Build file** -- A special file instructing Gradle on the actual organization of projects and available tasks
 
 ---
+
+## Gradle from scratch: empty project
+
+Let's start as empty as possible, just point your terminal to an empty folder and:
+```bash
+gradle tasks
+```
+
+Stuff happens: if nothing is specified,
+<br>
+*Gradle considers the folder where it is invoked as a project*
+<br>
+*The project name matches the folder name*
+
+Let's understand what:
+<br>
+
+```bash
+Welcome to Gradle <version>!
+
+Here are the highlights of this release:
+ - Blah blah blah
+
+Starting a Gradle Daemon (subsequent builds will be faster)
+```
+
+Up to there, it's just performance stuff:
+Gradle uses a background service to speed up cacheable operations
+
+---
+
+## Gradle from scratch: empty project
+
+```bash
+> Task :tasks
+
+------------------------------------------------------------
+Tasks runnable from root project
+------------------------------------------------------------
+
+Build Setup tasks
+-----------------
+init - Initializes a new Gradle build.
+wrapper - Generates Gradle wrapper files.
+```
+
+Some tasks exist already!
+They are built-in.
+Let's ignore them for now.
+
+
+---
+
+## Gradle from scratch: empty project
+
+```bash
+Help tasks
+----------
+buildEnvironment - Displays all buildscript dependencies declared in root project '00-empty'.
+components - Displays the components produced by root project '00-empty'. [incubating]
+dependencies - Displays all dependencies declared in root project '00-empty'.
+dependencyInsight - Displays the insight into a specific dependency in root project '00-empty'.
+dependentComponents - Displays the dependent components of components in root project '00-empty'. [incubating]
+help - Displays a help message.
+model - Displays the configuration model of root project '00-empty'. [incubating]
+outgoingVariants - Displays the outgoing variants of root project '00-empty'.
+projects - Displays the sub-projects of root project '00-empty'.
+properties - Displays the properties of root project '00-empty'.
+tasks - Displays the tasks runnable from root project '00-empty'.
+```
+
+Informational tasks. Among them, the `tasks` task we just invoked
+
+---
+
+## Gradle: configuration vs execution
+
+It is time to create our first *task*
+<br>
+Create a `build.gradle.kts` file as follows:
+
+```gradle
+tasks.register("brokenTask") { // creates a new task
+    println("this is executed at CONFIGURATION time!")
+}
+```
+
+Now launch gradle with `gradle brokenTask`:
+```bash
+gradle broken
+this is executed at CONFIGURATION time!
+
+BUILD SUCCESSFUL in 378ms
+```
+Looks ok, but it's **utterly broken**
+
+---
+
+## Gradle: configuration vs execution
+
+Try launching `gradle tasks`
+* We do not expect our task to run, we are launching something else
+
+```bash
+❯ gradle tasks
+
+> Task :tasks
+
+------------------------------------------------------------
+Tasks runnable from root project
+------------------------------------------------------------
+
+this is executed at CONFIGURATION time!
+Build Setup tasks
+```
+
+**Ouch!**
+
+**Reason**: the build script executes when Gradle is invoked, and *configures* tasks and dependencies.
+<br>
+Only later, when a task is invoked, it is *actually executed*
+*
+
+---
+
+## Gradle: configuration vs execution
+
+Let's write a *correct* task
+```gradle
+tasks.register("helloWorld") {
+    doLast { // This method takes as argument a Task.() -> Unit
+        println("Hello, World!")
+    }
+}
+```
+
+Execution with `gradle helloWorld`
+```bash
+gradle helloWorld
+
+> Task :helloWorld
+Hello, World!
+```
+
+---
+
+## Gradle: configuration vs execution
+
+### Why two separate phases?
+
+Delaying the actual execution allows for a more *fine grained configuration*
+<br>
+This will be especially useful when *modifying existing behavior*
+
+```gradle
+tasks.register("helloWorld") {
+    doLast { println("Hello, World!") }
+}
+
+tasks.getByName("helloWorld") { // let's find an existing task 
+    doFirst { // Similar to doLast, but adds operations in head
+        println("Configured later, executed first.")
+    }  
+}
+```
+
+```bash
+gradle helloWorld
+
+> Task :helloWorld
+Configured later, executed first.
+Hello, World!
+```
+
+---
+
+
 
     * Dependency management and configurations
     * The build system as a dependency
