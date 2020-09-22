@@ -121,15 +121,147 @@ and let the tool decide what to do actually</p>
 <li>the contained projects are <strong>subproject</strong>s</li>
 </ul>
 </li>
+<li><strong>Build file</strong> &ndash; A special file, situated in the root directory of a project,
+instructing Gradle on the actual organization of the project projects</li>
+<li><strong>Dependency</strong> &ndash; A resource required by some operation.
+<ul>
+<li>May have dependencies itself</li>
+<li>Dependencies of dependencies are called <em>transitive</em> dependencies</li>
+</ul>
+</li>
+<li><strong>Configuration</strong> &ndash; A group of dependencies with <em>three roles</em>:
+<ol>
+<li><em>Declare</em> dependencies</li>
+<li><em>Resolve</em> dependency declarations to actual artifacts/resources</li>
+<li><em>Present</em> the dependencies to consumer in a suitable format</li>
+</ol>
+</li>
 <li><strong>Task</strong> &ndash; An atomic operation on the project, which can
 <ul>
 <li>have input and output files</li>
 <li>depend on other tasks (can be executed only if those are completed)</li>
 </ul>
 </li>
-<li><strong>Build file</strong> &ndash; A special file instructing Gradle on the actual organization of projects and available tasks</li>
 </ul>
 </section><section>
+<h2 id="gradle-from-scratch-empty-project">Gradle from scratch: empty project</h2>
+<p>Let&rsquo;s start as empty as possible, just point your terminal to an empty folder and:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>gradle tasks
+</code></pre></div><p>Stuff happens: if nothing is specified,
+<br>
+<em>Gradle considers the folder where it is invoked as a project</em>
+<br>
+<em>The project name matches the folder name</em></p>
+<p>Let&rsquo;s understand what:
+<br></p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>Welcome to Gradle &lt;version&gt;!
+
+Here are the highlights of this release:
+ - Blah blah blah
+
+Starting a Gradle Daemon (subsequent builds will be faster)
+</code></pre></div><p>Up to there, it&rsquo;s just performance stuff:
+Gradle uses a background service to speed up cacheable operations</p>
+</section><section>
+<h2 id="gradle-from-scratch-empty-project-1">Gradle from scratch: empty project</h2>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>&gt; Task :tasks
+
+------------------------------------------------------------
+Tasks runnable from root project
+------------------------------------------------------------
+
+Build Setup tasks
+-----------------
+init - Initializes a new Gradle build.
+wrapper - Generates Gradle wrapper files.
+</code></pre></div><p>Some tasks exist already!
+They are built-in.
+Let&rsquo;s ignore them for now.</p>
+</section><section>
+<h2 id="gradle-from-scratch-empty-project-2">Gradle from scratch: empty project</h2>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>Help tasks
+----------
+buildEnvironment - Displays all buildscript dependencies declared in root project <span style="color:#d20;background-color:#fff0f0">&#39;00-empty&#39;</span>.
+components - Displays the components produced by root project <span style="color:#d20;background-color:#fff0f0">&#39;00-empty&#39;</span>. [incubating]
+dependencies - Displays all dependencies declared in root project <span style="color:#d20;background-color:#fff0f0">&#39;00-empty&#39;</span>.
+dependencyInsight - Displays the insight into a specific dependency in root project <span style="color:#d20;background-color:#fff0f0">&#39;00-empty&#39;</span>.
+dependentComponents - Displays the dependent components of components in root project <span style="color:#d20;background-color:#fff0f0">&#39;00-empty&#39;</span>. [incubating]
+<span style="color:#038">help</span> - Displays a <span style="color:#038">help</span> message.
+model - Displays the configuration model of root project <span style="color:#d20;background-color:#fff0f0">&#39;00-empty&#39;</span>. [incubating]
+outgoingVariants - Displays the outgoing variants of root project <span style="color:#d20;background-color:#fff0f0">&#39;00-empty&#39;</span>.
+projects - Displays the sub-projects of root project <span style="color:#d20;background-color:#fff0f0">&#39;00-empty&#39;</span>.
+properties - Displays the properties of root project <span style="color:#d20;background-color:#fff0f0">&#39;00-empty&#39;</span>.
+tasks - Displays the tasks runnable from root project <span style="color:#d20;background-color:#fff0f0">&#39;00-empty&#39;</span>.
+</code></pre></div><p>Informational tasks. Among them, the <code>tasks</code> task we just invoked</p>
+</section><section>
+<h2 id="gradle-configuration-vs-execution">Gradle: configuration vs execution</h2>
+<p>It is time to create our first <em>task</em>
+<br>
+Create a <code>build.gradle.kts</code> file as follows:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>tasks.<span style="color:#369">register</span>(<span style="color:#d20;background-color:#fff0f0">&#34;brokenTask&#34;</span>) { <span style="color:#888">// creates a new task
+</span><span style="color:#888"></span>    println(<span style="color:#d20;background-color:#fff0f0">&#34;this is executed at CONFIGURATION time!&#34;</span>)
+}
+</code></pre></div><p>Now launch gradle with <code>gradle brokenTask</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>gradle broken
+this is executed at CONFIGURATION time!
+
+BUILD SUCCESSFUL in 378ms
+</code></pre></div><p>Looks ok, but it&rsquo;s <strong>utterly broken</strong></p>
+</section><section>
+<h2 id="gradle-configuration-vs-execution-1">Gradle: configuration vs execution</h2>
+<p>Try launching <code>gradle tasks</code></p>
+<ul>
+<li>We do not expect our task to run, we are launching something else</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>❯ gradle tasks
+
+&gt; Task :tasks
+
+------------------------------------------------------------
+Tasks runnable from root project
+------------------------------------------------------------
+
+this is executed at CONFIGURATION time!
+Build Setup tasks
+</code></pre></div><p><strong>Ouch!</strong></p>
+<p><strong>Reason</strong>: the build script executes when Gradle is invoked, and <em>configures</em> tasks and dependencies.
+<br>
+Only later, when a task is invoked, it is <em>actually executed</em>
+*</p>
+</section><section>
+<h2 id="gradle-configuration-vs-execution-2">Gradle: configuration vs execution</h2>
+<p>Let&rsquo;s write a <em>correct</em> task</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>tasks.<span style="color:#369">register</span>(<span style="color:#d20;background-color:#fff0f0">&#34;helloWorld&#34;</span>) {
+    doLast { <span style="color:#888">// This method takes as argument a Task.() -&gt; Unit
+</span><span style="color:#888"></span>        println(<span style="color:#d20;background-color:#fff0f0">&#34;Hello, World!&#34;</span>)
+    }
+}
+</code></pre></div><p>Execution with <code>gradle helloWorld</code></p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>gradle helloWorld
+
+&gt; Task :helloWorld
+Hello, World!
+</code></pre></div></section><section>
+<h2 id="gradle-configuration-vs-execution-3">Gradle: configuration vs execution</h2>
+<h3 id="why-two-separate-phases">Why two separate phases?</h3>
+<p>Delaying the actual execution allows for a more <em>fine grained configuration</em>
+<br>
+This will be especially useful when <em>modifying existing behavior</em></p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>tasks.<span style="color:#369">register</span>(<span style="color:#d20;background-color:#fff0f0">&#34;helloWorld&#34;</span>) {
+    doLast { println(<span style="color:#d20;background-color:#fff0f0">&#34;Hello, World!&#34;</span>) }
+}
+
+tasks.<span style="color:#369">getByName</span>(<span style="color:#d20;background-color:#fff0f0">&#34;helloWorld&#34;</span>) { <span style="color:#888">// let&#39;s find an existing task 
+</span><span style="color:#888"></span>    doFirst { <span style="color:#888">// Similar to doLast, but adds operations in head
+</span><span style="color:#888"></span>        println(<span style="color:#d20;background-color:#fff0f0">&#34;Configured later, executed first.&#34;</span>)
+    }  
+}
+</code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>gradle helloWorld
+
+&gt; Task :helloWorld
+Configured later, executed first.
+Hello, World!
+</code></pre></div></section><section>
 <pre><code>* Dependency management and configurations
 * The build system as a dependency
 * Hierarchial organization
