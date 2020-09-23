@@ -522,8 +522,13 @@ fun DependencyHandlerScope.forEachLibrary(todo: DependencyHandlerScope.(String) 
 
 ---
 
-compile java
-    * Dependency management and configurations
+## Gradle: task dependencies
+
+Next step: we can compile, why not executing the program as well?
+
+
+---
+
 execute java: task dependencies
     * Task dependencies
 compile with dependencies
@@ -536,8 +541,16 @@ Write a custom Task for compilation
 @Input e @Output
 Continuous build
 Write a custom task for Execution
-    * Isolation of imperativity
-    * Declarativity via DSLs
-    * Reuse via plug-ins
-    * Testing plug-ins
-    * Existing plugins
+* Isolation of imperativity
+* Declarativity via DSLs
+concept of plugin
+the kotlin plugin
+* jvm variant
+* with its configurations
+our "plugin for java"
+testing a plugin (kotest + Gradle api + classpath trick)
+some existing plugins
+* detekt
+* ktlint
+* jacoco
+* what else?
