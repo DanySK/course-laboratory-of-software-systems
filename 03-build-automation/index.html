@@ -26,7 +26,7 @@
     <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
 <h2 id="build-automation">Build Automation</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2020-09-22
+2020-09-23
 
 </section><section>
 <h1 id="build-automation-1">Build automation</h1>
@@ -263,7 +263,7 @@ Configured later, executed first.
 Hello, World!
 </code></pre></div></section><section>
 <h2 id="gradle-task-types">Gradle: task types</h2>
-<p>Gradle offers some facilities to make it easier writing new tasks
+<p>Gradle offers some facilities to make it writing new tasks easier
 <br>
 An example is the <a href="https://docs.gradle.org/current/javadoc/org/gradle/api/tasks/Exec.html"><code>org.gradle.api.Exec</code></a> task type, representing a command to be executed on the underlying command line</p>
 <p>At task registration time, it is possible to specify the task type.
@@ -288,15 +288,178 @@ OpenJDK Runtime Environment (build 11.0.8+10)
 OpenJDK 64-Bit Server VM (build 11.0.8+10, mixed mode)
 /usr/lib/jvm/java-11-openjdk/bin/java invocation complete
 </code></pre></section><section>
-<pre><code>* Dependency management and configurations
-* The build system as a dependency
+<h2 id="gradle-principle-of-automation">Gradle: principle of automation</h2>
+<p>Let&rsquo;s try something more involved: compiling some Java source located in <code>src</code>.
+<br></p>
+<h4 id="principle"><strong>PRINCIPLE</strong></h4>
+<blockquote>
+<p><em>If you know how to do it, then you can instruct a machine to do it</em></p>
+</blockquote>
+<p>Compiling a Java source is just matter of invoking the <code>javac</code> compiler:</p>
+<ul>
+<li>Passing the files to be compiled</li>
+<li>Passing an appropriate classpath where to look for dependencies</li>
+<li>Passing where to put generated files</li>
+</ul>
+<p><em>Once you learn how some product is built, and you know how to build it by hand</em>
+<br>
+<strong>you have all the knowledge required to automate its construction</strong></p>
+</section><section>
+<h2 id="gradle-compiling-from-scratch">Gradle: compiling from scratch</h2>
+<p>Let&rsquo;s compile a simple <code>src/HelloWorld.java</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">HelloWorld</span> {
+    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#888;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">main</span>(String... args) {
+        System.<span style="color:#369">out</span>.<span style="color:#369">println</span>(<span style="color:#d20;background-color:#fff0f0">&#34;Hello, World!&#34;</span>);
+    }
+}
+</code></pre></div><p>Build logic:</p>
+<ol>
+<li>Find the sources to be compiled</li>
+<li>If any, find <code>javac</code></li>
+<li>Invoke <code>javac -d destination &lt;files&gt;</code></li>
+</ol>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.gradle.internal.jvm.Jvm</span>
+tasks.<span style="color:#369">register</span>&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">&#34;compileJava&#34;</span>) {
+    val sources = findSources() <span style="color:#888">// 
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">if</span> (sources.<span style="color:#369">isNotEmpty</span>())  { <span style="color:#888">// If the folder exists and there are files
+</span><span style="color:#888"></span>        val javacExecutable = Jvm.<span style="color:#369">current</span>().<span style="color:#369">javacExecutable</span>.<span style="color:#369">absolutePath</span> <span style="color:#888">// Use the current JVM&#39;s javac
+</span><span style="color:#888"></span>        commandLine(
+            <span style="color:#d20;background-color:#fff0f0">&#34;$javacExecutable&#34;</span>,
+            <span style="color:#d20;background-color:#fff0f0">&#34;-d&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;$buildDir/bin&#34;</span>, <span style="color:#888">// destination folder: the output directory of Gradle, inside &#34;bin&#34;
+</span><span style="color:#888"></span>            *sources
+        )
+    }
+    <span style="color:#888">// the task&#39;s doLast is inherited from Exec
+</span><span style="color:#888"></span>}
+</code></pre></div></section><section>
+<h2 id="gradle-compiling-from-scratch-1">Gradle: compiling from scratch</h2>
+<p>Here is the <code>findSources()</code> function:</p>
+<ul>
+<li>Pure Kotlin</li>
+<li>Single expression</li>
+<li>Fluent safe call chaining</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">findSources</span>(): Array&lt;String&gt; = projectDir <span style="color:#888">// From the project
+</span><span style="color:#888"></span>    .listFiles { it: File -&gt; it.isDirectory &amp;&amp; it.name == <span style="color:#d20;background-color:#fff0f0">&#34;src&#34;</span> } <span style="color:#888">// Find a folder named &#39;src&#39;
+</span><span style="color:#888"></span>    ?.firstOrNull() <span style="color:#888">// If it&#39;s not there we&#39;re done
+</span><span style="color:#888"></span>    ?.walk() <span style="color:#888">// If it&#39;s there, iterate all its content (returns a Sequence&lt;File&gt;)
+</span><span style="color:#888"></span>    ?.filter { it.extension == <span style="color:#d20;background-color:#fff0f0">&#34;java&#34;</span> } <span style="color:#888">// Pick all Java files
+</span><span style="color:#888"></span>    ?.map { it.absolutePath } <span style="color:#888">// Map them to their absolute path
+</span><span style="color:#888"></span>    ?.toList() <span style="color:#888">// Sequences can&#39;t get converted to arrays, we must go through lists
+</span><span style="color:#888"></span>    ?.toTypedArray() <span style="color:#888">// Convert to Array&lt;String&gt;
+</span><span style="color:#888"></span>    ?: emptyArray() <span style="color:#888">// Yeah if anything&#39;s missing there are no sources
+</span></code></pre></div><p>Execution:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>gradle compileJava
+
+BUILD SUCCESSFUL in 693ms
+</code></pre></div><p>Compiled files are in <code>build/bin</code>!</p>
+</section><section>
+<h2 id="gradle-dependency-management">Gradle: dependency management</h2>
+<p>Dependency management in Gradle depends from two fundamental concepts:</p>
+<ul>
+<li><strong>Dependency</strong>, a resource of some kind, possibly having other (<em>transitive</em>) dependencies</li>
+<li><strong>Configuration</strong>, a <em>resolvable</em> (mappable to actual resources) set of dependencies</li>
+</ul>
+<p>Let&rsquo;s see a use case: compiling a Java source with a dependency</p>
+<ul>
+<li>In <code>javac</code> terms, we need to feed some jars to the <code>-cp</code> flag of the compiler</li>
+<li>In Gradle (automation) terms, we need:
+<ul>
+<li>a <em>configuration</em> representing the compile classpath</li>
+<li>one <em>dependency</em> for each library we need to compile</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="gradle-dependency-management-1">Gradle: dependency management</h2>
+<p>Conceptually, we want something like:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#888">// Gradle way to create a configuration
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">compileClasspath</span> <span style="color:#080;font-weight:bold">by</span> configurations.creating <span style="color:#888">// Delegation!
+</span><span style="color:#888"></span>dependencies {
+    forEachLibrary { <span style="color:#888">// this function does not exist, unfortunate...
+</span><span style="color:#888"></span>        compileClasspath(files(it))
+    }
+}
+</code></pre></div><p>To be consumed by our improved compile task:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>tasks.register&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">&#34;compileJava&#34;</span>) {
+    <span style="color:#888">// Resolve the classpath configuration (in general, files could be remote and need fetching)
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">classpathFiles</span> = compileClasspath.resolve()
+    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">sources</span> = findSources() <span style="color:#888">// Find sources
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">if</span> (sources != <span style="color:#080;font-weight:bold">null</span>)  {
+        <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">javacExecutable</span> = Jvm.current().javacExecutable.absolutePath
+        <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">separator</span> = <span style="color:#080;font-weight:bold">if</span> (Os.isFamily(Os.FAMILY_WINDOWS)) <span style="color:#d20;background-color:#fff0f0">&#34;;&#34;</span> <span style="color:#080;font-weight:bold">else</span> <span style="color:#d20;background-color:#fff0f0">&#34;:&#34;</span> <span style="color:#888">// Deal with Windows conventions
+</span><span style="color:#888"></span>        commandLine(
+            <span style="color:#d20;background-color:#fff0f0">&#34;$javacExecutable&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;-cp&#34;</span>, classpathFiles.joinToString(separator = separator),
+            <span style="color:#d20;background-color:#fff0f0">&#34;-d&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;bin&#34;</span>, *sources
+        )
+    }
+}
+</code></pre></div><p>We just need to write <code>forEachLibrary</code>, but that is just a Kotlin exercise&hellip;</p>
+</section><section>
+<h2 id="micro-exercise-in-kotlin">Micro exercise in Kotlin</h2>
+<p>&hellip;not particularly difficult to solve:</p>
+<ol>
+<li>It&rsquo;s just something we need to do for each library</li>
+</ol>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#888">// In the context of a DependencyHandlerScope
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">DependencyHandlerScope</span>.forEachLibrary(todo: DependencyHandlerScope.(String) -&gt; Unit) {
+    findLibraries().forEach { <span style="color:#888">// For each library (function to be written)
+</span><span style="color:#888"></span>        todo(it) <span style="color:#888">// this.todo(it) -&gt; invoke todo on this passing the library
+</span><span style="color:#888"></span>    }
+}
+</code></pre></div><ol start="2">
+<li><code>findLibraries()</code> is similar to <code>findSources()</code>, let&rsquo;s refactor:</li>
+</ol>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">findSources</span>() = findFilesIn(<span style="color:#d20;background-color:#fff0f0">&#34;src&#34;</span>).withExtension(<span style="color:#d20;background-color:#fff0f0">&#34;java&#34;</span>) <span style="color:#888">// OK now we need findFiles()
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">findLibraries</span>() = findFilesIn(<span style="color:#d20;background-color:#fff0f0">&#34;lib&#34;</span>).withExtension(<span style="color:#d20;background-color:#fff0f0">&#34;jar&#34;</span>) <span style="color:#888">// And we also need a way to invoke withExtension
+</span></code></pre></div><ol start="3">
+<li>Let&rsquo;s use an intermediate class representing a search on a folder:</li>
+</ol>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">findFilesIn</span>(directory: String) = FinderInFolder(directory)
+<span style="color:#080;font-weight:bold">data</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">FinderInFolder</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">directory</span>: String) {
+    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">withExtension</span>(extension: String): Array&lt;String&gt; = TODO()
+}
+<span style="color:#888">// Now it compiles! We just need to write the actual method, but that&#39;s easy
+</span></code></pre></div></section><section>
+<h2 id="micro-exercise-in-kotlin-1">Micro exercise in Kotlin</h2>
+<p>Complete solution:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">data</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">FinderInFolder</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">directory</span>: String) {
+    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">withExtension</span>(extension: String): Array&lt;String&gt; = projectDir
+        .listFiles { it: File -&gt; it.isDirectory &amp;&amp; it.name == directory }
+        ?.firstOrNull()
+        ?.walk()
+        ?.filter { it.extension == extension }
+        ?.map { it.absolutePath }
+        ?.toList()
+        ?.toTypedArray()
+        ?: emptyArray()
+}
+<span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">findFilesIn</span>(directory: String) = FinderInFolder(directory)
+<span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">findSources</span>() = findFilesIn(<span style="color:#d20;background-color:#fff0f0">&#34;src&#34;</span>).withExtension(<span style="color:#d20;background-color:#fff0f0">&#34;java&#34;</span>)
+<span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">findLibraries</span>() = findFilesIn(<span style="color:#d20;background-color:#fff0f0">&#34;lib&#34;</span>).withExtension(<span style="color:#d20;background-color:#fff0f0">&#34;jar&#34;</span>)
+<span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">DependencyHandlerScope</span>.forEachLibrary(todo: DependencyHandlerScope.(String) -&gt; Unit) {
+    findLibraries().forEach { todo(it) }
+}
+
+</code></pre></div></section><section>
+<p>compile java
+* Dependency management and configurations
+execute java: task dependencies
 * Task dependencies
-* Hierarchial organization
+compile with dependencies
+* The build system as a dependency
+wrapper
+subprojects (lib + app)
+* Hierarchial organization</p>
+<p>Write a custom Task for compilation
+@Input e @Output
+Continuous build
+Write a custom task for Execution
 * Isolation of imperativity
 * Declarativity via DSLs
 * Reuse via plug-ins
 * Testing plug-ins
-* Existing plugins</code></pre>
+* Existing plugins</p>
 </section>
 
   
