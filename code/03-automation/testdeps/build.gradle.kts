@@ -1,19 +1,33 @@
 import org.apache.tools.ant.taskdefs.condition.Os
 import org.gradle.internal.jvm.Jvm
 
+data class FinderInFolder(val directory: String) {
+    fun withExtension(extension: String): Array<String> = projectDir
+        .listFiles { it: File -> it.isDirectory && it.name == directory }
+        ?.firstOrNull()
+        ?.walk()
+        ?.filter { it.extension == extension }
+        ?.map { it.absolutePath }
+        ?.toList()
+        ?.toTypedArray()
+        ?: emptyArray()
+}
+fun findFilesIn(directory: String) = FinderInFolder(directory)
+fun findSources() = findFilesIn("src").withExtension("java")
+fun findLibraries() = findFilesIn("lib").withExtension("jar")
+fun DependencyHandlerScope.forEachLibrary(todo: DependencyHandlerScope.(String) -> Unit) {
+    findLibraries().forEach {
+        todo(it)
+    }
+}
+
 // Create a new configuration, our compileClasspath
 val compileClasspath by configurations.creating
 
 dependencies {
-    // Search libraries in lib
-    val libraries = projectDir
-        .listFiles { it: File -> it.isDirectory && it.name == "lib"}
-        ?.firstOrNull()
-        ?.listFiles { it: File -> it.extension == "jar" }
-        ?: emptyArray()
-    println("Found libraries: ${libraries.joinToString()}")
-    // Add them to the classpath
-    compileClasspath(files(*libraries))
+    forEachLibrary {
+        compileClasspath(files(it))
+    }
 }
 
 // Write a task of type Exec that launches javac
@@ -22,18 +36,11 @@ tasks.register<Exec>("compileJava") {
     // (in general, files could be remote and need fetching)
     val classpathFiles = compileClasspath.resolve()
     // Build the command
-    val separator = if (Os.isFamily(Os.FAMILY_WINDOWS)) ";" else ":"
-    val sources = projectDir
-        .listFiles { it: File -> it.isDirectory && it.name == "src" }
-        ?.firstOrNull()
-        ?.walk()
-        ?.filter { it.extension == "java" }
-        ?.map { it.absolutePath }
-        ?.toList()
-        ?.toTypedArray()
+    val sources = findSources()
     if (sources != null)  {
         // Use the current JVM's javac
         val javacExecutable = Jvm.current().javacExecutable.absolutePath
+        val separator = if (Os.isFamily(Os.FAMILY_WINDOWS)) ";" else ":"
         commandLine(
             "$javacExecutable",
             "-cp", classpathFiles.joinToString(separator = separator),

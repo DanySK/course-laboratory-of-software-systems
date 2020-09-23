@@ -311,7 +311,7 @@ Hello, World!
 
 ## Gradle: task types
 
-Gradle offers some facilities to make it easier writing new tasks
+Gradle offers some facilities to make it writing new tasks easier
 <br>
 An example is the [`org.gradle.api.Exec`](https://docs.gradle.org/current/javadoc/org/gradle/api/tasks/Exec.html) task type, representing a command to be executed on the underlying command line
 
@@ -345,12 +345,197 @@ OpenJDK 64-Bit Server VM (build 11.0.8+10, mixed mode)
 
 ---
 
+## Gradle: principle of automation
 
+Let's try something more involved: compiling some Java source located in `src`.
+<br>
+#### **PRINCIPLE**
+> *If you know how to do it, then you can instruct a machine to do it*
 
+Compiling a Java source is just matter of invoking the `javac` compiler:
+* Passing the files to be compiled
+* Passing an appropriate classpath where to look for dependencies
+* Passing where to put generated files
+
+*Once you learn how some product is built, and you know how to build it by hand*
+<br>
+**you have all the knowledge required to automate its construction**
+
+---
+
+## Gradle: compiling from scratch
+
+Let's compile a simple `src/HelloWorld.java`:
+```java
+class HelloWorld {
+    public static void main(String... args) {
+        System.out.println("Hello, World!");
+    }
+}
+```
+Build logic:
+1. Find the sources to be compiled
+2. If any, find `javac`
+3. Invoke `javac -d destination <files>`
+
+```gradle
+import org.gradle.internal.jvm.Jvm
+tasks.register<Exec>("compileJava") {
+    val sources = findSources() // 
+    if (sources.isNotEmpty())  { // If the folder exists and there are files
+        val javacExecutable = Jvm.current().javacExecutable.absolutePath // Use the current JVM's javac
+        commandLine(
+            "$javacExecutable",
+            "-d", "$buildDir/bin", // destination folder: the output directory of Gradle, inside "bin"
+            *sources
+        )
+    }
+    // the task's doLast is inherited from Exec
+}
+```
+---
+
+## Gradle: compiling from scratch
+
+Here is the `findSources()` function:
+* Pure Kotlin
+* Single expression
+* Fluent safe call chaining
+
+```kotlin
+fun findSources(): Array<String> = projectDir // From the project
+    .listFiles { it: File -> it.isDirectory && it.name == "src" } // Find a folder named 'src'
+    ?.firstOrNull() // If it's not there we're done
+    ?.walk() // If it's there, iterate all its content (returns a Sequence<File>)
+    ?.filter { it.extension == "java" } // Pick all Java files
+    ?.map { it.absolutePath } // Map them to their absolute path
+    ?.toList() // Sequences can't get converted to arrays, we must go through lists
+    ?.toTypedArray() // Convert to Array<String>
+    ?: emptyArray() // Yeah if anything's missing there are no sources
+```
+Execution:
+```bash
+gradle compileJava
+
+BUILD SUCCESSFUL in 693ms
+```
+Compiled files are in `build/bin`!
+
+---
+
+## Gradle: dependency management
+
+Dependency management in Gradle depends from two fundamental concepts:
+* **Dependency**, a resource of some kind, possibly having other (*transitive*) dependencies
+* **Configuration**, a *resolvable* (mappable to actual resources) set of dependencies
+
+Let's see a use case: compiling a Java source with a dependency
+* In `javac` terms, we need to feed some jars to the `-cp` flag of the compiler
+* In Gradle (automation) terms, we need:
+    * a *configuration* representing the compile classpath
+    * one *dependency* for each library we need to compile
+
+---
+
+## Gradle: dependency management
+
+Conceptually, we want something like:
+```kotlin
+// Gradle way to create a configuration
+val compileClasspath by configurations.creating // Delegation!
+dependencies {
+    forEachLibrary { // this function does not exist, unfortunate...
+        compileClasspath(files(it))
+    }
+}
+```
+To be consumed by our improved compile task:
+```kotlin
+tasks.register<Exec>("compileJava") {
+    // Resolve the classpath configuration (in general, files could be remote and need fetching)
+    val classpathFiles = compileClasspath.resolve()
+    val sources = findSources() // Find sources
+    if (sources != null)  {
+        val javacExecutable = Jvm.current().javacExecutable.absolutePath
+        val separator = if (Os.isFamily(Os.FAMILY_WINDOWS)) ";" else ":" // Deal with Windows conventions
+        commandLine(
+            "$javacExecutable", "-cp", classpathFiles.joinToString(separator = separator),
+            "-d", "bin", *sources
+        )
+    }
+}
+```
+We just need to write `forEachLibrary`, but that is just a Kotlin exercise...
+
+---
+
+## Micro exercise in Kotlin
+
+...not particularly difficult to solve:
+1. It's just something we need to do for each library
+```kotlin
+// In the context of a DependencyHandlerScope
+fun DependencyHandlerScope.forEachLibrary(todo: DependencyHandlerScope.(String) -> Unit) {
+    findLibraries().forEach { // For each library (function to be written)
+        todo(it) // this.todo(it) -> invoke todo on this passing the library
+    }
+}
+```
+2. `findLibraries()` is similar to `findSources()`, let's refactor:
+```kotlin
+fun findSources() = findFilesIn("src").withExtension("java") // OK now we need findFiles()
+fun findLibraries() = findFilesIn("lib").withExtension("jar") // And we also need a way to invoke withExtension
+```
+3. Let's use an intermediate class representing a search on a folder:
+```kotlin
+fun findFilesIn(directory: String) = FinderInFolder(directory)
+data class FinderInFolder(val directory: String) {
+    fun withExtension(extension: String): Array<String> = TODO()
+}
+// Now it compiles! We just need to write the actual method, but that's easy
+```
+---
+
+## Micro exercise in Kotlin
+
+Complete solution:
+```kotlin
+data class FinderInFolder(val directory: String) {
+    fun withExtension(extension: String): Array<String> = projectDir
+        .listFiles { it: File -> it.isDirectory && it.name == directory }
+        ?.firstOrNull()
+        ?.walk()
+        ?.filter { it.extension == extension }
+        ?.map { it.absolutePath }
+        ?.toList()
+        ?.toTypedArray()
+        ?: emptyArray()
+}
+fun findFilesIn(directory: String) = FinderInFolder(directory)
+fun findSources() = findFilesIn("src").withExtension("java")
+fun findLibraries() = findFilesIn("lib").withExtension("jar")
+fun DependencyHandlerScope.forEachLibrary(todo: DependencyHandlerScope.(String) -> Unit) {
+    findLibraries().forEach { todo(it) }
+}
+
+```
+
+---
+
+compile java
     * Dependency management and configurations
-    * The build system as a dependency
+execute java: task dependencies
     * Task dependencies
+compile with dependencies
+    * The build system as a dependency
+wrapper
+subprojects (lib + app)
     * Hierarchial organization
+
+Write a custom Task for compilation
+@Input e @Output
+Continuous build
+Write a custom task for Execution
     * Isolation of imperativity
     * Declarativity via DSLs
     * Reuse via plug-ins
