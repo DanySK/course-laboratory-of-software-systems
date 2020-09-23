@@ -515,7 +515,7 @@ Just printed a stacktrace, I<span style="color:#a61717;background-color:#e3d2d2"
 BUILD SUCCESSFUL in 775ms
 <span style="color:#00d;font-weight:bold">2</span> actionable tasks: <span style="color:#00d;font-weight:bold">2</span> executed
 </code></pre></div></section><section>
-<h2 id="build-automation-dependencies">Build automation: dependencies</h2>
+<h2 id="build-automation-dependencies-everywhere">Build automation: dependencies everywhere</h2>
 <p>Dependencies permeate the world of build automation.</p>
 <ul>
 <li>At the <em>&ldquo;task&rdquo;</em> level
@@ -533,6 +533,33 @@ BUILD SUCCESSFUL in 775ms
 </ul>
 <p>$\Rightarrow$ <em>at the <strong>global</strong> level as well!</em></p>
 <p><em>no guarantee</em>  that automation written with some tool at version <code>X</code>, will work at version <code>Y</code>!</p>
+</section><section>
+<h2 id="the-gradle-wrapper">The Gradle wrapper</h2>
+<ul>
+<li>A global dependency on the build tool is <strong>hard to capture</strong></li>
+<li>Often, it becomes a <em>prerequisite expressed in natural language</em>
+<ul>
+<li>e.g., &ldquo;you need Maven 3.6.1 to build this software&rdquo;</li>
+</ul>
+</li>
+<li><em>Critical</em> issues when different pieces of the same system depend on different build tool versions</li>
+</ul>
+<p>Gradle proposes a (partial) solution with the so-called <em>Gradle wrapper</em></p>
+<ul>
+<li><em>A minimal program</em> that simply downloads the version of gradle written in a configuration file</li>
+<li><em>Generable</em> with the built-in task <code>wrapper</code>
+<ul>
+<li><code>gradle wrapper --gradle-version=&lt;VERSION&gt;</code></li>
+</ul>
+</li>
+<li>Prepares scripts for bash and cmd to run Gradle at the specified version
+<ul>
+<li><code>gradlew</code></li>
+<li><code>gradlew.bat</code></li>
+</ul>
+</li>
+</ul>
+<p>The Gradle wrapper is <em>the correct way</em> to use gradle, and we&rsquo;ll be using it from now on.</p>
 </section><section>
 <p>execute java: task dependencies
 * Task dependencies
