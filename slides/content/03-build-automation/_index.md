@@ -643,11 +643,32 @@ The Gradle wrapper is *the correct way* to use gradle, and we'll be using it fro
 
 ---
 
-execute java: task dependencies
-    * Task dependencies
-compile with dependencies
-    * The build system as a dependency
-wrapper
+## Cleaning up
+
+A source of failures when building is *dirty status*.
+<br>
+For istance, in the previous example, before we introduced a dependency between tasks:
+
+* clean execution fails
+* execution after a *manual* execution of compile works
+    * **false positive!**
+
+We need a way to start clean.
+<br>
+This usually involves cleaning up the build directory - not so hard in our example
+
+```kotlin
+tasks.register("clean") { // A generic task is fine
+    if (!buildDir.deleteRecursively()) {
+        throw IllegalStateException("Cannot delete $buildDir")
+    }
+}
+```
+
+---
+
+
+
 subprojects (lib + app)
     * Hierarchial organization
     * naming a project
