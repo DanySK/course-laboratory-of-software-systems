@@ -561,12 +561,28 @@ BUILD SUCCESSFUL in 775ms
 </ul>
 <p>The Gradle wrapper is <em>the correct way</em> to use gradle, and we&rsquo;ll be using it from now on.</p>
 </section><section>
-<p>execute java: task dependencies
-* Task dependencies
-compile with dependencies
-* The build system as a dependency
-wrapper
-subprojects (lib + app)
+<h2 id="cleaning-up">Cleaning up</h2>
+<p>A source of failures when building is <em>dirty status</em>.
+<br>
+For istance, in the previous example, before we introduced a dependency between tasks:</p>
+<ul>
+<li>clean execution fails</li>
+<li>execution after a <em>manual</em> execution of compile works
+<ul>
+<li><strong>false positive!</strong></li>
+</ul>
+</li>
+</ul>
+<p>We need a way to start clean.
+<br>
+This usually involves cleaning up the build directory - not so hard in our example</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>tasks.register(<span style="color:#d20;background-color:#fff0f0">&#34;clean&#34;</span>) { <span style="color:#888">// A generic task is fine
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">if</span> (!buildDir.deleteRecursively()) {
+        <span style="color:#080;font-weight:bold">throw</span> IllegalStateException(<span style="color:#d20;background-color:#fff0f0">&#34;Cannot delete $buildDir&#34;</span>)
+    }
+}
+</code></pre></div></section><section>
+<p>subprojects (lib + app)
 * Hierarchial organization
 * naming a project</p>
 <p>Write a custom Task for compilation
