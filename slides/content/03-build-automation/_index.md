@@ -604,9 +604,10 @@ Just printed a stacktrace, I'm fine actually
 BUILD SUCCESSFUL in 775ms
 2 actionable tasks: 2 executed
 ```
+
 ---
 
-## Build automation: dependencies
+## Build automation: dependencies everywhere
 
 Dependencies permeate the world of build automation.
 * At the *"task"* level
@@ -619,6 +620,26 @@ Dependencies permeate the world of build automation.
 $\Rightarrow$ *at the **global** level as well!*
 
 *no guarantee*  that automation written with some tool at version `X`, will work at version `Y`!
+
+---
+
+## The Gradle wrapper
+
+* A global dependency on the build tool is **hard to capture**
+* Often, it becomes a *prerequisite expressed in natural language*
+    * e.g., "you need Maven 3.6.1 to build this software"
+* *Critical* issues when different pieces of the same system depend on different build tool versions
+
+Gradle proposes a (partial) solution with the so-called *Gradle wrapper*
+
+* *A minimal program* that simply downloads the version of gradle written in a configuration file
+* *Generable* with the built-in task `wrapper`
+    * `gradle wrapper --gradle-version=<VERSION>`
+* Prepares scripts for bash and cmd to run Gradle at the specified version
+    * `gradlew`
+    * `gradlew.bat`
+
+The Gradle wrapper is *the correct way* to use gradle, and we'll be using it from now on.
 
 ---
 
