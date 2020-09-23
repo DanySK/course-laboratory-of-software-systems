@@ -442,24 +442,125 @@ BUILD SUCCESSFUL in 693ms
 }
 
 </code></pre></div></section><section>
-<p>compile java
-* Dependency management and configurations
-execute java: task dependencies
+<h2 id="gradle-task-dependencies">Gradle: task dependencies</h2>
+<p>Next step: we can compile, why not executing the program as well?</p>
+<ol>
+<li>Let&rsquo;s define a <code>runtimeClasspath</code> configuration
+<ul>
+<li>&ldquo;inherits&rdquo; from <code>compileClasspath</code></li>
+<li>In general we may need stuff at runtime that we don&rsquo;t need at compile time
+<ul>
+<li>E.g. stuff loaded via reflection</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">runtimeClasspath</span> <span style="color:#080;font-weight:bold">by</span> configurations.creating {
+    extendsFrom(compileClasspath) <span style="color:#888">// Built-in machinery to say that one configuration is another &#34;plus stuff&#34;
+</span><span style="color:#888"></span>}
+</code></pre></div><ol start="2">
+<li>Let&rsquo;s write the task</li>
+</ol>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>tasks.register&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">&#34;runJava&#34;</span>) {
+    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">classpathFiles</span> = runtimeClasspath.resolve()
+    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">mainClass</span> = <span style="color:#d20;background-color:#fff0f0">&#34;PrintException&#34;</span> <span style="color:#888">// Horribly hardcoded, we must do something
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">javaExecutable</span> = Jvm.current().javaExecutable.absolutePath
+    commandLine(
+            <span style="color:#d20;background-color:#fff0f0">&#34;$javaExecutable&#34;</span>,
+            <span style="color:#d20;background-color:#fff0f0">&#34;-cp&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;$buildDir/bin/$separator${classpathFiles.joinToString(separator = separator)}&#34;</span>,
+            mainClass
+    )
+}
+</code></pre></div></section><section>
+<h2 id="gradle-task-dependencies-1">Gradle: task dependencies</h2>
+<p>Let&rsquo;s run it!</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>❯ gradle runJava
+
+&gt; Task :runJava FAILED
+Error: Could not find or load main class PrintException
+Caused by: java.lang.ClassNotFoundException: PrintException
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed <span style="color:#080;font-weight:bold">for</span> task <span style="color:#d20;background-color:#fff0f0">&#39;:runJava&#39;</span>.
+&gt; Process <span style="color:#d20;background-color:#fff0f0">&#39;command &#39;</span>/usr/lib/jvm/java-11-openjdk/bin/java<span style="color:#d20;background-color:#fff0f0">&#39;&#39;</span> finished with non-zero <span style="color:#038">exit</span> value <span style="color:#00d;font-weight:bold">1</span>
+</code></pre></div><p>$\Rightarrow$ The code was not compiled!</p>
+<ul>
+<li>We need <code>runJava</code> to run after <code>compileJava</code></li>
+<li>One task depends on another!</li>
+</ul>
+</section><section>
+<h2 id="gradle-task-dependencies-2">Gradle: task dependencies</h2>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#888">// Let&#39;s get a reference to the task
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">compileJava</span> = tasks.register&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">&#34;compileJava&#34;</span>) {
+    ...
+}
+tasks.register&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">&#34;runJava&#34;</span>) {
+    ...
+    dependsOn(compileJava) <span style="color:#888">// runJava can run only if compileJava has been run
+</span><span style="color:#888"></span>}
+
+</code></pre></div><p>Run now:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#369">TERM</span>=dumb gradle runJava
+&gt; Task :compileJava
+
+&gt; Task :runJava
+java.lang.IllegalStateException
+        at PrintException.main(PrintException.java:5)
+
+Just printed a stacktrace, I<span style="color:#a61717;background-color:#e3d2d2">&#39;</span>m fine actually
+
+BUILD SUCCESSFUL in 775ms
+<span style="color:#00d;font-weight:bold">2</span> actionable tasks: <span style="color:#00d;font-weight:bold">2</span> executed
+</code></pre></div></section><section>
+<h2 id="build-automation-dependencies">Build automation: dependencies</h2>
+<p>Dependencies permeate the world of build automation.</p>
+<ul>
+<li>At the <em>&ldquo;task&rdquo;</em> level
+<ul>
+<li>Compile dependencies</li>
+<li>Runtime dependencies</li>
+</ul>
+</li>
+<li>At the <em>&ldquo;build&rdquo;</em> level
+<ul>
+<li>Phases of the lifecycle (<em>configurations</em> in Gradle) depend on other phases</li>
+<li><em>Tasks</em> depend on other tasks</li>
+</ul>
+</li>
+</ul>
+<p>$\Rightarrow$ <em>at the <strong>global</strong> level as well!</em></p>
+<p><em>no guarantee</em>  that automation written with some tool at version <code>X</code>, will work at version <code>Y</code>!</p>
+</section><section>
+<p>execute java: task dependencies
 * Task dependencies
 compile with dependencies
 * The build system as a dependency
 wrapper
 subprojects (lib + app)
-* Hierarchial organization</p>
+* Hierarchial organization
+* naming a project</p>
 <p>Write a custom Task for compilation
 @Input e @Output
 Continuous build
-Write a custom task for Execution
-* Isolation of imperativity
-* Declarativity via DSLs
-* Reuse via plug-ins
-* Testing plug-ins
-* Existing plugins</p>
+Write a custom task for Execution</p>
+<ul>
+<li>Isolation of imperativity</li>
+<li>Declarativity via DSLs
+concept of plugin
+the kotlin plugin</li>
+<li>jvm variant</li>
+<li>with its configurations
+our &ldquo;plugin for java&rdquo;
+testing a plugin (kotest + Gradle api + classpath trick)
+some existing plugins</li>
+<li>detekt</li>
+<li>ktlint</li>
+<li>jacoco</li>
+<li>refreshVersions</li>
+</ul>
 </section>
 
   
