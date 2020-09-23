@@ -526,6 +526,99 @@ fun DependencyHandlerScope.forEachLibrary(todo: DependencyHandlerScope.(String) 
 
 Next step: we can compile, why not executing the program as well?
 
+1. Let's define a `runtimeClasspath` configuration
+    * "inherits" from `compileClasspath`
+    * In general we may need stuff at runtime that we don't need at compile time
+        * E.g. stuff loaded via reflection
+```kotlin
+val runtimeClasspath by configurations.creating {
+    extendsFrom(compileClasspath) // Built-in machinery to say that one configuration is another "plus stuff"
+}
+```
+2. Let's write the task
+```kotlin
+tasks.register<Exec>("runJava") {
+    val classpathFiles = runtimeClasspath.resolve()
+    val mainClass = "PrintException" // Horribly hardcoded, we must do something
+    val javaExecutable = Jvm.current().javaExecutable.absolutePath
+    commandLine(
+            "$javaExecutable",
+            "-cp", "$buildDir/bin/$separator${classpathFiles.joinToString(separator = separator)}",
+            mainClass
+    )
+}
+```
+
+---
+
+## Gradle: task dependencies
+
+Let's run it!
+
+```bash
+❯ gradle runJava
+
+> Task :runJava FAILED
+Error: Could not find or load main class PrintException
+Caused by: java.lang.ClassNotFoundException: PrintException
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':runJava'.
+> Process 'command '/usr/lib/jvm/java-11-openjdk/bin/java'' finished with non-zero exit value 1
+```
+
+$\Rightarrow$ The code was not compiled!
+* We need `runJava` to run after `compileJava`
+* One task depends on another!
+
+---
+
+## Gradle: task dependencies
+
+```kotlin
+// Let's get a reference to the task
+val compileJava = tasks.register<Exec>("compileJava") {
+    ...
+}
+tasks.register<Exec>("runJava") {
+    ...
+    dependsOn(compileJava) // runJava can run only if compileJava has been run
+}
+
+```
+
+Run now:
+
+```bash
+TERM=dumb gradle runJava
+> Task :compileJava
+
+> Task :runJava
+java.lang.IllegalStateException
+        at PrintException.main(PrintException.java:5)
+
+Just printed a stacktrace, I'm fine actually
+
+BUILD SUCCESSFUL in 775ms
+2 actionable tasks: 2 executed
+```
+---
+
+## Build automation: dependencies
+
+Dependencies permeate the world of build automation.
+* At the *"task"* level
+    * Compile dependencies
+    * Runtime dependencies
+* At the *"build"* level
+    * Phases of the lifecycle (*configurations* in Gradle) depend on other phases
+    * *Tasks* depend on other tasks
+
+$\Rightarrow$ *at the **global** level as well!*
+
+*no guarantee*  that automation written with some tool at version `X`, will work at version `Y`!
 
 ---
 
@@ -536,6 +629,7 @@ compile with dependencies
 wrapper
 subprojects (lib + app)
     * Hierarchial organization
+    * naming a project
 
 Write a custom Task for compilation
 @Input e @Output
@@ -553,4 +647,4 @@ some existing plugins
 * detekt
 * ktlint
 * jacoco
-* what else?
+* refreshVersions

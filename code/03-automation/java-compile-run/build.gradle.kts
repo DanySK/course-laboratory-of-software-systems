@@ -20,8 +20,8 @@ fun DependencyHandlerScope.forEachLibrary(todo: DependencyHandlerScope.(String) 
         todo(it)
     }
 }
+val separator = if (Os.isFamily(Os.FAMILY_WINDOWS)) ";" else ":"
 
-// Create a new configuration, our compileClasspath
 val compileClasspath by configurations.creating
 
 dependencies {
@@ -30,24 +30,34 @@ dependencies {
     }
 }
 
-// Write a task of type Exec that launches javac
-tasks.register<Exec>("compileJava") {
-    // Resolve the classpath configuration
-    // (in general, files could be remote and need fetching)
+val compileJava = tasks.register<Exec>("compileJava") {
     val classpathFiles = compileClasspath.resolve()
     // Build the command
     val sources = findSources()
-    if (sources.isNotEmpty())  {
+    if (sources != null)  {
         // Use the current JVM's javac
         val javacExecutable = Jvm.current().javacExecutable.absolutePath
-        val separator = if (Os.isFamily(Os.FAMILY_WINDOWS)) ";" else ":"
         commandLine(
             "$javacExecutable",
             "-cp", classpathFiles.joinToString(separator = separator),
-            "-d", "$buildDir/bin",
+            "-d", "$buildDir/bin/",
             *sources
         )
     }
-    // the task's doLast is inherited from Exec
 }
 
+val runtimeClasspath by configurations.creating {
+    extendsFrom(compileClasspath) // Built-in machinery to say that one configuration is like another "plus stuff"
+}
+
+tasks.register<Exec>("runJava") {
+    val classpathFiles = runtimeClasspath.resolve()
+    val mainClass = "PrintException" // Horribly hardcoded, we must do something
+    val javaExecutable = Jvm.current().javaExecutable.absolutePath
+    commandLine(
+            "$javaExecutable",
+            "-cp", "$buildDir/bin/$separator${classpathFiles.joinToString(separator = separator)}",
+            mainClass
+    )
+    dependsOn(compileJava)
+}
