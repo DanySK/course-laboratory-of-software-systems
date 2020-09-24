@@ -42,7 +42,7 @@ enableSourceMap = true
 
 # Forum and contacts
 
-#### Prioritize the forum [`TBD`](TBD):
+#### Prioritize the forum [`http://bit.ly/lss-2020`](http://bit.ly/lss-2020):
   * All technical question
   * Any other non personal question
 
@@ -68,11 +68,16 @@ These *slides* should contain everything you need
 <br>
 code examples produced during the lecture will be available right after
 
+Slides will be produced with a *rolling release* model.
+<br>
+(of course trying to get them ready at least the day before the lecture)
+
 ## Books 
 
 No mandatory books, but there are both:
 * Recommended readings
 * Additional useful books
+
 On [the course webpage](https://www.unibo.it/it/didattica/insegnamenti/insegnamento/2020/412677)
 
 ---
@@ -83,40 +88,17 @@ Lectures in lab with immedate hands-on.
 <br>
 If you are following remotely, make sure you can experiment using your local system.
 
+## Anti-coronavirus measures
+
+* **Mandatory face masks** (sorry, no way around)
+* **Immuni** app warmly recommended to all those with a compatible device
+
 ## Timetable
 
 * **Thursday 14:00--17:00** --- Lab 3.1 
 * **Friday 14:00--17:00** --- Lab 3.1
-
-
----
-
-# Overview
-
-* [Kotlin for Scala developers](01-kotlin)
-  * [Internal DSLs construction](02-internal-dsls)
-* [Build automation](03-build-automation)
-* Advanced version control
-* Continuous integration/deployment/delivery
-* Containerization
-* Distributed software systems engineering
-* Domain driven design
-  * Including external DSL construction
-* Cyber-physical systems
-
----
-
-# Software
-
-## Required
-* A working JDK installation
-  * Consider using [Jabba](https://github.com/shyiko/jabba)
-
-<p>
-
-## Recommended
-* IntelliJ Idea
-* A decent Unix terminal
+<br>
+Changes will be published on [the forum](http://bit.ly/lss-2020)
 
 ---
 
@@ -126,6 +108,30 @@ If you are following remotely, make sure you can experiment using your local sys
 2. Zero-overhead from *domain definition* to *executable code*
 3. *Agile* development practices, *DevOps* phylosophy
 4. *High automation* + *technical excellence*
+
+---
+
+# Prerequisites
+
+* Knowledge of *Java* and *Scala*
+* Minimal ability with `git`
+  * initializing and managing the repository options
+  * committing
+  * branching and merging
+  * fetching and pushing
+* A *curious mindset*
+  * Never stop when it works, stop when you know *why* it does
+
+---
+
+# Help me help you
+
+<iframe src="https://giphy.com/embed/fdLR6LGwAiVNhGQNvf" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p></p>
+
+* [Language survey at https://virtuale.unibo.it/mod/choice/view.php?id=363641](https://virtuale.unibo.it/mod/choice/view.php?id=363641)
+  * We might switch to full English, but we don't want to scare people away
+* [ATTLS Survey at https://virtuale.unibo.it/mod/survey/view.php?id=363472](https://virtuale.unibo.it/mod/survey/view.php?id=363472)
+  * Helps the teachers understand the best way to present information
 
 ---
 
@@ -142,14 +148,62 @@ If you are following remotely, make sure you can experiment using your local sys
 
 ---
 
-# Prerequisites
+# Software
 
-* Knowledge of *Java* and *Scala*
-* Minimal ability with *`git`*
-  * initializing and managing the repository options
-  * committing
-  * branching and merging
-  * fetching and pushing
+## Required
+* A working internet connection
+* A working JDK installation
+  * Consider using [Jabba](https://github.com/shyiko/jabba)
+* Kotlin (kotlinc REPL working)
+* Gradle
+* Docker
+
+## Recommended
+* IntelliJ Idea
+* Visual Studio Code
+* A decent Unix terminal
+* Ruby Gem
+
+---
+
+# Course Container
+
+Feeling lazy?
+We prepared a container with all the course's software:
+  * [https://hub.docker.com/repository/docker/danysk/linux-didattica](https://hub.docker.com/repository/docker/danysk/linux-didattica)
+
+Follow the instructons at [https://github.com/DanySK/docker-linux-didattica](https://github.com/DanySK/docker-linux-didattica)
+
+---
+
+# Software in lab
+
+The PCs are equipped with the docker
+1. Lauch docker
+1. Launch the script on the Desktop
+1. Wait for it to start
+1. Close it, stop docker
+1. Restart docker
+1. Launch the X Server
+1. Now use the container freely
+
+Note: data is not persisted automatically, at end of session you need to copy it in your home folder
+
+
+---
+
+# Overview
+
+* [Kotlin for Scala developers](01-kotlin)
+  * [Internal DSLs construction](02-internal-dsls)
+* [Build automation](03-build-automation)
+* Advanced version control
+* Continuous integration/deployment/delivery
+* Containerization
+* Distributed software systems engineering
+* Domain driven design
+  * Including external DSL construction
+* Cyber-physical systems
 
 ---
 
