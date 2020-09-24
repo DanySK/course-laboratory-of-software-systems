@@ -197,8 +197,8 @@ Note: data is not persisted automatically, at end of session you need to copy it
 
 * [Kotlin for Scala developers](01-kotlin)
   * [Internal DSLs construction](02-internal-dsls)
-* The DevOps philosophy
-  * [Build automation](03-build-automation)
+* [The DevOps philosophy](03-devops-intro)
+  * [Build automation](04-build-automation)
   * Advanced version control
   * Continuous integration/deployment/delivery
   * Containerization
