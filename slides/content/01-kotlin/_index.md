@@ -1641,7 +1641,7 @@ where T and R are the same as in `getValue`, and P is a supertype of R
 
 ---
 
-# Kotlin 201 -- Functional Kotlin
+# Kotlin 202 -- Functional Kotlin
 
 ## Lambda expressions
 
@@ -1668,7 +1668,7 @@ whatsMyReturnType()() // Guess {{<comment_frag "A string" >}}
 
 ---
 
-# Kotlin 201 -- Functional Kotlin
+# Kotlin 202 -- Functional Kotlin
 
 ## Function type literals
 
@@ -1692,7 +1692,7 @@ compose({v: Int -> v * v}, {v: Double -> v.toInt()})(3.9) // 9
 
 ---
 
-# Kotlin 201 -- Functional Kotlin
+# Kotlin 202 -- Functional Kotlin
 
 ## Function references
 
@@ -1711,7 +1711,7 @@ compose(::square, ::floor)(3.9)
 
 ---
 
-# Kotlin 201 -- Functional Kotlin
+# Kotlin 202 -- Functional Kotlin
 
 ## The **trailing lambda** convention
 A simple special rule that enables very elegant syntactic forms:
@@ -1739,7 +1739,7 @@ println("Finished")
 
 ---
 
-# Kotlin 201 -- Functional Kotlin
+# Kotlin 202 -- Functional Kotlin
 
 ## Closures
 
@@ -1760,7 +1760,7 @@ sum == (0..100).sum()
 
 ---
 
-# Kotlin 201 -- Functional Kotlin
+# Kotlin 202 -- Functional Kotlin
 
 ## Flow control with lambdas
 
@@ -1790,7 +1790,7 @@ breakingFlow()
 
 ---
 
-# Kotlin 201 -- Functional Kotlin
+# Kotlin 202 -- Functional Kotlin
 
 ## Destructuring lambda parameters
 
@@ -1805,7 +1805,7 @@ mapOf(46 to "Rossi", 4 to "Dovizioso").map { (number, rider) ->
 
 ---
 
-# Kotlin 201 -- Functional Kotlin
+# Kotlin 202 -- Functional Kotlin
 
 ## Extension functions
 
@@ -1833,7 +1833,7 @@ Namely, *the receiver type is determined at compile time*.
 
 ---
 
-# Kotlin 201 -- Functional Kotlin
+# Kotlin 202 -- Functional Kotlin
 
 ## Extension properties
 
@@ -1851,7 +1851,7 @@ their behaviour is entirely specified by `get` and `set` accessors.
 
 ---
 
-# Kotlin 201 -- Functional Kotlin
+# Kotlin 202 -- Functional Kotlin
 
 ## Extension function type literals
 
@@ -1880,7 +1880,7 @@ mutableListOf<String>().configure {
 
 ---
 
-# Kotlin 201 -- Functional Kotlin
+# Kotlin 202 -- Functional Kotlin
 
 ## Extension members and implicit receivers
 
@@ -1904,7 +1904,7 @@ object Batman { // the Batman object is the dispatch receiver
 
 ---
 
-# Kotlin 201 -- Functional Kotlin
+# Kotlin 202 -- Functional Kotlin
 
 ## DSL scope control via extension members
 
@@ -1930,7 +1930,7 @@ insideTheScopeOf(Batman) { // inside this function, Batman is the dispatch recei
 
 ---
 
-# Kotlin 201 -- Functional Kotlin
+# Kotlin 202 -- Functional Kotlin
 
 ## Scope functions
 
@@ -1941,7 +1941,7 @@ Kotlin provides a number of built-in functions that run a lambda expression in a
 
 ---
 
-# Kotlin 201 -- Functional Kotlin
+# Kotlin 202 -- Functional Kotlin
 
 ## Scope functions
 
@@ -1960,7 +1960,7 @@ the return type is the result of the function
 
 ---
 
-# Kotlin 201 -- Functional Kotlin
+# Kotlin 202 -- Functional Kotlin
 
 ## Scope functions
 
@@ -1978,7 +1978,7 @@ the return type is the result of the function
 
 ---
 
-# Kotlin 201 -- Functional Kotlin
+# Kotlin 202 -- Functional Kotlin
 
 ## Scope functions
 
@@ -1997,7 +1997,7 @@ with(1) { "${this + 1}1" } // 21: String
 
 ---
 
-# Kotlin 201 -- Functional Kotlin
+# Kotlin 202 -- Functional Kotlin
 
 ## Scope functions
 
@@ -2017,7 +2017,7 @@ mutableListOf<Int>().apply {
 ```
 ---
 
-# Kotlin 201 -- Functional Kotlin
+# Kotlin 202 -- Functional Kotlin
 
 ## Scope functions
 
