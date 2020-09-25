@@ -667,6 +667,31 @@ tasks.register("clean") { // A generic task is fine
 
 ---
 
+## Build hierarchies
+
+Sometimes projects are *modular*
+<br>
+Where a module is a sub-project with a clear identity, possibly reusable elsewhere
+
+Examples:
+* A smartphone application with:
+    * A common library
+    * A software that uses such library for the actual app
+* Bluetooth control software comprising:
+    * Platform-specific drivers
+    * A platform-agnostic bluetooth API and service
+    * A CLI interface to the library
+    * A Graphical interface
+
+Modular software *simplifies maintenance* and *improves understandability*
+<br>
+Modules may **depend** on other modules
+<br>
+Some build tasks of some module may require build tasks *of other modules* to be complete before execution
+
+
+---
+
 
 
 subprojects (lib + app)
