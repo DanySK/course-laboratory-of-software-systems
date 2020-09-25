@@ -84,7 +84,7 @@ Much like Scala:
 
 * All parameters are named, but can be invoked positionally as well
 * Parameters can have defaults
-* Types are annotatedd after the parameter name
+* Types are annotated after the parameter name
 * Invocation can be positional or by name, with the rule that once a named parameter is used, subsequent parameters must be named as well
 
 ```kotlin
