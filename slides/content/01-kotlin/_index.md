@@ -1051,11 +1051,11 @@ Kotlin is less permissive than scala:
 
 ```kotlin
 class Infix {
-    infix fun andThen(s: String) = "in... $s ...fix!"
+    infix fun with(s: String) = "in... $s ...fix!"
 }
-Infix() andThen "Foo" // in... Foo ...fix!
-Infix() andThen "Foo" + "Bar" {{<comment_frag " // in... FooBar ...fix" >}}
-Infix() andThen "Foo" + "Bar" + Infix() andThen "Baz" {{<comment_frag " // error: unresolved reference: andThen (searched in String)" >}}
+Infix() with "Foo" // in... Foo ...fix!
+Infix() with "Foo" + "Bar" {{<comment_frag " // in... FooBar ...fix" >}}
+Infix() with "Foo" + "Bar" + Infix() with "Baz" {{<comment_frag " // error: unresolved reference: with (searched in String)" >}}
 ```
 
 ---
