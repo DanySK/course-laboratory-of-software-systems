@@ -26,7 +26,7 @@
     <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
 <h2 id="build-automation">Build Automation</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2020-09-24
+2020-09-25
 
 </section><section>
 <h1 id="build-automation-1">Build automation</h1>
@@ -582,6 +582,33 @@ This usually involves cleaning up the build directory - not so hard in our examp
     }
 }
 </code></pre></div></section><section>
+<h2 id="build-hierarchies">Build hierarchies</h2>
+<p>Sometimes projects are <em>modular</em>
+<br>
+Where a module is a sub-project with a clear identity, possibly reusable elsewhere</p>
+<p>Examples:</p>
+<ul>
+<li>A smartphone application with:
+<ul>
+<li>A common library</li>
+<li>A software that uses such library for the actual app</li>
+</ul>
+</li>
+<li>Bluetooth control software comprising:
+<ul>
+<li>Platform-specific drivers</li>
+<li>A platform-agnostic bluetooth API and service</li>
+<li>A CLI interface to the library</li>
+<li>A Graphical interface</li>
+</ul>
+</li>
+</ul>
+<p>Modular software <em>simplifies maintenance</em> and <em>improves understandability</em>
+<br>
+Modules may <strong>depend</strong> on other modules
+<br>
+Some build tasks of some module may require build tasks <em>of other modules</em> to be complete before execution</p>
+</section><section>
 <p>subprojects (lib + app)
 * Hierarchial organization
 * naming a project</p>

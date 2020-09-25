@@ -26,7 +26,7 @@
     <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
 <h2 id="kotlin-for-scala-developers">Kotlin (for Scala developers)</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2020-09-24
+2020-09-25
 
 </section><section>
 <h1 id="why-kotlin">Why Kotlin</h1>
@@ -82,7 +82,7 @@
 <ul>
 <li>All parameters are named, but can be invoked positionally as well</li>
 <li>Parameters can have defaults</li>
-<li>Types are annotatedd after the parameter name</li>
+<li>Types are annotated after the parameter name</li>
 <li>Invocation can be positional or by name, with the rule that once a named parameter is used, subsequent parameters must be named as well</li>
 </ul>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">foo</span>(a: Int = <span style="color:#00d;font-weight:bold">0</span>, b: String = <span style="color:#d20;background-color:#fff0f0">&#34;foo&#34;</span>): Int = TODO() <span style="color:#888">// TODO() is a builtin function throwing a `NotImplementedError`
@@ -885,11 +885,11 @@ a == b <span style="color:#888">// error: operator &#39;==&#39; cannot be applie
 <li><code>infix</code> functions have <em>lower precedence</em> than operators</li>
 </ul>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Infix</span> {
-    <span style="color:#080;font-weight:bold">infix</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">andThen</span>(s: String) = <span style="color:#d20;background-color:#fff0f0">&#34;in... $s ...fix!&#34;</span>
+    <span style="color:#080;font-weight:bold">infix</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">with</span>(s: String) = <span style="color:#d20;background-color:#fff0f0">&#34;in... $s ...fix!&#34;</span>
 }
-Infix() andThen <span style="color:#d20;background-color:#fff0f0">&#34;Foo&#34;</span> <span style="color:#888">// in... Foo ...fix!
-</span><span style="color:#888"></span>Infix() andThen <span style="color:#d20;background-color:#fff0f0">&#34;Foo&#34;</span> + <span style="color:#d20;background-color:#fff0f0">&#34;Bar&#34;</span> <span class='fragment '  style="color: #888;"> // in... FooBar ...fix</span>
-Infix() andThen <span style="color:#d20;background-color:#fff0f0">&#34;Foo&#34;</span> + <span style="color:#d20;background-color:#fff0f0">&#34;Bar&#34;</span> + Infix() andThen <span style="color:#d20;background-color:#fff0f0">&#34;Baz&#34;</span> <span class='fragment '  style="color: #888;"> // error: unresolved reference: andThen (searched in String)</span>
+Infix() with <span style="color:#d20;background-color:#fff0f0">&#34;Foo&#34;</span> <span style="color:#888">// in... Foo ...fix!
+</span><span style="color:#888"></span>Infix() with <span style="color:#d20;background-color:#fff0f0">&#34;Foo&#34;</span> + <span style="color:#d20;background-color:#fff0f0">&#34;Bar&#34;</span> <span class='fragment '  style="color: #888;"> // in... FooBar ...fix</span>
+Infix() with <span style="color:#d20;background-color:#fff0f0">&#34;Foo&#34;</span> + <span style="color:#d20;background-color:#fff0f0">&#34;Bar&#34;</span> + Infix() with <span style="color:#d20;background-color:#fff0f0">&#34;Baz&#34;</span> <span class='fragment '  style="color: #888;"> // error: unresolved reference: with (searched in String)</span>
 </code></pre></div></section><section>
 <h1 id="kotlin-102----oop-conventions-2">Kotlin 102 &ndash; OOP Conventions</h1>
 <h2 id="operator-creation">Operator creation</h2>
@@ -1545,7 +1545,7 @@ janesJson <span style="color:#888">// Does it change? <span class='fragment '  s
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">operator</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">setValue</span>(thisRef: T, property: KProperty&lt;*&gt;, value: P): R
 </code></pre></div><p>where T and R are the same as in <code>getValue</code>, and P is a supertype of R</p>
 </section><section>
-<h1 id="kotlin-201----functional-kotlin">Kotlin 201 &ndash; Functional Kotlin</h1>
+<h1 id="kotlin-202----functional-kotlin">Kotlin 202 &ndash; Functional Kotlin</h1>
 <h2 id="lambda-expressions">Lambda expressions</h2>
 <p>Kotlin lambda expression&rsquo;s syntax is inspired by Groovy
 <br/>
@@ -1567,7 +1567,7 @@ myLambda.invoke() <span style="color:#888">// Java-style invocation
 </span><span style="color:#888"></span>whatsMyReturnType() <span style="color:#888">// Guess <span class='fragment '  style="color: #888;">Subtle, but the compiler raises warnings</span>
 </span><span style="color:#888"></span>whatsMyReturnType()() <span style="color:#888">// Guess <span class='fragment '  style="color: #888;">A string</span>
 </span></code></pre></div></section><section>
-<h1 id="kotlin-201----functional-kotlin-1">Kotlin 201 &ndash; Functional Kotlin</h1>
+<h1 id="kotlin-202----functional-kotlin-1">Kotlin 202 &ndash; Functional Kotlin</h1>
 <h2 id="function-type-literals">Function type literals</h2>
 <p>Just as Scala, Kotlin supports function type literals
 <br/>
@@ -1583,7 +1583,7 @@ No need for verbose interfaces such as <code>Function&lt;T, R&gt;</code>, <code>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> &lt;T, I, R&gt; <span style="color:#06b;font-weight:bold">compose</span>(f: (I) -&gt; R, g: (T) -&gt; I): (T) -&gt; R = { f(g(it)) }
 compose({v: Int -&gt; v * v}, {v: Double -&gt; v.toInt()})(<span style="color:#00d;font-weight:bold">3.9</span>) <span style="color:#888">// 9
 </span></code></pre></div></section><section>
-<h1 id="kotlin-201----functional-kotlin-2">Kotlin 201 &ndash; Functional Kotlin</h1>
+<h1 id="kotlin-202----functional-kotlin-2">Kotlin 202 &ndash; Functional Kotlin</h1>
 <h2 id="function-references">Function references</h2>
 <p>Functions can be referred by using <code>::</code>
 <br/>
@@ -1595,7 +1595,7 @@ the right operand is the function name</p>
 <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">floor</span>(v: Double) = v.toInt()
 compose(::square, ::floor)(<span style="color:#00d;font-weight:bold">3.9</span>)
 </code></pre></div></section><section>
-<h1 id="kotlin-201----functional-kotlin-3">Kotlin 201 &ndash; Functional Kotlin</h1>
+<h1 id="kotlin-202----functional-kotlin-3">Kotlin 202 &ndash; Functional Kotlin</h1>
 <h2 id="the-trailing-lambda-convention">The <strong>trailing lambda</strong> convention</h2>
 <p>A simple special rule that enables very elegant syntactic forms:
 <br/>
@@ -1616,7 +1616,7 @@ println(<span style="color:#d20;background-color:#fff0f0">&#34;Start&#34;</span>
 delayed(<span style="color:#00d;font-weight:bold">300</span>) { println(<span style="color:#d20;background-color:#fff0f0">&#34;I wait less&#34;</span>) }
 println(<span style="color:#d20;background-color:#fff0f0">&#34;Finished&#34;</span>)
 </code></pre></div></section><section>
-<h1 id="kotlin-201----functional-kotlin-4">Kotlin 201 &ndash; Functional Kotlin</h1>
+<h1 id="kotlin-202----functional-kotlin-4">Kotlin 202 &ndash; Functional Kotlin</h1>
 <h2 id="closures">Closures</h2>
 <p>Closures are supoorted
 <br/>
@@ -1630,7 +1630,7 @@ They are allowed on <code>var</code>s as well as on <code>val</code>s</p>
 sum
 sum == (<span style="color:#00d;font-weight:bold">0.</span>.<span style="color:#00d;font-weight:bold">100</span>).sum()
 </code></pre></div></section><section>
-<h1 id="kotlin-201----functional-kotlin-5">Kotlin 201 &ndash; Functional Kotlin</h1>
+<h1 id="kotlin-202----functional-kotlin-5">Kotlin 202 &ndash; Functional Kotlin</h1>
 <h2 id="flow-control-with-lambdas">Flow control with lambdas</h2>
 <p>Kotlin rule: <code>return</code> returns from the closest <em>named</em> <code>fun</code>ction</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">breakingFlow</span>(): List&lt;Int&gt; = (<span style="color:#00d;font-weight:bold">0.</span>.<span style="color:#00d;font-weight:bold">10</span>).toList().map {
@@ -1649,7 +1649,7 @@ breakingFlow()
 }
 breakingFlow()
 </code></pre></div></section><section>
-<h1 id="kotlin-201----functional-kotlin-6">Kotlin 201 &ndash; Functional Kotlin</h1>
+<h1 id="kotlin-202----functional-kotlin-6">Kotlin 202 &ndash; Functional Kotlin</h1>
 <h2 id="destructuring-lambda-parameters">Destructuring lambda parameters</h2>
 <p>Lambda parameters can be destructured</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>mapOf(<span style="color:#00d;font-weight:bold">46</span> to <span style="color:#d20;background-color:#fff0f0">&#34;Rossi&#34;</span>, <span style="color:#00d;font-weight:bold">4</span> to <span style="color:#d20;background-color:#fff0f0">&#34;Dovizioso&#34;</span>).map { (number, rider) -&gt;
@@ -1657,7 +1657,7 @@ breakingFlow()
 </span><span style="color:#888"></span>    <span style="color:#d20;background-color:#fff0f0">&#34;$rider has number $number&#34;</span>
 }
 </code></pre></div></section><section>
-<h1 id="kotlin-201----functional-kotlin-7">Kotlin 201 &ndash; Functional Kotlin</h1>
+<h1 id="kotlin-202----functional-kotlin-7">Kotlin 202 &ndash; Functional Kotlin</h1>
 <h2 id="extension-functions">Extension functions</h2>
 <p>Kotlin allows to extend any type capabilities from anywhere
 <br/>
@@ -1675,7 +1675,7 @@ Namely, <em>the receiver type is determined at compile time</em>.</p>
 <p><strong>IMPORTANT/2</strong>: Extensions cannot shadow members,
 <em>members always take priority</em></p>
 </section><section>
-<h1 id="kotlin-201----functional-kotlin-8">Kotlin 201 &ndash; Functional Kotlin</h1>
+<h1 id="kotlin-202----functional-kotlin-8">Kotlin 202 &ndash; Functional Kotlin</h1>
 <h2 id="extension-properties">Extension properties</h2>
 <p>Same as functions, but for properties</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">String</span>.containsBatman <span style="color:#080;font-weight:bold">get</span>(): Boolean = <span style="color:#d20;background-color:#fff0f0">&#34;.*b.*a.*t.*m.*a.*n.*&#34;</span>.toRegex().matches(<span style="color:#080;font-weight:bold">this</span>)
@@ -1687,7 +1687,7 @@ Namely, <em>the receiver type is determined at compile time</em>.</p>
 their behaviour is entirely specified by <code>get</code> and <code>set</code> accessors.</li>
 </ol>
 </section><section>
-<h1 id="kotlin-201----functional-kotlin-9">Kotlin 201 &ndash; Functional Kotlin</h1>
+<h1 id="kotlin-202----functional-kotlin-9">Kotlin 202 &ndash; Functional Kotlin</h1>
 <h2 id="extension-function-type-literals">Extension function type literals</h2>
 <p>Extensions functions are&hellip; functions, like any other
 <br/>
@@ -1710,7 +1710,7 @@ as such, their type can be legally expressed by:</p>
 }
 </code></pre></div><p>&hellip;sounds easy to write DSLs&hellip;</p>
 </section><section>
-<h1 id="kotlin-201----functional-kotlin-10">Kotlin 201 &ndash; Functional Kotlin</h1>
+<h1 id="kotlin-202----functional-kotlin-10">Kotlin 202 &ndash; Functional Kotlin</h1>
 <h2 id="extension-members-and-implicit-receivers">Extension members and implicit receivers</h2>
 <p>When extensions are defined as members, there are multiple <em>implicit recevers</em>:</p>
 <ol>
@@ -1727,7 +1727,7 @@ as such, their type can be legally expressed by:</p>
     <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">String</span>.withBatman() = <span style="color:#d20;background-color:#fff0f0">&#34;$this ${this@Batman.name}!&#34;</span> <span style="color:#888">// Qualified this access to the dispatch receiver
 </span><span style="color:#888"></span>}
 </code></pre></div></section><section>
-<h1 id="kotlin-201----functional-kotlin-11">Kotlin 201 &ndash; Functional Kotlin</h1>
+<h1 id="kotlin-202----functional-kotlin-11">Kotlin 202 &ndash; Functional Kotlin</h1>
 <h2 id="dsl-scope-control-via-extension-members">DSL scope control via extension members</h2>
 <p>Extension members are visible only when the dispatch receiver is the type where the extensions were defined
 <br/>
@@ -1746,7 +1746,7 @@ insideTheScopeOf(Batman) { <span style="color:#888">// inside this function, Bat
 </span><span style="color:#888"></span>    String.intro.withBatman() <span style="color:#888">// OK!
 </span><span style="color:#888"></span>}
 </code></pre></div></section><section>
-<h1 id="kotlin-201----functional-kotlin-12">Kotlin 201 &ndash; Functional Kotlin</h1>
+<h1 id="kotlin-202----functional-kotlin-12">Kotlin 202 &ndash; Functional Kotlin</h1>
 <h2 id="scope-functions">Scope functions</h2>
 <p>Kotlin provides a number of built-in functions that run a lambda expression in a custom scope:</p>
 <ul>
@@ -1755,7 +1755,7 @@ insideTheScopeOf(Batman) { <span style="color:#888">// inside this function, Bat
 <li>by changing the return type</li>
 </ul>
 </section><section>
-<h1 id="kotlin-201----functional-kotlin-13">Kotlin 201 &ndash; Functional Kotlin</h1>
+<h1 id="kotlin-202----functional-kotlin-13">Kotlin 202 &ndash; Functional Kotlin</h1>
 <h2 id="scope-functions-1">Scope functions</h2>
 <h4 id="let--tt---r-r"><code>let</code> : <code>T.((T) -&gt; R) R</code></h4>
 <p>Can be invoked on an object, passing a lambda expression.
@@ -1766,7 +1766,7 @@ the return type is the result of the function</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#00d;font-weight:bold">1.l</span>et { <span style="color:#d20;background-color:#fff0f0">&#34;${it + 1}1&#34;</span> } <span style="color:#888">// 21: String
 </span><span style="color:#888"></span><span style="color:#00d;font-weight:bold">1.l</span>et { one -&gt; <span style="color:#d20;background-color:#fff0f0">&#34;${one + 1}1&#34;</span> } <span style="color:#888">// Same as above: it&#39;s a normal lambda
 </span></code></pre></div></section><section>
-<h1 id="kotlin-201----functional-kotlin-14">Kotlin 201 &ndash; Functional Kotlin</h1>
+<h1 id="kotlin-202----functional-kotlin-14">Kotlin 202 &ndash; Functional Kotlin</h1>
 <h2 id="scope-functions-2">Scope functions</h2>
 <h4 id="run--tt---r---r"><code>run</code> : <code>T.(T.() -&gt; R) -&gt; R</code></h4>
 <p>Can be invoked on an object, passing a lambda expression.
@@ -1776,7 +1776,7 @@ The method receiver is bound to the implicit receiver <code>this</code>
 the return type is the result of the function</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#00d;font-weight:bold">1.</span>run { <span style="color:#d20;background-color:#fff0f0">&#34;${this + 1}1&#34;</span> } <span style="color:#888">// 21: String
 </span></code></pre></div></section><section>
-<h1 id="kotlin-201----functional-kotlin-15">Kotlin 201 &ndash; Functional Kotlin</h1>
+<h1 id="kotlin-202----functional-kotlin-15">Kotlin 202 &ndash; Functional Kotlin</h1>
 <h2 id="scope-functions-3">Scope functions</h2>
 <h4 id="with--t---r---r"><code>with</code> : <code>(T.() -&gt; R) -&gt; R</code></h4>
 <p>Non-extension version of <code>run</code>,
@@ -1787,7 +1787,7 @@ The method receiver is bound to the implicit receiver <code>this</code>
 the return type is the result of the function</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>with(<span style="color:#00d;font-weight:bold">1</span>) { <span style="color:#d20;background-color:#fff0f0">&#34;${this + 1}1&#34;</span> } <span style="color:#888">// 21: String
 </span></code></pre></div></section><section>
-<h1 id="kotlin-201----functional-kotlin-16">Kotlin 201 &ndash; Functional Kotlin</h1>
+<h1 id="kotlin-202----functional-kotlin-16">Kotlin 202 &ndash; Functional Kotlin</h1>
 <h2 id="scope-functions-4">Scope functions</h2>
 <h4 id="apply--tt---unit---t"><code>apply</code> : <code>T.(T.() -&gt; Unit) -&gt; T</code></h4>
 <p>Similar to <code>run</code>,
@@ -1800,7 +1800,7 @@ and returning the original object</p>
     addAll((<span style="color:#00d;font-weight:bold">1.</span>.<span style="color:#00d;font-weight:bold">10</span>).toList())
 } <span style="color:#888">// [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 </span></code></pre></div></section><section>
-<h1 id="kotlin-201----functional-kotlin-17">Kotlin 201 &ndash; Functional Kotlin</h1>
+<h1 id="kotlin-202----functional-kotlin-17">Kotlin 202 &ndash; Functional Kotlin</h1>
 <h2 id="scope-functions-5">Scope functions</h2>
 <h4 id="also--t---unit---t"><code>also</code> : <code>T.(() -&gt; Unit) -&gt; T</code></h4>
 <p>Similar to <code>apply</code>, but does not change the context,
