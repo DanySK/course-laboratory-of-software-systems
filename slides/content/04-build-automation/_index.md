@@ -528,11 +528,16 @@ Next step: we can compile, why not executing the program as well?
 
 1. Let's define a `runtimeClasspath` configuration
     * "inherits" from `compileClasspath`
+    * includes the output folder
     * In general we may need stuff at runtime that we don't need at compile time
         * E.g. stuff loaded via reflection
 ```kotlin
 val runtimeClasspath by configurations.creating {
     extendsFrom(compileClasspath) // Built-in machinery to say that one configuration is another "plus stuff"
+}
+dependencies {
+    ...
+    runtimeClasspath(files("$buildDir/bin"))
 }
 ```
 2. Let's write the task
@@ -541,11 +546,7 @@ tasks.register<Exec>("runJava") {
     val classpathFiles = runtimeClasspath.resolve()
     val mainClass = "PrintException" // Horribly hardcoded, we must do something
     val javaExecutable = Jvm.current().javaExecutable.absolutePath
-    commandLine(
-            "$javaExecutable",
-            "-cp", "$buildDir/bin/$separator${classpathFiles.joinToString(separator = separator)}",
-            mainClass
-    )
+    commandLine(javaExecutable, "-cp", classpathFiles.joinToString(separator = separator), mainClass)
 }
 ```
 
@@ -689,14 +690,117 @@ Modules may **depend** on other modules
 <br>
 Some build tasks of some module may require build tasks *of other modules* to be complete before execution
 
+---
+
+## Hierarchial project
+
+Let us split our project into two components:
+* A base library
+* A stand-alone application using the library
+
+We need to reorganize the build logic to something similar to
+```
+hierarchial-project
+|__:library
+\__:app
+```
+
+Desiderata:
+* We can compile any of the two projects from the root
+* We can run the app from the root
+* Calling a run of the app implies a compilation of the library
+* We can clean both projects
 
 ---
 
+## Authoring subprojects in Gradle
 
+Gradle (as many other build automators)
+offers built-in support for *hierarchial projects*.
+<br>
+Gradle is limited to *two levels*, other products such as Maven have no limitation
 
-subprojects (lib + app)
-    * Hierarchial organization
-    * naming a project
+Subprojects are listed in a `settings.gradle.kts` file
+<br>
+Incidentally, it's the same place where the project name can be specified
+
+Subprojects *must have their own* `build.gradle.kts`
+<br>
+They can also have their own `settings.gradle.kts`, e.g. for selecting a name different than their folder
+
+---
+
+## Authoring subprojects in Gradle
+
+1. Create a settings.gradle.kts and declare your modules:
+
+```gradle
+rootProject.name = "project-with-hierarchy"
+
+include(":library") // There must be a folder named "library"
+include(":app") // There must be a folder named "app"
+```
+
+2. In the root project, configure the part common to **all** projects in a `allprojects` block
+    * e.g., in our case, the `clean` task should be available for each project
+
+```gradle
+allprojects {
+    tasks.register("clean") { // A generic task is fine
+        if (!buildDir.deleteRecursively()) {
+            throw IllegalStateException("Cannot delete $buildDir")
+        }
+    }
+}
+```
+
+---
+
+## Authoring subprojects in Gradle
+
+3. Put the part shared by *solely the sub-projects* into a `subprojects` block
+    * e.g., in our case, the `compileJava` task and the related utilities
+
+```kotlin
+subprojects {
+    // This must be there, as projectDir must refer to the *current* project
+    data class FinderInFolder(val directory: String) ...
+    fun findFilesIn(directory: String) = FinderInFolder(directory)
+    fun findSources() = findFilesIn("src").withExtension("java")
+    fun findLibraries() = findFilesIn("lib").withExtension("jar")
+    fun DependencyHandlerScope.forEachLibrary(todo: DependencyHandlerScope.(String) -> Unit) ...
+    val compileClasspath by configurations.creating
+    val runtimeClasspath by configurations.creating { extendsFrom(compileClasspath) }
+    dependencies { ... }
+    tasks.register<Exec>("compileJava") { ... }
+}
+```
+
+---
+
+## Authoring subprojects in Gradle
+4. In each subproject's `build.gradle.kts`, add further customization as necessary
+    * e.g., in our case, the `runJava` task can live in the `:app` subroject
+5. Connect configurations to each other using dependencies
+    * in `app`'s `build.gradle.kts`, for instance:
+```gradle
+dependencies {
+    compileClasspath(project(":library")) { // My compileClasspath configuration depends on project library
+        targetConfiguration = "runtimeClasspath" // Specifically, from its runtime
+    }
+}
+```
+6. Declare inter-subproject task dependencies
+    * Tasks may fail if ran out of order!
+    * Compiling `app` requires `library` to be compiled!
+    * inside `app`'s `build.gradle.kts`:
+```gradle
+tasks.compileJava { dependsOn(project(":library").tasks.compileJava) }
+```
+
+*Note*: `library`'s `build.gradle.kts` is actually empty at the end of the process
+
+---
 
 Write a custom Task for compilation
 @Input e @Output
