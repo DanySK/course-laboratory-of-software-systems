@@ -26,7 +26,7 @@
     <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
 <h2 id="build-automation">Build Automation</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2020-09-27
+2020-09-29
 
 </section><section>
 <h1 id="build-automation-1">Build automation</h1>
@@ -448,6 +448,7 @@ BUILD SUCCESSFUL in 693ms
 <li>Let&rsquo;s define a <code>runtimeClasspath</code> configuration
 <ul>
 <li>&ldquo;inherits&rdquo; from <code>compileClasspath</code></li>
+<li>includes the output folder</li>
 <li>In general we may need stuff at runtime that we don&rsquo;t need at compile time
 <ul>
 <li>E.g. stuff loaded via reflection</li>
@@ -459,6 +460,10 @@ BUILD SUCCESSFUL in 693ms
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">runtimeClasspath</span> <span style="color:#080;font-weight:bold">by</span> configurations.creating {
     extendsFrom(compileClasspath) <span style="color:#888">// Built-in machinery to say that one configuration is another &#34;plus stuff&#34;
 </span><span style="color:#888"></span>}
+dependencies {
+    ...
+    runtimeClasspath(files(<span style="color:#d20;background-color:#fff0f0">&#34;$buildDir/bin&#34;</span>))
+}
 </code></pre></div><ol start="2">
 <li>Let&rsquo;s write the task</li>
 </ol>
@@ -466,11 +471,7 @@ BUILD SUCCESSFUL in 693ms
     <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">classpathFiles</span> = runtimeClasspath.resolve()
     <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">mainClass</span> = <span style="color:#d20;background-color:#fff0f0">&#34;PrintException&#34;</span> <span style="color:#888">// Horribly hardcoded, we must do something
 </span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">javaExecutable</span> = Jvm.current().javaExecutable.absolutePath
-    commandLine(
-            <span style="color:#d20;background-color:#fff0f0">&#34;$javaExecutable&#34;</span>,
-            <span style="color:#d20;background-color:#fff0f0">&#34;-cp&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;$buildDir/bin/$separator${classpathFiles.joinToString(separator = separator)}&#34;</span>,
-            mainClass
-    )
+    commandLine(javaExecutable, <span style="color:#d20;background-color:#fff0f0">&#34;-cp&#34;</span>, classpathFiles.joinToString(separator = separator), mainClass)
 }
 </code></pre></div></section><section>
 <h2 id="gradle-task-dependencies-1">Gradle: task dependencies</h2>
@@ -609,9 +610,110 @@ Modules may <strong>depend</strong> on other modules
 <br>
 Some build tasks of some module may require build tasks <em>of other modules</em> to be complete before execution</p>
 </section><section>
-<p>subprojects (lib + app)
-* Hierarchial organization
-* naming a project</p>
+<h2 id="hierarchial-project">Hierarchial project</h2>
+<p>Let us split our project into two components:</p>
+<ul>
+<li>A base library</li>
+<li>A stand-alone application using the library</li>
+</ul>
+<p>We need to reorganize the build logic to something similar to</p>
+<pre><code>hierarchial-project
+|__:library
+\__:app
+</code></pre><p>Desiderata:</p>
+<ul>
+<li>We can compile any of the two projects from the root</li>
+<li>We can run the app from the root</li>
+<li>Calling a run of the app implies a compilation of the library</li>
+<li>We can clean both projects</li>
+</ul>
+</section><section>
+<h2 id="authoring-subprojects-in-gradle">Authoring subprojects in Gradle</h2>
+<p>Gradle (as many other build automators)
+offers built-in support for <em>hierarchial projects</em>.
+<br>
+Gradle is limited to <em>two levels</em>, other products such as Maven have no limitation</p>
+<p>Subprojects are listed in a <code>settings.gradle.kts</code> file
+<br>
+Incidentally, it&rsquo;s the same place where the project name can be specified</p>
+<p>Subprojects <em>must have their own</em> <code>build.gradle.kts</code>
+<br>
+They can also have their own <code>settings.gradle.kts</code>, e.g. for selecting a name different than their folder</p>
+</section><section>
+<h2 id="authoring-subprojects-in-gradle-1">Authoring subprojects in Gradle</h2>
+<ol>
+<li>Create a settings.gradle.kts and declare your modules:</li>
+</ol>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>rootProject.<span style="color:#369">name</span> = <span style="color:#d20;background-color:#fff0f0">&#34;project-with-hierarchy&#34;</span>
+
+include(<span style="color:#d20;background-color:#fff0f0">&#34;:library&#34;</span>) <span style="color:#888">// There must be a folder named &#34;library&#34;
+</span><span style="color:#888"></span>include(<span style="color:#d20;background-color:#fff0f0">&#34;:app&#34;</span>) <span style="color:#888">// There must be a folder named &#34;app&#34;
+</span></code></pre></div><ol start="2">
+<li>In the root project, configure the part common to <strong>all</strong> projects in a <code>allprojects</code> block
+<ul>
+<li>e.g., in our case, the <code>clean</code> task should be available for each project</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>allprojects {
+    tasks.<span style="color:#369">register</span>(<span style="color:#d20;background-color:#fff0f0">&#34;clean&#34;</span>) { <span style="color:#888">// A generic task is fine
+</span><span style="color:#888"></span>        <span style="color:#080;font-weight:bold">if</span> (!buildDir.<span style="color:#369">deleteRecursively</span>()) {
+            <span style="color:#080;font-weight:bold">throw</span> <span style="color:#06b;font-weight:bold">IllegalStateException</span>(<span style="color:#d20;background-color:#fff0f0">&#34;Cannot delete $buildDir&#34;</span>)
+        }
+    }
+}
+</code></pre></div></section><section>
+<h2 id="authoring-subprojects-in-gradle-2">Authoring subprojects in Gradle</h2>
+<ol start="3">
+<li>Put the part shared by <em>solely the sub-projects</em> into a <code>subprojects</code> block
+<ul>
+<li>e.g., in our case, the <code>compileJava</code> task and the related utilities</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>subprojects {
+    <span style="color:#888">// This must be there, as projectDir must refer to the *current* project
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">data</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">FinderInFolder</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">directory</span>: String) ...
+    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">findFilesIn</span>(directory: String) = FinderInFolder(directory)
+    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">findSources</span>() = findFilesIn(<span style="color:#d20;background-color:#fff0f0">&#34;src&#34;</span>).withExtension(<span style="color:#d20;background-color:#fff0f0">&#34;java&#34;</span>)
+    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">findLibraries</span>() = findFilesIn(<span style="color:#d20;background-color:#fff0f0">&#34;lib&#34;</span>).withExtension(<span style="color:#d20;background-color:#fff0f0">&#34;jar&#34;</span>)
+    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">DependencyHandlerScope</span>.forEachLibrary(todo: DependencyHandlerScope.(String) -&gt; Unit) ...
+    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">compileClasspath</span> <span style="color:#080;font-weight:bold">by</span> configurations.creating
+    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">runtimeClasspath</span> <span style="color:#080;font-weight:bold">by</span> configurations.creating { extendsFrom(compileClasspath) }
+    dependencies { ... }
+    tasks.register&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">&#34;compileJava&#34;</span>) { ... }
+}
+</code></pre></div></section><section>
+<h2 id="authoring-subprojects-in-gradle-3">Authoring subprojects in Gradle</h2>
+<ol start="4">
+<li>In each subproject&rsquo;s <code>build.gradle.kts</code>, add further customization as necessary
+<ul>
+<li>e.g., in our case, the <code>runJava</code> task can live in the <code>:app</code> subroject</li>
+</ul>
+</li>
+<li>Connect configurations to each other using dependencies
+<ul>
+<li>in <code>app</code>'s <code>build.gradle.kts</code>, for instance:</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>dependencies {
+    compileClasspath(project(<span style="color:#d20;background-color:#fff0f0">&#34;:library&#34;</span>)) { <span style="color:#888">// My compileClasspath configuration depends on project library
+</span><span style="color:#888"></span>        targetConfiguration = <span style="color:#d20;background-color:#fff0f0">&#34;runtimeClasspath&#34;</span> <span style="color:#888">// Specifically, from its runtime
+</span><span style="color:#888"></span>    }
+}
+</code></pre></div><ol start="6">
+<li>Declare inter-subproject task dependencies
+<ul>
+<li>Tasks may fail if ran out of order!</li>
+<li>Compiling <code>app</code> requires <code>library</code> to be compiled!</li>
+<li>inside <code>app</code>'s <code>build.gradle.kts</code>:</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>tasks.<span style="color:#369">compileJava</span> { dependsOn(project(<span style="color:#d20;background-color:#fff0f0">&#34;:library&#34;</span>).<span style="color:#369">tasks</span>.<span style="color:#369">compileJava</span>) }
+</code></pre></div><p><em>Note</em>: <code>library</code>'s <code>build.gradle.kts</code> is actually empty at the end of the process</p>
+</section><section>
 <p>Write a custom Task for compilation
 @Input e @Output
 Continuous build
