@@ -781,8 +781,39 @@ include(<span style="color:#d20;background-color:#fff0f0">&#34;:library&#34;</sp
 <h3 id="idea">Idea</h3>
 <p>In our main <code>build.gradle.kts</code></p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#888">// Imperative part
-</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">abstract</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#06b;font-weight:bold">JavaTask</span>(<span style="color:#369;font-style:italic">javaExecutable:</span> File = Jvm.<span style="color:#369">current</span>().<span style="color:#369">javaExecutable</span>) : Exec() { ... }
-</code></pre></div></section><section>
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">abstract</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#06b;font-weight:bold">JavaTask</span>(<span style="color:#369;font-style:italic">javaExecutable:</span> File = Jvm.<span style="color:#369">current</span>().<span style="color:#369">javaExecutable</span>) : Exec() { ... }sub
+open <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">CompileJava</span> <span style="color:#555">@javax.inject.Inject</span> constructor() : JavaTask(Jvm.<span style="color:#369">current</span>().<span style="color:#369">javacExecutable</span>) { ... }
+open <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">RunJava</span> <span style="color:#555">@javax.inject.Inject</span> constructor() : JavaTask() { ... }
+
+<span style="color:#888">// Declarative part
+</span><span style="color:#888"></span>allprojects { tasks.<span style="color:#369">register</span>&lt;Clean&gt;(<span style="color:#d20;background-color:#fff0f0">&#34;clean&#34;</span>) }
+subprojects {
+    val compileClasspath by configurations.<span style="color:#369">creating</span>
+    val runtimeClasspath by configurations.<span style="color:#369">creating</span> { extendsFrom(compileClasspath) }
+    dependencies {
+        findLibraries().<span style="color:#369">forEach</span> { compileClasspath(files(it)) }
+        runtimeClasspath(files(<span style="color:#d20;background-color:#fff0f0">&#34;$buildDir/bin&#34;</span>))
+    }
+    tasks.<span style="color:#369">register</span>&lt;CompileJava&gt;(<span style="color:#d20;background-color:#fff0f0">&#34;compileJava&#34;</span>)
+}
+</code></pre></div><p>In subprojects, only have the declarative part</p>
+<p>Unfortunately, <em>subprojects have no access to the root&rsquo;s defined types</em></p>
+<ul>
+<li>Fragile access only via reflection</li>
+<li>Enormous <strong>code duplication</strong></li>
+</ul>
+</section><section>
+<h2 id="isolation-of-imperativity-2">Isolation of imperativity</h2>
+<h3 id="project-wise-api-extension-plugin">Project-wise API extension (plugin)</h3>
+<p>Gradle provides the functionality we need (project-global type definitions) using a special <code>buildSrc</code> folder</p>
+<ul>
+<li>Requires a Gradle configuration
+<ul>
+<li>What it actually does will be clearer in future</li>
+</ul>
+</li>
+</ul>
+</section><section>
 <ul>
 <li>Isolation of imperativity
 Write a custom Task for compilation
