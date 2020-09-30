@@ -261,6 +261,23 @@ joined</p>
   pluto
 </span></li>
 </ul>
+</section><section>
+<h1 id="graphs-via-gravizo">Graphs via Gravizo</h1>
+
+
+  
+    
+  
+
+
+<figure>
+  <img
+    src='https://g.gravizo.com/svg?%0a%20%20digraph%20G%20%7b%0a%20%20%20%20aize%20%3d%224%2c4%22%3b%0a%20%20%20%20main%20%5bshape%3dbox%5d%3b%0a%20%20%20%20main%20-%3e%20parse%20%5bweight%3d8%5d%3b%0a%20%20%20%20parse%20-%3e%20execute%3b%0a%20%20%20%20main%20-%3e%20init%20%5bstyle%3ddotted%5d%3b%0a%20%20%20%20main%20-%3e%20cleanup%3b%0a%20%20%20%20execute%20-%3e%20%7b%20make_string%3b%20printf%7d%0a%20%20%20%20init%20-%3e%20make_string%3b%0a%20%20%20%20edge%20%5bcolor%3dred%5d%3b%0a%20%20%20%20main%20-%3e%20printf%20%5bstyle%3dbold%2clabel%3d%22100%20times%22%5d%3b%0a%20%20%20%20make_string%20%5blabel%3d%22make%20a%20string%22%5d%3b%0a%20%20%20%20node%20%5bshape%3dbox%2cstyle%3dfilled%2ccolor%3d%22.7%20.3%201.0%22%5d%3b%0a%20%20%20%20execute%20-%3e%20compare%3b%0a%20%20%7d%0a'
+    alt='Example Gravizo graph'
+    />
+    <figcaption>Example Gravizo graph</figcaption>
+</figure>
+
 </section>
 
   
