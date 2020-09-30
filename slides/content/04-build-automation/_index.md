@@ -873,8 +873,38 @@ In our main `build.gradle.kts`
 
 ```gradle
 // Imperative part
-abstract class JavaTask(javaExecutable: File = Jvm.current().javaExecutable) : Exec() { ... }
+abstract class JavaTask(javaExecutable: File = Jvm.current().javaExecutable) : Exec() { ... }sub
+open class CompileJava @javax.inject.Inject constructor() : JavaTask(Jvm.current().javacExecutable) { ... }
+open class RunJava @javax.inject.Inject constructor() : JavaTask() { ... }
+
+// Declarative part
+allprojects { tasks.register<Clean>("clean") }
+subprojects {
+    val compileClasspath by configurations.creating
+    val runtimeClasspath by configurations.creating { extendsFrom(compileClasspath) }
+    dependencies {
+        findLibraries().forEach { compileClasspath(files(it)) }
+        runtimeClasspath(files("$buildDir/bin"))
+    }
+    tasks.register<CompileJava>("compileJava")
+}
 ```
+In subprojects, only have the declarative part
+
+Unfortunately, *subprojects have no access to the root's defined types*
+* Fragile access only via reflection
+* Enormous **code duplication**
+
+---
+
+## Isolation of imperativity
+### Project-wise API extension (plugin)
+
+Gradle provides the functionality we need (project-global type definitions) using a special `buildSrc` folder
+* Requires a Gradle configuration
+    * What it actually does will be clearer in future
+
+
 
 ---
 

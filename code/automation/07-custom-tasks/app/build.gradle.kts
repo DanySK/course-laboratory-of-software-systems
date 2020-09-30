@@ -35,7 +35,7 @@ abstract class JavaTask(javaExecutable: File = Jvm.current().javaExecutable) : E
     val classPathDescriptor get() = classPath.joinToString(separator = separator)
 
     fun fromConfiguration(configuration: Configuration) {
-        classPath = configuration.resolve()
+        classPath = configuration.resolve().filterNotNull().toSet()
         update()
     }
 
@@ -53,15 +53,16 @@ abstract class JavaTask(javaExecutable: File = Jvm.current().javaExecutable) : E
 }
 
 open class RunJava @javax.inject.Inject constructor() : JavaTask() {
-    init {
-        fromConfiguration(project.configurations.runtimeClasspath.get())
-        dependsOn(project.tasks.named("compileJava")) // Sub-optimal, but we don't have access to the type!
-    }
     var mainClass: String = "Main"
         set(value) {
             field = value
             update()
         }
+
+    init {
+        fromConfiguration(project.configurations.runtimeClasspath.get())
+        dependsOn(project.tasks.named("compileJava")) // Sub-optimal, but we don't have access to the type!
+    }
 
    final override fun update() { javaCommandLine(mainClass) }
 }
@@ -79,7 +80,6 @@ dependencies {
 tasks.compileJava {// The CompileJava type is not visible, nor configurable!
     (this as Task).dependsOn(project(":library").tasks.compileJava)
     // The only way to configure is to go via reflection! ARGH
-    println("RUNTIME of ${project.name}: " + configurations.compileClasspath.get().resolve())
     this::class.memberFunctions.find { it.name == "fromConfiguration" }
         ?.call(this, configurations.compileClasspath.get())
             ?: throw IllegalStateException()
