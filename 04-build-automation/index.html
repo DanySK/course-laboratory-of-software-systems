@@ -969,15 +969,29 @@ tasks.<span style="color:#369">register</span>&lt;RunJava&gt;(<span style="color
 </ul>
 <p><em>Not very different than what&rsquo;s usually done in (good) software development</em></p>
 </section><section>
+<h2 id="reusability-across-multiple-projects">Reusability across multiple projects</h2>
+<p>We now have a rudimental infrastructure for building and running Java projects
+<br>
+What if we want to reuse it?</p>
+<p>Of course, copy/pasting the same file across projects is to be avoided whenever possible</p>
+<h2 id="the-concept-of-plugin">The concept of plugin</h2>
+<p>Gradle (as many other build systems) allow extensibility via <em>plugins</em>
+<br>
+A <em>plugin</em> is a software component that <em>extends the API</em> of the base system</p>
+</section><section>
+<h2 id="common-gradle-plugins">Common Gradle plugins</h2>
+</section><section>
 <ul>
 <li>Declarativity via DSLs
 concept of plugin
 the kotlin plugin</li>
 <li>jvm variant</li>
-<li>with its configurations
-our &ldquo;plugin for java&rdquo;
-testing a plugin (kotest + Gradle api + classpath trick)
-some existing plugins</li>
+<li>with its configurations</li>
+</ul>
+<p>our &ldquo;plugin for java&rdquo; &ndash; maybe better a stubby plugin with some exposed configuration</p>
+<p>testing a plugin (kotest + Gradle api + classpath trick)
+some existing plugins</p>
+<ul>
 <li>detekt</li>
 <li>ktlint</li>
 <li>jacoco</li>
