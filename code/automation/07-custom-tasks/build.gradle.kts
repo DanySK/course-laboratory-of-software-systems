@@ -31,16 +31,23 @@ fun Project.findFilesIn(directory: String) = FinderInFolder(this, directory)
 fun Project.findSources() = this.findFilesIn("src").withExtension("java")
 fun Project.findLibraries() = this.findFilesIn("lib").withExtension("jar")
 
+/*
+ * This is horrible and unmaintanable cut/paste!
+ */
 abstract class JavaTask(javaExecutable: File = Jvm.current().javaExecutable) : Exec() {
 
     init { executable = javaExecutable.absolutePath }
 
-    var classPath: Set<File> = project.findLibraries().map { project.file(it) }.toSet()
+    var classPath: Set<File> = FinderInFolder(project, "lib")
+            .withExtension("jar")
+            .map { project.file(it) }
+            .toSet()
         protected set
-    val classPathDescriptor = classPath.joinToString(separator = separator) { it.absolutePath }
+    val classPathDescriptor get() = classPath.joinToString(separator = separator)
 
     fun fromConfiguration(configuration: Configuration) {
         classPath = configuration.resolve()
+        update()
     }
 
     fun javaCommandLine(vararg arguments: String) = commandLine(
@@ -49,35 +56,31 @@ abstract class JavaTask(javaExecutable: File = Jvm.current().javaExecutable) : E
         *arguments
     )
 
+    abstract fun update(): Unit
+
     companion object {
         val separator = if (Os.isFamily(Os.FAMILY_WINDOWS)) ";" else ":"
     }
 }
 
 open class CompileJava @javax.inject.Inject constructor() : JavaTask(Jvm.current().javacExecutable) {
-//    var outputFolder: String = "${project.buildDir}/bin/"
-//        set(value) {
-//            field = value
-//            update()
-//        }
-//    // The shorter version does not work due to a Gradle/Kotlin bug
-//    var sources: Set<String> = FinderInFolder(project, "src").withExtension("java").toSet()
-//        set(value) {
-//            field = value
-//            update()
-//        }
-//    init { update() }
-//
-//    fun update() = javaCommandLine("-d", outputFolder, *sources.toTypedArray()).also{println(args)}
-}
+    var outputFolder: String = "${project.buildDir}/bin/"
+        set(value) {
+            field = value
+            update()
+        }
+    // The shorter version does not work due to a Gradle/Kotlin bug
+    var sources: Set<String> = FinderInFolder(project, "src").withExtension("java").toSet()
+        set(value) {
+            field = value
+            update()
+        }
+    init { update() }
 
-//open class RunJava @javax.inject.Inject constructor() : JavaTask() {
-//    var mainClass: String = "Main"
-//        set(value) {
-//            field = value
-//            javaCommandLine(mainClass)
-//        }
-//}
+    final override fun update() {
+        javaCommandLine("-d", outputFolder, *sources.toTypedArray())
+    }
+}
 
 /*
  * Declarative configuration

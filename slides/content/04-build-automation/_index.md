@@ -779,6 +779,7 @@ subprojects {
 ---
 
 ## Authoring subprojects in Gradle
+
 4. In each subproject's `build.gradle.kts`, add further customization as necessary
     * e.g., in our case, the `runJava` task can live in the `:app` subroject
 5. Connect configurations to each other using dependencies
@@ -802,11 +803,88 @@ tasks.compileJava { dependsOn(project(":library").tasks.compileJava) }
 
 ---
 
+## Mixed imperativity and declarativity
+
+At the moment, we have part of the project that's declarative, and part that's imperative:
+
+* **Declarative**
+    * configurations and their relationships
+    * dependencies
+    * task dependencies
+    * project hierarchy definition
+    * some parts of the task configuration
+* **Imperative**
+    * Operations on the file system
+    * some of the actual task logics
+    * resolution of configurations
+
+The *declarative* part is the one *for which we had a built-in API for*!
+
+---
+
+## Unavoidability of imperativity
+### (and its isolation)
+
+The base mechanism at work here is *hiding imperativity under a clean, declarative API*.
+
+Also *"purely declarative"* build systems, such as Maven, which are driven with markup files, *hide* their imperativity behind a curtain (in the case of Maven, plugins that are configured in the `pom.xml`, but implemented elsewhere).
+
+*Usability*, *understandability*, and, ultimately, *maintability*, get increased when:
+* *Imperativity* gets *hidden* under the hood
+* Most (if not all) the operations can be *configured* rather than *written*
+* Configuration can be *minimal for common tasks*
+    * **Convention over configuration**, we'll get back to this
+* Users can *resort to imperativity* in case of need
+
+---
+
+## Isolation of imperativity
+### Task type definition
+
+Let's begin our operation of isolation of imperativity by refactoring our hierarchy of operations.
+
+* We have a number of "Java-related" tasks.
+* All of them have a classpath
+* One has an output directory
+* One has a "main class"
+
+{{< gravizo "We can use Kotlin to extend the base Gradle API and impleent our own stuff" >}}
+@startuml
+interface Exec
+interface JavaTask extends Exec {
+    classpath : Set<File>
+    javaExecutable : File
+}
+interface JavaCompile extends JavaTask {
+    outputDirectory : File
+}
+interface JavaExecute extends JavaTask {
+    mainClass : String
+}
+@enduml
+{{< /gravizo >}}
+
+---
+
+## Isolation of imperativity
+### Idea
+
+In our main `build.gradle.kts`
+
+```gradle
+// Imperative part
+abstract class JavaTask(javaExecutable: File = Jvm.current().javaExecutable) : Exec() { ... }
+```
+
+---
+
+
+* Isolation of imperativity
 Write a custom Task for compilation
+Write a custom task for Execution
 @Input e @Output
 Continuous build
-Write a custom task for Execution
-* Isolation of imperativity
+buildSrc
 * Declarativity via DSLs
 concept of plugin
 the kotlin plugin

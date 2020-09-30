@@ -1,4 +1,4 @@
-rootProject.name = "project-with-hierarchy"
+rootProject.name = "imperativity-custom-tasks"
 
 include(":library")
 include(":app")
