@@ -777,6 +777,62 @@ include(<span style="color:#d20;background-color:#fff0f0">&#34;:library&#34;</sp
 </figure>
 
 </section><section>
+<h2 id="creating-a-new-task-type-in-gradle">Creating a new Task type in Gradle</h2>
+<p>Gradle supports the definition of new task types:</p>
+<ul>
+<li>New tasks <em>must implement</em> the <code>Task</code> interface
+<ul>
+<li>They <em>usually inherit</em> from <code>DefaultTask</code></li>
+</ul>
+</li>
+<li>They must be <em>extensible</em> (<code>open</code>)
+<ul>
+<li>At runtime, Gradle creates subclasses on the fly</li>
+</ul>
+</li>
+<li>They must have <em>a parameterless constructor annotated</em> with <code>@Inject</code>
+<ul>
+<li>Costruction of tasks happens via dependency injection</li>
+</ul>
+</li>
+<li>A public method can be marked as <code>@TaskAction</code>, and will get invoked to execute the task</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">open</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Clean</span> @Inject <span style="color:#080;font-weight:bold">constructor</span>() : DefaultTask() {
+    @TaskAction
+    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">clean</span>() {
+        <span style="color:#080;font-weight:bold">if</span> (!project.buildDir.deleteRecursively()) {
+            <span style="color:#080;font-weight:bold">throw</span> IllegalStateException(<span style="color:#d20;background-color:#fff0f0">&#34;Cannot delete ${project.buildDir}&#34;</span>)
+        }
+    }
+}
+</code></pre></div></section><section>
+<h3 id="input-output-caching-and-continuous-build-mode">Input, output, caching, and continuous build mode</h3>
+<p>In general, it is a good practice (that will become mandatory in future gradle releases)
+to <em>annotate every public property</em> of a task with a marker annotation that determines whether it is an <em>input</em> or an <em>output</em>.</p>
+<ul>
+<li><code>@Input</code>, <code>@InputFile</code>, <code>@InputFiles</code>, <code>@InputDirectory</code>, <code>@InputDirectories</code></li>
+<li><code>@OutputFile</code>, <code>@OutputFiles</code>, <code>@OutputDirectory</code>, <code>@OutputDirectories</code></li>
+</ul>
+<h4 id="why">Why?</h4>
+<ol>
+<li><strong>Performance</strong>
+<ul>
+<li>Gradle caches intermediate build results, using input and output markers to undersand whether or not some task is <em>up to date</em></li>
+<li>This allows for <em>much</em> faster builds while working on large projects
+<ul>
+<li>Time to build completion can decrease from tens on minutes to seconds!</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Continuous build</strong>
+<ul>
+<li>When launched with the <code>-t</code> option, Gradle re-runs the requested tasks every time <em>something changes</em></li>
+<li>(In/Out)put markers are used to understand <em>what</em> to actually run again</li>
+</ul>
+</li>
+</ol>
+</section><section>
 <h2 id="isolation-of-imperativity-1">Isolation of imperativity</h2>
 <h3 id="idea">Idea</h3>
 <p>In our main <code>build.gradle.kts</code></p>
@@ -807,20 +863,113 @@ subprojects {
 <h3 id="project-wise-api-extension-plugin">Project-wise API extension (plugin)</h3>
 <p>Gradle provides the functionality we need (project-global type definitions) using a special <code>buildSrc</code> folder</p>
 <ul>
-<li>Requires a Gradle configuration
+<li>Requires a Gradle configuration file
 <ul>
 <li>What it actually does will be clearer in future</li>
 </ul>
 </li>
+<li>Requires a peculiar directory structure</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>├── build.gradle.kts
+├── buildSrc
+│   ├── build.gradle.kts
+│   └── src
+│       └── main
+│           └── kotlin
+│               └── OurImperativeCode.kt
+└── settings.gradle.kts
+</code></pre></div><ul>
+<li>Allows imperative code to get <em>isolated</em> and <em>shared</em> among subprojects!</li>
 </ul>
 </section><section>
+<h2 id="isolation-of-imperativity-3">Isolation of imperativity</h2>
+<h3 id="project-wise-api-extension-plugin-1">Project-wise API extension (plugin)</h3>
+<p><code>buildSrc/build.gradle.kts</code> (clearer in future)</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins {
+    <span style="color:#a61717;background-color:#e3d2d2">`</span>kotlin-dsl<span style="color:#a61717;background-color:#e3d2d2">`</span>
+}
+repositories {
+    mavenCentral()
+}
+</code></pre></div><p><code>buildSrc/sr/main/kotlin/JavaOperations.kt</code> (excerpt, full code in the repo)</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">open</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Clean</span> @Inject <span style="color:#080;font-weight:bold">constructor</span>() : DefaultTask() { ... }
+<span style="color:#080;font-weight:bold">abstract</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">JavaTask</span>(javaExecutable: File = Jvm.current().javaExecutable) : Exec() { ... }
+<span style="color:#080;font-weight:bold">open</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">CompileJava</span> @javax.inject.Inject <span style="color:#080;font-weight:bold">constructor</span>() : JavaTask(Jvm.current().javacExecutable) {
+    @OutputDirectory <span style="color:#888">// Marks this property as an output
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">outputFolder</span>: String = <span style="color:#d20;background-color:#fff0f0">&#34;${project.buildDir}/bin/&#34;</span>
+    ...
+}
+<span style="color:#080;font-weight:bold">open</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">RunJava</span> @javax.inject.Inject <span style="color:#080;font-weight:bold">constructor</span>() : JavaTask() {
+    @Input <span style="color:#888">// Marks this property as an Input
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">mainClass</span>: String = <span style="color:#d20;background-color:#fff0f0">&#34;Main&#34;</span>
+    ...
+}
+</code></pre></div></section><section>
+<h2 id="isolation-of-imperativity-4">Isolation of imperativity</h2>
+<h3 id="project-wise-api-extension-plugin-2">Project-wise API extension (plugin)</h3>
+<p>Our Project&rsquo;s <code>build.gradle.kts</code> (full):</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>allprojects {
+    tasks.register&lt;Clean&gt;(<span style="color:#d20;background-color:#fff0f0">&#34;clean&#34;</span>)
+}
+subprojects {
+    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">compileClasspath</span> <span style="color:#080;font-weight:bold">by</span> configurations.creating
+    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">runtimeClasspath</span> <span style="color:#080;font-weight:bold">by</span> configurations.creating { extendsFrom(compileClasspath) }
+    dependencies {
+        findLibraries().forEach { compileClasspath(files(it)) }
+        runtimeClasspath(files(<span style="color:#d20;background-color:#fff0f0">&#34;$buildDir/bin&#34;</span>))
+    }
+    tasks.register&lt;CompileJava&gt;(<span style="color:#d20;background-color:#fff0f0">&#34;compileJava&#34;</span>)
+}
+
+</code></pre></div><p><strong>Purely declarative, yay!</strong></p>
+</section><section>
+<h2 id="isolation-of-imperativity-5">Isolation of imperativity</h2>
+<h3 id="project-wise-api-extension-plugin-3">Project-wise API extension (plugin)</h3>
+<p>Our <code>app</code> suproject&rsquo;s <code>build.gradle.kts</code> (full):</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>dependencies {
+    compileClasspath(project(<span style="color:#d20;background-color:#fff0f0">&#34;:library&#34;</span>)) { targetConfiguration = <span style="color:#d20;background-color:#fff0f0">&#34;runtimeClasspath&#34;</span> }
+}
+tasks.<span style="color:#369">compileJava</span> {
+    dependsOn(project(<span style="color:#d20;background-color:#fff0f0">&#34;:library&#34;</span>).<span style="color:#369">tasks</span>.<span style="color:#369">compileJava</span>)
+    fromConfiguration(configurations.<span style="color:#369">compileClasspath</span>.<span style="color:#369">get</span>())
+}
+tasks.<span style="color:#369">register</span>&lt;RunJava&gt;(<span style="color:#d20;background-color:#fff0f0">&#34;runJava&#34;</span>) {
+    fromConfiguration(configurations.<span style="color:#369">runtimeClasspath</span>.<span style="color:#369">get</span>())
+    mainClass = <span style="color:#d20;background-color:#fff0f0">&#34;PrintException&#34;</span>
+}
+</code></pre></div><p><strong>Purely declarative, yay!</strong></p>
+</section><section>
+<h2 id="divide-conquer-encapsulate-adorn">Divide, conquer, encapsulate, adorn</h2>
+<p>General approach to a <em>new</em> build automation problem:</p>
+<p><strong>Divide</strong></p>
 <ul>
-<li>Isolation of imperativity
-Write a custom Task for compilation
-Write a custom task for Execution
-@Input e @Output
-Continuous build
-buildSrc</li>
+<li>Identify the <em>base steps</em>, they could become your task
+<ul>
+<li>Or any concept your build system exposes to model an atomic operation</li>
+</ul>
+</li>
+</ul>
+<p><strong>Conquer</strong></p>
+<ul>
+<li>Clearly express the <em>dependencies</em> among them
+<ul>
+<li>Build a <em>pipeline</em></li>
+</ul>
+</li>
+<li>Implement them</li>
+<li>Provide a clean API</li>
+</ul>
+<p><strong>Encapsulate</strong></p>
+<ul>
+<li>Confine imperative logic, make it an <em>implementation detail</em></li>
+</ul>
+<p><strong>Adorn</strong></p>
+<ul>
+<li>Provide expressive, easy, immedate access to the API via <em>DSL</em>!</li>
+</ul>
+<p><em>Not very different than what&rsquo;s usually done in (good) software development</em></p>
+</section><section>
+<ul>
 <li>Declarativity via DSLs
 concept of plugin
 the kotlin plugin</li>
