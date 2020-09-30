@@ -17,8 +17,6 @@ open class Clean @Inject constructor() : DefaultTask() { // Must be open: Gradle
         }
     }
 }
-
-// Modified to work with arbitrary projects
 data class FinderInFolder(val project: Project, val directory: String) {
     fun withExtension(extension: String): Array<String> = project.projectDir
             .listFiles { it: File -> it.isDirectory && it.name == directory }
@@ -34,9 +32,6 @@ fun Project.findFilesIn(directory: String) = FinderInFolder(this, directory)
 fun Project.findSources() = this.findFilesIn("src").withExtension("java")
 fun Project.findLibraries() = this.findFilesIn("lib").withExtension("jar")
 
-/*
- * This is horrible and unmaintanable cut/paste!
- */
 abstract class JavaTask(javaExecutable: File = Jvm.current().javaExecutable) : Exec() {
 
     init { executable = javaExecutable.absolutePath }
