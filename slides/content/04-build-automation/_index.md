@@ -1066,12 +1066,34 @@ General approach to a *new* build automation problem:
 
 ---
 
+## Reusability across multiple projects
+
+We now have a rudimental infrastructure for building and running Java projects
+<br>
+What if we want to reuse it?
+
+Of course, copy/pasting the same file across projects is to be avoided whenever possible
+
+## The concept of plugin
+
+Gradle (as many other build systems) allow extensibility via *plugins*
+<br>
+A *plugin* is a software component that *extends the API* of the base system
+
+---
+
+## Common Gradle plugins
+
+---
+
 * Declarativity via DSLs
 concept of plugin
 the kotlin plugin
 * jvm variant
 * with its configurations
-our "plugin for java"
+
+our "plugin for java" -- maybe better a stubby plugin with some exposed configuration
+
 testing a plugin (kotest + Gradle api + classpath trick)
 some existing plugins
 * detekt
