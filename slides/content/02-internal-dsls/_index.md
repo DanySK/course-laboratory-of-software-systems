@@ -125,7 +125,7 @@ Result:
 
 ---
 
-<div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'><iframe sandbox='allow-scripts allow-same-origin' allowfullscreen='true' allowtransparency='true' frameborder='0' height='315' src='https://www.mentimeter.com/embed/9e8329b62b8c7bd8daf911dd652d4ee4' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' width='420'></iframe></div>
+{{<mentimeter 9e8329b62b8c7bd8daf911dd652d4ee4>}}
 
 ---
 
