@@ -27,7 +27,7 @@
 <h2 id="internal-domain-specific-languages">Internal Domain-Specific Languages</h2>
 <h2 id="in-kotlin">In Kotlin</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2020-09-30
+2020-10-01
 
 </section><section>
 <h1 id="dsls">DSLs</h1>
@@ -69,7 +69,7 @@ which in turn requires a <strong>deep understanding of the domain</strong></p>
 <li>Extension members</li>
 </ul>
 </section><section>
-<h1 id="kotlin-202----dsls">Kotlin 202 &ndash; DSLs</h1>
+<h1 id="kotlin-203----dsls">Kotlin 203 &ndash; DSLs</h1>
 <h2 id="aka-type-safe-builders">a.k.a. Type safe builders</h2>
 <p>Domain-specific languages require, as first step, to have a <strong>domain model</strong>.
 <br/>
@@ -81,7 +81,7 @@ The business logic will then be bound to the domain model inextricably.</p>
 <br/>
 whose implementations are manipulated by an infrastructure exposing the DSL</p>
 </section><section>
-<h1 id="kotlin-202----dsls-1">Kotlin 202 &ndash; DSLs</h1>
+<h1 id="kotlin-203----dsls-1">Kotlin 203 &ndash; DSLs</h1>
 <h2 id="a-simple-html-dsl">A simple HTML DSL</h2>
 <p>Desired syntax:</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>html {
@@ -95,7 +95,7 @@ whose implementations are manipulated by an infrastructure exposing the DSL</p>
     }
 }.render()
 </code></pre></div></section><section>
-<h1 id="kotlin-202----dsls-2">Kotlin 202 &ndash; DSLs</h1>
+<h1 id="kotlin-203----dsls-2">Kotlin 203 &ndash; DSLs</h1>
 <h2 id="a-simple-html-dsl-1">A simple HTML DSL</h2>
 <p>Result:</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>&lt;<span style="color:#b06;font-weight:bold">html</span>&gt;
@@ -113,7 +113,21 @@ whose implementations are manipulated by an infrastructure exposing the DSL</p>
 	&lt;/<span style="color:#b06;font-weight:bold">body</span>&gt;
 &lt;/<span style="color:#b06;font-weight:bold">html</span>&gt;
 </code></pre></div></section><section>
-<h1 id="kotlin-202----dsls-3">Kotlin 202 &ndash; DSLs</h1>
+<div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'>
+    <iframe
+        sandbox='allow-scripts allow-same-origin'
+        allowfullscreen='true'
+        allowtransparency='true'
+        frameborder='0'
+        height='315'
+        src='https://www.mentimeter.com/embed/9e8329b62b8c7bd8daf911dd652d4ee4'
+        style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;'
+        width='420'
+        >
+    </iframe>
+</div>
+</section><section>
+<h1 id="kotlin-203----dsls-3">Kotlin 203 &ndash; DSLs</h1>
 <h2 id="the-html-abstract-domain">The HTML abstract domain</h2>
 <ul>
 <li>An HTML document is made of text <code>Element</code>s</li>
@@ -128,7 +142,7 @@ whose implementations are manipulated by an infrastructure exposing the DSL</p>
 <span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">RepeatableTag</span> : Tag, RepeatableElement
 <span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">TextElement</span> : RepeatableElement
 </code></pre></div></section><section>
-<h1 id="kotlin-202----dsls-4">Kotlin 202 &ndash; DSLs</h1>
+<h1 id="kotlin-203----dsls-4">Kotlin 203 &ndash; DSLs</h1>
 <h2 id="detailing-the-domain">Detailing the domain</h2>
 <ul>
 <li>All <code>Element</code>s can be rendered to plain text, possibly with some indentation</li>
@@ -152,7 +166,7 @@ whose implementations are manipulated by an infrastructure exposing the DSL</p>
     <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">attributes</span>: Map&lt;String, String&gt;
 }
 </code></pre></div></section><section>
-<h1 id="kotlin-202----dsls-5">Kotlin 202 &ndash; DSLs</h1>
+<h1 id="kotlin-203----dsls-5">Kotlin 203 &ndash; DSLs</h1>
 <h2 id="domain-implementation">Domain implementation</h2>
 <ul>
 <li>Let&rsquo;s pick a <code>String</code> as indentation</li>
@@ -165,7 +179,7 @@ we convey a better meaning to what we are doing by relying on a <code>typealias 
 </span><span style="color:#888"></span>typealias Attribute = Pair&lt;String, String&gt; <span style="color:#888">// Just to avoid writing Pair&lt;String, String&gt;
 </span><span style="color:#888"></span><span style="color:#080;font-weight:bold">data</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Text</span>(<span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">text</span>: String) : TextElement
 </code></pre></div></section><section>
-<h1 id="kotlin-202----dsls-6">Kotlin 202 &ndash; DSLs</h1>
+<h1 id="kotlin-203----dsls-6">Kotlin 203 &ndash; DSLs</h1>
 <h2 id="domain-implementation-tag">Domain implementation: <code>Tag</code></h2>
 <p><code>Tag</code> is a bit more complex, let&rsquo;s try to factor the common part of all <code>Tag</code>s into an <code>AbtractTag</code></p>
 <ul>
@@ -191,7 +205,7 @@ we convey a better meaning to what we are doing by relying on a <code>typealias 
     }
 }
 </code></pre></div></section><section>
-<h1 id="kotlin-202----dsls-7">Kotlin 202 &ndash; DSLs</h1>
+<h1 id="kotlin-203----dsls-7">Kotlin 203 &ndash; DSLs</h1>
 <h2 id="domain-implementation-tags-rendering">Domain implementation: <code>Tag</code>'s rendering</h2>
 <ul>
 <li>We can now write how an HTML <code>Tag</code> is rendered</li>
@@ -214,7 +228,7 @@ we convey a better meaning to what we are doing by relying on a <code>typealias 
         ?: <span style="color:#d20;background-color:#fff0f0">&#34;&#34;</span> <span style="color:#888">// Elvis operator
 </span><span style="color:#888"></span>}
 </code></pre></div></section><section>
-<h1 id="kotlin-202----dsls-8">Kotlin 202 &ndash; DSLs</h1>
+<h1 id="kotlin-203----dsls-8">Kotlin 203 &ndash; DSLs</h1>
 <h2 id="dsl-entry-point">DSL: entry point</h2>
 <p>We will now:</p>
 <ol>
@@ -234,7 +248,7 @@ and then wrap it in a DSL (where mutability is mandatory)</p>
 <li>A <code>class</code> representing our entry point</li>
 </ul>
 </section><section>
-<h1 id="kotlin-202----dsls-9">Kotlin 202 &ndash; DSLs</h1>
+<h1 id="kotlin-203----dsls-9">Kotlin 203 &ndash; DSLs</h1>
 <h2 id="dsl-entry-point-1">DSL: entry point</h2>
 <p>We can now write:</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>html { }.render()
@@ -245,7 +259,7 @@ html(<span style="color:#d20;background-color:#fff0f0">&#34;lang&#34;</span> to 
 &lt;<span style="color:#b06;font-weight:bold">html</span> <span style="color:#369">lang</span>=<span style="color:#d20;background-color:#fff0f0">&#34;en&#34;</span>&gt;
 &lt;/<span style="color:#b06;font-weight:bold">html</span>&gt;
 </code></pre></div></section><section>
-<h1 id="kotlin-202----dsls-10">Kotlin 202 &ndash; DSLs</h1>
+<h1 id="kotlin-203----dsls-10">Kotlin 203 &ndash; DSLs</h1>
 <h2 id="dsl-adding-elements">DSL: adding elements</h2>
 <ul>
 <li>The base system is always the same!</li>
@@ -269,7 +283,7 @@ html(<span style="color:#d20;background-color:#fff0f0">&#34;lang&#34;</span> to 
     }
 }
 </code></pre></div></section><section>
-<h1 id="kotlin-202----dsls-11">Kotlin 202 &ndash; DSLs</h1>
+<h1 id="kotlin-203----dsls-11">Kotlin 203 &ndash; DSLs</h1>
 <h2 id="dsl-reusing-elements">DSL: reusing elements</h2>
 <ul>
 <li>Common DSL elements can be factored and reused via inheritance</li>
@@ -289,7 +303,7 @@ html(<span style="color:#d20;background-color:#fff0f0">&#34;lang&#34;</span> to 
 ) : BodyTag(<span style="color:#d20;background-color:#fff0f0">&#34;a&#34;</span>, *(<span style="color:#080;font-weight:bold">if</span> (href == <span style="color:#080;font-weight:bold">null</span>) emptyArray() <span style="color:#080;font-weight:bold">else</span> arrayOf(<span style="color:#d20;background-color:#fff0f0">&#34;href&#34;</span> to href)) + attributes),
     RepeatableElement <span style="color:#888">// Repeatable
 </span></code></pre></div></section><section>
-<h1 id="kotlin-202----dsls-12">Kotlin 202 &ndash; DSLs</h1>
+<h1 id="kotlin-203----dsls-12">Kotlin 203 &ndash; DSLs</h1>
 <h2 id="preventing-scope-leaking">Preventing scope leaking</h2>
 <p>Right now, this is valid:</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>html { head { head { title { title { } } } } }
@@ -312,7 +326,7 @@ Kotlin provides an annotation used to create scope-blocking annotations:</p>
 </span><span style="color:#888"></span><span style="color:#080;font-weight:bold">abstract</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">TagWithText</span>(name: String, <span style="color:#080;font-weight:bold">vararg</span> attributes: Attribute) : AbstractTag(name, *attributes) { ... }
 
 </code></pre></div></section><section>
-<h1 id="kotlin-202----dsls-13">Kotlin 202 &ndash; DSLs</h1>
+<h1 id="kotlin-202----dsls">Kotlin 202 &ndash; DSLs</h1>
 <h2 id="preventing-scope-leaking-1">Preventing scope leaking</h2>
 <p>With the DslMarker:</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>html {
@@ -330,7 +344,7 @@ Kotlin provides an annotation used to create scope-blocking annotations:</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>html { head { <span style="color:#080;font-weight:bold">this</span>@html.head { title { <span style="color:#080;font-weight:bold">this</span>@head.title { } } } } } <span style="color:#888">// compiles
 </span></code></pre></div><p>But you must be <em>explicitly willing</em> to access an outer receiver</p>
 </section><section>
-<h1 id="kotlin-202----dsls-14">Kotlin 202 &ndash; DSLs</h1>
+<h1 id="kotlin-203----dsls-13">Kotlin 203 &ndash; DSLs</h1>
 <h2 id="summing-up">Summing up</h2>
 <ol>
 <li>First and foremost <strong>model the domain</strong>
