@@ -528,11 +528,16 @@ Next step: we can compile, why not executing the program as well?
 
 1. Let's define a `runtimeClasspath` configuration
     * "inherits" from `compileClasspath`
+    * includes the output folder
     * In general we may need stuff at runtime that we don't need at compile time
         * E.g. stuff loaded via reflection
 ```kotlin
 val runtimeClasspath by configurations.creating {
     extendsFrom(compileClasspath) // Built-in machinery to say that one configuration is another "plus stuff"
+}
+dependencies {
+    ...
+    runtimeClasspath(files("$buildDir/bin"))
 }
 ```
 2. Let's write the task
@@ -541,11 +546,7 @@ tasks.register<Exec>("runJava") {
     val classpathFiles = runtimeClasspath.resolve()
     val mainClass = "PrintException" // Horribly hardcoded, we must do something
     val javaExecutable = Jvm.current().javaExecutable.absolutePath
-    commandLine(
-            "$javaExecutable",
-            "-cp", "$buildDir/bin/$separator${classpathFiles.joinToString(separator = separator)}",
-            mainClass
-    )
+    commandLine(javaExecutable, "-cp", classpathFiles.joinToString(separator = separator), mainClass)
 }
 ```
 
@@ -667,23 +668,432 @@ tasks.register("clean") { // A generic task is fine
 
 ---
 
+## Build hierarchies
 
+Sometimes projects are *modular*
+<br>
+Where a module is a sub-project with a clear identity, possibly reusable elsewhere
 
-subprojects (lib + app)
-    * Hierarchial organization
-    * naming a project
+Examples:
+* A smartphone application with:
+    * A common library
+    * A software that uses such library for the actual app
+* Bluetooth control software comprising:
+    * Platform-specific drivers
+    * A platform-agnostic bluetooth API and service
+    * A CLI interface to the library
+    * A Graphical interface
 
-Write a custom Task for compilation
-@Input e @Output
-Continuous build
-Write a custom task for Execution
-* Isolation of imperativity
+Modular software *simplifies maintenance* and *improves understandability*
+<br>
+Modules may **depend** on other modules
+<br>
+Some build tasks of some module may require build tasks *of other modules* to be complete before execution
+
+---
+
+## Hierarchial project
+
+Let us split our project into two components:
+* A base library
+* A stand-alone application using the library
+
+We need to reorganize the build logic to something similar to
+```
+hierarchial-project
+|__:library
+\__:app
+```
+
+Desiderata:
+* We can compile any of the two projects from the root
+* We can run the app from the root
+* Calling a run of the app implies a compilation of the library
+* We can clean both projects
+
+---
+
+## Authoring subprojects in Gradle
+
+Gradle (as many other build automators)
+offers built-in support for *hierarchial projects*.
+<br>
+Gradle is limited to *two levels*, other products such as Maven have no limitation
+
+Subprojects are listed in a `settings.gradle.kts` file
+<br>
+Incidentally, it's the same place where the project name can be specified
+
+Subprojects *must have their own* `build.gradle.kts`
+<br>
+They can also have their own `settings.gradle.kts`, e.g. for selecting a name different than their folder
+
+---
+
+## Authoring subprojects in Gradle
+
+1. Create a settings.gradle.kts and declare your modules:
+
+```gradle
+rootProject.name = "project-with-hierarchy"
+
+include(":library") // There must be a folder named "library"
+include(":app") // There must be a folder named "app"
+```
+
+2. In the root project, configure the part common to **all** projects in a `allprojects` block
+    * e.g., in our case, the `clean` task should be available for each project
+
+```gradle
+allprojects {
+    tasks.register("clean") { // A generic task is fine
+        if (!buildDir.deleteRecursively()) {
+            throw IllegalStateException("Cannot delete $buildDir")
+        }
+    }
+}
+```
+
+---
+
+## Authoring subprojects in Gradle
+
+3. Put the part shared by *solely the sub-projects* into a `subprojects` block
+    * e.g., in our case, the `compileJava` task and the related utilities
+
+```kotlin
+subprojects {
+    // This must be there, as projectDir must refer to the *current* project
+    data class FinderInFolder(val directory: String) ...
+    fun findFilesIn(directory: String) = FinderInFolder(directory)
+    fun findSources() = findFilesIn("src").withExtension("java")
+    fun findLibraries() = findFilesIn("lib").withExtension("jar")
+    fun DependencyHandlerScope.forEachLibrary(todo: DependencyHandlerScope.(String) -> Unit) ...
+    val compileClasspath by configurations.creating
+    val runtimeClasspath by configurations.creating { extendsFrom(compileClasspath) }
+    dependencies { ... }
+    tasks.register<Exec>("compileJava") { ... }
+}
+```
+
+---
+
+## Authoring subprojects in Gradle
+
+4. In each subproject's `build.gradle.kts`, add further customization as necessary
+    * e.g., in our case, the `runJava` task can live in the `:app` subroject
+5. Connect configurations to each other using dependencies
+    * in `app`'s `build.gradle.kts`, for instance:
+```gradle
+dependencies {
+    compileClasspath(project(":library")) { // My compileClasspath configuration depends on project library
+        targetConfiguration = "runtimeClasspath" // Specifically, from its runtime
+    }
+}
+```
+6. Declare inter-subproject task dependencies
+    * Tasks may fail if ran out of order!
+    * Compiling `app` requires `library` to be compiled!
+    * inside `app`'s `build.gradle.kts`:
+```gradle
+tasks.compileJava { dependsOn(project(":library").tasks.compileJava) }
+```
+
+*Note*: `library`'s `build.gradle.kts` is actually empty at the end of the process
+
+---
+
+## Mixed imperativity and declarativity
+
+At the moment, we have part of the project that's declarative, and part that's imperative:
+
+* **Declarative**
+    * configurations and their relationships
+    * dependencies
+    * task dependencies
+    * project hierarchy definition
+    * some parts of the task configuration
+* **Imperative**
+    * Operations on the file system
+    * some of the actual task logics
+    * resolution of configurations
+
+The *declarative* part is the one *for which we had a built-in API for*!
+
+---
+
+## Unavoidability of imperativity
+### (and its isolation)
+
+The base mechanism at work here is *hiding imperativity under a clean, declarative API*.
+
+Also *"purely declarative"* build systems, such as Maven, which are driven with markup files, *hide* their imperativity behind a curtain (in the case of Maven, plugins that are configured in the `pom.xml`, but implemented elsewhere).
+
+*Usability*, *understandability*, and, ultimately, *maintability*, get increased when:
+* *Imperativity* gets *hidden* under the hood
+* Most (if not all) the operations can be *configured* rather than *written*
+* Configuration can be *minimal for common tasks*
+    * **Convention over configuration**, we'll get back to this
+* Users can *resort to imperativity* in case of need
+
+---
+
+## Isolation of imperativity
+### Task type definition
+
+Let's begin our operation of isolation of imperativity by refactoring our hierarchy of operations.
+
+* We have a number of "Java-related" tasks.
+* All of them have a classpath
+* One has an output directory
+* One has a "main class"
+
+{{< gravizo "We can use Kotlin to extend the base Gradle API and impleent our own stuff" >}}
+@startuml
+interface Exec
+interface JavaTask extends Exec {
+    classpath : Set<File>
+    javaExecutable : File
+}
+interface JavaCompile extends JavaTask {
+    outputDirectory : File
+}
+interface JavaExecute extends JavaTask {
+    mainClass : String
+}
+@enduml
+{{< /gravizo >}}
+
+---
+
+## Creating a new Task type in Gradle
+
+Gradle supports the definition of new task types:
+* New tasks *must implement* the `Task` interface
+    * They *usually inherit* from `DefaultTask`
+* They must be *extensible* (`open`)
+    * At runtime, Gradle creates subclasses on the fly
+* They must have *a parameterless constructor annotated* with `@Inject`
+    * Costruction of tasks happens via dependency injection
+* A public method can be marked as `@TaskAction`, and will get invoked to execute the task
+
+```kotlin
+open class Clean @Inject constructor() : DefaultTask() {
+    @TaskAction
+    fun clean() {
+        if (!project.buildDir.deleteRecursively()) {
+            throw IllegalStateException("Cannot delete ${project.buildDir}")
+        }
+    }
+}
+```
+
+---
+
+### Input, output, caching, and continuous build mode
+
+In general, it is a good practice (that will become mandatory in future gradle releases)
+to *annotate every public property* of a task with a marker annotation that determines whether it is an *input* or an *output*.
+* `@Input`, `@InputFile`, `@InputFiles`, `@InputDirectory`, `@InputDirectories`
+* `@OutputFile`, `@OutputFiles`, `@OutputDirectory`, `@OutputDirectories`
+
+#### Why?
+
+1. **Performance**
+    * Gradle caches intermediate build results, using input and output markers to undersand whether or not some task is *up to date*
+    * This allows for *much* faster builds while working on large projects
+        * Time to build completion can decrease from tens on minutes to seconds!
+2. **Continuous build**
+    * When launched with the `-t` option, Gradle re-runs the requested tasks every time *something changes*
+    * (In/Out)put markers are used to understand *what* to actually run again
+
+---
+
+## Isolation of imperativity
+### Idea
+
+In our main `build.gradle.kts`
+
+```gradle
+// Imperative part
+abstract class JavaTask(javaExecutable: File = Jvm.current().javaExecutable) : Exec() { ... }sub
+open class CompileJava @javax.inject.Inject constructor() : JavaTask(Jvm.current().javacExecutable) { ... }
+open class RunJava @javax.inject.Inject constructor() : JavaTask() { ... }
+
+// Declarative part
+allprojects { tasks.register<Clean>("clean") }
+subprojects {
+    val compileClasspath by configurations.creating
+    val runtimeClasspath by configurations.creating { extendsFrom(compileClasspath) }
+    dependencies {
+        findLibraries().forEach { compileClasspath(files(it)) }
+        runtimeClasspath(files("$buildDir/bin"))
+    }
+    tasks.register<CompileJava>("compileJava")
+}
+```
+In subprojects, only have the declarative part
+
+Unfortunately, *subprojects have no access to the root's defined types*
+* Fragile access only via reflection
+* Enormous **code duplication**
+
+---
+
+## Isolation of imperativity
+### Project-wise API extension (plugin)
+
+Gradle provides the functionality we need (project-global type definitions) using a special `buildSrc` folder
+* Requires a Gradle configuration file
+    * What it actually does will be clearer in future
+* Requires a peculiar directory structure
+```bash
+├── build.gradle.kts
+├── buildSrc
+│   ├── build.gradle.kts
+│   └── src
+│       └── main
+│           └── kotlin
+│               └── OurImperativeCode.kt
+└── settings.gradle.kts
+```
+* Allows imperative code to get *isolated* and *shared* among subprojects!
+
+---
+
+## Isolation of imperativity
+### Project-wise API extension (plugin)
+
+`buildSrc/build.gradle.kts` (clearer in future)
+
+```kotlin
+plugins {
+    `kotlin-dsl`
+}
+repositories {
+    mavenCentral()
+}
+```
+
+`buildSrc/sr/main/kotlin/JavaOperations.kt` (excerpt, full code in the repo)
+
+```kotlin
+open class Clean @Inject constructor() : DefaultTask() { ... }
+abstract class JavaTask(javaExecutable: File = Jvm.current().javaExecutable) : Exec() { ... }
+open class CompileJava @javax.inject.Inject constructor() : JavaTask(Jvm.current().javacExecutable) {
+    @OutputDirectory // Marks this property as an output
+    var outputFolder: String = "${project.buildDir}/bin/"
+    ...
+}
+open class RunJava @javax.inject.Inject constructor() : JavaTask() {
+    @Input // Marks this property as an Input
+    var mainClass: String = "Main"
+    ...
+}
+```
+
+---
+
+## Isolation of imperativity
+### Project-wise API extension (plugin)
+
+Our Project's `build.gradle.kts` (full):
+
+```kotlin
+allprojects {
+    tasks.register<Clean>("clean")
+}
+subprojects {
+    val compileClasspath by configurations.creating
+    val runtimeClasspath by configurations.creating { extendsFrom(compileClasspath) }
+    dependencies {
+        findLibraries().forEach { compileClasspath(files(it)) }
+        runtimeClasspath(files("$buildDir/bin"))
+    }
+    tasks.register<CompileJava>("compileJava")
+}
+
+```
+
+**Purely declarative, yay!**
+
+---
+
+## Isolation of imperativity
+### Project-wise API extension (plugin)
+
+Our `app` suproject's `build.gradle.kts` (full):
+
+```gradle
+dependencies {
+    compileClasspath(project(":library")) { targetConfiguration = "runtimeClasspath" }
+}
+tasks.compileJava {
+    dependsOn(project(":library").tasks.compileJava)
+    fromConfiguration(configurations.compileClasspath.get())
+}
+tasks.register<RunJava>("runJava") {
+    fromConfiguration(configurations.runtimeClasspath.get())
+    mainClass = "PrintException"
+}
+```
+
+**Purely declarative, yay!**
+
+---
+
+## Divide, conquer, encapsulate, adorn
+
+General approach to a *new* build automation problem:
+
+**Divide**
+* Identify the *base steps*, they could become your task
+    * Or any concept your build system exposes to model an atomic operation
+
+**Conquer**
+* Clearly express the *dependencies* among them
+    * Build a *pipeline*
+* Implement them
+* Provide a clean API
+
+**Encapsulate**
+* Confine imperative logic, make it an *implementation detail*
+
+**Adorn**
+* Provide expressive, easy, immedate access to the API via *DSL*!
+
+*Not very different than what's usually done in (good) software development*
+
+---
+
+## Reusability across multiple projects
+
+We now have a rudimental infrastructure for building and running Java projects
+<br>
+What if we want to reuse it?
+
+Of course, copy/pasting the same file across projects is to be avoided whenever possible
+
+## The concept of plugin
+
+Gradle (as many other build systems) allow extensibility via *plugins*
+<br>
+A *plugin* is a software component that *extends the API* of the base system
+
+---
+
+## Common Gradle plugins
+
+---
+
 * Declarativity via DSLs
 concept of plugin
 the kotlin plugin
 * jvm variant
 * with its configurations
-our "plugin for java"
+
+our "plugin for java" -- maybe better a stubby plugin with some exposed configuration
+
 testing a plugin (kotest + Gradle api + classpath trick)
 some existing plugins
 * detekt

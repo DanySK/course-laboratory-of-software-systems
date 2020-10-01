@@ -23,11 +23,15 @@ fun DependencyHandlerScope.forEachLibrary(todo: DependencyHandlerScope.(String) 
 val separator = if (Os.isFamily(Os.FAMILY_WINDOWS)) ";" else ":"
 
 val compileClasspath by configurations.creating
+val runtimeClasspath by configurations.creating {
+    extendsFrom(compileClasspath)
+}
 
 dependencies {
     forEachLibrary {
         compileClasspath(files(it))
     }
+    runtimeClasspath(files("$buildDir/bin"))
 }
 
 val compileJava = tasks.register<Exec>("compileJava") {
@@ -46,18 +50,20 @@ val compileJava = tasks.register<Exec>("compileJava") {
     }
 }
 
-val runtimeClasspath by configurations.creating {
-    extendsFrom(compileClasspath) // Built-in machinery to say that one configuration is like another "plus stuff"
-}
-
 tasks.register<Exec>("runJava") {
     val classpathFiles = runtimeClasspath.resolve()
     val mainClass = "PrintException" // Horribly hardcoded, we must do something
     val javaExecutable = Jvm.current().javaExecutable.absolutePath
     commandLine(
             "$javaExecutable",
-            "-cp", "$buildDir/bin/$separator${classpathFiles.joinToString(separator = separator)}",
+            "-cp", classpathFiles.joinToString(separator = separator),
             mainClass
     )
     dependsOn(compileJava)
+}
+
+tasks.register("clean") { // A generic task is fine
+    if (!buildDir.deleteRecursively()) {
+        throw IllegalStateException("Cannot delete $buildDir")
+    }
 }

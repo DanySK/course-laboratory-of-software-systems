@@ -186,6 +186,7 @@ The PCs are equipped with the docker
 1. Restart docker
 1. Launch the X Server
 1. Now use the container freely
+1. Data is saved in your desktop in `DockerHome` (preserve the folder if you need)
 
 Note: data is not persisted automatically, at end of session you need to copy it in your home folder
 
@@ -196,14 +197,15 @@ Note: data is not persisted automatically, at end of session you need to copy it
 
 * [Kotlin for Scala developers](01-kotlin)
   * [Internal DSLs construction](02-internal-dsls)
-* [Build automation](03-build-automation)
-* Advanced version control
-* Continuous integration/deployment/delivery
-* Containerization
-* Distributed software systems engineering
+* [The DevOps philosophy](03-devops-intro)
+  * [Build automation](04-build-automation)
+  * Advanced version control
+  * Continuous integration/deployment/delivery
+  * Containerization
 * Domain driven design
-  * Including external DSL construction
-* Cyber-physical systems
+  * External DSL construction
+  * Distributed software systems engineering
+  * Cyber-physical systems
 
 ---
 
