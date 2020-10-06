@@ -77,7 +77,7 @@ from code to artifacts
 * Configuration (declarative) and actionable (imperative) logics mixed together
 * Highly configurable
 
-**Declartive style**: adhere to some convention, specify additional configuration,
+**Declarative style**: adhere to some convention, specify additional configuration,
 and let the tool decide what to do actually
 * *Examples*: Apache Maven
 * Separation between *what* to do and *how* to do it
@@ -254,7 +254,6 @@ Build Setup tasks
 **Reason**: the build script executes when Gradle is invoked, and *configures* tasks and dependencies.
 <br>
 Only later, when a task is invoked, it is *actually executed*
-*
 
 ---
 
@@ -896,6 +895,7 @@ In general, it is a good practice (that will become mandatory in future gradle r
 to *annotate every public property* of a task with a marker annotation that determines whether it is an *input* or an *output*.
 * `@Input`, `@InputFile`, `@InputFiles`, `@InputDirectory`, `@InputDirectories`
 * `@OutputFile`, `@OutputFiles`, `@OutputDirectory`, `@OutputDirectories`
+    * `@Internal` marks some property that is used as output *internally* (not reified on the file system)
 
 #### Why?
 
@@ -964,7 +964,7 @@ Gradle provides the functionality we need (project-global type definitions) usin
 ## Isolation of imperativity
 ### Project-wise API extension (plugin)
 
-`buildSrc/build.gradle.kts` (clearer in future)
+inside `buildSrc/build.gradle.kts` (clearer in future):
 
 ```kotlin
 plugins {
@@ -975,7 +975,8 @@ repositories {
 }
 ```
 
-`buildSrc/sr/main/kotlin/JavaOperations.kt` (excerpt, full code in the repo)
+excerpt of `buildSrc/src/main/kotlin/JavaOperations.kt` (full code in the repo)
+
 
 ```kotlin
 open class Clean @Inject constructor() : DefaultTask() { ... }
@@ -1079,15 +1080,456 @@ Of course, copy/pasting the same file across projects is to be avoided whenever 
 Gradle (as many other build systems) allow extensibility via *plugins*
 <br>
 A *plugin* is a software component that *extends the API* of the base system
+<br>
+It usually includes:
+* A set of `Task`s
+* An `Extension` -- An object incapsulating the global configuration options
+    * this is where the DSL capabilities get usually leveraged
+* A `Plugin` object, implementing an `apply(Project)` function
+    * Application must create the extension, the tasks, and the rest of the imperative stuff
+* A **manifest** file declaring which of the classes implementing `Plugin` is the entry point of the declared plugin
+    * located in `META-INF/gradle-plugins/<plugin-name>.properties`
 
 ---
 
-## Common Gradle plugins
+## Using a plugin
+
+* Plugins are loaded from the *build environment*
+    * the *classpath* used for such tasks can be explored with the built-in task `buildEnvironment`
+    * if a plugin is not found, then if a version for it is available it's *fetched from remote repositories*
+        * by default the [Gradle plugin portal](https://plugins.gradle.org/)
+* Plugin need to be **applied**
+    * Which actually translates to calling the `apply(Project)` function
+    * Application for *hierarchial* projects is *not automatic*
+        * You might want your plugin to be applied only in some subprojects!
+
+**Example code**
+```kotlin
+plugins {
+    pluginName // Loads a plugin from the "buildEnvironment" classpath
+    `plugin-name` // Syntax for non Kotlin-compliant plugin names
+    id("plugin2-name") // Alternative to the former
+    id("some-custom-plugin") version "1.2.3" // if not found locally, gets fetched from the Gradle plugin portal
+}
+// In case of non-hierarchial projects, plugins are also "applied"
+// Otherwise, they need to get applied manually, e.g.:
+allprojects {
+    apply(plugin = "pluginName")
+}
+```
+
+---
+
+## Built-in Gradle plugins
+
+The default Gradle distribution includes a large number of plugins, e.g.:
+* `java` plugin, for Java written applications
+    * a full fledged version of the custom local plugin we created!
+* `java-library` plugin, for Java libraries (with no main class)
+* `scala` plugin
+* `cpp` plugin, for C++
+* `kotlin` plugin, supporting Kotlin with multiple targets (JVM, Javascript, native)
+
+We are going to use the Kotlin JVM plugin to build our first standalone plugin!
+<br>
+(yes we already did write our first one: code in `buildSrc` is *project-local plugin code*)
+
+---
+
+## A Greeting plugin
+
+A very simple plugin that greets the user
+
+**Desiderata**
+* adds a `greet` task that prints a greeting
+* the default output should be configurable with something like:
+
+```kotlin
+plugins {
+    id("it.unibo.lss.greetings")
+}
+greetings {
+    greetWith { "Ciao da" }
+}
+```
+
+---
+
+## Setting up a Kotlin build
+
+First step: we need to set up a Kotlin build, we'll write our plugin in Kotlin
+
+```kotlin
+plugins {
+    // No magic: calls a method running behind the scenes the same of id("org.jetbrains.kotlin-" + "jvm")
+    kotlin("jvm") version "1.4.10" // version is necessary
+}
+```
+
+The Kotlin plugin introduces:
+* Several *tasks*, among which:
+    * `compileJava`
+    * `compileKotlin`
+* A number of *configurations*
+    * `api`: available both at compile- and run- time, *exported to consumers*
+    * `implementation`: available both at compile- and run- time, *not exported to consumers*
+        * internal logic, implementation details
+    * `compileOnly`: available at *compile time only* (e.g. compile time annotations)
+    * `runtimeOnly`: available at *runtime only*
+
+---
+
+## Importing the standard library
+Libraries can be imported in Gradle from `repositories`
+* Several packaging formats supported, among wich Maven repositories
+* Maven repositories are a de-facto standard for shipping JVM libraries
+
+```kotlin
+// Configuration of software sources
+repositories {
+    jcenter() // points to JCenter Bintray
+    // mavenCentral() // points to Maven Central instead or additionally
+}
+
+dependencies {
+     // "implementation" is a configuration created by by the Kotlin plugin
+    implementation(kotlin("stdlib-jdk8")) // "kotlin" is an extension method of DependencyHandler
+    // The call to "kotlin" passing `module`, returns a String "org.jetbrains.kotlin:kotlin-$module:<KotlinVersion>"
+}
+```
+
+---
+
+## Importing the Gradle API
+
+In order to develop a plugin, we need the Gradle API
+* Otherwise, we can't manipulate any Gradle entity...
+
+```kotlin
+dependencies {
+    implementation(kotlin("stdlib-jdk8"))
+    implementation(gradleApi()) // Built-in method, returns a `Dependency` to the current Gradle version
+}
+```
+
+---
+
+## Plugin name and entry point
+
+Gradle expects the plugin entry point (the class implementing the `Plugin` interface) to be specified in a **manifest file**
+* in a *property file*
+* located in `META-INF/gradle-plugins`
+* whose file name is `<plugin-name>.properties`
+
+The name is usually a "reverse url", similarly to Java packages.
+<br>
+e.g., `it.unibo.lss.greetings`
+
+The file content is just a pointer to the class implementing `Plugin`, in our case:
+```properties
+implementation-class=it.unibo.lss.firstplugin.GreetingPlugin
+```
+
+---
+
+## Plugin implementation
+
+Usually, composed by:
+* A *clean API*, if the controlled system is not trivial
+* A set of *tasks* incapuslating the imperative logic
+* An *extension* containing the DSL for configuring the plugin
+* A *plugin*
+    * Creates the extension
+    * Creates the tasks
+    * Links tasks and extension
+
+---
+
+## Lazy configuration in Gradle
+
+Some properties need to be *lazy*:
+1. Wire together Gradle components without worrying about values, just knowing their *provider*.
+    * Configuration happens *before* execution, some values be unknown
+    * yet their provider is known at configuration time
+2. Automatic dependency discovery:
+    * if an output property is an input for another task, the dependency creation is automatic
+3. Performance: resource intensive work is not in the configuration phase
+
+#### In the gradle API
+
+`Provider` -- a value that can only be queried and cannot be changed
+* Transformable with a `map` method!
+
+`Property` -- a value that can be queried and also changed
+* Subtype of Provider
+* Allows to be directly `set` or to be `set` passing a `Provider` instance
+
+---
+
+## The `GreetingTask` task type
+
+```kotlin
+open class GreetingTask : DefaultTask() {
+
+    @Input
+    val greeting: Property<String> = project.objects.property<String>(String::class.java) // Lazy property creation
+
+    @Internal // Read-only property calculated from `greeting`
+    val message: Provider<String> = greeting.map { "$it Gradle" }
+
+    @TaskAction
+    fun printMessage() {
+        // "logger" is a property of DefaultTask
+        logger.quiet(message.get())
+    }
+}
+```
+
+Properties are created via `project` (a property of `DefaultTask` of type `Project`)
+
+---
+
+## The `GreetingExtension` extension type
+
+```kotlin
+open class GreetingExtension(val project: Project) {
+    val defaultGreeting: Property<String> = project.objects.property(String::class.java)
+        .apply { convention("Hello from") } // Set a conventional value
+
+    // A DSL would go there
+    fun greetWith(greeting: () -> String) = defaultGreeting.set(greeting())
+}
+```
+
+Extensions can be seen as global configuration containers
+<br>
+If the plugin can be driven with a DSL, the extension is a good place for the entry point
+
+---
+
+## The `GreetingPlugin`
+
+```kotlin
+class GreetingPlugin : Plugin<Project> {
+    override fun apply(target: Project) {
+        // Create the extension
+        val extension = target.extensions.create("greetings", GreetingExtension::class.java, target)
+        // Create the task
+        target.tasks.register("greet", GreetingTask::class.java).get().run {
+            // Set the default greeting to be the one configured in the extension
+            greeting.set(extension.defaultGreeting)
+            // Configuration per-task can still be changed manually by users
+        }
+    }
+}
+```
+
+* Extensions are created via a `Project` object
+* The `Plugin` configures the project as needed for the tasks and the extension to work
+* Plugins can forcibly *apply* other plugins 
+    * e.g., the Kotlin plugin applies the `java-library` plugin behind the scenes
+* Plugins can *react* to the application of other plugins
+    * e.g., enable additional features or provide compatibility
+    * doing so is possible by the `plugins` property of `Project`, e.g.:
+```kotlin
+project.plugins.withType(JavaPlugin::class.java) {
+    // Stuff you want to do only if someone enables the Java plugin for the current project
+}
+```
+
+---
+
+## Testing a plugin
+
+We got a plugin, we don't know yet how to use it though.
+<br>
+First step is: *testing it to see if it works*
+
+1. Create a modified *version of Gradle including the plugin*
+    * Or simply, add the plugin to the build classpath
+2. Prepare a Gradle *workspace*
+3. *Launch the tasks* of interest
+4. *Verify* the task success (or failure, if expected), or the program output
+
+**Tools to be used**
+
+1. The **Gradle test kit**, for programmatically launching Gradle and ispecting the execution results
+2. [Kotest](https://github.com/kotest/kotest), a test framework for Kotlin
+    * could be done with JUnit or other systems, but Kotest is more idiomatic
+3. A pinch of *manual Gradle automation* to prepare the classpath
+
+---
+
+## Importing Gradle test kit and Kotest
+
+It's just matter of pulling the right dependencies
+
+```kotlin
+dependencies {
+    implementation(gradleApi())
+    testImplementation(gradleTestKit()) // Test implementation: available for testing compile and runtime
+    testImplementation("io.kotest:kotest-runner-junit5:4.2.5") // for kotest framework
+    testImplementation("io.kotest:kotest-assertions-core:4.2.5") // for kotest core assertions
+    testImplementation("io.kotest:kotest-assertions-core-jvm:4.2.5") // for kotest core jvm assertions
+}
+```
+
+Kotest leverages Junit 5 / Jupiter for execution, we need to enable it
+
+```kotlin
+tasks.withType<Test> { // The task type is defined in the Java plugin
+    useJUnitPlatform() // Use JUnit 5 engine
+}
+```
+
+---
+
+## Exploiting configuration options
+
+In general, our automation process may and should be **informative**
+<br>
+We can exploit the API of any Gradle plugin at our advantage
+<br>
+(Of course it depends *whether or not* configuration options are available)
+
+Let's add information to our testing system:
+
+```kotlin
+tasks.withType<Test> {
+    useJUnitPlatform() // Use JUnit 5 engine
+    testLogging.showStandardStreams = true
+    testLogging {
+        showCauses = true
+        showStackTraces = true
+        showStandardStreams = true
+        events(*org.gradle.api.tasks.testing.logging.TestLogEvent.values())
+        exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+    }
+}
+```
+In general *explore the API and use it your advantage*
+
+---
+
+## Plugin Classpath injection
+
+By default, the Gradle test kit just runs Gradle.
+We want to inject our plugin into the distribution.
+
+**Strategy**
+
+1. Create the list of files composing our *runtime classpath*
+3. Make sure that the list is always up to date and ready before test execution
+2. Use such list as our classpath for running Gradle
+
+---
+
+## Plugin Classpath preparation
+
+It's easy enough to write a task writing our classpath in output:
+```kotlin
+// This task creates a file with a classpath descriptor, to be used in tests
+val createClasspathManifest by tasks.registering { // This delegate uses the variable name as task name
+    val outputDir = file("$buildDir/$name") // We will write in this folder
+    inputs.files(sourceSets.main.get().runtimeClasspath) // Our input is a ready runtime classpath
+    // Note: due to the line above, this task implicitly requires our plugin to be compiled!
+    outputs.dir(outputDir) // we register the output directory as an output of the task
+    doLast { // This is the task the action will execute
+        outputDir.mkdirs() // Create the directory infrastructure
+        // Write a file with one classpath entry per line
+        file("$outputDir/plugin-classpath.txt").writeText(sourceSets.main.get().runtimeClasspath.joinToString("\n"))
+    }
+}
+```
+Finally, we say that for tests to run all files from `createClasspathManifest` must be ready
+```kotlin
+dependencies {
+    // This way "createClasspathManifest" is always executed before the tests!
+    // Gradle auto-resolves dependencies if there are dependencies on inputs/outputs
+    testRuntimeOnly(files(createClasspathManifest))
+}
+```
+
+---
+
+## Kotest
+
+Kotest is a testing framework fro Kotlin, inspired by [Scalatest](https://www.scalatest.org/) and [Cucumber](https://cucumber.io/)
+* Supports [several styles](https://github.com/kotest/kotest/blob/master/doc/styles.md)
+* We will use `FreeSpec` (Scalatest inspired), similar to `StringSpec` (Kotest original)
+
+```kotlin
+class PluginTest : FreeSpec({
+    // Arbitrarily nested test levels
+    "whenever a Formula 1 championship" - {
+        "begins testing" - {
+            "Ferrari and Mercedes are favorites" {
+                // Test code for
+                // "whenever a Formula 1 championship begins testing Ferrari and Mercedes are favorites"
+            }
+        }
+        "reaches mid-season" - {
+            "Vettel spins repeatedly" { /* Test code */ }
+            "Ferrari" {
+                "lags behind with development"  { /* Test code */ }
+                "wins next year" { /* Test code */ }
+            }
+        }
+
+    } 
+})
+```
+
+---
+
+## Preparing the test infrastructure
+
+We now need to read the classpath configuration from our file, and feed it to the Gradle runner
+
+```kotlin
+// Find the file
+val pluginClasspathResource = ClassLoader.getSystemClassLoader().getResource("plugin-classpath.txt")
+    ?: throw IllegalStateException("Did not find the plugin classpath descriptor.")
+// Extract the content
+val classpath = pluginClasspathResource.openStream().bufferedReader().use { reader ->
+    reader.readLines().map { File(it) } // Convert each line to a file
+}
+// Configure a Gradle runner
+val runner = GradleRunner.create()
+    .withProjectDir(testFolder.root)
+    .withPluginClasspath(classpath)
+    .withArguments(":tasks", ":you", ":need", ":to", ":run:", "--and", "--cli", "--options")
+    .build() // This actually runs Gradle
+// Inspect results
+runner.task(":someExistingTask")?.outcome shouldBe TaskOutcome.SUCCESS
+runner.output shouldContain "Hello from Gradle"
+```
+Final result in the [attached code](https://github.com/DanySK/Course-Laboratory-of-Software-Systems/blob/master/code/automation/10-greetings-plugin/src/test/kotlin/PluginTest.kt)!
+
+---
+
+## Making the plugin available
+
+---
+
+## Quality control
+
+
+
+* publishing plugins on the gradle plugin portal
+* Coverage with Jacoco
+* Code quality: warnings as errors ktlint and detekt
+* Automatic update search with refreshVersions
+
+---
+
+
+
+
 
 ---
 
 * Declarativity via DSLs
-concept of plugin
 the kotlin plugin
 * jvm variant
 * with its configurations

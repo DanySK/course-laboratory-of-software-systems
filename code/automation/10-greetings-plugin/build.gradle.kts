@@ -1,6 +1,6 @@
 plugins {
     // No magic: calls a method calling id("org.jetbrains.kotlin-" + "jvm")
-    kotlin("jvm") version "1.3.72" // version is necessary
+    kotlin("jvm") version "1.4.10" // version is necessary
 }
 
 // Configuration of software sources
@@ -30,7 +30,8 @@ tasks.withType<Test> {
         exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
     }
 }
-    // This task creates a file with a classpath descriptor, to be used in tests
+
+// This task creates a file with a classpath descriptor, to be used in tests
 val createClasspathManifest by tasks.registering {
     val outputDir = file("$buildDir/$name")
     inputs.files(sourceSets.main.get().runtimeClasspath)

@@ -7,9 +7,8 @@ import org.gradle.testkit.runner.TaskOutcome
 import java.io.File
 
 class PluginTest : FreeSpec({
-    val pluginClasspathResource = ClassLoader.getSystemClassLoader()
-            .getResource("plugin-classpath.txt")
-            ?: throw IllegalStateException("Did not find plugin classpath resource, run \"testClasses\" build task.")
+    val pluginClasspathResource = ClassLoader.getSystemClassLoader().getResource("plugin-classpath.txt")
+        ?: throw IllegalStateException("Did not find the plugin classpath descriptor.")
     val classpath = pluginClasspathResource.openStream().bufferedReader().use { reader ->
         reader.readLines().map { File(it) }
     }
@@ -33,7 +32,7 @@ class PluginTest : FreeSpec({
                 runner.task(greetTask)?.outcome shouldBe TaskOutcome.SUCCESS
             }
             "print an hello message" {
-                runner.output.shouldContain("Hello from Gradle")
+                runner.output shouldContain "Hello from Gradle"
             }
         }
         "a message in Italian" - {
@@ -51,7 +50,7 @@ class PluginTest : FreeSpec({
                 runner.task(greetTask)?.outcome shouldBe TaskOutcome.SUCCESS
             }
             "print an hello message" {
-                runner.output.shouldContain("Ciao da Gradle")
+                runner.output shouldContain "Ciao da Gradle"
             }
         }
     }
