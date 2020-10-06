@@ -199,6 +199,8 @@ Note: data is not persisted automatically, at end of session you need to copy it
   * [Internal DSLs construction](02-internal-dsls)
 * [The DevOps philosophy](03-devops-intro)
   * [Build automation](04-build-automation)
+  * [Software versioning](05-version-selection)
+  * [Software licensing](06-licenses)
   * Advanced version control
   * Continuous integration/deployment/delivery
   * Containerization

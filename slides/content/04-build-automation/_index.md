@@ -1510,6 +1510,30 @@ Final result in the [attached code](https://github.com/DanySK/Course-Laboratory-
 
 ## Making the plugin available
 
+We now know how to run the plugin,
+<br>
+yet manual classpath modification is not the way we want to run our plugin
+
+We want something like:
+```kotlin
+plugins {
+    id("it.unibo.lss.greetings") version "0.1.0"
+}
+```
+To do so, we need to ship our plugin to the [Gradle plugin portal](https://plugins.gradle.org/)
+<br>
+Gradle provides [a plugin publishing plugin](https://plugins.gradle.org/docs/publish-plugin) to simplify delivery
+
+...but before, we need to learn how to
+
+1. click $\Rightarrow{}$ [**pick a version number**](../05-version-selection) $\Leftarrow{}$ click
+
+2. click $\Rightarrow{}$ [**select a software license**](../06-licenses)! $\Leftarrow{}$ click
+
+---
+
+click: $\Rightarrow{}$ 
+
 ---
 
 ## Quality control
