@@ -278,3 +278,34 @@ The public API should not be considered stable.
 * *Dates* may make sense for projects with fast and steady development
     * Possibly as part of a Semantic Versioned project
     * Dates are useful as part of a *better versioned* system
+
+---
+
+## DVCS-based versioning
+
+* The underlying state of the *DVCS* can be used to version the software
+* The practice can change, but consider for instance a case in which:
+    * Manually added *tags identify versions*
+        * And are in `X.Y.Z` format
+    * An automated system searches for the closest past tag `T`
+        * if no tag is found, then `T=0.1.0`
+        * If the current commit is tagged, then the version is `T`
+        * Otherwise, if C is the count of intermediate commits and `H` the current hash, it is `T-C+H`
+    * *Automatically generates a SemVer compatible version!*
+
+---
+
+## `git describe`
+
+*Give an object a human readable name based on an available ref*
+
+* The command finds the most recent tag that is reachable from a commit.
+* If the tag points to the commit, then only the tag is shown.
+* Otherwise, it suffixes the tag name with the number of additional commits on top of the tagged object and the abbreviated object name of the most recent commit.
+* The result is a "human-readable" object name which can also be used to identify the commit to other git commands.
+
+In case no tag is present, `git describe` fails, but the last commit date could be used instead:
+
+```bash
+git describe || echo "0.1.0-$(git log -n1 --date=format:'%Y-%m-%dT%H%M%S' --format=%cd)" 
+```

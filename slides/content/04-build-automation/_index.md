@@ -1532,7 +1532,19 @@ Gradle provides [a plugin publishing plugin](https://plugins.gradle.org/docs/pub
 
 ---
 
-click: $\Rightarrow{}$ 
+# Setting a version
+
+The project version can be specified in Gradle by simply setting the `version` property of the project:
+
+```kotlin
+version = "0.1.0"
+```
+
+* Drawback: *manual management*!
+
+It would be better to *rely on the underlying DVCS*
+<br>
+to compute a Semantic Versioning compatible version!
 
 ---
 
