@@ -77,7 +77,7 @@ from code to artifacts</p>
 <li>Configuration (declarative) and actionable (imperative) logics mixed together</li>
 <li>Highly configurable</li>
 </ul>
-<p><strong>Declartive style</strong>: adhere to some convention, specify additional configuration,
+<p><strong>Declarative style</strong>: adhere to some convention, specify additional configuration,
 and let the tool decide what to do actually</p>
 <ul>
 <li><em>Examples</em>: Apache Maven</li>
@@ -226,8 +226,7 @@ Build Setup tasks
 </code></pre></div><p><strong>Ouch!</strong></p>
 <p><strong>Reason</strong>: the build script executes when Gradle is invoked, and <em>configures</em> tasks and dependencies.
 <br>
-Only later, when a task is invoked, it is <em>actually executed</em>
-*</p>
+Only later, when a task is invoked, it is <em>actually executed</em></p>
 </section><section>
 <h2 id="gradle-configuration-vs-execution-2">Gradle: configuration vs execution</h2>
 <p>Let&rsquo;s write a <em>correct</em> task</p>
@@ -811,7 +810,11 @@ include(<span style="color:#d20;background-color:#fff0f0">&#34;:library&#34;</sp
 to <em>annotate every public property</em> of a task with a marker annotation that determines whether it is an <em>input</em> or an <em>output</em>.</p>
 <ul>
 <li><code>@Input</code>, <code>@InputFile</code>, <code>@InputFiles</code>, <code>@InputDirectory</code>, <code>@InputDirectories</code></li>
-<li><code>@OutputFile</code>, <code>@OutputFiles</code>, <code>@OutputDirectory</code>, <code>@OutputDirectories</code></li>
+<li><code>@OutputFile</code>, <code>@OutputFiles</code>, <code>@OutputDirectory</code>, <code>@OutputDirectories</code>
+<ul>
+<li><code>@Internal</code> marks some property that is used as output <em>internally</em> (not reified on the file system)</li>
+</ul>
+</li>
 </ul>
 <h4 id="why">Why?</h4>
 <ol>
@@ -884,14 +887,14 @@ subprojects {
 </section><section>
 <h2 id="isolation-of-imperativity-3">Isolation of imperativity</h2>
 <h3 id="project-wise-api-extension-plugin-1">Project-wise API extension (plugin)</h3>
-<p><code>buildSrc/build.gradle.kts</code> (clearer in future)</p>
+<p>inside <code>buildSrc/build.gradle.kts</code> (clearer in future):</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins {
     <span style="color:#a61717;background-color:#e3d2d2">`</span>kotlin-dsl<span style="color:#a61717;background-color:#e3d2d2">`</span>
 }
 repositories {
     mavenCentral()
 }
-</code></pre></div><p><code>buildSrc/sr/main/kotlin/JavaOperations.kt</code> (excerpt, full code in the repo)</p>
+</code></pre></div><p>excerpt of <code>buildSrc/src/main/kotlin/JavaOperations.kt</code> (full code in the repo)</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">open</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Clean</span> @Inject <span style="color:#080;font-weight:bold">constructor</span>() : DefaultTask() { ... }
 <span style="color:#080;font-weight:bold">abstract</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">JavaTask</span>(javaExecutable: File = Jvm.current().javaExecutable) : Exec() { ... }
 <span style="color:#080;font-weight:bold">open</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">CompileJava</span> @javax.inject.Inject <span style="color:#080;font-weight:bold">constructor</span>() : JavaTask(Jvm.current().javacExecutable) {
@@ -977,13 +980,416 @@ What if we want to reuse it?</p>
 <h2 id="the-concept-of-plugin">The concept of plugin</h2>
 <p>Gradle (as many other build systems) allow extensibility via <em>plugins</em>
 <br>
-A <em>plugin</em> is a software component that <em>extends the API</em> of the base system</p>
+A <em>plugin</em> is a software component that <em>extends the API</em> of the base system
+<br>
+It usually includes:</p>
+<ul>
+<li>A set of <code>Task</code>s</li>
+<li>An <code>Extension</code> &ndash; An object incapsulating the global configuration options
+<ul>
+<li>this is where the DSL capabilities get usually leveraged</li>
+</ul>
+</li>
+<li>A <code>Plugin</code> object, implementing an <code>apply(Project)</code> function
+<ul>
+<li>Application must create the extension, the tasks, and the rest of the imperative stuff</li>
+</ul>
+</li>
+<li>A <strong>manifest</strong> file declaring which of the classes implementing <code>Plugin</code> is the entry point of the declared plugin
+<ul>
+<li>located in <code>META-INF/gradle-plugins/&lt;plugin-name&gt;.properties</code></li>
+</ul>
+</li>
+</ul>
 </section><section>
-<h2 id="common-gradle-plugins">Common Gradle plugins</h2>
+<h2 id="using-a-plugin">Using a plugin</h2>
+<ul>
+<li>Plugins are loaded from the <em>build environment</em>
+<ul>
+<li>the <em>classpath</em> used for such tasks can be explored with the built-in task <code>buildEnvironment</code></li>
+<li>if a plugin is not found, then if a version for it is available it&rsquo;s <em>fetched from remote repositories</em>
+<ul>
+<li>by default the <a href="https://plugins.gradle.org/">Gradle plugin portal</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Plugin need to be <strong>applied</strong>
+<ul>
+<li>Which actually translates to calling the <code>apply(Project)</code> function</li>
+<li>Application for <em>hierarchial</em> projects is <em>not automatic</em>
+<ul>
+<li>You might want your plugin to be applied only in some subprojects!</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Example code</strong></p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins {
+    pluginName <span style="color:#888">// Loads a plugin from the &#34;buildEnvironment&#34; classpath
+</span><span style="color:#888"></span>    <span style="color:#a61717;background-color:#e3d2d2">`</span>plugin-name<span style="color:#a61717;background-color:#e3d2d2">`</span> <span style="color:#888">// Syntax for non Kotlin-compliant plugin names
+</span><span style="color:#888"></span>    id(<span style="color:#d20;background-color:#fff0f0">&#34;plugin2-name&#34;</span>) <span style="color:#888">// Alternative to the former
+</span><span style="color:#888"></span>    id(<span style="color:#d20;background-color:#fff0f0">&#34;some-custom-plugin&#34;</span>) version <span style="color:#d20;background-color:#fff0f0">&#34;1.2.3&#34;</span> <span style="color:#888">// if not found locally, gets fetched from the Gradle plugin portal
+</span><span style="color:#888"></span>}
+<span style="color:#888">// In case of non-hierarchial projects, plugins are also &#34;applied&#34;
+</span><span style="color:#888">// Otherwise, they need to get applied manually, e.g.:
+</span><span style="color:#888"></span>allprojects {
+    apply(plugin = <span style="color:#d20;background-color:#fff0f0">&#34;pluginName&#34;</span>)
+}
+</code></pre></div></section><section>
+<h2 id="built-in-gradle-plugins">Built-in Gradle plugins</h2>
+<p>The default Gradle distribution includes a large number of plugins, e.g.:</p>
+<ul>
+<li><code>java</code> plugin, for Java written applications
+<ul>
+<li>a full fledged version of the custom local plugin we created!</li>
+</ul>
+</li>
+<li><code>java-library</code> plugin, for Java libraries (with no main class)</li>
+<li><code>scala</code> plugin</li>
+<li><code>cpp</code> plugin, for C++</li>
+<li><code>kotlin</code> plugin, supporting Kotlin with multiple targets (JVM, Javascript, native)</li>
+</ul>
+<p>We are going to use the Kotlin JVM plugin to build our first standalone plugin!
+<br>
+(yes we already did write our first one: code in <code>buildSrc</code> is <em>project-local plugin code</em>)</p>
+</section><section>
+<h2 id="a-greeting-plugin">A Greeting plugin</h2>
+<p>A very simple plugin that greets the user</p>
+<p><strong>Desiderata</strong></p>
+<ul>
+<li>adds a <code>greet</code> task that prints a greeting</li>
+<li>the default output should be configurable with something like:</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins {
+    id(<span style="color:#d20;background-color:#fff0f0">&#34;it.unibo.lss.greetings&#34;</span>)
+}
+greetings {
+    greetWith { <span style="color:#d20;background-color:#fff0f0">&#34;Ciao da&#34;</span> }
+}
+</code></pre></div></section><section>
+<h2 id="setting-up-a-kotlin-build">Setting up a Kotlin build</h2>
+<p>First step: we need to set up a Kotlin build, we&rsquo;ll write our plugin in Kotlin</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins {
+    <span style="color:#888">// No magic: calls a method running behind the scenes the same of id(&#34;org.jetbrains.kotlin-&#34; + &#34;jvm&#34;)
+</span><span style="color:#888"></span>    kotlin(<span style="color:#d20;background-color:#fff0f0">&#34;jvm&#34;</span>) version <span style="color:#d20;background-color:#fff0f0">&#34;1.4.10&#34;</span> <span style="color:#888">// version is necessary
+</span><span style="color:#888"></span>}
+</code></pre></div><p>The Kotlin plugin introduces:</p>
+<ul>
+<li>Several <em>tasks</em>, among which:
+<ul>
+<li><code>compileJava</code></li>
+<li><code>compileKotlin</code></li>
+</ul>
+</li>
+<li>A number of <em>configurations</em>
+<ul>
+<li><code>api</code>: available both at compile- and run- time, <em>exported to consumers</em></li>
+<li><code>implementation</code>: available both at compile- and run- time, <em>not exported to consumers</em>
+<ul>
+<li>internal logic, implementation details</li>
+</ul>
+</li>
+<li><code>compileOnly</code>: available at <em>compile time only</em> (e.g. compile time annotations)</li>
+<li><code>runtimeOnly</code>: available at <em>runtime only</em></li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="importing-the-standard-library">Importing the standard library</h2>
+<p>Libraries can be imported in Gradle from <code>repositories</code></p>
+<ul>
+<li>Several packaging formats supported, among wich Maven repositories</li>
+<li>Maven repositories are a de-facto standard for shipping JVM libraries</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#888">// Configuration of software sources
+</span><span style="color:#888"></span>repositories {
+    jcenter() <span style="color:#888">// points to JCenter Bintray
+</span><span style="color:#888"></span>    <span style="color:#888">// mavenCentral() // points to Maven Central instead or additionally
+</span><span style="color:#888"></span>}
+
+dependencies {
+     <span style="color:#888">// &#34;implementation&#34; is a configuration created by by the Kotlin plugin
+</span><span style="color:#888"></span>    implementation(kotlin(<span style="color:#d20;background-color:#fff0f0">&#34;stdlib-jdk8&#34;</span>)) <span style="color:#888">// &#34;kotlin&#34; is an extension method of DependencyHandler
+</span><span style="color:#888"></span>    <span style="color:#888">// The call to &#34;kotlin&#34; passing `module`, returns a String &#34;org.jetbrains.kotlin:kotlin-$module:&lt;KotlinVersion&gt;&#34;
+</span><span style="color:#888"></span>}
+</code></pre></div></section><section>
+<h2 id="importing-the-gradle-api">Importing the Gradle API</h2>
+<p>In order to develop a plugin, we need the Gradle API</p>
+<ul>
+<li>Otherwise, we can&rsquo;t manipulate any Gradle entity&hellip;</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>dependencies {
+    implementation(kotlin(<span style="color:#d20;background-color:#fff0f0">&#34;stdlib-jdk8&#34;</span>))
+    implementation(gradleApi()) <span style="color:#888">// Built-in method, returns a `Dependency` to the current Gradle version
+</span><span style="color:#888"></span>}
+</code></pre></div></section><section>
+<h2 id="plugin-name-and-entry-point">Plugin name and entry point</h2>
+<p>Gradle expects the plugin entry point (the class implementing the <code>Plugin</code> interface) to be specified in a <strong>manifest file</strong></p>
+<ul>
+<li>in a <em>property file</em></li>
+<li>located in <code>META-INF/gradle-plugins</code></li>
+<li>whose file name is <code>&lt;plugin-name&gt;.properties</code></li>
+</ul>
+<p>The name is usually a &ldquo;reverse url&rdquo;, similarly to Java packages.
+<br>
+e.g., <code>it.unibo.lss.greetings</code></p>
+<p>The file content is just a pointer to the class implementing <code>Plugin</code>, in our case:</p>
+<pre><code class="nohighlight" data-noescape>implementation-class=it.unibo.lss.firstplugin.GreetingPlugin
+</code></pre></section><section>
+<h2 id="plugin-implementation">Plugin implementation</h2>
+<p>Usually, composed by:</p>
+<ul>
+<li>A <em>clean API</em>, if the controlled system is not trivial</li>
+<li>A set of <em>tasks</em> incapuslating the imperative logic</li>
+<li>An <em>extension</em> containing the DSL for configuring the plugin</li>
+<li>A <em>plugin</em>
+<ul>
+<li>Creates the extension</li>
+<li>Creates the tasks</li>
+<li>Links tasks and extension</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="lazy-configuration-in-gradle">Lazy configuration in Gradle</h2>
+<p>Some properties need to be <em>lazy</em>:</p>
+<ol>
+<li>Wire together Gradle components without worrying about values, just knowing their <em>provider</em>.
+<ul>
+<li>Configuration happens <em>before</em> execution, some values be unknown</li>
+<li>yet their provider is known at configuration time</li>
+</ul>
+</li>
+<li>Automatic dependency discovery:
+<ul>
+<li>if an output property is an input for another task, the dependency creation is automatic</li>
+</ul>
+</li>
+<li>Performance: resource intensive work is not in the configuration phase</li>
+</ol>
+<h4 id="in-the-gradle-api">In the gradle API</h4>
+<p><code>Provider</code> &ndash; a value that can only be queried and cannot be changed</p>
+<ul>
+<li>Transformable with a <code>map</code> method!</li>
+</ul>
+<p><code>Property</code> &ndash; a value that can be queried and also changed</p>
+<ul>
+<li>Subtype of Provider</li>
+<li>Allows to be directly <code>set</code> or to be <code>set</code> passing a <code>Provider</code> instance</li>
+</ul>
+</section><section>
+<h2 id="the-greetingtask-task-type">The <code>GreetingTask</code> task type</h2>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">open</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">GreetingTask</span> : DefaultTask() {
+
+    @Input
+    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">greeting</span>: Property&lt;String&gt; = project.objects.property&lt;String&gt;(String::<span style="color:#080;font-weight:bold">class</span>.java) <span style="color:#888">// Lazy property creation
+</span><span style="color:#888"></span>
+    @Internal <span style="color:#888">// Read-only property calculated from `greeting`
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">message</span>: Provider&lt;String&gt; = greeting.map { <span style="color:#d20;background-color:#fff0f0">&#34;$it Gradle&#34;</span> }
+
+    @TaskAction
+    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">printMessage</span>() {
+        <span style="color:#888">// &#34;logger&#34; is a property of DefaultTask
+</span><span style="color:#888"></span>        logger.quiet(message.<span style="color:#080;font-weight:bold">get</span>())
+    }
+}
+</code></pre></div><p>Properties are created via <code>project</code> (a property of <code>DefaultTask</code> of type <code>Project</code>)</p>
+</section><section>
+<h2 id="the-greetingextension-extension-type">The <code>GreetingExtension</code> extension type</h2>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">open</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">GreetingExtension</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">project</span>: Project) {
+    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">defaultGreeting</span>: Property&lt;String&gt; = project.objects.property(String::<span style="color:#080;font-weight:bold">class</span>.java)
+        .apply { convention(<span style="color:#d20;background-color:#fff0f0">&#34;Hello from&#34;</span>) } <span style="color:#888">// Set a conventional value
+</span><span style="color:#888"></span>
+    <span style="color:#888">// A DSL would go there
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">greetWith</span>(greeting: () -&gt; String) = defaultGreeting.<span style="color:#080;font-weight:bold">set</span>(greeting())
+}
+</code></pre></div><p>Extensions can be seen as global configuration containers
+<br>
+If the plugin can be driven with a DSL, the extension is a good place for the entry point</p>
+</section><section>
+<h2 id="the-greetingplugin">The <code>GreetingPlugin</code></h2>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">GreetingPlugin</span> : Plugin&lt;Project&gt; {
+    <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">apply</span>(target: Project) {
+        <span style="color:#888">// Create the extension
+</span><span style="color:#888"></span>        <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">extension</span> = target.extensions.create(<span style="color:#d20;background-color:#fff0f0">&#34;greetings&#34;</span>, GreetingExtension::<span style="color:#080;font-weight:bold">class</span>.java, target)
+        <span style="color:#888">// Create the task
+</span><span style="color:#888"></span>        target.tasks.register(<span style="color:#d20;background-color:#fff0f0">&#34;greet&#34;</span>, GreetingTask::<span style="color:#080;font-weight:bold">class</span>.java).<span style="color:#080;font-weight:bold">get</span>().run {
+            <span style="color:#888">// Set the default greeting to be the one configured in the extension
+</span><span style="color:#888"></span>            greeting.<span style="color:#080;font-weight:bold">set</span>(extension.defaultGreeting)
+            <span style="color:#888">// Configuration per-task can still be changed manually by users
+</span><span style="color:#888"></span>        }
+    }
+}
+</code></pre></div><ul>
+<li>Extensions are created via a <code>Project</code> object</li>
+<li>The <code>Plugin</code> configures the project as needed for the tasks and the extension to work</li>
+<li>Plugins can forcibly <em>apply</em> other plugins
+<ul>
+<li>e.g., the Kotlin plugin applies the <code>java-library</code> plugin behind the scenes</li>
+</ul>
+</li>
+<li>Plugins can <em>react</em> to the application of other plugins
+<ul>
+<li>e.g., enable additional features or provide compatibility</li>
+<li>doing so is possible by the <code>plugins</code> property of <code>Project</code>, e.g.:</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>project.plugins.withType(JavaPlugin::<span style="color:#080;font-weight:bold">class</span>.java) {
+    <span style="color:#888">// Stuff you want to do only if someone enables the Java plugin for the current project
+</span><span style="color:#888"></span>}
+</code></pre></div></section><section>
+<h2 id="testing-a-plugin">Testing a plugin</h2>
+<p>We got a plugin, we don&rsquo;t know yet how to use it though.
+<br>
+First step is: <em>testing it to see if it works</em></p>
+<ol>
+<li>Create a modified <em>version of Gradle including the plugin</em>
+<ul>
+<li>Or simply, add the plugin to the build classpath</li>
+</ul>
+</li>
+<li>Prepare a Gradle <em>workspace</em></li>
+<li><em>Launch the tasks</em> of interest</li>
+<li><em>Verify</em> the task success (or failure, if expected), or the program output</li>
+</ol>
+<p><strong>Tools to be used</strong></p>
+<ol>
+<li>The <strong>Gradle test kit</strong>, for programmatically launching Gradle and ispecting the execution results</li>
+<li><a href="https://github.com/kotest/kotest">Kotest</a>, a test framework for Kotlin
+<ul>
+<li>could be done with JUnit or other systems, but Kotest is more idiomatic</li>
+</ul>
+</li>
+<li>A pinch of <em>manual Gradle automation</em> to prepare the classpath</li>
+</ol>
+</section><section>
+<h2 id="importing-gradle-test-kit-and-kotest">Importing Gradle test kit and Kotest</h2>
+<p>It&rsquo;s just matter of pulling the right dependencies</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>dependencies {
+    implementation(gradleApi())
+    testImplementation(gradleTestKit()) <span style="color:#888">// Test implementation: available for testing compile and runtime
+</span><span style="color:#888"></span>    testImplementation(<span style="color:#d20;background-color:#fff0f0">&#34;io.kotest:kotest-runner-junit5:4.2.5&#34;</span>) <span style="color:#888">// for kotest framework
+</span><span style="color:#888"></span>    testImplementation(<span style="color:#d20;background-color:#fff0f0">&#34;io.kotest:kotest-assertions-core:4.2.5&#34;</span>) <span style="color:#888">// for kotest core assertions
+</span><span style="color:#888"></span>    testImplementation(<span style="color:#d20;background-color:#fff0f0">&#34;io.kotest:kotest-assertions-core-jvm:4.2.5&#34;</span>) <span style="color:#888">// for kotest core jvm assertions
+</span><span style="color:#888"></span>}
+</code></pre></div><p>Kotest leverages Junit 5 / Jupiter for execution, we need to enable it</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>tasks.withType&lt;Test&gt; { <span style="color:#888">// The task type is defined in the Java plugin
+</span><span style="color:#888"></span>    useJUnitPlatform() <span style="color:#888">// Use JUnit 5 engine
+</span><span style="color:#888"></span>}
+</code></pre></div></section><section>
+<h2 id="exploiting-configuration-options">Exploiting configuration options</h2>
+<p>In general, our automation process may and should be <strong>informative</strong>
+<br>
+We can exploit the API of any Gradle plugin at our advantage
+<br>
+(Of course it depends <em>whether or not</em> configuration options are available)</p>
+<p>Let&rsquo;s add information to our testing system:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>tasks.withType&lt;Test&gt; {
+    useJUnitPlatform() <span style="color:#888">// Use JUnit 5 engine
+</span><span style="color:#888"></span>    testLogging.showStandardStreams = <span style="color:#080;font-weight:bold">true</span>
+    testLogging {
+        showCauses = <span style="color:#080;font-weight:bold">true</span>
+        showStackTraces = <span style="color:#080;font-weight:bold">true</span>
+        showStandardStreams = <span style="color:#080;font-weight:bold">true</span>
+        events(*org.gradle.api.tasks.testing.logging.TestLogEvent.values())
+        exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+    }
+}
+</code></pre></div><p>In general <em>explore the API and use it your advantage</em></p>
+</section><section>
+<h2 id="plugin-classpath-injection">Plugin Classpath injection</h2>
+<p>By default, the Gradle test kit just runs Gradle.
+We want to inject our plugin into the distribution.</p>
+<p><strong>Strategy</strong></p>
+<ol>
+<li>Create the list of files composing our <em>runtime classpath</em></li>
+<li>Make sure that the list is always up to date and ready before test execution</li>
+<li>Use such list as our classpath for running Gradle</li>
+</ol>
+</section><section>
+<h2 id="plugin-classpath-preparation">Plugin Classpath preparation</h2>
+<p>It&rsquo;s easy enough to write a task writing our classpath in output:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#888">// This task creates a file with a classpath descriptor, to be used in tests
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">createClasspathManifest</span> <span style="color:#080;font-weight:bold">by</span> tasks.registering { <span style="color:#888">// This delegate uses the variable name as task name
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">outputDir</span> = file(<span style="color:#d20;background-color:#fff0f0">&#34;$buildDir/$name&#34;</span>) <span style="color:#888">// We will write in this folder
+</span><span style="color:#888"></span>    inputs.files(sourceSets.main.<span style="color:#080;font-weight:bold">get</span>().runtimeClasspath) <span style="color:#888">// Our input is a ready runtime classpath
+</span><span style="color:#888"></span>    <span style="color:#888">// Note: due to the line above, this task implicitly requires our plugin to be compiled!
+</span><span style="color:#888"></span>    outputs.dir(outputDir) <span style="color:#888">// we register the output directory as an output of the task
+</span><span style="color:#888"></span>    doLast { <span style="color:#888">// This is the task the action will execute
+</span><span style="color:#888"></span>        outputDir.mkdirs() <span style="color:#888">// Create the directory infrastructure
+</span><span style="color:#888"></span>        <span style="color:#888">// Write a file with one classpath entry per line
+</span><span style="color:#888"></span>        file(<span style="color:#d20;background-color:#fff0f0">&#34;$outputDir/plugin-classpath.txt&#34;</span>).writeText(sourceSets.main.<span style="color:#080;font-weight:bold">get</span>().runtimeClasspath.joinToString(<span style="color:#d20;background-color:#fff0f0">&#34;\n&#34;</span>))
+    }
+}
+</code></pre></div><p>Finally, we say that for tests to run all files from <code>createClasspathManifest</code> must be ready</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>dependencies {
+    <span style="color:#888">// This way &#34;createClasspathManifest&#34; is always executed before the tests!
+</span><span style="color:#888"></span>    <span style="color:#888">// Gradle auto-resolves dependencies if there are dependencies on inputs/outputs
+</span><span style="color:#888"></span>    testRuntimeOnly(files(createClasspathManifest))
+}
+</code></pre></div></section><section>
+<h2 id="kotest">Kotest</h2>
+<p>Kotest is a testing framework fro Kotlin, inspired by <a href="https://www.scalatest.org/">Scalatest</a> and <a href="https://cucumber.io/">Cucumber</a></p>
+<ul>
+<li>Supports <a href="https://github.com/kotest/kotest/blob/master/doc/styles.md">several styles</a></li>
+<li>We will use <code>FreeSpec</code> (Scalatest inspired), similar to <code>StringSpec</code> (Kotest original)</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">PluginTest</span> : FreeSpec({
+    <span style="color:#888">// Arbitrarily nested test levels
+</span><span style="color:#888"></span>    <span style="color:#d20;background-color:#fff0f0">&#34;whenever a Formula 1 championship&#34;</span> - {
+        <span style="color:#d20;background-color:#fff0f0">&#34;begins testing&#34;</span> - {
+            <span style="color:#d20;background-color:#fff0f0">&#34;Ferrari and Mercedes are favorites&#34;</span> {
+                <span style="color:#888">// Test code for
+</span><span style="color:#888"></span>                <span style="color:#888">// &#34;whenever a Formula 1 championship begins testing Ferrari and Mercedes are favorites&#34;
+</span><span style="color:#888"></span>            }
+        }
+        <span style="color:#d20;background-color:#fff0f0">&#34;reaches mid-season&#34;</span> - {
+            <span style="color:#d20;background-color:#fff0f0">&#34;Vettel spins repeatedly&#34;</span> { <span style="color:#888">/* Test code */</span> }
+            <span style="color:#d20;background-color:#fff0f0">&#34;Ferrari&#34;</span> {
+                <span style="color:#d20;background-color:#fff0f0">&#34;lags behind with development&#34;</span>  { <span style="color:#888">/* Test code */</span> }
+                <span style="color:#d20;background-color:#fff0f0">&#34;wins next year&#34;</span> { <span style="color:#888">/* Test code */</span> }
+            }
+        }
+
+    } 
+})
+</code></pre></div></section><section>
+<h2 id="preparing-the-test-infrastructure">Preparing the test infrastructure</h2>
+<p>We now need to read the classpath configuration from our file, and feed it to the Gradle runner</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#888">// Find the file
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">pluginClasspathResource</span> = ClassLoader.getSystemClassLoader().getResource(<span style="color:#d20;background-color:#fff0f0">&#34;plugin-classpath.txt&#34;</span>)
+    ?: <span style="color:#080;font-weight:bold">throw</span> IllegalStateException(<span style="color:#d20;background-color:#fff0f0">&#34;Did not find the plugin classpath descriptor.&#34;</span>)
+<span style="color:#888">// Extract the content
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">classpath</span> = pluginClasspathResource.openStream().bufferedReader().use { reader -&gt;
+    reader.readLines().map { File(it) } <span style="color:#888">// Convert each line to a file
+</span><span style="color:#888"></span>}
+<span style="color:#888">// Configure a Gradle runner
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">runner</span> = GradleRunner.create()
+    .withProjectDir(testFolder.root)
+    .withPluginClasspath(classpath)
+    .withArguments(<span style="color:#d20;background-color:#fff0f0">&#34;:tasks&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;:you&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;:need&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;:to&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;:run:&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;--and&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;--cli&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;--options&#34;</span>)
+    .build() <span style="color:#888">// This actually runs Gradle
+</span><span style="color:#888">// Inspect results
+</span><span style="color:#888"></span>runner.task(<span style="color:#d20;background-color:#fff0f0">&#34;:someExistingTask&#34;</span>)?.outcome shouldBe TaskOutcome.SUCCESS
+runner.output shouldContain <span style="color:#d20;background-color:#fff0f0">&#34;Hello from Gradle&#34;</span>
+</code></pre></div><p>Final result in the <a href="https://github.com/DanySK/Course-Laboratory-of-Software-Systems/blob/master/code/automation/10-greetings-plugin/src/test/kotlin/PluginTest.kt">attached code</a>!</p>
+</section><section>
+<h2 id="making-the-plugin-available">Making the plugin available</h2>
+</section><section>
+<h2 id="quality-control">Quality control</h2>
+<ul>
+<li>publishing plugins on the gradle plugin portal</li>
+<li>Coverage with Jacoco</li>
+<li>Code quality: warnings as errors ktlint and detekt</li>
+<li>Automatic update search with refreshVersions</li>
+</ul>
+</section><section>
 </section><section>
 <ul>
 <li>Declarativity via DSLs
-concept of plugin
 the kotlin plugin</li>
 <li>jvm variant</li>
 <li>with its configurations</li>
