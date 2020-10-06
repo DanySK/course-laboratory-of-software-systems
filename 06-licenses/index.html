@@ -82,6 +82,224 @@
 Usage of the software may be subjected to acceptance of the EULA.</p>
 <h3 id="free">Free</h3>
 <p>The software publisher grants <em>extensive rights to modify and redistribute</em> the software, often prohibiting rolling back such rights (strong copyleft).</p>
+</section><section>
+<h2 id="freedom-as-in-beer-vs-as-in-speech">Freedom: as in beer vs. as in speech</h2>
+<p>Much easier for italian speakers:</p>
+<ul>
+<li>free as in speech: <em>libero</em></li>
+<li>free as in beer: <em>gratuito</em></li>
+</ul>
+<h3 id="free-as-in-beer">Free as in beer</h3>
+<p><em>Free of charge</em></p>
+<h3 id="free-as-in-speech">Free as in speech</h3>
+<p>The user receives the <em>source code</em> of the software, is allowed to <em>modify</em> and <em>redistribute</em> it.</p>
+<ul>
+<li>The user can be asked to <em>pay for receiving a copy</em>: it can be distributed behind a fee</li>
+<li>The author can also ask for <em>additional money for accessing the source code</em>
+<ul>
+<li>but not &ldquo;too much&rdquo;</li>
+<li>e.g., asking for a billion dollars would make the software de-facto proprietary.</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h1 id="free-vs-open-source">Free vs. Open source</h1>
+<p>Usually together, but:</p>
+<ul>
+<li><strong>Open source</strong>: focus on availability of <em>source code</em> and right to modify and share it</li>
+<li><strong>Free</strong>: focus on freedom to use the <em>program</em>, modify, and share it</li>
+</ul>
+<p>There are non-free open source licenses:</p>
+<ul>
+<li>Apple Public source license 1.0 $\Rightarrow$ <a href="https://www.gnu.org/licenses/license-list.html#apsl1">too generic</a></li>
+<li>Artistic License 1.0 $\Rightarrow$ overly vague</li>
+<li>Nasa Open Source Agreement</li>
+</ul>
+<p>And there are free non-open source licenses as well</p>
+<ul>
+<li>WTFPL $\Rightarrow$ <a href="https://opensource.org/minutes20090304">&ldquo;public domain&rdquo; is undefined in EU legislation</a></li>
+<li>Netscape public license</li>
+<li>OpenSSL license</li>
+</ul>
+</section><section>
+<h1 id="unlicensed-software">Unlicensed software</h1>
+<ul>
+<li><strong>Internal business and trade secrets</strong>
+<ul>
+<li>Release is unwanted</li>
+<li>Undisclosed, unavailable, unlicensed</li>
+</ul>
+</li>
+<li><strong>Software distributed without any license</strong>
+<ul>
+<li><em>fully copyright protected</em>, and therefore <strong>legally unusable</strong></li>
+</ul>
+</li>
+<li><strong>Public domain</strong>
+<ul>
+<li>At copyright termination, distributed unlicensed software becomes public domain: freely usable, modifiable, redistributable</li>
+<li>It takes over 100 years for software released after 2008</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="proprietary-licenses-constraints">Proprietary licenses&rsquo; constraints</h2>
+<ul>
+<li><strong>Closed volume</strong>: the customer commits to purchase <em>a certain number of licenses over a fixed period</em> (mostly two years).
+<ul>
+<li>Licensing can be limited per user, CPU, concurrent usage, etc.</li>
+</ul>
+</li>
+<li><strong>Maintenance and support</strong>: proprietary licenses usually include forms of maintenance and support</li>
+<li><strong>Warranty</strong>: proprietary licenses often include a warranty
+<ul>
+<li>Typically time limited</li>
+<li>Typically with purcheasable extensions</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="gnu-gplv3">GNU GPLv3</h2>
+<p><strong>GNU General Public License</strong></p>
+<ul>
+<li><em>Free and open source</em></li>
+<li><em>Strong copyleft</em>: derived work must be released under a compatible license</li>
+<li><em>Does not allow linking</em> from non GPL-compatible licensed software!
+<ul>
+<li>If you want your software to be used as a dependency of proprietary software, don’t use this license!</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="gnu-lgplv3">GNU LGPLv3</h2>
+<p><strong>GNU Lesser General Public License (LGPL)</strong></p>
+<ul>
+<li>A modification of the GPLv3 with a <em>linking exception</em>
+<ul>
+<li>Not an entirely different license as the previous LGPL</li>
+</ul>
+</li>
+<li><em>Free and open source</em></li>
+<li><em>Strong copyleft</em>: derived work must be released under a compatible license</li>
+<li><em>Allows linking</em> from code with a different license</li>
+<li><em>Work linking</em> the LGPL library (combined work) <em>must</em>:
+<ul>
+<li><em>Allow modification of the original linked library</em> shipped with the work</li>
+<li><strong>Allow reverse engineering</strong> and debugging of the combined work</li>
+</ul>
+</li>
+<li>These requirements are <em>often unacceptable for companies</em>!</li>
+</ul>
+</section><section>
+<h2 id="gnu-gpl-with-linking-exception">GNU GPL with linking exception</h2>
+<p><strong>GNU General Public License with linking exception</strong></p>
+<ul>
+<li>Can be <em>built on top of a GPL</em>, by manually adding an exception for linking</li>
+<li><em>Free and open source</em></li>
+<li><em>Strong copyleft</em>: derived work must be released under a compatible license</li>
+<li>Allows linking from code with a different license without further restrictions
+<ul>
+<li>Combined work can be redistributed under non GPL-compatible licenses</li>
+</ul>
+</li>
+</ul>
+<p><strong>Example exception</strong></p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>Linking this library statically or dynamically with other modules is making a combined work based on this library.
+Thus, the terms and conditions of the GNU General Public License cover the whole combination.
+As a special exception, the copyright holders of this library give you permission to link this library with
+independent modules to produce an executable, regardless of the license terms of these independent modules, and to
+copy and distribute the resulting executable under terms of your choice, provided that you also meet, for each linked
+independent module, the terms and conditions of the license of that module. An independent module is a module which
+is not derived from or based on this library. If you modify this library, you may extend this exception to your
+version of the library, but you are not obliged to do so. If you do not wish to do so, delete this exception
+statement from your version.
+</code></pre></div></section><section>
+<h2 id="mit-license">MIT License</h2>
+<ul>
+<li><strong>Extremely permissive</strong></li>
+<li><em>Free and open source</em></li>
+<li><em>GPL compatible</em></li>
+<li><em>No copyleft</em>: the work or a derivative can be redistributed under any other license</li>
+<li>Does not protect trademarks</li>
+<li>Does not protect patent claims</li>
+</ul>
+</section><section>
+<h2 id="apache-license-20">Apache License 2.0</h2>
+<ul>
+<li><em>More restrictive than MIT</em></li>
+<li><em>Free and open source</em></li>
+<li><em>GPL compatible</em></li>
+<li><em>No copyleft</em>: the work or a derivative can be redistributed under any other license</li>
+<li>Protects trademarks</li>
+<li>Allows for placing a warranty</li>
+<li>Protects patent claims</li>
+<li>Forces authors of derived works to <em>state significant changes</em> made to the software</li>
+<li>If a <code>NOTICE</code> file with authors is provided, it must be included when redistributed. Entries can be appended.</li>
+</ul>
+</section><section>
+<h2 id="wtfpl">WTFPL</h2>
+<ul>
+<li>Extremely permissive but <em>problematic</em></li>
+<li>A good example of how things may go wrong if you write licenses without competence</li>
+<li>Free, <em>not open source</em></li>
+<li><em>No copyleft</em></li>
+<li>Better use something else</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>           DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+                   Version 2, December 2004
+ 
+Copyright (C) 2004 Sam Hocevar &lt;sam@hocevar.net&gt;
+
+Everyone is permitted to copy and distribute verbatim or modified
+copies of this license document, and changing it is allowed as long
+as the name is changed.
+ 
+           DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+  TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+
+ 0. You just DO WHAT THE FUCK YOU WANT TO.
+</code></pre></div></section><section>
+<h2 id="creative-commons">Creative Commons</h2>
+<ul>
+<li>Set of licenses with <em>increasing copyleft</em></li>
+<li><a href="https://creativecommons.org/faq/#can-i-apply-a-creative-commons-license-to-software"><strong>not designed for software</strong></a></li>
+<li>Good for data (including databases), documentation, and resources</li>
+</ul>
+<p><strong>Available rights</strong></p>
+<ul>
+<li><code>BY</code> (Attribution) &ndash; Derivative works must credit the original author</li>
+<li><code>SA</code> (Share-alike) &ndash; Enables copyleft</li>
+<li><code>NC</code> (Non-commercial) &ndash; — Derivative work can only be used for non commercial purposes</li>
+<li><code>ND</code> (No derivative Works) &ndash; Free distribution and copy, but derivatives are forbidden</li>
+</ul>
+<p><strong>Valid combinations</strong></p>
+<ul>
+<li><code>CC0</code> &ndash; Public domain (prefer the MIT licens for a similar protection)</li>
+<li><code>CC-BY</code> &ndash; Attribution</li>
+<li><code>CC-BY-SA</code> &ndash; Attribution, Share-alike (enables copyleft)</li>
+<li><code>CC-BY-NC</code> &ndash; Attribution Noncommercial</li>
+<li><code>CC-BY-NC-SA</code> &ndash; As above, plus copyleft</li>
+<li><code>CC-BY-ND</code> &ndash; Attribution Noderivatives (commercially usable, but not modifiable)</li>
+<li><code>CC-BY-NC-ND</code> &ndash; As above, non commercial</li>
+</ul>
+</section><section>
+<h1 id="applying-a-license">Applying a License</h1>
+<ol>
+<li>Create a <code>LICENSE</code> or <code>COPYING</code> plain text file in the repository with the <em>full license</em> text
+<ul>
+<li>Full text can be easy found online</li>
+<li>Change the owner and the copyright year</li>
+</ul>
+</li>
+<li>Apply a <strong>copyright notice header</strong> to <em>every source file</em>
+<ul>
+<li>Use an automated tool to do it</li>
+<li>Most IDEs can deal with this</li>
+<li>Header templates are usually available where the license is published</li>
+</ul>
+</li>
+</ol>
+<p><strong>Your software is now licensed!</strong></p>
 </section>
 
   
