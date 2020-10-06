@@ -1378,6 +1378,27 @@ runner.output shouldContain <span style="color:#d20;background-color:#fff0f0">&#
 </code></pre></div><p>Final result in the <a href="https://github.com/DanySK/Course-Laboratory-of-Software-Systems/blob/master/code/automation/10-greetings-plugin/src/test/kotlin/PluginTest.kt">attached code</a>!</p>
 </section><section>
 <h2 id="making-the-plugin-available">Making the plugin available</h2>
+<p>We now know how to run the plugin,
+<br>
+yet manual classpath modification is not the way we want to run our plugin</p>
+<p>We want something like:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins {
+    id(<span style="color:#d20;background-color:#fff0f0">&#34;it.unibo.lss.greetings&#34;</span>) version <span style="color:#d20;background-color:#fff0f0">&#34;0.1.0&#34;</span>
+}
+</code></pre></div><p>To do so, we need to ship our plugin to the <a href="https://plugins.gradle.org/">Gradle plugin portal</a>
+<br>
+Gradle provides <a href="https://plugins.gradle.org/docs/publish-plugin">a plugin publishing plugin</a> to simplify delivery</p>
+<p>&hellip;but before, we need to learn how to</p>
+<ol>
+<li>
+<p>click $\Rightarrow{}$ <a href="../05-version-selection"><strong>pick a version number</strong></a> $\Leftarrow{}$ click</p>
+</li>
+<li>
+<p>click $\Rightarrow{}$ <a href="../06-licenses"><strong>select a software license</strong></a>! $\Leftarrow{}$ click</p>
+</li>
+</ol>
+</section><section>
+<p>click: $\Rightarrow{}$</p>
 </section><section>
 <h2 id="quality-control">Quality control</h2>
 <ul>
