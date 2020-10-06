@@ -1398,7 +1398,15 @@ Gradle provides <a href="https://plugins.gradle.org/docs/publish-plugin">a plugi
 </li>
 </ol>
 </section><section>
-<p>click: $\Rightarrow{}$</p>
+<h1 id="setting-a-version">Setting a version</h1>
+<p>The project version can be specified in Gradle by simply setting the <code>version</code> property of the project:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>version = <span style="color:#d20;background-color:#fff0f0">&#34;0.1.0&#34;</span>
+</code></pre></div><ul>
+<li>Drawback: <em>manual management</em>!</li>
+</ul>
+<p>It would be better to <em>rely on the underlying DVCS</em>
+<br>
+to compute a Semantic Versioning compatible version!</p>
 </section><section>
 <h2 id="quality-control">Quality control</h2>
 <ul>

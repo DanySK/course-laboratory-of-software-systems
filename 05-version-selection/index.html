@@ -331,7 +331,40 @@ The public API should not be considered stable.</li>
 </ul>
 </li>
 </ul>
-</section>
+</section><section>
+<h2 id="dvcs-based-versioning">DVCS-based versioning</h2>
+<ul>
+<li>The underlying state of the <em>DVCS</em> can be used to version the software</li>
+<li>The practice can change, but consider for instance a case in which:
+<ul>
+<li>Manually added <em>tags identify versions</em>
+<ul>
+<li>And are in <code>X.Y.Z</code> format</li>
+</ul>
+</li>
+<li>An automated system searches for the closest past tag <code>T</code>
+<ul>
+<li>if no tag is found, then <code>T=0.1.0</code></li>
+<li>If the current commit is tagged, then the version is <code>T</code></li>
+<li>Otherwise, if C is the count of intermediate commits and <code>H</code> the current hash, it is <code>T-C+H</code></li>
+</ul>
+</li>
+<li><em>Automatically generates a SemVer compatible version!</em></li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="git-describe"><code>git describe</code></h2>
+<p><em>Give an object a human readable name based on an available ref</em></p>
+<ul>
+<li>The command finds the most recent tag that is reachable from a commit.</li>
+<li>If the tag points to the commit, then only the tag is shown.</li>
+<li>Otherwise, it suffixes the tag name with the number of additional commits on top of the tagged object and the abbreviated object name of the most recent commit.</li>
+<li>The result is a &ldquo;human-readable&rdquo; object name which can also be used to identify the commit to other git commands.</li>
+</ul>
+<p>In case no tag is present, <code>git describe</code> fails, but the last commit date could be used instead:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>git describe || <span style="color:#038">echo</span> <span style="color:#d20;background-color:#fff0f0">&#34;0.1.0-</span><span style="color:#080;font-weight:bold">$(</span>git log -n1 --date=format:<span style="color:#d20;background-color:#fff0f0">&#39;%Y-%m-%dT%H%M%S&#39;</span> --format=%cd<span style="color:#080;font-weight:bold">)</span><span style="color:#d20;background-color:#fff0f0">&#34;</span> 
+</code></pre></div></section>
 
   
 
