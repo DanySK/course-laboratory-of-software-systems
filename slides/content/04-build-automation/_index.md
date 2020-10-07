@@ -1818,18 +1818,65 @@ dependencies {
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.14.1")
 }
 detekt {
-    // Further configuration if needed
-    // Configuration file by default found in: $projectDir/config/detekt.yml
+    failFast = true // fail build on any finding
+    buildUponDefaultConfig = true // preconfigure defaults
+    config = files("$projectDir/config/detekt.yml") // Custom additional rules
 }
+```
+
+Adds the `detekt` task, failing in case of violation
+
+---
+
+# Detekt
+## Recommended configuration
+
+```yaml
+comments:
+  EndOfSentenceFormat:
+    active: true
+  UndocumentedPublicClass:
+    active: true
+  UndocumentedPublicFunction:
+    active: true
+  UndocumentedPublicProperty:
+    active: true
+```
+```yaml
+complexity:
+  LongMethod:
+    active: false
+  LongParameterList:
+    active: false
+  NestedBlockDepth:
+    threshold: 5
+  TooManyFunctions:
+    ignoreDeprecated: true
+    ignorePrivate: true
+    ignoreOverridden: true
+    thresholdInInterfaces: 20
+```
+---
+
+# Detekt
+## Recommended configuration
+
+```yaml
+naming:
+  MemberNameEqualsClassName:
+    active: false
+performance:
+  SpreadOperator:
+    active: false
+style:
+  MagicNumber:
+    ignoreNumbers: ['-2', '-1', '0', '0.5', '1', '2', '3', '4', '10', '360.0']
+  ForbiddenComment:
+    allowedPatterns: 'TODO:'
 ```
 
 ---
 
-## Aggressive compiler settings
-
-
-* Coverage with Jacoco
-* Code quality: warnings as errors ktlint and detekt
 * Automatic update search with refreshVersions
 * creating archives (default tasks)
 * signing
