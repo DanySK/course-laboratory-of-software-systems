@@ -1604,36 +1604,30 @@ Activating plugin it.unibo.lss2020.greetings-plugin version 0.1.0-archeo+ea6b9d7
 </ul>
 </section><section>
 <h1 id="detekt">Detekt</h1>
-<p>plugins {
-<code>java-gradle-plugin</code>
-jacoco
-kotlin(&ldquo;jvm&rdquo;) version &ldquo;1.3.72&rdquo;
-id (&ldquo;org.danilopianini.git-sensitive-semantic-versioning&rdquo;) version &ldquo;0.2.2&rdquo;
-id(&ldquo;com.gradle.plugin-publish&rdquo;) version &ldquo;0.12.0&rdquo;
-id(&ldquo;pl.droidsonroids.jacoco.testkit&rdquo;) version &ldquo;1.0.7&rdquo;
-id(&ldquo;org.jlleitschuh.gradle.ktlint&rdquo;) version &ldquo;9.4.1&rdquo;
-id(&ldquo;io.gitlab.arturbosch.detekt&rdquo;) version &ldquo;1.14.1&rdquo;
+<ul>
+<li>Configurable static source code analyzer</li>
+<li>Requires an external module <em>not found on Maven Central</em>
+<ul>
+<li>If you are using JCenter, no worries</li>
+<li>Otherwise, you need to add it and whitelist the <code>detekt</code> configuration</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins {
+    id(<span style="color:#d20;background-color:#fff0f0">&#34;io.gitlab.arturbosch.detekt&#34;</span>) version <span style="color:#d20;background-color:#fff0f0">&#34;1.14.1&#34;</span>
 }
 repositories {
-mavenCentral()
-jcenter {
-content {
-onlyForConfigurations(&ldquo;detekt&rdquo;)
-}
-}
-}
+    jcenter { content { onlyForConfigurations(<span style="color:#d20;background-color:#fff0f0">&#34;detekt&#34;</span>) } } <span style="color:#888">// configuration-based content filtering
+</span><span style="color:#888"></span>}
 dependencies {
-detektPlugins(&ldquo;io.gitlab.arturbosch.detekt:detekt-formatting:_&quot;)
+    <span style="color:#888">// Adds a configuration &#34;detektPlugins&#34;
+</span><span style="color:#888"></span>    detektPlugins(<span style="color:#d20;background-color:#fff0f0">&#34;io.gitlab.arturbosch.detekt:detekt-formatting:1.14.1&#34;</span>)
 }
 detekt {
-failFast = true
-buildUponDefaultConfig = true
-config = files(&ldquo;$projectDir/config/detekt.yml&rdquo;)
-reports {
-html.enabled = true // observe findings in your browser with structure and code snippets
-}
-}</p>
-</section><section>
+    <span style="color:#888">// Further configuration if needed
+</span><span style="color:#888"></span>    <span style="color:#888">// Configuration file by default found in: $projectDir/config/detekt.yml
+</span><span style="color:#888"></span>}
+</code></pre></div></section><section>
 <h2 id="aggressive-compiler-settings-1">Aggressive compiler settings</h2>
 <ul>
 <li>Coverage with Jacoco</li>
