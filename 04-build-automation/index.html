@@ -1702,9 +1702,17 @@ detekt {
 </code></pre></div><p>generates a jar file with classifier <code>javadoc</code> inside the <code>build/libs</code> folder</p>
 </section><section>
 <h2 id="signing-artifacts">Signing artifacts</h2>
+<p>Many repositories require artifacts to be <strong>signed</strong> in order for them to be delivered/deployed</p>
 <ul>
-<li>signing</li>
+<li>e.g. Bintray, Maven Central</li>
 </ul>
+<p>If you do not have a signature yet, <a href="https://central.sonatype.org/pages/working-with-pgp-signatures.html">time to create one</a></p>
+<ul>
+<li>Creation: <code>gpg --gen-key</code></li>
+<li>List: <code>gpg --list-keys</code></li>
+<li>Distribution: <code>gpg --keyserver hkp://pool.sks-keyservers.net --send-keys</code></li>
+</ul>
+<p>Once you have a key, you can use the <code>sign</code> plugin to have Gradle generate artifact signatures</p>
 </section><section>
 <h2 id="publishing-artifacts">Publishing artifacts</h2>
 <ul>
