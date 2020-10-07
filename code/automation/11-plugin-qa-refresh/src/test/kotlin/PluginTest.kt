@@ -63,10 +63,9 @@ class PluginTest : FreeSpec({
     }
 })
 
-fun projectSetup(content: String) = TemporaryFolder().apply{
+fun projectSetup(content: String) = TemporaryFolder().apply {
     create()
     newFile("build.gradle.kts").writeText(content)
 }
 
 fun projectSetup(content: () -> String) = projectSetup(content())
-

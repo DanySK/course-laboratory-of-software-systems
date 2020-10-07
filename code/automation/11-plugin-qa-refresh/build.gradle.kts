@@ -2,9 +2,11 @@ plugins {
     `java-gradle-plugin`
     jacoco
     kotlin("jvm") version "1.3.72"
-    id ("org.danilopianini.git-sensitive-semantic-versioning") version "0.2.2"
+    id("org.danilopianini.git-sensitive-semantic-versioning") version "0.2.2"
     id("com.gradle.plugin-publish") version "0.12.0"
     id("pl.droidsonroids.jacoco.testkit") version "1.0.7"
+    id("org.jlleitschuh.gradle.ktlint") version "9.4.1"
+    id("io.gitlab.arturbosch.detekt") version "1.14.1"
 }
 
 group = "it.unibo.lss2020"
@@ -23,12 +25,6 @@ dependencies {
     testImplementation("io.kotest:kotest-runner-junit5:4.1.3") // for kotest framework
     testImplementation("io.kotest:kotest-assertions-core:4.1.3") // for kotest core assertions
     testImplementation("io.kotest:kotest-assertions-core-jvm:4.1.3") // for kotest core jvm assertions
-}
-
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions {
-        allWarningsAsErrors = true
-    }
 }
 
 tasks.withType<Test> {
@@ -81,5 +77,11 @@ tasks.jacocoTestReport {
     reports {
         // xml.isEnabled = true
         html.isEnabled = true
+    }
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        allWarningsAsErrors = true
     }
 }

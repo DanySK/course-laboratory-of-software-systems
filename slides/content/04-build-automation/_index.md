@@ -1548,14 +1548,300 @@ to compute a Semantic Versioning compatible version!
 
 ---
 
-## Quality control
+## DVCS-based Automatic semantic versioning
+
+There are a number of plugins that do so
+<br>
+including [one I've developed](https://github.com/DanySK/git-sensitive-semantic-versioning-gradle-plugin)
+
+Minimal configuration:
+```kotlin
+plugins {
+    id ("org.danilopianini.git-sensitive-semantic-versioning") version "0.2.2"
+}
+gitSemVer {
+    version = computeGitSemVer()
+}
+```
+
+```plain
+ ./gradlew printGitSemVer
+> Task :printGitSemVer
+Version computed by GitSemVer: 0.1.0-archeo+cf5b4c0
+```
+
+Another possibility is *writing a plugin yourself*
+<br>
+But at the moment we are stuck: we don't know yet how to expose plugins to other builds
 
 
+---
 
-* publishing plugins on the gradle plugin portal
+# Selecting a license
+
+There's not really much I want to protect in this example, so I'm going to pick one of the most open licenses: MIT (BSD would have been a good alternative)
+
+1. Create a LICENSE file
+2. Copy the text from the MIT license
+3. If needed, edit details
+
+```plain
+Copyright 2020 Danilo Pianini
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+documentation files (the "Software"), to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS
+OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+```
+
+---
+
+# Maven style packaging
+
+JVM artifacts are normally shipped in form of jar archives
+<br>
+the de-facto convention is *inherited from Maven*:
+* Each distribution has a **groupId**, an **artifactId**, and a **version**
+    * e.g. `com.google.guava:guava:29.0-jre`
+        * groupId: `com.google.guava`
+        * artifactId: `guava`
+        * version: `29.0-jre`
+* Further **metadata** is stored in a `pom.xml` file
+* Multiple artifacts in the same distributions are identified by a **classifier**
+    * e.g., a project having executables, sources, and javadoc, may have:
+        * `guava-29.0-jre.jar`
+        * `guava-29.0-jre-javadoc.jar`
+        * `guava-29.0-jre-sources.jar`
+
+---
+
+# Setting the details
+
+In order to create Maven-compatible artifacts, we need first to set the **groupId**:
+```kotlin
+group = "it.unibo.lss2020"
+```
+Many repositories require to register the group and associate developer identities to it
+
+The project name set in `settings.gradle.kts` is usually used as **artifactId**
+
+---
+
+## Preparing the plugin publication
+
+Gradle provides two plugins to simplify the assembly and upload of plugins
+
+```kotlin
+plugins {
+  `java-gradle-plugin`
+  id("com.gradle.plugin-publish") version "0.12.0"
+}
+```
+```kotlin
+pluginBundle { // These settings are set for the whole plugin bundle
+    website = "https://danysk.github.io/Course-Laboratory-of-Software-Systems/"
+    vcsUrl = "https://github.com/DanySK/Course-Laboratory-of-Software-Systems"
+    tags = listOf("example", "greetings", "lss", "unibo")
+}
+```
+```kotlin
+gradlePlugin {
+    plugins {
+        create("GradleLatex") { // One entry per plugin
+            id = "${project.group}.${project.name}"
+            displayName = "LSS Greeting plugin"
+            description = "Example plugin for the LSS course"
+            implementationClass = "it.unibo.lss.firstplugin.GreetingPlugin"
+        }
+    }
+}
+```
+They add the `publishPlugins` task
+
+---
+
+## Credentials
+
+In order to publish on the Gradle Plugin Portal (but it is true for any repository) users need to be *authenticated*
+<br>
+This is most frequently done via authentication tokens, and more rarely by username and password.
+
+It is first required to [register](https://plugins.gradle.org/user/register),
+once done, an **API Key** will be available from the web interface, along with a **secret**.
+
+These data is required to be able to publish, and can be fed to Gradle in two ways:
+
+1. By editing the `~/.gradle/gradle.properties` file, adding:
+```plain
+gradle.publish.key=YOUR_KEY
+gradle.publish.secret=YOUR_SECRET
+```
+2. Via command line, using `-P` flags:
+```plain
+./gradlew -Pgradle.publish.key=<key> -Pgradle.publish.secret=<secret> publishPlugins
+```
+
+---
+
+# Actual publication
+
+```plain
+❯ ./gradlew publishPlugins
+> Task :publishPlugins
+Publishing plugin it.unibo.lss2020.greetings-plugin version 0.1.0-archeo+ea6b9d7
+Publishing artifact build/libs/greetings-plugin-0.1.0-archeo+ea6b9d7.jar
+Publishing artifact build/libs/greetings-plugin-0.1.0-archeo+ea6b9d7-sources.jar
+Publishing artifact build/libs/greetings-plugin-0.1.0-archeo+ea6b9d7-javadoc.jar
+Publishing artifact build/publish-generated-resources/pom.xml
+Activating plugin it.unibo.lss2020.greetings-plugin version 0.1.0-archeo+ea6b9d7
+```
+
+[The result is a published plugin](https://plugins.gradle.org/plugin/it.unibo.lss2020.greetings-plugin)
+
+---
+
+# Quality control
+
+It is a good practice to set up some tools to validate the quality of the source code and testing.
+
+In the case of Kotlin, there are three useful tools:
+1. Setting the **compiler** into a "*warnings as errors*" mode
+2. Enabling a *coverage* tool such as **Jacoco**
+2. Configuring **Ktlint**, a Pinterest-made tool similar to Checkstyle
+3. Configuring **Detekt**, a *static code analysis* tool similar to PMD
+
+* All quality control tasks are dependencies of the `check` task
+
+Moreover, we need a way to *inspect the results* of executing these controls, besides of course failing if too many things go wrong.
+
+(note: under Kotlin and Scala, I do not recommend to use Spotbugs: even though it works, it generates *way* too many false positives)
+
+
+---
+
+## Build reports in Gradle
+
+Tasks with a report module usually publish their results under `$buildDir/reports/$reportName`
+
+* For instance, *test results* are published in `$buildDir/reports/tests`
+* Other tools follow the same convention
+* If you want to write a reporting task, extend from `AbstractReportTask`
+
+---
+
+## Using Jacoco with Kotest
+
+Jacoco works with Kotest out of the box
+```kotlin
+plugins {
+    // Some plugins
+    jacoco
+    // Some plugins
+}
+```
+
+The plugin introduces two tasks:
+* `jacocoTestCoverageVerification`
+* `jacocoTestReport`
+
+The latter must be configured to produce readable reports:
+
+```kotlin
+tasks.jacocoTestReport {
+    reports {
+        // xml.isEnabled = true // Useful for processing results automatically
+        html.isEnabled = true // Useful for human inspection
+    }
+}
+```
+
+Note: Jacoco does not work with the Gradle test kit, but [there are plugins](https://github.com/koral--/jacoco-gradle-testkit-plugin) to work this around.
+
+---
+
+## Aggressive compiler settings
+
+Can be configured for every `KotlinCompile` task
+```kotlin
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        allWarningsAsErrors = true
+    }
+}
+```
+
+---
+
+# Ktlint
+
+* Linter with *minimal configuration* options
+* Configuration happens in a `.editorconfig` file
+* Also *checks build files*
+
+```kotlin
+plugins {
+    id("org.jlleitschuh.gradle.ktlint") version "9.4.1"
+}
+```
+
+Adds the following tasks:
+* `ktlintApplyToIdea`, `ktlintApplyToIdeaGlobally` -- Change the IntelliJ Idea configuration to adhere to the rules
+* `ktlintCheck`, `ktlintKotlinScriptCheck`, `ktlint<SourceSetName>SourceSetCheck`, -- Apply rules and report errors 
+* `ktlintFormat`, `ktlintKotlinScriptFormat`, `ktlint<SourceSetName>SourceSetFormat` -- Lint code automatically
+
+---
+
+# Detekt
+
+plugins {
+    `java-gradle-plugin`
+    jacoco
+    kotlin("jvm") version "1.3.72"
+    id ("org.danilopianini.git-sensitive-semantic-versioning") version "0.2.2"
+    id("com.gradle.plugin-publish") version "0.12.0"
+    id("pl.droidsonroids.jacoco.testkit") version "1.0.7"
+    id("org.jlleitschuh.gradle.ktlint") version "9.4.1"
+    id("io.gitlab.arturbosch.detekt") version "1.14.1"
+}
+repositories {
+    mavenCentral()
+    jcenter {
+        content {
+            onlyForConfigurations("detekt")
+        }
+    }
+}
+dependencies {
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:_")
+}
+detekt {
+    failFast = true
+    buildUponDefaultConfig = true
+    config = files("$projectDir/config/detekt.yml")
+    reports {
+        html.enabled = true // observe findings in your browser with structure and code snippets
+    }
+}
+
+---
+
+## Aggressive compiler settings
+
+
 * Coverage with Jacoco
 * Code quality: warnings as errors ktlint and detekt
 * Automatic update search with refreshVersions
+* creating archives (default tasks)
+* signing
+* delivery on Central
 
 ---
 
@@ -1565,16 +1851,3 @@ to compute a Semantic Versioning compatible version!
 
 ---
 
-* Declarativity via DSLs
-the kotlin plugin
-* jvm variant
-* with its configurations
-
-our "plugin for java" -- maybe better a stubby plugin with some exposed configuration
-
-testing a plugin (kotest + Gradle api + classpath trick)
-some existing plugins
-* detekt
-* ktlint
-* jacoco
-* refreshVersions
