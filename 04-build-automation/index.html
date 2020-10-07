@@ -1408,30 +1408,243 @@ Gradle provides <a href="https://plugins.gradle.org/docs/publish-plugin">a plugi
 <br>
 to compute a Semantic Versioning compatible version!</p>
 </section><section>
-<h2 id="quality-control">Quality control</h2>
+<h2 id="dvcs-based-automatic-semantic-versioning">DVCS-based Automatic semantic versioning</h2>
+<p>There are a number of plugins that do so
+<br>
+including <a href="https://github.com/DanySK/git-sensitive-semantic-versioning-gradle-plugin">one I&rsquo;ve developed</a></p>
+<p>Minimal configuration:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins {
+    id (<span style="color:#d20;background-color:#fff0f0">&#34;org.danilopianini.git-sensitive-semantic-versioning&#34;</span>) version <span style="color:#d20;background-color:#fff0f0">&#34;0.2.2&#34;</span>
+}
+gitSemVer {
+    version = computeGitSemVer()
+}
+</code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape> ./gradlew printGitSemVer
+&gt; Task :printGitSemVer
+Version computed by GitSemVer: 0.1.0-archeo+cf5b4c0
+</code></pre></div><p>Another possibility is <em>writing a plugin yourself</em>
+<br>
+But at the moment we are stuck: we don&rsquo;t know yet how to expose plugins to other builds</p>
+</section><section>
+<h1 id="selecting-a-license">Selecting a license</h1>
+<p>There&rsquo;s not really much I want to protect in this example, so I&rsquo;m going to pick one of the most open licenses: MIT (BSD would have been a good alternative)</p>
+<ol>
+<li>Create a LICENSE file</li>
+<li>Copy the text from the MIT license</li>
+<li>If needed, edit details</li>
+</ol>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>Copyright 2020 Danilo Pianini
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+documentation files (the &#34;Software&#34;), to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+Software.
+
+THE SOFTWARE IS PROVIDED &#34;AS IS&#34;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS
+OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+</code></pre></div></section><section>
+<h1 id="maven-style-packaging">Maven style packaging</h1>
+<p>JVM artifacts are normally shipped in form of jar archives
+<br>
+the de-facto convention is <em>inherited from Maven</em>:</p>
 <ul>
-<li>publishing plugins on the gradle plugin portal</li>
+<li>Each distribution has a <strong>groupId</strong>, an <strong>artifactId</strong>, and a <strong>version</strong>
+<ul>
+<li>e.g. <code>com.google.guava:guava:29.0-jre</code>
+<ul>
+<li>groupId: <code>com.google.guava</code></li>
+<li>artifactId: <code>guava</code></li>
+<li>version: <code>29.0-jre</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Further <strong>metadata</strong> is stored in a <code>pom.xml</code> file</li>
+<li>Multiple artifacts in the same distributions are identified by a <strong>classifier</strong>
+<ul>
+<li>e.g., a project having executables, sources, and javadoc, may have:
+<ul>
+<li><code>guava-29.0-jre.jar</code></li>
+<li><code>guava-29.0-jre-javadoc.jar</code></li>
+<li><code>guava-29.0-jre-sources.jar</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h1 id="setting-the-details">Setting the details</h1>
+<p>In order to create Maven-compatible artifacts, we need first to set the <strong>groupId</strong>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>group = <span style="color:#d20;background-color:#fff0f0">&#34;it.unibo.lss2020&#34;</span>
+</code></pre></div><p>Many repositories require to register the group and associate developer identities to it</p>
+<p>The project name set in <code>settings.gradle.kts</code> is usually used as <strong>artifactId</strong></p>
+</section><section>
+<h2 id="preparing-the-plugin-publication">Preparing the plugin publication</h2>
+<p>Gradle provides two plugins to simplify the assembly and upload of plugins</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins {
+  <span style="color:#a61717;background-color:#e3d2d2">`</span>java-gradle-plugin<span style="color:#a61717;background-color:#e3d2d2">`</span>
+  id(<span style="color:#d20;background-color:#fff0f0">&#34;com.gradle.plugin-publish&#34;</span>) version <span style="color:#d20;background-color:#fff0f0">&#34;0.12.0&#34;</span>
+}
+</code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>pluginBundle { <span style="color:#888">// These settings are set for the whole plugin bundle
+</span><span style="color:#888"></span>    website = <span style="color:#d20;background-color:#fff0f0">&#34;https://danysk.github.io/Course-Laboratory-of-Software-Systems/&#34;</span>
+    vcsUrl = <span style="color:#d20;background-color:#fff0f0">&#34;https://github.com/DanySK/Course-Laboratory-of-Software-Systems&#34;</span>
+    tags = listOf(<span style="color:#d20;background-color:#fff0f0">&#34;example&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;greetings&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;lss&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;unibo&#34;</span>)
+}
+</code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>gradlePlugin {
+    plugins {
+        create(<span style="color:#d20;background-color:#fff0f0">&#34;GradleLatex&#34;</span>) { <span style="color:#888">// One entry per plugin
+</span><span style="color:#888"></span>            id = <span style="color:#d20;background-color:#fff0f0">&#34;${project.group}.${project.name}&#34;</span>
+            displayName = <span style="color:#d20;background-color:#fff0f0">&#34;LSS Greeting plugin&#34;</span>
+            description = <span style="color:#d20;background-color:#fff0f0">&#34;Example plugin for the LSS course&#34;</span>
+            implementationClass = <span style="color:#d20;background-color:#fff0f0">&#34;it.unibo.lss.firstplugin.GreetingPlugin&#34;</span>
+        }
+    }
+}
+</code></pre></div><p>They add the <code>publishPlugins</code> task</p>
+</section><section>
+<h2 id="credentials">Credentials</h2>
+<p>In order to publish on the Gradle Plugin Portal (but it is true for any repository) users need to be <em>authenticated</em>
+<br>
+This is most frequently done via authentication tokens, and more rarely by username and password.</p>
+<p>It is first required to <a href="https://plugins.gradle.org/user/register">register</a>,
+once done, an <strong>API Key</strong> will be available from the web interface, along with a <strong>secret</strong>.</p>
+<p>These data is required to be able to publish, and can be fed to Gradle in two ways:</p>
+<ol>
+<li>By editing the <code>~/.gradle/gradle.properties</code> file, adding:</li>
+</ol>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>gradle.publish.key=YOUR_KEY
+gradle.publish.secret=YOUR_SECRET
+</code></pre></div><ol start="2">
+<li>Via command line, using <code>-P</code> flags:</li>
+</ol>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>./gradlew -Pgradle.publish.key=&lt;key&gt; -Pgradle.publish.secret=&lt;secret&gt; publishPlugins
+</code></pre></div></section><section>
+<h1 id="actual-publication">Actual publication</h1>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>❯ ./gradlew publishPlugins
+&gt; Task :publishPlugins
+Publishing plugin it.unibo.lss2020.greetings-plugin version 0.1.0-archeo+ea6b9d7
+Publishing artifact build/libs/greetings-plugin-0.1.0-archeo+ea6b9d7.jar
+Publishing artifact build/libs/greetings-plugin-0.1.0-archeo+ea6b9d7-sources.jar
+Publishing artifact build/libs/greetings-plugin-0.1.0-archeo+ea6b9d7-javadoc.jar
+Publishing artifact build/publish-generated-resources/pom.xml
+Activating plugin it.unibo.lss2020.greetings-plugin version 0.1.0-archeo+ea6b9d7
+</code></pre></div><p><a href="https://plugins.gradle.org/plugin/it.unibo.lss2020.greetings-plugin">The result is a published plugin</a></p>
+</section><section>
+<h1 id="quality-control">Quality control</h1>
+<p>It is a good practice to set up some tools to validate the quality of the source code and testing.</p>
+<p>In the case of Kotlin, there are three useful tools:</p>
+<ol>
+<li>Setting the <strong>compiler</strong> into a &ldquo;<em>warnings as errors</em>&rdquo; mode</li>
+<li>Enabling a <em>coverage</em> tool such as <strong>Jacoco</strong></li>
+<li>Configuring <strong>Ktlint</strong>, a Pinterest-made tool similar to Checkstyle</li>
+<li>Configuring <strong>Detekt</strong>, a <em>static code analysis</em> tool similar to PMD</li>
+</ol>
+<ul>
+<li>All quality control tasks are dependencies of the <code>check</code> task</li>
+</ul>
+<p>Moreover, we need a way to <em>inspect the results</em> of executing these controls, besides of course failing if too many things go wrong.</p>
+<p>(note: under Kotlin and Scala, I do not recommend to use Spotbugs: even though it works, it generates <em>way</em> too many false positives)</p>
+</section><section>
+<h2 id="build-reports-in-gradle">Build reports in Gradle</h2>
+<p>Tasks with a report module usually publish their results under <code>$buildDir/reports/$reportName</code></p>
+<ul>
+<li>For instance, <em>test results</em> are published in <code>$buildDir/reports/tests</code></li>
+<li>Other tools follow the same convention</li>
+<li>If you want to write a reporting task, extend from <code>AbstractReportTask</code></li>
+</ul>
+</section><section>
+<h2 id="using-jacoco-with-kotest">Using Jacoco with Kotest</h2>
+<p>Jacoco works with Kotest out of the box</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins {
+    <span style="color:#888">// Some plugins
+</span><span style="color:#888"></span>    jacoco
+    <span style="color:#888">// Some plugins
+</span><span style="color:#888"></span>}
+</code></pre></div><p>The plugin introduces two tasks:</p>
+<ul>
+<li><code>jacocoTestCoverageVerification</code></li>
+<li><code>jacocoTestReport</code></li>
+</ul>
+<p>The latter must be configured to produce readable reports:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>tasks.jacocoTestReport {
+    reports {
+        <span style="color:#888">// xml.isEnabled = true // Useful for processing results automatically
+</span><span style="color:#888"></span>        html.isEnabled = <span style="color:#080;font-weight:bold">true</span> <span style="color:#888">// Useful for human inspection
+</span><span style="color:#888"></span>    }
+}
+</code></pre></div><p>Note: Jacoco does not work with the Gradle test kit, but <a href="https://github.com/koral--/jacoco-gradle-testkit-plugin">there are plugins</a> to work this around.</p>
+</section><section>
+<h2 id="aggressive-compiler-settings">Aggressive compiler settings</h2>
+<p>Can be configured for every <code>KotlinCompile</code> task</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>tasks.withType&lt;org.jetbrains.kotlin.gradle.tasks.KotlinCompile&gt; {
+    kotlinOptions {
+        allWarningsAsErrors = <span style="color:#080;font-weight:bold">true</span>
+    }
+}
+</code></pre></div></section><section>
+<h1 id="ktlint">Ktlint</h1>
+<ul>
+<li>Linter with <em>minimal configuration</em> options</li>
+<li>Configuration happens in a <code>.editorconfig</code> file</li>
+<li>Also <em>checks build files</em></li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins {
+    id(<span style="color:#d20;background-color:#fff0f0">&#34;org.jlleitschuh.gradle.ktlint&#34;</span>) version <span style="color:#d20;background-color:#fff0f0">&#34;9.4.1&#34;</span>
+}
+</code></pre></div><p>Adds the following tasks:</p>
+<ul>
+<li><code>ktlintApplyToIdea</code>, <code>ktlintApplyToIdeaGlobally</code> &ndash; Change the IntelliJ Idea configuration to adhere to the rules</li>
+<li><code>ktlintCheck</code>, <code>ktlintKotlinScriptCheck</code>, <code>ktlint&lt;SourceSetName&gt;SourceSetCheck</code>, &ndash; Apply rules and report errors</li>
+<li><code>ktlintFormat</code>, <code>ktlintKotlinScriptFormat</code>, <code>ktlint&lt;SourceSetName&gt;SourceSetFormat</code> &ndash; Lint code automatically</li>
+</ul>
+</section><section>
+<h1 id="detekt">Detekt</h1>
+<p>plugins {
+<code>java-gradle-plugin</code>
+jacoco
+kotlin(&ldquo;jvm&rdquo;) version &ldquo;1.3.72&rdquo;
+id (&ldquo;org.danilopianini.git-sensitive-semantic-versioning&rdquo;) version &ldquo;0.2.2&rdquo;
+id(&ldquo;com.gradle.plugin-publish&rdquo;) version &ldquo;0.12.0&rdquo;
+id(&ldquo;pl.droidsonroids.jacoco.testkit&rdquo;) version &ldquo;1.0.7&rdquo;
+id(&ldquo;org.jlleitschuh.gradle.ktlint&rdquo;) version &ldquo;9.4.1&rdquo;
+id(&ldquo;io.gitlab.arturbosch.detekt&rdquo;) version &ldquo;1.14.1&rdquo;
+}
+repositories {
+mavenCentral()
+jcenter {
+content {
+onlyForConfigurations(&ldquo;detekt&rdquo;)
+}
+}
+}
+dependencies {
+detektPlugins(&ldquo;io.gitlab.arturbosch.detekt:detekt-formatting:_&quot;)
+}
+detekt {
+failFast = true
+buildUponDefaultConfig = true
+config = files(&ldquo;$projectDir/config/detekt.yml&rdquo;)
+reports {
+html.enabled = true // observe findings in your browser with structure and code snippets
+}
+}</p>
+</section><section>
+<h2 id="aggressive-compiler-settings-1">Aggressive compiler settings</h2>
+<ul>
 <li>Coverage with Jacoco</li>
 <li>Code quality: warnings as errors ktlint and detekt</li>
 <li>Automatic update search with refreshVersions</li>
+<li>creating archives (default tasks)</li>
+<li>signing</li>
+<li>delivery on Central</li>
 </ul>
 </section><section>
 </section><section>
-<ul>
-<li>Declarativity via DSLs
-the kotlin plugin</li>
-<li>jvm variant</li>
-<li>with its configurations</li>
-</ul>
-<p>our &ldquo;plugin for java&rdquo; &ndash; maybe better a stubby plugin with some exposed configuration</p>
-<p>testing a plugin (kotest + Gradle api + classpath trick)
-some existing plugins</p>
-<ul>
-<li>detekt</li>
-<li>ktlint</li>
-<li>jacoco</li>
-<li>refreshVersions</li>
-</ul>
 </section>
 
   
