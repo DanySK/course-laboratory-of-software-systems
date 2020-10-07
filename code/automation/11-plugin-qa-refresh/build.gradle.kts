@@ -1,8 +1,13 @@
 plugins {
-    // No magic: calls a method calling id("org.jetbrains.kotlin-" + "jvm")
-    kotlin("jvm") version "1.4.10" // version is necessary
+    `java-gradle-plugin`
+    jacoco
+    kotlin("jvm") version "1.3.72"
     id ("org.danilopianini.git-sensitive-semantic-versioning") version "0.2.2"
+    id("com.gradle.plugin-publish") version "0.12.0"
+    id("pl.droidsonroids.jacoco.testkit") version "1.0.7"
 }
+
+group = "it.unibo.lss2020"
 
 gitSemVer {
     version = computeGitSemVer()
@@ -15,9 +20,15 @@ repositories {
 dependencies {
     implementation(gradleApi()) // Implementation: available at compile and runtime, non transitive
     testImplementation(gradleTestKit()) // Test implementation: available for testing compile and runtime
-    testImplementation("io.kotest:kotest-runner-junit5:4.2.5") // for kotest framework
-    testImplementation("io.kotest:kotest-assertions-core:4.2.5") // for kotest core assertions
-    testImplementation("io.kotest:kotest-assertions-core-jvm:4.2.5") // for kotest core jvm assertions
+    testImplementation("io.kotest:kotest-runner-junit5:4.1.3") // for kotest framework
+    testImplementation("io.kotest:kotest-assertions-core:4.1.3") // for kotest core assertions
+    testImplementation("io.kotest:kotest-assertions-core-jvm:4.1.3") // for kotest core jvm assertions
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        allWarningsAsErrors = true
+    }
 }
 
 tasks.withType<Test> {
@@ -48,4 +59,27 @@ dependencies {
     // This way "createClasspathManifest" is always executed before the tests!
     // Gradle auto-resolves dependencies if there are dependencies on inputs/outputs
     testRuntimeOnly(files(createClasspathManifest))
+}
+
+pluginBundle { // These settings are set for the whole plugin bundle
+    website = "https://danysk.github.io/Course-Laboratory-of-Software-Systems/"
+    vcsUrl = "https://github.com/DanySK/Course-Laboratory-of-Software-Systems"
+    tags = listOf("example", "greetings", "lss", "unibo")
+}
+gradlePlugin {
+    plugins {
+        create("GradleLatex") { // One entry per plugin
+            id = "${project.group}.${project.name}"
+            displayName = "LSS Greeting plugin"
+            description = "Example plugin for the LSS course"
+            implementationClass = "it.unibo.lss.firstplugin.GreetingPlugin"
+        }
+    }
+}
+
+tasks.jacocoTestReport {
+    reports {
+        // xml.isEnabled = true
+        html.isEnabled = true
+    }
 }
