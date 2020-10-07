@@ -1624,14 +1624,51 @@ dependencies {
 </span><span style="color:#888"></span>    detektPlugins(<span style="color:#d20;background-color:#fff0f0">&#34;io.gitlab.arturbosch.detekt:detekt-formatting:1.14.1&#34;</span>)
 }
 detekt {
-    <span style="color:#888">// Further configuration if needed
-</span><span style="color:#888"></span>    <span style="color:#888">// Configuration file by default found in: $projectDir/config/detekt.yml
+    failFast = <span style="color:#080;font-weight:bold">true</span> <span style="color:#888">// fail build on any finding
+</span><span style="color:#888"></span>    buildUponDefaultConfig = <span style="color:#080;font-weight:bold">true</span> <span style="color:#888">// preconfigure defaults
+</span><span style="color:#888"></span>    config = files(<span style="color:#d20;background-color:#fff0f0">&#34;$projectDir/config/detekt.yml&#34;</span>) <span style="color:#888">// Custom additional rules
 </span><span style="color:#888"></span>}
-</code></pre></div></section><section>
-<h2 id="aggressive-compiler-settings-1">Aggressive compiler settings</h2>
+</code></pre></div><p>Adds the <code>detekt</code> task, failing in case of violation</p>
+</section><section>
+<h1 id="detekt-1">Detekt</h1>
+<h2 id="recommended-configuration">Recommended configuration</h2>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">comments</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">EndOfSentenceFormat</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">active</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">UndocumentedPublicClass</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">active</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">UndocumentedPublicFunction</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">active</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">UndocumentedPublicProperty</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">active</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">
+</span></code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">complexity</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">LongMethod</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">active</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">false</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">LongParameterList</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">active</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">false</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">NestedBlockDepth</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">threshold</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">5</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">TooManyFunctions</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">ignoreDeprecated</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">ignorePrivate</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">ignoreOverridden</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">thresholdInInterfaces</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">20</span><span style="color:#bbb">
+</span></code></pre></div></section><section>
+<h1 id="detekt-2">Detekt</h1>
+<h2 id="recommended-configuration-1">Recommended configuration</h2>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">naming</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">MemberNameEqualsClassName</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">active</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">false</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">performance</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">SpreadOperator</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">active</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">false</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">style</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">MagicNumber</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">ignoreNumbers</span>:<span style="color:#bbb"> </span>[<span style="color:#d20;background-color:#fff0f0">&#39;-2&#39;</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;-1&#39;</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;0&#39;</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;0.5&#39;</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;1&#39;</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;2&#39;</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;3&#39;</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;4&#39;</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;10&#39;</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;360.0&#39;</span>]<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">ForbiddenComment</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">allowedPatterns</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;TODO:&#39;</span><span style="color:#bbb">
+</span></code></pre></div></section><section>
 <ul>
-<li>Coverage with Jacoco</li>
-<li>Code quality: warnings as errors ktlint and detekt</li>
 <li>Automatic update search with refreshVersions</li>
 <li>creating archives (default tasks)</li>
 <li>signing</li>
