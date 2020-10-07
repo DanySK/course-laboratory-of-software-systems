@@ -25,6 +25,7 @@ dependencies {
     testImplementation("io.kotest:kotest-runner-junit5:4.1.3") // for kotest framework
     testImplementation("io.kotest:kotest-assertions-core:4.1.3") // for kotest core assertions
     testImplementation("io.kotest:kotest-assertions-core-jvm:4.1.3") // for kotest core jvm assertions
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.14.1")
 }
 
 tasks.withType<Test> {
@@ -84,4 +85,10 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions {
         allWarningsAsErrors = true
     }
+}
+
+detekt {
+    failFast = true // fail build on any finding
+    buildUponDefaultConfig = true // preconfigure defaults
+    config = files("$projectDir/config/detekt.yml")
 }

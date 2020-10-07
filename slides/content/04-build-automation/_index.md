@@ -1801,35 +1801,27 @@ Adds the following tasks:
 
 # Detekt
 
+* Configurable static source code analyzer
+* Requires an external module *not found on Maven Central*
+    * If you are using JCenter, no worries
+    * Otherwise, you need to add it and whitelist the `detekt` configuration
+
+```kotlin
 plugins {
-    `java-gradle-plugin`
-    jacoco
-    kotlin("jvm") version "1.3.72"
-    id ("org.danilopianini.git-sensitive-semantic-versioning") version "0.2.2"
-    id("com.gradle.plugin-publish") version "0.12.0"
-    id("pl.droidsonroids.jacoco.testkit") version "1.0.7"
-    id("org.jlleitschuh.gradle.ktlint") version "9.4.1"
     id("io.gitlab.arturbosch.detekt") version "1.14.1"
 }
 repositories {
-    mavenCentral()
-    jcenter {
-        content {
-            onlyForConfigurations("detekt")
-        }
-    }
+    jcenter { content { onlyForConfigurations("detekt") } } // configuration-based content filtering
 }
 dependencies {
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:_")
+    // Adds a configuration "detektPlugins"
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.14.1")
 }
 detekt {
-    failFast = true
-    buildUponDefaultConfig = true
-    config = files("$projectDir/config/detekt.yml")
-    reports {
-        html.enabled = true // observe findings in your browser with structure and code snippets
-    }
+    // Further configuration if needed
+    // Configuration file by default found in: $projectDir/config/detekt.yml
 }
+```
 
 ---
 
