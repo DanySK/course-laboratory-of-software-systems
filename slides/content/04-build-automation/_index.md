@@ -1922,22 +1922,141 @@ If you do not have a signature yet, [time to create one](https://central.sonatyp
 * List: `gpg --list-keys`
 * Distribution: `gpg --keyserver hkp://pool.sks-keyservers.net --send-keys`
 
-Once you have a key, you can use the `sign` plugin to have Gradle generate artifact signatures
+Once you have a key, you can use the `signing` plugin to have Gradle generate artifact signatures
+
+---
+
+## Maven Central and other software repositories
+
+[Maven Central](https://search.maven.org/) is one of the de-facto standard repositories for JVM (artifacts)
+* It actually hosts any artifact compatible with the Maven conventional format
+* **No-retract policy**
+    * **Errors** [stay there forever](https://search.maven.org/artifact/commons-io/commons-io)
+* *Requires* both *sources* and *Javadoc* artifacts to get shipped
+* Artifacts on Central should only depend from other artifacts on Central
+* "Old" deployment management, requires some machinery
+
+Other notable repositories:
+* *Bintray JCenter*: superset of Maven Central
+* *Jitpack*: code hosting with (semi-)automatic packaging
+* *NPM*: for Javascript code
+* *Pypy*: for Python code
+* *RubyGems.org*: for Ruby code
+
+---
+
+## Publishing artifacts on Maven Central
+
+**Requirements**
+* A valid public signature
+* A registered **groupId**
+    * Registration is handled manually, [open an issue](https://issues.sonatype.org/secure/CreateIssue.jspa?issuetype=21&pid=10134)
+    * You could register `io.github.yourghusername` as group id
+* Complete project metadata in a `pom.xml` file
+    * Including developers, urls, project description, etc.
+
+**Procedure**
+* *Sign* artifacts with your registered signature
+* *Upload* them to `oss.sonatype.org`
+* *Close* the repository
+    * Automatically checks contents, structure, and signatures
+* Double check and then *Release*
+    * There is *no turning back* after a mistake!
+
+---
+
+# The Gradle publish plugin
+
+Gradle provides a `maven-publish` *plugin for automated delivery* to Maven repositories
+<br>
+Requires some manual configuration:
+* Generation of sources and javadoc jars
+* Configuration of the `pom.xml` metadata
+
+```kotlin
+plugins { `maven-publish` }
+publishing {
+    repositories { maven { url = uri("https://oss.sonatype.org" } }
+    publications {
+        create<MavenPublication>("publicationName") {
+            from(components["java"])
+            name.set("My Library")
+            description.set("A concise description of my library")
+            url.set("http://www.example.com/library")
+            licenses { ... }
+            developers { ... }
+            scm { ... }
+        }
+    }
+}
+```
+Adds:
+* `publish<PubName>PublicationTo<RepoName>Repository` 
+* `publish<PubName>PublicationToMavenLocal` 
+
+---
+
+## Preconfigured Central publication
+
+I produced a plugin that pre-configures `maven-publish` to point to Maven Central
+
+* Reacts to the application of `java`, `maven-publish`, and `signing` plugins
+* Defines task types `SourcesJar` and `JavadocJar`
+    * Supports both Javadoc and Dokka
+* Creates tasks to create the archives before delivery
+* Requires credentials to be set as environment variables
+    * `MAVEN_CENTRAL_USERNAME`
+    * `MAVEN_CENTRAL_PASSWORD`
+
 
 
 
 ---
 
-## Publishing artifacts
+## Preconfigured Central publication
 
-* delivery on Central
-* Maven central gradle plugin
+```kotlin
+plugins {
+    `java`
+    `maven-publish`
+    `signing`
+    id ("org.danilopianini.publish-on-central") version "0.3.0"
+}
+```
+```kotlin
+group = "your.group.id" // This must be configured for the generated pom.xml to work correctly
+publishOnCentral {
+    projectDescription.set("description") // Defaults to "No description provided"
+    projectLongName.set("full project name") // Defaults to the project name
+    licenseName.set("your license") // Default "Apache License, Version 2.0"
+    licenseUrl.set("link to your license") // Default http://www.apache.org/licenses/LICENSE-2.0
+    projectUrl.set("website url") // Default "https://github.com/DanySK/${project.name}"
+    scmConnection.set("git:git@github.com:youruser/yourrepo") // Default "git:git@github.com:DanySK/${project.name}"
+}
+```
+```kotlin
+publishing {
+    publications { withType<MavenPublication> { pom { developers {
+        developer {
+            name.set("Danilo Pianini")
+            email.set("danilo.pianini@gmail.com")
+            url.set("http://www.danilopianini.org/")
+        }
+    }}}}
+}
+```
 
 ---
 
-## Automatic updates
+# Automatic updates
 
-* Automatic update search with refreshVersions
+We automated everything from source writing to delivery!
+<br>
+Yet there is a missing piece: we need to *fetch library updates manually*
+<br>
+Also, version numbers are strings scattered around our build file
 
 ---
+
+# Build monitoring
 

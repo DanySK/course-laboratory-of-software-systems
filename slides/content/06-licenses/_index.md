@@ -1,8 +1,8 @@
  
 +++
 
-title = "Picking version numbers"
-description = "Assignign meaning to revisions"
+title = "Selecting a license"
+description = "Setting up your project correctly"
 outputs = ["Reveal"]
 
 [reveal_hugo]

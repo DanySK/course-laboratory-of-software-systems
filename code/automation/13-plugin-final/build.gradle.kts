@@ -8,9 +8,12 @@ plugins {
     id("pl.droidsonroids.jacoco.testkit") version "1.0.7"
     id("org.jlleitschuh.gradle.ktlint") version "9.4.1"
     id("io.gitlab.arturbosch.detekt") version "1.14.1"
+    signing
+    `maven-publish`
+    id ("org.danilopianini.publish-on-central") version "0.3.0"
 }
 
-group = "it.unibo.lss2020"
+group = "org.danilopianini"
 
 gitSemVer {
     version = computeGitSemVer()
@@ -94,7 +97,27 @@ detekt {
     config = files("$projectDir/config/detekt.yml")
 }
 
-val javadocJar by tasks.registering(Jar::class) {
-    archiveClassifier.set("javadoc")
-    from(tasks.dokkaJavadoc.get().outputDirectory)
+publishOnCentral {
+    projectDescription.set("A Greeting plugin")
+    projectLongName.set("Exemplary greeting plugin")
+    licenseName.set("MIT License")
+    licenseUrl.set("https://opensource.org/licenses/MIT")
+    projectUrl.set("https://github.com/DanySK/Course-Laboratory-of-Software-Systems")
+    scmConnection.set("git:git@github.com:DanySK/Course-Laboratory-of-Software-Systems.git")
+}
+
+publishing {
+    publications {
+        withType<MavenPublication> {
+            pom {
+                developers {
+                    developer {
+                        name.set("Danilo Pianini")
+                        email.set("danilo.pianini@gmail.com")
+                        url.set("http://www.danilopianini.org/")
+                    }
+                }
+            }
+        }
+    }
 }
