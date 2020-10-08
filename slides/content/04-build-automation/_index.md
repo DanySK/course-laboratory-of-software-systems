@@ -659,8 +659,10 @@ This usually involves cleaning up the build directory - not so hard in our examp
 
 ```kotlin
 tasks.register("clean") { // A generic task is fine
-    if (!buildDir.deleteRecursively()) {
-        throw IllegalStateException("Cannot delete $buildDir")
+    doLast {
+        if (!buildDir.deleteRecursively()) {
+            throw IllegalStateException("Cannot delete $buildDir")
+        }
     }
 }
 ```
@@ -1002,7 +1004,13 @@ Our Project's `build.gradle.kts` (full):
 
 ```kotlin
 allprojects {
-    tasks.register<Clean>("clean")
+    tasks.register("clean") { // A generic task is fine
+        doLast {
+            if (!buildDir.deleteRecursively()) {
+                throw IllegalStateException("Cannot delete $buildDir")
+            }
+        }
+    }
 }
 subprojects {
     val compileClasspath by configurations.creating
