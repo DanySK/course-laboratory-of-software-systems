@@ -26,7 +26,7 @@
     <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
 <h2 id="build-automation">Build Automation</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2020-10-07
+2020-10-08
 
 </section><section>
 <h1 id="build-automation-1">Build automation</h1>
@@ -1712,19 +1712,143 @@ detekt {
 <li>List: <code>gpg --list-keys</code></li>
 <li>Distribution: <code>gpg --keyserver hkp://pool.sks-keyservers.net --send-keys</code></li>
 </ul>
-<p>Once you have a key, you can use the <code>sign</code> plugin to have Gradle generate artifact signatures</p>
+<p>Once you have a key, you can use the <code>signing</code> plugin to have Gradle generate artifact signatures</p>
 </section><section>
-<h2 id="publishing-artifacts">Publishing artifacts</h2>
+<h2 id="maven-central-and-other-software-repositories">Maven Central and other software repositories</h2>
+<p><a href="https://search.maven.org/">Maven Central</a> is one of the de-facto standard repositories for JVM (artifacts)</p>
 <ul>
-<li>delivery on Central</li>
-<li>Maven central gradle plugin</li>
+<li>It actually hosts any artifact compatible with the Maven conventional format</li>
+<li><strong>No-retract policy</strong>
+<ul>
+<li><strong>Errors</strong> <a href="https://search.maven.org/artifact/commons-io/commons-io">stay there forever</a></li>
+</ul>
+</li>
+<li><em>Requires</em> both <em>sources</em> and <em>Javadoc</em> artifacts to get shipped</li>
+<li>Artifacts on Central should only depend from other artifacts on Central</li>
+<li>&ldquo;Old&rdquo; deployment management, requires some machinery</li>
+</ul>
+<p>Other notable repositories:</p>
+<ul>
+<li><em>Bintray JCenter</em>: superset of Maven Central</li>
+<li><em>Jitpack</em>: code hosting with (semi-)automatic packaging</li>
+<li><em>NPM</em>: for Javascript code</li>
+<li><em>Pypy</em>: for Python code</li>
+<li><em>RubyGems.org</em>: for Ruby code</li>
 </ul>
 </section><section>
-<h2 id="automatic-updates">Automatic updates</h2>
+<h2 id="publishing-artifacts-on-maven-central">Publishing artifacts on Maven Central</h2>
+<p><strong>Requirements</strong></p>
 <ul>
-<li>Automatic update search with refreshVersions</li>
+<li>A valid public signature</li>
+<li>A registered <strong>groupId</strong>
+<ul>
+<li>Registration is handled manually, <a href="https://issues.sonatype.org/secure/CreateIssue.jspa?issuetype=21&amp;pid=10134">open an issue</a></li>
+<li>You could register <code>io.github.yourghusername</code> as group id</li>
+</ul>
+</li>
+<li>Complete project metadata in a <code>pom.xml</code> file
+<ul>
+<li>Including developers, urls, project description, etc.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Procedure</strong></p>
+<ul>
+<li><em>Sign</em> artifacts with your registered signature</li>
+<li><em>Upload</em> them to <code>oss.sonatype.org</code></li>
+<li><em>Close</em> the repository
+<ul>
+<li>Automatically checks contents, structure, and signatures</li>
+</ul>
+</li>
+<li>Double check and then <em>Release</em>
+<ul>
+<li>There is <em>no turning back</em> after a mistake!</li>
+</ul>
+</li>
 </ul>
 </section><section>
+<h1 id="the-gradle-publish-plugin">The Gradle publish plugin</h1>
+<p>Gradle provides a <code>maven-publish</code> <em>plugin for automated delivery</em> to Maven repositories
+<br>
+Requires some manual configuration:</p>
+<ul>
+<li>Generation of sources and javadoc jars</li>
+<li>Configuration of the <code>pom.xml</code> metadata</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins { <span style="color:#a61717;background-color:#e3d2d2">`</span>maven-publish<span style="color:#a61717;background-color:#e3d2d2">`</span> }
+publishing {
+    repositories { maven { url = uri(<span style="color:#d20;background-color:#fff0f0">&#34;https://oss.sonatype.org&#34;</span> } }
+    publications {
+        create&lt;MavenPublication&gt;(<span style="color:#d20;background-color:#fff0f0">&#34;publicationName&#34;</span>) {
+            from(components[<span style="color:#d20;background-color:#fff0f0">&#34;java&#34;</span>])
+            name.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;My Library&#34;</span>)
+            description.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;A concise description of my library&#34;</span>)
+            url.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;http://www.example.com/library&#34;</span>)
+            licenses { ... }
+            developers { ... }
+            scm { ... }
+        }
+    }
+}
+</code></pre></div><p>Adds:</p>
+<ul>
+<li><code>publish&lt;PubName&gt;PublicationTo&lt;RepoName&gt;Repository</code></li>
+<li><code>publish&lt;PubName&gt;PublicationToMavenLocal</code></li>
+</ul>
+</section><section>
+<h2 id="preconfigured-central-publication">Preconfigured Central publication</h2>
+<p>I produced a plugin that pre-configures <code>maven-publish</code> to point to Maven Central</p>
+<ul>
+<li>Reacts to the application of <code>java</code>, <code>maven-publish</code>, and <code>signing</code> plugins</li>
+<li>Defines task types <code>SourcesJar</code> and <code>JavadocJar</code>
+<ul>
+<li>Supports both Javadoc and Dokka</li>
+</ul>
+</li>
+<li>Creates tasks to create the archives before delivery</li>
+<li>Requires credentials to be set as environment variables
+<ul>
+<li><code>MAVEN_CENTRAL_USERNAME</code></li>
+<li><code>MAVEN_CENTRAL_PASSWORD</code></li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="preconfigured-central-publication-1">Preconfigured Central publication</h2>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins {
+    `java`
+    <span style="color:#a61717;background-color:#e3d2d2">`</span>maven-publish<span style="color:#a61717;background-color:#e3d2d2">`</span>
+    `signing`
+    id (<span style="color:#d20;background-color:#fff0f0">&#34;org.danilopianini.publish-on-central&#34;</span>) version <span style="color:#d20;background-color:#fff0f0">&#34;0.3.0&#34;</span>
+}
+</code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>group = <span style="color:#d20;background-color:#fff0f0">&#34;your.group.id&#34;</span> <span style="color:#888">// This must be configured for the generated pom.xml to work correctly
+</span><span style="color:#888"></span>publishOnCentral {
+    projectDescription.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;description&#34;</span>) <span style="color:#888">// Defaults to &#34;No description provided&#34;
+</span><span style="color:#888"></span>    projectLongName.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;full project name&#34;</span>) <span style="color:#888">// Defaults to the project name
+</span><span style="color:#888"></span>    licenseName.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;your license&#34;</span>) <span style="color:#888">// Default &#34;Apache License, Version 2.0&#34;
+</span><span style="color:#888"></span>    licenseUrl.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;link to your license&#34;</span>) <span style="color:#888">// Default http://www.apache.org/licenses/LICENSE-2.0
+</span><span style="color:#888"></span>    projectUrl.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;website url&#34;</span>) <span style="color:#888">// Default &#34;https://github.com/DanySK/${project.name}&#34;
+</span><span style="color:#888"></span>    scmConnection.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;git:git@github.com:youruser/yourrepo&#34;</span>) <span style="color:#888">// Default &#34;git:git@github.com:DanySK/${project.name}&#34;
+</span><span style="color:#888"></span>}
+</code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>publishing {
+    publications { withType&lt;MavenPublication&gt; { pom { developers {
+        developer {
+            name.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;Danilo Pianini&#34;</span>)
+            email.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;danilo.pianini@gmail.com&#34;</span>)
+            url.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;http://www.danilopianini.org/&#34;</span>)
+        }
+    }}}}
+}
+</code></pre></div></section><section>
+<h1 id="automatic-updates">Automatic updates</h1>
+<p>We automated everything from source writing to delivery!
+<br>
+Yet there is a missing piece: we need to <em>fetch library updates manually</em>
+<br>
+Also, version numbers are strings scattered around our build file</p>
+</section><section>
+<h1 id="build-monitoring">Build monitoring</h1>
 </section>
 
   
