@@ -577,8 +577,10 @@ For istance, in the previous example, before we introduced a dependency between 
 <br>
 This usually involves cleaning up the build directory - not so hard in our example</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>tasks.register(<span style="color:#d20;background-color:#fff0f0">&#34;clean&#34;</span>) { <span style="color:#888">// A generic task is fine
-</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">if</span> (!buildDir.deleteRecursively()) {
-        <span style="color:#080;font-weight:bold">throw</span> IllegalStateException(<span style="color:#d20;background-color:#fff0f0">&#34;Cannot delete $buildDir&#34;</span>)
+</span><span style="color:#888"></span>    doLast {
+        <span style="color:#080;font-weight:bold">if</span> (!buildDir.deleteRecursively()) {
+            <span style="color:#080;font-weight:bold">throw</span> IllegalStateException(<span style="color:#d20;background-color:#fff0f0">&#34;Cannot delete $buildDir&#34;</span>)
+        }
     }
 }
 </code></pre></div></section><section>
@@ -912,7 +914,13 @@ repositories {
 <h3 id="project-wise-api-extension-plugin-2">Project-wise API extension (plugin)</h3>
 <p>Our Project&rsquo;s <code>build.gradle.kts</code> (full):</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>allprojects {
-    tasks.register&lt;Clean&gt;(<span style="color:#d20;background-color:#fff0f0">&#34;clean&#34;</span>)
+    tasks.register(<span style="color:#d20;background-color:#fff0f0">&#34;clean&#34;</span>) { <span style="color:#888">// A generic task is fine
+</span><span style="color:#888"></span>        doLast {
+            <span style="color:#080;font-weight:bold">if</span> (!buildDir.deleteRecursively()) {
+                <span style="color:#080;font-weight:bold">throw</span> IllegalStateException(<span style="color:#d20;background-color:#fff0f0">&#34;Cannot delete $buildDir&#34;</span>)
+            }
+        }
+    }
 }
 subprojects {
     <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">compileClasspath</span> <span style="color:#080;font-weight:bold">by</span> configurations.creating
