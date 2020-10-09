@@ -2056,7 +2056,7 @@ publishing {
 
 ---
 
-# Automatic updates
+# (Semi)Automatic updates
 
 We automated everything from source writing to delivery!
 <br>
@@ -2064,7 +2064,56 @@ Yet there is a missing piece: we need to *fetch library updates manually*
 <br>
 Also, version numbers are strings scattered around our build file
 
+**Possible solution**
+
+A plugin that stores versions in a properties file, and fetches updates automatically: [refreshVersions](https://github.com/jmfayard/refreshVersions/)
+* The plugin is applied project-wise to the `settings.gradle.kts`
+```kotlin
+import de.fayard.refreshVersions.bootstrapRefreshVersions
+buildscript {
+    repositories { gradlePluginPortal() }
+    dependencies { classpath("de.fayard.refreshVersions:refreshVersions:0.9.5") }
+}
+bootstrapRefreshVersions()
+```
+* Hardcoded versions can get substitued with `_`
+* Hardcoded plugin versions can be removed
+* Adds task `refreshVersions` to update versions in `versions.properties`
+* *Note*: this plugin is *still in development*, your mileage may vary
+
+
 ---
 
-# Build monitoring
+# Inspecting dependencies
 
+In rich projects, most of the build-related issues are due to pesky stuff going on with *dependencies*
+* Transitive conflicts
+    * dependency A requires B at version 1, dependency C requires B at version 2
+* Multiple names for the same artifact
+* Unexpected differences between configurations
+
+Gradle allows for **inspection** of the dependencies:
+* `./gradlew dependencies` prints the dependency trees for each configuration
+
+Inspecting multiple large trees can be difficult
+* A single dependency inspection is available
+* `./gradlew dependencyInsight --dependency <DepName> `
+    * Optionally, fiterable by configuration: `--configuration <ConfName>`
+
+---
+
+# Build reporting
+
+* Builds can get complicated when automation is pushed forward
+    * Performance issues may arise
+    * Some tests may run anomalously slow
+    * Dependency trees may get hard to analyze in a terminal
+    * Plugin behaviour could be different than expected
+
+Gradle supports a reporting system called *Gradle build scans*
+* Executable by appending `--scan` to the build
+* Requires terminal interaction (or use of the [enterprise plugin](https://docs.gradle.com/enterprise/gradle-plugin/))
+
+Example scans:
+* [https://scans.gradle.com/s/5i6ai7gz6qzmc](https://scans.gradle.com/s/5i6ai7gz6qzmc)
+* [https://scans.gradle.com/s/5jmd7avh2gnvi](https://scans.gradle.com/s/5jmd7avh2gnvi)
