@@ -1849,14 +1849,76 @@ publishing {
     }}}}
 }
 </code></pre></div></section><section>
-<h1 id="automatic-updates">Automatic updates</h1>
+<h1 id="semiautomatic-updates">(Semi)Automatic updates</h1>
 <p>We automated everything from source writing to delivery!
 <br>
 Yet there is a missing piece: we need to <em>fetch library updates manually</em>
 <br>
 Also, version numbers are strings scattered around our build file</p>
+<p><strong>Possible solution</strong></p>
+<p>A plugin that stores versions in a properties file, and fetches updates automatically: <a href="https://github.com/jmfayard/refreshVersions/">refreshVersions</a></p>
+<ul>
+<li>The plugin is applied project-wise to the <code>settings.gradle.kts</code></li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">de.fayard.refreshVersions.bootstrapRefreshVersions</span>
+buildscript {
+    repositories { gradlePluginPortal() }
+    dependencies { classpath(<span style="color:#d20;background-color:#fff0f0">&#34;de.fayard.refreshVersions:refreshVersions:0.9.5&#34;</span>) }
+}
+bootstrapRefreshVersions()
+</code></pre></div><ul>
+<li>Hardcoded versions can get substitued with <code>_</code></li>
+<li>Hardcoded plugin versions can be removed</li>
+<li>Adds task <code>refreshVersions</code> to update versions in <code>versions.properties</code></li>
+<li><em>Note</em>: this plugin is <em>still in development</em>, your mileage may vary</li>
+</ul>
 </section><section>
-<h1 id="build-monitoring">Build monitoring</h1>
+<h1 id="inspecting-dependencies">Inspecting dependencies</h1>
+<p>In rich projects, most of the build-related issues are due to pesky stuff going on with <em>dependencies</em></p>
+<ul>
+<li>Transitive conflicts
+<ul>
+<li>dependency A requires B at version 1, dependency C requires B at version 2</li>
+</ul>
+</li>
+<li>Multiple names for the same artifact</li>
+<li>Unexpected differences between configurations</li>
+</ul>
+<p>Gradle allows for <strong>inspection</strong> of the dependencies:</p>
+<ul>
+<li><code>./gradlew dependencies</code> prints the dependency trees for each configuration</li>
+</ul>
+<p>Inspecting multiple large trees can be difficult</p>
+<ul>
+<li>A single dependency inspection is available</li>
+<li><code>./gradlew dependencyInsight --dependency &lt;DepName&gt; </code>
+<ul>
+<li>Optionally, fiterable by configuration: <code>--configuration &lt;ConfName&gt;</code></li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h1 id="build-reporting">Build reporting</h1>
+<ul>
+<li>Builds can get complicated when automation is pushed forward
+<ul>
+<li>Performance issues may arise</li>
+<li>Some tests may run anomalously slow</li>
+<li>Dependency trees may get hard to analyze in a terminal</li>
+<li>Plugin behaviour could be different than expected</li>
+</ul>
+</li>
+</ul>
+<p>Gradle supports a reporting system called <em>Gradle build scans</em></p>
+<ul>
+<li>Executable by appending <code>--scan</code> to the build</li>
+<li>Requires terminal interaction (or use of the <a href="https://docs.gradle.com/enterprise/gradle-plugin/">enterprise plugin</a>)</li>
+</ul>
+<p>Example scans:</p>
+<ul>
+<li><a href="https://scans.gradle.com/s/5i6ai7gz6qzmc">https://scans.gradle.com/s/5i6ai7gz6qzmc</a></li>
+<li><a href="https://scans.gradle.com/s/5jmd7avh2gnvi">https://scans.gradle.com/s/5jmd7avh2gnvi</a></li>
+</ul>
 </section>
 
   
