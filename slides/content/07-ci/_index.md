@@ -305,17 +305,71 @@ Travis automatically combines some variables into a *[build matrix](https://docs
 * `jobs.exclude` can be used to filter jobs out of the matrix
 
 ```yaml
-
+...
+env:
+  global:
+    ...
+  matrix:
+    - JDK="adopt@"
+    - JDK="adopt@1.11"
+    - JDK="adopt-openj9@"
+    - JDK="adopt-openj9@1.11"
+jobs:
+  include: # Add a job with default OS and the specified matrix environment
+    env:
+      - JDK="adopt@1.8" 
+  exclude: # Excludes builds with OSX and OpenJ9
+    - { os: osx, env: [ JDK="adopt-openj9@" ] } # JSON-like syntax, YAML is a superset of JSON
+    - { os: osx, env: [ JDK="adopt-openj9@1.11" ] }
 ```
-
 
 ---
 
-* **submodule repo**
-* environment variables
-* build matrix
+## Build Stages and workspaces
+
+Spanning several jobs upfront may make the build very slow
+* A single mistake will be detected only after all jobs failed
+* In case of limited resources, it can take a long time
+* Most errors will affect *all* builds
+
+**Build stages** allow to group one or more jobs that are to be run in parallel
+* By default, all jobs run the `test` stage
+* Jobs from a stage can communicate with jobs on another stage via **[workspaces](https://docs.travis-ci.com/user/using-workspaces/)**
+
+Consider for instance this structure:
+1. Run a build on the *reference* environment
+2. If successul, then *test on all the supported configurations*
+3. If everything is successful, then *deploy*
+
+this can be mapped into a *three-stages* configuration
+
+---
+
+## Travis YAML validation
+
+* Builds can get *complex*
+* The corrisponding YAML file can get *rich*
+* Syntax *errors are possible and likely*
+
+* Use *[anchors](https://yaml.org/spec/1.2/spec.html#id2765878)* and *[merge keys](https://yaml.org/type/merge.html)* to foster reuse
+* *Validate* YAML before pushing
+    * Travis CI provides a Ruby tool for this!
+
+<br>
+<br>
+
+#### Using `travis` from the local terminal
+* Installation: `gem install travis`
+    * Make sure you have the Gem install folder in your `PATH`
+* Run `travis lint` to verify if your YAML file complies
+
+---
+
+## Conditional jobs, stages, and deployments
+
+---
+
 * conditional jobs
-* stages and workspaces
 * private variables
 * file encryption
 * cronjobs
@@ -327,3 +381,4 @@ Travis automatically combines some variables into a *[build matrix](https://docs
 * CI practices
 * ASCII armored in memory signign
 * Repo-level automation
+
