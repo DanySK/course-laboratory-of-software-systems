@@ -69,7 +69,7 @@ Often for *open source* projects, internal and external versioning *coincide*
 
 ---
 
-# Versioning appraoaches
+# Versioning approaches
 ## Code naming
 
 The version is represented by a (usually pronounceable) *word*, *short phrase* or *acronym*
@@ -85,7 +85,7 @@ The version is represented by a (usually pronounceable) *word*, *short phrase* o
 
 ---
 
-# Versioning appraoaches
+# Versioning approaches
 ## Date based versioning
 
 The version is represented by **a string representing the release date**
@@ -98,7 +98,7 @@ The version is represented by **a string representing the release date**
 
 ---
 
-# Versioning appraoaches
+# Versioning approaches
 ## Unary numbering
 
 The version is represented by a **string whose length grows at each version**
@@ -108,7 +108,7 @@ The version is represented by a **string whose length grows at each version**
 
 ---
 
-# Versioning appraoaches
+# Versioning approaches
 ## Degree of retro compatibility
 
 The version is represented one or more sequences, separately incremented, that
