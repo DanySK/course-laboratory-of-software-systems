@@ -5,3 +5,7 @@
 	path = code/ci/00-ci-init
 	url = https://github.com/DanySK/Plugin-CI-Running-Example.git
 	branch = 00-ci-init
+[submodule "code/ci/01-multi-os"]
+	path = code/ci/01-multi-os
+	url = https://github.com/DanySK/Plugin-CI-Running-Example.git
+	branch = 01-multi-os

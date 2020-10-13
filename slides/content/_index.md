@@ -201,8 +201,8 @@ Note: data is not persisted automatically, at end of session you need to copy it
   * [Build automation](04-build-automation)
   * [Software versioning](05-version-selection)
   * [Software licensing](06-licenses)
+  * [Continuous integration/delivery/deployment](07-ci)
   * Advanced version control
-  * Continuous integration/deployment/delivery
   * Containerization
 * Domain driven design
   * External DSL construction
