@@ -29,7 +29,311 @@
 2020-10-13
 
 </section><section>
+<h1 id="continuous-integration-1">Continuous Integration</h1>
+<p>The practice of integrating code with a main development line <strong>continuously</strong>
+<br>
+<em>Verifying</em> that the build remains intact</p>
 <ul>
+<li>Requires <em>build automation</em> to be in place</li>
+<li>Requires <em>testing</em> to be in place</li>
+<li>Pivot point of the <em>DevOps</em> practices</li>
+<li>Historically introduced by the extreme programming (XP) community</li>
+<li>Now widespread in the larger DevOps community</li>
+</ul>
+</section><section>
+<h1 id="the-integration-hell">The Integration Hell</h1>
+<ul>
+<li>Traditional software development takes several months for <em>“integrating”</em> a couple of years of development</li>
+<li>The longer there is no integrated project, the higher the <strong>risk</strong></li>
+</ul>
+<p><img src="integration-traditional.png" style='
+    
+    
+    max-width: 40vw;
+    max-height: 50vh;
+    object-fit: contain;
+'>
+
+<img src="integration-continuous.png" style='
+    
+    
+    max-width: 40vw;
+    max-height: 50vh;
+    object-fit: contain;
+'>
+</p>
+</section><section>
+<h2 id="microreleases-and-protoduction">Microreleases and protoduction</h2>
+<ul>
+<li>High frequency integration may lead to high frequency releases
+<ul>
+<li>Possibly, <em>one per commit</em></li>
+<li>Of course, <em>versioning</em> must be appropriate&hellip;</li>
+</ul>
+</li>
+</ul>
+<p>Traditionally, <strong>protoduction</strong> is jargon for a <em>prototype that ends up in production</em></p>
+<img src="protoduction.jpg" style='
+    
+    
+    max-width: 25vw;
+    max-height: 40vh;
+    object-fit: contain;
+'>
+
+<ul>
+<li>Traditionally used with a <em>negative</em> meaning
+<ul>
+<li>It implied software
+<ul>
+<li><em>unfinished</em>,</li>
+<li><em>unpolished</em>,</li>
+<li><em>badly designed</em></li>
+</ul>
+</li>
+<li>Very common, unfortunately</li>
+</ul>
+</li>
+<li>This si different in a continuously integrated environment
+<ul>
+<li><em>Incrementality</em> is fostered</li>
+<li>Partial features are <em>up to date</em> with the mainline</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="intensive-operations-should-be-elsewhere">Intensive operations should be elsewhere</h2>
+<ul>
+<li>The build process should be <em>rich</em> and <em>fast</em></li>
+<li>Operations requiring a long time should be <em>automated</em>
+<ul>
+<li>And run somewhere else than devs&rsquo; PCs</li>
+</ul>
+</li>
+</ul>
+<p>
+<img src="compiling.png" style='
+    
+    
+    max-width: 95vw;
+    max-height: 50vh;
+    object-fit: contain;
+'>
+
+</p>
+</section><section>
+<h2 id="continuous-integration-software">Continuous integration software</h2>
+<p>Software that promotes CI practices should:</p>
+<ul>
+<li>Provide <em>clean environments</em> for compilation/testing</li>
+<li>Provide a <em>wide range</em> of environments
+<ul>
+<li>Matching the relevant specifications of the actual targets</li>
+</ul>
+</li>
+<li>High degree of <em>configurability</em></li>
+<li>Possibly, <em>declarative configuration</em></li>
+<li>A <em>notification system</em> to alert about failures or issues</li>
+<li>Support for <em>authentication</em> and deployment to external services</li>
+</ul>
+<p><strong>Plenty</strong> of integrators on the market</p>
+<ul>
+<li>Circle CI, Travis CI, Werker, done.io, Codefresh, Codeship, Bitbucket Pipelines&hellip;</li>
+</ul>
+<p>We will use Travis CI</p>
+<ul>
+<li>GitHub integration</li>
+<li>Free for academy</li>
+<li>Multiple OSs supported</li>
+</ul>
+</section><section>
+<h1 id="core-concepts">Core concepts</h1>
+<p><strong>phase</strong></p>
+<ul>
+<li>A <em>named sequence of commands</em></li>
+<li>A phase succeeds if all the commands succeed</li>
+<li>The next phase starts only if the previous was successful</li>
+<li>The names and order of phases are <em>pre-determined</em></li>
+</ul>
+<p><strong>job</strong></p>
+<ul>
+<li>Operation consisting in:
+<ul>
+<li><em>spawning</em> of a fresh <em>virtual environment</em></li>
+<li><em>configuration</em> of the virtual environment</li>
+<li><em>cloning</em> of the repository</li>
+<li><em>ordered execution of all phases</em></li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h1 id="core-concepts-1">Core concepts</h1>
+<p><strong>stage</strong></p>
+<ul>
+<li>A <em>group of jobs</em> that run in parallel</li>
+<li>A build finishes when all of its jobs are finished.</li>
+<li>A stage is successful if all of its stages are successful</li>
+<li>The next stages starts only if the previous was successful</li>
+</ul>
+<p><strong>build</strong></p>
+<ul>
+<li>A <em>group of stages</em> that run in <em>sequence</em></li>
+<li>A build finishes when all of its stages are finished.</li>
+<li>A build is successful if all of its stages are successful</li>
+</ul>
+</section><section>
+<h2 id="job-lifecycle">Job lifecycle</h2>
+
+
+  
+    
+  
+
+
+<figure>
+  <img
+    src='https://g.gravizo.com/svg?%0a%40startuml%0a%0a%28%2a%29%20-right-%3e%20%22before_install%22%0a%22before_install%22%20-right-%3e%20%22install%22%0a%22install%22%20-right-%3e%20%22before_script%22%0a%22before_script%22%20-right-%3e%20%22script%22%0a%22script%22%20-right-%3e%20%22before_cache%22%0aif%20%22TRAVIS_TEST_RESULT%22%20then%0a%20%20--%3e%20%5btrue%5d%20%22after_success%22%0a%20%20--%3e%20%22before_deploy%22%0aelse%0a%20%20--%3e%20%5bfalse%5d%20%22after_failure%22%0a%20%20--%3e%20%22before_deploy%22%0a%22before_deploy%22%20-left-%3e%20%22deploy%22%0a%22deploy%22%20-left-%3e%20%22after_deploy%22%0a%22after_deploy%22%20-left-%3e%20%22after_script%22%0a%22after_script%22%20-left-%3e%20%28%2a%29%0a%0a%40enduml%0a'
+    alt='Travis CI Job lifecycle'
+    />
+    <figcaption>Travis CI Job lifecycle</figcaption>
+</figure>
+
+<ul>
+<li>If <code>before_install</code>, <code>install</code> or <code>before_script</code> returns a non-zero exit code, the build is errored and stops immediately.</li>
+<li>If <code>script</code> returns a non-zero exit code, the build is failed, but <em>continues to run</em> before being marked as failed.</li>
+<li>The exit code of <code>after_success</code>, <code>after_failure</code>, <code>after_script</code>, <code>after_deploy</code> and subsequent stages <em>do not affect the build result</em>.
+<ul>
+<li>However, if one of these stages times out, the build is marked as failed.</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="travis-ci-configuration">Travis CI: Configuration</h2>
+<p>Travis CI is configured in a single <code>travis.yml</code> file located in the repository root</p>
+<p>At registration time, it integrates with GitHub</p>
+<p>New pushes on repositories which contain <code>.travis.yml</code> get automatically built</p>
+</section><section>
+<h2 id="travis-ci-environment-selection">Travis CI: Environment selection</h2>
+<p>By default, travis tries to build a <em>Ruby</em> project
+<br>
+Travis itself is written in Ruby</p>
+<p>Selection of a different system configuration can be operated with the <code>language</code> keyword.
+<br>
+Over <a href="https://docs.travis-ci.com/user/language-specific/">30 languages</a> are natively supported.</p>
+<p>Some of the most interesting for us are:</p>
+<ul>
+<li><code>java</code></li>
+<li><code>scala</code></li>
+<li><code>minimal</code> (bare environment with just bash and Ruby)</li>
+</ul>
+<p>Every environment has some <em>pre-defined behaviour</em>,
+for instance the <code>language: java</code> environment automatically searches for a <code>pom.xml</code> and in case runs Maven,
+if not found searches for a <code>gradlew</code> file and runs <code>./gradlew assemble</code> in the <code>install</code> phase and <code>./gradlew check</code> in the <code>script</code> phase.</p>
+<ul>
+<li>Default phase behavior can be disabled with <code>&lt;phase_name&gt;: true</code></li>
+</ul>
+</section><section>
+<h2 id="travis-ci-clone-depth-control">Travis CI: clone depth control</h2>
+<p>By default, Travis CI <em>does not clone the entire history</em> of a repository.
+<br>
+It performs instead a <em>shallow clone</em>, by running <code>git clone --depth 50 &lt;repo-url&gt;</code></p>
+<p>This <em>interferes with DVCS-based versioning</em>, which may well need to look behind of many commits.</p>
+<p>This behaviour can be controlled with the <code>git</code> key:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">git</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">depth</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">false</span><span style="color:#bbb"> </span><span style="color:#888"># Accepts false or any number representing the commit count, defaults to 50</span><span style="color:#bbb">
+</span></code></pre></div><p>The same key allows for controlling further behaviour, such as disabling <code>autocrlf</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">git</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">depth</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">false</span><span style="color:#bbb"> </span><span style="color:#888"># Accepts false or any number representing the commit count, defaults to 50</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">autocrlf</span>:<span style="color:#bbb"> </span>input<span style="color:#bbb"> </span><span style="color:#888"># Prevents git to try to be smart with line endings</span><span style="color:#bbb">
+</span></code></pre></div></section><section>
+<h2 id="travis-ci-testing-on-different-oss">Travis CI: Testing on different OSs</h2>
+<p>If our software supports <em>multiple operating systems</em>, it is a good practice to verify that changes do not <em>break compatibility</em></p>
+<p>A few integrators allow to perform a multi-os build. In Travis it is possible via the <code>os</code> key, supporting:</p>
+<ul>
+<li><code>linux</code> &ndash; A Ubuntu Linux installation</li>
+<li><code>macos</code> &ndash; A MacOS X installation</li>
+<li><code>windows</code> &ndash; A Windows Server installation</li>
+</ul>
+<p>Specifying <em>multiple operating systems</em> causes the execution of <em>multiple jobs</em> in the same build</p>
+<p><em>Note</em>: Some languages or system configurations may be unavailable for some environments!</p>
+<ul>
+<li>e.g., there is no <code>java</code> environment available on <code>windows</code></li>
+</ul>
+</section><section>
+<h2 id="custom-environment">Custom environment</h2>
+<p>If a particular environment of need is unavailable, one solution is
+<br>
+<strong>build it yourself</strong></p>
+<ul>
+<li>start from <code>language: minimal</code></li>
+<li>if the software you need is installable via <strong>apt</strong> or <strong>homebrew</strong>, use the <code>addons</code> keyword:</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">addons</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">apt</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">packages</span>:<span style="color:#bbb"> </span>foo<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">homebrew</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">packages</span>:<span style="color:#bbb"> </span>bar<span style="color:#bbb">
+</span></code></pre></div><ul>
+<li>install packages under windows using <strong><a href="https://chocolatey.org/">chocolatey</a></strong> (pre installed on Travis Windows instances)</li>
+<li>if you need to perform a manual installation, you can write it in bash</li>
+</ul>
+</section><section>
+<h2 id="improved-resilience-on-travis">Improved resilience on Travis</h2>
+<ul>
+<li>operations that may fail due to network issues or long time can be worked around using Travis built in functions:
+<ul>
+<li><code>travis_retry COMMAND</code> tries the same <code>COMMAND</code> three times, giving up only if it fails for three times</li>
+<li><code>travis_wait N COMMAND</code> allows <code>COMMAND</code> to run without any output for longer than the default 10 minutes.
+<ul>
+<li>The hard limit on 50 minutes per job however remains</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="a-java-custom-environment">A Java custom environment</h2>
+<p>It could be useful to test on specific versions of the JDK, for instance.
+<br>
+A multi platform installer exists: <a href="https://github.com/shyiko/jabba">Jabba</a></p>
+<p>Also, a Travis-CI dedicated tool has been written to ease installation via Travis: <a href="Gravis-CI">Gravis-CI</a></p>
+<ul>
+<li>Automatically installs Jabba</li>
+<li>Uses Jabba to install the version of the JDK specified in the <code>JDK</code> environment variable</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">env</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">global</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- GRAVIS_REPO=<span style="color:#d20;background-color:#fff0f0">&#34;https://github.com/DanySK/Gravis-CI.git&#34;</span><span style="color:#bbb"> </span><span style="color:#888"># Convenience variable for shortening commands</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- GRAVIS=<span style="color:#d20;background-color:#fff0f0">&#34;$HOME/gravis&#34;</span><span style="color:#bbb"> </span><span style="color:#888"># Convenience variable for shortening commands</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- JDK=<span style="color:#d20;background-color:#fff0f0">&#34;adopt@1.11.0-8&#34;</span><span style="color:#bbb"> </span><span style="color:#888"># Partial versions supported, adopt@1.11 would pull the latest adopt 1.11</span><span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">before_install</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>- travis_retry<span style="color:#bbb"> </span>git<span style="color:#bbb"> </span>clone<span style="color:#bbb"> </span>--depth<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">1</span><span style="color:#bbb"> </span>$GRAVIS_REPO<span style="color:#bbb"> </span>$GRAVIS<span style="color:#bbb"> </span><span style="color:#888"># Check out the script set</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>- source<span style="color:#bbb"> </span>$GRAVIS/install-jdk<span style="color:#bbb"> </span><span style="color:#888"># Install the JDK you configured in the $JDK environment variable</span><span style="color:#bbb">
+</span></code></pre></div></section><section>
+<h2 id="build-matrix">Build Matrix</h2>
+<p>Similarly to the operating systems, other environment features may need to get tested, e.g. the JDK versions</p>
+<p>Travis automatically combines some variables into a <em><a href="https://docs.travis-ci.com/user/build-matrix/">build matrix</a></em></p>
+<ul>
+<li>Generates one job for each combination of such variable</li>
+<li>Expands <code>os</code>, custom language keys (such as <code>rvm</code> or <code>python</code>), and <code>env.matrix</code> keys</li>
+<li><code>jobs.include</code> can be used to add further jobs to the matrix</li>
+<li><code>jobs.exclude</code> can be used to filter jobs out of the matrix</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#bbb">
+</span></code></pre></div></section><section>
+<ul>
+<li><strong>submodule repo</strong></li>
+<li>environment variables</li>
+<li>build matrix</li>
+<li>conditional jobs</li>
+<li>stages and workspaces</li>
+<li>private variables</li>
+<li>file encryption</li>
+<li>cronjobs</li>
+<li>caches</li>
+<li>conditional builds</li>
+<li>conditional deployments</li>
 <li>Codecov.io</li>
 <li>Sonarcloud</li>
 <li>CI practices</li>
