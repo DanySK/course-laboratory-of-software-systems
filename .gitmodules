@@ -13,3 +13,7 @@
 	path = code/ci/02-custom-env
 	url = https://github.com/DanySK/Plugin-CI-Running-Example.git
 	branch = 02-custom-env
+[submodule "code/ci/03-build-matrix"]
+	path = code/ci/03-build-matrix
+	url = https://github.com/DanySK/Plugin-CI-Running-Example.git
+	branch = 03-build-matrix
