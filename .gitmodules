@@ -9,3 +9,7 @@
 	path = code/ci/01-multi-os
 	url = https://github.com/DanySK/Plugin-CI-Running-Example.git
 	branch = 01-multi-os
+[submodule "code/ci/02-custom-env"]
+	path = code/ci/02-custom-env
+	url = https://github.com/DanySK/Plugin-CI-Running-Example.git
+	branch = 02-custom-env
