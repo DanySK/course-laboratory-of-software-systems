@@ -320,14 +320,80 @@ A multi platform installer exists: <a href="https://github.com/shyiko/jabba">Jab
 <li><code>jobs.include</code> can be used to add further jobs to the matrix</li>
 <li><code>jobs.exclude</code> can be used to filter jobs out of the matrix</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#bbb">
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>...<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">env</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">global</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>...<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">matrix</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- JDK=<span style="color:#d20;background-color:#fff0f0">&#34;adopt@&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- JDK=<span style="color:#d20;background-color:#fff0f0">&#34;adopt@1.11&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- JDK=<span style="color:#d20;background-color:#fff0f0">&#34;adopt-openj9@&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- JDK=<span style="color:#d20;background-color:#fff0f0">&#34;adopt-openj9@1.11&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">jobs</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">include</span>:<span style="color:#bbb"> </span><span style="color:#888"># Add a job with default OS and the specified matrix environment</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">env</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- JDK=<span style="color:#d20;background-color:#fff0f0">&#34;adopt@1.8&#34;</span><span style="color:#bbb"> 
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">exclude</span>:<span style="color:#bbb"> </span><span style="color:#888"># Excludes builds with OSX and OpenJ9</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- {<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">os: osx, env</span>:<span style="color:#bbb"> </span>[<span style="color:#bbb"> </span>JDK=<span style="color:#d20;background-color:#fff0f0">&#34;adopt-openj9@&#34;</span><span style="color:#bbb"> </span>]<span style="color:#bbb"> </span>}<span style="color:#bbb"> </span><span style="color:#888"># JSON-like syntax, YAML is a superset of JSON</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- {<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">os: osx, env</span>:<span style="color:#bbb"> </span>[<span style="color:#bbb"> </span>JDK=<span style="color:#d20;background-color:#fff0f0">&#34;adopt-openj9@1.11&#34;</span><span style="color:#bbb"> </span>]<span style="color:#bbb"> </span>}<span style="color:#bbb">
 </span></code></pre></div></section><section>
+<h2 id="build-stages-and-workspaces">Build Stages and workspaces</h2>
+<p>Spanning several jobs upfront may make the build very slow</p>
 <ul>
-<li><strong>submodule repo</strong></li>
-<li>environment variables</li>
-<li>build matrix</li>
+<li>A single mistake will be detected only after all jobs failed</li>
+<li>In case of limited resources, it can take a long time</li>
+<li>Most errors will affect <em>all</em> builds</li>
+</ul>
+<p><strong>Build stages</strong> allow to group one or more jobs that are to be run in parallel</p>
+<ul>
+<li>By default, all jobs run the <code>test</code> stage</li>
+<li>Jobs from a stage can communicate with jobs on another stage via <strong><a href="https://docs.travis-ci.com/user/using-workspaces/">workspaces</a></strong></li>
+</ul>
+<p>Consider for instance this structure:</p>
+<ol>
+<li>Run a build on the <em>reference</em> environment</li>
+<li>If successul, then <em>test on all the supported configurations</em></li>
+<li>If everything is successful, then <em>deploy</em></li>
+</ol>
+<p>this can be mapped into a <em>three-stages</em> configuration</p>
+</section><section>
+<h2 id="travis-yaml-validation">Travis YAML validation</h2>
+<ul>
+<li>
+<p>Builds can get <em>complex</em></p>
+</li>
+<li>
+<p>The corrisponding YAML file can get <em>rich</em></p>
+</li>
+<li>
+<p>Syntax <em>errors are possible and likely</em></p>
+</li>
+<li>
+<p>Use <em><a href="https://yaml.org/spec/1.2/spec.html#id2765878">anchors</a></em> and <em><a href="https://yaml.org/type/merge.html">merge keys</a></em> to foster reuse</p>
+</li>
+<li>
+<p><em>Validate</em> YAML before pushing</p>
+<ul>
+<li>Travis CI provides a Ruby tool for this!</li>
+</ul>
+</li>
+</ul>
+<br>
+<br>
+<h4 id="using-travis-from-the-local-terminal">Using <code>travis</code> from the local terminal</h4>
+<ul>
+<li>Installation: <code>gem install travis</code>
+<ul>
+<li>Make sure you have the Gem install folder in your <code>PATH</code></li>
+</ul>
+</li>
+<li>Run <code>travis lint</code> to verify if your YAML file complies</li>
+</ul>
+</section><section>
+<h2 id="conditional-jobs-stages-and-deployments">Conditional jobs, stages, and deployments</h2>
+</section><section>
+<ul>
 <li>conditional jobs</li>
-<li>stages and workspaces</li>
 <li>private variables</li>
 <li>file encryption</li>
 <li>cronjobs</li>
