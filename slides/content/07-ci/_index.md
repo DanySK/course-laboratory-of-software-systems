@@ -365,20 +365,180 @@ this can be mapped into a *three-stages* configuration
 
 ---
 
-## Conditional jobs, stages, and deployments
+## Private data and continuous integration
+
+We would like the CI to be able to
+* Sign our artifacts
+* Delivery/Deploy our artifacts on remote targets
+
+Both operations **require private information to be shared**
+
+Of course, private data *can't be shared*
+* Attackers may steal the identity
+* Attackers may compromise deployments
+* In case of open projects, attackers may exploit *pull requests*!
+    * Fork your project (which has e.g. a secret environment variable)
+    * Print the value of the secret (e.g. with `printenv`)
+
+How to *share a secret* with the build environment?
 
 ---
 
-* conditional jobs
-* private variables
-* file encryption
-* cronjobs
-* caches
-* conditional builds
-* conditional deployments
-* Codecov.io
-* Sonarcloud
-* CI practices
-* ASCII armored in memory signign
-* Repo-level automation
+## Sharing a secret
 
+Travis supports the insertion of secret **variables** in two ways:
+* From the *web interface* (easier, quicker)
+    * More options $\Rightarrow$ Settings $\Rightarrow$ Environment variables
+* From the *command line* (more compleicated)
+    * `travis encrypt <String to encrypt>  --pro`
+        * e.g., `travis encrypt 'PASSWORD="foobar"'`
+    * produces a `secure: <code>` entry that can be pasted in `.travis.yml`
+        * e.g.:
+```yaml
+env:
+  global:
+    secure: <code>
+```
+
+Travis also supports sharing a **single secret file**
+* It gets encrypted using `travis encrypt-file <file> --pro`
+* The output command must be included in `.travis.yml`
+    * e.g. in the `before_install` phase of any job requiring it
+* The resulting encrypted file must be tracked
+    * Be careful not to track the original one!
+
+---
+
+## Shared secrets: best practices
+
+* Leverage the single shared file for sharing an **ASCII-armored** PGP key
+    * Allows for *signing* artifacts
+    * *Signing keys are large* and cannot fit a variable
+    * Obtain it with `gpg --armor --export-secret-keys > secrets.asc`
+    * Encrypt with `travis encrypt-file secrets.asc --pro`
+    * Remove it (`rm secrets.asc`)
+    * Track the encrypted file `git add secrets.asc.enc`
+    * In the `install` or `before_install` phase:
+        * Add the `openssl` command printed by travis in the `before_install` phase
+        * Add `export ORG_GRADLE_PROJECT_signingKey=$(cat secrets.asc)`
+* In case you need *multiple files*:
+    * create an archive, encrypt it, decrypt on the build server, and unpack there
+* Store *passwords* into *encrypted variables*
+* Secrets are *only available in builds launched from the original repository*
+    * Otherwise there'd be no protection from *pull request attacks*
+    * *Make sure pull requests can build without secrets*!
+    * e.g. by *excluding phases or jobs* that use secrets
+
+---
+
+## Signing using in-memory keys in Gradle
+
+```kotlin
+if (System.getenv("CI") == true.toString()) {
+    signing {
+        val signingKey: String? by project
+        val signingPassword: String? by project
+        useInMemoryPgpKeys(signingKey, signingPassword)
+    }
+}
+```
+* The `CI` environment variable is automatically set to true on Travis CI
+    * See [https://docs.travis-ci.com/user/environment-variables/#default-environment-variables](https://docs.travis-ci.com/user/environment-variables/#default-environment-variables)
+* The `signingKey` and `signingPassword` properties must get *passed* to Gradle
+    * The best way is probably by exporting them as environment variables
+    * Gradle auto-imports properties named `ORG_GRADLE_PROJECT_<variableName>`
+    * This mechanism can be exploited to inject properties using environment variables:
+        * `export ORG_GRADLE_PROJECT_signingKey=$(cat secrets.asc)`
+        * A secret variable named `ORG_GRADLE_PROJECT_signingPassword` from the web UI
+
+---
+
+## Conditional jobs, stages, and deployments
+
+One way to prevent pull requests to run deployment phases that would fail
+<br>
+(due to unavailability of secrets)
+<br>
+is to use **conditional jobs, stages, and deployments**
+
+To do so, the keyword `if` can be used:
+* On the whole build, to skip it entirely
+* On a `stages` entry, to skip a single stage
+* On a `jobs.include` entry, to exclude that job
+
+The [Travis condition syntax is documented at https://docs.travis-ci.com/user/conditions-v1](https://docs.travis-ci.com/user/conditions-v1)
+
+---
+
+## Travis CI's `deploy`
+
+The `deploy` phase is special in Travis:
+* It does not allow to run custom commands
+* It expects entries with:
+    * A deploy provider
+    * A configuration
+
+Full reference: [https://docs.travis-ci.com/user/deployment-v2](https://docs.travis-ci.com/user/deployment-v2)
+
+Example:
+```yaml
+deploy:
+  provider: releases # Deploys on GitHub Releases
+  file: build/libs/*.jar # Files to deploy
+  edge: true # opt in to the new deploy API
+  on: # filter
+    all_branches: true
+    # tags: true # deploy only tags
+```
+
+---
+
+# Stale builds
+
+1. Stuff *works*
+2. *Nobody touches it* for months
+3. Untouched stuff is now *borked*!
+
+Ever happenend?
+
+* Connected to the issue of build reproducibility
+* The default configuration of Travis CI may change
+    * By the way, explicitly using `dist` for Linux builds may help
+* Some tools may become unavailable
+* Some dependencies may get unavailable
+
+**The sooner the issue is known, the better**
+
+$\Rightarrow$ *Automatically run the build every some time* even if nobody touches the project
+* How often? Depends on the project...
+
+---
+
+## Additional checks and reportings
+
+There exist a number of recommended services that provide additional QA and reports.
+
+Non exhaustive list:
+* [Codecov.io](https://codecov.io/)
+    * Code coverage
+    * Supports Jacoco XML reports
+    * Nice data reporting system
+* [Sonarcloud](https://sonarcloud.io/)
+    * Multiple measures, covering reliability, security, maintainability, duplication, complexity...
+* [Codacy](https://www.codacy.com/)
+    * Automated software QA for several languages
+* [Code Factor](https://www.codefactor.io/)
+    * Automated software QA
+
+---
+
+## High quality FLOSS checklist
+
+The [Linux Foundation](https://www.linuxfoundation.org/) [Core Infrastructure Initiative](https://www.coreinfrastructure.org/) created a checklist for high quality FLOSS.
+
+**[CII Best Practices Badge Program https://bestpractices.coreinfrastructure.org/en](https://bestpractices.coreinfrastructure.org/en)**
+
+
+* *Self-certification*: no need for bureaucracy
+* Provides a nice *TODO list* for a high quality product
+* Releases a *badge* that can be added e.g. to the project homepage
