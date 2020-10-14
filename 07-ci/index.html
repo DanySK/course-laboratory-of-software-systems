@@ -390,21 +390,221 @@ A multi platform installer exists: <a href="https://github.com/shyiko/jabba">Jab
 <li>Run <code>travis lint</code> to verify if your YAML file complies</li>
 </ul>
 </section><section>
-<h2 id="conditional-jobs-stages-and-deployments">Conditional jobs, stages, and deployments</h2>
-</section><section>
+<h2 id="private-data-and-continuous-integration">Private data and continuous integration</h2>
+<p>We would like the CI to be able to</p>
 <ul>
-<li>conditional jobs</li>
-<li>private variables</li>
-<li>file encryption</li>
-<li>cronjobs</li>
-<li>caches</li>
-<li>conditional builds</li>
-<li>conditional deployments</li>
-<li>Codecov.io</li>
-<li>Sonarcloud</li>
-<li>CI practices</li>
-<li>ASCII armored in memory signign</li>
-<li>Repo-level automation</li>
+<li>Sign our artifacts</li>
+<li>Delivery/Deploy our artifacts on remote targets</li>
+</ul>
+<p>Both operations <strong>require private information to be shared</strong></p>
+<p>Of course, private data <em>can&rsquo;t be shared</em></p>
+<ul>
+<li>Attackers may steal the identity</li>
+<li>Attackers may compromise deployments</li>
+<li>In case of open projects, attackers may exploit <em>pull requests</em>!
+<ul>
+<li>Fork your project (which has e.g. a secret environment variable)</li>
+<li>Print the value of the secret (e.g. with <code>printenv</code>)</li>
+</ul>
+</li>
+</ul>
+<p>How to <em>share a secret</em> with the build environment?</p>
+</section><section>
+<h2 id="sharing-a-secret">Sharing a secret</h2>
+<p>Travis supports the insertion of secret <strong>variables</strong> in two ways:</p>
+<ul>
+<li>From the <em>web interface</em> (easier, quicker)
+<ul>
+<li>More options $\Rightarrow$ Settings $\Rightarrow$ Environment variables</li>
+</ul>
+</li>
+<li>From the <em>command line</em> (more compleicated)
+<ul>
+<li><code>travis encrypt &lt;String to encrypt&gt;  --pro</code>
+<ul>
+<li>e.g., <code>travis encrypt 'PASSWORD=&quot;foobar&quot;'</code></li>
+</ul>
+</li>
+<li>produces a <code>secure: &lt;code&gt;</code> entry that can be pasted in <code>.travis.yml</code>
+<ul>
+<li>e.g.:</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">env</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">global</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">secure</span>:<span style="color:#bbb"> </span>&lt;code&gt;<span style="color:#bbb">
+</span></code></pre></div><p>Travis also supports sharing a <strong>single secret file</strong></p>
+<ul>
+<li>It gets encrypted using <code>travis encrypt-file &lt;file&gt; --pro</code></li>
+<li>The output command must be included in <code>.travis.yml</code>
+<ul>
+<li>e.g. in the <code>before_install</code> phase of any job requiring it</li>
+</ul>
+</li>
+<li>The resulting encrypted file must be tracked
+<ul>
+<li>Be careful not to track the original one!</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="shared-secrets-best-practices">Shared secrets: best practices</h2>
+<ul>
+<li>Leverage the single shared file for sharing an <strong>ASCII-armored</strong> PGP key
+<ul>
+<li>Allows for <em>signing</em> artifacts</li>
+<li><em>Signing keys are large</em> and cannot fit a variable</li>
+<li>Obtain it with <code>gpg --armor --export-secret-keys &gt; secrets.asc</code></li>
+<li>Encrypt with <code>travis encrypt-file secrets.asc --pro</code></li>
+<li>Remove it (<code>rm secrets.asc</code>)</li>
+<li>Track the encrypted file <code>git add secrets.asc.enc</code></li>
+<li>In the <code>install</code> or <code>before_install</code> phase:
+<ul>
+<li>Add the <code>openssl</code> command printed by travis in the <code>before_install</code> phase</li>
+<li>Add <code>export ORG_GRADLE_PROJECT_signingKey=$(cat secrets.asc)</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>In case you need <em>multiple files</em>:
+<ul>
+<li>create an archive, encrypt it, decrypt on the build server, and unpack there</li>
+</ul>
+</li>
+<li>Store <em>passwords</em> into <em>encrypted variables</em></li>
+<li>Secrets are <em>only available in builds launched from the original repository</em>
+<ul>
+<li>Otherwise there&rsquo;d be no protection from <em>pull request attacks</em></li>
+<li><em>Make sure pull requests can build without secrets</em>!</li>
+<li>e.g. by <em>excluding phases or jobs</em> that use secrets</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="signing-using-in-memory-keys-in-gradle">Signing using in-memory keys in Gradle</h2>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">if</span> (System.getenv(<span style="color:#d20;background-color:#fff0f0">&#34;CI&#34;</span>) == <span style="color:#080;font-weight:bold">true</span>.toString()) {
+    signing {
+        <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">signingKey</span>: String? <span style="color:#080;font-weight:bold">by</span> project
+        <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">signingPassword</span>: String? <span style="color:#080;font-weight:bold">by</span> project
+        useInMemoryPgpKeys(signingKey, signingPassword)
+    }
+}
+</code></pre></div><ul>
+<li>The <code>CI</code> environment variable is automatically set to true on Travis CI
+<ul>
+<li>See <a href="https://docs.travis-ci.com/user/environment-variables/#default-environment-variables">https://docs.travis-ci.com/user/environment-variables/#default-environment-variables</a></li>
+</ul>
+</li>
+<li>The <code>signingKey</code> and <code>signingPassword</code> properties must get <em>passed</em> to Gradle
+<ul>
+<li>The best way is probably by exporting them as environment variables</li>
+<li>Gradle auto-imports properties named <code>ORG_GRADLE_PROJECT_&lt;variableName&gt;</code></li>
+<li>This mechanism can be exploited to inject properties using environment variables:
+<ul>
+<li><code>export ORG_GRADLE_PROJECT_signingKey=$(cat secrets.asc)</code></li>
+<li>A secret variable named <code>ORG_GRADLE_PROJECT_signingPassword</code> from the web UI</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="conditional-jobs-stages-and-deployments">Conditional jobs, stages, and deployments</h2>
+<p>One way to prevent pull requests to run deployment phases that would fail
+<br>
+(due to unavailability of secrets)
+<br>
+is to use <strong>conditional jobs, stages, and deployments</strong></p>
+<p>To do so, the keyword <code>if</code> can be used:</p>
+<ul>
+<li>On the whole build, to skip it entirely</li>
+<li>On a <code>stages</code> entry, to skip a single stage</li>
+<li>On a <code>jobs.include</code> entry, to exclude that job</li>
+</ul>
+<p>The <a href="https://docs.travis-ci.com/user/conditions-v1">Travis condition syntax is documented at https://docs.travis-ci.com/user/conditions-v1</a></p>
+</section><section>
+<h2 id="travis-cis-deploy">Travis CI&rsquo;s <code>deploy</code></h2>
+<p>The <code>deploy</code> phase is special in Travis:</p>
+<ul>
+<li>It does not allow to run custom commands</li>
+<li>It expects entries with:
+<ul>
+<li>A deploy provider</li>
+<li>A configuration</li>
+</ul>
+</li>
+</ul>
+<p>Full reference: <a href="https://docs.travis-ci.com/user/deployment-v2">https://docs.travis-ci.com/user/deployment-v2</a></p>
+<p>Example:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">deploy</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">provider</span>:<span style="color:#bbb"> </span>releases<span style="color:#bbb"> </span><span style="color:#888"># Deploys on GitHub Releases</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">file</span>:<span style="color:#bbb"> </span>build/libs/<span style="color:#c00;font-weight:bold">*.jar</span><span style="color:#bbb"> </span><span style="color:#888"># Files to deploy</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">edge</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb"> </span><span style="color:#888"># opt in to the new deploy API</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">on</span>:<span style="color:#bbb"> </span><span style="color:#888"># filter</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">all_branches</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#888"># tags: true # deploy only tags</span><span style="color:#bbb">
+</span></code></pre></div></section><section>
+<h1 id="stale-builds">Stale builds</h1>
+<ol>
+<li>Stuff <em>works</em></li>
+<li><em>Nobody touches it</em> for months</li>
+<li>Untouched stuff is now <em>borked</em>!</li>
+</ol>
+<p>Ever happenend?</p>
+<ul>
+<li>Connected to the issue of build reproducibility</li>
+<li>The default configuration of Travis CI may change
+<ul>
+<li>By the way, explicitly using <code>dist</code> for Linux builds may help</li>
+</ul>
+</li>
+<li>Some tools may become unavailable</li>
+<li>Some dependencies may get unavailable</li>
+</ul>
+<p><strong>The sooner the issue is known, the better</strong></p>
+<p>$\Rightarrow$ <em>Automatically run the build every some time</em> even if nobody touches the project</p>
+<ul>
+<li>How often? Depends on the project&hellip;</li>
+</ul>
+</section><section>
+<h2 id="additional-checks-and-reportings">Additional checks and reportings</h2>
+<p>There exist a number of recommended services that provide additional QA and reports.</p>
+<p>Non exhaustive list:</p>
+<ul>
+<li><a href="https://codecov.io/">Codecov.io</a>
+<ul>
+<li>Code coverage</li>
+<li>Supports Jacoco XML reports</li>
+<li>Nice data reporting system</li>
+</ul>
+</li>
+<li><a href="https://sonarcloud.io/">Sonarcloud</a>
+<ul>
+<li>Multiple measures, covering reliability, security, maintainability, duplication, complexity&hellip;</li>
+</ul>
+</li>
+<li><a href="https://www.codacy.com/">Codacy</a>
+<ul>
+<li>Automated software QA for several languages</li>
+</ul>
+</li>
+<li><a href="https://www.codefactor.io/">Code Factor</a>
+<ul>
+<li>Automated software QA</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="high-quality-floss-checklist">High quality FLOSS checklist</h2>
+<p>The <a href="https://www.linuxfoundation.org/">Linux Foundation</a> <a href="https://www.coreinfrastructure.org/">Core Infrastructure Initiative</a> created a checklist for high quality FLOSS.</p>
+<p><strong><a href="https://bestpractices.coreinfrastructure.org/en">CII Best Practices Badge Program https://bestpractices.coreinfrastructure.org/en</a></strong></p>
+<ul>
+<li><em>Self-certification</em>: no need for bureaucracy</li>
+<li>Provides a nice <em>TODO list</em> for a high quality product</li>
+<li>Releases a <em>badge</em> that can be added e.g. to the project homepage</li>
 </ul>
 </section>
 
