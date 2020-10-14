@@ -17,3 +17,11 @@
 	path = code/ci/03-build-matrix
 	url = https://github.com/DanySK/Plugin-CI-Running-Example.git
 	branch = 03-build-matrix
+[submodule "code/ci/04-stages"]
+	path = code/ci/04-stages
+	url = https://github.com/DanySK/Plugin-CI-Running-Example.git
+	branch = 04-stages
+[submodule "code/ci/05-deploy"]
+	path = code/ci/05-deploy
+	url = https://github.com/DanySK/Plugin-CI-Running-Example.git
+	branch = 05-deploy
