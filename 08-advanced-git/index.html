@@ -2,8 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-<title>Development &#43; Operations</title>
-<meta name="description" content="No silos">
+<title>Advanced Versioning Techniques</title>
+<meta name="description" content="Submodules, rebasing, squashing, cherry-picking">
 <meta name="author" content="Danilo Pianini">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -24,122 +24,44 @@
   
 
     <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
-<h2 id="development--operations">Development + Operations</h2>
+<h2 id="advanced-versioning-techniques">Advanced Versioning Techniques</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
 2020-10-15
 
-</section>
-<section data-noprocess data-shortcode-slide>
-  <h1 id="development">Development</h1>
+</section><section>
+<h1 id="advanced-merging">Advanced merging</h1>
 <ul>
-<li>Analysis of a domain</li>
-<li>Design of a solution</li>
-<li>Implementation</li>
-<li>Testing</li>
+<li>In classic merging, diverging branches are reunited through a <strong>merge commit</strong></li>
 </ul>
-</section>
-<section data-noprocess data-shortcode-slide>
-<h1 id="operations">Operations</h1>
+<p><img src="basic-rebase-1.png" alt=""></p>
+</section><section>
+<h1 id="advanced-merging-1">Advanced merging</h1>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>git checkout master
+git merge experiment
+</code></pre></div><p><img src="basic-rebase-2.png" alt=""></p>
+</section><section>
+<h1 id="advanced-merging-rebase">Advanced merging: rebase</h1>
 <ul>
-<li>IT infrastructure</li>
-<li>Deployment</li>
-<li>Maintenance</li>
-</ul>
-</section>
-<section data-noprocess data-shortcode-slide>
-<h1 id="silo-mentality">Silo mentality</h1>
-<img src="assets/silos.svg" style="max-height: 70vh; object-fit: contain;"/>
-</section>
-<section data-noprocess data-shortcode-slide>
-<h1 id="no-silos"><strong>No</strong> silos</h1>
-<img src="assets/no-silos.svg" style="max-height: 70vh; object-fit: contain;"/>
-</section>
-<section data-noprocess data-shortcode-slide>
-<h1 id="devops-culture">DevOps culture</h1>
+<li>Merging is not the only way to reunite diverging branches</li>
+<li>We may want, for instance, to simulate that <code>C4</code> was developed after <code>C3</code>
 <ul>
-<li>
-<p><strong>Increased collaboration</strong></p>
-<ul>
-<li>Dev and Ops should <em>exchange information</em> and <em>work together</em></li>
+<li>For instance, because it was on a separate part of the codebase</li>
 </ul>
 </li>
-<li>
-<p><strong>Shared responsibility</strong></p>
+<li>Merging <em>forces</em> to record the creation and reunion of a development line, but in some cases it may be undesirable
 <ul>
-<li>A team is responsible for the (sub) product for its <em>whole lifetime</em></li>
-<li><em>No handing over</em> projects from devs to ops</li>
-</ul>
-</li>
-<li>
-<p><strong>Autonomous teams</strong></p>
-<ul>
-<li><em>Lightweight decision making</em> process</li>
-</ul>
-</li>
-<li>
-<p><strong>Focus on the process, not just the product</strong></p>
-<ul>
-<li>Promote small, <em>incremental changes</em></li>
-<li><em>Automate</em> as much as possible</li>
-<li>Leverage the right <em>tool</em> for the job at hand</li>
+<li>Project history <em>hard to understand</em> because of too many merges</li>
+<li>The separation was actually a successful small experiment</li>
 </ul>
 </li>
 </ul>
-</section>
-<section data-noprocess data-shortcode-slide>
-<h1 id="why-bother">Why bother?</h1>
-<ol>
-<li>
-<p><strong>Risk management</strong></p>
-<ul>
-<li>Reduce the probability of <em>failure</em></li>
-<li>Detect <em>defects</em> before hitting the market</li>
-<li>Quickly <em>react</em> to problems</li>
-</ul>
-</li>
-<li>
-<p><strong>Resource exploitation</strong></p>
-<ul>
-<li>Use <em>human resources</em> for human-y work</li>
-<li>Reduce <em>time to market</em></li>
-<li>Embrace <em>innovation</em></li>
-<li>Exploit <em>emerging technologies</em></li>
-</ul>
-</li>
-</ol>
-</section>
-<section data-noprocess data-shortcode-slide>
-<h1 id="devops">DevOps</h1>
-<ol>
-<li><strong>Principles</strong></li>
-<li><strong>Practices</strong></li>
-<li><strong>Tools</strong></li>
-</ol>
-<p><strong>Principles</strong> <em>inspire</em> <strong>practices</strong></p>
-<p><strong>Practices</strong> <em>require</em> <strong>tools</strong></p>
-</section>
-<section data-noprocess data-shortcode-slide>
-<h1 id="devops-principles">DevOps principles</h1>
-<h3 id="not-exhaustive">(not exhaustive)</h3>
-<ul>
-<li>Collaboration</li>
-<li>Reproducibility</li>
-<li>Automation</li>
-<li>Incrementality</li>
-<li>Robustness</li>
-</ul>
-</section>
-<section data-noprocess data-shortcode-slide>
-<h1 id="devops-practices">DevOps practices</h1>
-<ul>
-<li>Workflow organization</li>
-<li>Self-testing code</li>
-<li>Code quality control</li>
-<li>Continuous Integration</li>
-<li>Continuous Delivery</li>
-<li>Continuous Deployment</li>
-<li>Continuous Monitoring</li>
-</ul>
+<p><strong>Rebasing</strong> provides a way to alter the project history by <em>changing the parent</em>  of (re-base) existing commits</p>
+</section><section>
+<h1 id="advanced-merging-rebase-1">Advanced merging: rebase</h1>
+<p><img src="basic-rebase-1.png" alt=""></p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>git checkout experiment
+git rebase master
+</code></pre></div><p><img src="basic-rebase-3.png" alt=""></p>
 </section>
 
   
