@@ -61,7 +61,97 @@ git merge experiment
 <p><img src="basic-rebase-1.png" alt=""></p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>git checkout experiment
 git rebase master
+</code></pre></div></section><section>
+<h1 id="advanced-merging-rebase-2">Advanced merging: rebase</h1>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>git checkout experiment
+git rebase master
 </code></pre></div><p><img src="basic-rebase-3.png" alt=""></p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>git checkout master
+git merge experiment <span style="color:#888"># Fast forward!</span>
+</code></pre></div><p><img src="basic-rebase-4.png" alt=""></p>
+</section><section>
+<h1 id="advanced-rebasing">Advanced rebasing</h1>
+<p><img src="interesting-rebase-1.png" alt=""></p>
+<p>We want to leave <code>server</code> as is, but rebase <code>client</code> onto <code>master</code></p>
+</section><section>
+<h1 id="advanced-rebasing-1">Advanced rebasing</h1>
+<p>Option <code>--onto</code> can be used to transplant entire branches</p>
+<ul>
+<li><code>git rebase --onto destination start end</code>
+<ul>
+<li>pick commits from <code>start</code> to <code>end</code></li>
+<li>reply them starting from <code>destination</code></li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>git rebase --onto master server client
+</code></pre></div><p><img src="interesting-rebase-2.png" alt=""></p>
+<p>Reads: <em>pick all commits from <code>server</code> (excluded) to <code>client</code> (included), remove them and reply them starting from <code>master</code></em></p>
+</section><section>
+<h1 id="rebase-pull">Rebase pull</h1>
+<p><code>pull</code> is a non-atomic operation:</p>
+<ol>
+<li><code>git fetch</code></li>
+<li><code>git merge FETCH_HEAD</code></li>
+</ol>
+<p>There is no reason why the operation of branch joining must be <code>merge</code>: it could well be <code>rebase</code>!</p>
+<ol>
+<li><code>git fetch</code></li>
+<li><code>git rebase FETCH_HEAD</code></li>
+</ol>
+<p><em>Both operations</em> are actually supported! The full commands would be:</p>
+<ul>
+<li><code>git pull --merge</code> $\Rightarrow$ default behaviour (in old <code>git</code> versions)</li>
+<li><code>git pull --rebase</code> $\Rightarrow$ reunite using rebase!</li>
+</ul>
+<p><strong>Note:</strong> new versions of git require configuration and do not start with merge as default!</p>
+<ul>
+<li><code>git config --global pull.rebase [true/false]</code></li>
+</ul>
+</section><section>
+<h1 id="perils-of-rebasing">Perils of rebasing</h1>
+<blockquote>
+<p><strong>Do not rebase commits that exist outside your repository</strong></p>
+</blockquote>
+<p>Rebasing <em>rewrites the project history</em> and as such generates <em>incompatible histories</em></p>
+<ul>
+<li>Remote pushes may get <em>refused</em>!</li>
+<li>pushing with <code>--force</code> <em>rewrites history remotely</em> and <strong>may delete other people commits</strong>!</li>
+<li><code>git pull --rebase</code> is safe, if the local commits where never pushed in any remote
+<ul>
+<li>It is actually a good practice to default to it</li>
+<li><code>git config --global pull.rebase true</code></li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h1 id="rebasing-or-merging">Rebasing or merging?</h1>
+<p>Select depending on what you <em>conceptually</em> want:</p>
+<ul>
+<li>I want to <strong>record of what actually happened</strong>: then <strong>merge</strong>
+<ul>
+<li>History is preserved</li>
+<li>Messy commits are there</li>
+</ul>
+</li>
+<li>I want to <strong>tell the story of how your project was made</strong>: then <strong>rebase</strong>
+<ul>
+<li>History is <em>modified</em></li>
+<li>Commits are cleaner</li>
+</ul>
+</li>
+</ul>
+<p>They tell two stories:</p>
+<ul>
+<li><em>rebase</em> is the book</li>
+<li><em>merge</em> is the story of how the book was written</li>
+</ul>
+</section><section>
+<h1 id="squashing">Squashing</h1>
+</section><section>
+<h1 id="cherry-picking">Cherry picking</h1>
+</section><section>
+<h1 id="git-submodules">Git Submodules</h1>
 </section>
 
   
