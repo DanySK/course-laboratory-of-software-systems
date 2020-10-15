@@ -202,7 +202,7 @@ Note: data is not persisted automatically, at end of session you need to copy it
   * [Software versioning](05-version-selection)
   * [Software licensing](06-licenses)
   * [Continuous integration/delivery/deployment](07-ci)
-  * Advanced version control
+  * [Advanced version control](08-advanced-git)
   * Containerization
 * Domain driven design
   * External DSL construction
