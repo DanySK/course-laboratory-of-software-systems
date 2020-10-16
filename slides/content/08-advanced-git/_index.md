@@ -164,6 +164,168 @@ They tell two stories:
 
 # Squashing
 
+Squashing is the practice of *reassembling multiple commits into a single one*
+* Allows to forget "experimental" commits
+* Allows to merge temporary changes into a single one 
+* *Simplifies* history
+* *Alters* history
+* Can be performed via `merge` or manually
+
+---
+
+# Squashing manually
+
+{{< gravizo >}}
+  digraph G {
+    rankdir=LR;
+    rankdir=LR;
+    C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
+    HEAD [style="filled,solid", shape=box, fillcolor=orange];
+    C6 -> HEAD [dir=back, penwidth=4, color=orange];
+  }
+{{< /gravizo >}}
+`git reset --soft HEAD~4`
+{{< gravizo >}}
+  digraph G {
+    graph[splines=ortho]
+    rankdir=LR;
+    C1
+    C1 -> C2  [dir=back]
+    {rank=same; C2, HEAD}
+    HEAD [style="filled,solid", shape=box, fillcolor=orange];
+    C3 [style=dashed];
+    C4 [style=dashed];
+    C5 [style=dashed];
+    C6 [style=dashed];
+    C2 -> C3 -> C4 -> C5 -> C6 [style=dashed, dir=back];
+    rankdir=LR;
+    C2 -> HEAD [dir=back, weight=0, penwidth=4, color=orange];
+  }
+{{< /gravizo >}}
+`git commit`
+{{< gravizo >}}
+  digraph G {
+    rankdir=LR;
+    C1 -> C2 -> "C3'" [dir=back];
+    HEAD [style="filled,solid", shape=box, fillcolor=orange];
+    "C3'" [style=filled, fillcolor=red]
+    "C3'" -> HEAD [dir=back, penwidth=4, color=orange];
+  }
+{{< /gravizo >}}
+
+---
+
+# Squashing with merge
+
+{{< gravizo >}}
+  digraph G {
+    rankdir=LR;
+    C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
+    HEAD [style="filled,solid", shape=box, fillcolor=orange];
+    master [style="filled,solid", shape=box, fillcolor=orange];
+    {rank=same; master, HEAD}
+    C6 -> HEAD [dir=back, penwidth=4, color=orange];
+    C6 -> master [dir=back, penwidth=4, color=orange];
+  }
+{{< /gravizo >}}
+`git branch target`
+{{< gravizo >}}
+  digraph G {
+    rankdir=LR;
+    C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
+    HEAD [style="filled,solid", shape=box, fillcolor=orange];
+    master [style="filled,solid", shape=box, fillcolor=orange];
+    target [style="filled,solid", shape=box, fillcolor=orange];
+    {rank=same; master, target, HEAD}
+    C6 -> HEAD [dir=back, penwidth=4, color=orange];
+    C6 -> master [dir=back, penwidth=4, color=orange];
+    C6 -> target [dir=back, penwidth=4, color=orange];
+  }
+{{< /gravizo >}}
+`git reset --hard HEAD~4`
+{{< gravizo >}}
+  digraph G {
+    rankdir=LR;
+    master [style="filled,solid", shape=box, fillcolor=orange];
+    C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
+    HEAD [style="filled,solid", shape=box, fillcolor=orange];
+    target [style="filled,solid", shape=box, fillcolor=orange];
+    {rank=same; C2, master}
+    {rank=same; C3, HEAD}
+    C2 -> HEAD [dir=back, penwidth=4, color=orange];
+    C2 -> master [dir=back, penwidth=4, color=orange];
+    C6 -> target [dir=back, penwidth=4, color=orange];
+  }
+{{< /gravizo >}}
+
+---
+
+# Squashing with merge
+
+{{< gravizo >}}
+  digraph G {
+    rankdir=LR;
+    master [style="filled,solid", shape=box, fillcolor=orange];
+    C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
+    HEAD [style="filled,solid", shape=box, fillcolor=orange];
+    target [style="filled,solid", shape=box, fillcolor=orange];
+    {rank=same; C2, master}
+    {rank=same; C3, HEAD}
+    C2 -> HEAD [dir=back, penwidth=4, color=orange];
+    C2 -> master [dir=back, penwidth=4, color=orange];
+    C6 -> target [dir=back, penwidth=4, color=orange];
+  }
+{{< /gravizo >}}
+`git merge --squash target`
+{{< gravizo >}}
+  digraph G {
+    compound=true;
+    rankdir=LR;
+    master [style="filled,solid", shape=box, fillcolor=orange];
+    C1 -> C2 [dir=back]
+    C2 -> C3 [weight=2, dir=back]
+    C2 -> "C3'" [weight=1]
+    "C3'" [style=filled, fillcolor=red]
+    subgraph cluster_0 {
+        C3 -> C4 -> C5 -> C6 [dir=back];
+        color=red
+        style=dashed
+    }
+    "C3'" -> C4 [lhead=cluster_0, style="dashed", dir=back, color=red]
+    HEAD [style="filled,solid", shape=box, fillcolor=orange];
+    target [style="filled,solid", shape=box, fillcolor=orange];
+    "C3'" -> HEAD [dir=back, penwidth=4, color=orange];
+    "C3'" -> master [dir=back, penwidth=4, color=orange];
+    C6 -> target [dir=back, penwidth=4, color=orange];
+    {rank=same; C2, master}
+    {rank=same; "C3'", HEAD}
+  }
+{{< /gravizo >}}
+`git branch -d target`
+{{< gravizo >}}
+  digraph G {
+    rankdir=LR;
+    C1 -> C2 -> "C3'" [dir=back];
+    HEAD [style="filled,solid", shape=box, fillcolor=orange];
+    "C3'" [style=filled, fillcolor=red]
+    "C3'" -> HEAD [dir=back, penwidth=4, color=orange];
+    master [style="filled,solid", shape=box, fillcolor=orange];
+    "C3'" -> master [dir=back, penwidth=4, color=orange];
+  }
+{{< /gravizo >}}
+
+---
+
+# Squash, merge, or rebase?
+
+Squashing results in *further alteration* than rebase
+
+**Merge** when you want to *retain history*, keeping track of what happened
+
+**Rebase** only when you are the only one with the commits, to favor *linearity*
+
+**Squash** when you are the only one, and some of the commits are somewhat "tests", points in time you do not want to get back to anyway
+
 ---
 
 # Cherry picking
