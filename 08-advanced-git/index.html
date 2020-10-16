@@ -26,7 +26,7 @@
     <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
 <h2 id="advanced-versioning-techniques">Advanced Versioning Techniques</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2020-10-15
+2020-10-16
 
 </section><section>
 <h1 id="advanced-merging">Advanced merging</h1>
@@ -148,6 +148,149 @@ git merge experiment <span style="color:#888"># Fast forward!</span>
 </ul>
 </section><section>
 <h1 id="squashing">Squashing</h1>
+<p>Squashing is the practice of <em>reassembling multiple commits into a single one</em></p>
+<ul>
+<li>Allows to forget &ldquo;experimental&rdquo; commits</li>
+<li>Allows to merge temporary changes into a single one</li>
+<li><em>Simplifies</em> history</li>
+<li><em>Alters</em> history</li>
+<li>Can be performed via <code>merge</code> or manually</li>
+</ul>
+</section><section>
+<h1 id="squashing-manually">Squashing manually</h1>
+<p>
+
+  
+
+
+<figure>
+  <img
+    src='https://g.gravizo.com/svg?%0a%20%20digraph%20G%20%7b%0a%20%20%20%20rankdir%3dLR%3b%0a%20%20%20%20rankdir%3dLR%3b%0a%20%20%20%20C1%20-%3e%20C2%20-%3e%20C3%20-%3e%20C4%20-%3e%20C5%20-%3e%20C6%20%5bdir%3dback%5d%3b%0a%20%20%20%20HEAD%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0a%20%20%20%20C6%20-%3e%20HEAD%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%7d%0a'
+    alt=''
+    />
+    <figcaption></figcaption>
+</figure>
+
+<code>git reset --soft HEAD~4</code>
+
+
+  
+
+
+<figure>
+  <img
+    src='https://g.gravizo.com/svg?%0a%20%20digraph%20G%20%7b%0a%20%20%20%20graph%5bsplines%3dortho%5d%0a%20%20%20%20rankdir%3dLR%3b%0a%20%20%20%20C1%0a%20%20%20%20C1%20-%3e%20C2%20%20%5bdir%3dback%5d%0a%20%20%20%20%7brank%3dsame%3b%20C2%2c%20HEAD%7d%0a%20%20%20%20HEAD%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0a%20%20%20%20C3%20%5bstyle%3ddashed%5d%3b%0a%20%20%20%20C4%20%5bstyle%3ddashed%5d%3b%0a%20%20%20%20C5%20%5bstyle%3ddashed%5d%3b%0a%20%20%20%20C6%20%5bstyle%3ddashed%5d%3b%0a%20%20%20%20C2%20-%3e%20C3%20-%3e%20C4%20-%3e%20C5%20-%3e%20C6%20%5bstyle%3ddashed%2c%20dir%3dback%5d%3b%0a%20%20%20%20rankdir%3dLR%3b%0a%20%20%20%20C2%20-%3e%20HEAD%20%5bdir%3dback%2c%20weight%3d0%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%7d%0a'
+    alt=''
+    />
+    <figcaption></figcaption>
+</figure>
+
+<code>git commit</code>
+
+
+  
+
+
+<figure>
+  <img
+    src='https://g.gravizo.com/svg?%0a%20%20digraph%20G%20%7b%0a%20%20%20%20rankdir%3dLR%3b%0a%20%20%20%20C1%20-%3e%20C2%20-%3e%20%22C3%27%22%20%5bdir%3dback%5d%3b%0a%20%20%20%20HEAD%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0a%20%20%20%20%22C3%27%22%20%5bstyle%3dfilled%2c%20fillcolor%3dred%5d%0a%20%20%20%20%22C3%27%22%20-%3e%20HEAD%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%7d%0a'
+    alt=''
+    />
+    <figcaption></figcaption>
+</figure>
+</p>
+</section><section>
+<h1 id="squashing-with-merge">Squashing with merge</h1>
+<p>
+
+  
+
+
+<figure>
+  <img
+    src='https://g.gravizo.com/svg?%0a%20%20digraph%20G%20%7b%0a%20%20%20%20rankdir%3dLR%3b%0a%20%20%20%20C1%20-%3e%20C2%20-%3e%20C3%20-%3e%20C4%20-%3e%20C5%20-%3e%20C6%20%5bdir%3dback%5d%3b%0a%20%20%20%20HEAD%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0a%20%20%20%20master%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0a%20%20%20%20%7brank%3dsame%3b%20master%2c%20HEAD%7d%0a%20%20%20%20C6%20-%3e%20HEAD%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%20%20C6%20-%3e%20master%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%7d%0a'
+    alt=''
+    />
+    <figcaption></figcaption>
+</figure>
+
+<code>git branch target</code>
+
+
+  
+
+
+<figure>
+  <img
+    src='https://g.gravizo.com/svg?%0a%20%20digraph%20G%20%7b%0a%20%20%20%20rankdir%3dLR%3b%0a%20%20%20%20C1%20-%3e%20C2%20-%3e%20C3%20-%3e%20C4%20-%3e%20C5%20-%3e%20C6%20%5bdir%3dback%5d%3b%0a%20%20%20%20HEAD%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0a%20%20%20%20master%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0a%20%20%20%20target%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0a%20%20%20%20%7brank%3dsame%3b%20master%2c%20target%2c%20HEAD%7d%0a%20%20%20%20C6%20-%3e%20HEAD%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%20%20C6%20-%3e%20master%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%20%20C6%20-%3e%20target%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%7d%0a'
+    alt=''
+    />
+    <figcaption></figcaption>
+</figure>
+
+<code>git reset --hard HEAD~4</code>
+
+
+  
+
+
+<figure>
+  <img
+    src='https://g.gravizo.com/svg?%0a%20%20digraph%20G%20%7b%0a%20%20%20%20rankdir%3dLR%3b%0a%20%20%20%20master%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0a%20%20%20%20C1%20-%3e%20C2%20-%3e%20C3%20-%3e%20C4%20-%3e%20C5%20-%3e%20C6%20%5bdir%3dback%5d%3b%0a%20%20%20%20HEAD%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0a%20%20%20%20target%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0a%20%20%20%20%7brank%3dsame%3b%20C2%2c%20master%7d%0a%20%20%20%20%7brank%3dsame%3b%20C3%2c%20HEAD%7d%0a%20%20%20%20C2%20-%3e%20HEAD%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%20%20C2%20-%3e%20master%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%20%20C6%20-%3e%20target%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%7d%0a'
+    alt=''
+    />
+    <figcaption></figcaption>
+</figure>
+</p>
+</section><section>
+<h1 id="squashing-with-merge-1">Squashing with merge</h1>
+<p>
+
+  
+
+
+<figure>
+  <img
+    src='https://g.gravizo.com/svg?%0a%20%20digraph%20G%20%7b%0a%20%20%20%20rankdir%3dLR%3b%0a%20%20%20%20master%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0a%20%20%20%20C1%20-%3e%20C2%20-%3e%20C3%20-%3e%20C4%20-%3e%20C5%20-%3e%20C6%20%5bdir%3dback%5d%3b%0a%20%20%20%20HEAD%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0a%20%20%20%20target%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0a%20%20%20%20%7brank%3dsame%3b%20C2%2c%20master%7d%0a%20%20%20%20%7brank%3dsame%3b%20C3%2c%20HEAD%7d%0a%20%20%20%20C2%20-%3e%20HEAD%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%20%20C2%20-%3e%20master%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%20%20C6%20-%3e%20target%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%7d%0a'
+    alt=''
+    />
+    <figcaption></figcaption>
+</figure>
+
+<code>git merge --squash target</code>
+
+
+  
+
+
+<figure>
+  <img
+    src='https://g.gravizo.com/svg?%0a%20%20digraph%20G%20%7b%0a%20%20%20%20compound%3dtrue%3b%0a%20%20%20%20rankdir%3dLR%3b%0a%20%20%20%20master%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0a%20%20%20%20C1%20-%3e%20C2%20%5bdir%3dback%5d%0a%20%20%20%20C2%20-%3e%20C3%20%5bweight%3d2%2c%20dir%3dback%5d%0a%20%20%20%20C2%20-%3e%20%22C3%27%22%20%5bweight%3d1%5d%0a%20%20%20%20%22C3%27%22%20%5bstyle%3dfilled%2c%20fillcolor%3dred%5d%0a%20%20%20%20subgraph%20cluster_0%20%7b%0a%20%20%20%20%20%20%20%20C3%20-%3e%20C4%20-%3e%20C5%20-%3e%20C6%20%5bdir%3dback%5d%3b%0a%20%20%20%20%20%20%20%20color%3dred%0a%20%20%20%20%20%20%20%20style%3ddashed%0a%20%20%20%20%7d%0a%20%20%20%20%22C3%27%22%20-%3e%20C4%20%5blhead%3dcluster_0%2c%20style%3d%22dashed%22%2c%20dir%3dback%2c%20color%3dred%5d%0a%20%20%20%20HEAD%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0a%20%20%20%20target%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0a%20%20%20%20%22C3%27%22%20-%3e%20HEAD%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%20%20%22C3%27%22%20-%3e%20master%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%20%20C6%20-%3e%20target%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%20%20%7brank%3dsame%3b%20C2%2c%20master%7d%0a%20%20%20%20%7brank%3dsame%3b%20%22C3%27%22%2c%20HEAD%7d%0a%20%20%7d%0a'
+    alt=''
+    />
+    <figcaption></figcaption>
+</figure>
+
+<code>git branch -d target</code>
+
+
+  
+
+
+<figure>
+  <img
+    src='https://g.gravizo.com/svg?%0a%20%20digraph%20G%20%7b%0a%20%20%20%20rankdir%3dLR%3b%0a%20%20%20%20C1%20-%3e%20C2%20-%3e%20%22C3%27%22%20%5bdir%3dback%5d%3b%0a%20%20%20%20HEAD%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0a%20%20%20%20%22C3%27%22%20%5bstyle%3dfilled%2c%20fillcolor%3dred%5d%0a%20%20%20%20%22C3%27%22%20-%3e%20HEAD%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%20%20master%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0a%20%20%20%20%22C3%27%22%20-%3e%20master%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%7d%0a'
+    alt=''
+    />
+    <figcaption></figcaption>
+</figure>
+</p>
+</section><section>
+<h1 id="squash-merge-or-rebase">Squash, merge, or rebase?</h1>
+<p>Squashing results in <em>further alteration</em> than rebase</p>
+<p><strong>Merge</strong> when you want to <em>retain history</em>, keeping track of what happened</p>
+<p><strong>Rebase</strong> only when you are the only one with the commits, to favor <em>linearity</em></p>
+<p><strong>Squash</strong> when you are the only one, and some of the commits are somewhat &ldquo;tests&rdquo;, points in time you do not want to get back to anyway</p>
 </section><section>
 <h1 id="cherry-picking">Cherry picking</h1>
 </section><section>
