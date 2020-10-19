@@ -27,6 +27,22 @@ enableSourceMap = true
 
 ---
 
+# Annotated Tagging
+
+Git supports two types of tags:
+* **lightweight** tags
+    * *default option*
+    * simply a name for an object (usually a commit)
+    * meant for creating **private** or **temporary** annotations!
+* **annotated** tags
+    * Produced with `-a` (unsigend), `-s`, or `-u` options
+    * Creates a *new object*
+    * Contain *message*, *creation date*, *tagger name* and *email*, and an optional *signature*
+    * Annotated tags are **meant for release**
+    * Some commands (most notably, `git describe`) ignore lightweight tags by default
+
+---
+
 # Advanced merging
 
 * In classic merging, diverging branches are reunited through a **merge commit**
@@ -404,4 +420,9 @@ Changes into submodules are dealt with as if they were on a *separate repository
 
 ## Submodules and CI
 
-* single ssh keys
+* Submodules require care in CI
+* The *clone command* needs to get *altered* for them to checkout correctly
+* On *Travis CI*, modules are pulled in *automatically*
+    * *SSH keys* however are not trivial to be managed
+    * *Prefer HTTPS*
+* Other integrators may require to clone with `--recurse-submodules` explicitly specified
