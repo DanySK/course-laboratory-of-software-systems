@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>Containerization</title>
+<meta name="description" content="Containerization basics and CI">
+<meta name="author" content="Danilo Pianini">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/css/reset.css">
+<link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/css/reveal.css">
+  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.1e2604bf0c24e445faa3ae7d68b2f0146c34bc9e7b9bd6aee2b7187115560e96.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
+    
+<link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
+<link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Oxygen Mono' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Ubuntu Mono' rel='stylesheet'>
+
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+  
+
+    <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
+<h2 id="containerization-basics-and-ci">Containerization: Basics and CI</h2>
+<h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
+2020-10-19
+
+</section><section>
+<h1 id="containers">Containers</h1>
+
+
+  
+
+
+<figure>
+  <img
+    src='https://g.gravizo.com/svg?%0adigraph%20structs%20%7b%0a%20%20%20%20rankdir%3dLR%0a%20%20%20%20graph%20%5bfontname%3d%22helvetica%22%2c%20layout%3dneato%5d%0a%20%20%20%20edge%20%5bfontname%3d%22helvetica%22%5d%0a%20%20%20%20node%20%5bfontname%3d%22helvetica%22%2c%20shape%3drecord%2c%20style%3d%22rounded%2c%20filled%22%2c%20fontcolor%3dwhite%2c%20fixedsize%3dtrue%2c%20width%3d3%5d%3b%0a%20%20%20%20%22Bare%20metal%22%20%5bshape%3dplaintext%2c%20style%3d%22%22%2c%20fontcolor%3dblack%20fontsize%3d20%2c%20pos%3d%220%2c0%21%22%2c%20layout%3dneato%5d%0a%20%20%20%20Physical%20%5bfillcolor%3dblack%2c%20pos%3d%220%2c0.5%21%22%5d%0a%20%20%20%20%22Operating%20System%22%20%5bfillcolor%3dgray%2c%20pos%3d%220%2c1.1%21%22%5d%0a%20%20%20%20Runtime%20%5bfillcolor%3dgreen%2c%20pos%3d%220%2c1.7%21%22%5d%0a%20%20%20%20App1%20%5bfillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%22-1.025%2c2.3%21%22%5d%0a%20%20%20%20App2%20%5bfillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%220%2c2.3%21%22%5d%0a%20%20%20%20App3%20%5bfillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%221.025%2c2.3%21%22%5d%0a%0a%20%20%20%20%22Virtual%20Machine%22%20%5bshape%3dplaintext%2c%20style%3d%22%22%2c%20fontcolor%3dblack%20fontsize%3d20%2c%20pos%3d%223.5%2c0%21%22%5d%0a%20%20%20%20VM_Phy%20%5blabel%3dPhysical%2c%20fillcolor%3dblack%2c%20pos%3d%223.5%2c0.5%21%22%5d%0a%20%20%20%20%22Host%20Operating%20System%22%20%5bfillcolor%3dgray%2c%20pos%3d%223.5%2c1.1%21%22%5d%0a%20%20%20%20Hypervisor%20%5bfillcolor%3dorange%2c%20pos%3d%223.5%2c1.7%21%22%2c%20fontcolor%3dblack%5d%0a%20%20%20%20GuestOS1%20%5bfillcolor%3dgray%2c%20width%3d0.95%2c%20pos%3d%222.475%2c2.3%21%22%5d%0a%20%20%20%20GuestOS2%20%5bfillcolor%3dgray%2c%20width%3d0.95%2c%20pos%3d%223.5%2c2.3%21%22%5d%0a%20%20%20%20GuestOS3%20%5bfillcolor%3dgray%2c%20width%3d0.95%2c%20pos%3d%224.525%2c2.3%21%22%5d%0a%20%20%20%20Runtime1%20%5bfillcolor%3dgreen%2c%20width%3d0.95%2c%20pos%3d%222.475%2c2.9%21%22%5d%0a%20%20%20%20Runtime2%20%5bfillcolor%3dgreen%2c%20width%3d0.95%2c%20pos%3d%223.5%2c2.9%21%22%5d%0a%20%20%20%20Runtime3%20%5bfillcolor%3dgreen%2c%20width%3d0.95%2c%20pos%3d%224.525%2c2.9%21%22%5d%0a%20%20%20%20VM_App1%20%5blabel%3dApp1%2c%20fillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%222.475%2c3.5%21%22%5d%0a%20%20%20%20VM_App2%20%5blabel%3dApp2%2c%20fillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%223.5%2c3.5%21%22%5d%0a%20%20%20%20VM_App3%20%5blabel%3dApp3%2c%20fillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%224.525%2c3.5%21%22%5d%0a%0a%20%20%20%20%22Container%22%20%5bshape%3dplaintext%2c%20style%3d%22%22%2c%20fontcolor%3dblack%20fontsize%3d20%2c%20pos%3d%227%2c0%21%22%5d%0a%20%20%20%20C_Phy%20%5blabel%3dPhysical%2c%20fillcolor%3dblack%2c%20pos%3d%227%2c0.5%21%22%5d%0a%20%20%20%20C_K%20%5blabel%3d%22Operating%20System%22%2c%20fillcolor%3dgray%2c%20pos%3d%227%2c1.1%21%22%5d%0a%20%20%20%20%22Container%20Service%22%20%5bfillcolor%3dblue%2c%20pos%3d%227%2c1.7%21%22%5d%0a%20%20%20%20C_Rt1%20%5blabel%3dRuntime1%2c%20fillcolor%3dgreen%2c%20width%3d0.95%2c%20pos%3d%225.975%2c2.3%21%22%5d%0a%20%20%20%20C_Rt2%20%5blabel%3dRuntime2%2c%20fillcolor%3dgreen%2c%20width%3d0.95%2c%20pos%3d%227%2c2.3%21%22%5d%0a%20%20%20%20C_Rt3%20%5blabel%3dRuntime3%2c%20fillcolor%3dgreen%2c%20width%3d0.95%2c%20pos%3d%228.025%2c2.3%21%22%5d%0a%20%20%20%20C_App1%20%5blabel%3dApp1%2c%20fillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%225.975%2c2.9%21%22%5d%0a%20%20%20%20C_App2%20%5blabel%3dApp2%2c%20fillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%227%2c2.9%21%22%5d%0a%20%20%20%20C_App3%20%5blabel%3dApp3%2c%20fillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%228.025%2c2.9%21%22%5d%0a%7d%0a'
+    alt=''
+    />
+    <figcaption></figcaption>
+</figure>
+
+<p>Runtime <strong>isolation</strong> without operating system <strong>replication</strong></p>
+</section><section>
+<h1 id="why-containers">Why containers?</h1>
+<p><img src="memes/works-on-my-machine.jpeg" style='
+    width: 36.5vw;
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+<img src="memes/docker-born.jpeg" style='
+    width: 33vw;
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+</p>
+</section><section>
+<h2 id="lightweight-virtual-machines">Lightweight virtual machines?</h2>
+<img src="memes/lightweight-container.jpg" style='
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</section><section>
+<h2 id="lightweight-virtual-machines-1">Lightweight virtual machines?</h2>
+<img src="memes/chroot.jpeg" style='
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</section>
+
+  
+
+
+</div>
+      
+
+    </div>
+<script type="text/javascript" src=/Course-Laboratory-of-Software-Systems/reveal-hugo/object-assign.js></script>
+
+<a href="/Course-Laboratory-of-Software-Systems/reveal-js/css/print/" id="print-location" style="display: none;"></a>
+<script type="text/javascript">
+  var printLocationElement = document.getElementById('print-location');
+  var link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = printLocationElement.href + (window.location.search.match(/print-pdf/gi) ? 'pdf.css' : 'paper.css');
+  document.getElementsByTagName('head')[0].appendChild(link);
+</script>
+
+<script type="application/json" id="reveal-hugo-site-params">{"height":"100%","pdfseparatefragments":false,"theme":"white","width":"100%"}</script>
+<script type="application/json" id="reveal-hugo-page-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"custom_theme_options":{"enablesourcemap":true,"targetpath":"css/custom-theme.css"},"transition":"slide","transition_speed":"fast"}</script>
+
+<script src="/Course-Laboratory-of-Software-Systems/reveal-js/js/reveal.js"></script>
+
+<script type="text/javascript">
+  
+  
+  function camelize(map) {
+    if (map) {
+      Object.keys(map).forEach(function(k) {
+        newK = k.replace(/(\_\w)/g, function(m) { return m[1].toUpperCase() });
+        if (newK != k) {
+          map[newK] = map[k];
+          delete map[k];
+        }
+      });
+    }
+    return map;
+  }
+  
+  var revealHugoDefaults = { center: true, controls: true, history: true, progress: true, transition: "slide" };
+  var revealHugoSiteParams = JSON.parse(document.getElementById('reveal-hugo-site-params').innerHTML);
+  var revealHugoPageParams = JSON.parse(document.getElementById('reveal-hugo-page-params').innerHTML);
+  
+  var options = Object.assign({},
+    camelize(revealHugoDefaults),
+    camelize(revealHugoSiteParams),
+    camelize(revealHugoPageParams));
+  Reveal.initialize(options);
+</script>
+
+
+  
+  
+  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/markdown/marked.js"></script>
+  
+  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/markdown/markdown.js"></script>
+  
+  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/highlight/highlight.js"></script>
+  
+  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/zoom-js/zoom.js"></script>
+  
+  
+  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/notes/notes.js"></script>
+
+
+
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+</script>
+
+<script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+
+    
+  </body>
+</html>
