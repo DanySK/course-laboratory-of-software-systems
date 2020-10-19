@@ -26,7 +26,7 @@
     <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
 <h2 id="advanced-versioning-techniques">Advanced Versioning Techniques</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2020-10-16
+2020-10-19
 
 </section><section>
 <h1 id="advanced-merging">Advanced merging</h1>
@@ -293,8 +293,67 @@ git merge experiment <span style="color:#888"># Fast forward!</span>
 <p><strong>Squash</strong> when you are the only one, and some of the commits are somewhat &ldquo;tests&rdquo;, points in time you do not want to get back to anyway</p>
 </section><section>
 <h1 id="cherry-picking">Cherry picking</h1>
+<p>Selecting and importing a single commit (or commit range) from another branch</p>
+<p><code>git cherry-pick commitRef</code></p>
+<ul>
+<li>Picks commitRef and adds it to HEAD</li>
+<li>If <code>commitRef</code> is a branch name, cherry picks the last commit of the branch</li>
+</ul>
+<p><code>git cherry-pick from..to</code></p>
+<ul>
+<li>cherry picks commit range from ref <code>from</code> to ref <code>to</code></li>
+</ul>
+<p>Cherry picking is often useful for applying <em>fixes</em> or <em>patches</em> which are in development from other branches.</p>
 </section><section>
-<h1 id="git-submodules">Git Submodules</h1>
+<h1 id="submodules">Submodules</h1>
+<p>Using <em>a repository within another repository</em></p>
+<p>Typical use:</p>
+<ul>
+<li><em>Templating</em>
+<ul>
+<li>see e.g. these slides</li>
+</ul>
+</li>
+<li><em>Aggregation</em>
+<ul>
+<li>A &ldquo;master project&rdquo; working as container of multiple other projects</li>
+</ul>
+</li>
+<li>A <em>direct dipendency</em> on an unreleased or in-development library</li>
+</ul>
+</section><section>
+<h1 id="git-submodule">Git Submodule</h1>
+<p>Adding an external submodule:</p>
+<ul>
+<li><code>git submodule add &lt;REPO_URL&gt; &lt;DESTINATION&gt;</code>
+<ul>
+<li><em>Prefer HTTPS</em>: SSH requires public key authorization, and hosts have limitations</li>
+<li>Creates or modifies the <code>.gitmodules</code> file in the repository root</li>
+<li>Creates a new special file <code>&lt;DESTINATION&gt;</code></li>
+<li>Both <code>.gitmodules</code> and <code>&lt;DESTINATION&gt;</code> <strong>must be tracked</strong></li>
+<li>Clones the current repository status at <code>&lt;DESTINATION&gt;</code></li>
+</ul>
+</li>
+<li>Contents of the submodules <strong>are not tracked</strong>, but <strong>linked</strong></li>
+<li>A project can have <em>multiple</em> submodules</li>
+<li><em>Nested</em> submodules are possible, although not recommended</li>
+</ul>
+</section><section>
+<h2 id="importing-a-repository-with-submodules">Importing a repository with submodules</h2>
+<p>A plain <code>clone</code> does not initialize submodules. Special care applies.</p>
+<p><code>git clone --recurse-submodules &lt;URL&gt; &lt;DESTINATION&gt;</code></p>
+<ul>
+<li>Besides performing the clone, also recursively initialize submodules</li>
+</ul>
+<p>If the repository has been cloned plainly, then submodules can be initialized manually</p>
+<p><code>git submodule update --init --recursive</code></p>
+</section><section>
+<h2 id="updating-submodules">Updating submodules</h2>
+</section><section>
+<h2 id="submodules-and-travis-ci">Submodules and Travis CI</h2>
+<ul>
+<li>single ssh keys</li>
+</ul>
 </section>
 
   
