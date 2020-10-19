@@ -320,6 +320,12 @@ git merge experiment <span style="color:#888"># Fast forward!</span>
 </ul>
 </li>
 <li>A <em>direct dipendency</em> on an unreleased or in-development library</li>
+<li>The project cannot be managed with an <em>integrated hierarchial tool</em>
+<ul>
+<li>No Gradle or Maven or similar</li>
+<li>If a build tool can deal with dependencies, then let it do its job</li>
+</ul>
+</li>
 </ul>
 </section><section>
 <h1 id="git-submodule">Git Submodule</h1>
@@ -348,9 +354,24 @@ git merge experiment <span style="color:#888"># Fast forward!</span>
 <p>If the repository has been cloned plainly, then submodules can be initialized manually</p>
 <p><code>git submodule update --init --recursive</code></p>
 </section><section>
-<h2 id="updating-submodules">Updating submodules</h2>
+<h2 id="working-with-submodules">Working with submodules</h2>
+<p><code>git submodule update --remote --recursive</code></p>
+<ul>
+<li>Recursively updates all submbodules</li>
+<li>It <em>must</em> be executed also <strong>after a pull</strong>
+<ul>
+<li><em>Pulling does not update submodules by default</em></li>
+</ul>
+</li>
+</ul>
+<p>Changes into submodules are dealt with as if they were on a <em>separate repository</em></p>
+<p><code>foreach</code> can be used to <em>run some command on all modules</em></p>
+<ul>
+<li>e.g., <code>git submodule foreach git pull</code></li>
+<li><em>recursive behavior</em> can be obtained with <code>--recurse-submodules</code></li>
+</ul>
 </section><section>
-<h2 id="submodules-and-travis-ci">Submodules and Travis CI</h2>
+<h2 id="submodules-and-ci">Submodules and CI</h2>
 <ul>
 <li>single ssh keys</li>
 </ul>
