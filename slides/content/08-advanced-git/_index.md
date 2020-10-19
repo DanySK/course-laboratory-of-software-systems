@@ -330,6 +330,64 @@ Squashing results in *further alteration* than rebase
 
 # Cherry picking
 
+Selecting and importing a single commit (or commit range) from another branch
+
+`git cherry-pick commitRef`
+* Picks commitRef and adds it to HEAD
+* If `commitRef` is a branch name, cherry picks the last commit of the branch
+
+`git cherry-pick from..to`
+* cherry picks commit range from ref `from` to ref `to`
+
+Cherry picking is often useful for applying *fixes* or *patches* which are in development from other branches.
+
 ---
 
-# Git Submodules
+# Submodules
+
+Using *a repository within another repository*
+
+Typical use:
+* *Templating*
+    * see e.g. these slides
+* *Aggregation*
+    * A "master project" working as container of multiple other projects
+* A *direct dipendency* on an unreleased or in-development library
+
+---
+
+# Git Submodule
+
+Adding an external submodule:
+* `git submodule add <REPO_URL> <DESTINATION>`
+    * *Prefer HTTPS*: SSH requires public key authorization, and hosts have limitations
+    * Creates or modifies the `.gitmodules` file in the repository root
+    * Creates a new special file `<DESTINATION>`
+    * Both `.gitmodules` and `<DESTINATION>` **must be tracked**
+    * Clones the current repository status at `<DESTINATION>`
+* Contents of the submodules **are not tracked**, but **linked**
+* A project can have *multiple* submodules
+* *Nested* submodules are possible, although not recommended
+
+---
+
+## Importing a repository with submodules
+
+A plain `clone` does not initialize submodules. Special care applies.
+
+`git clone --recurse-submodules <URL> <DESTINATION>`
+* Besides performing the clone, also recursively initialize submodules
+
+If the repository has been cloned plainly, then submodules can be initialized manually
+
+`git submodule update --init --recursive`
+
+---
+
+## Updating submodules
+
+---
+
+## Submodules and Travis CI
+
+* single ssh keys
