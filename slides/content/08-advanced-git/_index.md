@@ -353,6 +353,9 @@ Typical use:
 * *Aggregation*
     * A "master project" working as container of multiple other projects
 * A *direct dipendency* on an unreleased or in-development library
+* The project cannot be managed with an *integrated hierarchial tool*
+    * No Gradle or Maven or similar
+    * If a build tool can deal with dependencies, then let it do its job
 
 ---
 
@@ -384,10 +387,21 @@ If the repository has been cloned plainly, then submodules can be initialized ma
 
 ---
 
-## Updating submodules
+## Working with submodules
+
+`git submodule update --remote --recursive`
+* Recursively updates all submbodules
+* It *must* be executed also **after a pull**
+    * *Pulling does not update submodules by default*
+
+Changes into submodules are dealt with as if they were on a *separate repository*
+
+`foreach` can be used to *run some command on all modules*
+* e.g., `git submodule foreach git pull`
+* *recursive behavior* can be obtained with `--recurse-submodules`
 
 ---
 
-## Submodules and Travis CI
+## Submodules and CI
 
 * single ssh keys
