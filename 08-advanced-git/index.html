@@ -29,6 +29,27 @@
 2020-10-19
 
 </section><section>
+<h1 id="annotated-tagging">Annotated Tagging</h1>
+<p>Git supports two types of tags:</p>
+<ul>
+<li><strong>lightweight</strong> tags
+<ul>
+<li><em>default option</em></li>
+<li>simply a name for an object (usually a commit)</li>
+<li>meant for creating <strong>private</strong> or <strong>temporary</strong> annotations!</li>
+</ul>
+</li>
+<li><strong>annotated</strong> tags
+<ul>
+<li>Produced with <code>-a</code> (unsigend), <code>-s</code>, or <code>-u</code> options</li>
+<li>Creates a <em>new object</em></li>
+<li>Contain <em>message</em>, <em>creation date</em>, <em>tagger name</em> and <em>email</em>, and an optional <em>signature</em></li>
+<li>Annotated tags are <strong>meant for release</strong></li>
+<li>Some commands (most notably, <code>git describe</code>) ignore lightweight tags by default</li>
+</ul>
+</li>
+</ul>
+</section><section>
 <h1 id="advanced-merging">Advanced merging</h1>
 <ul>
 <li>In classic merging, diverging branches are reunited through a <strong>merge commit</strong></li>
@@ -373,7 +394,15 @@ git merge experiment <span style="color:#888"># Fast forward!</span>
 </section><section>
 <h2 id="submodules-and-ci">Submodules and CI</h2>
 <ul>
-<li>single ssh keys</li>
+<li>Submodules require care in CI</li>
+<li>The <em>clone command</em> needs to get <em>altered</em> for them to checkout correctly</li>
+<li>On <em>Travis CI</em>, modules are pulled in <em>automatically</em>
+<ul>
+<li><em>SSH keys</em> however are not trivial to be managed</li>
+<li><em>Prefer HTTPS</em></li>
+</ul>
+</li>
+<li>Other integrators may require to clone with <code>--recurse-submodules</code> explicitly specified</li>
 </ul>
 </section>
 
