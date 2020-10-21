@@ -1,7 +1,7 @@
  
 +++
 
-title = "DDD - Elements"
+title = "[LSS2021] DDD > Elements"
 description = ""
 outputs = ["Reveal"]
 aliases = [
@@ -30,6 +30,17 @@ enableSourceMap = true
 &nbsp;
 #### {{< course_name >}}
 #### {{< academic_year >}}
+
+---
+
+## Outline
+
+1. The role of Knowledge Crunching
+1. Focusing on the Core Domain of a Software System
+1. Model-Driven Design
+1. Domain Model Implementation Patterns
+1. Bounded Contexts
+1. Software Architectures for the DDD
 
 ---
 
@@ -76,24 +87,27 @@ enableSourceMap = true
 
 ---
 
-## The Importance of Domain Knowledge
+# Domain knowledge is key,
+## even more so than technical know‐how
 
-* **Domain knowledge is key, even more so than technical know‐how.**
+* If you can’t speak to your business users in simple terms about complex concepts in the problem domain...
+    * ... you are not ready to start developing software within it!
 
-* Teams working in a business with complex processes and logic need to immerse themselves in the problem domain, assimilating all the relevant domain knowledge.
-
-* If you can’t speak to your business users in simple terms about complex concepts in the problem domain, you are not ready to start developing software within it.
+* Teams working in a business with complex processes and logic need to immerse themselves in the problem domain
+    * assimilating all the relevant domain knowledge
 
 ---
 
-## The Role of Business Analysts
+## The Role of
+# Business Analysts
 
-* A business analyst can help stakeholders flesh out their
-initial ideas and capture inputs and outputs of the product.
+> A business analyst can help stakeholders flesh out their initial ideas  
+and capture inputs and outputs of the product
 
-* If you have odd whiz‐kid developers and are nervous about putting them in front of domain experts, you can also use business analysts as facilitators to help communication.
+* Business analysts as facilitators to help communication
+    * e.g. if you have odd whiz‐kid developers and are nervous about putting them in front of domain experts...
 
-* What you don’t want to do is remove the direct communication between the development team and the people who understand that part of the business the most.
+* What you don’t want to do is remove the direct communication between the development team and the people who understand business requirments and processes
 
 > *Who can act as a Business Analyst?*
 
@@ -101,12 +115,10 @@ initial ideas and capture inputs and outputs of the product.
 
 ## Knowledge crunching is an ongoing process
 
-* Model‐driven design and the evolution of a domain model
-is an ongoing process.
+* Model‐driven design and the evolution of a domain model is an ongoing process.
 
-* Many models must be rejected in order to ensure you have a useful modelfor the current use cases of a system. 
-    * **Collaboration among development team, business
-stakeholders, and subject matter experts should not be constrained to the start of a project**.
+* Many models must be rejected in order to ensure you have a useful model for the current use cases of a system. 
+    * **Collaboration among development team, business stakeholders, and subject matter experts should not be constrained to the start of a project**.
 
 * Knowledge crunching should be an ongoing concern with the business engaged throughout the _lifetime_ of the application build.
     * Note: when the system is in use the model may also need to evolve due to technical reasons such as performance or a better understanding of the systems usage.
@@ -115,15 +127,21 @@ stakeholders, and subject matter experts should not be constrained to the start 
 
 ---
 
-## Domain Experts vs. Stakeholders
+## Domain Experts vs. Stakeholders (1/2)
 
-{{< image src="domain_experts_stakeholders.png" width="70">}}
+{{< image src="domain_experts_stakeholders.png" >}}
 
-* A problem space gives you a set of requirements, inputs, and expected outputs: this is usually provided from your stakeholders.
+---
 
-* A solution space contains a model that can meet the needs of the requirements: this is where domain experts can help.
+## Domain Experts vs. Stakeholders (2/2)
 
-<!--As shown in Figure 2-2, if your stakeholder is not a domain expert then his role will differ greatly from that of a domain expert. A stakeholder will tell you what they want the system to do; they will focus on the inputs and outputs. A domain expert on the other hand will work with you in order to produce a useful model that can satisfy the needs of a stakeholder and the behaviors of the application.-->
+* The *problem space* gives you a set of requirements, inputs, and expected outputs
+    * this is usually provided from your stakeholders
+    * they tell what they want the system to do 
+
+* The *solution space* contains a model that can meet the needs of the requirements
+    * this is where domain experts can help
+    * the goal is to produce a useful model that can satisfy the needs of a stakeholder and the behaviors of the application
 
 ---
 
@@ -389,7 +407,7 @@ cases.
 
 ## An Example: Auction Web Site (1/4)
 
-<div class='left' style='float:left;width:40%'>
+<div class='left' style='float:left;width:50%'>
 
 * We will consider the domain model of an online auction site
 
@@ -399,9 +417,9 @@ cases.
 
 </div>
 
-<div class='right' style='float:right;width:60%'>
+<div class='right' style='float:right;width:50%'>
 
-{{< image src="online_auction_ex01.png" >}}
+{{< image src="online_auction_ex01.png" width="40">}}
 
 </div>
 
@@ -409,7 +427,7 @@ cases.
 
 ## An Example: Auction Web Site (2/4)
 
-<div class='left' style='float:left;width:40%'>
+<div class='left' style='float:left;width:50%'>
 
 * Membership: the area of the systems that deals
 with the registrations, preferences, and details of members.
@@ -425,9 +443,9 @@ activities
 
 </div>
 
-<div class='right' style='float:right;width:60%'>
+<div class='right' style='float:right;width:50%'>
 
-{{< image src="online_auction_ex02.png" >}}
+{{< image src="online_auction_ex02.png" width="40">}}
 
 </div>
 
@@ -435,7 +453,7 @@ activities
 
 ## An Example: Auction Web Site (3/4)
 
-<div class='left' style='float:left;width:40%'>
+<div class='left' style='float:left;width:50%'>
 
 * Core domains of the system are the *seller* and the
 *auction*.
@@ -448,9 +466,9 @@ activities
 
 </div>
 
-<div class='right' style='float:right;width:60%'>
+<div class='right' style='float:right;width:50%'>
 
-{{< image src="online_auction_ex03.png" >}}
+{{< image src="online_auction_ex03.png" width="40">}}
 
 </div>
 
@@ -458,18 +476,26 @@ activities
 
 ## An Example: Auction Web Site (4/4)
 
+<div class='left' style='float:left;width:50%'>
+
+{{< image src="online_auction_ex04.png" width="45" >}}
+
+</div>
+
+<div class='right' style='float:right;width:50%'>
+
 * The online auction site is divided into two physical applications
 
 * The dispute domain has been fulfilled by an off‐the‐shelf
 package while the core and supporting domains will be designed using a custom web application
 
-{{< image src="online_auction_ex04.png" width="60" >}}
+</div>
 
 ---
 
 ## Anticorruption Layer
 
-{{< image src="anticorruption_layer.png" width="70" >}}
+{{< image src="anticorruption_layer.png" width="60" >}}
 
 * Wraps the communication with legacy or third‐party code to protect the integrity of a bounded context
 * Manages the transformation of one context’s view to another, retaining the integrity of new code
@@ -493,7 +519,7 @@ package while the core and supporting domains will be designed using a custom we
 ## From the Problem Space
 ## to the Solution Space
 
-* it is important to implement in code the analysis model that was produced during knowledge-crunching sessions
+* It is important to implement in code the analysis model that was produced during knowledge-crunching sessions
 
 * DDD requires to produce a single model that serves as an analysis model for business people to understand and which is implemented using the same terminology and concepts in code
 
@@ -525,15 +551,13 @@ package while the core and supporting domains will be designed using a custom we
 
 ---
 
-## The Domain Model Evolution Process
-## (without DDD-MDD)
+## Domain Model Evolution (without DDD)
 
 {{< image src="domain_model_evolution_wrong.png" width="80">}}
 
 ---
 
-## The Domain Model Evolution Process
-## (following DDD-MDD)
+## Domain Model Evolution (following DDD)
 
 {{< image src="domain_model_evolution_good.png" width="75">}}
 
@@ -614,16 +638,14 @@ data schemas!*
 
 ## Best Practices for Shaping the UL
 
-1. Ensure that you have **linguistic consistency**
+1. Ensure the **linguistic consistency**
     * If you are using a term in code that the domain expert doesn’t say, you need to check it with her
-    * It could be that you have found a concept that was required, so it needs to be added to the UL and understood by the domain expert
-    * Alternatively, maybe you misunderstood something that the domain expert said; therefore, you should rectify the code with the correct term
+        * It could be that you have found a concept that was required, so it needs to be added to the UL and understood by the domain expert
+        * Alternatively, maybe you misunderstood something that the domain expert said; therefore, you should rectify the code with the correct term
 
 1. Create a **glossary of domain terms** with the domain expert to avoid confusion
     * Ensure that you use one word for a specific concept
-
-1. Don’t use terms that have a specific meaning in software development
-    * such as design pattern names...
+    * Don’t use terms that have a specific meaning in software development (such as design pattern names...)
 
 1. Use the language to drive the design of your code
     * The **UL should be visible everywhere**, from namespaces to classes, and from properties to method names
@@ -633,7 +655,7 @@ data schemas!*
 ## How to create effective domain models?
 
 1. **Don’t let the truth get in the way of a good model**
-    * A domain model is not a model of real life; it is a system of abstractions on reality, an interpretation
+    * A domain model is not a model of real-life; it is a system of abstractions on reality, an interpretation
 
 1. **Model only what is relevant**
     * You don’t have to include everything into the model
@@ -646,3 +668,313 @@ data schemas!*
 1. **Implement the model in code early and often**
 
 ---
+
+# Domain Model Patterns
+
+---
+
+## The Domain Layer
+
+<div class='left' style='float:left;width:50%'>
+
+* The **Domain Layer** is the area of the code that contains the domain model
+    * Isolation among *domain model complexity* and *application technical complexity*
+
+* Several Patterns available to implement a domain model in code
+
+</div>
+
+<div class='right' style='float:right;width:50%'>
+
+{{< image src="assets/domain_layer.png" >}}
+
+</div>
+
+---
+
+## Domain Model Pattern
+
+<div class='left' style='float:left;width:50%'>
+
+{{< image src="assets/domain_model_pattern.png" >}}
+</div>
+
+<div class='right' style='float:right;width:50%'>
+
+* **A good fit for complex domains with rich business logic**
+    * An Object-Oriented Model with Data and Behaviour
+    * The Domain Model is separated from the infrastructure
+
+* Generally designed according to the DDD Building Blocks
+
+* Do not confuse the domain model with the data persistence model
+    * The first incorporates also business processes, associations, rules, ...
+
+</div>
+
+---
+
+## Domain Model Pattern - An Example
+
+{{< image src="assets/domain_model_example1.png" >}}
+
+---
+
+## Domain Model Pattern - Details
+
+* It is a pure object‐oriented approach that involves creating an abstract model of the real business domain and is useful when dealing with complex logic and workflow
+
+* It is persistence ignorant and relies on mapper classes and other abstraction patterns to persist and retrieve business entities
+
+* **Avoid trying to apply the domain model pattern for everything**
+    * It is a good candidate when you have to model complex logic or part of the problem domain that requires clarity because it’s important, or will change often due to continued investment
+---
+
+## Transaction Script Pattern
+
+<div class='left' style='float:left;width:50%'>
+
+{{< image src="assets/transaction_script_pattern.png" >}}
+</div>
+
+<div class='right' style='float:right;width:50%'>
+
+* The transaction script pattern follows a procedural style of development rather than an object‐oriented approach
+
+    * A single procedure is created for each of your business transactions, and it is grouped in some kind of static manager or service class
+    * Each procedure contains all the business logic that is required to complete the business transaction from the workflow, business rules, and validation checks to persistence in the database.
+
+</div>
+
+---
+
+## Transaction Script Pattern - An Example
+
+{{< image src="assets/transaction_script_example1.png" >}}
+
+---
+
+## Transaction Script Pattern - Details
+
+* It is simple to understand and can be fast to get new team members up to speed without prior knowledge of the pattern
+
+    * Useful for the parts of your domain that have little or no logic
+    * If logic becomes complex, the transaction script pattern can quickly become hard to manage because, by its nature, duplication can occur quickly
+
+* The problems with the transaction script pattern are revealed when an application grows and the business logic complexities increase
+
+---
+
+## Table Module Pattern
+
+* The table module pattern maps the object model to the database model
+    * A single object represents a table or view or a document in the database
+    * The object is responsible for all persistence needs along with business logic behavior
+
+* At a first glance, it might not be a good fit for DDD
+    * it is good for simpler parts of the domain that are isolated by a bounded context and that are simply forms over data
+---
+
+## Anemic Domain Module Pattern
+
+* It is very similar to the domain model pattern
+    * There are domain objects that represent the business domain...
+    * ... but without any behaviors!
+
+* It is a good candidate for parts of your domain model that have little logic
+    * The anemic domain model can incorporate the UL and be a good first step when trying to create a rich domain model
+    * It is a good choice when associated to a functional programming approach
+
+---
+
+# Bounded Contexts
+
+---
+
+*The DDD Basic Approach*
+
+# Use Bounded Contexts
+# to ensure Domain Integrity 
+
+> **Bounded Context**
+> * Defines the applicability of the model
+> * Ensures that domain concepts outside a model's context do not distract from the problem it was designed to solve
+> * Makes explicit what the model is responsible for and what it is not
+
+---
+
+## The Challenges of a Single Model
+
+* At the core of Domain‐Driven Design there is the need to create explicit, evolvable models in code that align with the shared conceptual models
+    * As new domain insights are gained, they can be incorporated into the model efficiently
+    
+* If a single model is used for an entire system, concepts from one area of the model can be confused with similar-sounding concepts from another
+area of the system (and even become coupled to them)
+
+* DDD advocates that you break up a large complex system into multiple code models
+
+---
+
+## (1) A model can grow in complexity
+
+{{< image src="assets/bounded_challenges_1.png" >}}
+
+---
+
+## (2) Multiple Teams working on a Single Model
+
+{{< image src="assets/bounded_challenges_2.png" >}}
+
+---
+
+## (3) Ambiguity in the Language of the Model
+
+{{< image src="assets/bounded_challenges_3.png" >}}
+
+---
+
+## (4) The Applicability of a Domain Concept...
+
+{{< image src="assets/bounded_challenges_4.png" >}}
+
+---
+
+## (4) ... and the violation of the SRP
+
+{{< image src="assets/bounded_challenges_4b.png" >}}
+
+---
+
+## Divide and Conquer with Bounded Context
+
+{{< image src="assets/bounded_contexts_transition.png" >}}
+
+---
+
+## Subdomains vs. Bounded Contexts
+
+{{< image src="assets/subdomains_and_bounded_contexts.png" >}}
+
+---
+
+## The Anatomy of a Bounded Context
+
+<div class='left' style='float:left;width:60%'>
+
+{{< image src="assets/bounded-context.png" width="55">}}
+
+</div>
+
+<div class='right' style='float:right;width:40%'>
+
+* A Bounded Context owns the *vertical slide* of functionalities
+    * from the presentation layer
+    * through the domain logic layer
+    * on to the persistence
+    * and even to the data storage
+
+* *Autonomy* is a key feature of each bounded context
+
+* Relations among bounded contexts must be described using context maps
+
+</div>
+
+---
+
+# Software Architectures
+# for the Domain-Driven Design
+
+---
+
+## Towards a
+# Clean Architecture
+
+DDD does not enforce the use of a particular architectural style  
+... as long as the chosen one *must support the isolation of the domain logic*!
+
+* Several architectural styles can be used
+    * e.g. ubiquitous layered architecture, hexagonal architecture, ...
+
+* The Microservice Architectural Style is the closest one to the DDD philosophy
+---
+
+## A "revised" Layered Architecture
+
+<div class='left' style='float:left;width:50%'>
+
+{{< image src="assets/layered_architecture.png" >}}
+
+</div>
+
+<div class='right' style='float:right;width:50%'>
+
+* At the heart of the architecture there is the domain layer
+
+* Surrounding the domain layer there is an application layer
+    * It abstracts the low-level details of the domain behind a coarse-grained API
+    * The APIs represent the business use cases of the application
+
+* The domain logic and application layers are isolated and protected from the "external" accidental complexities
+</div>
+
+---
+
+## Dependency Inversion
+
+{{< image src="assets/dependency-inversion.png" width="50">}}
+
+* The domain layer and application layers at the center of the architecture should not depend on any other layers
+* The application layer is dependent only on the domain layer
+    * it orchestrates the handling of the use cases by delegating to the domain layer
+
+---
+
+## The Application Service Layer
+
+* **Represents the use cases and behavior of the application**
+    * use cases are implemented as application services that contain application logic to coordinate the fulfillment of a use case by delegating to the domain and infrastructural layers
+
+* **Operates at a higher level of abstraction than the domain objects**
+    * exposing a coarse-grained set of services while hiding the details of the domain layer ("*what the system does, but not how it does it"*)
+    * is a facade for the domain model
+
+* **Enables the support of different clients without compromising the domain layer's integrity**
+    * clients must adapt to the application layer APIs, transforming the output in a suitable format
+
+---
+
+## The Infrastructural Layer
+
+* Contains all the technical details of the software system
+    * such as enabling the application to be consumed, whether by humans via a user interface or by applications via a set of web service or message endpoints
+    * is responsible for the technical implementation of storing information on the state of domain objects
+
+* Can provide capabilities for logging, security, notification, and integration with other bounded contexts and applications
+
+---
+
+{{< image src="assets/CleanArchitecture.jpg" >}}
+
+(from *Clean Architecture* by Robert C. Martin)
+
+---
+
+## Clean Architecture Features
+
+1. Independent of Frameworks
+
+1. Testable
+
+1. Independent of the UI
+
+1. Independent of the data persistence layer
+
+1. Independent of any external agency
+
+---
+
+## Microservices Architecture
+
+* Nowadays, an extremely popular architecture style
+    * heavily inspired by DDD Bounded Context concept
+

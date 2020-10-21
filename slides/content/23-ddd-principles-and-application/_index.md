@@ -1,7 +1,7 @@
  
 +++
 
-title = "DDD - Principles and Philosophy"
+title = "[LSS2021] DDD > Principles and Philosophy"
 description = ""
 outputs = ["Reveal"]
 aliases = [
@@ -30,6 +30,52 @@ enableSourceMap = true
 &nbsp;
 #### {{< course_name >}}
 #### {{< academic_year >}}
+
+---
+
+# Domain-Driven Design
+
+## *is*
+
+a philosophy born out of a need to realign the focus of development teams writing software for complex domains
+
+## *is not*
+
+a framework or a set of predefined templates that you can apply to a project
+
+(although there is value in design patterns and frameworks)
+
+---
+
+### Designers and developers Teams should embrace the problem domain they are working within and look outside of their technical tunnel vision!
+
+The most fundamental point to being a grat software specialist is to understand the problem domain you work within and value this as much as you value your technical expertise
+
+---
+
+# Common Problems
+## When Starting with Domain-Driven Design
+
+---
+
+### #1
+## Overemphasizing the importance of tactical patterns
+
+
+
+---
+
+# Applying the
+# Domain-Driven Design Approach
+
+---
+
+## Relations between
+# Domain-Driven Design and Agile
+
+---
+
+# OLD SLIDES
 
 ---
 
