@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-<title>DDD - Elements</title>
+<title>[LSS2021] DDD &gt; Elements</title>
 
 <meta name="author" content="Danilo Pianini">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,6 +33,16 @@
 <p> </p>
 <h4 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h4>
 <h4 id="hahahugoshortcode-s1-hbhb">A.Y. 2020/2021</h4>
+</section><section>
+<h2 id="outline">Outline</h2>
+<ol>
+<li>The role of Knowledge Crunching</li>
+<li>Focusing on the Core Domain of a Software System</li>
+<li>Model-Driven Design</li>
+<li>Domain Model Implementation Patterns</li>
+<li>Bounded Contexts</li>
+<li>Software Architectures for the DDD</li>
+</ol>
 </section><section>
 <h1 id="knowledge-crunching">Knowledge Crunching</h1>
 </section><section>
@@ -88,30 +98,38 @@
 </li>
 </ul>
 </section><section>
-<h2 id="the-importance-of-domain-knowledge">The Importance of Domain Knowledge</h2>
+<h1 id="domain-knowledge-is-key">Domain knowledge is key,</h1>
+<h2 id="even-more-so-than-technical-knowhow">even more so than technical know‐how</h2>
 <ul>
 <li>
-<p><strong>Domain knowledge is key, even more so than technical know‐how.</strong></p>
+<p>If you can’t speak to your business users in simple terms about complex concepts in the problem domain&hellip;</p>
+<ul>
+<li>&hellip; you are not ready to start developing software within it!</li>
+</ul>
 </li>
 <li>
-<p>Teams working in a business with complex processes and logic need to immerse themselves in the problem domain, assimilating all the relevant domain knowledge.</p>
-</li>
-<li>
-<p>If you can’t speak to your business users in simple terms about complex concepts in the problem domain, you are not ready to start developing software within it.</p>
+<p>Teams working in a business with complex processes and logic need to immerse themselves in the problem domain</p>
+<ul>
+<li>assimilating all the relevant domain knowledge</li>
+</ul>
 </li>
 </ul>
 </section><section>
-<h2 id="the-role-of-business-analysts">The Role of Business Analysts</h2>
+<h2 id="the-role-of">The Role of</h2>
+<h1 id="business-analysts">Business Analysts</h1>
+<blockquote>
+<p>A business analyst can help stakeholders flesh out their initial ideas<br>
+and capture inputs and outputs of the product</p>
+</blockquote>
 <ul>
 <li>
-<p>A business analyst can help stakeholders flesh out their
-initial ideas and capture inputs and outputs of the product.</p>
+<p>Business analysts as facilitators to help communication</p>
+<ul>
+<li>e.g. if you have odd whiz‐kid developers and are nervous about putting them in front of domain experts&hellip;</li>
+</ul>
 </li>
 <li>
-<p>If you have odd whiz‐kid developers and are nervous about putting them in front of domain experts, you can also use business analysts as facilitators to help communication.</p>
-</li>
-<li>
-<p>What you don’t want to do is remove the direct communication between the development team and the people who understand that part of the business the most.</p>
+<p>What you don’t want to do is remove the direct communication between the development team and the people who understand business requirments and processes</p>
 </li>
 </ul>
 <blockquote>
@@ -121,14 +139,12 @@ initial ideas and capture inputs and outputs of the product.</p>
 <h2 id="knowledge-crunching-is-an-ongoing-process">Knowledge crunching is an ongoing process</h2>
 <ul>
 <li>
-<p>Model‐driven design and the evolution of a domain model
-is an ongoing process.</p>
+<p>Model‐driven design and the evolution of a domain model is an ongoing process.</p>
 </li>
 <li>
-<p>Many models must be rejected in order to ensure you have a useful modelfor the current use cases of a system.</p>
+<p>Many models must be rejected in order to ensure you have a useful model for the current use cases of a system.</p>
 <ul>
-<li><strong>Collaboration among development team, business
-stakeholders, and subject matter experts should not be constrained to the start of a project</strong>.</li>
+<li><strong>Collaboration among development team, business stakeholders, and subject matter experts should not be constrained to the start of a project</strong>.</li>
 </ul>
 </li>
 <li>
@@ -142,24 +158,33 @@ stakeholders, and subject matter experts should not be constrained to the start 
 </li>
 </ul>
 </section><section>
-<h2 id="domain-experts-vs-stakeholders">Domain Experts vs. Stakeholders</h2>
+<h2 id="domain-experts-vs-stakeholders-12">Domain Experts vs. Stakeholders (1/2)</h2>
 <img src="domain_experts_stakeholders.png" style='
-    width: 70vw;
+    
     
     max-width: 95vw;
     max-height: 80vh;
     object-fit: contain;
 '>
 
+</section><section>
+<h2 id="domain-experts-vs-stakeholders-22">Domain Experts vs. Stakeholders (2/2)</h2>
 <ul>
 <li>
-<p>A problem space gives you a set of requirements, inputs, and expected outputs: this is usually provided from your stakeholders.</p>
+<p>The <em>problem space</em> gives you a set of requirements, inputs, and expected outputs</p>
+<ul>
+<li>this is usually provided from your stakeholders</li>
+<li>they tell what they want the system to do</li>
+</ul>
 </li>
 <li>
-<p>A solution space contains a model that can meet the needs of the requirements: this is where domain experts can help.</p>
+<p>The <em>solution space</em> contains a model that can meet the needs of the requirements</p>
+<ul>
+<li>this is where domain experts can help</li>
+<li>the goal is to produce a useful model that can satisfy the needs of a stakeholder and the behaviors of the application</li>
+</ul>
 </li>
 </ul>
-<!--As shown in Figure 2-2, if your stakeholder is not a domain expert then his role will differ greatly from that of a domain expert. A stakeholder will tell you what they want the system to do; they will focus on the inputs and outputs. A domain expert on the other hand will work with you in order to produce a useful model that can satisfy the needs of a stakeholder and the behaviors of the application.-->
 </section><section>
 <h2 id="effective-knowledge-crunching-13">Effective Knowledge Crunching (1/3)</h2>
 <blockquote>
@@ -564,7 +589,7 @@ cases.</p>
 </ul>
 </section><section>
 <h2 id="an-example-auction-web-site-14">An Example: Auction Web Site (1/4)</h2>
-<div class='left' style='float:left;width:40%'>
+<div class='left' style='float:left;width:50%'>
 <ul>
 <li>
 <p>We will consider the domain model of an online auction site</p>
@@ -577,9 +602,9 @@ cases.</p>
 </li>
 </ul>
 </div>
-<div class='right' style='float:right;width:60%'>
+<div class='right' style='float:right;width:50%'>
 <img src="online_auction_ex01.png" style='
-    
+    width: 40vw;
     
     max-width: 95vw;
     max-height: 80vh;
@@ -589,7 +614,7 @@ cases.</p>
 </div>
 </section><section>
 <h2 id="an-example-auction-web-site-24">An Example: Auction Web Site (2/4)</h2>
-<div class='left' style='float:left;width:40%'>
+<div class='left' style='float:left;width:50%'>
 <ul>
 <li>
 <p>Membership: the area of the systems that deals
@@ -610,9 +635,9 @@ activities</p>
 </li>
 </ul>
 </div>
-<div class='right' style='float:right;width:60%'>
+<div class='right' style='float:right;width:50%'>
 <img src="online_auction_ex02.png" style='
-    
+    width: 40vw;
     
     max-width: 95vw;
     max-height: 80vh;
@@ -622,7 +647,7 @@ activities</p>
 </div>
 </section><section>
 <h2 id="an-example-auction-web-site-34">An Example: Auction Web Site (3/4)</h2>
-<div class='left' style='float:left;width:40%'>
+<div class='left' style='float:left;width:50%'>
 <ul>
 <li>
 <p>Core domains of the system are the <em>seller</em> and the
@@ -640,9 +665,9 @@ activities</p>
 </li>
 </ul>
 </div>
-<div class='right' style='float:right;width:60%'>
+<div class='right' style='float:right;width:50%'>
 <img src="online_auction_ex03.png" style='
-    
+    width: 40vw;
     
     max-width: 95vw;
     max-height: 80vh;
@@ -652,6 +677,17 @@ activities</p>
 </div>
 </section><section>
 <h2 id="an-example-auction-web-site-44">An Example: Auction Web Site (4/4)</h2>
+<div class='left' style='float:left;width:50%'>
+<img src="online_auction_ex04.png" style='
+    width: 45vw;
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</div>
+<div class='right' style='float:right;width:50%'>
 <ul>
 <li>
 <p>The online auction site is divided into two physical applications</p>
@@ -661,18 +697,11 @@ activities</p>
 package while the core and supporting domains will be designed using a custom web application</p>
 </li>
 </ul>
-<img src="online_auction_ex04.png" style='
-    width: 60vw;
-    
-    max-width: 95vw;
-    max-height: 80vh;
-    object-fit: contain;
-'>
-
+</div>
 </section><section>
 <h2 id="anticorruption-layer">Anticorruption Layer</h2>
 <img src="anticorruption_layer.png" style='
-    width: 70vw;
+    width: 60vw;
     
     max-width: 95vw;
     max-height: 80vh;
@@ -703,7 +732,7 @@ package while the core and supporting domains will be designed using a custom we
 <h2 id="to-the-solution-space">to the Solution Space</h2>
 <ul>
 <li>
-<p>it is important to implement in code the analysis model that was produced during knowledge-crunching sessions</p>
+<p>It is important to implement in code the analysis model that was produced during knowledge-crunching sessions</p>
 </li>
 <li>
 <p>DDD requires to produce a single model that serves as an analysis model for business people to understand and which is implemented using the same terminology and concepts in code</p>
@@ -754,8 +783,7 @@ package while the core and supporting domains will be designed using a custom we
 '>
 
 </section><section>
-<h2 id="the-domain-model-evolution-process">The Domain Model Evolution Process</h2>
-<h2 id="without-ddd-mdd">(without DDD-MDD)</h2>
+<h2 id="domain-model-evolution-without-ddd">Domain Model Evolution (without DDD)</h2>
 <img src="domain_model_evolution_wrong.png" style='
     width: 80vw;
     
@@ -765,8 +793,7 @@ package while the core and supporting domains will be designed using a custom we
 '>
 
 </section><section>
-<h2 id="the-domain-model-evolution-process-1">The Domain Model Evolution Process</h2>
-<h2 id="following-ddd-mdd">(following DDD-MDD)</h2>
+<h2 id="domain-model-evolution-following-ddd">Domain Model Evolution (following DDD)</h2>
 <img src="domain_model_evolution_good.png" style='
     width: 75vw;
     
@@ -862,23 +889,21 @@ In all cases, a lost mail compensation case is opened and sent to the courier wi
 <h2 id="best-practices-for-shaping-the-ul">Best Practices for Shaping the UL</h2>
 <ol>
 <li>
-<p>Ensure that you have <strong>linguistic consistency</strong></p>
+<p>Ensure the <strong>linguistic consistency</strong></p>
 <ul>
-<li>If you are using a term in code that the domain expert doesn’t say, you need to check it with her</li>
+<li>If you are using a term in code that the domain expert doesn’t say, you need to check it with her
+<ul>
 <li>It could be that you have found a concept that was required, so it needs to be added to the UL and understood by the domain expert</li>
 <li>Alternatively, maybe you misunderstood something that the domain expert said; therefore, you should rectify the code with the correct term</li>
+</ul>
+</li>
 </ul>
 </li>
 <li>
 <p>Create a <strong>glossary of domain terms</strong> with the domain expert to avoid confusion</p>
 <ul>
 <li>Ensure that you use one word for a specific concept</li>
-</ul>
-</li>
-<li>
-<p>Don’t use terms that have a specific meaning in software development</p>
-<ul>
-<li>such as design pattern names&hellip;</li>
+<li>Don’t use terms that have a specific meaning in software development (such as design pattern names&hellip;)</li>
 </ul>
 </li>
 <li>
@@ -894,7 +919,7 @@ In all cases, a lost mail compensation case is opened and sent to the courier wi
 <li>
 <p><strong>Don’t let the truth get in the way of a good model</strong></p>
 <ul>
-<li>A domain model is not a model of real life; it is a system of abstractions on reality, an interpretation</li>
+<li>A domain model is not a model of real-life; it is a system of abstractions on reality, an interpretation</li>
 </ul>
 </li>
 <li>
@@ -917,6 +942,445 @@ In all cases, a lost mail compensation case is opened and sent to the courier wi
 </li>
 </ol>
 </section><section>
+<h1 id="domain-model-patterns">Domain Model Patterns</h1>
+</section><section>
+<h2 id="the-domain-layer">The Domain Layer</h2>
+<div class='left' style='float:left;width:50%'>
+<ul>
+<li>
+<p>The <strong>Domain Layer</strong> is the area of the code that contains the domain model</p>
+<ul>
+<li>Isolation among <em>domain model complexity</em> and <em>application technical complexity</em></li>
+</ul>
+</li>
+<li>
+<p>Several Patterns available to implement a domain model in code</p>
+</li>
+</ul>
+</div>
+<div class='right' style='float:right;width:50%'>
+<img src="assets/domain_layer.png" style='
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</div>
+</section><section>
+<h2 id="domain-model-pattern">Domain Model Pattern</h2>
+<div class='left' style='float:left;width:50%'>
+<img src="assets/domain_model_pattern.png" style='
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</div>
+<div class='right' style='float:right;width:50%'>
+<ul>
+<li>
+<p><strong>A good fit for complex domains with rich business logic</strong></p>
+<ul>
+<li>An Object-Oriented Model with Data and Behaviour</li>
+<li>The Domain Model is separated from the infrastructure</li>
+</ul>
+</li>
+<li>
+<p>Generally designed according to the DDD Building Blocks</p>
+</li>
+<li>
+<p>Do not confuse the domain model with the data persistence model</p>
+<ul>
+<li>The first incorporates also business processes, associations, rules, &hellip;</li>
+</ul>
+</li>
+</ul>
+</div>
+</section><section>
+<h2 id="domain-model-pattern---an-example">Domain Model Pattern - An Example</h2>
+<img src="assets/domain_model_example1.png" style='
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</section><section>
+<h2 id="domain-model-pattern---details">Domain Model Pattern - Details</h2>
+<ul>
+<li>
+<p>It is a pure object‐oriented approach that involves creating an abstract model of the real business domain and is useful when dealing with complex logic and workflow</p>
+</li>
+<li>
+<p>It is persistence ignorant and relies on mapper classes and other abstraction patterns to persist and retrieve business entities</p>
+</li>
+<li>
+<p><strong>Avoid trying to apply the domain model pattern for everything</strong></p>
+<ul>
+<li>It is a good candidate when you have to model complex logic or part of the problem domain that requires clarity because it’s important, or will change often due to continued investment</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="transaction-script-pattern">Transaction Script Pattern</h2>
+<div class='left' style='float:left;width:50%'>
+<img src="assets/transaction_script_pattern.png" style='
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</div>
+<div class='right' style='float:right;width:50%'>
+<ul>
+<li>
+<p>The transaction script pattern follows a procedural style of development rather than an object‐oriented approach</p>
+<ul>
+<li>A single procedure is created for each of your business transactions, and it is grouped in some kind of static manager or service class</li>
+<li>Each procedure contains all the business logic that is required to complete the business transaction from the workflow, business rules, and validation checks to persistence in the database.</li>
+</ul>
+</li>
+</ul>
+</div>
+</section><section>
+<h2 id="transaction-script-pattern---an-example">Transaction Script Pattern - An Example</h2>
+<img src="assets/transaction_script_example1.png" style='
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</section><section>
+<h2 id="transaction-script-pattern---details">Transaction Script Pattern - Details</h2>
+<ul>
+<li>
+<p>It is simple to understand and can be fast to get new team members up to speed without prior knowledge of the pattern</p>
+<ul>
+<li>Useful for the parts of your domain that have little or no logic</li>
+<li>If logic becomes complex, the transaction script pattern can quickly become hard to manage because, by its nature, duplication can occur quickly</li>
+</ul>
+</li>
+<li>
+<p>The problems with the transaction script pattern are revealed when an application grows and the business logic complexities increase</p>
+</li>
+</ul>
+</section><section>
+<h2 id="table-module-pattern">Table Module Pattern</h2>
+<ul>
+<li>
+<p>The table module pattern maps the object model to the database model</p>
+<ul>
+<li>A single object represents a table or view or a document in the database</li>
+<li>The object is responsible for all persistence needs along with business logic behavior</li>
+</ul>
+</li>
+<li>
+<p>At a first glance, it might not be a good fit for DDD</p>
+<ul>
+<li>it is good for simpler parts of the domain that are isolated by a bounded context and that are simply forms over data</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="anemic-domain-module-pattern">Anemic Domain Module Pattern</h2>
+<ul>
+<li>
+<p>It is very similar to the domain model pattern</p>
+<ul>
+<li>There are domain objects that represent the business domain&hellip;</li>
+<li>&hellip; but without any behaviors!</li>
+</ul>
+</li>
+<li>
+<p>It is a good candidate for parts of your domain model that have little logic</p>
+<ul>
+<li>The anemic domain model can incorporate the UL and be a good first step when trying to create a rich domain model</li>
+<li>It is a good choice when associated to a functional programming approach</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h1 id="bounded-contexts">Bounded Contexts</h1>
+</section><section>
+<p><em>The DDD Basic Approach</em></p>
+<h1 id="use-bounded-contexts">Use Bounded Contexts</h1>
+<h1 id="to-ensure-domain-integrity">to ensure Domain Integrity</h1>
+<blockquote>
+<p><strong>Bounded Context</strong></p>
+<ul>
+<li>Defines the applicability of the model</li>
+<li>Ensures that domain concepts outside a model&rsquo;s context do not distract from the problem it was designed to solve</li>
+<li>Makes explicit what the model is responsible for and what it is not</li>
+</ul>
+</blockquote>
+</section><section>
+<h2 id="the-challenges-of-a-single-model">The Challenges of a Single Model</h2>
+<ul>
+<li>
+<p>At the core of Domain‐Driven Design there is the need to create explicit, evolvable models in code that align with the shared conceptual models</p>
+<ul>
+<li>As new domain insights are gained, they can be incorporated into the model efficiently</li>
+</ul>
+</li>
+<li>
+<p>If a single model is used for an entire system, concepts from one area of the model can be confused with similar-sounding concepts from another
+area of the system (and even become coupled to them)</p>
+</li>
+<li>
+<p>DDD advocates that you break up a large complex system into multiple code models</p>
+</li>
+</ul>
+</section><section>
+<h2 id="1-a-model-can-grow-in-complexity">(1) A model can grow in complexity</h2>
+<img src="assets/bounded_challenges_1.png" style='
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</section><section>
+<h2 id="2-multiple-teams-working-on-a-single-model">(2) Multiple Teams working on a Single Model</h2>
+<img src="assets/bounded_challenges_2.png" style='
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</section><section>
+<h2 id="3-ambiguity-in-the-language-of-the-model">(3) Ambiguity in the Language of the Model</h2>
+<img src="assets/bounded_challenges_3.png" style='
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</section><section>
+<h2 id="4-the-applicability-of-a-domain-concept">(4) The Applicability of a Domain Concept&hellip;</h2>
+<img src="assets/bounded_challenges_4.png" style='
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</section><section>
+<h2 id="4--and-the-violation-of-the-srp">(4) &hellip; and the violation of the SRP</h2>
+<img src="assets/bounded_challenges_4b.png" style='
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</section><section>
+<h2 id="divide-and-conquer-with-bounded-context">Divide and Conquer with Bounded Context</h2>
+<img src="assets/bounded_contexts_transition.png" style='
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</section><section>
+<h2 id="subdomains-vs-bounded-contexts">Subdomains vs. Bounded Contexts</h2>
+<img src="assets/subdomains_and_bounded_contexts.png" style='
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</section><section>
+<h2 id="the-anatomy-of-a-bounded-context">The Anatomy of a Bounded Context</h2>
+<div class='left' style='float:left;width:60%'>
+<img src="assets/bounded-context.png" style='
+    width: 55vw;
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</div>
+<div class='right' style='float:right;width:40%'>
+<ul>
+<li>
+<p>A Bounded Context owns the <em>vertical slide</em> of functionalities</p>
+<ul>
+<li>from the presentation layer</li>
+<li>through the domain logic layer</li>
+<li>on to the persistence</li>
+<li>and even to the data storage</li>
+</ul>
+</li>
+<li>
+<p><em>Autonomy</em> is a key feature of each bounded context</p>
+</li>
+<li>
+<p>Relations among bounded contexts must be described using context maps</p>
+</li>
+</ul>
+</div>
+</section><section>
+<h1 id="software-architectures">Software Architectures</h1>
+<h1 id="for-the-domain-driven-design">for the Domain-Driven Design</h1>
+</section><section>
+<h2 id="towards-a">Towards a</h2>
+<h1 id="clean-architecture">Clean Architecture</h1>
+<p>DDD does not enforce the use of a particular architectural style<br>
+&hellip; as long as the chosen one <em>must support the isolation of the domain logic</em>!</p>
+<ul>
+<li>
+<p>Several architectural styles can be used</p>
+<ul>
+<li>e.g. ubiquitous layered architecture, hexagonal architecture, &hellip;</li>
+</ul>
+</li>
+<li>
+<p>The Microservice Architectural Style is the closest one to the DDD philosophy</p>
+</li>
+</ul>
+</section><section>
+<h2 id="a-revised-layered-architecture">A &ldquo;revised&rdquo; Layered Architecture</h2>
+<div class='left' style='float:left;width:50%'>
+<img src="assets/layered_architecture.png" style='
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</div>
+<div class='right' style='float:right;width:50%'>
+<ul>
+<li>
+<p>At the heart of the architecture there is the domain layer</p>
+</li>
+<li>
+<p>Surrounding the domain layer there is an application layer</p>
+<ul>
+<li>It abstracts the low-level details of the domain behind a coarse-grained API</li>
+<li>The APIs represent the business use cases of the application</li>
+</ul>
+</li>
+<li>
+<p>The domain logic and application layers are isolated and protected from the &ldquo;external&rdquo; accidental complexities</p>
+</li>
+</ul>
+</div>
+</section><section>
+<h2 id="dependency-inversion">Dependency Inversion</h2>
+<img src="assets/dependency-inversion.png" style='
+    width: 50vw;
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+<ul>
+<li>The domain layer and application layers at the center of the architecture should not depend on any other layers</li>
+<li>The application layer is dependent only on the domain layer
+<ul>
+<li>it orchestrates the handling of the use cases by delegating to the domain layer</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="the-application-service-layer">The Application Service Layer</h2>
+<ul>
+<li>
+<p><strong>Represents the use cases and behavior of the application</strong></p>
+<ul>
+<li>use cases are implemented as application services that contain application logic to coordinate the fulfillment of a use case by delegating to the domain and infrastructural layers</li>
+</ul>
+</li>
+<li>
+<p><strong>Operates at a higher level of abstraction than the domain objects</strong></p>
+<ul>
+<li>exposing a coarse-grained set of services while hiding the details of the domain layer (&quot;<em>what the system does, but not how it does it&rdquo;</em>)</li>
+<li>is a facade for the domain model</li>
+</ul>
+</li>
+<li>
+<p><strong>Enables the support of different clients without compromising the domain layer&rsquo;s integrity</strong></p>
+<ul>
+<li>clients must adapt to the application layer APIs, transforming the output in a suitable format</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="the-infrastructural-layer">The Infrastructural Layer</h2>
+<ul>
+<li>
+<p>Contains all the technical details of the software system</p>
+<ul>
+<li>such as enabling the application to be consumed, whether by humans via a user interface or by applications via a set of web service or message endpoints</li>
+<li>is responsible for the technical implementation of storing information on the state of domain objects</li>
+</ul>
+</li>
+<li>
+<p>Can provide capabilities for logging, security, notification, and integration with other bounded contexts and applications</p>
+</li>
+</ul>
+</section><section>
+<img src="assets/CleanArchitecture.jpg" style='
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+<p>(from <em>Clean Architecture</em> by Robert C. Martin)</p>
+</section><section>
+<h2 id="clean-architecture-features">Clean Architecture Features</h2>
+<ol>
+<li>
+<p>Independent of Frameworks</p>
+</li>
+<li>
+<p>Testable</p>
+</li>
+<li>
+<p>Independent of the UI</p>
+</li>
+<li>
+<p>Independent of the data persistence layer</p>
+</li>
+<li>
+<p>Independent of any external agency</p>
+</li>
+</ol>
+</section><section>
+<h2 id="microservices-architecture">Microservices Architecture</h2>
+<ul>
+<li>Nowadays, an extremely popular architecture style
+<ul>
+<li>heavily inspired by DDD Bounded Context concept</li>
+</ul>
+</li>
+</ul>
 </section>
 
   
