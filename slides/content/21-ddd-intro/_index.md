@@ -1,7 +1,7 @@
  
 +++
 
-title = "DDD - Intro"
+title = "[LSS2021] DDD > Intro"
 description = ""
 outputs = ["Reveal"]
 aliases = [
@@ -39,39 +39,52 @@ enableSourceMap = true
 (*Scott Millett*)
 
 ---
+## True Stories
 
-## A true Story
+> #### #1
+> *When you need to modify code written by other developers*  
+> *(or code you wrote 6/12 months ago)*  
+> *we have two scenarios:*  
+>
+> *in the best case, it's **a bit boring**...*  
+> *...but in the worst case, it's **a nightmare**!*
 
-* When it comes to modifying code written by other developers (or code you wrote 6/12 months ago) it can be a bit of a bore at best and a nightmare at worst.
+---
 
-* The software works... but you aren’t sure exactly how!
+## True Stories
 
-* It contains all the right frameworks and patterns, and has been created using an agile approach... but introducing new features into the codebase is harder than it should be.
+> #### #2
+> *The software works... but you aren't sure exactly how!*
 
-* Even business experts aren’t helpful because the code bears no resemblance to the language they use.
+> #### #3
+> *The software contains all the right frameworks and patterns,*  
+> *and has been created using an agile approach...*  
+> *...but introducing new features into the codebase is harder than it should be!*
 
-* Working on such systems becomes a chore, leaving developers frustrated and devoid of any coding pleasure.
+> #### #4
+> *Often, business/domain experts aren’t helpful*  
+> *because the code bears no resemblance to the language they use.*
 
 ---
 
 ## Domain-Driven Design "Philosophy"
 
-> *Domain-Driven Design (DDD) is a process that aligns your code with the reality of your problem domain.*
+> *Domain-Driven Design (DDD) is a process that aligns your code with the reality of your problem domain*
 
-* As your product evolves, adding new features becomes as easy as it was in the good old days of greenfield development.
+* DDD facilitates the evolution of software
+    * Adding new features becomes as easy as it was in the good old days of greenfield development
 
-* Although DDD understands the need for software patterns, principles, methodologies, and frameworks, it values developers and domain experts working together to understand domain concepts, policies, and logic equally.
+* DDD enforces *designers*/*developers* and *domain experts* working together to understand domain concepts, policies, and logic
+    * Although it understand the need for software patterns, principles, methodologies, and frameworks
 
-* With greater knowledge of the problem domain and synergy with the business, developers are more likely to build software that is more readable and easier to adapt for future enhancement.
-
-* **Following the DDD philosophy will give developers the knowledge and skills they need to tackle
-large or complex business systems effectively.**
+* Greater knowledge of the problem domain and synergy with the business
+    * The produced software is easier to adapt for future enhancement
 
 ---
 
 ## The Art of the Possible
 
-{{< image src="art_of_possible.png" >}}
+{{< image src="assets/art_of_possible.png" width="60">}}
 
 ---
 
@@ -85,9 +98,17 @@ large or complex business systems effectively.**
 
 <div class='right' style='float:right;width:70%'>
 
-> *Domain-Driven Design (DDD) is both a way of thinking and a set of priorities, aimed at accelerating software projects that have to deal with complicated domains.*
+> Domain-Driven Design (DDD) is both *a way of thinking* and *a set of priorities*, aimed at accelerating software projects that have to deal with complicated domains*
 >
 > (Eric Evans, Domain-Driven Design, 2003)
+
+&nbsp;
+&nbsp;
+&nbsp;
+#### It offers to designers/developers  
+#### the knowledge and skills they need
+#### to tackle large or complex business systems
+#### effectively
 
 </div>
 
@@ -96,34 +117,37 @@ large or complex business systems effectively.**
 ## Fundamental Concepts of DDD
 ### (in a nutshell)
 
-1. Distill a large problem domain into **smaller sub-domains**.
+1. Distill a large problem domain into **smaller sub-domains**
+    * Identify the core sub-domains to reveal what is important
+    * The core domains are those of greater value to the business which requires more focus and time
 
-1. Identify the core sub-domains to reveal what is important.
-    * The core domains are those of greater value to the business which requires more focus and time.
+1. Collaborate with experts to discover an analysis model that will provide solutions to solve problems (**knowledge crunching**)
 
-1. Collaborate with experts to discover an analysis model that will provide solutions to solve problems or reveal opportunities particularly in the core domain.
+1. Use the same **ubiquitous language** to bind the analysis model to the code model
 
-1. Use the same **ubiquitous language** to bind the analysis model to the code model.
+1. Enclose the model within a boundary to protect its integrity (**bounded context**)
 
-1. Split the model into smaller models
-    * Enclose the model within a **boundary** to protect the
-models integrity.
-
-1. Keep a **context map** to understand the relationships of all models in play.
+1. Keep a **context map** to understand the relationships of all models in play
 
 ---
 
 ## DDD "Conceptual Space"
 
-{{< image src="ddd_conceptual_space.png" >}}
+{{< image src="assets/ddd_conceptual_space.png" >}}
 
 ---
 
-## Software Complexity
+## The ability to recognize
+# Software Complexity
+## is a crucial design skill
 
-* **The ability to recognize complexity is a crucial design skill**
-    * It allows you to identify problems before you invest a lot of effort in them
-    * It allows you to make good choices among alternatives
+It allows to:
+* identify problems before you invest a lot of effort in them...
+* make good choices among alternatives...
+---
+
+*A possible definition for*
+# Software Complexity
 
 * Complexity (C) is anything related to the structure of a software system that makes it hard to understand and modify the system
 
@@ -164,7 +188,7 @@ $$C = \sum_{p}^{}c_pt_p$$
 
 ## Complex Problem Domains
 
-{{< image src="ddd_software_complexity.png" >}}
+{{< image src="assets/ddd_software_complexity.png" >}}
 
 ---
 
@@ -198,13 +222,20 @@ $$C = \sum_{p}^{}c_pt_p$$
 ## Software Complexity Challenges (2/3)
 ### A Lack of Organization
 
-{{< image src="ddd_lack_of_organization.png" width="40">}}
+<div class='left' style='float:left;width:45%'>
+
+{{< image src="assets/ddd_lack_of_organization.png" width="40">}}
+
+</div>
+
+<div class='right' style='float:right;width:55%'>
 
 * The initial incarnation of a system is fast to produce and often a well‐rounded success...
-
     * ... but because there is little focus based on the design of an application around a model of the problem domain, subsequent enhancements are troublesome.
 
 * The codebase lacks the required synergy with the business behavior
+
+</div>
 
 ---
 
@@ -221,13 +252,20 @@ $$C = \sum_{p}^{}c_pt_p$$
 
 ---
 
+*The DDD Golden Rule*
+
+# Focus on the domain
+# above anything else
+
+> **Domain experts must work with the development team**  
+> (to focus on the areas of the domain that are useful to be able)  
+> **to produce valuable software!**
+
+---
+
 ## The Problem Domain
 
 * A problem domain refers to **the subject area for which you are building software**.
-
-* DDD stresses the need to **focus on the domain above anything else** when working on creating software for large‐scale and complex business systems.
-
-* **Domain experts must work with the development team** to focus on the areas of the domain that are useful to be able to produce valuable software.
 
 * For example:
     * _when writing software for healthcare it is not important to learn to become a doctor. What is important to understand is the terminology of the health industry, how different departments view patients and care, what information doctors gather, and what they do with it_.
@@ -249,7 +287,7 @@ $$C = \sum_{p}^{}c_pt_p$$
 
 * Not all of a large software product needs be perfectly designed.
 
-* Development teams and domain experts use analysis patterns and knowledge crunching to distill large problem domains into more manageable subdomains.
+* Development teams and domain experts use analysis patterns and **knowledge crunching** to distill large problem domains into more manageable subdomains.
     * This distillation reveals the core sub-domain
 
 * DDD emphasizes the need to focus effort and talent on the core
@@ -334,30 +372,42 @@ models being corrupt by isolating them from third-party code.
 
 ## The Problem Space
 
-{{< image src="ddd_problem_space.png">}}
+{{< image src="assets/ddd_problem_space.png">}}
 
 ---
 
 ## The Solution Space
 
-{{< image src="ddd_solution_space.png" >}}
+{{< image src="assets/ddd_solution_space.png" >}}
 
 ---
 
-## Popular Misconceptions of DDD
+## Popular Misconceptions of DDD (1/2)
 
 1. *Tactical Patterns are key to DDD! No, they aren't!*
-    * DDD is less about software design patterns and more about problem solving through collaboration.
+    * DDD is less about software design patterns and more about problem-solving through collaboration
     
-    * DDD is not code centric: its purpose is not to make elegant code. **Software is merely an artifact of DDD**.
+    * DDD is not code-centric!
+        * its purpose is not to make elegant code
+        * **Software is merely an artifact of DDD**.
 
 1. *DDD is a Framework! No, it isn't!*
-    * DDD is architecturally agnostic in that there is no single architectural style you must follow to implement it.
-    * Architectural styles can vary because they should apply at the bounded context level and not the application level.
+    * DDD is architecturally agnostic 
+        * there is no single architectural style you must follow to implement it
+    
+    * It is possible to use different architectural styles within the same system
+        * they should apply at the bounded context level and not the application level.
 
-1. *DDD is a Silver Bullet! No, it isn't!*
-    * DDD can take a lot of effort: it requires an iterative development methodology, an engaged business, etc.
-    * Not all software systems fit with this approach (e.g. those with trivial domains with little or no domain logic). 
+---
+
+## Popular Misconceptions of DDD (2/2)
+
+3. *DDD is a Silver Bullet! No, it isn't!*
+    * DDD can take a lot of effort
+        * it requires an iterative development methodology, an engaged business, etc.
+        
+    * Not all software systems fit with this approach 
+        * e.g. those with trivial domains with little or no domain logic 
 
 ---
 
@@ -414,10 +464,13 @@ domain experts to collaborate on solutions effectively.
 
 ## Summing up
 
-* DDD is as a development philosophy: it promotes a new domain‐centric way of thinking and design software systems.
+* **DDD is as a design/development philosophy**
+    * it promotes a new domain‐centric way of thinking and design software systems
 
-* It is the learning process, not the end goal, which is the greatest strength of DDD. 
+* **The greatest strength of DDD is the learning process**
+    * not the end goal... 
 
-* Any team can write a software product to meet the needs of a set of use cases, but teams that put time and effort into the problem domain they are working on can consistently evolve the product to meet new business use cases.
+* Any team can write a software product to meet the needs of a set of use cases
+    * but teams that put time and effort into the problem domain they are working on can consistently evolve the product to meet new business use cases
 
-* DDD is not a strict methodology in itself but must be used with some form of iterative software project methodology to build and evolve a useful model.
+* DDD is not a strict methodology in itself but must be used with some form of iterative software project methodology to build and evolve a useful model
