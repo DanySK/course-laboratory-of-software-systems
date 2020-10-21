@@ -77,7 +77,7 @@ from code to artifacts
 * Configuration (declarative) and actionable (imperative) logics mixed together
 * Highly configurable
 
-**Declartive style**: adhere to some convention, specify additional configuration,
+**Declarative style**: adhere to some convention, specify additional configuration,
 and let the tool decide what to do actually
 * *Examples*: Apache Maven
 * Separation between *what* to do and *how* to do it
@@ -254,7 +254,6 @@ Build Setup tasks
 **Reason**: the build script executes when Gradle is invoked, and *configures* tasks and dependencies.
 <br>
 Only later, when a task is invoked, it is *actually executed*
-*
 
 ---
 
@@ -660,8 +659,10 @@ This usually involves cleaning up the build directory - not so hard in our examp
 
 ```kotlin
 tasks.register("clean") { // A generic task is fine
-    if (!buildDir.deleteRecursively()) {
-        throw IllegalStateException("Cannot delete $buildDir")
+    doLast {
+        if (!buildDir.deleteRecursively()) {
+            throw IllegalStateException("Cannot delete $buildDir")
+        }
     }
 }
 ```
@@ -896,6 +897,7 @@ In general, it is a good practice (that will become mandatory in future gradle r
 to *annotate every public property* of a task with a marker annotation that determines whether it is an *input* or an *output*.
 * `@Input`, `@InputFile`, `@InputFiles`, `@InputDirectory`, `@InputDirectories`
 * `@OutputFile`, `@OutputFiles`, `@OutputDirectory`, `@OutputDirectories`
+    * `@Internal` marks some property that is used as output *internally* (not reified on the file system)
 
 #### Why?
 
@@ -964,7 +966,7 @@ Gradle provides the functionality we need (project-global type definitions) usin
 ## Isolation of imperativity
 ### Project-wise API extension (plugin)
 
-`buildSrc/build.gradle.kts` (clearer in future)
+inside `buildSrc/build.gradle.kts` (clearer in future):
 
 ```kotlin
 plugins {
@@ -975,7 +977,8 @@ repositories {
 }
 ```
 
-`buildSrc/sr/main/kotlin/JavaOperations.kt` (excerpt, full code in the repo)
+excerpt of `buildSrc/src/main/kotlin/JavaOperations.kt` (full code in the repo)
+
 
 ```kotlin
 open class Clean @Inject constructor() : DefaultTask() { ... }
@@ -1001,7 +1004,13 @@ Our Project's `build.gradle.kts` (full):
 
 ```kotlin
 allprojects {
-    tasks.register<Clean>("clean")
+    tasks.register("clean") { // A generic task is fine
+        doLast {
+            if (!buildDir.deleteRecursively()) {
+                throw IllegalStateException("Cannot delete $buildDir")
+            }
+        }
+    }
 }
 subprojects {
     val compileClasspath by configurations.creating
@@ -1079,24 +1088,1032 @@ Of course, copy/pasting the same file across projects is to be avoided whenever 
 Gradle (as many other build systems) allow extensibility via *plugins*
 <br>
 A *plugin* is a software component that *extends the API* of the base system
+<br>
+It usually includes:
+* A set of `Task`s
+* An `Extension` -- An object incapsulating the global configuration options
+    * this is where the DSL capabilities get usually leveraged
+* A `Plugin` object, implementing an `apply(Project)` function
+    * Application must create the extension, the tasks, and the rest of the imperative stuff
+* A **manifest** file declaring which of the classes implementing `Plugin` is the entry point of the declared plugin
+    * located in `META-INF/gradle-plugins/<plugin-name>.properties`
 
 ---
 
-## Common Gradle plugins
+## Using a plugin
+
+* Plugins are loaded from the *build environment*
+    * the *classpath* used for such tasks can be explored with the built-in task `buildEnvironment`
+    * if a plugin is not found, then if a version for it is available it's *fetched from remote repositories*
+        * by default the [Gradle plugin portal](https://plugins.gradle.org/)
+* Plugin need to be **applied**
+    * Which actually translates to calling the `apply(Project)` function
+    * Application for *hierarchial* projects is *not automatic*
+        * You might want your plugin to be applied only in some subprojects!
+
+**Example code**
+```kotlin
+plugins {
+    pluginName // Loads a plugin from the "buildEnvironment" classpath
+    `plugin-name` // Syntax for non Kotlin-compliant plugin names
+    id("plugin2-name") // Alternative to the former
+    id("some-custom-plugin") version "1.2.3" // if not found locally, gets fetched from the Gradle plugin portal
+}
+// In case of non-hierarchial projects, plugins are also "applied"
+// Otherwise, they need to get applied manually, e.g.:
+allprojects {
+    apply(plugin = "pluginName")
+}
+```
 
 ---
 
-* Declarativity via DSLs
-concept of plugin
-the kotlin plugin
-* jvm variant
-* with its configurations
+## Built-in Gradle plugins
 
-our "plugin for java" -- maybe better a stubby plugin with some exposed configuration
+The default Gradle distribution includes a large number of plugins, e.g.:
+* `java` plugin, for Java written applications
+    * a full fledged version of the custom local plugin we created!
+* `java-library` plugin, for Java libraries (with no main class)
+* `scala` plugin
+* `cpp` plugin, for C++
+* `kotlin` plugin, supporting Kotlin with multiple targets (JVM, Javascript, native)
 
-testing a plugin (kotest + Gradle api + classpath trick)
-some existing plugins
-* detekt
-* ktlint
-* jacoco
-* refreshVersions
+We are going to use the Kotlin JVM plugin to build our first standalone plugin!
+<br>
+(yes we already did write our first one: code in `buildSrc` is *project-local plugin code*)
+
+---
+
+## A Greeting plugin
+
+A very simple plugin that greets the user
+
+**Desiderata**
+* adds a `greet` task that prints a greeting
+* the default output should be configurable with something like:
+
+```kotlin
+plugins {
+    id("it.unibo.lss.greetings")
+}
+greetings {
+    greetWith { "Ciao da" }
+}
+```
+
+---
+
+## Setting up a Kotlin build
+
+First step: we need to set up a Kotlin build, we'll write our plugin in Kotlin
+
+```kotlin
+plugins {
+    // No magic: calls a method running behind the scenes the same of id("org.jetbrains.kotlin-" + "jvm")
+    kotlin("jvm") version "1.4.10" // version is necessary
+}
+```
+
+The Kotlin plugin introduces:
+* Several *tasks*, among which:
+    * `compileJava`
+    * `compileKotlin`
+* A number of *configurations*
+    * `api`: available both at compile- and run- time, *exported to consumers*
+    * `implementation`: available both at compile- and run- time, *not exported to consumers*
+        * internal logic, implementation details
+    * `compileOnly`: available at *compile time only* (e.g. compile time annotations)
+    * `runtimeOnly`: available at *runtime only*
+
+---
+
+## Importing the standard library
+Libraries can be imported in Gradle from `repositories`
+* Several packaging formats supported, among wich Maven repositories
+* Maven repositories are a de-facto standard for shipping JVM libraries
+
+```kotlin
+// Configuration of software sources
+repositories {
+    jcenter() // points to JCenter Bintray
+    // mavenCentral() // points to Maven Central instead or additionally
+}
+
+dependencies {
+     // "implementation" is a configuration created by by the Kotlin plugin
+    implementation(kotlin("stdlib-jdk8")) // "kotlin" is an extension method of DependencyHandler
+    // The call to "kotlin" passing `module`, returns a String "org.jetbrains.kotlin:kotlin-$module:<KotlinVersion>"
+}
+```
+
+---
+
+## Importing the Gradle API
+
+In order to develop a plugin, we need the Gradle API
+* Otherwise, we can't manipulate any Gradle entity...
+
+```kotlin
+dependencies {
+    implementation(kotlin("stdlib-jdk8"))
+    implementation(gradleApi()) // Built-in method, returns a `Dependency` to the current Gradle version
+}
+```
+
+---
+
+## Plugin name and entry point
+
+Gradle expects the plugin entry point (the class implementing the `Plugin` interface) to be specified in a **manifest file**
+* in a *property file*
+* located in `META-INF/gradle-plugins`
+* whose file name is `<plugin-name>.properties`
+
+The name is usually a "reverse url", similarly to Java packages.
+<br>
+e.g., `it.unibo.lss.greetings`
+
+The file content is just a pointer to the class implementing `Plugin`, in our case:
+```properties
+implementation-class=it.unibo.lss.firstplugin.GreetingPlugin
+```
+
+---
+
+## Plugin implementation
+
+Usually, composed by:
+* A *clean API*, if the controlled system is not trivial
+* A set of *tasks* incapuslating the imperative logic
+* An *extension* containing the DSL for configuring the plugin
+* A *plugin*
+    * Creates the extension
+    * Creates the tasks
+    * Links tasks and extension
+
+---
+
+## Lazy configuration in Gradle
+
+Some properties need to be *lazy*:
+1. Wire together Gradle components without worrying about values, just knowing their *provider*.
+    * Configuration happens *before* execution, some values be unknown
+    * yet their provider is known at configuration time
+2. Automatic dependency discovery:
+    * if an output property is an input for another task, the dependency creation is automatic
+3. Performance: resource intensive work is not in the configuration phase
+
+#### In the gradle API
+
+`Provider` -- a value that can only be queried and cannot be changed
+* Transformable with a `map` method!
+
+`Property` -- a value that can be queried and also changed
+* Subtype of Provider
+* Allows to be directly `set` or to be `set` passing a `Provider` instance
+
+---
+
+## The `GreetingTask` task type
+
+```kotlin
+open class GreetingTask : DefaultTask() {
+
+    @Input
+    val greeting: Property<String> = project.objects.property<String>(String::class.java) // Lazy property creation
+
+    @Internal // Read-only property calculated from `greeting`
+    val message: Provider<String> = greeting.map { "$it Gradle" }
+
+    @TaskAction
+    fun printMessage() {
+        // "logger" is a property of DefaultTask
+        logger.quiet(message.get())
+    }
+}
+```
+
+Properties are created via `project` (a property of `DefaultTask` of type `Project`)
+
+---
+
+## The `GreetingExtension` extension type
+
+```kotlin
+open class GreetingExtension(val project: Project) {
+    val defaultGreeting: Property<String> = project.objects.property(String::class.java)
+        .apply { convention("Hello from") } // Set a conventional value
+
+    // A DSL would go there
+    fun greetWith(greeting: () -> String) = defaultGreeting.set(greeting())
+}
+```
+
+Extensions can be seen as global configuration containers
+<br>
+If the plugin can be driven with a DSL, the extension is a good place for the entry point
+
+---
+
+## The `GreetingPlugin`
+
+```kotlin
+class GreetingPlugin : Plugin<Project> {
+    override fun apply(target: Project) {
+        // Create the extension
+        val extension = target.extensions.create("greetings", GreetingExtension::class.java, target)
+        // Create the task
+        target.tasks.register("greet", GreetingTask::class.java).get().run {
+            // Set the default greeting to be the one configured in the extension
+            greeting.set(extension.defaultGreeting)
+            // Configuration per-task can still be changed manually by users
+        }
+    }
+}
+```
+
+* Extensions are created via a `Project` object
+* The `Plugin` configures the project as needed for the tasks and the extension to work
+* Plugins can forcibly *apply* other plugins 
+    * e.g., the Kotlin plugin applies the `java-library` plugin behind the scenes
+* Plugins can *react* to the application of other plugins
+    * e.g., enable additional features or provide compatibility
+    * doing so is possible by the `plugins` property of `Project`, e.g.:
+```kotlin
+project.plugins.withType(JavaPlugin::class.java) {
+    // Stuff you want to do only if someone enables the Java plugin for the current project
+}
+```
+
+---
+
+## Testing a plugin
+
+We got a plugin, we don't know yet how to use it though.
+<br>
+First step is: *testing it to see if it works*
+
+1. Create a modified *version of Gradle including the plugin*
+    * Or simply, add the plugin to the build classpath
+2. Prepare a Gradle *workspace*
+3. *Launch the tasks* of interest
+4. *Verify* the task success (or failure, if expected), or the program output
+
+**Tools to be used**
+
+1. The **Gradle test kit**, for programmatically launching Gradle and ispecting the execution results
+2. [Kotest](https://github.com/kotest/kotest), a test framework for Kotlin
+    * could be done with JUnit or other systems, but Kotest is more idiomatic
+3. A pinch of *manual Gradle automation* to prepare the classpath
+
+---
+
+## Importing Gradle test kit and Kotest
+
+It's just matter of pulling the right dependencies
+
+```kotlin
+dependencies {
+    implementation(gradleApi())
+    testImplementation(gradleTestKit()) // Test implementation: available for testing compile and runtime
+    testImplementation("io.kotest:kotest-runner-junit5:4.2.5") // for kotest framework
+    testImplementation("io.kotest:kotest-assertions-core:4.2.5") // for kotest core assertions
+    testImplementation("io.kotest:kotest-assertions-core-jvm:4.2.5") // for kotest core jvm assertions
+}
+```
+
+Kotest leverages Junit 5 / Jupiter for execution, we need to enable it
+
+```kotlin
+tasks.withType<Test> { // The task type is defined in the Java plugin
+    useJUnitPlatform() // Use JUnit 5 engine
+}
+```
+
+---
+
+## Exploiting configuration options
+
+In general, our automation process may and should be **informative**
+<br>
+We can exploit the API of any Gradle plugin at our advantage
+<br>
+(Of course it depends *whether or not* configuration options are available)
+
+Let's add information to our testing system:
+
+```kotlin
+tasks.withType<Test> {
+    useJUnitPlatform() // Use JUnit 5 engine
+    testLogging.showStandardStreams = true
+    testLogging {
+        showCauses = true
+        showStackTraces = true
+        showStandardStreams = true
+        events(*org.gradle.api.tasks.testing.logging.TestLogEvent.values())
+        exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+    }
+}
+```
+In general *explore the API and use it your advantage*
+
+---
+
+## Plugin Classpath injection
+
+By default, the Gradle test kit just runs Gradle.
+We want to inject our plugin into the distribution.
+
+**Strategy**
+
+1. Create the list of files composing our *runtime classpath*
+3. Make sure that the list is always up to date and ready before test execution
+2. Use such list as our classpath for running Gradle
+
+---
+
+## Plugin Classpath preparation
+
+It's easy enough to write a task writing our classpath in output:
+```kotlin
+// This task creates a file with a classpath descriptor, to be used in tests
+val createClasspathManifest by tasks.registering { // This delegate uses the variable name as task name
+    val outputDir = file("$buildDir/$name") // We will write in this folder
+    inputs.files(sourceSets.main.get().runtimeClasspath) // Our input is a ready runtime classpath
+    // Note: due to the line above, this task implicitly requires our plugin to be compiled!
+    outputs.dir(outputDir) // we register the output directory as an output of the task
+    doLast { // This is the task the action will execute
+        outputDir.mkdirs() // Create the directory infrastructure
+        // Write a file with one classpath entry per line
+        file("$outputDir/plugin-classpath.txt").writeText(sourceSets.main.get().runtimeClasspath.joinToString("\n"))
+    }
+}
+```
+Finally, we say that for tests to run all files from `createClasspathManifest` must be ready
+```kotlin
+dependencies {
+    // This way "createClasspathManifest" is always executed before the tests!
+    // Gradle auto-resolves dependencies if there are dependencies on inputs/outputs
+    testRuntimeOnly(files(createClasspathManifest))
+}
+```
+
+---
+
+## Kotest
+
+Kotest is a testing framework fro Kotlin, inspired by [Scalatest](https://www.scalatest.org/) and [Cucumber](https://cucumber.io/)
+* Supports [several styles](https://github.com/kotest/kotest/blob/master/doc/styles.md)
+* We will use `FreeSpec` (Scalatest inspired), similar to `StringSpec` (Kotest original)
+
+```kotlin
+class PluginTest : FreeSpec({
+    // Arbitrarily nested test levels
+    "whenever a Formula 1 championship" - {
+        "begins testing" - {
+            "Ferrari and Mercedes are favorites" {
+                // Test code for
+                // "whenever a Formula 1 championship begins testing Ferrari and Mercedes are favorites"
+            }
+        }
+        "reaches mid-season" - {
+            "Vettel spins repeatedly" { /* Test code */ }
+            "Ferrari" {
+                "lags behind with development"  { /* Test code */ }
+                "wins next year" { /* Test code */ }
+            }
+        }
+
+    } 
+})
+```
+
+---
+
+## Preparing the test infrastructure
+
+We now need to read the classpath configuration from our file, and feed it to the Gradle runner
+
+```kotlin
+// Find the file
+val pluginClasspathResource = ClassLoader.getSystemClassLoader().getResource("plugin-classpath.txt")
+    ?: throw IllegalStateException("Did not find the plugin classpath descriptor.")
+// Extract the content
+val classpath = pluginClasspathResource.openStream().bufferedReader().use { reader ->
+    reader.readLines().map { File(it) } // Convert each line to a file
+}
+// Configure a Gradle runner
+val runner = GradleRunner.create()
+    .withProjectDir(testFolder.root)
+    .withPluginClasspath(classpath)
+    .withArguments(":tasks", ":you", ":need", ":to", ":run:", "--and", "--cli", "--options")
+    .build() // This actually runs Gradle
+// Inspect results
+runner.task(":someExistingTask")?.outcome shouldBe TaskOutcome.SUCCESS
+runner.output shouldContain "Hello from Gradle"
+```
+Final result in the [attached code](https://github.com/DanySK/Course-Laboratory-of-Software-Systems/blob/master/code/automation/10-greetings-plugin/src/test/kotlin/PluginTest.kt)!
+
+---
+
+## Making the plugin available
+
+We now know how to run the plugin,
+<br>
+yet manual classpath modification is not the way we want to run our plugin
+
+We want something like:
+```kotlin
+plugins {
+    id("it.unibo.lss.greetings") version "0.1.0"
+}
+```
+To do so, we need to ship our plugin to the [Gradle plugin portal](https://plugins.gradle.org/)
+<br>
+Gradle provides [a plugin publishing plugin](https://plugins.gradle.org/docs/publish-plugin) to simplify delivery
+
+...but before, we need to learn how to
+
+1. click $\Rightarrow{}$ [**pick a version number**](../05-version-selection) $\Leftarrow{}$ click
+
+2. click $\Rightarrow{}$ [**select a software license**](../06-licenses)! $\Leftarrow{}$ click
+
+---
+
+# Setting a version
+
+The project version can be specified in Gradle by simply setting the `version` property of the project:
+
+```kotlin
+version = "0.1.0"
+```
+
+* Drawback: *manual management*!
+
+It would be better to *rely on the underlying DVCS*
+<br>
+to compute a Semantic Versioning compatible version!
+
+---
+
+## DVCS-based Automatic semantic versioning
+
+There are a number of plugins that do so
+<br>
+including [one I've developed](https://github.com/DanySK/git-sensitive-semantic-versioning-gradle-plugin)
+
+Minimal configuration:
+```kotlin
+plugins {
+    id ("org.danilopianini.git-sensitive-semantic-versioning") version "0.2.2"
+}
+gitSemVer {
+    version = computeGitSemVer()
+}
+```
+
+```plain
+ ./gradlew printGitSemVer
+> Task :printGitSemVer
+Version computed by GitSemVer: 0.1.0-archeo+cf5b4c0
+```
+
+Another possibility is *writing a plugin yourself*
+<br>
+But at the moment we are stuck: we don't know yet how to expose plugins to other builds
+
+
+---
+
+# Selecting a license
+
+There's not really much I want to protect in this example, so I'm going to pick one of the most open licenses: MIT (BSD would have been a good alternative)
+
+1. Create a LICENSE file
+2. Copy the text from the MIT license
+3. If needed, edit details
+
+```plain
+Copyright 2020 Danilo Pianini
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+documentation files (the "Software"), to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS
+OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+```
+
+---
+
+# Maven style packaging
+
+JVM artifacts are normally shipped in form of jar archives
+<br>
+the de-facto convention is *inherited from Maven*:
+* Each distribution has a **groupId**, an **artifactId**, and a **version**
+    * e.g. `com.google.guava:guava:29.0-jre`
+        * groupId: `com.google.guava`
+        * artifactId: `guava`
+        * version: `29.0-jre`
+* Further **metadata** is stored in a `pom.xml` file
+* Multiple artifacts in the same distributions are identified by a **classifier**
+    * e.g., a project having executables, sources, and javadoc, may have:
+        * `guava-29.0-jre.jar`
+        * `guava-29.0-jre-javadoc.jar`
+        * `guava-29.0-jre-sources.jar`
+
+---
+
+# Setting the details
+
+In order to create Maven-compatible artifacts, we need first to set the **groupId**:
+```kotlin
+group = "it.unibo.lss2020"
+```
+Many repositories require to register the group and associate developer identities to it
+
+The project name set in `settings.gradle.kts` is usually used as **artifactId**
+
+---
+
+## Preparing the plugin publication
+
+Gradle provides two plugins to simplify the assembly and upload of plugins
+
+```kotlin
+plugins {
+  `java-gradle-plugin`
+  id("com.gradle.plugin-publish") version "0.12.0"
+}
+```
+```kotlin
+pluginBundle { // These settings are set for the whole plugin bundle
+    website = "https://danysk.github.io/Course-Laboratory-of-Software-Systems/"
+    vcsUrl = "https://github.com/DanySK/Course-Laboratory-of-Software-Systems"
+    tags = listOf("example", "greetings", "lss", "unibo")
+}
+```
+```kotlin
+gradlePlugin {
+    plugins {
+        create("GradleLatex") { // One entry per plugin
+            id = "${project.group}.${project.name}"
+            displayName = "LSS Greeting plugin"
+            description = "Example plugin for the LSS course"
+            implementationClass = "it.unibo.lss.firstplugin.GreetingPlugin"
+        }
+    }
+}
+```
+They add the `publishPlugins` task
+
+---
+
+## Credentials
+
+In order to publish on the Gradle Plugin Portal (but it is true for any repository) users need to be *authenticated*
+<br>
+This is most frequently done via authentication tokens, and more rarely by username and password.
+
+It is first required to [register](https://plugins.gradle.org/user/register),
+once done, an **API Key** will be available from the web interface, along with a **secret**.
+
+These data is required to be able to publish, and can be fed to Gradle in two ways:
+
+1. By editing the `~/.gradle/gradle.properties` file, adding:
+```plain
+gradle.publish.key=YOUR_KEY
+gradle.publish.secret=YOUR_SECRET
+```
+2. Via command line, using `-P` flags:
+```plain
+./gradlew -Pgradle.publish.key=<key> -Pgradle.publish.secret=<secret> publishPlugins
+```
+
+---
+
+# Actual publication
+
+```plain
+❯ ./gradlew publishPlugins
+> Task :publishPlugins
+Publishing plugin it.unibo.lss2020.greetings-plugin version 0.1.0-archeo+ea6b9d7
+Publishing artifact build/libs/greetings-plugin-0.1.0-archeo+ea6b9d7.jar
+Publishing artifact build/libs/greetings-plugin-0.1.0-archeo+ea6b9d7-sources.jar
+Publishing artifact build/libs/greetings-plugin-0.1.0-archeo+ea6b9d7-javadoc.jar
+Publishing artifact build/publish-generated-resources/pom.xml
+Activating plugin it.unibo.lss2020.greetings-plugin version 0.1.0-archeo+ea6b9d7
+```
+
+[The result is a published plugin](https://plugins.gradle.org/plugin/it.unibo.lss2020.greetings-plugin)
+
+---
+
+# Quality control
+
+It is a good practice to set up some tools to validate the quality of the source code and testing.
+
+In the case of Kotlin, there are three useful tools:
+1. Setting the **compiler** into a "*warnings as errors*" mode
+2. Enabling a *coverage* tool such as **Jacoco**
+2. Configuring **Ktlint**, a Pinterest-made tool similar to Checkstyle
+3. Configuring **Detekt**, a *static code analysis* tool similar to PMD
+
+* All quality control tasks are dependencies of the `check` task
+
+Moreover, we need a way to *inspect the results* of executing these controls, besides of course failing if too many things go wrong.
+
+(note: under Kotlin and Scala, I do not recommend to use Spotbugs: even though it works, it generates *way* too many false positives)
+
+
+---
+
+## Build reports in Gradle
+
+Tasks with a report module usually publish their results under `$buildDir/reports/$reportName`
+
+* For instance, *test results* are published in `$buildDir/reports/tests`
+* Other tools follow the same convention
+* If you want to write a reporting task, extend from `AbstractReportTask`
+
+---
+
+## Using Jacoco with Kotest
+
+Jacoco works with Kotest out of the box
+```kotlin
+plugins {
+    // Some plugins
+    jacoco
+    // Some plugins
+}
+```
+
+The plugin introduces two tasks:
+* `jacocoTestCoverageVerification`
+* `jacocoTestReport`
+
+The latter must be configured to produce readable reports:
+
+```kotlin
+tasks.jacocoTestReport {
+    reports {
+        // xml.isEnabled = true // Useful for processing results automatically
+        html.isEnabled = true // Useful for human inspection
+    }
+}
+```
+
+Note: Jacoco does not work with the Gradle test kit, but [there are plugins](https://github.com/koral--/jacoco-gradle-testkit-plugin) to work this around.
+
+---
+
+## Aggressive compiler settings
+
+Can be configured for every `KotlinCompile` task
+```kotlin
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        allWarningsAsErrors = true
+    }
+}
+```
+
+---
+
+# Ktlint
+
+* Linter with *minimal configuration* options
+* Configuration happens in a `.editorconfig` file
+* Also *checks build files*
+
+```kotlin
+plugins {
+    id("org.jlleitschuh.gradle.ktlint") version "9.4.1"
+}
+```
+
+Adds the following tasks:
+* `ktlintApplyToIdea`, `ktlintApplyToIdeaGlobally` -- Change the IntelliJ Idea configuration to adhere to the rules
+* `ktlintCheck`, `ktlintKotlinScriptCheck`, `ktlint<SourceSetName>SourceSetCheck`, -- Apply rules and report errors 
+* `ktlintFormat`, `ktlintKotlinScriptFormat`, `ktlint<SourceSetName>SourceSetFormat` -- Lint code automatically
+
+---
+
+# Detekt
+
+* Configurable static source code analyzer
+* Requires an external module *not found on Maven Central*
+    * If you are using JCenter, no worries
+    * Otherwise, you need to add it and whitelist the `detekt` configuration
+
+```kotlin
+plugins {
+    id("io.gitlab.arturbosch.detekt") version "1.14.1"
+}
+repositories {
+    jcenter { content { onlyForConfigurations("detekt") } } // configuration-based content filtering
+}
+dependencies {
+    // Adds a configuration "detektPlugins"
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.14.1")
+}
+detekt {
+    failFast = true // fail build on any finding
+    buildUponDefaultConfig = true // preconfigure defaults
+    config = files("$projectDir/config/detekt.yml") // Custom additional rules
+}
+```
+
+Adds the `detekt` task, failing in case of violation
+
+---
+
+# Detekt
+## Recommended configuration
+
+```yaml
+comments:
+  EndOfSentenceFormat:
+    active: true
+  UndocumentedPublicClass:
+    active: true
+  UndocumentedPublicFunction:
+    active: true
+  UndocumentedPublicProperty:
+    active: true
+```
+```yaml
+complexity:
+  LongMethod:
+    active: false
+  LongParameterList:
+    active: false
+  NestedBlockDepth:
+    threshold: 5
+  TooManyFunctions:
+    ignoreDeprecated: true
+    ignorePrivate: true
+    ignoreOverridden: true
+    thresholdInInterfaces: 20
+```
+---
+
+# Detekt
+## Recommended configuration
+
+```yaml
+naming:
+  MemberNameEqualsClassName:
+    active: false
+performance:
+  SpreadOperator:
+    active: false
+style:
+  MagicNumber:
+    ignoreNumbers: ['-2', '-1', '0', '0.5', '1', '2', '3', '4', '10', '360.0']
+  ForbiddenComment:
+    allowedPatterns: 'TODO:'
+```
+
+---
+
+# Code documentation
+
+It is a good practice to automate the generation of the API documentation.
+* The `java[-library]` plugin adds a `javadoc` task for the Javadoc
+* The `scala` plugin includes a task of type `ScalaDoc`
+* Documentation for Kotlin is generated by using the **Dokka** tool
+    * Jetbrains provides a plugin!
+
+```kotlin
+plugins { id("org.jetbrains.dokka") version "1.4.10" }
+```
+Adds four tasks:
+* `dokkaGfm`, `dokkaHtml`, `dokkaJavadoc`, `dokkaJekyll`
+* They differ by kind of documentation they generate
+
+---
+
+# Creating artifacts
+
+The `java-library` and `java` plugins (applied behind the scenes by the `kotlin-jvm` plugin as well) automatically create an `assemble` task which generates a task of type `Jar` creating a non-executable jar with the project contents.
+
+* Further tasks of the same type can be defined for other archives
+    * e.g., containing sources or documentation
+
+```kotlin
+val javadocJar by tasks.registering(Jar::class) {
+    archiveClassifier.set("javadoc")
+    from(tasks.dokkaJavadoc.get().outputDirectory) // Automatically makes it depend on dokkaJavadoc
+}
+```
+
+generates a jar file with classifier `javadoc` inside the `build/libs` folder
+
+---
+
+## Signing artifacts
+
+Many repositories require artifacts to be **signed** in order for them to be delivered/deployed
+* e.g. Bintray, Maven Central
+
+If you do not have a signature yet, [time to create one](https://central.sonatype.org/pages/working-with-pgp-signatures.html)
+* Creation: `gpg --gen-key`
+* List: `gpg --list-keys`
+* Distribution: `gpg --keyserver hkp://pool.sks-keyservers.net --send-keys`
+
+Once you have a key, you can use the `signing` plugin to have Gradle generate artifact signatures
+
+---
+
+## Maven Central and other software repositories
+
+[Maven Central](https://search.maven.org/) is one of the de-facto standard repositories for JVM (artifacts)
+* It actually hosts any artifact compatible with the Maven conventional format
+* **No-retract policy**
+    * **Errors** [stay there forever](https://search.maven.org/artifact/commons-io/commons-io)
+* *Requires* both *sources* and *Javadoc* artifacts to get shipped
+* Artifacts on Central should only depend from other artifacts on Central
+* "Old" deployment management, requires some machinery
+
+Other notable repositories:
+* *Bintray JCenter*: superset of Maven Central
+* *Jitpack*: code hosting with (semi-)automatic packaging
+* *NPM*: for Javascript code
+* *Pypy*: for Python code
+* *RubyGems.org*: for Ruby code
+
+---
+
+## Publishing artifacts on Maven Central
+
+**Requirements**
+* A valid public signature
+* A registered **groupId**
+    * Registration is handled manually, [open an issue](https://issues.sonatype.org/secure/CreateIssue.jspa?issuetype=21&pid=10134)
+    * You could register `io.github.yourghusername` as group id
+* Complete project metadata in a `pom.xml` file
+    * Including developers, urls, project description, etc.
+
+**Procedure**
+* *Sign* artifacts with your registered signature
+* *Upload* them to `oss.sonatype.org`
+* *Close* the repository
+    * Automatically checks contents, structure, and signatures
+* Double check and then *Release*
+    * There is *no turning back* after a mistake!
+
+---
+
+# The Gradle publish plugin
+
+Gradle provides a `maven-publish` *plugin for automated delivery* to Maven repositories
+<br>
+Requires some manual configuration:
+* Generation of sources and javadoc jars
+* Configuration of the `pom.xml` metadata
+
+```kotlin
+plugins { `maven-publish` }
+publishing {
+    repositories { maven { url = uri("https://oss.sonatype.org" } }
+    publications {
+        create<MavenPublication>("publicationName") {
+            from(components["java"])
+            name.set("My Library")
+            description.set("A concise description of my library")
+            url.set("http://www.example.com/library")
+            licenses { ... }
+            developers { ... }
+            scm { ... }
+        }
+    }
+}
+```
+Adds:
+* `publish<PubName>PublicationTo<RepoName>Repository` 
+* `publish<PubName>PublicationToMavenLocal` 
+
+---
+
+## Preconfigured Central publication
+
+I produced a plugin that pre-configures `maven-publish` to point to Maven Central
+
+* Reacts to the application of `java`, `maven-publish`, and `signing` plugins
+* Defines task types `SourcesJar` and `JavadocJar`
+    * Supports both Javadoc and Dokka
+* Creates tasks to create the archives before delivery
+* Requires credentials to be set as environment variables
+    * `MAVEN_CENTRAL_USERNAME`
+    * `MAVEN_CENTRAL_PASSWORD`
+
+
+
+
+---
+
+## Preconfigured Central publication
+
+```kotlin
+plugins {
+    `java`
+    `maven-publish`
+    `signing`
+    id ("org.danilopianini.publish-on-central") version "0.3.0"
+}
+```
+```kotlin
+group = "your.group.id" // This must be configured for the generated pom.xml to work correctly
+publishOnCentral {
+    projectDescription.set("description") // Defaults to "No description provided"
+    projectLongName.set("full project name") // Defaults to the project name
+    licenseName.set("your license") // Default "Apache License, Version 2.0"
+    licenseUrl.set("link to your license") // Default http://www.apache.org/licenses/LICENSE-2.0
+    projectUrl.set("website url") // Default "https://github.com/DanySK/${project.name}"
+    scmConnection.set("git:git@github.com:youruser/yourrepo") // Default "git:git@github.com:DanySK/${project.name}"
+}
+```
+```kotlin
+publishing {
+    publications { withType<MavenPublication> { pom { developers {
+        developer {
+            name.set("Danilo Pianini")
+            email.set("danilo.pianini@gmail.com")
+            url.set("http://www.danilopianini.org/")
+        }
+    }}}}
+}
+```
+
+---
+
+# (Semi)Automatic updates
+
+We automated everything from source writing to delivery!
+<br>
+Yet there is a missing piece: we need to *fetch library updates manually*
+<br>
+Also, version numbers are strings scattered around our build file
+
+**Possible solution**
+
+A plugin that stores versions in a properties file, and fetches updates automatically: [refreshVersions](https://github.com/jmfayard/refreshVersions/)
+* The plugin is applied project-wise to the `settings.gradle.kts`
+```kotlin
+import de.fayard.refreshVersions.bootstrapRefreshVersions
+buildscript {
+    repositories { gradlePluginPortal() }
+    dependencies { classpath("de.fayard.refreshVersions:refreshVersions:0.9.5") }
+}
+bootstrapRefreshVersions()
+```
+* Hardcoded versions can get substitued with `_`
+* Hardcoded plugin versions can be removed
+* Adds task `refreshVersions` to update versions in `versions.properties`
+* *Note*: this plugin is *still in development*, your mileage may vary
+
+
+---
+
+# Inspecting dependencies
+
+In rich projects, most of the build-related issues are due to pesky stuff going on with *dependencies*
+* Transitive conflicts
+    * dependency A requires B at version 1, dependency C requires B at version 2
+* Multiple names for the same artifact
+* Unexpected differences between configurations
+
+Gradle allows for **inspection** of the dependencies:
+* `./gradlew dependencies` prints the dependency trees for each configuration
+
+Inspecting multiple large trees can be difficult
+* A single dependency inspection is available
+* `./gradlew dependencyInsight --dependency <DepName> `
+    * Optionally, fiterable by configuration: `--configuration <ConfName>`
+
+---
+
+# Build reporting
+
+* Builds can get complicated when automation is pushed forward
+    * Performance issues may arise
+    * Some tests may run anomalously slow
+    * Dependency trees may get hard to analyze in a terminal
+    * Plugin behaviour could be different than expected
+
+Gradle supports a reporting system called *Gradle build scans*
+* Executable by appending `--scan` to the build
+* Requires terminal interaction (or use of the [enterprise plugin](https://docs.gradle.com/enterprise/gradle-plugin/))
+
+Example scans:
+* [https://scans.gradle.com/s/5i6ai7gz6qzmc](https://scans.gradle.com/s/5i6ai7gz6qzmc)
+* [https://scans.gradle.com/s/5jmd7avh2gnvi](https://scans.gradle.com/s/5jmd7avh2gnvi)

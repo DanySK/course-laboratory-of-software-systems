@@ -1,3 +1,28 @@
 [submodule "slides/themes/reveal-hugo"]
 	path = slides/themes/reveal-hugo
 	url = https://github.com/dzello/reveal-hugo.git
+	branch = master
+[submodule "code/ci/00-ci-init"]
+	path = code/ci/00-ci-init
+	url = https://github.com/DanySK/Plugin-CI-Running-Example.git
+	branch = 00-ci-init
+[submodule "code/ci/01-multi-os"]
+	path = code/ci/01-multi-os
+	url = https://github.com/DanySK/Plugin-CI-Running-Example.git
+	branch = 01-multi-os
+[submodule "code/ci/02-custom-env"]
+	path = code/ci/02-custom-env
+	url = https://github.com/DanySK/Plugin-CI-Running-Example.git
+	branch = 02-custom-env
+[submodule "code/ci/03-build-matrix"]
+	path = code/ci/03-build-matrix
+	url = https://github.com/DanySK/Plugin-CI-Running-Example.git
+	branch = 03-build-matrix
+[submodule "code/ci/04-stages"]
+	path = code/ci/04-stages
+	url = https://github.com/DanySK/Plugin-CI-Running-Example.git
+	branch = 04-stages
+[submodule "code/ci/05-deploy"]
+	path = code/ci/05-deploy
+	url = https://github.com/DanySK/Plugin-CI-Running-Example.git
+	branch = 05-deploy

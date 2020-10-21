@@ -5,8 +5,10 @@ val separator = if (Os.isFamily(Os.FAMILY_WINDOWS)) ";" else ":"
 
 allprojects {
     tasks.register("clean") { // A generic task is fine
-        if (!buildDir.deleteRecursively()) {
-            throw IllegalStateException("Cannot delete $buildDir")
+        doLast {
+            if (!buildDir.deleteRecursively()) {
+                throw IllegalStateException("Cannot delete $buildDir")
+            }
         }
     }
 }

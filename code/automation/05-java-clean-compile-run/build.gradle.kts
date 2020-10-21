@@ -63,7 +63,9 @@ tasks.register<Exec>("runJava") {
 }
 
 tasks.register("clean") { // A generic task is fine
-    if (!buildDir.deleteRecursively()) {
-        throw IllegalStateException("Cannot delete $buildDir")
+    doLast {
+        if (!buildDir.deleteRecursively()) {
+            throw IllegalStateException("Cannot delete $buildDir")
+        }
     }
 }
