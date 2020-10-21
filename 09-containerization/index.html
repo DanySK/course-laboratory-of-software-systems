@@ -82,7 +82,170 @@
     object-fit: contain;
 '>
 
-</section>
+</section><section>
+<h1 id="docker">Docker</h1>
+<p>Docker is a containerization platform</p>
+<p><em>Standard de-facto</em> in industry</p>
+<p><strong>Base concepts</strong></p>
+<ul>
+<li><em>Image</em>
+<ul>
+<li>a <em>read-only template</em> with instructions for creating a Docker container</li>
+<li>images can get built upon other images</li>
+<li>images are made of a stack of <em>layers</em></li>
+</ul>
+</li>
+<li><em>Container</em>
+<ul>
+<li>a <em>runnable instance</em> of an image</li>
+<li>namely, a &ldquo;writable layer&rdquo; atop an image</li>
+</ul>
+</li>
+<li><em>Service</em>
+<ul>
+<li>A software component in charge of running one or multiple containers</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h1 id="docker-architecture">Docker architecture</h1>
+<ul>
+<li><em>Registry</em>: repository of images</li>
+<li><em>Daemon</em>: service pulling images from registries and instancing containers</li>
+<li><em>Client</em>: interface towards the daemon</li>
+</ul>
+<p><img src="architecture.svg" alt=""></p>
+</section><section>
+<h1 id="running-docker-containers">Running docker containers</h1>
+<ol>
+<li>Install docker</li>
+<li>Add your user to the <code>docker</code> group</li>
+<li>Enable the docker service</li>
+</ol>
+<ul>
+<li>e.g. on most Linux distributions <code>systemctl start docker</code></li>
+</ul>
+<ol start="4">
+<li>Pull an image</li>
+</ol>
+<ul>
+<li>e.g., <code>docker pull adoptopenjdk</code></li>
+</ul>
+<ol start="5">
+<li>Run a container!</li>
+</ol>
+<ul>
+<li><code>docker run adoptopenjdk</code></li>
+</ul>
+<p>Every container provides a <em>default command</em>, running without options runs such default in a <em>non-interactive</em> terminal.</p>
+<p>Running in interactive mode can be achieved with the <code>-i</code> option</p>
+<p>Running a custom command can be achieved with writing the command after the image name</p>
+<ul>
+<li>e.g., <code>docker run -i adoptopenjdk bash</code></li>
+<li>parameters for the custom command can follow</li>
+<li>use the <code>t</code> option to run in a <em>pseudo-tty</em></li>
+</ul>
+</section><section>
+<h1 id="interaction-with-the-outside-world">Interaction with the outside world</h1>
+<p>A docker container runs <em>in isolation</em>.</p>
+<p>Environment variables, network ports, and file system folders are <strong>not</strong> shared.</p>
+<p>Sharing must be explicit and requires options to be specified</p>
+<ul>
+<li>Passing environment variables: <code>-e &lt;name&gt;=&lt;value&gt;</code></li>
+<li>Mounting volumes: <code>-v &lt;host&gt;:&lt;guest&gt;:&lt;options&gt;</code>
+<ul>
+<li><code>&lt;host&gt;</code> is the path on the host system</li>
+<li><code>&lt;guest&gt;</code> is the location where it will be mounted on the guest</li>
+<li><code>&lt;options&gt;</code> can be optionally specified as mount options (e.g., <code>rw</code>, <code>ro</code>)</li>
+</ul>
+</li>
+<li>Publishing ports: <code>-p &lt;host&gt;:&lt;guest&gt;</code>
+<ul>
+<li><code>&lt;host&gt;</code> is the port on the host system</li>
+<li><code>&lt;guest&gt;</code> is the corresponding port on the container</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h1 id="managing-images">Managing images</h1>
+<p>Every image has a unique <strong>ID</strong>, and may have an associated <strong>tag</strong></p>
+<p>The subcommand <code>images</code> lists the pulled images and their associated information</p>
+<p>The subcommand <code>image</code> allows for running maintenance tasks, e.g.</p>
+<ul>
+<li><code>docker image ls</code> &ndash; same as <code>docker images</code></li>
+<li><code>docker image prune</code> &ndash; removes unused images</li>
+<li><code>docker image rm</code> &ndash; removes images by name</li>
+<li><code>docker image tag</code> &ndash; associates a tag to an image</li>
+</ul>
+</section><section>
+<h1 id="creating-docker-images">Creating docker images</h1>
+<p>Docker images are written in a <em>Dockerfile</em></p>
+<p>Every command inside a Dockerfile generates a new <em>layer</em></p>
+<p>The final stack of layers creates the final <em>image</em></p>
+<p>The <code>docker build</code> command interprets the Dockerfile commands to produce a sequence of layers</p>
+<p>Changes to a layer do not invalidate previous layers</p>
+</section><section>
+<h1 id="dockerfile-syntax">Dockerfile syntax</h1>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#888"># Pulls an image from docker hub with this name. Alternatively, &#34;scratch&#34; can be used for an empty container</span><span style="color:#a61717;background-color:#e3d2d2">
+</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">FROM</span><span style="color:#d20;background-color:#fff0f0"> manjarolinux/base </span><span style="color:#a61717;background-color:#e3d2d2">
+</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Runs a command</span><span style="color:#a61717;background-color:#e3d2d2">
+</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">RUN</span> pacman -Sy --noconfirm gnupg archlinux-keyring manjaro-keyring<span style="color:#a61717;background-color:#e3d2d2">
+</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Copies a file from the local folder into the image</span><span style="color:#a61717;background-color:#e3d2d2">
+</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">COPY</span> makepkg.conf /etc/makepkg.conf<span style="color:#a61717;background-color:#e3d2d2">
+</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Adds a new environment variable</span><span style="color:#a61717;background-color:#e3d2d2">
+</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">ENV</span> <span style="color:#369">GEM_HOME</span>=/rubygems/bin<span style="color:#a61717;background-color:#e3d2d2">
+</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Configures the default command to execute</span><span style="color:#a61717;background-color:#e3d2d2">
+</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">CMD</span> bash<span style="color:#a61717;background-color:#e3d2d2">
+</span></code></pre></div></section><section>
+<h1 id="naming-images">Naming images</h1>
+<p>Image naming is done via <em>tags</em></p>
+<p>The easiest way to do so is assigning tags at <em>build time</em> with the <code>-t</code> options of <code>docker build</code></p>
+<p>The option can be repeated multiple times to make multiple tags</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>docker build -t <span style="color:#d20;background-color:#fff0f0">&#34;myImage:latest&#34;</span> -t <span style="color:#d20;background-color:#fff0f0">&#34;myImage:0.1.0&#34;</span>
+</code></pre></div><p><code>latest</code> is usually used to identify the most recent version of some image</p>
+</section><section>
+<h1 id="publishing-docker-images">Publishing docker images</h1>
+<p>Images get published in <em>registries</em></p>
+<p>The most famous, free for publicly available images, is <em>Docker Hub</em></p>
+<p>By default, Docker uses Docker Hub as registry (both for <code>pull</code> and <code>push</code> operations)</p>
+<p>Docker Hub requires registration and CLI login:</p>
+<ul>
+<li><code>docker login docker.io</code></li>
+</ul>
+<p>Once done, publication is performed via <code>push</code>:</p>
+<ul>
+<li><code>docker push &lt;image name&gt;</code></li>
+</ul>
+</section><section>
+<h1 id="building-docker-images-in-ci">Building docker images in CI</h1>
+<p>Of course, as any other software, <em>custom docker images should get built in CI</em></p>
+<p>Travis CI and most other integrators provide <em>direct support</em></p>
+<p>Several integrators use containers as build environments: it is possible to <em>build a container using a container</em></p>
+<p>More in general, there is <em>no limit on how much containers can be nested into each other</em></p>
+</section><section>
+<h1 id="travis-ci-example">Travis CI example</h1>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#888"># Required: enables the service</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">services</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>- docker<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#888"># Optionally, specify where you want your container built, I like to use the latest version of Linux</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">dist</span>:<span style="color:#bbb"> </span>focal<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#888"># Utilities</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">env</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">global</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- TZ=UTC<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- IMAGE_NAME=<span style="color:#d20;background-color:#fff0f0">&#34;danysk/manjaro-with-yay&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#888"># Version computation. Here dates are used instead of Semantic Versioning</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">before_script</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>- export<span style="color:#bbb"> </span>TAG=<span style="color:#d20;background-color:#fff0f0">&#34;$(git describe || git log -n1 --date=format:&#39;%Y-%m-%dT%H%M%S&#39; --format=%cd)$(date +%Y-%m-%d_%H%M)&#34;</span><span style="color:#bbb">
+</span></code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">script</span>:<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#888"># Build the image</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>- docker<span style="color:#bbb"> </span>build<span style="color:#bbb"> </span>-t<span style="color:#bbb"> </span>$IMAGE_NAME:latest<span style="color:#bbb"> </span>-t<span style="color:#bbb"> </span>$IMAGE_NAME:$TAG<span style="color:#bbb"> </span>.<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#888"># Login into docker hub from a non-interactive terminal</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>- echo<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#34;$DOCKER_PASSWORD&#34;</span><span style="color:#bbb"> </span>|<span style="color:#bbb"> </span>docker<span style="color:#bbb"> </span>login<span style="color:#bbb"> </span>-u<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#34;$DOCKER_USERNAME&#34;</span><span style="color:#bbb"> </span>--password-stdin<span style="color:#bbb"> </span>docker.io<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#888"># Push the images, with both names (upload will happen only once, as they refer the same layer)</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>- docker<span style="color:#bbb"> </span>push<span style="color:#bbb"> </span>$IMAGE_NAME:$TAG<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>- docker<span style="color:#bbb"> </span>push<span style="color:#bbb"> </span>$IMAGE_NAME:latest<span style="color:#bbb">
+</span></code></pre></div></section>
 
   
 
