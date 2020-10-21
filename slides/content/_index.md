@@ -203,7 +203,7 @@ Note: data is not persisted automatically, at end of session you need to copy it
   * [Software licensing](06-licenses)
   * [Continuous integration/delivery/deployment](07-ci)
   * [Advanced version control](08-advanced-git)
-  * Containerization
+  * [Containerization](09-containerization)
 * Domain driven design
   * External DSL construction
   * Distributed software systems engineering
