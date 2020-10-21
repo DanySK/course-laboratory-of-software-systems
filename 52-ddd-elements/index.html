@@ -1,0 +1,1006 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>DDD - Elements</title>
+
+<meta name="author" content="Danilo Pianini">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/css/reset.css">
+<link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/css/reveal.css">
+  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.1e2604bf0c24e445faa3ae7d68b2f0146c34bc9e7b9bd6aee2b7187115560e96.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
+    
+<link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
+<link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Oxygen Mono' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Ubuntu Mono' rel='stylesheet'>
+
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+  
+
+    <section><h4 id="alma-mater-studiorum---università-di-bologna">Alma Mater Studiorum - Università di Bologna</h4>
+<h4 id="computer-science-and-engineering-department-disi">Computer Science and Engineering Department (DISI)</h4>
+<p> </p>
+<h1 id="domain-driven-design">Domain-Driven Design</h1>
+<h2 id="02---elements">02 - Elements</h2>
+<p> </p>
+<h4 id="a-croattimailtoacroattiuniboit"><a href="mailto:a.croatti@unibo.it">A. Croatti</a></h4>
+<p> </p>
+<h4 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h4>
+<h4 id="hahahugoshortcode-s1-hbhb">A.Y. 2020/2021</h4>
+</section><section>
+<h1 id="knowledge-crunching">Knowledge Crunching</h1>
+</section><section>
+<h2 id="knowledge-crunching-1">Knowledge Crunching</h2>
+<!--Complex problem domains will contain a wealth of information, some of which will not be applicable to solving the problem at hand and will only act to distract from the real focus of your modelling efforts.-->
+<ul>
+<li>
+<p>Knowledge crunching is the art of <strong>distilling relevant information from the problem domain to build a useful model that can fulfill the needs of business use cases</strong>.</p>
+<ul>
+<li>The key to bridging any knowledge gaps for the technical team when designing a solution for a problem domain.</li>
+</ul>
+</li>
+<li>
+<p>In order for a team to produce a  useful model they need to have a deep insight of the problem domain to ensure important concepts are not overlooked or misunderstood.</p>
+<ul>
+<li>This can only be done through working in collaboration with domain experts (brainstorming together).</li>
+</ul>
+  <!--* Without this there is a danger that a technical solution will be produced that is void of any real domain insight and something that cannot be understood by the business or by other developers during software maintenance or subsequent enhancements.-->
+</li>
+<li>
+<p>The main goal: <strong>discover and agree on a shared understanding of the problem domain to produce a model that can fulfill business use cases</strong>.</p>
+</li>
+</ul>
+</section><section>
+<h2 id="knowledge-crunching-2">Knowledge Crunching</h2>
+<img src="knowledge_crunching.png" style='
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+<!--The process of knowledge crunching, as shown in Figure 2-1, starts with the behaviors of a system. The team go through the scenarios of the application with the business stakeholders and experts. This process is the catalyst to conversation, deep insight, and a shared understanding of the domain for all participants. It is therefore vital that stakeholders and subject matter experts are actively involved and engaged.-->
+</section><section>
+<h2 id="shared-understanding-through-a-shared-language">Shared Understanding through a Shared Language</h2>
+<ul>
+<li>An output of knowledge crunching and an artifact of the shared understanding is a common <strong>Ubiquitous Language</strong> (UL).
+<ul>
+<li>This language must be made explicit and be used when describing the domain model and problem domain.</li>
+<li>The language should also be used in the code implementation of the model (with the same terms and concepts used as class names, properties, and method names).</li>
+<li>It is the language that enables both the business and development teams to have meaningful communication about the software.</li>
+</ul>
+</li>
+</ul>
+<!--* UL is used to bind the code representation of the model to the conceptual model communicated in language and diagrams.-->
+<ul>
+<li>
+<p>The UL will contain terminology from the business as well as new concepts and terms discovered when modeling the use case of the problem domain.</p>
+</li>
+<li>
+<p>The shared understanding obtained with a well defined UL prevents the need to constantly translate from a technical model to a business model.</p>
+</li>
+</ul>
+</section><section>
+<h2 id="the-importance-of-domain-knowledge">The Importance of Domain Knowledge</h2>
+<ul>
+<li>
+<p><strong>Domain knowledge is key, even more so than technical know‐how.</strong></p>
+</li>
+<li>
+<p>Teams working in a business with complex processes and logic need to immerse themselves in the problem domain, assimilating all the relevant domain knowledge.</p>
+</li>
+<li>
+<p>If you can’t speak to your business users in simple terms about complex concepts in the problem domain, you are not ready to start developing software within it.</p>
+</li>
+</ul>
+</section><section>
+<h2 id="the-role-of-business-analysts">The Role of Business Analysts</h2>
+<ul>
+<li>
+<p>A business analyst can help stakeholders flesh out their
+initial ideas and capture inputs and outputs of the product.</p>
+</li>
+<li>
+<p>If you have odd whiz‐kid developers and are nervous about putting them in front of domain experts, you can also use business analysts as facilitators to help communication.</p>
+</li>
+<li>
+<p>What you don’t want to do is remove the direct communication between the development team and the people who understand that part of the business the most.</p>
+</li>
+</ul>
+<blockquote>
+<p><em>Who can act as a Business Analyst?</em></p>
+</blockquote>
+</section><section>
+<h2 id="knowledge-crunching-is-an-ongoing-process">Knowledge crunching is an ongoing process</h2>
+<ul>
+<li>
+<p>Model‐driven design and the evolution of a domain model
+is an ongoing process.</p>
+</li>
+<li>
+<p>Many models must be rejected in order to ensure you have a useful modelfor the current use cases of a system.</p>
+<ul>
+<li><strong>Collaboration among development team, business
+stakeholders, and subject matter experts should not be constrained to the start of a project</strong>.</li>
+</ul>
+</li>
+<li>
+<p>Knowledge crunching should be an ongoing concern with the business engaged throughout the <em>lifetime</em> of the application build.</p>
+<ul>
+<li>Note: when the system is in use the model may also need to evolve due to technical reasons such as performance or a better understanding of the systems usage.</li>
+</ul>
+</li>
+<li>
+<p><strong>A good model must be &ldquo;malleable&rdquo;!</strong></p>
+</li>
+</ul>
+</section><section>
+<h2 id="domain-experts-vs-stakeholders">Domain Experts vs. Stakeholders</h2>
+<img src="domain_experts_stakeholders.png" style='
+    width: 70vw;
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+<ul>
+<li>
+<p>A problem space gives you a set of requirements, inputs, and expected outputs: this is usually provided from your stakeholders.</p>
+</li>
+<li>
+<p>A solution space contains a model that can meet the needs of the requirements: this is where domain experts can help.</p>
+</li>
+</ul>
+<!--As shown in Figure 2-2, if your stakeholder is not a domain expert then his role will differ greatly from that of a domain expert. A stakeholder will tell you what they want the system to do; they will focus on the inputs and outputs. A domain expert on the other hand will work with you in order to produce a useful model that can satisfy the needs of a stakeholder and the behaviors of the application.-->
+</section><section>
+<h2 id="effective-knowledge-crunching-13">Effective Knowledge Crunching (1/3)</h2>
+<blockquote>
+<p><strong>Creating a useful model is a collaborative experience: however, business users can also find it tiring and unproductive!</strong></p>
+</blockquote>
+<ol>
+<li><em>Focus on the most interesting conversations</em>
+<ul>
+<li>
+<p>Start with the areas of the problem domain that keep the business up at night</p>
+<ul>
+<li>E.g.: Which parts of the current system are hard to use? Which manual processes stop them from doing value‐adding work? What changes would increase revenue or improve operational efficiencies and save money from the bottom line?</li>
+</ul>
+</li>
+<li>
+<p>The most interesting conversations will reveal where you should spend most of your effort on creating a shared understanding and a shared language.</p>
+</li>
+</ul>
+</li>
+</ol>
+</section><section>
+<h2 id="effective-knowledge-crunching-23">Effective Knowledge Crunching (2/3)</h2>
+<ol start="2">
+<li>
+<p><em>Start from the Use Cases</em></p>
+<ul>
+<li>
+<p>A use case lists the steps required to achieve a goal, including the interactions between users and systems.</p>
+</li>
+<li>
+<p>Be careful to listen for domain terminology, because this forms the start of your shared language for describing and communicating the problem domain.</p>
+</li>
+<li>
+<p>It’s also useful to read back the use case to the domain expert in your own understanding, so they can validate that you do understand the use case as they do.</p>
+</li>
+<li>
+<p>Don’t try to jump to a solution too quickly before you truly understand and appreciate the problem.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><em>Ask Powerful Questions</em></p>
+<ul>
+<li>The questions you ask during knowledge‐crunching sessions will go a long way toward your understanding of the importance of the product you are building and the intent behind it.</li>
+</ul>
+</li>
+</ol>
+</section><section>
+<h2 id="effective-knowledge-crunching-33">Effective Knowledge Crunching (3/3)</h2>
+<ol start="4">
+<li><em>Sketching</em>
+<ul>
+<li>
+<p>People often learn quicker by seeing visual representations of the concepts they are discussing.</p>
+</li>
+<li>
+<p>Sketching simple diagrams is a common visualization technique DDD practitioners use to enhance knowledge-crunching sessions and maximize their time with domain experts.</p>
+<ul>
+<li>Useful diagrams: UML Use Case, UML Activity, CRC Cards</li>
+</ul>
+</li>
+<li>
+<p>Keeping your diagrams at a consistent level of detail will prevent you from showing too much detail or too little detail, meaning everyone can understand what you are trying to convey. It’s often better to create multiple diagrams each at a different level of detail.</p>
+</li>
+</ul>
+</li>
+</ol>
+</section><section>
+<h2 id="uml-use-case-diagram">UML &ldquo;Use Case&rdquo; Diagram</h2>
+<ul>
+<li>
+<p>The use case diagram in UML captures the behavior of a system as it appears to an outside user.</p>
+<ul>
+<li>It partitions the system functionality into transactions meaningful to actors (users of a system).</li>
+<li>The pieces of interactive functionality are called use cases.</li>
+</ul>
+</li>
+<li>
+<p>A use case describes an interaction with actors as a sequence of messages between the system and one or more actors.</p>
+</li>
+<li>
+<p>The term actor includes humans, as well as other computer systems and processes.</p>
+</li>
+</ul>
+</section><section>
+<h2 id="use-case-diagram-an-example-12">Use Case Diagram: An Example (1/2)</h2>
+<img src="uml_use_cases_ex01.png" style='
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</section><section>
+<h2 id="actors">Actors</h2>
+<ul>
+<li>
+<p>An actor is an idealization of an external person, process, or thing interacting with a system.</p>
+</li>
+<li>
+<p>An actor characterizes the interactions that outside users may have with the system.</p>
+<ul>
+<li>At run time, one physical user may be bound to multiple actors within the system.</li>
+<li>Different users may be bound to the same actor and therefore represent multiple instances of the same actor definition.</li>
+<li>Each actor participates in one or more use cases.</li>
+</ul>
+</li>
+<li>
+<p>The internal implementation of an actor is not relevant in the use case</p>
+<ul>
+<li>Actors may be defined in generalization hierarchies, in which an abstract actor description is shared and augmented by one or more specific actor descriptions.</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="use-case">Use Case</h2>
+<ul>
+<li>
+<p>A use case is a coherent unit of externally visible functionality provided by a system unit and expressed by sequences of messages exchanged by the system unit and one or more actors of the system unit.</p>
+</li>
+<li>
+<p>The purpose of a use case is to define a
+piece of coherent behavior without revealing the internal structure of the system.</p>
+</li>
+<li>
+<p>In the model, the execution of each use case is independent of the others, although an implementation of the use cases may create implicit dependencies among them.</p>
+</li>
+<li>
+<p>Each use case represents an orthogonal piece of functionality whose execution can be mixed with the execution of other use
+cases.</p>
+</li>
+</ul>
+</section><section>
+<h2 id="use-case-diagram-an-example-22">Use Case Diagram: An Example (2/2)</h2>
+<img src="uml_use_cases_ex02.png" style='
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</section><section>
+<h2 id="use-cases-relationships">Use Cases Relationships</h2>
+<ul>
+<li>A use case can participate in several relationships, in addition to the association with actors</li>
+</ul>
+<img src="uml_use_cases_relationships.png" style='
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</section><section>
+<h2 id="uml-activity-diagram">UML &ldquo;Activity&rdquo; Diagram</h2>
+<ul>
+<li>
+<p>An activity diagram is a graph of nodes and flows that shows the flow of control (and data) through the steps of a computation</p>
+<ul>
+<li>Execution steps can both sequential and concurrent</li>
+</ul>
+</li>
+<li>
+<p>An activity definition contains activity nodes: each of them represents the performance of a step in a workflow</p>
+<ul>
+<li>Each node waits for the completion of its computation, then the execution proceeds to nodes found on the output flow</li>
+</ul>
+</li>
+<li>
+<p>An activity diagram my contain branches and forking</p>
+</li>
+<li>
+<p>Partitions can be used to organize activities in a model according to responsibility</p>
+</li>
+<li>
+<p>An activity diagram</p>
+</li>
+</ul>
+</section><section>
+<h2 id="activity-diagram-an-example-12">Activity Diagram: An Example (1/2)</h2>
+<img src="xxx.png" style='
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+<h1 id="tbc">TBC</h1>
+</section><section>
+<h2 id="class-responsibility-collaboration-crc-cards">Class Responsibility Collaboration (CRC) Cards</h2>
+<ul>
+<li>
+<p>Because DDD is built around the core idea of a shared language, it is important to use knowledge-gathering techniques that focus on creating a concise and powerful language</p>
+</li>
+<li>
+<p>CRC (Class Responsibility Collaboration) cards are divided into three areas and contain the following information:</p>
+<ol>
+<li>A class <strong>name</strong>, which represents a concept in the domain</li>
+<li>The <strong>responsibilities</strong> of the class</li>
+<li>Classes that are <strong>associated</strong> and are required to fulfill its purpose</li>
+</ol>
+</li>
+<li>
+<p>CRC cards focus the team and the business experts on thinking about the language of the concepts in the problem domain.</p>
+</li>
+<li>
+<p>Martin Fowler has described CRC cards as a viable alternative to UML sequence diagram to design the dynamics of object interaction and collaboration</p>
+</li>
+</ul>
+</section><section>
+<h2 id="crc-cards-an-example">CRC Cards: An Example</h2>
+<img src="crc_ex.png" style='
+    width: 100vw;
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</section><section>
+<h2 id="rapid-prototyping">Rapid Prototyping</h2>
+<ul>
+<li>
+<p>Favour rapid prototyping during knowledge‐crunching sessions!</p>
+<ul>
+<li>Business users like nothing more than screen mock‐ups, because they reveal so much more about the intent they have behind a product</li>
+<li>Users understand UI; they can interact with it and act out work flows clearly</li>
+</ul>
+</li>
+<li>
+<p>Another form of rapid prototyping is to capture requirements in code</p>
+<ul>
+<li>Starting to code will help focus analysis sessions</li>
+<li>Starting to implement abstract ideas from knowledge crunching will enable you to validate and prove your model</li>
+<li>It also helps to avoid only abstract thinking, which can lead to analysis paralysis</li>
+</ul>
+</li>
+<li>
+<p>Coding quickly helps create your powerful questions and helps find missing use cases</p>
+<ul>
+<li>NOTE (1): Coding at this level is part of the analysis process!</li>
+<li>NOTE (2): Only create a code model of what is relevant and within the specific context to solve a given problem; you can’t effectively model the entire domain.</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="impact-mapping">Impact Mapping</h2>
+<ul>
+<li>
+<p>Impact mapping allows to go beyond traditional requirements documents, working on what impacts the business is trying to make</p>
+</li>
+<li>
+<p>Once you understand the impact the business is trying to make, you can play a more effective role in helping them to achieve it</p>
+<ul>
+<li>Significantly for DDD, you will be able to ask better questions during knowledge-crunching sessions since you know what the business wants to achieve</li>
+</ul>
+</li>
+<li>
+<p>Impact mapping is a very informal technique</p>
+<ul>
+<li>You simply create mind‐map-like diagrams that accentuate key business information</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="impact-mapping-an-example">Impact Mapping: An Example</h2>
+<img src="impact_mapping.png" style='
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</section><section>
+<h2 id="whirlpool-process-of-model-exploration">Whirlpool Process of Model Exploration</h2>
+<ul>
+<li>
+<p>A method of modeling and knowledge crunching that can complement other agile methodologies and be called upon at any time of need throughout the lifetime of application development</p>
+<ul>
+<li>Proposed by Eric Evans</li>
+</ul>
+</li>
+<li>
+<p>It is used not as a modeling methodology but rather for <strong>when problems are encountered during the creation of a model</strong>.</p>
+</li>
+</ul>
+</section><section>
+<img src="whirlpool.png" style='
+    width: 100vw;
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</section><section>
+<h2 id="whirlpools-activities-12">Whirlpool&rsquo;s Activities (1/2)</h2>
+<ol>
+<li>
+<p><strong>Scenario Exploring</strong></p>
+<ul>
+<li>A domain expert describes a scenario (with concrete examples) that the team is worried about or having difficulty with in the problem domain</li>
+<li>Then, the group then maps the scenario, like event storming in a visual manner in an open space</li>
+</ul>
+</li>
+<li>
+<p><strong>Modeling</strong></p>
+<ul>
+<li>At the same time of running through a scenario, the team starts to examine the current model and assesses its usefulness for solving the scenario expressed by the domain expert</li>
+</ul>
+</li>
+<li>
+<p><strong>Challenging the Model</strong></p>
+<ul>
+<li>Once the team has amended the model or created a new model they then challenge it with further scenarios from the domain expert to prove its usefulness</li>
+</ul>
+</li>
+</ol>
+</section><section>
+<h2 id="whirlpools-activities-22">Whirlpool&rsquo;s Activities (2/2)</h2>
+<ol start="3">
+<li>
+<p><strong>Harvesting and Documenting</strong></p>
+<ul>
+<li>Significant scenarios that help demonstrate the model should be captured in documentation</li>
+<li>Business scenarios will change less often than the model so it is useful to have a collection of important ones as a reference</li>
+</ul>
+</li>
+<li>
+<p><strong>Code Probing</strong></p>
+<ul>
+<li>When insight into the problem domain is unlocked and a design breakthrough occurs the technical team should prove it in code to ensure that it can be implemented</li>
+</ul>
+</li>
+</ol>
+</section><section>
+<h1 id="focusing-on-the-core-domain">Focusing on the Core Domain</h1>
+</section><section>
+<h2 id="focusing-on-the-core-domain-1">Focusing on the Core Domain</h2>
+<ul>
+<li>
+<p><strong>Not all parts of a problem are equal!</strong></p>
+<ul>
+<li>Some parts of the application are more important than others</li>
+<li>Some parts need more attention and investment than others to make the application a success</li>
+</ul>
+</li>
+<li>
+<p>During knowledge crunching with domain experts, it’s important to reduce the noise of what’s unimportant to enable you to focus on what is important</p>
+</li>
+<li>
+<p><strong>Domain-Driven Design is all about reducing complexity!</strong></p>
+<ul>
+<li>A single monolithic model would increase the complexity</li>
+<li>You should break the problem domain down so that you are able to create smaller models in the solution space</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="domain-and-subdomains">Domain and Subdomains</h2>
+<ul>
+<li>
+<p>Large problem domains can be partitioned into <em>subdomains</em> to manage complexity and to separate the important parts from the rest of the system</p>
+</li>
+<li>
+<p>Understanding the subdomains of your system enables you to break down the problem space</p>
+</li>
+<li>
+<p>Subdomains are abstract concepts</p>
+<ul>
+<li>don’t get subdomains confused with the organizational structure of a company</li>
+</ul>
+</li>
+<li>
+<p><strong>By distilling the problem domain you reduce complexity by dividing and conquering the problem</strong></p>
+<ul>
+<li>Smaller models can be created and understood within the context of a subdomain</li>
+<li>This removes the need for a single large model to represent the entire problem domain</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="the-core-domain">The Core Domain</h2>
+<ul>
+<li>
+<p>To know where to invest the most effort and quality, it’s crucial to understand where the core domains are, because these are key to making software successful</p>
+</li>
+<li>
+<p>This knowledge is distilled from knowledge‐crunching sessions working in collaboration with domain experts to understand the most important aspect of the product under design and development</p>
+</li>
+<li>
+<p><strong>What is core changes over time!</strong></p>
+</li>
+<li>
+<p>One of the fundamental shifts in mentality required for writing software for complex core domains is to focus on the product rather than view it as a standalone project</p>
+</li>
+</ul>
+</section><section>
+<h2 id="an-example-auction-web-site-14">An Example: Auction Web Site (1/4)</h2>
+<div class='left' style='float:left;width:40%'>
+<ul>
+<li>
+<p>We will consider the domain model of an online auction site</p>
+</li>
+<li>
+<p>There are many different components that make up the large overall system</p>
+</li>
+<li>
+<p>Some parts will be found in any online system, but some will be unique to the domain and specific business</p>
+</li>
+</ul>
+</div>
+<div class='right' style='float:right;width:60%'>
+<img src="online_auction_ex01.png" style='
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</div>
+</section><section>
+<h2 id="an-example-auction-web-site-24">An Example: Auction Web Site (2/4)</h2>
+<div class='left' style='float:left;width:40%'>
+<ul>
+<li>
+<p>Membership: the area of the systems that deals
+with the registrations, preferences, and details of members.</p>
+</li>
+<li>
+<p>Seller: all the processes and behaviors that deal with the seller
+activities</p>
+</li>
+<li>
+<p>Auction: managing the timing of auctions and dealing with bid activity</p>
+</li>
+<li>
+<p>Listings: the catalogs of items that are available on the auction site</p>
+</li>
+<li>
+<p>Dispute resolution: the area that deals with disputes between members and sellers</p>
+</li>
+</ul>
+</div>
+<div class='right' style='float:right;width:60%'>
+<img src="online_auction_ex02.png" style='
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</div>
+</section><section>
+<h2 id="an-example-auction-web-site-34">An Example: Auction Web Site (3/4)</h2>
+<div class='left' style='float:left;width:40%'>
+<ul>
+<li>
+<p>Core domains of the system are the <em>seller</em> and the
+<em>auction</em>.</p>
+<ul>
+<li>The seller domain contains the ratings for a seller and the domain logic for determining seller fees</li>
+<li>The auction core domain is the mechanism for running an auction and handling bids</li>
+</ul>
+</li>
+<li>
+<p>The <em>membership</em> and <em>listing</em> domains support the core domains by providing bidders the opportunity to create accounts and find items for sale.</p>
+</li>
+<li>
+<p>The <em>dispute resolution</em> domain is generic in that it can be served using a commercial off‐the‐shelf package</p>
+</li>
+</ul>
+</div>
+<div class='right' style='float:right;width:60%'>
+<img src="online_auction_ex03.png" style='
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</div>
+</section><section>
+<h2 id="an-example-auction-web-site-44">An Example: Auction Web Site (4/4)</h2>
+<ul>
+<li>
+<p>The online auction site is divided into two physical applications</p>
+</li>
+<li>
+<p>The dispute domain has been fulfilled by an off‐the‐shelf
+package while the core and supporting domains will be designed using a custom web application</p>
+</li>
+</ul>
+<img src="online_auction_ex04.png" style='
+    width: 60vw;
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</section><section>
+<h2 id="anticorruption-layer">Anticorruption Layer</h2>
+<img src="anticorruption_layer.png" style='
+    width: 70vw;
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+<ul>
+<li>Wraps the communication with legacy or third‐party code to protect the integrity of a bounded context</li>
+<li>Manages the transformation of one context’s view to another, retaining the integrity of new code</li>
+</ul>
+</section><section>
+<h2 id="hints">Hints</h2>
+<ol>
+<li>
+<p><em>Focus on clean boundaries over perfect models!</em></p>
+</li>
+<li>
+<p><em>The Core Domain doesn’t always have to be perfect the first time!</em></p>
+</li>
+<li>
+<p><em>Build Subdomains for replacement rather than reuse!</em></p>
+</li>
+</ol>
+</section><section>
+<h1 id="model-driven-design">Model-Driven Design</h1>
+</section><section>
+<h2 id="from-the-problem-space">From the Problem Space</h2>
+<h2 id="to-the-solution-space">to the Solution Space</h2>
+<ul>
+<li>
+<p>it is important to implement in code the analysis model that was produced during knowledge-crunching sessions</p>
+</li>
+<li>
+<p>DDD requires to produce a single model that serves as an analysis model for business people to understand and which is implemented using the same terminology and concepts in code</p>
+</li>
+<li>
+<p>This process is known as <strong>Model‐Driven Design</strong> (MDD)</p>
+</li>
+</ul>
+</section><section>
+<h2 id="model-driven-design-1">Model-Driven Design</h2>
+<ul>
+<li>
+<p>Model‐Driven Design is the process of binding an analysis model to a code implementation model</p>
+<ul>
+<li>ensuring that both stay in sync and are useful during evolution</li>
+</ul>
+</li>
+<li>
+<p>Model‐Driven Design differs from Domain-Driven Design</p>
+<ul>
+<li>MDD it is focused on implementation and any constraints that may require changes to an initial model</li>
+<li>DDD focuses on language, collaboration, and domain knowledge</li>
+</ul>
+</li>
+<li>
+<p>The two complement each other</p>
+<ul>
+<li>The MDD approach enables domain knowledge and the shared language to be incorporated into a software model that mirrors the language and mental models of the business experts</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="the-domain-model">The Domain Model</h2>
+<ul>
+<li>The Domain Model is at the center of Domain‐Driven Design
+<ul>
+<li>When it is expressed as a code implementation, it is bound to the analysis model through the use of the shared language</li>
+<li>The model contains only what is relevant to solve problems in the context of the system</li>
+</ul>
+</li>
+</ul>
+<img src="domain_model_role.png" style='
+    width: 80vw;
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</section><section>
+<h2 id="the-domain-model-evolution-process">The Domain Model Evolution Process</h2>
+<h2 id="without-ddd-mdd">(without DDD-MDD)</h2>
+<img src="domain_model_evolution_wrong.png" style='
+    width: 80vw;
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</section><section>
+<h2 id="the-domain-model-evolution-process-1">The Domain Model Evolution Process</h2>
+<h2 id="following-ddd-mdd">(following DDD-MDD)</h2>
+<img src="domain_model_evolution_good.png" style='
+    width: 75vw;
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</section><section>
+<h2 id="about-the-importance-of-the-ubiquitous-language">About the Importance of the Ubiquitous Language</h2>
+<blockquote>
+<p><em>Ubiquitous Language (UL) represents the Key of an effective DDD-MDD approach</em></p>
+</blockquote>
+<ul>
+<li>
+<p>UL enables teams to organize both the mental and the code model with ease</p>
+<ul>
+<li>It achieves an unambiguous meaning because of the shared understanding that it brings to the teams</li>
+</ul>
+</li>
+<li>
+<p>UL also provides clarity and consistency in meaning</p>
+<ul>
+<li>The language is ultimately expressed in code, but speech, sketch, and documentation are also important for creating the language</li>
+<li>The language is constantly explored, verified, and refined with new insights and greater knowledge</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="an-example-15">An Example (1/5)</h2>
+<ul>
+<li>A business user is describing the process of customers at an e‐commerce site requesting a replacement for an order that wasn’t delivered</li>
+</ul>
+<blockquote>
+<p>When a customer doesn’t receive her goods, she can request a new order for free.
+She logs into her account and clicks on the I Have Not Received My Items button.
+If she has already been flagged as having received a free order, she can’t get another one without speaking to customer service.
+Otherwise, we will send her a free order and update the database to show that this customer has already claimed for a lost item. We will then contact the courier to see if we can claim back the cost of the lost order.</p>
+</blockquote>
+</section><section>
+<h2 id="an-example-25">An Example (2/5)</h2>
+<blockquote>
+<p>When a customer doesn’t receive her goods, she can request a new order for free.
+She logs into her account and clicks on the I Have Not Received My Items button.
+If she has already been flagged as having received a free order, she can’t get another one without speaking to customer service.
+Otherwise, we will send her a free order and update the database to show that this customer has already claimed for a lost item. We will then contact the courier to see if we can claim back the cost of the lost order.</p>
+</blockquote>
+<ul>
+<li><em>Is the use-case description focused on the business process?</em></li>
+</ul>
+</section><section>
+<h2 id="an-example-35">An Example (3/5)</h2>
+<blockquote>
+<p>When a customer doesn’t receive her goods, she can request a new order for free.
+<strong>She logs into her account and clicks on the I Have Not Received My Items button.</strong>
+If she has already been flagged as having received a free order, she can’t get another one without speaking to customer service.
+Otherwise, we will send her a free order and update the database to show that this customer has already claimed for a lost item. We will then contact the courier to see if we can claim back the cost of the lost order.</p>
+</blockquote>
+<ul>
+<li><em>Is this sentence relevant for the domain model?</em></li>
+<li><em>Does it gives any value or insight?</em></li>
+</ul>
+</section><section>
+<h2 id="an-example-45">An Example (4/5)</h2>
+<blockquote>
+<p>When a customer doesn’t receive her goods, she can request a new order for free.
+She logs into her account and clicks on the I Have Not Received My Items button.
+<strong>If she has already been flagged as having received a free order, she can’t get another one without speaking to customer service.</strong>
+Otherwise, we will send her a free order and update the database to show that this customer has already claimed for a lost item. We will then contact the courier to see if we can claim back the cost of the lost order.</p>
+</blockquote>
+<ul>
+<li><em>Some experts may have experience with databases and may go as far as suggesting
+data schemas!</em>
+<ul>
+<li><em>This gives the team no deep understanding of the domain</em></li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="an-example-55">An Example (5/5)</h2>
+<h3 id="rewriting-the-use-case-description">Rewriting the Use Case Description</h3>
+<blockquote>
+<p>If you have not received an order, you can submit an undelivered order notification. 
+If this is your first claim, a replacement order is created.
+If you have made a claim before, your claim case is opened and assigned to a customer service representative, who will investigate the claim.
+In all cases, a lost mail compensation case is opened and sent to the courier with details of the consignment that was undelivered.</p>
+</blockquote>
+<ul>
+<li><em>This new description reveals many important domain concepts missing before</em></li>
+<li><em>The customer is no longer the most important concept!</em></li>
+</ul>
+</section><section>
+<h2 id="best-practices-for-shaping-the-ul">Best Practices for Shaping the UL</h2>
+<ol>
+<li>
+<p>Ensure that you have <strong>linguistic consistency</strong></p>
+<ul>
+<li>If you are using a term in code that the domain expert doesn’t say, you need to check it with her</li>
+<li>It could be that you have found a concept that was required, so it needs to be added to the UL and understood by the domain expert</li>
+<li>Alternatively, maybe you misunderstood something that the domain expert said; therefore, you should rectify the code with the correct term</li>
+</ul>
+</li>
+<li>
+<p>Create a <strong>glossary of domain terms</strong> with the domain expert to avoid confusion</p>
+<ul>
+<li>Ensure that you use one word for a specific concept</li>
+</ul>
+</li>
+<li>
+<p>Don’t use terms that have a specific meaning in software development</p>
+<ul>
+<li>such as design pattern names&hellip;</li>
+</ul>
+</li>
+<li>
+<p>Use the language to drive the design of your code</p>
+<ul>
+<li>The <strong>UL should be visible everywhere</strong>, from namespaces to classes, and from properties to method names</li>
+</ul>
+</li>
+</ol>
+</section><section>
+<h2 id="how-to-create-effective-domain-models">How to create effective domain models?</h2>
+<ol>
+<li>
+<p><strong>Don’t let the truth get in the way of a good model</strong></p>
+<ul>
+<li>A domain model is not a model of real life; it is a system of abstractions on reality, an interpretation</li>
+</ul>
+</li>
+<li>
+<p><strong>Model only what is relevant</strong></p>
+<ul>
+<li>You don’t have to include everything into the model</li>
+</ul>
+</li>
+<li>
+<p><strong>Domain models are temporarily useful</strong></p>
+<ul>
+<li>A domain model needs to be constantly refined to continually be useful</li>
+</ul>
+</li>
+<li>
+<p><strong>Be explicit with terminology and limit your abstractions</strong></p>
+</li>
+<li>
+<p><strong>Implement the model in code early and often</strong></p>
+</li>
+</ol>
+</section><section>
+</section>
+
+  
+
+
+</div>
+      
+
+    </div>
+<script type="text/javascript" src=/Course-Laboratory-of-Software-Systems/reveal-hugo/object-assign.js></script>
+
+<a href="/Course-Laboratory-of-Software-Systems/reveal-js/css/print/" id="print-location" style="display: none;"></a>
+<script type="text/javascript">
+  var printLocationElement = document.getElementById('print-location');
+  var link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = printLocationElement.href + (window.location.search.match(/print-pdf/gi) ? 'pdf.css' : 'paper.css');
+  document.getElementsByTagName('head')[0].appendChild(link);
+</script>
+
+<script type="application/json" id="reveal-hugo-site-params">{"height":"100%","pdfseparatefragments":false,"theme":"white","width":"100%"}</script>
+<script type="application/json" id="reveal-hugo-page-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"custom_theme_options":{"enablesourcemap":true,"targetpath":"css/custom-theme.css"},"transition":"slide","transition_speed":"fast"}</script>
+
+<script src="/Course-Laboratory-of-Software-Systems/reveal-js/js/reveal.js"></script>
+
+<script type="text/javascript">
+  
+  
+  function camelize(map) {
+    if (map) {
+      Object.keys(map).forEach(function(k) {
+        newK = k.replace(/(\_\w)/g, function(m) { return m[1].toUpperCase() });
+        if (newK != k) {
+          map[newK] = map[k];
+          delete map[k];
+        }
+      });
+    }
+    return map;
+  }
+  
+  var revealHugoDefaults = { center: true, controls: true, history: true, progress: true, transition: "slide" };
+  var revealHugoSiteParams = JSON.parse(document.getElementById('reveal-hugo-site-params').innerHTML);
+  var revealHugoPageParams = JSON.parse(document.getElementById('reveal-hugo-page-params').innerHTML);
+  
+  var options = Object.assign({},
+    camelize(revealHugoDefaults),
+    camelize(revealHugoSiteParams),
+    camelize(revealHugoPageParams));
+  Reveal.initialize(options);
+</script>
+
+
+  
+  
+  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/markdown/marked.js"></script>
+  
+  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/markdown/markdown.js"></script>
+  
+  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/highlight/highlight.js"></script>
+  
+  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/zoom-js/zoom.js"></script>
+  
+  
+  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/notes/notes.js"></script>
+
+
+
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+</script>
+
+<script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+
+    
+  </body>
+</html>

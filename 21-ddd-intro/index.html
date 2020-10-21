@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-<title>DDD - Intro</title>
+<title>[LSS2021] DDD &gt; Intro</title>
 
 <meta name="author" content="Danilo Pianini">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -38,107 +38,140 @@
 <h2 id="-at-least-if-its-greenfield-software">&hellip; at least if it&rsquo;s greenfield software!</h2>
 <p>(<em>Scott Millett</em>)</p>
 </section><section>
-<h2 id="a-true-story">A true Story</h2>
-<ul>
-<li>
-<p>When it comes to modifying code written by other developers (or code you wrote 6/12 months ago) it can be a bit of a bore at best and a nightmare at worst.</p>
-</li>
-<li>
-<p>The software works&hellip; but you aren’t sure exactly how!</p>
-</li>
-<li>
-<p>It contains all the right frameworks and patterns, and has been created using an agile approach&hellip; but introducing new features into the codebase is harder than it should be.</p>
-</li>
-<li>
-<p>Even business experts aren’t helpful because the code bears no resemblance to the language they use.</p>
-</li>
-<li>
-<p>Working on such systems becomes a chore, leaving developers frustrated and devoid of any coding pleasure.</p>
-</li>
-</ul>
+<h2 id="true-stories">True Stories</h2>
+<blockquote>
+<h4 id="1">#1</h4>
+<p><em>When you need to modify code written by other developers</em><br>
+<em>(or code you wrote 6/12 months ago)</em><br>
+<em>we have two scenarios:</em></p>
+<p><em>in the best case, it&rsquo;s <strong>a bit boring</strong>&hellip;</em><br>
+<em>&hellip;but in the worst case, it&rsquo;s <strong>a nightmare</strong>!</em></p>
+</blockquote>
+</section><section>
+<h2 id="true-stories-1">True Stories</h2>
+<blockquote>
+<h4 id="2">#2</h4>
+<p><em>The software works&hellip; but you aren&rsquo;t sure exactly how!</em></p>
+</blockquote>
+<blockquote>
+<h4 id="3">#3</h4>
+<p><em>The software contains all the right frameworks and patterns,</em><br>
+<em>and has been created using an agile approach&hellip;</em><br>
+<em>&hellip;but introducing new features into the codebase is harder than it should be!</em></p>
+</blockquote>
+<blockquote>
+<h4 id="4">#4</h4>
+<p><em>Often, business/domain experts aren’t helpful</em><br>
+<em>because the code bears no resemblance to the language they use.</em></p>
+</blockquote>
 </section><section>
 <h2 id="domain-driven-design-philosophy">Domain-Driven Design &ldquo;Philosophy&rdquo;</h2>
 <blockquote>
-<p><em>Domain-Driven Design (DDD) is a process that aligns your code with the reality of your problem domain.</em></p>
+<p><em>Domain-Driven Design (DDD) is a process that aligns your code with the reality of your problem domain</em></p>
 </blockquote>
 <ul>
 <li>
-<p>As your product evolves, adding new features becomes as easy as it was in the good old days of greenfield development.</p>
+<p>DDD facilitates the evolution of software</p>
+<ul>
+<li>Adding new features becomes as easy as it was in the good old days of greenfield development</li>
+</ul>
 </li>
 <li>
-<p>Although DDD understands the need for software patterns, principles, methodologies, and frameworks, it values developers and domain experts working together to understand domain concepts, policies, and logic equally.</p>
+<p>DDD enforces <em>designers</em>/<em>developers</em> and <em>domain experts</em> working together to understand domain concepts, policies, and logic</p>
+<ul>
+<li>Although it understand the need for software patterns, principles, methodologies, and frameworks</li>
+</ul>
 </li>
 <li>
-<p>With greater knowledge of the problem domain and synergy with the business, developers are more likely to build software that is more readable and easier to adapt for future enhancement.</p>
-</li>
-<li>
-<p><strong>Following the DDD philosophy will give developers the knowledge and skills they need to tackle
-large or complex business systems effectively.</strong></p>
+<p>Greater knowledge of the problem domain and synergy with the business</p>
+<ul>
+<li>The produced software is easier to adapt for future enhancement</li>
+</ul>
 </li>
 </ul>
 </section><section>
 <h2 id="the-art-of-the-possible">The Art of the Possible</h2>
-<img src="art_of_possible.png" style='width: vw; object-fit: contain; border:0px; box-shadow: none'>
+<img src="assets/art_of_possible.png" style='
+    width: 60vw;
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
 </section><section>
 <h2 id="domain-driven-design-a-first-definition">Domain-Driven Design: A first Definition</h2>
 <div class='left' style='float:left;width:30%'>
-<img src="https://m.media-amazon.com/images/I/51OWGtzQLLL.jpg" style='width: vw; object-fit: contain; border:0px; box-shadow: none'>
+<img src="https://m.media-amazon.com/images/I/51OWGtzQLLL.jpg" style='
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
 </div>
 <div class='right' style='float:right;width:70%'>
 <blockquote>
-<p><em>Domain-Driven Design (DDD) is both a way of thinking and a set of priorities, aimed at accelerating software projects that have to deal with complicated domains.</em></p>
+<p>Domain-Driven Design (DDD) is both <em>a way of thinking</em> and <em>a set of priorities</em>, aimed at accelerating software projects that have to deal with complicated domains*</p>
 <p>(Eric Evans, Domain-Driven Design, 2003)</p>
 </blockquote>
+<p> 
+ 
+ </p>
+<h4 id="it-offers-to-designersdevelopers">It offers to designers/developers</h4>
+<h4 id="the-knowledge-and-skills-they-need">the knowledge and skills they need</h4>
+<h4 id="to-tackle-large-or-complex-business-systems">to tackle large or complex business systems</h4>
+<h4 id="effectively">effectively</h4>
 </div>
 </section><section>
 <h2 id="fundamental-concepts-of-ddd">Fundamental Concepts of DDD</h2>
 <h3 id="in-a-nutshell">(in a nutshell)</h3>
 <ol>
 <li>
-<p>Distill a large problem domain into <strong>smaller sub-domains</strong>.</p>
-</li>
-<li>
-<p>Identify the core sub-domains to reveal what is important.</p>
+<p>Distill a large problem domain into <strong>smaller sub-domains</strong></p>
 <ul>
-<li>The core domains are those of greater value to the business which requires more focus, effort, and time.</li>
+<li>Identify the core sub-domains to reveal what is important</li>
+<li>The core domains are those of greater value to the business which requires more focus and time</li>
 </ul>
 </li>
 <li>
-<p>Collaborate with experts to discover an analysis model that will provide solutions to solve problems or reveal opportunities particularly in the core domain.</p>
+<p>Collaborate with experts to discover an analysis model that will provide solutions to solve problems (<strong>knowledge crunching</strong>)</p>
 </li>
 <li>
-<p>Use the same <strong>ubiquitous language</strong> to bind the analysis model to the code model.</p>
-<ul>
-<li>Use <strong>tactical patterns</strong> to separate technical code from domain code to prevent accidental complexity.</li>
-</ul>
+<p>Use the same <strong>ubiquitous language</strong> to bind the analysis model to the code model</p>
 </li>
 <li>
-<p>Split the model into smaller models</p>
-<ul>
-<li>Enclose the model within a <strong>boundary</strong> to protect the
-models integrity.</li>
-</ul>
+<p>Enclose the model within a boundary to protect its integrity (<strong>bounded context</strong>)</p>
 </li>
 <li>
-<p>Keep a <strong>context map</strong> to understand the relationships of all models in play.</p>
+<p>Keep a <strong>context map</strong> to understand the relationships of all models in play</p>
 </li>
 </ol>
 </section><section>
 <h2 id="ddd-conceptual-space">DDD &ldquo;Conceptual Space&rdquo;</h2>
-<img src="ddd_conceptual_space.png" style='width: 60vw; object-fit: contain; border:0px; box-shadow: none'>
+<img src="assets/ddd_conceptual_space.png" style='
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
 </section><section>
-<h2 id="software-complexity">Software Complexity</h2>
+<h2 id="the-ability-to-recognize">The ability to recognize</h2>
+<h1 id="software-complexity">Software Complexity</h1>
+<h2 id="is-a-crucial-design-skill">is a crucial design skill</h2>
+<p>It allows to:</p>
 <ul>
-<li>
-<p><strong>The ability to recognize complexity is a crucial design skill</strong></p>
-<ul>
-<li>It allows you to identify problems before you invest a lot of effort in them</li>
-<li>It allows you to make good choices among alternatives</li>
+<li>identify problems before you invest a lot of effort in them&hellip;</li>
+<li>make good choices among alternatives&hellip;</li>
 </ul>
-</li>
-<li>
-<p>Complexity (C) is anything related to the structure of a software system that makes it hard to understand and modify the system</p>
-</li>
+</section><section>
+<p><em>A possible definition for</em></p>
+<h1 id="software-complexity-1">Software Complexity</h1>
+<ul>
+<li>Complexity (C) is anything related to the structure of a software system that makes it hard to understand and modify the system</li>
 </ul>
 <p>$$C = \sum_{p}^{}c_pt_p$$</p>
 <ul>
@@ -193,7 +226,14 @@ models integrity.</li>
 </ol>
 </section><section>
 <h2 id="complex-problem-domains">Complex Problem Domains</h2>
-<img src="ddd_software_complexity.png" style='width: vw; object-fit: contain; border:0px; box-shadow: none'>
+<img src="assets/ddd_software_complexity.png" style='
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
 </section><section>
 <h2 id="strategic-design">Strategic Design</h2>
 <ul>
@@ -233,7 +273,17 @@ models integrity.</li>
 </section><section>
 <h2 id="software-complexity-challenges-23">Software Complexity Challenges (2/3)</h2>
 <h3 id="a-lack-of-organization">A Lack of Organization</h3>
-<img src="ddd_lack_of_organization.png" style='width: 40vw; object-fit: contain; border:0px; box-shadow: none'>
+<div class='left' style='float:left;width:45%'>
+<img src="assets/ddd_lack_of_organization.png" style='
+    width: 40vw;
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</div>
+<div class='right' style='float:right;width:55%'>
 <ul>
 <li>
 <p>The initial incarnation of a system is fast to produce and often a well‐rounded success&hellip;</p>
@@ -245,6 +295,7 @@ models integrity.</li>
 <p>The codebase lacks the required synergy with the business behavior</p>
 </li>
 </ul>
+</div>
 </section><section>
 <h2 id="software-complexity-challenges-33">Software Complexity Challenges (3/3)</h2>
 <h3 id="a-lack-of-focus-on-the-problem-domain">A Lack of Focus on the Problem Domain</h3>
@@ -263,16 +314,19 @@ models integrity.</li>
 </li>
 </ul>
 </section><section>
+<p><em>The DDD Golden Rule</em></p>
+<h1 id="focus-on-the-domain">Focus on the domain</h1>
+<h1 id="above-anything-else">above anything else</h1>
+<blockquote>
+<p><strong>Domain experts must work with the development team</strong><br>
+(to focus on the areas of the domain that are useful to be able)<br>
+<strong>to produce valuable software!</strong></p>
+</blockquote>
+</section><section>
 <h2 id="the-problem-domain">The Problem Domain</h2>
 <ul>
 <li>
 <p>A problem domain refers to <strong>the subject area for which you are building software</strong>.</p>
-</li>
-<li>
-<p>DDD stresses the need to <strong>focus on the domain above anything else</strong> when working on creating software for large‐scale and complex business systems.</p>
-</li>
-<li>
-<p><strong>Domain experts must work with the development team</strong> to focus on the areas of the domain that are useful to be able to produce valuable software.</p>
 </li>
 <li>
 <p>For example:</p>
@@ -303,7 +357,7 @@ models integrity.</li>
 <p>Not all of a large software product needs be perfectly designed.</p>
 </li>
 <li>
-<p>Development teams and domain experts use analysis patterns and knowledge crunching to distill large problem domains into more manageable subdomains.</p>
+<p>Development teams and domain experts use analysis patterns and <strong>knowledge crunching</strong> to distill large problem domains into more manageable subdomains.</p>
 <ul>
 <li>This distillation reveals the core sub-domain</li>
 </ul>
@@ -424,41 +478,83 @@ models being corrupt by isolating them from third-party code.</p>
 </ul>
 </section><section>
 <h2 id="the-problem-space">The Problem Space</h2>
-<img src="ddd_problem_space.png" style='width: vw; object-fit: contain; border:0px; box-shadow: none'>
+<img src="assets/ddd_problem_space.png" style='
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
 </section><section>
 <h2 id="the-solution-space">The Solution Space</h2>
-<img src="ddd_solution_space.png" style='width: vw; object-fit: contain; border:0px; box-shadow: none'>
+<img src="assets/ddd_solution_space.png" style='
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
 </section><section>
-<h2 id="popular-misconceptions-of-ddd">Popular Misconceptions of DDD</h2>
+<h2 id="popular-misconceptions-of-ddd-12">Popular Misconceptions of DDD (1/2)</h2>
 <ol>
 <li>
 <p><em>Tactical Patterns are key to DDD! No, they aren&rsquo;t!</em></p>
 <ul>
 <li>
-<p>DDD is less about software design patterns and more about problem solving through collaboration.</p>
+<p>DDD is less about software design patterns and more about problem-solving through collaboration</p>
 </li>
 <li>
-<p>DDD is not code centric: its purpose is not to make elegant code. <strong>Software is merely an artifact of DDD</strong>.</p>
+<p>DDD is not code-centric!</p>
+<ul>
+<li>its purpose is not to make elegant code</li>
+<li><strong>Software is merely an artifact of DDD</strong>.</li>
+</ul>
 </li>
 </ul>
 </li>
 <li>
 <p><em>DDD is a Framework! No, it isn&rsquo;t!</em></p>
 <ul>
-<li>DDD is architecturally agnostic in that there is no single architectural style you must follow to implement it.</li>
-<li>Architectural styles can vary because they should apply at the bounded context level and not the application level.</li>
+<li>
+<p>DDD is architecturally agnostic</p>
+<ul>
+<li>there is no single architectural style you must follow to implement it</li>
 </ul>
 </li>
 <li>
-<p><em>DDD is a Silver Bullet! No, it isn&rsquo;t!</em></p>
+<p>It is possible to use different architectural styles within the same system</p>
 <ul>
-<li>DDD can take a lot of effort: it requires an iterative development methodology, an engaged business, etc.</li>
-<li>Not all software systems fit with this approach (e.g. those with trivial domains with little or no domain logic).</li>
+<li>they should apply at the bounded context level and not the application level.</li>
+</ul>
+</li>
 </ul>
 </li>
 </ol>
 </section><section>
-<h2 id="why-domain-driven-solutions-often-fail-to-deliver">Why Domain-Driven Solutions often fail to deliver?</h2>
+<h2 id="popular-misconceptions-of-ddd-22">Popular Misconceptions of DDD (2/2)</h2>
+<ol start="3">
+<li><em>DDD is a Silver Bullet! No, it isn&rsquo;t!</em>
+<ul>
+<li>
+<p>DDD can take a lot of effort</p>
+<ul>
+<li>it requires an iterative development methodology, an engaged business, etc.</li>
+</ul>
+</li>
+<li>
+<p>Not all software systems fit with this approach</p>
+<ul>
+<li>e.g. those with trivial domains with little or no domain logic</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</section><section>
+<h2 id="why-domain-driven-solutions">Why Domain-Driven Solutions</h2>
+<h2 id="often-fail-to-deliver">often fail to deliver?</h2>
 <ul>
 <li>
 <p>The reason that solutions fail to deliver is not because of a lack of programming ability or technical expertise, but rather because of a lack of understanding, communication, and business knowledge.</p>
@@ -535,16 +631,25 @@ domain experts to collaborate on solutions effectively.</p>
 <h2 id="summing-up">Summing up</h2>
 <ul>
 <li>
-<p>DDD is as a development philosophy: it promotes a new domain‐centric way of thinking and design software systems.</p>
+<p><strong>DDD is as a design/development philosophy</strong></p>
+<ul>
+<li>it promotes a new domain‐centric way of thinking and design software systems</li>
+</ul>
 </li>
 <li>
-<p>It is the learning process, not the end goal, which is the greatest strength of DDD.</p>
+<p><strong>The greatest strength of DDD is the learning process</strong></p>
+<ul>
+<li>not the end goal&hellip;</li>
+</ul>
 </li>
 <li>
-<p>Any team can write a software product to meet the needs of a set of use cases, but teams that put time and effort into the problem domain they are working on can consistently evolve the product to meet new business use cases.</p>
+<p>Any team can write a software product to meet the needs of a set of use cases</p>
+<ul>
+<li>but teams that put time and effort into the problem domain they are working on can consistently evolve the product to meet new business use cases</li>
+</ul>
 </li>
 <li>
-<p>DDD is not a strict methodology in itself but must be used with some form of iterative software project methodology to build and evolve a useful model.</p>
+<p>DDD is not a strict methodology in itself but must be used with some form of iterative software project methodology to build and evolve a useful model</p>
 </li>
 </ul>
 </section>
