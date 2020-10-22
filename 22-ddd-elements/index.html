@@ -36,12 +36,27 @@
 </section><section>
 <h2 id="outline">Outline</h2>
 <ol>
-<li>The role of Knowledge Crunching</li>
-<li>Focusing on the Core Domain of a Software System</li>
-<li>Model-Driven Design</li>
-<li>Domain Model Implementation Patterns</li>
-<li>Bounded Contexts</li>
-<li>Software Architectures for the DDD</li>
+<li>
+<p>The role of Knowledge Crunching</p>
+</li>
+<li>
+<p>Focusing on the Core Domain of a Software System</p>
+</li>
+<li>
+<p>Model-Driven Design</p>
+</li>
+<li>
+<p>Domain Model Implementation Patterns</p>
+</li>
+<li>
+<p>Bounded Contexts</p>
+</li>
+<li>
+<p>Software Architectures for the DDD</p>
+</li>
+<li>
+<p>Bounded Context Integration</p>
+</li>
 </ol>
 </section><section>
 <h1 id="knowledge-crunching">Knowledge Crunching</h1>
@@ -68,7 +83,7 @@
 </ul>
 </section><section>
 <h2 id="knowledge-crunching-2">Knowledge Crunching</h2>
-<img src="knowledge_crunching.png" style='
+<img src="assets/knowledge_crunching.png" style='
     
     
     max-width: 95vw;
@@ -144,7 +159,7 @@ and capture inputs and outputs of the product</p>
 <li>
 <p>Many models must be rejected in order to ensure you have a useful model for the current use cases of a system.</p>
 <ul>
-<li><strong>Collaboration among development team, business stakeholders, and subject matter experts should not be constrained to the start of a project</strong>.</li>
+<li><strong>Collaboration among the development team, business stakeholders, and subject matter experts should not be constrained to the start of a project</strong>.</li>
 </ul>
 </li>
 <li>
@@ -159,7 +174,7 @@ and capture inputs and outputs of the product</p>
 </ul>
 </section><section>
 <h2 id="domain-experts-vs-stakeholders-12">Domain Experts vs. Stakeholders (1/2)</h2>
-<img src="domain_experts_stakeholders.png" style='
+<img src="assets/domain_experts_stakeholders.png" style='
     
     
     max-width: 95vw;
@@ -271,7 +286,7 @@ and capture inputs and outputs of the product</p>
 </ul>
 </section><section>
 <h2 id="use-case-diagram-an-example-12">Use Case Diagram: An Example (1/2)</h2>
-<img src="uml_use_cases_ex01.png" style='
+<img src="assets/uml_use_cases_ex01.png" style='
     
     
     max-width: 95vw;
@@ -320,7 +335,7 @@ cases.</p>
 </ul>
 </section><section>
 <h2 id="use-case-diagram-an-example-22">Use Case Diagram: An Example (2/2)</h2>
-<img src="uml_use_cases_ex02.png" style='
+<img src="assets/uml_use_cases_ex02.png" style='
     
     
     max-width: 95vw;
@@ -333,7 +348,7 @@ cases.</p>
 <ul>
 <li>A use case can participate in several relationships, in addition to the association with actors</li>
 </ul>
-<img src="uml_use_cases_relationships.png" style='
+<img src="assets/uml_use_cases_relationships.png" style='
     
     
     max-width: 95vw;
@@ -455,7 +470,7 @@ cases.</p>
 </ul>
 </section><section>
 <h2 id="impact-mapping-an-example">Impact Mapping: An Example</h2>
-<img src="impact_mapping.png" style='
+<img src="assets/impact_mapping.png" style='
     
     
     max-width: 95vw;
@@ -477,7 +492,7 @@ cases.</p>
 </li>
 </ul>
 </section><section>
-<img src="whirlpool.png" style='
+<img src="assets/whirlpool.png" style='
     width: 100vw;
     
     max-width: 95vw;
@@ -603,7 +618,7 @@ cases.</p>
 </ul>
 </div>
 <div class='right' style='float:right;width:50%'>
-<img src="online_auction_ex01.png" style='
+<img src="assets/online_auction_ex01.png" style='
     width: 40vw;
     
     max-width: 95vw;
@@ -636,7 +651,7 @@ activities</p>
 </ul>
 </div>
 <div class='right' style='float:right;width:50%'>
-<img src="online_auction_ex02.png" style='
+<img src="assets/online_auction_ex02.png" style='
     width: 40vw;
     
     max-width: 95vw;
@@ -666,7 +681,7 @@ activities</p>
 </ul>
 </div>
 <div class='right' style='float:right;width:50%'>
-<img src="online_auction_ex03.png" style='
+<img src="assets/online_auction_ex03.png" style='
     width: 40vw;
     
     max-width: 95vw;
@@ -678,7 +693,7 @@ activities</p>
 </section><section>
 <h2 id="an-example-auction-web-site-44">An Example: Auction Web Site (4/4)</h2>
 <div class='left' style='float:left;width:50%'>
-<img src="online_auction_ex04.png" style='
+<img src="assets/online_auction_ex04.png" style='
     width: 45vw;
     
     max-width: 95vw;
@@ -700,7 +715,7 @@ package while the core and supporting domains will be designed using a custom we
 </div>
 </section><section>
 <h2 id="anticorruption-layer">Anticorruption Layer</h2>
-<img src="anticorruption_layer.png" style='
+<img src="assets/anticorruption_layer.png" style='
     width: 60vw;
     
     max-width: 95vw;
@@ -766,6 +781,14 @@ package while the core and supporting domains will be designed using a custom we
 </ul>
 </section><section>
 <h2 id="the-domain-model">The Domain Model</h2>
+<img src="assets/domain_model_role.png" style='
+    width: 60vw;
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
 <ul>
 <li>The Domain Model is at the center of Domain‐Driven Design
 <ul>
@@ -774,17 +797,9 @@ package while the core and supporting domains will be designed using a custom we
 </ul>
 </li>
 </ul>
-<img src="domain_model_role.png" style='
-    width: 80vw;
-    
-    max-width: 95vw;
-    max-height: 80vh;
-    object-fit: contain;
-'>
-
 </section><section>
 <h2 id="domain-model-evolution-without-ddd">Domain Model Evolution (without DDD)</h2>
-<img src="domain_model_evolution_wrong.png" style='
+<img src="assets/domain_model_evolution_wrong.png" style='
     width: 80vw;
     
     max-width: 95vw;
@@ -794,7 +809,7 @@ package while the core and supporting domains will be designed using a custom we
 
 </section><section>
 <h2 id="domain-model-evolution-following-ddd">Domain Model Evolution (following DDD)</h2>
-<img src="domain_model_evolution_good.png" style='
+<img src="assets/domain_model_evolution_good.png" style='
     width: 75vw;
     
     max-width: 95vw;
@@ -1344,6 +1359,20 @@ area of the system (and even become coupled to them)</p>
 </li>
 </ul>
 </section><section>
+<div class='left' style='float:left;width:40%'>
+<h1 id="clean-architecture-1">Clean Architecture</h1>
+<ol>
+<li>Independent of Frameworks</li>
+<li>Testable</li>
+<li>Independent of the UI</li>
+<li>Independent of the data persistence layer</li>
+<li>Independent of any external agency</li>
+</ol>
+<blockquote>
+<p><em>No &ldquo;name&rdquo; in an outer circle can be mentioned by an inner circle</em></p>
+</blockquote>
+</div>
+<div class='right' style='float:right;width:60%'>
 <img src="assets/CleanArchitecture.jpg" style='
     
     
@@ -1353,34 +1382,100 @@ area of the system (and even become coupled to them)</p>
 '>
 
 <p>(from <em>Clean Architecture</em> by Robert C. Martin)</p>
+</div>
 </section><section>
-<h2 id="clean-architecture-features">Clean Architecture Features</h2>
-<ol>
-<li>
-<p>Independent of Frameworks</p>
-</li>
-<li>
-<p>Testable</p>
-</li>
-<li>
-<p>Independent of the UI</p>
-</li>
-<li>
-<p>Independent of the data persistence layer</p>
-</li>
-<li>
-<p>Independent of any external agency</p>
-</li>
-</ol>
-</section><section>
-<h2 id="microservices-architecture">Microservices Architecture</h2>
+<div class='left' style='float:left;width:50%'>
+<h1 id="microservices-architecture">Microservices Architecture</h1>
 <ul>
-<li>Nowadays, an extremely popular architecture style
+<li>
+<p>Nowadays, an extremely popular architecture style</p>
 <ul>
-<li>heavily inspired by DDD Bounded Context concept</li>
+<li>&hellip; heavily inspired by DDD Bounded Context concept!</li>
+</ul>
+</li>
+<li>
+<p>The goal is to have a high level of decoupling</p>
+<ul>
+<li>Microservices favour duplication over reuse</li>
 </ul>
 </li>
 </ul>
+</div>
+<div class='right' style='float:right;width:50%'>
+<img src="assets/microservices_topology.png" style='
+    width: 40vw;
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+<p>(from <em>Fundamentals of Software Architecture</em><br>
+by R. Richards and N. Ford)</p>
+</div>
+</section><section>
+<h2 id="microservices-and-bounded-contexts">Microservices and Bounded Contexts</h2>
+<ul>
+<li>
+<p>Each (micro)service models a domain/workflow</p>
+<ul>
+<li>Each service represents a bounded context&hellip;</li>
+<li>&hellip; or more than one!</li>
+</ul>
+</li>
+<li>
+<p>Service Boundaries delineated according:</p>
+<ul>
+<li><em>Purpose</em> - each microservice should be extremely functionally cohesive</li>
+<li><em>Transactions</em> - each microservice must reduce issues related to transaction collaboration among domain entities</li>
+<li><em>Choreography</em> - excellent domain isolation might generate a overhead in communications</li>
+</ul>
+</li>
+<li>
+<p>Data Isolation</p>
+<ul>
+<li>Avoid all kind of coupling, especially shared data schemas and databases (used as integration point)</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="sidecar-pattern-with-service-plane">Sidecar Pattern with Service Plane</h2>
+<img src="assets/sidecar_pattern.png" style='
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</section><section>
+<div class='left' style='float:left;width:50%'>
+<p><em>For a good architecture&hellip;</em></p>
+<h1 id="be-pragmatic-yet-visionary">Be Pragmatic, Yet Visionary</h1>
+<ul>
+<li>
+<p><em>Pragmatic</em> - Dealing with things sensibly and realistically in a way that is based on a practical rather than a theoretical considerations</p>
+</li>
+<li>
+<p><em>Visionary</em> - Thinking about or planning the future with imagination or wisdom</p>
+</li>
+</ul>
+</div>
+<div class='right' style='float:right;width:50%'>
+<img src="assets/pragmatic_visionary.png" style='
+    width: 30vw;
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+<p>(from <em>Fundamentals of Software Architecture</em><br>
+by R. Richards and N. Ford)</p>
+</div>
+</section><section>
+<h1 id="bounded-context-integration">Bounded Context Integration</h1>
+</section><section>
 </section>
 
   
