@@ -964,7 +964,7 @@ DDD does not enforce the use of a particular architectural style
 
 ---
 
-<div class='left' style='float:left;width:40%'>
+<div class='left' style='float:left;width:45%'>
 
 # Clean Architecture
 
@@ -978,9 +978,9 @@ DDD does not enforce the use of a particular architectural style
 
 </div>
 
-<div class='right' style='float:right;width:60%'>
+<div class='right' style='float:right;width:55%'>
 
-{{< image src="assets/CleanArchitecture.jpg" >}}
+{{< image src="assets/CleanArchitecture.jpg" width="40">}}
 
 (from *Clean Architecture* by Robert C. Martin)
 
