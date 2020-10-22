@@ -244,7 +244,7 @@ It performs instead a <em>shallow clone</em>, by running <code>git clone --depth
 </span></code></pre></div><p>The same key allows for controlling further behaviour, such as disabling <code>autocrlf</code>:</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">git</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">depth</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">false</span><span style="color:#bbb"> </span><span style="color:#888"># Accepts false or any number representing the commit count, defaults to 50</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">autocrlf</span>:<span style="color:#bbb"> </span>input<span style="color:#bbb"> </span><span style="color:#888"># Prevents git to try to be smart with line endings</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">autocrlf</span>:<span style="color:#bbb"> </span>input<span style="color:#bbb"> </span><span style="color:#888"># Prevents git from trying to be smart with line endings</span><span style="color:#bbb">
 </span></code></pre></div></section><section>
 <h2 id="travis-ci-testing-on-different-oss">Travis CI: Testing on different OSs</h2>
 <p>If our software supports <em>multiple operating systems</em>, it is a good practice to verify that changes do not <em>break compatibility</em></p>
