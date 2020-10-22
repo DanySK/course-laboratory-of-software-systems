@@ -126,7 +126,7 @@ We will use Travis CI
 **stage**
 * A *group of jobs* that run in parallel
 * A build finishes when all of its jobs are finished.
-* A stage is successful if all of its stages are successful
+* A stage is successful if all of its jobs are successful
 * The next stages starts only if the previous was successful
 
 **build**
