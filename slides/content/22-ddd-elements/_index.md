@@ -263,15 +263,19 @@ cases.
 
 * Partitions can be used to organize activities in a model according to responsibility
 
-* An activity diagram
+* The leaves of an activity diagram are actions
 
 --- 
 
 ## Activity Diagram: An Example (1/2)
 
-{{< image src="xxx.png" >}}
+{{< image src="assets/activity_diagram_example01.png" >}}
 
-# TBC
+---
+
+## Activity Diagram: An Example (2/2)
+
+{{< image src="assets/activity_diagram_example02.png" >}}
 
 ---
 
