@@ -220,7 +220,7 @@ The same key allows for controlling further behaviour, such as disabling `autocr
 ```yaml
 git:
   depth: false # Accepts false or any number representing the commit count, defaults to 50
-  autocrlf: input # Prevents git to try to be smart with line endings
+  autocrlf: input # Prevents git from trying to be smart with line endings
 ```
 
 ---
