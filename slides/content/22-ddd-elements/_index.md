@@ -36,11 +36,18 @@ enableSourceMap = true
 ## Outline
 
 1. The role of Knowledge Crunching
+
 1. Focusing on the Core Domain of a Software System
+
 1. Model-Driven Design
+
 1. Domain Model Implementation Patterns
+
 1. Bounded Contexts
+
 1. Software Architectures for the DDD
+
+1. Bounded Context Integration
 
 ---
 
@@ -66,7 +73,7 @@ enableSourceMap = true
 
 ## Knowledge Crunching
 
-{{< image src="knowledge_crunching.png" >}}
+{{< image src="assets/knowledge_crunching.png" >}}
 
 <!--The process of knowledge crunching, as shown in Figure 2-1, starts with the behaviors of a system. The team go through the scenarios of the application with the business stakeholders and experts. This process is the catalyst to conversation, deep insight, and a shared understanding of the domain for all participants. It is therefore vital that stakeholders and subject matter experts are actively involved and engaged.-->
 
@@ -118,7 +125,7 @@ and capture inputs and outputs of the product
 * Model‐driven design and the evolution of a domain model is an ongoing process.
 
 * Many models must be rejected in order to ensure you have a useful model for the current use cases of a system. 
-    * **Collaboration among development team, business stakeholders, and subject matter experts should not be constrained to the start of a project**.
+    * **Collaboration among the development team, business stakeholders, and subject matter experts should not be constrained to the start of a project**.
 
 * Knowledge crunching should be an ongoing concern with the business engaged throughout the _lifetime_ of the application build.
     * Note: when the system is in use the model may also need to evolve due to technical reasons such as performance or a better understanding of the systems usage.
@@ -129,7 +136,7 @@ and capture inputs and outputs of the product
 
 ## Domain Experts vs. Stakeholders (1/2)
 
-{{< image src="domain_experts_stakeholders.png" >}}
+{{< image src="assets/domain_experts_stakeholders.png" >}}
 
 ---
 
@@ -198,7 +205,7 @@ and capture inputs and outputs of the product
 
 ## Use Case Diagram: An Example (1/2)
 
-{{< image src="uml_use_cases_ex01.png" >}}
+{{< image src="assets/uml_use_cases_ex01.png" >}}
 
 ---
 
@@ -232,7 +239,7 @@ cases.
 
 ## Use Case Diagram: An Example (2/2)
 
-{{< image src="uml_use_cases_ex02.png" >}}
+{{< image src="assets/uml_use_cases_ex02.png" >}}
 
 ---
 
@@ -240,7 +247,7 @@ cases.
 
 * A use case can participate in several relationships, in addition to the association with actors
 
-{{< image src="uml_use_cases_relationships.png" >}}
+{{< image src="assets/uml_use_cases_relationships.png" >}}
 
 ---
 
@@ -320,7 +327,7 @@ cases.
 
 ## Impact Mapping: An Example
 
-{{< image src="impact_mapping.png" >}}
+{{< image src="assets/impact_mapping.png" >}}
 
 ---
 
@@ -333,7 +340,7 @@ cases.
 
 --- 
 
-{{< image src="whirlpool.png" width="100">}}
+{{< image src="assets/whirlpool.png" width="100">}}
 
 ---
 
@@ -419,7 +426,7 @@ cases.
 
 <div class='right' style='float:right;width:50%'>
 
-{{< image src="online_auction_ex01.png" width="40">}}
+{{< image src="assets/online_auction_ex01.png" width="40">}}
 
 </div>
 
@@ -445,7 +452,7 @@ activities
 
 <div class='right' style='float:right;width:50%'>
 
-{{< image src="online_auction_ex02.png" width="40">}}
+{{< image src="assets/online_auction_ex02.png" width="40">}}
 
 </div>
 
@@ -468,7 +475,7 @@ activities
 
 <div class='right' style='float:right;width:50%'>
 
-{{< image src="online_auction_ex03.png" width="40">}}
+{{< image src="assets/online_auction_ex03.png" width="40">}}
 
 </div>
 
@@ -478,7 +485,7 @@ activities
 
 <div class='left' style='float:left;width:50%'>
 
-{{< image src="online_auction_ex04.png" width="45" >}}
+{{< image src="assets/online_auction_ex04.png" width="45" >}}
 
 </div>
 
@@ -495,7 +502,7 @@ package while the core and supporting domains will be designed using a custom we
 
 ## Anticorruption Layer
 
-{{< image src="anticorruption_layer.png" width="60" >}}
+{{< image src="assets/anticorruption_layer.png" width="60" >}}
 
 * Wraps the communication with legacy or third‐party code to protect the integrity of a bounded context
 * Manages the transformation of one context’s view to another, retaining the integrity of new code
@@ -543,23 +550,23 @@ package while the core and supporting domains will be designed using a custom we
 
 ## The Domain Model
 
+{{< image src="assets/domain_model_role.png" width="60">}}
+
 * The Domain Model is at the center of Domain‐Driven Design
     * When it is expressed as a code implementation, it is bound to the analysis model through the use of the shared language
     * The model contains only what is relevant to solve problems in the context of the system
-
-{{< image src="domain_model_role.png" width="80">}}
 
 ---
 
 ## Domain Model Evolution (without DDD)
 
-{{< image src="domain_model_evolution_wrong.png" width="80">}}
+{{< image src="assets/domain_model_evolution_wrong.png" width="80">}}
 
 ---
 
 ## Domain Model Evolution (following DDD)
 
-{{< image src="domain_model_evolution_good.png" width="75">}}
+{{< image src="assets/domain_model_evolution_good.png" width="75">}}
 
 ---
 
@@ -953,28 +960,98 @@ DDD does not enforce the use of a particular architectural style
 
 ---
 
+<div class='left' style='float:left;width:40%'>
+
+# Clean Architecture
+
+1. Independent of Frameworks
+1. Testable
+1. Independent of the UI
+1. Independent of the data persistence layer
+1. Independent of any external agency
+
+> *No "name" in an outer circle can be mentioned by an inner circle*
+
+</div>
+
+<div class='right' style='float:right;width:60%'>
+
 {{< image src="assets/CleanArchitecture.jpg" >}}
 
 (from *Clean Architecture* by Robert C. Martin)
 
----
-
-## Clean Architecture Features
-
-1. Independent of Frameworks
-
-1. Testable
-
-1. Independent of the UI
-
-1. Independent of the data persistence layer
-
-1. Independent of any external agency
+</div>
 
 ---
 
-## Microservices Architecture
+<div class='left' style='float:left;width:50%'>
+
+# Microservices Architecture
 
 * Nowadays, an extremely popular architecture style
-    * heavily inspired by DDD Bounded Context concept
+    * ... heavily inspired by DDD Bounded Context concept!
+
+* The goal is to have a high level of decoupling
+    * Microservices favour duplication over reuse
+
+</div>
+
+<div class='right' style='float:right;width:50%'>
+
+{{< image src="assets/microservices_topology.png"  width="40">}}
+
+(from *Fundamentals of Software Architecture*  
+by R. Richards and N. Ford)
+
+</div>
+
+---
+
+## Microservices and Bounded Contexts
+
+* Each (micro)service models a domain/workflow
+    * Each service represents a bounded context...
+    * ... or more than one!
+
+* Service Boundaries delineated according:
+    * *Purpose* - each microservice should be extremely functionally cohesive
+    * *Transactions* - each microservice must reduce issues related to transaction collaboration among domain entities
+    * *Choreography* - excellent domain isolation might generate a overhead in communications
+
+* Data Isolation
+    * Avoid all kind of coupling, especially shared data schemas and databases (used as integration point)
+
+---
+
+## Sidecar Pattern with Service Plane
+
+{{< image src="assets/sidecar_pattern.png" >}}
+
+---
+
+<div class='left' style='float:left;width:50%'>
+
+*For a good architecture...*
+# Be Pragmatic, Yet Visionary
+
+* *Pragmatic* - Dealing with things sensibly and realistically in a way that is based on a practical rather than a theoretical considerations
+
+* *Visionary* - Thinking about or planning the future with imagination or wisdom
+
+</div>
+
+<div class='right' style='float:right;width:50%'>
+
+{{< image src="assets/pragmatic_visionary.png" width="30">}}
+
+(from *Fundamentals of Software Architecture*  
+by R. Richards and N. Ford)
+
+</div>
+
+---
+
+# Bounded Context Integration
+
+---
 
