@@ -57,6 +57,14 @@ and value this as much as you value your technical expertise
 
 ---
 
+*The whole DDD idea in 6 words*
+# Merge the People,
+# Split the Software!
+
+(by Alberto Brandolini - [eventstorming.com](https://www.eventstorming.com/))
+
+---
+
 # Common Problems
 ## When Starting with Domain-Driven Design
 
