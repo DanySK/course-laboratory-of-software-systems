@@ -296,7 +296,7 @@ cases.
 
 ## CRC Cards: An Example
 
-{{< image src="crc_ex.png" width="100">}}
+{{< image src="assets/crc_ex.png" >}}
 
 ---
 
@@ -617,7 +617,7 @@ package while the core and supporting domains will be designed using a custom we
 > Otherwise, we will send her a free order and update the database to show that this customer has already claimed for a lost item. We will then contact the courier to see if we can claim back the cost of the lost order.
 
 * *Is this sentence relevant for the domain model?*
-* *Does it gives any value or insight?*
+* *Does it give any value or insight?*
 
 ---
 
@@ -964,7 +964,7 @@ DDD does not enforce the use of a particular architectural style
 
 ---
 
-<div class='left' style='float:left;width:45%'>
+<div class='left' style='float:left;width:50%'>
 
 # Clean Architecture
 
@@ -978,7 +978,7 @@ DDD does not enforce the use of a particular architectural style
 
 </div>
 
-<div class='right' style='float:right;width:55%'>
+<div class='right' style='float:right;width:50%'>
 
 {{< image src="assets/CleanArchitecture.jpg" width="40">}}
 
@@ -1058,4 +1058,11 @@ by R. Richards and N. Ford)
 # Bounded Context Integration
 
 ---
+
+# The Issue
+
+* Software services need to have relationships with each other to provide advanced behaviors
+
+* 
+
 
