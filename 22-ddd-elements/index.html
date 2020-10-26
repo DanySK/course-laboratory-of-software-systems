@@ -65,7 +65,7 @@
 <!--Complex problem domains will contain a wealth of information, some of which will not be applicable to solving the problem at hand and will only act to distract from the real focus of your modelling efforts.-->
 <ul>
 <li>
-<p>Knowledge crunching is the art of <strong>distilling relevant information from the problem domain to build a useful model that can fulfill the needs of business use cases</strong>.</p>
+<p>Knowledge crunching is the art of <strong>distilling relevant information from the problem domain to build a useful model that can fulfill the needs of business use cases</strong></p>
 <ul>
 <li>The key to bridging any knowledge gaps for the technical team when designing a solution for a problem domain.</li>
 </ul>
@@ -73,12 +73,13 @@
 <li>
 <p>In order for a team to produce a  useful model they need to have a deep insight of the problem domain to ensure important concepts are not overlooked or misunderstood.</p>
 <ul>
-<li>This can only be done through working in collaboration with domain experts (brainstorming together).</li>
-</ul>
-  <!--* Without this there is a danger that a technical solution will be produced that is void of any real domain insight and something that cannot be understood by the business or by other developers during software maintenance or subsequent enhancements.-->
+<li>
+<p>This can only be done through working in collaboration with domain experts (brainstorming together)</p>
 </li>
 <li>
-<p>The main goal: <strong>discover and agree on a shared understanding of the problem domain to produce a model that can fulfill business use cases</strong>.</p>
+<p>Without effective knowledge crunching, a technical solution will be produced without any real domain insight and correlation with it</p>
+</li>
+</ul>
 </li>
 </ul>
 </section><section>
@@ -93,23 +94,91 @@
 
 <!--The process of knowledge crunching, as shown in Figure 2-1, starts with the behaviors of a system. The team go through the scenarios of the application with the business stakeholders and experts. This process is the catalyst to conversation, deep insight, and a shared understanding of the domain for all participants. It is therefore vital that stakeholders and subject matter experts are actively involved and engaged.-->
 </section><section>
-<h2 id="shared-understanding-through-a-shared-language">Shared Understanding through a Shared Language</h2>
+<p><em>The main goal</em></p>
+<h2 id="discover-and-agree-on-a">discover and agree on a</h2>
+<h1 id="shared-understanding-of-the-problem-domain">shared understanding of the problem domain</h1>
+<h2 id="to-produce-a-model-that-can-fulfill-business-use-cases">to produce a model that can fulfill business use cases</h2>
+</section><section>
+<h2 id="ubiquitous-language">Ubiquitous Language</h2>
 <ul>
-<li>An output of knowledge crunching and an artifact of the shared understanding is a common <strong>Ubiquitous Language</strong> (UL).
+<li>An output of knowledge crunching and an artifact of the shared understanding is a common <strong>Ubiquitous Language</strong> (UL)
 <ul>
-<li>This language must be made explicit and be used when describing the domain model and problem domain.</li>
-<li>The language should also be used in the code implementation of the model (with the same terms and concepts used as class names, properties, and method names).</li>
-<li>It is the language that enables both the business and development teams to have meaningful communication about the software.</li>
+<li>This language must be made explicit and be used when describing the domain model and problem domain</li>
+<li>The language <em>should also be used in the code implementation of the model</em> (with the same terms and concepts used as class names, properties, and method names)</li>
+<li>It is the language that enables both the business and development teams to have meaningful communication about the software</li>
 </ul>
 </li>
 </ul>
 <!--* UL is used to bind the code representation of the model to the conceptual model communicated in language and diagrams.-->
 <ul>
 <li>
-<p>The UL will contain terminology from the business as well as new concepts and terms discovered when modeling the use case of the problem domain.</p>
+<p>The UL will contain terminology from the business as well as new concepts and terms discovered when modeling the use case of the problem domain</p>
 </li>
 <li>
-<p>The shared understanding obtained with a well defined UL prevents the need to constantly translate from a technical model to a business model.</p>
+<p>The shared understanding obtained with a well defined UL prevents the need to constantly translate from a technical model to a business model</p>
+</li>
+</ul>
+</section><section>
+<h2 id="ubiquitous-language-and-code-evolution">Ubiquitous Language and Code Evolution</h2>
+<img src="assets/domain_language_evolution.jpg" style='
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</section><section>
+<h2 id="ubiquitous-language-neq-shared-vocabulary">Ubiquitous Language $\neq$ Shared Vocabulary</h2>
+<blockquote>
+<p><em>The Ubiquitous Language must include not only the words we use but also how we use them</em></p>
+</blockquote>
+<ul>
+<li>From the Theory of Language
+<ul>
+<li><em>Denotation</em> is the explicit literal meaning as defined by a dictionary</li>
+<li><em>Connotation</em> is the cultural and emotional meaning that a word might have</li>
+<li><em>Association</em> is an indirect meaning of a word</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="example-the-invoice-concept-12">Example: the &ldquo;invoice&rdquo; concept (1/2)</h2>
+<blockquote>
+<p>The Business Use Case:</p>
+<p><em>The system must create an invoice for each customer purchase request!</em></p>
+</blockquote>
+<blockquote>
+<p>From the dictionary:</p>
+<p><em>The term &ldquo;invoice&rdquo; as a noun means a demand for payment for a service/good delivered, and as a verb it means delivering if the demand to a costumer</em></p>
+</blockquote>
+</section><section>
+<h2 id="example-the-invoice-concept-22">Example: the &ldquo;invoice&rdquo; concept (2/2)</h2>
+<ul>
+<li>
+<p>About the meaning:</p>
+<ul>
+<li>The demand for payment?</li>
+<li>The paper or the email representing the demand?</li>
+</ul>
+</li>
+<li>
+<p>And more:</p>
+<ul>
+<li>We need to print up the paper invoice?</li>
+<li>Or we have to calculate how much he owes so that we can require the payment?</li>
+</ul>
+</li>
+<li>
+<p>Finally, if we think to the software design, &ldquo;invoice&rdquo; might represent:</p>
+<ul>
+<li>a database record with the sum owed</li>
+<li>a PDF document to be sent, stored somewhere</li>
+<li>the mail we have to send or we have sent</li>
+</ul>
+</li>
+<li>
+<p>We have also to distinguish among the states of an invoice (not sent, sent but not settled, settled)&hellip;</p>
 </li>
 </ul>
 </section><section>
