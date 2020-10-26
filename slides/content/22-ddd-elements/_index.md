@@ -59,15 +59,14 @@ enableSourceMap = true
 
 <!--Complex problem domains will contain a wealth of information, some of which will not be applicable to solving the problem at hand and will only act to distract from the real focus of your modelling efforts.-->
 
-* Knowledge crunching is the art of **distilling relevant information from the problem domain to build a useful model that can fulfill the needs of business use cases**.
+* Knowledge crunching is the art of **distilling relevant information from the problem domain to build a useful model that can fulfill the needs of business use cases**
 
     * The key to bridging any knowledge gaps for the technical team when designing a solution for a problem domain.
 
 * In order for a team to produce a  useful model they need to have a deep insight of the problem domain to ensure important concepts are not overlooked or misunderstood.
-    * This can only be done through working in collaboration with domain experts (brainstorming together). 
-    <!--* Without this there is a danger that a technical solution will be produced that is void of any real domain insight and something that cannot be understood by the business or by other developers during software maintenance or subsequent enhancements.-->
-
-* The main goal: **discover and agree on a shared understanding of the problem domain to produce a model that can fulfill business use cases**.
+    * This can only be done through working in collaboration with domain experts (brainstorming together)
+    
+    * Without effective knowledge crunching, a technical solution will be produced without any real domain insight and correlation with it
 
 ---
 
@@ -79,18 +78,74 @@ enableSourceMap = true
 
 ---
 
-## Shared Understanding through a Shared Language
+*The main goal*
+## discover and agree on a
+# shared understanding of the problem domain
+## to produce a model that can fulfill business use cases
 
-* An output of knowledge crunching and an artifact of the shared understanding is a common **Ubiquitous Language** (UL).
-    * This language must be made explicit and be used when describing the domain model and problem domain.
-    * The language should also be used in the code implementation of the model (with the same terms and concepts used as class names, properties, and method names). 
-    * It is the language that enables both the business and development teams to have meaningful communication about the software.
+---
+
+## Ubiquitous Language 
+
+* An output of knowledge crunching and an artifact of the shared understanding is a common **Ubiquitous Language** (UL)
+    * This language must be made explicit and be used when describing the domain model and problem domain
+    * The language *should also be used in the code implementation of the model* (with the same terms and concepts used as class names, properties, and method names)
+    * It is the language that enables both the business and development teams to have meaningful communication about the software
 
 <!--* UL is used to bind the code representation of the model to the conceptual model communicated in language and diagrams.-->
 
-* The UL will contain terminology from the business as well as new concepts and terms discovered when modeling the use case of the problem domain.
+* The UL will contain terminology from the business as well as new concepts and terms discovered when modeling the use case of the problem domain
 
-* The shared understanding obtained with a well defined UL prevents the need to constantly translate from a technical model to a business model.
+* The shared understanding obtained with a well defined UL prevents the need to constantly translate from a technical model to a business model
+
+---
+
+## Ubiquitous Language and Code Evolution 
+
+{{< image src="assets/domain_language_evolution.jpg" >}}
+
+---
+
+## Ubiquitous Language $\neq$ Shared Vocabulary
+
+> *The Ubiquitous Language must include not only the words we use but also how we use them*
+
+* From the Theory of Language
+    * *Denotation* is the explicit literal meaning as defined by a dictionary
+    * *Connotation* is the cultural and emotional meaning that a word might have
+    * *Association* is an indirect meaning of a word
+
+---
+
+## Example: the "invoice" concept (1/2)
+
+
+> The Business Use Case:
+> 
+> *The system must create an invoice for each customer purchase request!*
+
+> From the dictionary:
+>
+> *The term "invoice" as a noun means a demand for payment for a service/good delivered, and as a verb it means delivering if the demand to a costumer*
+
+---
+
+## Example: the "invoice" concept (2/2)
+
+* About the meaning:
+    * The demand for payment?
+    * The paper or the email representing the demand?
+
+* And more:
+    * We need to print up the paper invoice?
+    * Or we have to calculate how much he owes so that we can require the payment?
+
+* Finally, if we think to the software design, "invoice" might represent:
+    * a database record with the sum owed
+    * a PDF document to be sent, stored somewhere
+    * the mail we have to send or we have sent
+
+* We have also to distinguish among the states of an invoice (not sent, sent but not settled, settled)...
 
 ---
 
