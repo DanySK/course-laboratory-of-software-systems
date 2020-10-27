@@ -51,9 +51,9 @@ a framework or a set of predefined templates that you can apply to a project
 ### should embrace the problem domain they are working within  
 ### and look outside of their technical tunnel vision!
 
-The most fundamental point to being a grat software specialist  
+*The most fundamental point to being a great software specialist  
 is to understand the problem domain you work within  
-and value this as much as you value your technical expertise
+and value this as much as you value your technical expertise*
 
 ---
 
@@ -115,7 +115,7 @@ and value this as much as you value your technical expertise
 <div class='right' style='float:right;width:40%'>
 
 # #3
-## Missing the Real value of DDD: Collaboration, Communication and Context
+## Missing the Real value of DDD: Collaboration, Communication, and Context
 
 * Underestimating the importance of Context
 
@@ -155,8 +155,7 @@ and value this as much as you value your technical expertise
 
 * Making Simple Problems Complex
 
-* Applying DDD Principles to a trivial domain with little
-business expectation
+* Applying DDD Principles to a trivial domain with little business expectation
 
 * Using the Domain Model Pattern for every Bounded Context
 
@@ -216,7 +215,7 @@ business expectation
 * A methodology focused on capturing the behavior of a system and then driving design from the outside in
     * based on the Test-Driven Development (TDD)
 
-* BDD uses concrete domain scenarios during conversations with domain experts and stakeholders to describe the behaviour of a system
+* BDD uses concrete domain scenarios during conversations with domain experts and stakeholders to describe the behavior of a system
     * follows the GWT approach (Given, When, Then) to structure conversations
 
 ---
@@ -247,7 +246,7 @@ business expectation
 <div class='right' style='float:right;width:50%'>
 
 ### BDD Scenario #2
-*Scenario*: Customer does not satisfy the spend threshold for free delivery but triggers message to up sale
+*Scenario*: Customer does not satisfy the spend threshold for free delivery but triggers the message to up sale
 
 *Given*: Threshold for free delivery is set at €60  
 *And*: I am a customer who has a basket totaling €50  
@@ -268,14 +267,23 @@ business expectation
 # DDD "Step-by-Step"
 
 1. Engaging with an Expert
+
 1. Select a Behavior and Model Around a Concrete Scenario
+
 1. Collaborate with the Domain Expert on the Most Interesting Parts
+
 1. **Evolve UL to Remove Ambiguity**
+
 1. Throw Away Your First Model, and Your Second
+
 1. Implement the Model in Code
+
 1. Keep the Solution Simple and Your Code Boring
+
 1. Integrate the Model Early and Often
+
 1. **Nontechnical Refactoring**
+
 1. Decompose Your Solution Space
 
 ---
@@ -360,6 +368,7 @@ public class OverSeasSellingPolicy {
 
 # *"Domain-Driven Design belongs on the shelf of every **thoughtful** software developer"*
 ### by Kent Beck
+
 (one of the 17 original signatories of the Agile Manifesto)
 
 --- 
@@ -367,7 +376,7 @@ public class OverSeasSellingPolicy {
 A key problem within many Agile projects is that
 ## the deep thinking about design can be ignored to produce more features
 
-* Software designers coerced into adding features or functionalities due to time and budged pressures
+* Software designers coerced into adding features or functionalities due to time and budget pressures
     * (sometimes) the important aspect of the overall system design is left behind within security and interoperability aspects
 
 * Often, in the Agile Development Process, the code and related databases become the focus of attention
@@ -375,14 +384,20 @@ A key problem within many Agile projects is that
 
 ---
 
-## Common design issues in Agile
+# Common design issues in Agile
 
 * Processing logic is implemented in the UI
+
 * Data Persistence is mixed in with Processing logic
+
 * Databases are overloaded with slow, locking queries
+
 * Stateful architectures are preferred in place of stateless ones
+
 * (Micro)Services are coupled together
+
 * Code is produced but not tested properly and is fragile
+
 * ...
 
 ---
@@ -391,10 +406,10 @@ A key problem within many Agile projects is that
 
 * DDD encourages an iterative process of collaboration to explore a model and develop a shared language between development teams and domain experts
 
-* Business Logic or "Domain Logic" is embedded into the process at its inception, where processes, workflows, functionality and entity relationships are determined
+* Business Logic or "Domain Logic" is embedded into the process at its inception, where processes, workflows, functionality, and entity relationships are determined
 
 * DDD approach is not top-down, abstract, nor does it ignore iterative rapid prototypes
-    * It force the separation of logical layers and ensures that the Business Logic, not the UI, is the key aspect of development
+    * It forces the separation of logical layers and ensures that the Business Logic, not the UI, is the key aspect of development
 
 ---
 

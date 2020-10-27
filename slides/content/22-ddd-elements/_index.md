@@ -57,7 +57,7 @@ enableSourceMap = true
 
 ## Knowledge Crunching
 
-<!--Complex problem domains will contain a wealth of information, some of which will not be applicable to solving the problem at hand and will only act to distract from the real focus of your modelling efforts.-->
+<!--Complex problem domains will contain a wealth of information, some of which will not be applicable to solving the problem at hand and will only act to distract from the real focus of your modeling efforts.-->
 
 * Knowledge crunching is the art of **distilling relevant information from the problem domain to build a useful model that can fulfill the needs of business use cases**
 
@@ -74,7 +74,7 @@ enableSourceMap = true
 
 {{< image src="assets/knowledge_crunching.png" >}}
 
-<!--The process of knowledge crunching, as shown in Figure 2-1, starts with the behaviors of a system. The team go through the scenarios of the application with the business stakeholders and experts. This process is the catalyst to conversation, deep insight, and a shared understanding of the domain for all participants. It is therefore vital that stakeholders and subject matter experts are actively involved and engaged.-->
+<!--The process of knowledge crunching, as shown in Figure 2-1, starts with the behaviors of a system. The team go through the scenarios of the application with the business stakeholders and experts. This process is the catalyst to the conversation, deep insight, and a shared understanding of the domain for all participants. It is therefore vital that stakeholders and subject matter experts are actively involved and engaged.-->
 
 ---
 
@@ -169,7 +169,7 @@ and capture inputs and outputs of the product
 * Business analysts as facilitators to help communication
     * e.g. if you have odd whiz‐kid developers and are nervous about putting them in front of domain experts...
 
-* What you don’t want to do is remove the direct communication between the development team and the people who understand business requirments and processes
+* What you don’t want to do is remove the direct communication between the development team and the people who understand business requirements and processes
 
 > *Who can act as a Business Analyst?*
 
@@ -285,7 +285,7 @@ and capture inputs and outputs of the product
 * The purpose of a use case is to define a
 piece of coherent behavior without revealing the internal structure of the system.
 
-* In the model, the execution of each use case is independent of the others, although an implementation of the use cases may create implicit dependencies among them.
+* In the model, the execution of each use case is independent of the others, although implementation of the use cases may create implicit dependencies among them.
 
 * Each use case represents an orthogonal piece of functionality whose execution can be mixed with the execution of other use
 cases.
@@ -462,7 +462,7 @@ cases.
 
 ## The Core Domain
 
-* To know where to invest the most effort and quality, it’s crucial to understand where the core domains are, because these are key to making software successful
+* To know where to invest the most effort and quality, it’s crucial to understand where the core domains are because these are key to making software successful
 
 * This knowledge is distilled from knowledge‐crunching sessions working in collaboration with domain experts to understand the most important aspect of the product under design and development
 
@@ -762,7 +762,7 @@ data schemas!*
 
 <div class='left' style='float:left;width:50%'>
 
-{{< image src="assets/domain_model_pattern.png" >}}
+{{< image src="assets/domain_model_pattern.png" width="50">}}
 </div>
 
 <div class='right' style='float:right;width:50%'>
@@ -962,17 +962,12 @@ DDD does not enforce the use of a particular architectural style
     * e.g. ubiquitous layered architecture, hexagonal architecture, ...
 
 * The Microservice Architectural Style is the closest one to the DDD philosophy
----
 
-## A "revised" Layered Architecture
+---
 
 <div class='left' style='float:left;width:50%'>
 
-{{< image src="assets/layered_architecture.png" >}}
-
-</div>
-
-<div class='right' style='float:right;width:50%'>
+## A "revised" Layered Architecture
 
 * At the heart of the architecture there is the domain layer
 
@@ -981,17 +976,33 @@ DDD does not enforce the use of a particular architectural style
     * The APIs represent the business use cases of the application
 
 * The domain logic and application layers are isolated and protected from the "external" accidental complexities
+
+</div>
+
+<div class='right' style='float:right;width:50%'>
+
+{{< image src="assets/layered_architecture.png" >}}
+
 </div>
 
 ---
 
-## Dependency Inversion
+# Dependency Inversion
 
-{{< image src="assets/dependency-inversion.png" width="50">}}
+<div class='left' style='float:left;width:65%'>
+
+{{< image src="assets/dependency-inversion.png" width="65">}}
+
+</div>
+
+<div class='right' style='float:right;width:35%'>
 
 * The domain layer and application layers at the center of the architecture should not depend on any other layers
+
 * The application layer is dependent only on the domain layer
     * it orchestrates the handling of the use cases by delegating to the domain layer
+
+</div>
 
 ---
 
@@ -1011,7 +1022,7 @@ DDD does not enforce the use of a particular architectural style
 
 ## The Infrastructural Layer
 
-* Contains all the technical details of the software system
+* **Contains all the technical details of the software system**
     * such as enabling the application to be consumed, whether by humans via a user interface or by applications via a set of web service or message endpoints
     * is responsible for the technical implementation of storing information on the state of domain objects
 
@@ -1051,7 +1062,7 @@ DDD does not enforce the use of a particular architectural style
     * ... heavily inspired by DDD Bounded Context concept!
 
 * The goal is to have a high level of decoupling
-    * Microservices favour duplication over reuse
+    * Microservices favor duplication over reuse
 
 </div>
 
@@ -1075,7 +1086,7 @@ by R. Richards and N. Ford)
 * Service Boundaries delineated according:
     * *Purpose* - each microservice should be extremely functionally cohesive
     * *Transactions* - each microservice must reduce issues related to transaction collaboration among domain entities
-    * *Choreography* - excellent domain isolation might generate a overhead in communications
+    * *Choreography* - excellent domain isolation might generate overhead in communications
 
 * Data Isolation
     * Avoid all kind of coupling, especially shared data schemas and databases (used as integration point)
@@ -1090,10 +1101,10 @@ by R. Richards and N. Ford)
 
 <div class='left' style='float:left;width:50%'>
 
-*For a good architecture...*
+*For good architectures...*
 # Be Pragmatic, Yet Visionary
 
-* *Pragmatic* - Dealing with things sensibly and realistically in a way that is based on a practical rather than a theoretical considerations
+* *Pragmatic* - Dealing with things sensibly and realistically in a way that is based on practical rather than theoretical considerations
 
 * *Visionary* - Thinking about or planning the future with imagination or wisdom
 
