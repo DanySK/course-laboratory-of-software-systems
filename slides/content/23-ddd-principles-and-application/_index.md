@@ -418,13 +418,13 @@ A key problem within many Agile projects is that
 
 <div class='left' style='float:left;width:50%'>
 
-{{< image src="assets/paper-front.png" width="50" >}}
+{{< image src="assets/paper-front.png" width="40" >}}
 
 </div>
 
 <div class='right' style='float:right;width:50%'>
 
-{{< image src="assets/agile-ddd.png" width="45" >}}
+{{< image src="assets/agile-ddd.png" width="40" >}}
 
 ([https://link.springer.com/chapter/10.1007/978-3-319-91602-6_16](https://link.springer.com/chapter/10.1007/978-3-319-91602-6_16))
 

@@ -356,3 +356,7 @@ The combination of the two appears an optimal direction for the DDD approach!
 {{< image src="assets/soa_and_reactive.png" >}}
 
 </div>
+
+---
+
+...
