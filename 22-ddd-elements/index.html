@@ -62,7 +62,7 @@
 <h1 id="knowledge-crunching">Knowledge Crunching</h1>
 </section><section>
 <h2 id="knowledge-crunching-1">Knowledge Crunching</h2>
-<!--Complex problem domains will contain a wealth of information, some of which will not be applicable to solving the problem at hand and will only act to distract from the real focus of your modelling efforts.-->
+<!--Complex problem domains will contain a wealth of information, some of which will not be applicable to solving the problem at hand and will only act to distract from the real focus of your modeling efforts.-->
 <ul>
 <li>
 <p>Knowledge crunching is the art of <strong>distilling relevant information from the problem domain to build a useful model that can fulfill the needs of business use cases</strong></p>
@@ -92,7 +92,7 @@
     object-fit: contain;
 '>
 
-<!--The process of knowledge crunching, as shown in Figure 2-1, starts with the behaviors of a system. The team go through the scenarios of the application with the business stakeholders and experts. This process is the catalyst to conversation, deep insight, and a shared understanding of the domain for all participants. It is therefore vital that stakeholders and subject matter experts are actively involved and engaged.-->
+<!--The process of knowledge crunching, as shown in Figure 2-1, starts with the behaviors of a system. The team go through the scenarios of the application with the business stakeholders and experts. This process is the catalyst to the conversation, deep insight, and a shared understanding of the domain for all participants. It is therefore vital that stakeholders and subject matter experts are actively involved and engaged.-->
 </section><section>
 <p><em>The main goal</em></p>
 <h2 id="discover-and-agree-on-a">discover and agree on a</h2>
@@ -213,7 +213,7 @@ and capture inputs and outputs of the product</p>
 </ul>
 </li>
 <li>
-<p>What you don’t want to do is remove the direct communication between the development team and the people who understand business requirments and processes</p>
+<p>What you don’t want to do is remove the direct communication between the development team and the people who understand business requirements and processes</p>
 </li>
 </ul>
 <blockquote>
@@ -395,7 +395,7 @@ and capture inputs and outputs of the product</p>
 piece of coherent behavior without revealing the internal structure of the system.</p>
 </li>
 <li>
-<p>In the model, the execution of each use case is independent of the others, although an implementation of the use cases may create implicit dependencies among them.</p>
+<p>In the model, the execution of each use case is independent of the others, although implementation of the use cases may create implicit dependencies among them.</p>
 </li>
 <li>
 <p>Each use case represents an orthogonal piece of functionality whose execution can be mixed with the execution of other use
@@ -668,7 +668,7 @@ cases.</p>
 <h2 id="the-core-domain">The Core Domain</h2>
 <ul>
 <li>
-<p>To know where to invest the most effort and quality, it’s crucial to understand where the core domains are, because these are key to making software successful</p>
+<p>To know where to invest the most effort and quality, it’s crucial to understand where the core domains are because these are key to making software successful</p>
 </li>
 <li>
 <p>This knowledge is distilled from knowledge‐crunching sessions working in collaboration with domain experts to understand the most important aspect of the product under design and development</p>
@@ -1065,7 +1065,7 @@ In all cases, a lost mail compensation case is opened and sent to the courier wi
 <h2 id="domain-model-pattern">Domain Model Pattern</h2>
 <div class='left' style='float:left;width:50%'>
 <img src="assets/domain_model_pattern.png" style='
-    
+    width: 50vw;
     
     max-width: 95vw;
     max-height: 80vh;
@@ -1353,18 +1353,8 @@ area of the system (and even become coupled to them)</p>
 </li>
 </ul>
 </section><section>
-<h2 id="a-revised-layered-architecture">A &ldquo;revised&rdquo; Layered Architecture</h2>
 <div class='left' style='float:left;width:50%'>
-<img src="assets/layered_architecture.png" style='
-    
-    
-    max-width: 95vw;
-    max-height: 80vh;
-    object-fit: contain;
-'>
-
-</div>
-<div class='right' style='float:right;width:50%'>
+<h2 id="a-revised-layered-architecture">A &ldquo;revised&rdquo; Layered Architecture</h2>
 <ul>
 <li>
 <p>At the heart of the architecture there is the domain layer</p>
@@ -1381,24 +1371,41 @@ area of the system (and even become coupled to them)</p>
 </li>
 </ul>
 </div>
-</section><section>
-<h2 id="dependency-inversion">Dependency Inversion</h2>
-<img src="assets/dependency-inversion.png" style='
-    width: 50vw;
+<div class='right' style='float:right;width:50%'>
+<img src="assets/layered_architecture.png" style='
+    
     
     max-width: 95vw;
     max-height: 80vh;
     object-fit: contain;
 '>
 
+</div>
+</section><section>
+<h1 id="dependency-inversion">Dependency Inversion</h1>
+<div class='left' style='float:left;width:65%'>
+<img src="assets/dependency-inversion.png" style='
+    width: 65vw;
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</div>
+<div class='right' style='float:right;width:35%'>
 <ul>
-<li>The domain layer and application layers at the center of the architecture should not depend on any other layers</li>
-<li>The application layer is dependent only on the domain layer
+<li>
+<p>The domain layer and application layers at the center of the architecture should not depend on any other layers</p>
+</li>
+<li>
+<p>The application layer is dependent only on the domain layer</p>
 <ul>
 <li>it orchestrates the handling of the use cases by delegating to the domain layer</li>
 </ul>
 </li>
 </ul>
+</div>
 </section><section>
 <h2 id="the-application-service-layer">The Application Service Layer</h2>
 <ul>
@@ -1426,7 +1433,7 @@ area of the system (and even become coupled to them)</p>
 <h2 id="the-infrastructural-layer">The Infrastructural Layer</h2>
 <ul>
 <li>
-<p>Contains all the technical details of the software system</p>
+<p><strong>Contains all the technical details of the software system</strong></p>
 <ul>
 <li>such as enabling the application to be consumed, whether by humans via a user interface or by applications via a set of web service or message endpoints</li>
 <li>is responsible for the technical implementation of storing information on the state of domain objects</li>
@@ -1474,7 +1481,7 @@ area of the system (and even become coupled to them)</p>
 <li>
 <p>The goal is to have a high level of decoupling</p>
 <ul>
-<li>Microservices favour duplication over reuse</li>
+<li>Microservices favor duplication over reuse</li>
 </ul>
 </li>
 </ul>
@@ -1506,7 +1513,7 @@ by R. Richards and N. Ford)</p>
 <ul>
 <li><em>Purpose</em> - each microservice should be extremely functionally cohesive</li>
 <li><em>Transactions</em> - each microservice must reduce issues related to transaction collaboration among domain entities</li>
-<li><em>Choreography</em> - excellent domain isolation might generate a overhead in communications</li>
+<li><em>Choreography</em> - excellent domain isolation might generate overhead in communications</li>
 </ul>
 </li>
 <li>
@@ -1528,11 +1535,11 @@ by R. Richards and N. Ford)</p>
 
 </section><section>
 <div class='left' style='float:left;width:50%'>
-<p><em>For a good architecture&hellip;</em></p>
+<p><em>For good architectures&hellip;</em></p>
 <h1 id="be-pragmatic-yet-visionary">Be Pragmatic, Yet Visionary</h1>
 <ul>
 <li>
-<p><em>Pragmatic</em> - Dealing with things sensibly and realistically in a way that is based on a practical rather than a theoretical considerations</p>
+<p><em>Pragmatic</em> - Dealing with things sensibly and realistically in a way that is based on practical rather than theoretical considerations</p>
 </li>
 <li>
 <p><em>Visionary</em> - Thinking about or planning the future with imagination or wisdom</p>
