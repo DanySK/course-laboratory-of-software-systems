@@ -35,8 +35,7 @@ enableSourceMap = true
 
 ### Angelo Croatti
   * email: [`a.croatti@unibo.it`](mailto:a.croatti@unibo.it)
-  * homepage: [`https://www.unibo.it/sitoweb/angelo.croatti/en`](https://www.unibo.it/sitoweb/angelo.croatti/en)
-
+  * homepage: [`https://www.unibo.it/sitoweb/a.croatti/en`](https://www.unibo.it/sitoweb/a.croatti/en)
 
 ---
 
@@ -51,14 +50,12 @@ enableSourceMap = true
 #### When using the email
   * Include *both* tachers, *always*
 
-
 <p>
 
 #### Office hours
 Teachers available both physically and via Microsoft Teams
   * Danilo Pianini $\Rightarrow$ check [the teacher webpage](https://www.unibo.it/sitoweb/danilo.pianini/en)
   * Angelo Croatti $\Rightarrow$ check [the teacher webpage](https://www.unibo.it/sitoweb/a.croatti)
-
 
 ---
 
@@ -84,7 +81,7 @@ On [the course webpage](https://www.unibo.it/it/didattica/insegnamenti/insegname
 
 # Organization
 
-Lectures in lab with immedate hands-on.
+Lectures in lab with immediate hands-on.
 <br>
 If you are following remotely, make sure you can experiment using your local system.
 
@@ -104,9 +101,9 @@ Changes will be published on [the forum](http://bit.ly/lss-2020)
 
 # Goals
 
-1. Design systems top down, from the **domain**
+1. Design systems top-down, from the **domain**
 2. Zero-overhead from *domain definition* to *executable code*
-3. *Agile* development practices, *DevOps* phylosophy
+3. *Agile* development practices, *DevOps* philosophy
 4. *High automation* + *technical excellence*
 
 ---
@@ -172,14 +169,14 @@ Feeling lazy?
 We prepared a container with all the course's software:
   * [https://hub.docker.com/repository/docker/danysk/linux-didattica](https://hub.docker.com/repository/docker/danysk/linux-didattica)
 
-Follow the instructons at [https://github.com/DanySK/docker-linux-didattica](https://github.com/DanySK/docker-linux-didattica)
+Follow the instructions at [https://github.com/DanySK/docker-linux-didattica](https://github.com/DanySK/docker-linux-didattica)
 
 ---
 
 # Software in lab
 
 The PCs are equipped with the docker
-1. Lauch docker
+1. Launch docker
 1. Launch the script on the Desktop
 1. Wait for it to start
 1. Close it, stop docker
@@ -188,12 +185,15 @@ The PCs are equipped with the docker
 1. Now use the container freely
 1. Data is saved in your desktop in `DockerHome` (preserve the folder if you need)
 
-Note: data is not persisted automatically, at end of session you need to copy it in your home folder
-
+Note: data is not persisted automatically, at end of the session you need to copy it in your home folder
 
 ---
 
 # Overview
+
+<div class='left' style='float:left;width:50%'>
+
+**Module 1**
 
 * [Kotlin for Scala developers](01-kotlin)
   * [Internal DSLs construction](02-internal-dsls)
@@ -204,10 +204,24 @@ Note: data is not persisted automatically, at end of session you need to copy it
   * [Continuous integration/delivery/deployment](07-ci)
   * [Advanced version control](08-advanced-git)
   * [Containerization](09-containerization)
-* Domain driven design
-  * External DSL construction
-  * Distributed software systems engineering
-  * Cyber-physical systems
+
+</div>
+
+<div class='right' style='float:right;width:50%'>
+
+**Module 2**
+
+* [Domain-Driven Design](21-ddd-intro)
+  * [Elements](22-ddd-elements)
+  * [Principles and Application](23-ddd-principles-and-application)
+  * [Strategic Patterns](24-ddd-strategic-patterns)
+  * [Tactical Patterns](25-ddd-tactical-patterns)
+  * Effective Application Patterns
+* Metamodeling and External DSL
+  * Xtext and Xtend
+* Cyber-physical systems
+
+</div>
 
 ---
 
