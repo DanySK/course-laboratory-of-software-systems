@@ -198,11 +198,11 @@ and capture inputs and outputs of the product
 ## Domain Experts vs. Stakeholders (2/2)
 
 * The *problem space* gives you a set of requirements, inputs, and expected outputs
-    * this is usually provided from your stakeholders
+    * usually provided by your stakeholders
     * they tell what they want the system to do 
 
 * The *solution space* contains a model that can meet the needs of the requirements
-    * this is where domain experts can help
+    * here domain experts can help
     * the goal is to produce a useful model that can satisfy the needs of a stakeholder and the behaviors of the application
 
 ---
