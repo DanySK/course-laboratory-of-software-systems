@@ -231,7 +231,14 @@ by R. Richards and N. Ford)
 
 ---
 
-# Bounded Contexts are Autonomous
+<div class='left' style='float:left;width:50%'>
+
+# Bounded Contexts
+# must be Autonomous
+
+</div>
+
+<div class='right' style='float:right;width:50%'>
 
 * As systems grow, dependencies become more significant in a negative way
     * You should strive to avoid most forms of coupling unless you have a very good reason...
@@ -240,6 +247,8 @@ by R. Richards and N. Ford)
     * ... or cause bottlenecks that slow down the delivery of new features!
     
 * A runtime coupling between subsystems means that one system cannot function without the other
+
+</div>
 
 ---
 
@@ -259,7 +268,7 @@ by R. Richards and N. Ford)
 * ...
 ---
 
-## "Physical" Boundaries to enforce clean models
+## "Physical" Boundaries
 
 {{< image src="assets/physical_boundaries.png">}}
 
@@ -327,7 +336,7 @@ In these systems, choosing the wrong integration strategy might cause slow or un
 
 ---
 
-# Service-Oriented Architectures and Reactive DDD
+## Service-Oriented Architectures & Reactive DDD
 
 > ***Reactive programming** is a set of low‐level technical guidelines that lead to loosely-coupled software components*
 
@@ -337,14 +346,14 @@ The combination of the two appears an optimal direction for the DDD approach!
 
 ---
 
-# SOA and Reactive DDD
+## SOA & Reactive DDD
 
 <div class='left' style='float:left;width:50%'>
 
 * How to combine these benefits with DDD?
     * **View your bounded contexts as SOA services, so that you can map high‐level bounded contexts onto low‐level, event‐driven software components**
 
-* Combining SOA and reactive programming provides the platform to:
+* Combining SOA and reactive programming provides a platform to:
     * align your infrastructure with business priorities
     * deal with scalability and reliability challenges
     * organize your teams by aligning them with bounded contexts to reduce communication overhead
@@ -353,10 +362,35 @@ The combination of the two appears an optimal direction for the DDD approach!
 
 <div class='right' style='float:right;width:50%'>
 
-{{< image src="assets/soa_and_reactive.png" >}}
+{{< image src="assets/soa_and_reactive.png" width="45">}}
 
 </div>
 
 ---
 
-...
+## Domain-Driven Design & REST
+
+* **Resources** - fit well with DDD because domain concepts can be expressed as resources, further spreading the UL
+    * E.g. In a financial domain, transactions that transfer funds from one account to another
+        * The UL has an entry for each type of transaction, such as *B2B Transaction* or *Personal Transaction*, that become resources accessible from proper URIs
+            * `http://mydomain.com/B2bTransactions`
+            * `http://mydomain.com/PersonalTransactions`
+
+* **Hypermedia** - an opportunity for DDD to express the domain concepts more explicitly
+    * E.g. In a car insurance policy, each step of the application process could be expressed as links in hypermedia to the next possible steps, according with the UL terminology
+    * It can be used to model also workflows or domain processes
+
+---
+
+## Bounded Context Integration via REST
+
+* *Be careful!* - A direct exposition of the domain model via RESTful API might be brittle!
+    * **Each change in the domain model is directly reflected in the system interface**
+
+* A viable solution
+    * introduce a separate Bounded Context for the system's interface layer and use appropriate strategies to access the actual Core Domain from the system's interface model
+    * so, the Core Domain is decoupled from the system's interface model
+    * the interface model must be driven by the use cases
+
+* A step further
+    * CQRS - Command Query Responsibility Segregation
