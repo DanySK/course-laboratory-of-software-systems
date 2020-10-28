@@ -288,7 +288,11 @@ by R. Richards and N. Ford)</p>
 </li>
 </ul>
 </section><section>
-<h1 id="bounded-contexts-are-autonomous">Bounded Contexts are Autonomous</h1>
+<div class='left' style='float:left;width:50%'>
+<h1 id="bounded-contexts">Bounded Contexts</h1>
+<h1 id="must-be-autonomous">must be Autonomous</h1>
+</div>
+<div class='right' style='float:right;width:50%'>
 <ul>
 <li>
 <p>As systems grow, dependencies become more significant in a negative way</p>
@@ -306,6 +310,7 @@ by R. Richards and N. Ford)</p>
 <p>A runtime coupling between subsystems means that one system cannot function without the other</p>
 </li>
 </ul>
+</div>
 </section><section>
 <h2 id="bunded-contexts-integration-at-the-code-level">Bunded Contexts Integration at the code level</h2>
 <h2 id="to-be-avoided">(to be avoided)</h2>
@@ -334,7 +339,7 @@ by R. Richards and N. Ford)</p>
 </li>
 </ul>
 </section><section>
-<h2 id="physical-boundaries-to-enforce-clean-models">&ldquo;Physical&rdquo; Boundaries to enforce clean models</h2>
+<h2 id="physical-boundaries">&ldquo;Physical&rdquo; Boundaries</h2>
 <img src="assets/physical_boundaries.png" style='
     
     
@@ -424,7 +429,7 @@ by R. Richards and N. Ford)</p>
 '>
 
 </section><section>
-<h1 id="service-oriented-architectures-and-reactive-ddd">Service-Oriented Architectures and Reactive DDD</h1>
+<h2 id="service-oriented-architectures--reactive-ddd">Service-Oriented Architectures &amp; Reactive DDD</h2>
 <blockquote>
 <p><em><strong>Reactive programming</strong> is a set of low‐level technical guidelines that lead to loosely-coupled software components</em></p>
 </blockquote>
@@ -433,7 +438,7 @@ by R. Richards and N. Ford)</p>
 </blockquote>
 <p>The combination of the two appears an optimal direction for the DDD approach!</p>
 </section><section>
-<h1 id="soa-and-reactive-ddd">SOA and Reactive DDD</h1>
+<h2 id="soa--reactive-ddd">SOA &amp; Reactive DDD</h2>
 <div class='left' style='float:left;width:50%'>
 <ul>
 <li>
@@ -443,7 +448,7 @@ by R. Richards and N. Ford)</p>
 </ul>
 </li>
 <li>
-<p>Combining SOA and reactive programming provides the platform to:</p>
+<p>Combining SOA and reactive programming provides a platform to:</p>
 <ul>
 <li>align your infrastructure with business priorities</li>
 <li>deal with scalability and reliability challenges</li>
@@ -454,7 +459,7 @@ by R. Richards and N. Ford)</p>
 </div>
 <div class='right' style='float:right;width:50%'>
 <img src="assets/soa_and_reactive.png" style='
-    
+    width: 45vw;
     
     max-width: 95vw;
     max-height: 80vh;
@@ -463,7 +468,55 @@ by R. Richards and N. Ford)</p>
 
 </div>
 </section><section>
-<p>&hellip;</p>
+<h2 id="domain-driven-design--rest">Domain-Driven Design &amp; REST</h2>
+<ul>
+<li>
+<p><strong>Resources</strong> - fit well with DDD because domain concepts can be expressed as resources, further spreading the UL</p>
+<ul>
+<li>E.g. In a financial domain, transactions that transfer funds from one account to another
+<ul>
+<li>The UL has an entry for each type of transaction, such as <em>B2B Transaction</em> or <em>Personal Transaction</em>, that become resources accessible from proper URIs
+<ul>
+<li><code>http://mydomain.com/B2bTransactions</code></li>
+<li><code>http://mydomain.com/PersonalTransactions</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Hypermedia</strong> - an opportunity for DDD to express the domain concepts more explicitly</p>
+<ul>
+<li>E.g. In a car insurance policy, each step of the application process could be expressed as links in hypermedia to the next possible steps, according with the UL terminology</li>
+<li>It can be used to model also workflows or domain processes</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="bounded-context-integration-via-rest">Bounded Context Integration via REST</h2>
+<ul>
+<li>
+<p><em>Be careful!</em> - A direct exposition of the domain model via RESTful API might be brittle!</p>
+<ul>
+<li><strong>Each change in the domain model is directly reflected in the system interface</strong></li>
+</ul>
+</li>
+<li>
+<p>A viable solution</p>
+<ul>
+<li>introduce a separate Bounded Context for the system&rsquo;s interface layer and use appropriate strategies to access the actual Core Domain from the system&rsquo;s interface model</li>
+<li>so, the Core Domain is decoupled from the system&rsquo;s interface model</li>
+<li>the interface model must be driven by the use cases</li>
+</ul>
+</li>
+<li>
+<p>A step further</p>
+<ul>
+<li>CQRS - Command Query Responsibility Segregation</li>
+</ul>
+</li>
+</ul>
 </section>
 
   
