@@ -66,46 +66,38 @@
 </ul>
 </section><section>
 <h2 id="building-blocks-categorization">Building Blocks Categorization</h2>
-<div class='left' style='float:left;width:40%'>
 <ol>
 <li>
 <p><strong>Domain Modeling Patterns</strong> &ndash; represent the policies and logic within the problem domain (relationships among objects, model rules, &hellip;) and helping to achieve the MDD</p>
 <ul>
-<li><em>Entities</em></li>
-<li><em>Value Objects</em></li>
-<li><em>Domain Services</em></li>
-<li>(<em>Modules</em>)</li>
+<li><em>Entities</em>, <em>Value Objects</em>, <em>Domain Services</em>, <em>Modules</em></li>
 </ul>
 </li>
 <li>
 <p><strong>Lifecycle Patterns</strong> &ndash; deal with the creation and persistence of the objects that represent the domain structure</p>
 <ul>
-<li><em>Aggregates</em></li>
-<li><em>Factories</em></li>
-<li><em>Repositories</em></li>
+<li><em>Aggregates</em>, <em>Factories</em>, <em>Repositories</em></li>
+</ul>
+</li>
+<li>
+<p><strong>Emerging Patterns</strong> &ndash; collateral patterns respect to Evans&rsquo; original definition</p>
+<ul>
+<li><em>Domain Events</em>, <em>Event Sourcing</em></li>
 </ul>
 </li>
 </ol>
-</div>
-<div class='right' style='float:right;width:60%'>
+</section><section>
+<h2 id="evans-original-building-blocks">Evans&rsquo; Original Building Blocks</h2>
 <img src="assets/evans_tacticals_overview.png" style='
-    width: 55vw;
+    
     
     max-width: 95vw;
     max-height: 80vh;
     object-fit: contain;
 '>
 
-<ol start="3">
-<li><strong>Emerging Patterns</strong> &ndash; collateral patterns respect to Evans&rsquo; original definition
-<ul>
-<li><em>Domain Events</em></li>
-<li><em>Event Sourcing</em></li>
-</ul>
-</li>
-</ol>
-</div>
 </section><section>
+<h2 id="a-modern-view-on-building-blocks">A modern view on Building Blocks</h2>
 <img src="assets/tacticals_overview.png" style='
     
     
@@ -127,6 +119,16 @@
 </section><section>
 <div class='left' style='float:left;width:50%'>
 <h1 id="value-objects">Value Objects</h1>
+<img src="assets/value_objects.png" style='
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</div>
+<div class='right' style='float:right;width:50%'>
 <ul>
 <li>
 <p>Value objects represent <strong>the elements or concepts of your domain that are known only by their characteristics</strong></p>
@@ -149,16 +151,6 @@
 </ul>
 </li>
 </ul>
-</div>
-<div class='right' style='float:right;width:50%'>
-<img src="assets/value_objects.png" style='
-    
-    
-    max-width: 95vw;
-    max-height: 80vh;
-    object-fit: contain;
-'>
-
 </div>
 </section><section>
 <div class='left' style='float:left;width:50%'>
@@ -336,8 +328,8 @@
 '>
 
 </section><section>
-<h1 id="repositories">Repositories</h1>
 <div class='left' style='float:left;width:50%'>
+<h1 id="repositories">Repositories</h1>
 <img src="assets/repositories.png" style='
     width: 45vw;
     
