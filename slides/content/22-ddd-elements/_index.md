@@ -45,10 +45,6 @@ enableSourceMap = true
 
 1. Bounded Contexts
 
-1. Software Architectures for the DDD
-
-1. Bounded Context Integration
-
 ---
 
 # Knowledge Crunching
@@ -57,17 +53,16 @@ enableSourceMap = true
 
 ## Knowledge Crunching
 
-<!--Complex problem domains will contain a wealth of information, some of which will not be applicable to solving the problem at hand and will only act to distract from the real focus of your modelling efforts.-->
+<!--Complex problem domains will contain a wealth of information, some of which will not be applicable to solving the problem at hand and will only act to distract from the real focus of your modeling efforts.-->
 
-* Knowledge crunching is the art of **distilling relevant information from the problem domain to build a useful model that can fulfill the needs of business use cases**.
+* Knowledge crunching is the art of **distilling relevant information from the problem domain to build a useful model that can fulfill the needs of business use cases**
 
     * The key to bridging any knowledge gaps for the technical team when designing a solution for a problem domain.
 
 * In order for a team to produce a  useful model they need to have a deep insight of the problem domain to ensure important concepts are not overlooked or misunderstood.
-    * This can only be done through working in collaboration with domain experts (brainstorming together). 
-    <!--* Without this there is a danger that a technical solution will be produced that is void of any real domain insight and something that cannot be understood by the business or by other developers during software maintenance or subsequent enhancements.-->
-
-* The main goal: **discover and agree on a shared understanding of the problem domain to produce a model that can fulfill business use cases**.
+    * This can only be done through working in collaboration with domain experts (brainstorming together)
+    
+    * Without effective knowledge crunching, a technical solution will be produced without any real domain insight and correlation with it
 
 ---
 
@@ -75,22 +70,78 @@ enableSourceMap = true
 
 {{< image src="assets/knowledge_crunching.png" >}}
 
-<!--The process of knowledge crunching, as shown in Figure 2-1, starts with the behaviors of a system. The team go through the scenarios of the application with the business stakeholders and experts. This process is the catalyst to conversation, deep insight, and a shared understanding of the domain for all participants. It is therefore vital that stakeholders and subject matter experts are actively involved and engaged.-->
+<!--The process of knowledge crunching, as shown in Figure 2-1, starts with the behaviors of a system. The team go through the scenarios of the application with the business stakeholders and experts. This process is the catalyst to the conversation, deep insight, and a shared understanding of the domain for all participants. It is therefore vital that stakeholders and subject matter experts are actively involved and engaged.-->
 
 ---
 
-## Shared Understanding through a Shared Language
+*The main goal*
+## discover and agree on a
+# shared understanding of the problem domain
+## to produce a model that can fulfill business use cases
 
-* An output of knowledge crunching and an artifact of the shared understanding is a common **Ubiquitous Language** (UL).
-    * This language must be made explicit and be used when describing the domain model and problem domain.
-    * The language should also be used in the code implementation of the model (with the same terms and concepts used as class names, properties, and method names). 
-    * It is the language that enables both the business and development teams to have meaningful communication about the software.
+---
+
+## Ubiquitous Language 
+
+* An output of knowledge crunching and an artifact of the shared understanding is a common **Ubiquitous Language** (UL)
+    * This language must be made explicit and be used when describing the domain model and problem domain
+    * The language *should also be used in the code implementation of the model* (with the same terms and concepts used as class names, properties, and method names)
+    * It is the language that enables both the business and development teams to have meaningful communication about the software
 
 <!--* UL is used to bind the code representation of the model to the conceptual model communicated in language and diagrams.-->
 
-* The UL will contain terminology from the business as well as new concepts and terms discovered when modeling the use case of the problem domain.
+* The UL will contain terminology from the business as well as new concepts and terms discovered when modeling the use case of the problem domain
 
-* The shared understanding obtained with a well defined UL prevents the need to constantly translate from a technical model to a business model.
+* The shared understanding obtained with a well defined UL prevents the need to constantly translate from a technical model to a business model
+
+---
+
+## Ubiquitous Language and Code Evolution 
+
+{{< image src="assets/domain_language_evolution.jpg" >}}
+
+---
+
+## Ubiquitous Language $\neq$ Shared Vocabulary
+
+> *The Ubiquitous Language must include not only the words we use but also how we use them*
+
+* From the Theory of Language
+    * *Denotation* is the explicit literal meaning as defined by a dictionary
+    * *Connotation* is the cultural and emotional meaning that a word might have
+    * *Association* is an indirect meaning of a word
+
+---
+
+## Example: the "invoice" concept (1/2)
+
+
+> The Business Use Case:
+> 
+> *The system must create an invoice for each customer purchase request!*
+
+> From the dictionary:
+>
+> *The term "invoice" as a noun means a demand for payment for a service/good delivered, and as a verb it means delivering if the demand to a costumer*
+
+---
+
+## Example: the "invoice" concept (2/2)
+
+* About the meaning:
+    * The demand for payment?
+    * The paper or the email representing the demand?
+
+* And more:
+    * We need to print up the paper invoice?
+    * Or we have to calculate how much he owes so that we can require the payment?
+
+* Finally, if we think to the software design, "invoice" might represent:
+    * a database record with the sum owed
+    * a PDF document to be sent, stored somewhere
+    * the mail we have to send or we have sent
+
+* We have also to distinguish among the states of an invoice (not sent, sent but not settled, settled)...
 
 ---
 
@@ -114,7 +165,7 @@ and capture inputs and outputs of the product
 * Business analysts as facilitators to help communication
     * e.g. if you have odd whiz‐kid developers and are nervous about putting them in front of domain experts...
 
-* What you don’t want to do is remove the direct communication between the development team and the people who understand business requirments and processes
+* What you don’t want to do is remove the direct communication between the development team and the people who understand business requirements and processes
 
 > *Who can act as a Business Analyst?*
 
@@ -143,11 +194,11 @@ and capture inputs and outputs of the product
 ## Domain Experts vs. Stakeholders (2/2)
 
 * The *problem space* gives you a set of requirements, inputs, and expected outputs
-    * this is usually provided from your stakeholders
+    * usually provided by your stakeholders
     * they tell what they want the system to do 
 
 * The *solution space* contains a model that can meet the needs of the requirements
-    * this is where domain experts can help
+    * here domain experts can help
     * the goal is to produce a useful model that can satisfy the needs of a stakeholder and the behaviors of the application
 
 ---
@@ -230,7 +281,7 @@ and capture inputs and outputs of the product
 * The purpose of a use case is to define a
 piece of coherent behavior without revealing the internal structure of the system.
 
-* In the model, the execution of each use case is independent of the others, although an implementation of the use cases may create implicit dependencies among them.
+* In the model, the execution of each use case is independent of the others, although implementation of the use cases may create implicit dependencies among them.
 
 * Each use case represents an orthogonal piece of functionality whose execution can be mixed with the execution of other use
 cases.
@@ -296,7 +347,7 @@ cases.
 
 ## CRC Cards: An Example
 
-{{< image src="crc_ex.png" width="100">}}
+{{< image src="assets/crc_ex.png" >}}
 
 ---
 
@@ -407,7 +458,7 @@ cases.
 
 ## The Core Domain
 
-* To know where to invest the most effort and quality, it’s crucial to understand where the core domains are, because these are key to making software successful
+* To know where to invest the most effort and quality, it’s crucial to understand where the core domains are because these are key to making software successful
 
 * This knowledge is distilled from knowledge‐crunching sessions working in collaboration with domain experts to understand the most important aspect of the product under design and development
 
@@ -617,7 +668,7 @@ package while the core and supporting domains will be designed using a custom we
 > Otherwise, we will send her a free order and update the database to show that this customer has already claimed for a lost item. We will then contact the courier to see if we can claim back the cost of the lost order.
 
 * *Is this sentence relevant for the domain model?*
-* *Does it gives any value or insight?*
+* *Does it give any value or insight?*
 
 ---
 
@@ -707,7 +758,7 @@ data schemas!*
 
 <div class='left' style='float:left;width:50%'>
 
-{{< image src="assets/domain_model_pattern.png" >}}
+{{< image src="assets/domain_model_pattern.png" width="50">}}
 </div>
 
 <div class='right' style='float:right;width:50%'>
@@ -889,173 +940,3 @@ area of the system (and even become coupled to them)
 * Relations among bounded contexts must be described using context maps
 
 </div>
-
----
-
-# Software Architectures
-# for the Domain-Driven Design
-
----
-
-## Towards a
-# Clean Architecture
-
-DDD does not enforce the use of a particular architectural style  
-... as long as the chosen one *must support the isolation of the domain logic*!
-
-* Several architectural styles can be used
-    * e.g. ubiquitous layered architecture, hexagonal architecture, ...
-
-* The Microservice Architectural Style is the closest one to the DDD philosophy
----
-
-## A "revised" Layered Architecture
-
-<div class='left' style='float:left;width:50%'>
-
-{{< image src="assets/layered_architecture.png" >}}
-
-</div>
-
-<div class='right' style='float:right;width:50%'>
-
-* At the heart of the architecture there is the domain layer
-
-* Surrounding the domain layer there is an application layer
-    * It abstracts the low-level details of the domain behind a coarse-grained API
-    * The APIs represent the business use cases of the application
-
-* The domain logic and application layers are isolated and protected from the "external" accidental complexities
-</div>
-
----
-
-## Dependency Inversion
-
-{{< image src="assets/dependency-inversion.png" width="50">}}
-
-* The domain layer and application layers at the center of the architecture should not depend on any other layers
-* The application layer is dependent only on the domain layer
-    * it orchestrates the handling of the use cases by delegating to the domain layer
-
----
-
-## The Application Service Layer
-
-* **Represents the use cases and behavior of the application**
-    * use cases are implemented as application services that contain application logic to coordinate the fulfillment of a use case by delegating to the domain and infrastructural layers
-
-* **Operates at a higher level of abstraction than the domain objects**
-    * exposing a coarse-grained set of services while hiding the details of the domain layer ("*what the system does, but not how it does it"*)
-    * is a facade for the domain model
-
-* **Enables the support of different clients without compromising the domain layer's integrity**
-    * clients must adapt to the application layer APIs, transforming the output in a suitable format
-
----
-
-## The Infrastructural Layer
-
-* Contains all the technical details of the software system
-    * such as enabling the application to be consumed, whether by humans via a user interface or by applications via a set of web service or message endpoints
-    * is responsible for the technical implementation of storing information on the state of domain objects
-
-* Can provide capabilities for logging, security, notification, and integration with other bounded contexts and applications
-
----
-
-<div class='left' style='float:left;width:45%'>
-
-# Clean Architecture
-
-1. Independent of Frameworks
-1. Testable
-1. Independent of the UI
-1. Independent of the data persistence layer
-1. Independent of any external agency
-
-> *No "name" in an outer circle can be mentioned by an inner circle*
-
-</div>
-
-<div class='right' style='float:right;width:55%'>
-
-{{< image src="assets/CleanArchitecture.jpg" width="40">}}
-
-(from *Clean Architecture* by Robert C. Martin)
-
-</div>
-
----
-
-<div class='left' style='float:left;width:50%'>
-
-# Microservices Architecture
-
-* Nowadays, an extremely popular architecture style
-    * ... heavily inspired by DDD Bounded Context concept!
-
-* The goal is to have a high level of decoupling
-    * Microservices favour duplication over reuse
-
-</div>
-
-<div class='right' style='float:right;width:50%'>
-
-{{< image src="assets/microservices_topology.png"  width="40">}}
-
-(from *Fundamentals of Software Architecture*  
-by R. Richards and N. Ford)
-
-</div>
-
----
-
-## Microservices and Bounded Contexts
-
-* Each (micro)service models a domain/workflow
-    * Each service represents a bounded context...
-    * ... or more than one!
-
-* Service Boundaries delineated according:
-    * *Purpose* - each microservice should be extremely functionally cohesive
-    * *Transactions* - each microservice must reduce issues related to transaction collaboration among domain entities
-    * *Choreography* - excellent domain isolation might generate a overhead in communications
-
-* Data Isolation
-    * Avoid all kind of coupling, especially shared data schemas and databases (used as integration point)
-
----
-
-## Sidecar Pattern with Service Plane
-
-{{< image src="assets/sidecar_pattern.png" >}}
-
----
-
-<div class='left' style='float:left;width:50%'>
-
-*For a good architecture...*
-# Be Pragmatic, Yet Visionary
-
-* *Pragmatic* - Dealing with things sensibly and realistically in a way that is based on a practical rather than a theoretical considerations
-
-* *Visionary* - Thinking about or planning the future with imagination or wisdom
-
-</div>
-
-<div class='right' style='float:right;width:50%'>
-
-{{< image src="assets/pragmatic_visionary.png" width="30">}}
-
-(from *Fundamentals of Software Architecture*  
-by R. Richards and N. Ford)
-
-</div>
-
----
-
-# Bounded Context Integration
-
----
-
