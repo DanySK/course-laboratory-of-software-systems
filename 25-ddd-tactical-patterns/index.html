@@ -34,19 +34,6 @@
 <h4 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h4>
 <h4 id="hahahugoshortcode-s1-hbhb">A.Y. 2020/2021</h4>
 </section><section>
-<h2 id="outline">Outline</h2>
-<ol>
-<li>
-<p>Building Blocks Overview</p>
-</li>
-<li>
-<p>Value Objects</p>
-</li>
-<li>
-<p>&hellip;</p>
-</li>
-</ol>
-</section><section>
 <h2 id="domain-driven-design-tactical-patterns">Domain-Driven Design Tactical Patterns</h2>
 <ul>
 <li>
@@ -472,10 +459,48 @@
 </tbody>
 </table>
 </section><section>
-<div class='left' style='float:left;width:50%'>
+<h1 id="a-concrete-example">A concrete Example</h1>
+<h1 id="of-domain-modelling">of Domain Modelling</h1>
+<p>(from &ldquo;Emergent Contexts through Refinement&rdquo; by M. Verraes)</p>
+</section><section>
+<h2 id="the-problem">The Problem</h2>
+<blockquote>
+<p>Imagine working on a business application, that deals with sales, accounting, reporting, that sort of thing. The existing software has some serious issues.</p>
+<p>For example, monetary values are represented as scalars. In many places, values are calculated at high precision, and then rounded down to 2 decimals, and later used again for high precision calculations. These rounding errors are all over the code. It doesn&rsquo;t make a huge difference on a single amount and a single rounding error, but eventually it could add up, and cost the business millions.</p>
+<p>The monetary values can represent different currencies, but the financial reporting is always in EUR. It is unclear if the code always correctly converts to EUR when needed, or accidentally adds up amounts from different currencies.</p>
+</blockquote>
+</section><section>
+<div class='left' style='float:left;width:25%'>
+<h2 id="the-knowledge-crunching-step">The knowledge crunching step</h2>
+<p><em>After several conversations with the domain experts (from sales and accounting) a common agreement on some requirements was reached</em></p>
 </div>
-<div class='right' style='float:right;width:50%'>
+<div class='right' style='float:right;width:75%'>
+<ol>
+<li>
+<p>Business needs to support about 10 currencies, possibly more in the future.</p>
+<ul>
+<li>When the business wants to support a new currency, say Japanese Yen, then it is assumed that the developers will add support in the code.</li>
+<li>There&rsquo;s no need for a UI for adding new currencies.</li>
+</ul>
+</li>
+<li>
+<p>All price calculations need to be done with a precision of 8 decimals. This is a business decision.</p>
+</li>
+<li>
+<p>When showing amounts to users (or passing them along over an API) the software will always stick to the currency&rsquo;s official division.</p>
+<ul>
+<li>For example, in the case of EUR or USD, that&rsquo;s 2 decimals. In the case of Bitcoin, a precision of 1 satoshi aka BTC 10<sup>-8</sup>.</li>
+</ul>
+</li>
+<li>
+<p>In some markets, the software will need to do specific compliance reporting (e.g., considering VAT or adapting prices).</p>
+</li>
+<li>
+<p>All internal reporting needs to be in EUR, no matter what the original currency was.</p>
+</li>
+</ol>
 </div>
+</section><section>
 </section>
 
   
