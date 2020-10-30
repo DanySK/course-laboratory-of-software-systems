@@ -126,10 +126,13 @@ Docker is a containerization platform
 
 1. Install docker
 2. Add your user to the `docker` group
-1. Enable the docker service
+
+3. Enable the docker service
   * e.g. on most Linux distributions `systemctl start docker`
+
 4. Pull an image
   * e.g., `docker pull adoptopenjdk`
+
 5. Run a container!
   * `docker run adoptopenjdk`
 
