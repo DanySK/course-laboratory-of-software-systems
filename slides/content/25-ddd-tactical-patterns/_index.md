@@ -33,16 +33,6 @@ enableSourceMap = true
 
 ---
 
-## Outline
-
-1. Building Blocks Overview
-
-1. Value Objects
-
-1. ...
-
----
-
 ## Domain-Driven Design Tactical Patterns
 
 * Introduced by E. Evans to enable the creation of effective domain models
@@ -335,12 +325,47 @@ function checkout(shoppingCart: ShoppingCart, ...) {
 
 ---
 
-<div class='left' style='float:left;width:50%'>
+# A concrete Example
+# of Domain Modelling
+
+(from "Emergent Contexts through Refinement" by M. Verraes)
+
+---
+
+## The Problem
+
+> Imagine working on a business application, that deals with sales, accounting, reporting, that sort of thing. The existing software has some serious issues. 
+> 
+> For example, monetary values are represented as scalars. In many places, values are calculated at high precision, and then rounded down to 2 decimals, and later used again for high precision calculations. These rounding errors are all over the code. It doesn't make a huge difference on a single amount and a single rounding error, but eventually it could add up, and cost the business millions. 
+> 
+> The monetary values can represent different currencies, but the financial reporting is always in EUR. It is unclear if the code always correctly converts to EUR when needed, or accidentally adds up amounts from different currencies. 
+
+---
+
+<div class='left' style='float:left;width:25%'>
+
+## The knowledge crunching step
+
+*After several conversations with the domain experts (from sales and accounting) a common agreement on some requirements was reached*
 
 </div>
 
-<div class='right' style='float:right;width:50%'>
+<div class='right' style='float:right;width:75%'>
+
+1. Business needs to support about 10 currencies, possibly more in the future.
+    * When the business wants to support a new currency, say Japanese Yen, then it is assumed that the developers will add support in the code.
+    * There's no need for a UI for adding new currencies.
+
+1. All price calculations need to be done with a precision of 8 decimals. This is a business decision.
+
+1. When showing amounts to users (or passing them along over an API) the software will always stick to the currency's official division.
+    * For example, in the case of EUR or USD, that's 2 decimals. In the case of Bitcoin, a precision of 1 satoshi aka BTC 10<sup>-8</sup>.
+
+1. In some markets, the software will need to do specific compliance reporting (e.g., considering VAT or adapting prices).
+
+1. All internal reporting needs to be in EUR, no matter what the original currency was.
 
 </div>
 
+---
 
