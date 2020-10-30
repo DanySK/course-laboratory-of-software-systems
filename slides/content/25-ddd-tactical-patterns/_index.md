@@ -57,34 +57,24 @@ enableSourceMap = true
 
 ## Building Blocks Categorization
 
-<div class='left' style='float:left;width:40%'>
-
 1. **Domain Modeling Patterns** -- represent the policies and logic within the problem domain (relationships among objects, model rules, ...) and helping to achieve the MDD
-    * *Entities*
-    * *Value Objects*
-    * *Domain Services*
-    * (*Modules*)
+    * *Entities*, *Value Objects*, *Domain Services*, *Modules*
 
 1. **Lifecycle Patterns** -- deal with the creation and persistence of the objects that represent the domain structure
-    * *Aggregates*
-    * *Factories*
-    * *Repositories*
+    * *Aggregates*, *Factories*, *Repositories*
 
-
-
-</div>
-
-<div class='right' style='float:right;width:60%'>
-
-{{< image src="assets/evans_tacticals_overview.png" width="55">}}
-
-3. **Emerging Patterns** -- collateral patterns respect to Evans' original definition
-    * *Domain Events*
-    * *Event Sourcing*
-
-</div>
+1. **Emerging Patterns** -- collateral patterns respect to Evans' original definition
+    * *Domain Events*, *Event Sourcing*
 
 ---
+
+## Evans' Original Building Blocks
+
+{{< image src="assets/evans_tacticals_overview.png" >}}
+
+---
+
+## A modern view on Building Blocks
 
 {{< image src="assets/tacticals_overview.png" >}}
 
@@ -100,6 +90,12 @@ enableSourceMap = true
 
 # Value Objects
 
+{{< image src="assets/value_objects.png" >}}
+
+</div>
+
+<div class='right' style='float:right;width:50%'>
+
 * Value objects represent **the elements or concepts of your domain that are known only by their characteristics**
     * they are used as descriptors for elements in your model
     * they do not require a unique identity
@@ -110,12 +106,6 @@ enableSourceMap = true
 
 * Are often passed as parameters in messages between object
     * they are temporarily created for an operation and then discarded
-
-</div>
-
-<div class='right' style='float:right;width:50%'>
-
-{{< image src="assets/value_objects.png" >}}
 
 </div>
 
@@ -259,9 +249,9 @@ function checkout(shoppingCart: ShoppingCart, ...) {
 
 ---
 
-# Repositories
-
 <div class='left' style='float:left;width:50%'>
+
+# Repositories
 
 {{< image src="assets/repositories.png" width="45">}}
 
