@@ -186,6 +186,47 @@ $$C = \sum_{p}^{}c_pt_p$$
 
 ---
 
+## Categorizing Complexity
+
+<div class='left' style='float:left;width:30%'>
+
+## Cynefin Framework
+by D. Snowden, 1999
+
+* A conceptual framework used to aid decision-making
+
+* Offers five decision-making contexts that help managers to identify how they perceive situations and make sense of their own and other people's behaviour
+
+</div>
+
+<div class='right' style='float:right;width:70%'>
+
+{{< image src="assets/cynefin.jpeg" >}}
+
+</div>
+
+---
+
+## Categorizing Complexity - Details (1/2)
+
+| Category | Description          
+| --- |---
+| **Simple** | - Problems where best practices and an established set of rules are available, and there is a direct link between a cause and a consequence.<br>- The sequence of actions for this domain is [1] Establishing facts (sense), [2] identify processes and rules (categorise) and [3] execute them (response)
+| **Complicated** | - Problems where expertise and skills are required to find the relation between cause and effect since there is no single answer to such a problem. <br> - The sequence of actions in this domain would be sense-analyse-respond. "analyse" replace "categorise" because there is no clear categorisation of facts in this domain. <br> - *Here it makes sense to apply DDD patterns for both strategic and tactical design, but you probably could avoid more advanced exploratory techniques and you might spend less time on knowledge crunching, if the problem is thoroughly understood.*
+
+
+---
+
+## Categorizing Complexity - Details (2/2)
+
+| Category | Description          
+| --- |---
+| **Complex** | - Here we encounter something that no one has done before, making even a rough estimate is impossible. It is hard or impossible to predict the reaction in response to our actions: we can only find out about the impact that we have made in retrospect. <br> - The sequence of actions is "probe-sense-respond". There are no right answers here and no practices to rely upon the previous experience might not be helping. <br> - This is the place where all innovation happens. <br> - *In terms of DDD, here we find our Core Domain. A deep strategic design is necessary, but some tactical patterns of DDD can be safely ignored to save time. Event Storming and Knowledge Chrunching are very important here.*
+| **Chaotic** | - No one wants to be here! <br> - *It is probably not the best place for DDD since there is no time and budget for any sort of design available at this stage*
+| **Disorder** | - It is where the transition to chaos usually happens from any stage. <br> - Underestimated complex problems with unrealistic deadlines bring teams to stress, leading to disorder at the later project stages, from where all slips to chaos.
+
+---
+
 ## Complex Problem Domains
 
 {{< image src="assets/ddd_software_complexity.png" >}}
@@ -389,7 +430,7 @@ models being corrupt by isolating them from third-party code.
     
     * DDD is not code-centric!
         * its purpose is not to make elegant code
-        * **Software is merely an artifact of DDD**.
+        * **Software is merely an artifact of DDD**
 
 1. *DDD is a Framework! No, it isn't!*
     * DDD is architecturally agnostic 
@@ -402,12 +443,22 @@ models being corrupt by isolating them from third-party code.
 
 ## Popular Misconceptions of DDD (2/2)
 
+<div class='left' style='float:left;width:45%'>
+
 3. *DDD is a Silver Bullet! No, it isn't!*
     * DDD can take a lot of effort
         * it requires an iterative development methodology, an engaged business, etc.
         
     * Not all software systems fit with this approach 
-        * e.g. those with trivial domains with little or no domain logic 
+        * e.g. those with trivial domains with little or no domain logic
+
+</div>
+
+<div class='right' style='float:right;width:50%'>
+
+{{< image src="assets/ddd_where_to_use.jpeg" >}}
+
+</div>
 
 ---
 

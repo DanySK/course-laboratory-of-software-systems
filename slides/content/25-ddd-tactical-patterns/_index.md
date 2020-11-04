@@ -31,7 +31,7 @@ enableSourceMap = true
 #### {{< course_name >}}
 #### {{< academic_year >}}
 
----git sta
+---
 
 ## Domain-Driven Design Tactical Patterns
 

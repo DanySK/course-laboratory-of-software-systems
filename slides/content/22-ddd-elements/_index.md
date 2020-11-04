@@ -156,6 +156,18 @@ enableSourceMap = true
 
 ---
 
+## Avoiding Ignorance
+
+{{< image src="assets/ignorance_graph.png" >}}
+
+---
+
+{{< image src="assets/ignorance_paper.jpg" width="100">}}
+
+[https://cacm.acm.org/magazines/2000/10/7556-the-five-orders-of-ignorance/fulltext](https://cacm.acm.org/magazines/2000/10/7556-the-five-orders-of-ignorance/fulltext)
+
+---
+
 ## The Role of
 # Business Analysts
 
@@ -179,7 +191,7 @@ and capture inputs and outputs of the product
     * **Collaboration among the development team, business stakeholders, and subject matter experts should not be constrained to the start of a project**.
 
 * Knowledge crunching should be an ongoing concern with the business engaged throughout the _lifetime_ of the application build.
-    * Note: when the system is in use the model may also need to evolve due to technical reasons such as performance or a better understanding of the systems usage.
+    * Note: when the system is in use the model may also need to evolve due to technical reasons such as performance or a better understanding of the system's usage.
 
 * **A good model must be "malleable"!**
 
@@ -368,25 +380,49 @@ cases.
 
 ---
 
-## Impact Mapping
+# Impact Mapping
 
-* Impact mapping allows to go beyond traditional requirements documents, working on what impacts the business is trying to make
+* Impact mapping allows to go beyond traditional requirements documents
+    * ... working on what impacts the business is trying to make
 
 * Once you understand the impact the business is trying to make, you can play a more effective role in helping them to achieve it    
     * Significantly for DDD, you will be able to ask better questions during knowledge-crunching sessions since you know what the business wants to achieve
 
-* Impact mapping is a very informal technique
+* Impact mapping is *a very informal technique*
     * You simply create mind‐map-like diagrams that accentuate key business information
 
 ---
 
-## Impact Mapping: An Example
+<div class='left' style='float:left;width:30%'>
+
+# Impact Mapping
+## An Example
+</div>
+
+<div class='right' style='float:right;width:70%'>
 
 {{< image src="assets/impact_mapping.png" >}}
 
+</div>
+
 ---
 
-## Whirlpool Process of Model Exploration
+# Keep well organized the whole Knowledge Crunching Process
+
+Example of Useful Tools
+
+* Atlassian Confluence (+ Jira)
+    * [https://www.atlassian.com/software/confluence](https://www.atlassian.com/software/confluence)
+
+* GitHub Pages
+    * [https://pages.github.com/](https://pages.github.com/)
+
+* GenMyModel (& plugins for other tools)
+    * [https://www.genmymodel.com/](https://www.genmymodel.com/)
+
+---
+
+# Model Exploration Whirlpool
 
 * A method of modeling and knowledge crunching that can complement other agile methodologies and be called upon at any time of need throughout the lifetime of application development
     * Proposed by Eric Evans
@@ -403,7 +439,7 @@ cases.
 
 1. **Scenario Exploring**
     * A domain expert describes a scenario (with concrete examples) that the team is worried about or having difficulty with in the problem domain
-    * Then, the group then maps the scenario, like event storming in a visual manner in an open space
+    * Then, the group maps the scenario, like event storming in a visual manner in an open space
 
 1. **Modeling**
     * At the same time of running through a scenario, the team starts to examine the current model and assesses its usefulness for solving the scenario expressed by the domain expert
@@ -421,6 +457,248 @@ cases.
 
 3. **Code Probing** 
     * When insight into the problem domain is unlocked and a design breakthrough occurs the technical team should prove it in code to ensure that it can be implemented
+
+---
+
+# Domain Storytelling
+
+<div class='left' style='float:left;width:35%'>
+
+{{< image src="https://domainstorytelling.org/images/domainstorytelling-book.jpg" >}}
+
+</div>
+
+<div class='right' style='float:right;width:65%'>
+
+* Let domain experts tell their domain stories
+
+* While listening, you record the domain stories using a pictographic language
+    * The domain experts can see immediately if you understand their story correctly
+    
+* After very few stories, you are able to talk about the people, tasks, tools, work items, and events in that domain
+
+> *You can learn more from a good example than from a bad abstraction!*
+
+[https://domainstorytelling.org/](https://domainstorytelling.org/)
+
+</div>
+
+---
+
+{{< image src="assets/ds_1.png" width="100">}}
+
+---
+
+{{< image src="assets/ds_2.png" width="100">}}
+
+---
+
+## Domain Stories $\neq$ Documentation Artifacts
+
+* Do not think of Domain Stories as documentation
+    * use them to dive into Domain Driven Design...
+    
+* Inviting the right people to the meetings is important because the primary goal is to learn and communicate
+
+* A picture of a Domain Story serves as an aid to memory for those present at the meeting
+    * ... but it is not a replacement for participating!
+
+---
+
+<div class='left' style='float:left;width:30%'>
+
+## The "Cinema" Case Study
+## (1/10)
+
+</div>
+
+<div class='right' style='float:right;width:70%'>
+
+* A chain of cinemas has asked us to develop an app that allows their customers to make reservations and buy electronic tickets
+
+* We visit one of the cinemas and invite an employee who works at the ticket counter, the local cinema manager, and an administrator who manages the existing ticket system.
+
+</div>
+
+---
+
+<div class='left' style='float:left;width:30%'>
+
+## The "Cinema" Case Study
+## (2/10)
+
+</div>
+
+<div class='right' style='float:right;width:70%'>
+
+* First, we talk about the use cases that might be relevant for the app and collect the information in a use case diagram
+
+{{< image src="assets/cinema_01.png" width="60">}}
+
+</div>
+
+---
+
+<div class='left' style='float:left;width:30%'>
+
+## The "Cinema" Case Study
+## (3/10)
+
+</div>
+
+<div class='right' style='float:right;width:70%'>
+
+* We ask out Domain Experts to pick an important use case and explain it to us in detail
+
+* They decide to start with the ticket reservation use case because it takes up a lot of the employee's time
+
+{{< image src="assets/cinema_02a.png" width="70">}}
+
+</div>
+
+---
+
+<div class='left' style='float:left;width:30%'>
+
+## The "Cinema" Case Study
+## (4/10)
+
+</div>
+
+<div class='right' style='float:right;width:70%'>
+
+* Step by step, we record the Domain Story
+
+{{< image src="assets/cinema_02b.png" width="65">}}
+
+</div>
+
+---
+
+<div class='left' style='float:left;width:30%'>
+
+## The "Cinema" Case Study
+## (5/10)
+
+</div>
+
+<div class='right' style='float:right;width:70%'>
+
+* After step three, the employee hesitates
+
+{{< image src="assets/cinema_03a.png" width="65">}}
+
+</div>
+
+---
+
+<div class='left' style='float:left;width:30%'>
+
+## The "Cinema" Case Study
+## (6/10)
+
+</div>
+
+<div class='right' style='float:right;width:70%'>
+
+* The employee continues with his story until the reservation number is generated
+
+{{< image src="assets/cinema_03b.png" width="65">}}
+
+</div>
+
+---
+
+<div class='left' style='float:left;width:30%'>
+
+## The "Cinema" Case Study
+## (7/10)
+
+</div>
+
+<div class='right' style='float:right;width:70%'>
+
+{{< image src="assets/cinema_04a.png" width="65">}}
+
+</div>
+
+---
+
+<div class='left' style='float:left;width:30%'>
+
+## The "Cinema" Case Study
+## (8/10)
+
+</div>
+
+<div class='right' style='float:right;width:70%'>
+
+{{< image src="assets/cinema_04b.png" width="65">}}
+
+</div>
+
+---
+
+<div class='left' style='float:left;width:30%'>
+
+## The "Cinema" Case Study
+## (9/10)
+
+</div>
+
+<div class='right' style='float:right;width:70%'>
+
+* Employee, manager and administrator agree there is anything else we need to know about making reservations at the ticket counter
+
+* We revisit the use case diagram
+    * We have just learned that the ticket system is an actor in the reservation process and that reservations can be made at the ticket counter and by phone
+
+{{< image src="assets/cinema_05.png" width="45">}}
+
+</div>
+
+---
+
+<div class='left' style='float:left;width:30%'>
+
+## The "Cinema" Case Study
+## (10/10)
+
+</div>
+
+<div class='right' style='float:right;width:70%'>
+
+* We captured the relevant variations of the ticket reservation use case in one Domain Story
+    * There is no need for an additional ticket reservation Domain Story
+    * Hence, we continue with the next use case
+
+* It will take more than one workshop to gather enough knowledge about the domain
+    * We could run another workshop with someone from marketing and someone who is in charge of the screen plans
+
+> WPS Modeler - [https://www.wps.de/modeler/](https://www.wps.de/modeler/)
+</div>
+
+---
+
+<div class='left' style='float:left;width:30%'>
+
+## Collaborative Modelling
+
+* For further details
+
+    1. [Who doesn’t love a good story?](https://medium.com/@zspajich/who-doesnt-love-a-good-story-1fb7a64966b7)
+    
+    1. [Collaborative Modeling: Domain Storytelling as a catalyst for product backlogs](https://www.wps.de/en/aktuelles/blog-en/collaborative-modeling-domain-storytelling-as-a-catalyst-for-product-backlogs/)
+
+    1. [Distilling the Essence of Collaborative Modelling](https://www.wps.de/en/aktuelles/announcements/distilling-the-essence-of-collaborative-modelling/)
+
+</div>
+
+<div class='right' style='float:right;width:70%'>
+
+{{< image src="assets/como.png" >}}
+
+</div>
 
 ---
 
