@@ -225,6 +225,74 @@
 </li>
 </ol>
 </section><section>
+<h2 id="categorizing-complexity">Categorizing Complexity</h2>
+<div class='left' style='float:left;width:30%'>
+<h2 id="cynefin-framework">Cynefin Framework</h2>
+<p>by D. Snowden, 1999</p>
+<ul>
+<li>
+<p>A conceptual framework used to aid decision-making</p>
+</li>
+<li>
+<p>Offers five decision-making contexts that help managers to identify how they perceive situations and make sense of their own and other people&rsquo;s behaviour</p>
+</li>
+</ul>
+</div>
+<div class='right' style='float:right;width:70%'>
+<img src="assets/cynefin.jpeg" style='
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</div>
+</section><section>
+<h2 id="categorizing-complexity---details-12">Categorizing Complexity - Details (1/2)</h2>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Simple</strong></td>
+<td>- Problems where best practices and an established set of rules are available, and there is a direct link between a cause and a consequence.<br>- The sequence of actions for this domain is [1] Establishing facts (sense), [2] identify processes and rules (categorise) and [3] execute them (response)</td>
+</tr>
+<tr>
+<td><strong>Complicated</strong></td>
+<td>- Problems where expertise and skills are required to find the relation between cause and effect since there is no single answer to such a problem. <br> - The sequence of actions in this domain would be sense-analyse-respond. &ldquo;analyse&rdquo; replace &ldquo;categorise&rdquo; because there is no clear categorisation of facts in this domain. <br> - <em>Here it makes sense to apply DDD patterns for both strategic and tactical design, but you probably could avoid more advanced exploratory techniques and you might spend less time on knowledge crunching, if the problem is thoroughly understood.</em></td>
+</tr>
+</tbody>
+</table>
+</section><section>
+<h2 id="categorizing-complexity---details-22">Categorizing Complexity - Details (2/2)</h2>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Complex</strong></td>
+<td>- Here we encounter something that no one has done before, making even a rough estimate is impossible. It is hard or impossible to predict the reaction in response to our actions: we can only find out about the impact that we have made in retrospect. <br> - The sequence of actions is &ldquo;probe-sense-respond&rdquo;. There are no right answers here and no practices to rely upon the previous experience might not be helping. <br> - This is the place where all innovation happens. <br> - <em>In terms of DDD, here we find our Core Domain. A deep strategic design is necessary, but some tactical patterns of DDD can be safely ignored to save time. Event Storming and Knowledge Chrunching are very important here.</em></td>
+</tr>
+<tr>
+<td><strong>Chaotic</strong></td>
+<td>- No one wants to be here! <br> - <em>It is probably not the best place for DDD since there is no time and budget for any sort of design available at this stage</em></td>
+</tr>
+<tr>
+<td><strong>Disorder</strong></td>
+<td>- It is where the transition to chaos usually happens from any stage. <br> - Underestimated complex problems with unrealistic deadlines bring teams to stress, leading to disorder at the later project stages, from where all slips to chaos.</td>
+</tr>
+</tbody>
+</table>
+</section><section>
 <h2 id="complex-problem-domains">Complex Problem Domains</h2>
 <img src="assets/ddd_software_complexity.png" style='
     
@@ -509,7 +577,7 @@ models being corrupt by isolating them from third-party code.</p>
 <p>DDD is not code-centric!</p>
 <ul>
 <li>its purpose is not to make elegant code</li>
-<li><strong>Software is merely an artifact of DDD</strong>.</li>
+<li><strong>Software is merely an artifact of DDD</strong></li>
 </ul>
 </li>
 </ul>
@@ -534,6 +602,7 @@ models being corrupt by isolating them from third-party code.</p>
 </ol>
 </section><section>
 <h2 id="popular-misconceptions-of-ddd-22">Popular Misconceptions of DDD (2/2)</h2>
+<div class='left' style='float:left;width:45%'>
 <ol start="3">
 <li><em>DDD is a Silver Bullet! No, it isn&rsquo;t!</em>
 <ul>
@@ -552,6 +621,17 @@ models being corrupt by isolating them from third-party code.</p>
 </ul>
 </li>
 </ol>
+</div>
+<div class='right' style='float:right;width:50%'>
+<img src="assets/ddd_where_to_use.jpeg" style='
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</div>
 </section><section>
 <h2 id="why-domain-driven-solutions">Why Domain-Driven Solutions</h2>
 <h2 id="often-fail-to-deliver">often fail to deliver?</h2>
