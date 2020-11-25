@@ -126,17 +126,30 @@ DDD does not enforce the use of a particular architectural style
 
 ---
 
-<div class='left' style='float:left;width:50%'>
-
 # Clean Architecture
 
-1. Independent of Frameworks
-1. Testable
-1. Independent of the UI
-1. Independent of the data persistence layer
-1. Independent of any external agency
+* Unifies the *layered Architecture* and *Hexagonal Architecture* with best practices like the *Dependency Inversion Principle* and *Use Cases*
+    * It also aims for maximum independence of any frameworks or tools that might stay in the way of application’s testability or their replacement
 
-> *No "name" in an outer circle can be mentioned by an inner circle*
+* Clean Architecture divides our system into 4 layers
+
+* **Key concepts**
+    1. Any layer can only reference a layer below it and know nothing about what’s going on above.
+    1. The use cases and entities are the heart of your application and should have a minimal set of external library dependencies.
+
+---
+
+## Clean Architecture Layers
+
+<div class='left' style='float:left;width:50%'>
+
+* **Entities** - These are the business objects of your application. These should not be affected by any change external to them, and these should be the most stable code within your application.
+
+* **Use Cases** - Implement and encapsulate all of the business rules
+
+* **Interface Adapters** - Convert and present data to the use case and entity layers
+
+* **Frameworks and Drivers** - Contain any frameworks or tools you need to run your application
 
 </div>
 
@@ -146,7 +159,33 @@ DDD does not enforce the use of a particular architectural style
 
 (from *Clean Architecture* by Robert C. Martin)
 
+> *No "name" in an outer circle can be mentioned by an inner circle*
+
 </div>
+
+---
+
+## Clean Architecture - Pros
+
+|Pros|Description
+|---|---
+|**Power**|Your business logic is protected, and nothing from the outside can make it fail. Your code does not depend on any external framework “controlled” by someone else.
+|**Flexibility**|Any adapter can be replaced at anytime by any other implementation of your choice.
+|**Defer decisions**|What database do I need? What web framework do I need? You can build your business logic without knowing those details.
+|**High maintainability**|It’s easy to identify what component fails.
+|**Implement faster**|As the architecture separates concerns, you can concentrate on one task at a time and develop faster. This also should reduce the amount of technical debt.
+|**Tests**|Unit testing is easier as the dependencies are well-defined, it’s easy to mock or stub.
+|**Integration tests**|You can create a specific implementation of any external service you want to hit during your integration tests.
+
+---
+
+## Clean Architecture - Cons
+
+|Cons|Description
+|---|---
+|**Learning curve**|At the beginning, the architecture can be overwhelming, especially for junior developers.
+|**Too much code**|More classes, more packages, more sub-projects, ...
+|**Complexity**|The complexity of the project is higher.
 
 ---
 
@@ -461,7 +500,7 @@ by Mark Richards, Neal Ford
 <div class='left' style='float:left;width:40%'>
 
 # #3
-## Hopen Host Service
+## Open Host Service
 
 * Useful when other systems or components employ some type of transformation layer in order to translate your model into terms of their own
     * e.g. using an anticorruption layer

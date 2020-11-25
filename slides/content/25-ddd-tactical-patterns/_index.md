@@ -5,7 +5,7 @@ title = "[LSS2021] DDD > Building Blocks"
 description = ""
 outputs = ["Reveal"]
 aliases = [
-    "/ddd-building-blocks/"
+    "/ddd-tactical-patterns/"
 ]
 
 [reveal_hugo]
@@ -561,7 +561,7 @@ public bool CanBeExceededBy(Money offer)
         * trade-off between additional technical complexity and greater expressiveness and fluency
 
 7. **Testable**
-    * Immutability, cohesion, and combinability are three qualities of value objects that make them easy to test in expressive domain‐oriented language
+    * Immutability, cohesion, and combinability are three qualities of value objects that make them easy to test in an expressive domain‐oriented language
         * Immutability precludes the need to use mocks or verify side effects
         * Cohesion allows single concepts to be fully tested in isolation
         * Combinability allows you to express the relationships between different values
@@ -777,7 +777,7 @@ public class PhoneBook : ValueObject<PhoneBook>
     * Unlike value objects, it is usually not acceptable for two entities that have similar values to be considered equal
 
 * Finding entities in your domain and modeling them explicitly is important for conceptual and technical reasons
-    * Identifing a concept as an entity, enable to to probe domain experts for related details (e.g. its life cycle)
+    * Identifing a concept as an entity, enable to probe domain experts for related details (e.g. its life cycle)
 
 * Technically, is also important to understand which concepts are entities
     * Distinct trade‐offs and considerations apply to their design and implementation
@@ -801,7 +801,7 @@ public class PhoneBook : ValueObject<PhoneBook>
 >
 > vs.
 >
-> A hotel have no realworld unique identifier, so the application would need to generate an arbitrary one.
+> A hotel have no real-world unique identifier, so the application would need to generate an arbitrary one.
 
 * If it's not clear, then it's in your best interests to ask the domain experts if an entity has a unique identity in the problem domain
 
@@ -1704,7 +1704,7 @@ public class NotifyRestaurantOnBookingConfirmation
 </div>
 
 * One obvious drawback: 
-    * the logic is now distributed between the `RestaurantBooking` entity and the `NotifyRestaurantOnCustomerBookingConfirmation` event handler, whereas with other patterns this would be a single piece of code
+    * The logic is now distributed between the `RestaurantBooking` entity and the `NotifyRestaurantOnCustomerBookingConfirmation` event handler, whereas with other patterns this would be a single piece of code
 
 ---
 
@@ -1714,7 +1714,7 @@ public class NotifyRestaurantOnBookingConfirmation
 
 # Domain Events
 
-* In the Domain‐Driven Design (DDD) several problem domains can be better understanded considering events that occur within them (not just the entities)
+* In the Domain‐Driven Design (DDD) several problem domains can be better understood considering events that occur within them (not just the entities)
     * These events, known as domain events, will be uncovered during knowledge‐crunching sessions with domain experts
 
 * If conceptual models are event‐centric, then the code also needs to be event‐centric
@@ -1812,7 +1812,120 @@ private void onDeliveryFailure(DeliveryGuaranteeFailed evnt)
 
 # Aggregates
 
-* xx
+* A domain model’s structure is composed of entities and value objects that represent concepts in the problem domain
+    * Associations that do not support behavior and exist only to better reflect reality add unnecessary complexity to a domain model
+
+* *Designing relationships between domain objects is equally as important as designing the domain objects themselves*
+
+* An aggregate is *a consistency boundary that decomposes large models into smaller clusters of domain objects* that are technically easier to manage
+    * Aggregates are an extremely important pattern at your disposal when designing a domain model
+    * They help you manage technical complexity
+    * They add a higher level of abstraction that can simplify talking and reasoning about the domain model
+
+---
+
+## MANAGING COMPLEX OBJECT GRAPHS
+
+* Avoiding complex object graphs doesn’t have to be difficult
+    * You can easily reduce the number of associations between entities and value objects by only allowing relationships in a single direction
+
+* To decrease the number of relationships, you have to justify their inclusion
+    * If the relationship is not required (does not work to fulfill an invariant), don’t implement it!
+    * A relationship may exist in the problem domain, but it may not provide a benefit by existing in the code
+
+* **Modeling domain object associations based on the needs of use cases and not real life can ensure a simpler domain model and a more performant system**
+    1. Associations between domain objects are there to support invariants
+    1. Simplify associations in object graphs
+    1. Model relationships from the point of view of a single traversal direction
+    1. Simplify the model, and you will make it easier to implement and maintain in code
+
+---
+
+## Favoring a Single Traversal Direction
+
+<div class='left' style='float:left;width:60%'>
+
+* A model that is built to reflect reality will contain many bidirectional object relationships
+    * Two objects contain a reference to each other
+    * By selecting a uni‐directional relationship between the entities the domain model is simpler 
+
+* When defining object relationships, it is good practice to ensure that you explicitly ask:
+    * What is the behavior that an association is fulfilling? 
+    * Who needs the relationship to function?
+
+{{< image src="assets/aggregates_single_dir.png" width="50">}}
+
+</div>
+
+<div class='right' style='float:right;width:40%'>
+
+```csharp
+public class Supplier
+{
+    public IList<PurchaseOrder> PurchaseOrders 
+    { get; private set; }
+
+    public IList<Product> Products
+    { get; private set; }
+}
+```
+```csharp
+public class PurchaseOrder
+{
+    public Supplier Supplier
+    {get; private set;}
+
+    public IList <Product> Products
+    {get; private set;}
+}
+```
+```csharp
+public class Product
+{
+    public IList<Supplier> Suppliers
+    {get; private set;}
+
+    public IList<PurchaseOrder> PurchaseOrders
+    {get; private set;}
+}
+```
+
+</div>
+
+---
+
+# Aggregates are the most powerful of all tactical patterns
+## but they are one of the most difficult to get right
+
+* There are many guidelines and principles you can lean on to help with the construction of effective aggregates
+    * but often developers focus only on the implementation of these rules
+    * and miss the true purpose and use of an aggregate
+    * which is to act as a consistency boundary
+
+---
+
+## #1 - Design around Domain Invariants
+
+* Domain invariants are statements or rules that must always be adhered to
+    * If domain invariants are ever broken, you have failed to accurately model your domain
+    
+> A basic example of an invariant for aggregates
+>
+> *Winning auction bids must always be placed before the auction ends. If a winning bid is placed after an auction ends, the domain is in an invalid state because an invariant has been broken and the domain model has failed to correctly apply domain rules.*
+
+* Using invariants as a design strategy for aggregates makes sense because invariants often involve multiple domain objects   
+    * When all domain objects involved in an invariant reside within the same aggregate, it is easier to compare and coordinate them to ensure that their collective states do not violate a domain invariant
+
+---
+
+## #2 - Higher Level of Domain Abstraction
+
+* By grouping related domain objects, you can refer to them collectively as a single concept
+
+* Aggregates afford
+these benefits of abstraction to your domain model by allowing you to refer to a collection of
+domain objects as a single concept. Instead of an order and order lines, you can refer to them
+collectively as an order, for example.
 
 ---
 
@@ -1820,9 +1933,209 @@ private void onDeliveryFailure(DeliveryGuaranteeFailed evnt)
 
 ---
 
-# Factories
+## The role of Factories
 
-* xx
+* Aggregates, entities, and value objects can become complex when you're creating a domain model for large and rich domains
+    * The knowledge of other objects' invariants breaks the Single Responsibility Principle (SRP) 
+    
+* **Object creation is not a domain concern, but it does live within the domain layer of an application**
+    * You will rarely talk about factories to domain experts, but they do play an important role...
+
+* Factories can be used to reconstitute a domain object from a persistence model, or to create new domain objects, encapsulating complex creation logic
+    * The factory method pattern belongs to the creational group of the G0F design patterns
+    * It handles the issue of creating objects without specifying the exact class of object to be created
+
+---
+
+## Separating Use from Construction
+
+* The main objective of the factory pattern is to *hide the complexities of creating objects*
+    * Complexities can include deciding what class to instantiate if a client depends on an abstraction, or it could be checking invariants
+    
+* A secondary objective of a factory is to *express the intent behind variations of an object instantiation*
+    * Typically, this is hard to achieve using constructors only
+    
+* Using factories, the client code can be completely ignorant of how dependent classes are created
+    * This follows the Dependency Inversion Principle...
+    
+* Another benefit of the factory method pattern is related to *the centralization of the code responsible to the creation of objects*
+    * a change in the way an object is generated can be located and updated without affecting the code that depends on it
+
+---
+
+## Encapsulating Internals
+
+* When adding elements to an aggregate, it important to avoid to expose the structure of the aggregate
+
+<div class='left' style='float:left;width:50%'>
+
+```csharp
+//Application Layer
+public class AddProductToBasket
+{
+    public void Add(Product product, Guid basketId)
+    {
+        var item = new BasketItem(
+            TaxRateService.ObtainTaxRateFor(product.Id, 
+            country.Id), product.Id, product.price)
+
+        basketRepository.FindBy(basketId).Add(item);
+    }
+}
+```
+
+* Here, the application service method is required to understand the logic behind how a `BasketItem` is constructed
+    * This is a responsibility it should not have as it should be concerned with coordination only
+* You can avoid exposing the internals of the aggregate by adding a factory method
+</div>
+
+<div class='right' style='float:right;width:50%'>
+
+```csharp
+//Application Layer
+public class AddProductToBasket
+{
+    public void Add(Product product, Guid basketId)
+    {
+        basketRepository.FindBy(basketId).Add(product);
+    }
+}
+```
+
+```csharp
+//Domain Layer
+public class Basket
+{
+    public void Add(Product product)
+    {
+        if (Contains(product))
+            GetItemFor(product).IncreaseItemQuantitBy(1);
+        else
+            items.Add(BasketItemFactory.CreateItem(product));
+    }
+}
+
+public class BasketItemFactory
+{
+    public static BasketItem CreateItem(Product product)
+        => new BasketItem(/* ... */)
+}
+```
+
+</div>
+
+---
+
+## Hiding Decisions on Creation Type
+
+* A factory can be used in the domain layer to abstract the type that a class requires
+    * if there are multiple choices 
+    * if this choice is not the responsibility of the client class
+    
+* The client codes against an interface or abstract class and leaves the factory class responsible for creating the concrete type
+    * if the correct type can't be anticipated
+
+---
+
+## Hiding Decisions on Creation Type - Example
+
+```csharp
+public class Order
+{
+    public Consignment CreateFor(IEnumerable<Item> items, destination)
+    {
+        var courier = CourierFactory.GetCourierFor(items, destination.Country);
+        var consignment = new Consignment(items, destination, courier);
+    
+        SetAsDispatched(items, consignment);
+    
+        return consignment;
+    }
+}
+```
+
+```csharp
+public static Courier GetCourierFor(IEnumerable<Item> consignmentItems, DeliveryAddress destination)
+{
+    if (AirMail.CanDeliver(consignmentItems, destination)) return new AirMail(consignmentItems, destination);
+    else 
+        if (TrackedService.CanDeliver(consignmentItems, destination)) return new TrackedService(consignmentItems, destination);
+        else return new StandardMail(consignmentItems, destination);
+}
+
+```
+
+* An order can create consignments: this is itself a factory method but, to create a valid consignment must be selected a `Courier`
+    
+* The Order class doesn't know which `Courier` to create, so it delegates to `CourierFactory`
+
+---
+
+## Factory Methods on Aggregates
+
+<div class='left' style='float:left;width:50%'>
+
+* A factory method can exist on an aggregate to hide the complexities of object creation from clients
+
+```csharp
+public class Basket
+{
+    public WishListItem MoveToWishList(Product product)
+    {
+        if (BasketContainsAnItemFor(product_snapshot))
+        {
+            var wishListItem = WishListItemFactory
+                .CreateFrom(GetItemFor(product));
+            RemoveItemFor(product);
+            return wishListItem;
+        }
+    }
+}
+```
+
+</div>
+
+<div class='right' style='float:right;width:50%'>
+
+* A factory method can create an aggregate itself
+
+```csharp
+public class Account
+{
+    public Order CreateOrder()
+    {
+        if (HasEnoughCreditToOrder()) return new Order(Id,
+            PaymentMethod, Address);
+        else throw new InsufficentCreditToCreateAnOrder();
+    }
+
+    public Order CreateAnOrderIgnoringCreditRating()
+        => new Order(Id, PaymentMethod,
+                Address, PaymentType.PayBeforeShipping);
+    }
+}
+```
+
+</div>
+
+---
+
+<div class='left' style='float:left;width:40%'>
+
+# Factories' Rationale
+
+</div>
+
+<div class='right' style='float:right;width:60%'>
+
+1. Factories can be effective to ensure that the domain model remains expressive
+    * they should only be used where they are effective and by no means everywhere an instance of an object needs to be instantiated
+    
+1. Use a factory when it is more expressive than a constructor or if it provides convenience where there is the confusion of more than one constructor 
+
+1. Use a factory where elements needed for construction logic are not the concern of the dependent class
+
+</div>
 
 ---
 
@@ -1832,7 +2145,160 @@ private void onDeliveryFailure(DeliveryGuaranteeFailed evnt)
 
 # Repositories
 
-* xx
+* A repository is used to *manage aggregate persistence and retrieval*
+    * ensuring that there is a separation between the domain model and the data model
+
+* It mediates between these two models by using a collection façade that hides the complexities of the underlying storage platform and any persistence framework
+
+* Repositories differ from traditional data access strategies in 3 ways:
+    1. They restrict access to domain objects by only allowing the retrieval and persistence of aggregate roots, ensuring all changes and invariants are handled by aggregates
+    1. They keep up the persistence-ignorant façade by hiding the underlying technology used to persist and retrieve aggregates
+    1. **They define a boundary between the domain model and the data model**
+
+---
+
+## An Example
+
+<div class='left' style='float:left;width:40%'>
+
+* *The interface is kept within the domain model* because it is part of the domain model, with *the implementation residing in the technical infrastructure*
+
+* A typical client of a repository is the application service layer
+    * A repository defines all the data-access methods that an application service requires to carry out a business task
+
+</div>
+
+<div class='right' style='float:right;width:60%'>
+
+```csharp
+//Domain Layer
+public interface ICustomerRepository
+{
+    Customer FindBy(Guid id);
+    void Add(Customer customer);
+    void Remove(Customer customer);
+}
+```
+
+```csharp
+//Infrastructural Layer
+public class CustomerRepository : ICustomerRepository
+{
+    private ISession _session;
+    
+    public CustomerRepository (ISession session)
+    {
+        _session = session;
+    }
+
+    public IEnumerable<Customer> FindBy(Guid id) 
+        => _session.Load<Order>(id);
+    
+    public void Add(Customer customer) { session.Save(customer); }
+
+    public void Remove(Customer customer) { _session.Delete(customer); }
+}
+```
+
+</div>
+
+---
+
+## A MISUNDERSTOOD PATTERN
+
+* When it’s not used in conjunction with a rich domain model, the repository pattern is overly complex
+    * can be avoided for a simpler data access object (DAO) or better by using a persistence framework directly
+
+* However, when modeling a solution for a complex domain, the repository is an extension of the model
+    * It reveals the intent behind aggregate retrieval and can be written in a manner that is meaningful to the domain rather than a technical framework
+    * Without a repository layer, your persistence infrastructure will likely leak into the domain model and weaken its integrity and ultimately usefulness
+
+* The benefit to separating the data model from the domain model is that it allows you to evolve the domain model without having to constantly think of the data storage and how it will be persisted
+
+---
+
+## A REPOSITORY IS AN EXPLICIT CONTRACT (1/2)
+
+* The contract of a repository is more than just a CRUD interface
+    * It is an extension of the domain model and is written in terms that the domain expert understands
+    * Your repository should be built from the needs of the application use cases rather than from a CRUD‐like data access standpoint
+
+* The application layer is the client that pulls aggregates from the repository and delegates work to them
+
+* The repository is not an object
+    * It is a procedural boundary and an explicit contract that requires just as much effort when naming methods upon it as the objects in your domain model do
+    
+* The repository contract should be specific and intention revealing and mean something to your domain experts
+
+---
+
+## A REPOSITORY IS AN EXPLICIT CONTRACT (2/2)
+
+<div class='left' style='float:left;width:50%'>
+
+(implicit contract)
+
+```csharp
+public interface ICustomerRepository
+{
+    Customer FindBy(Guid id);
+    IEnumerable<Customer> FindAllThatMatch(Query query);
+    IEnumerable<Customer> FindAllThatMatch(String hql);
+    void Add(Customer customer);
+}
+```
+
+</div>
+
+<div class='right' style='float:right;width:50%'>
+
+(explicit contract)
+
+```csharp
+public interface ICustomerRepository
+{
+    Customer FindBy(Guid id);
+    IEnumerable<Customer> FindAllThatAreDeactivated();
+    IEnumerable<Customer> FindAllThatAreOverAllowedCredit();
+    void Add(Customer customer);
+```
+
+</div>
+
+* The repository is the contract between the domain model and the persistence store
+    * It should be written only in terms of the domain and without a thought to the underlying persistence framework
+
+* NOTE: Define intent and make it explicit!
+    * Do not treat the repository contract like object‐oriented code...
+
+---
+
+## THE REPOSITORY AS AN ANTICORRUPTION LAYER
+
+* A repository can help keep the domain model pure by acting as an anticorruption layer
+    * enabling to create a model without its shape being affected by any underlying infrastructure complexities
+
+* Whatever persistence store is used, it should not shape the domain model!
+    * Repositories map to aggregates, not tables...
+    * Repositories can also store a model over more than a single data store
+
+{{< image src="assets/repository_as_acl.png" width="60">}}
+
+---
+
+## OTHER RESPONSIBILITIES OF A REPOSITORY
+
+1. **Entity ID Generation**
+    * If the database or another infrastructural service controls the seeding of IDs, this can be asbstracted behind the repository and exposed to the application service
+
+1. **Collection Summaries**
+    * Besides counting the number of aggregates you have in a collection, you may want some other summary information on what the collection contains without having to pull back each aggregate and summarize manually
+
+1. **Concurrency**
+    * When multiple users are concurrently changing the state of a domain object, it is important that users are working against the latest version of an aggregate and that their changes don’t overwrite other changes that they are not aware of
+
+1. **Metadata (and Logging)**
+    * A repository can be used if the data model requires metadata that does not make sense in the domain
 
 ---
 
@@ -1842,6 +2308,92 @@ private void onDeliveryFailure(DeliveryGuaranteeFailed evnt)
 
 # Event Sourcing
 
-* xx
+* Event sourcing allows businesses to deeply understand many aspects of their data, including detailed behavior of their customers
+    * A full history of activity is stored...
+    * With this historical information, new and novel queries can be asked that inform product development, marketing strategies, and other business decisions
+
+* Using event sourcing, it is possible to determine what the state of the system looked like at any given point in time and how it reached any of those states
+    * Many systems today store only the current state of the domain model, thereby precluding the opportunity to analyze historical behavior
+
+* Domain‐Driven Design (DDD) practitioners often like to combine event sourcing with CQRS as the basis for enhanced scalability and performance
 
 ---
+
+## Why adopting Event Sourcing?
+
+* If you only store the current state of your domain model, you don’t have a way of understanding how the system reached that
+    * you cannot analyze past behavior to uncover new insights or to work out what has gone wrong
+    
+* You can acquire the ability to analyze full historical data by storing each event of significance in chronological order with its timestamp
+    * You then derive current state by replaying events
+
+* Significantly, you can do more than just work out the current state
+    * you can replay any subsequence of events to work out the state, and activity that caused it, for any point in history
+
+---
+
+## Temporal Queries
+
+* Temporal queries are like the ability to travel back in time
+    * you can rewind the state of your domain model to a previous point in history
+    
+* **Replaying events is the mechanism that underlies temporal queries**
+
+* **Projections** are the underlying feature that enables combining events from multiple streams to carry out complex temporal queries
+    * *Projections are queries that map a set of input event streams onto one or more new output streams*
+
+---
+
+## Snapshots
+
+* A consequence of storing state as events is that event streams can grow very large, meaning that the time to replay events can continue to increase significantly
+
+* To avoid this performance hit, event stores use **snapshots**
+    * *Snapshots are intermediate steps in an event stream that represent the state after replaying all previous events*
+
+{{< image src="assets/event_sourcing_snapshot.png" width="60">}}
+
+* When an application wants to load the current state of an aggregate from an event stream, all it has to do is find the latest snapshot
+    * Then it need then only replay all the subsequent events in the stream
+
+---
+
+## EVENT‐SOURCED AGGREGATES
+
+* For compatibility with event sourcing, **aggregates need to be event-oriented**
+    * They need to be able to calculate their state by applying a series of events
+
+* DDD practitioners find that a nice side effect of this is that their aggregates are more behavior oriented
+    * ... providing heightened levels of domain event expressiveness!
+    * Moreover, persistence tends to be loosely coupled and less problematic
+
+---
+
+## Aggregates for event‐sourced domain models
+
+* There are a few key details involved in the creation of event-oriented aggregates:
+    1. An aggregate must be able to apply a domain event and update its state according to the appropriate business rule(s)
+    1. A list of uncommitted events needs to be maintained so that they can be persisted to an Event Store
+    1. An aggregate needs to maintain a record of its version and provide the ability to create snapshots and restore from them
+
+---
+
+## Persisting and Rehydrating
+
+* Persisting event‐sourced aggregates is just a case of storing the uncommitted changes in an event store
+    * loading the aggregate, also known as rehydrating, requires you to load and replay all previously stored events, with the option to use snapshots as a shortcut
+
+---
+
+## BENEFITS OF EVENT SOURCING
+
+1. **Competitive Business Advantage**
+
+1. **Expressive Behavior‐Focused Aggregates**
+    * Event‐sourced aggregates are almost declarative
+        * `When {Domain Event} {Apply Business Rules}`
+    * This makes the domain model even more useful in knowledge‐crunching sessions
+
+1. **Simplified Persistence**
+
+1. **Superior Debugging (And Testing)**
