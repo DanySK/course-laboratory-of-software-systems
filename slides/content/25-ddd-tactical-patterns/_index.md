@@ -913,7 +913,7 @@ public class Stay
 
 ## Focusing on Behavior, Not Data
 
-* Entities should be behavior oriented
+* Entities should be behavior-oriented
     * An entity's interface should expose expressive methods that communicate domain behaviors instead of exposing state
 
 * Focusing on an entity's behavior when using DDD is important because it makes your domain model more expressive
@@ -1209,7 +1209,7 @@ public class Basket
 ## Favor Hidden‐Side‐Effect‐Free Functions
 
 * Side effects can make code harder to reason about and harder to test, and they can often be the source of bugs
-    * Avoiding side effecting functions as much as possible is generally considered good advice...
+    * Avoiding side-effecting functions as much as possible is generally considered good advice...
     * ... and avoiding hidden side effects is a fundamental expectation!
 
 <div class='left' style='float:left;width:50%'>
@@ -1268,7 +1268,7 @@ public class Dice
     * they are stateless
 
 * Domain services are used to orchestrate entities and encapsulate business policies
-    * NOTE: Domain Services must be non confused with "application services" functionalities...
+    * NOTE: Domain Services must be not confused with "application services" functionalities...
     
 * When to use:
     1. *Encapsulating business policies and processes*
@@ -1593,7 +1593,7 @@ public class RestaurantBookingRepository
 
 ---
 
-## OPTION #3 - Inversion of Control with Service Locator
+## Option #3 - Inversion of Control with Service Locator
 
 Inversion of Control (IoC): the entity proactively requires the service
 
@@ -1894,13 +1894,36 @@ public class Product
 
 ---
 
+## Qualifying Associations
+
+* If you are implementing associations as object references to support domain invariants and those associations are one‐ or many‐to‐many, you should qualify the associations to reduce the number of objects that need to be hydrated
+
+{{< image src="assets/aggregates_associations.png" width="50">}}
+
+* In general: the greater the number of items in an associated collection (*cardinality*) the more complex the technical implementation will become
+    * Aim for lower cardinality by adding constraints to collections
+
+---
+
+## IDs vs. Object References
+
+* **Relationships between domain objects should exist only for behavioral needs**
+    * Relationships that do not support behaviors can increase complexity in the implementation of the domain model
+
+* Object references are the classic example of adding unnecessary, complexity‐increasing relationships to a domain model
+    * E.g.,  Even if in the real life a customer has many orders, in the solution space there may be no invariant that requires a Customer to hold a collection of all Orders belonging to that customer
+
+{{< image src="assets/aggregates_ids.png" >}}
+
+---
+
 # Aggregates are the most powerful of all tactical patterns
 ## but they are one of the most difficult to get right
 
 * There are many guidelines and principles you can lean on to help with the construction of effective aggregates
-    * but often developers focus only on the implementation of these rules
-    * and miss the true purpose and use of an aggregate
-    * which is to act as a consistency boundary
+    * but often developers focus only on the implementation of these rules...
+    * ... and miss the true purpose and use of an aggregate...
+    * ... which is to act as a consistency boundary!
 
 ---
 
@@ -1920,12 +1943,520 @@ public class Product
 
 ## #2 - Higher Level of Domain Abstraction
 
-* By grouping related domain objects, you can refer to them collectively as a single concept
+* **By grouping related domain objects, you can refer to them collectively as a single concept**
 
-* Aggregates afford
-these benefits of abstraction to your domain model by allowing you to refer to a collection of
-domain objects as a single concept. Instead of an order and order lines, you can refer to them
-collectively as an order, for example.
+* Aggregates afford these benefits of abstraction to your domain model by allowing you to refer to a collection of domain objects as a single concept
+
+---
+
+## #3 - Consistency Boundaries
+
+* To ensure a system is usable and reliable, there is *a strong need to make good choices about which data should be consistent* and *where transactional boundaries should lie*
+
+* When applying DDD, these choices arise from grouping objects that are involved in the same business use case(s)
+    * In other words, aggregates...
+
+* Two alternatives:
+    * **Transactional Consistency internally**
+    * **Eventual Consistency Externally**
+
+---
+
+## #3A - Transactional Consistency Internally (1/4)
+
+* Considers the option to have a single aggregate by wrapping the entire domain model in a single transactional boundary
+    * The problem with this is that *in a collaborative domain when many changes are being performed there is the potential for a conflict for changes that are completely unrelated*
+    * The problem would likely manifest as blocking issues at the database level or failed updates (due to pessimistic concurrency)
+
+<div class='left' style='float:left;width:60%'>
+
+{{< image src="assets/aggregates_tci_1.png" width="50">}}
+
+</div>
+
+<div class='right' style='float:right;width:40%'>
+
+* User A wants to add an address to a customer record, whereas user B wants to change the state of the same customer’s order.
+* There are no invariants that state while an order is being updated the personal details of a customer cannot change
+    * but in this scenario if both updates are made at the same time, one of the user’s changes will be blocked/rejected
+
+</div>
+
+---
+
+## #3A - Transactional Consistency Internally (2/4)
+
+* You might be tempted to assume that having no transactional boundaries would solve all the problems
+    * That would be dangerous because then consistency problems can arise that cause domain‐invariant violations
+
+<div class='left' style='float:left;width:60%'>
+
+{{< image src="assets/aggregates_tci_2.png" width="50">}}
+
+</div>
+
+<div class='right' style='float:right;width:40%'>
+
+* Two different users are updating the same order
+    * one is applying a discount code to the order, while another is modifying an order line
+* Because there is no concurrency check and the change is not transactional, both changes will be made, resulting in a broken invariant
+    * In this case, the order could have a massive discount applied that is no longer applicable
+
+</div>
+
+---
+
+## #3A - Transactional Consistency Internally (3/4)
+
+* An aggregate treats the cluster of domain objects as a conceptual whole
+    * e.g. The order items do not exist or make sense outside the concept of an order
+        
+* **The aggregate defines the boundary of the cluster of domain objects and separates it in terms of consistency and transactional mechanism from all other domain objects outside it**
+
+<div class='left' style='float:left;width:60%'>
+
+{{< image src="assets/aggregates_tci_3.png" width="50">}}
+
+</div>
+
+<div class='right' style='float:right;width:40%'>
+
+* Customer and order are treated as two independent aggregates because there are no invariants in the domain that involve both of them
+
+</div>
+
+---
+
+## #3A - Transactional Consistency Internally (4/4)
+
+* To enforce consistency in the cluster of domain objects, all interaction needs to go through a single entity known as the aggregate root
+
+* Objects outside of the aggregates can have no access to any of the internal objects of the aggregate
+    * this ensures control of the domain objects and ensures consistency within the aggregate
+
+<div class='left' style='float:left;width:60%'>
+
+{{< image src="assets/aggregates_tci_4.png" width="50">}}
+
+</div>
+
+<div class='right' style='float:right;width:40%'>
+
+> *Aggregates persistency*
+>
+> * The aggregate as a whole is pulled from and committed to the datastore via a repository
+> * No parts of the aggregates can be separately pulled from the data store unless it is purely for reporting
+
+</div>
+
+---
+
+## #3B - Eventual Consistency Externally (1/2)
+
+* Because aggregates are persisted and retrieved atomically, a rule that spans two or more aggregates will not be immediately consistent
+    * The aggregate ensures transactional consistency internally but it is not responsible for updating anything outside its consistency boundary
+
+{{< image src="assets/aggregates_ece_1.png" width="70">}}
+
+---
+
+## #3B - Eventual Consistency Externally (2/2)
+
+> *Example* - 
+> Consider a loyalty policy: ff a customer has spent more than $100 in the past year, he/she gets 10% off all further purchases
+
+<div class='left' style='float:left;width:40%'>
+
+* In the domain model, there are separate order and loyalty aggregates
+    1. When an order is placed, the Order aggregate is updated inside a transaction exclusively
+    1. At that point, the Loyalty aggregate does not have a consistent view of the customer’s purchase history because it was not updated in the same transaction
+    1. The Order aggregate can publish an event signalling the order was created, which the Loyalty aggregate can subscribe to...
+
+</div>
+
+<div class='right' style='float:right;width:60%'>
+
+{{< image src="assets/aggregates_ece_1.png" width="58">}}
+
+</div>
+
+---
+
+*A general rule*
+# Favor Smaller Aggregates
+
+* Smaller aggregates make a system faster and more reliable, because less data is being transferred and fewer opportunities for concurrency conflicts arise
+
+* Conversely, large aggregates:
+    1. can degrade performance
+    1. are more susceptible to concurrency issues
+    1. may not scale well
+
+---
+
+## Online Auction Case Study
+
+<div class='left' style='float:left;width:60%'>
+
+{{< image src="assets/ebidder_bc.png" width="50">}}
+
+</div>
+
+<div class='right' style='float:right;width:40%'>
+
+Bounded Contexts
+
+* The *Listing* bounded context deals with the items for sale and the format that they are being sold in, whether that is an auction or a fixed price
+* The *Disputes* bounded context covers any disputes raised between a seller and member over a listing
+* The *Membership* bounded context covers membership to the eBidder site
+* The *Selling Account* bounded context looks after fees and selling activities
+
+In this example we will consider the Listing bounded context only
+
+</div>
+
+---
+
+## Online Auction Case Study
+
+<div class='left' style='float:left;width:20%'>
+
+The domain model for the Listing bounded context
+
+</div>
+
+<div class='right' style='float:right;width:80%'>
+
+{{< image src="assets/ebidder_listing_domain.png" >}}
+
+</div>
+
+---
+
+*Defining Aggregates Boundaries*
+## Rule 1 - Aligning with Invariants
+
+Some of the domain rules that can form the basis of deciding which clusters of objects should be aggregates in the Listing bounded context
+
+* Each listing must be in at least one category and offer at least one payment type and one shipping method
+* A listing is sold via an auction
+    * an auction has a start and end date and keeps track of the winning bid
+* When a member places a bid, he can enter the maximum amount that he would be happy to pay for the item
+    * only the amount required to become the winning bidder is bid
+    * if a second member bids, the auction automatically bids up to the maximum amount
+    * each automatic bid is logged as a bid
+* A member can ask questions about a listing
+    * a seller can then provide an answer that closes the question
+* An auction can generate many bids, but the current price is defined by the winning bid
+* Members can watch items
+
+---
+
+*Defining Aggregates Boundaries*
+## Rule 1 - Aligning with Invariants
+
+{{< image src="assets/ebidder_aggregates.png" width="58">}}
+
+---
+
+*Defining Aggregates Boundaries*
+## Rule 1 - Aligning with Invariants
+
+Considerations (1/2)
+
+1. *Questions and Answers aggregate* - There are no invariants that requires data from both questions and listings apart from a reference that can be implemented via an ID property. A listing as a concept can exist without a question, and a question does not depend on any other domain objects apart from an answer.
+
+1. *Auction and Winning Bid aggregate* - An auction represents the format of the listing. It holds data on the start and end dates along with the current winning bid, including the maximum amount that the member would bid up to. For bidding to occur, the auction has to be active, and the value of the winning bid must be less than the intended bid. The auction does not depend on the details of the listing to perform its role.
+
+---
+
+*Defining Aggregates Boundaries*
+## Rule 1 - Aligning with Invariants
+
+Considerations (2/2)
+
+1. *Listing aggregate* - A listing contains all information on the item being sold, including what category it is in, what payment methods can be used to pay for the item, and which shipping methods are available for the item. An invariant requires a listing to have a shipping method, category, and payment method.
+
+1. *Bid aggregate* - A bid is a historical event; therefore, it can exist as its own aggregate because it is not involved in any invariants.
+
+1. *Member/Seller aggregate* - The member and seller only have their identifiers shared so they can become their own aggregates.
+
+1. *"Watch" aggregate* - A member can watch an auction but doesn’t have any invariants and is just a container with the listing ID and member ID; it, too, can be its own aggregate
+
+---
+
+*Defining Aggregates Boundaries*
+## Rule 2 - Aligning with Transactions and Consistency
+
+<div class='left' style='float:left;width:45%'>
+
+* *You should try to align your aggregate boundaries with transactions*
+    * the higher the number of aggregates being modified in a single transaction, the greater the chance of a concurrency failure
+
+* If you find that you are modifying more than one aggregate in a transaction, it may be a sign that your aggregate boundaries can be better aligned with the problem domain
+    * You should try to find new insights by discussing the use case with domain experts or experimenting with your model
+
+</div>
+
+<div class='right' style='float:right;width:55%'>
+
+{{< image src="assets/ebidder_consistency.png" width="50">}}
+
+The auction and listing boundaries are aligned with transactions; each aggregate is modified inside a separate transaction
+
+</div>
+
+---
+
+*Defining Aggregates Boundaries*
+## Rule 3 - Ignoring User Interface Influences
+
+* Aggregates should not be designed around UIs
+
+* Instead of creating large aggregates to satisfy UIs, it’s common practice to map from multiple aggregates onto a single view model that contains all the data a page needs
+
+* In such a scenario, you may want to consider the CQRS Pattern
+
+---
+
+*Defining Aggregates Boundaries*
+## Rule 3 - Avoiding unuseful Collections/Containers
+
+* A common aggregate misconception is that they are merely collections or containers for other objects
+
+* This can be a dangerous misconception that results in a lack of clarity in your domain model
+
+* Whenever you see a collection or a container‐like concept, you shouldn’t blindly assume that it is an aggregate
+
+> *Example* - In the online auction case study you could look at the auction entity and be tempted to bring its collection of bids into the aggregate. This is logical because, conceptually, an auction has a collection of bids, but...
+
+---
+
+*Defining Aggregates Boundaries*
+## Rule 4 - Don’t Focus on "HAS‐A Relationships"
+
+* Your aggregates should not be influenced by your data model
+    * Associations between domain objects are not the same as database table relationships, data models need to represent each HAS‐A relationship
+
+> *Example* - Listing HAS questions, and a listing HAS AN auction, but this does not need to be modeled as a single aggregate
+
+* When including domain objects in an aggregate, don’t simply focus on the HAS‐A relationship
+    * *justify each grouping and ensure that each object is required to define the behavior of the aggregate instead of just being related to the aggregate*
+
+---
+
+*Defining Aggregates Boundaries*
+## Rule 5 - Refactoring to Aggregates
+
+* Defining aggregate boundaries is a reversible and continual activity
+
+* A new use case may involve existing entities and uncover new relationships
+    * Consequently, new domain invariants may arise that don’t fit well with your existing aggregate designs
+
+---
+
+*Defining Aggregates Boundaries*
+## Rule 6 - Satisfying Business Use Cases, Not Real Life
+
+* Focus on modeling aggregates from the perspective of your business use cases
+    * Ask what invariants must be met to fulfill a use case
+
+<div class='left' style='float:left;width:70%'>
+
+```csharp
+public class BidOnAuctionService
+{
+    public void Bid(Guid auctionId, Guid memberId, decimal amount)
+    {
+        if (memberService.GetMember(memberId).CanBid)
+        {
+            var auction = _auctions.FindBy(auctionId);
+            var offer = new Offer(memberId, new Money(amount), _clock.Time());
+            auction.PlaceBidFor(offer, _clock.Time());
+        }
+
+        DomainEvents.Register(OutBid());
+        DomainEvents.Register(BidPlaced());
+    }
+}
+```
+
+</div>
+
+<div class='right' style='float:right;width:30%'>
+
+*Example* - Consider the use case of placing a bid. You will notice that it doesn’t require information on the listing, its category, or description to place a bid. This is why the listing and auction aggregates were modeled separately.
+
+</div>
+
+---
+
+*Implementing Aggregates*
+## Rule 1 - Selecting an Aggregate Root
+
+* For an aggregate to remain consistent, its constituent parts should not be shared throughout the domain model or made accessible to the service layer
+    * this guideline prevents other parts of an application from putting an aggregate into an inconsistent state
+
+* Choose an entity for each aggregate to be its aggregate root
+    * all communication with an aggregate should then occur only via its root
+
+* **An aggregate root coordinates all changes to the aggregate, ensuring that clients cannot put the aggregate into an inconsistent state**
+    * It manages all invariants of the aggregate by delegating to other entities and value objects in the aggregate cluster
+
+---
+
+*Implementing Aggregates*
+## Rule 1 - Selecting an Aggregate Root
+
+{{< image src="assets/ebidder_aggregate_root.png" width="80">}}
+
+---
+
+*Implementing Aggregates*
+## Rule 1 - Selecting an Aggregate Root
+
+**Expose Behavioral Interfaces and Protect Internal State**
+
+<div class='left' style='float:left;width:50%'>
+
+```csharp
+public class Auction : Entity<Guid>
+{
+    public Auction(Guid id, Guid itemId, 
+        Money startingPrice, DateTime endsAt) { }
+
+    private Guid ItemId { get; set; }
+    private DateTime EndsAt { get; set; }
+    private Money StartingPrice { get; set; }
+    private WinningBid WinningBid { get; set; }
+    private bool HasEnded { get; set; }
+    
+    public void ReduceTheStartingPrice() { }
+    public bool CanPlaceBid() { }
+    public void PlaceBidFor(Offer offer, 
+        DateTime currentTime) { }
+}
+```
+
+</div>
+
+<div class='right' style='float:right;width:50%'>
+
+```csharp
+public class WinningBid : ValueObject<WinningBid>
+{
+    public WinningBid(Guid bidder, Money maximumBid,
+        Money bid, DateTime timeOfBid) { }
+
+    public Guid Bidder { get; private set; }
+    public Money MaximumBid { get; private set; }
+    public DateTime TimeOfBid { get; private set; }
+    public Price CurrentAuctionPrice { get; private set; }
+
+    public WinningBid RaiseMaximumBidTo(Money newAmount) { }
+    public bool WasMadeBy(Guid bidder) { } 
+    public bool CanBeExceededBy(Money offer) { }
+    public bool HasNotReachedMaximumBid() { }
+}
+```
+
+</div>
+
+* The public interfaces consist only of behavior
+    * All references to internal members of the objects are encapsulated as private member variables
+    * If an aggregate exposes getters and setters, the internals of the aggregate may be exposed.
+
+---
+
+*Implementing Aggregates*
+## Rule 1 - Selecting an Aggregate Root
+
+**Allowing only Roots to have Global Identity**
+
+<div class='left' style='float:left;width:50%'>
+
+{{< image src="assets/ebidder_local_global_id.png" width="50">}}
+
+</div>
+
+<div class='right' style='float:right;width:50%'>
+
+* DDD practitioners refer to *local identity* and *global identity*
+
+* That’s just a concise way of expressing that an aggregate root has a global identity because it can be accessed from outside the aggregate
+    * whereas other members of an aggregate have a local identity because they are internal to the aggregate
+
+</div>
+
+---
+
+*Implementing Aggregates*
+## Rule 2 - Referencing Other Aggregates
+
+**Nothing outside an aggregate’s boundary may hold a reference to anything inside**
+
+{{< image src="assets/ebidder_ref_1.png" width="70">}}
+
+---
+
+*Implementing Aggregates*
+## Rule 2 - Referencing Other Aggregates
+
+**The Aggregate root can hand out transient references to the internal domain objects**
+
+{{< image src="assets/ebidder_ref_2.png" width="70">}}
+
+---
+
+*Implementing Aggregates*
+## Rule 2 - Referencing Other Aggregates
+
+**Objects within the aggregate can hold references to other aggregate roots**
+
+{{< image src="assets/ebidder_ref_3.png" width="70">}}
+
+---
+
+*Implementing Aggregates*
+## Rule 3 - Implementing Persistence
+
+<div class='left' style='float:left;width:45%'>
+
+* Only aggregate roots can be obtained directly with database queries
+    * The domain objects that are inner components of the aggregate can be accessed only via the aggregate root
+    
+* Each aggregate has a matching repository that abstracts the underlying database and that will only allow aggregates to be persisted and hydrated
+    * This is crucial in ensuring that invariants are met and aggregates are kept consistent
+
+</div>
+
+<div class='right' style='float:right;width:55%'>
+
+{{< image src="assets/ebidder_persistency_1.png" width="50">}}
+
+</div>
+
+---
+
+*Implementing Aggregates*
+## Rule 3 - Implementing Persistence
+
+<div class='left' style='float:left;width:45%'>
+
+* Sometimes, loading an entire aggregate is inefficient or unnecessary, when instead you just want to load a single domain object
+    * these scenarios are rare...
+
+* For reporting on the state of the domain, you need not worry about aggregates
+    * Reporting or querying can be performed directly at the database level without the need to hydrate domain objects
+    * The CQRS Pattern enforce this vision...
+
+</div>
+
+<div class='right' style='float:right;width:55%'>
+
+{{< image src="assets/ebidder_persistency_2.png" width="50">}}
+
+</div>
 
 ---
 

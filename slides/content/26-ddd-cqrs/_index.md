@@ -183,7 +183,7 @@ public class CustomerWantsToRedeemACertificate
     * The shape of aggregates is morphed from handling invariants into structures that match the user interface
 
 * You can avoid these issues by applying CQRS and freeing the model from any presentational requirements
-    * The UL will fit better around the behaviors of application than the UI screen
+    * The UL will fit better around the behaviors of the application than the UI screen
     * Domain experts will talk about behavior and rules, not about UI
 ---
 
@@ -318,7 +318,7 @@ public class CreateOrUpdateCategoryHandler
     * Separating the read and write sides enables each to be scaled independently to meet the particular demands of the application
 
 * Read and write data can also be separated into stores that are best suited to their needs
-    * A write store that deals solely with aggregates can utilize a document database or a key value store
+    * A write store that deals solely with aggregates can utilize a document database or a key-value store
     * A read model can utilize a relational database or a caching store
 
 * To scale either side you need to understand the trade‐offs involved
@@ -388,7 +388,7 @@ public class CreateOrUpdateCategoryHandler
 
 ## The whole picture
 
-* If you are working in a collaborative domain with heavy reads and writes, you can use an eventually consistent read model in conjunction with business tasks being handled out of process
+* If you are working in a collaborative domain with heavy reads and writes, you can use an eventually consistent read model in conjunction with business tasks being handled out of the process
 
 {{< image src="assets/cqrs_11.png" width="65">}}
 
@@ -509,7 +509,7 @@ public class CreateOrUpdateCategoryHandler
     * An application service’s job is to handle these error conditions and translate them into suitable representations for external parties
     * No external parties must be coupled to the structure of the domain errors
 
-* E.g., If the referrer has a debit in its balance, the point 3) must be skipped
+* E.g., If the referrer has a debit in its balance, point 3) must be skipped
 
 </div>
 
@@ -530,7 +530,7 @@ public class CreateOrUpdateCategoryHandler
 * Response times, errors, and other types of diagnostic information allow you to see how your application is performing and spot any potential issues at an early stage
     * But capturing this information can add unnecessary clutter to your domain logic and obfuscate important concepts
 
-* E.g., Measuring time between friend's recomendation and friend's acceptation
+* E.g., Measuring time between friend's recommendation and friend's acceptation
 
 </div>
 
@@ -601,4 +601,4 @@ public class CreateOrUpdateCategoryHandler
 
 1. **Publish/Subscribe**
     * A pattern for looser coupling is publish/subscribe, whereby application services subscribe to events in the domain
-    * You may want to consider this pattern when your domain logic is inherently event based, especially when you pass commands into the domain but do not receive a return value
+    * You may want to consider this pattern when your domain logic is inherently event-based, especially when you pass commands into the domain but do not receive a return value
