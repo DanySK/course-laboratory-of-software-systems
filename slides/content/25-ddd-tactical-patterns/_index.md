@@ -37,15 +37,24 @@ enableSourceMap = true
 
 1. Tactical Building Blocks Overview
 
-1. Tactical Building Blocks Details
+1. Tactical Building Blocks Details (Part 1)
     * Value Objects
     * Entities
     * Domain Services
     * Domain Events
     * Aggregates
+
+1. An Example: Tactical DDD to design microservices
+
+1. Tactical Building Blocks Details (Part 2)
     * Factories
     * Repositories
     * Event Sourcing
+
+---
+
+# Tactical Building Blocks
+# Overview
 
 ---
 
@@ -338,6 +347,11 @@ function checkout(shoppingCart: ShoppingCart, ...) {
 | Repositories | - Expose the interface of an in-memory collection of aggregate roots <br> - Provide the retrieval and persistence needs of aggregate roots <br> - Decouple the domain layer from database strategies and infrastructure code
 | Domain Events | - Makes domain events more explicit in code <br> - They are part of the ubiquitous language (UL)
 | Event Sourcing | - Replaces traditional snapshot‐only storage with a full history of events that produce the current state
+
+---
+
+# Tactical Building Blocks
+# Details (Part 1)
 
 ---
 
@@ -2457,6 +2471,176 @@ public class WinningBid : ValueObject<WinningBid>
 {{< image src="assets/ebidder_persistency_2.png" width="50">}}
 
 </div>
+
+---
+
+# An Example
+# Tactical DDD to design microservices
+
+---
+
+## Scenario
+
+> ACME, Inc. is starting a drone delivery service. The company manages a fleet of drone aircraft. Businesses register with the service, and users can request a drone to pick up goods for delivery. When a customer schedules a pickup, a backend system assigns a drone and notifies the user with an estimated delivery time. While the delivery is in progress, the customer can track the location of the drone, with a continuously updated ETA (Estimated Time of Arrival).
+>
+> This scenario involves a fairly complicated domain. Some of the business concerns include scheduling drones, tracking packages, managing user accounts, and storing and analyzing historical data. Moreover, ACME wants to get to market quickly and then iterate quickly, adding new functionality and capabilities. The application needs to operate at cloud scale, with a high service level objective (SLO). ACME also expects that different parts of the system will have very different requirements for data storage and querying.
+
+---
+
+## Drone Delivery Domain - A sketch
+
+After some initial domain analysis, the ACME team came up with a rough sketch that depicts the Drone Delivery domain
+
+{{< image src="https://docs.microsoft.com/en-us/azure/architecture/microservices/images/ddd1.svg" width="70">}}
+
+---
+
+## Drone Delivery Domain - Details
+
+* *Shipping* is placed in the center of the diagram, because it's core to the business. Everything else in the diagram exists to enable this functionality.
+* *Drone* management is also core to the business. Functionality that is closely related to drone management includes *drone repair* and using *predictive analysis* to predict when drones need servicing and maintenance.
+* *ETA* analysis provides time estimates for pickup and delivery.
+* *Third-party transportation* will enable the application to schedule alternative transportation methods if a package cannot be shipped entirely by drone.
+* *Drone sharing* is a possible extension of the core business. The company may have excess drone capacity during certain hours, and could rent out drones that would otherwise be idle. This feature will not be in the initial release.
+* *Video surveillance* is another area that the company might expand into later.
+* *User accounts*, *Invoicing*, and *Call center* are subdomains that support the core business.
+
+---
+
+## Drone Delivery Domain - Bounded Contexts
+
+{{< image src="https://docs.microsoft.com/en-us/azure/architecture/microservices/images/ddd2.svg" >}}
+
+---
+
+## Applying Tactical Pattern to the Shipping Bounded Context
+
+*We start with the use-cases that the Shipping bounded context must handle*
+
+* A customer can request a drone to pick up goods from a business that is registered with the drone delivery service.
+* The sender generates a tag (barcode or RFID) to put on the package.
+* A drone will pick up and deliver a package from the source location to the destination location.
+* When a customer schedules a delivery, the system provides an ETA based on route information, weather conditions, and historical data.
+* When the drone is in flight, a user can track the current location and the latest ETA.
+* Until a drone has picked up the package, the customer can cancel a delivery.
+* The customer is notified when the delivery is completed.
+* The sender can request delivery confirmation from the customer, in the form of a signature or finger print.
+* Users can look up the history of a completed delivery.
+
+---
+
+## Shipping Bounded Context - Tactical Concepts (1/3)
+
+* We can identify the following concepts:
+    * *Delivery*
+    * *Package*
+    * *Drone*
+    * *Account*
+    * *Confirmation*
+    * *Notification*
+    * *Tag*
+
+* The first four, *Delivery*, *Package*, *Drone*, and *Account*, are all **aggregates** that represent transactional consistency boundaries
+    * *Confirmations* and *Notifications* are child **entities** of *Deliveries*
+    * *Tags* are child **entities** of *Packages*
+
+* The **value objects** in this design include *Location*, *ETA*, *PackageWeight*, and *PackageSize*
+
+---
+
+## Shipping Bounded Context - Tactical Concepts (2/3)
+
+* There are two **domain events**:
+
+    * While a drone is in flight, the Drone entity sends *DroneStatus* events that describe the drone's location and status (in-flight, landed)
+
+    * The Delivery entity sends *DeliveryTracking* events whenever the stage of a delivery changes. These include *DeliveryCreated*, *DeliveryRescheduled*, *DeliveryHeadedToDropoff*, and *DeliveryCompleted*
+
+* We can recognize one more area of functionality, which doesn't fit neatly into any of the entities described so far
+    * Some part of the system must coordinate all of the steps involved in scheduling or updating a delivery
+    * Therefore, we can add two **domain services** to the design:
+        * a *Scheduler* that coordinates the steps
+        * a *Supervisor* that monitors the status of each step, in order to detect whether any steps have failed or timed out
+
+---
+
+## Shipping Bounded Context - Tactical Concepts (3/3)
+
+{{< image src="https://docs.microsoft.com/en-us/azure/architecture/microservices/images/drone-ddd.png">}}
+
+---
+
+## From domain model to microservices - Guidelines
+
+1. In general, the functionality in a microservice should not span more than one bounded context
+    * By definition, a bounded context marks the boundary of a particular domain model
+    * If you find that a microservice mixes different domain models together, that's a sign that you may need to go back and refine your domain analysis
+
+1. Look at the aggregates in your domain model
+    * Aggregates are often good candidates for microservices
+    * A well-designed aggregate exhibits many of the characteristics of a well-designed microservice, such as:
+        * An aggregate is derived from business requirements, rather than technical concerns such as data access or messaging
+        * An aggregate should have high functional cohesion
+        * An aggregate is a boundary of persistence
+        * Aggregates should be loosely coupled
+
+---
+
+## From domain model to microservices - Guidelines
+
+3. Domain services are also good candidates for microservices
+    * Domain services are stateless operations across multiple aggregates
+    * A typical example is a workflow that involves several microservices
+
+3. Finally, consider non-functional requirements
+    * Look at factors such as team size, data types, technologies, scalability requirements, availability requirements, and security requirements
+    * These factors may lead you to further decompose a microservice into two or more smaller services, or do the opposite and combine several microservices into one
+
+---
+
+## Microservices for the Shipping Bounded Context
+
+We have identified four aggregates (Delivery, Package, Drone, and Account)  
+and two domain services (Scheduler and Supervisor)
+
+* Delivery and Package are obvious candidates for microservices
+
+*  The Scheduler and Supervisor coordinate the activities performed by other microservices
+    * it makes sense to implement these domain services as microservices
+
+* Drone and Account are interesting because they belong to other bounded contexts
+    * Option 1 - the Scheduler calls the Drone and Account bounded contexts directly
+    * Option 2 - create Drone and Account microservices inside the Shipping bounded context
+    * Most likely, the best option is to keep the two bounded context (and related microservices) distinct from the Shipping one, using an ACL action as a "translator" (the Context Map must be designed before taking such a decision)
+
+--- 
+
+## Microservices for the Shipping Bounded Context
+
+**Considering Non-functional Requirements...**
+
+* Non-functional requirments lead us to create one additional service, to deal with throughput requirements
+    * A separate Ingestion microservice that is responsible for ingesting client requests
+    * The Scheduler will read the requests from the buffer and execute the workflow
+
+* More over, another requirments is about the need of storing the history of every delivery in a persistency data store
+    * This responsibility can be demanded to the Delivery service...
+    * ...but could be appropriate to have another dedicate service for this purpose
+        * Delivery History service, reachable from the Delivery service via appropriate domain events
+
+
+---
+
+## Microservices for the Shipping Bounded Context
+
+{{< image src="https://docs.microsoft.com/en-us/azure/architecture/microservices/images/drone-delivery.png" >}}
+
+...
+
+---
+
+# Tactical Building Blocks
+# Details (Part 2)
 
 ---
 

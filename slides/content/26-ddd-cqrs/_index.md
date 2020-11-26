@@ -195,16 +195,23 @@ public class CustomerWantsToRedeemACertificate
 
 * A command handler only returns an acknowledgement of the success or failure of a command
 
+<div class='left' style='float:left;width:40%'>
+
 * Because a domain model on the command side is built to implement domain rules and logic, it does not need to contain unnecessary presentational properties
     * DDD aggregates support command processing rather than model real life
     * Handlers can help to focus aggregates on behavior and invariants rather than on real life
+
+</div>
+
+<div class='right' style='float:right;width:60%'>
 
 ```csharp
 public class CreateOrUpdateCategoryHandler
 {
     public ICommandResult Execute(CreateOrUpdateCategoryCommand command)
     {
-        var category = new Category { CategoryId = command.CategoryId, Name = command.Name, Description = command.Description };
+        var category = new Category { CategoryId = command.CategoryId, 
+            Name = command.Name, Description = command.Description };
 
         if (category.CategoryId == 0) categoryRepository.Add(category);
         else categoryRepository.Update(category);
@@ -214,6 +221,8 @@ public class CreateOrUpdateCategoryHandler
     }
 }
 ```
+
+</div>
 
 ---
 
