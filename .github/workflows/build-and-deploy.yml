@@ -5,7 +5,7 @@ on:
     - cron: '0 0 5 * *'
 
 jobs:
-  Build-slides:
+  Build-Slides:
     runs-on: ubuntu-20.04
     steps:
       # Checkout the repository
