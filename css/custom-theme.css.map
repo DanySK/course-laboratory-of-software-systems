@@ -1,7 +1,7 @@
 {
 	"version": 3,
 	"file": "custom-theme.css",
-	"sourceRoot": "/home/travis/build/DanySK/Course-Laboratory-of-Software-Systems/slides",
+	"sourceRoot": "/home/runner/work/Course-Laboratory-of-Software-Systems/Course-Laboratory-of-Software-Systems/slides",
 	"sources": [
 		"assets/custom-theme.scss",
 		"themes/reveal-hugo/assets/reveal-js/css/theme/template/mixins.scss",
