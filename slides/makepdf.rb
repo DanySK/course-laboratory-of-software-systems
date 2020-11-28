@@ -41,7 +41,7 @@ class ChromiumGenerator < Generator
     end
 
     def generation_command(url, file_name, options)
-        options += '--disable-gpu --virtual-time-budget=10000 --window-size=1440,900'
+        options += '--disable-gpu --window-size=1440,900'
         command = "#{@chromium} --headless --run-all-compositor-stages-before-draw #{options} --print-to-pdf=#{file_name} #{url}?print-pdf"
         puts "Launching: #{command}"
         puts `#{command}`
