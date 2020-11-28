@@ -78,7 +78,7 @@ puts "Generation complete!"
 # Site has been generated and is being served. Launch generation
 
 for pack in [''] + contents do
-    decktape.generate(pack, 'decktape')
+    # decktape.generate(pack, 'decktape')
     chromium.generate(pack, 'chromium')
 end
 
