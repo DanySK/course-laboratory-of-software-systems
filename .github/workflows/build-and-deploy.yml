@@ -1,0 +1,83 @@
+name: Build and deploy
+on:
+  push:
+  schedule:
+    - cron: '0 0 5 * *'
+
+jobs:
+  Build-slides:
+    runs-on: ubuntu-20.04
+    steps:
+      # Checkout the repository
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          submodules: recursive
+      - name: Fetch tags
+        shell: bash
+        run: git fetch --tags -f
+      - name: Update package list
+        run: sudo apt-get update -y
+      - name: Install Chromium
+        run: sudo apt-get install -y chromium-browser
+      - name: Download Hugo
+        run: wget --retry-connrefused --waitretry=1 --read-timeout=20 https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_Linux-64bit.deb --output-document=hugo.deb
+        env:
+          HUGO_VERSION: "0.73.0"
+      - name: List files
+        run: ls -ahl
+      - name: Install Hugo
+        run: sudo dpkg -i hugo.deb
+      - name: Print Hugo version
+        run: hugo version
+      - name: Remove Hugo Installer
+        run: rm hugo.deb
+      # - name: Start SSH session
+      #   uses: luchihoratiu/debug-via-ssh@main
+      #   with:
+      #     NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
+      #     SSH_PASS: ${{ secrets.SSH_PASS }}
+      - name: Autotag
+        uses: DanySK/semver-autotag-action@master
+      - name: Build slides with hugo
+        run: |
+          cd slides
+          hugo
+      - name: Make the pdfs
+        run: |
+          cd slides
+          ruby makepdf.rb
+      - name: Deploy PDFs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG=$(git describe --tags --exact-match HEAD)
+          hub release create -m "$(git tag -l --format='%(contents)' "$TAG")" "$TAG" || true
+          for pdf in $(ls slides/*.pdf); do
+            echo "Delivering file $pdf"
+            hub release edit -m '' -a "$pdf" "$TAG"
+          done
+      - name: Deploy website
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: build
+  Automerge:
+    needs: Build-Slides
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: automerge
+        uses: "DanySK/yaagha@master"
+        env:
+          GITHUB_TOKEN: "${{ secrets.AUTOMERGE_TOKEN }}"
+          MERGE_FORKS: "false"
+          MERGE_LABELS: "version-upgrade"
+          BLOCK_LABELS: "blocked, wontfix, invalid"
+          MERGE_METHOD: "rebase"
+          CLOSE_ON_CONFLICT: "true"
+          DELETE_BRANCH_ON_CLOSE: "true"
+          GIT_USER_NAME: "Danilo Pianini"
+          GIT_USER_EMAIL: "danilo.pianini@gmail.com"
