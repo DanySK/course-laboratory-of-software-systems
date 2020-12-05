@@ -56,7 +56,7 @@ jobs:
           hub release create -m "$(git tag -l --format='%(contents)' "$TAG")" "$TAG" || true
           for pdf in $(ls slides/*.pdf); do
             echo "Delivering file $pdf"
-            hub release edit -m '' -a "$pdf" "$TAG"
+            gh release upload "$TAG" "$pdf" --clobber
           done
       - name: Deploy website
         uses: JamesIves/github-pages-deploy-action@3.7.1
