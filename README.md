@@ -26,7 +26,13 @@ The Final Exam of this course requires candidates to propose a project in order 
         * The logical architecture of each core bounded context must be appropriately designed (according to the Clean Architecture vision) and properly described in the project report and implemented into the code (in its main elements, assuming the development of a coarse-grained prototype of the system).
 
     * The project must be managed in a DevOps scenario. In particular:
-        * TBA
+        * Appropriate versioning and licensing
+        * Appropriate strategy for version control (e.g., rebasing policy)
+        * Full build automation
+        * Full continuous integration
+        * Automated quality assurance: code quality, testing, reporting
+        * Automatic delivery, possibly, automated deployment
+        * When applicable, a containerized version of the application
 
 3. **Project delivery**
     * The project must be made available on a dedicated GitHub public repository
@@ -39,11 +45,6 @@ The Final Exam of this course requires candidates to propose a project in order 
 4. **Project discussion**
     * The project will be discussed during an oral exam
     * The oral exam will be organized as follows:
-        * Students must show their project in a 5 to 15 minutes long presentation (eventually using slides or other material)
+        * Students must show their project in a 5 minutes per student (maximum 15 minutes) long presentation (possibly using slides or other material)
         * The contribution of each team member must emerge from the presentation
         * After the presentation, teachers can ask questions to students related to the proposed project, considering the presentation, the project report and the developed code
-
-
-
-
-
