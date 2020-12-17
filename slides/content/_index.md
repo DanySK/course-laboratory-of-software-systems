@@ -216,10 +216,10 @@ Note: data is not persisted automatically, at end of the session you need to cop
   * [Principles and Application](23-ddd-principles-and-application)
   * [Strategic Patterns](24-ddd-strategic-patterns)
   * [Tactical Patterns](25-ddd-tactical-patterns)
-  * Effective Application Patterns
-* Metamodeling and External DSL
-  * Xtext and Xtend
-* Cyber-physical systems
+  * [CQRS Pattern](26-ddd-cqrs)
+* [Enterprise Software Architectures](27-enterprise-software-architectures)
+* [Elements of Metamodeling](28-metamodeling)
+* [DSL Engineering](29-dsl-engineering)
 
 </div>
 
