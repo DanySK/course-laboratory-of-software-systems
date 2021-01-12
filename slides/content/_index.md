@@ -198,12 +198,13 @@ Note: data is not persisted automatically, at end of the session you need to cop
 * [Kotlin for Scala developers](01-kotlin)
   * [Internal DSLs construction](02-internal-dsls)
 * [The DevOps philosophy](03-devops-intro)
-  * [Build automation](04-build-automation)
+* [Build automation](04-build-automation)
+* Sharing
   * [Software versioning](05-version-selection)
   * [Software licensing](06-licenses)
-  * [Continuous integration/delivery/deployment](07-ci)
-  * [Advanced version control](08-advanced-git)
-  * [Containerization](09-containerization)
+* [Continuous integration/delivery/deployment](07-ci)
+* [Advanced version control](08-advanced-git)
+* [Containerization](09-containerization)
 
 </div>
 
