@@ -1,0 +1,56 @@
+intro = '''
+
+# Build automation
+
+The process of automating the creation of *software artifacts*
+<br/>
+going from *source* code to *tested* deployable artifact
+
+May include, depending on the system specifics:
+* Automated *source code manipulation* and generation
+* Source code *quality assurance*
+* *Dependency management*
+* *Compilation*, linking
+* *Binary manipulation*
+* *Test execution*
+* Test *quality assurance* (e.g., coverage)
+* API *documentation*
+* *Packaging*
+* *Delivery*
+
+---
+
+## Build automation: basics and styles
+
+It's just a software that automates the building of some software
+<br/>
+hence, all concerns that hold for sofware creation hold for build systems creation.
+
+**Imperative style**: write a script that tells the system what to do to get
+from code to artifacts
+* *Examples*: make, cmake, Apache Ant
+* Verbose, repetitive
+* Configuration (declarative) and actionable (imperative) logics mixed together
+* Highly configurable
+
+**Declarative style**: adhere to some convention, specify additional configuration,
+and let the tool decide what to do actually
+* *Examples*: Apache Maven
+* Separation between *what* to do and *how* to do it
+* Configuration limited by the provided options
+
+---
+
+## Hybrid automators
+
+Create a *declarative infrastructure* upon an *imperative basis*, and
+*allow easy access to the underlying machinery*
+
+**DSL**s are helpful in this context: they can "hide" imperativity without ruling it out
+
+Still, many challenges remain open:
+* How to reuse the build logic?
+    * within a project, and among projects
+* How to structure multiple logical and interdependent parts?
+
+'''

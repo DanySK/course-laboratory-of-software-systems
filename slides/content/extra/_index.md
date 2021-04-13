@@ -28,4 +28,5 @@ enableSourceMap = true
 # Extra goodies
 
 * [How to contribute, a guide to writing slides for LSS](guide)
+* [Introduction to DevOps for "Programming and Development paradigms"](pps-ci-introduction)
 * [Introduction to DevOps for the **DIR** (Distretto Informatico Romagnolo)](devops-dir)

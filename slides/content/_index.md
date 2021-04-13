@@ -175,12 +175,12 @@ Follow the instructions at [https://github.com/DanySK/docker-linux-didattica](ht
 
 # Software in lab
 
-The PCs are equipped with the docker
-1. Launch docker
+The PCs are equipped with the container
+1. Launch Docker
 1. Launch the script on the Desktop
 1. Wait for it to start
-1. Close it, stop docker
-1. Restart docker
+1. Close it, stop Docker
+1. Restart Docker
 1. Launch the X Server
 1. Now use the container freely
 1. Data is saved in your desktop in `DockerHome` (preserve the folder if you need)
