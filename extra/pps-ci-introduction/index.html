@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-<title>Continuous Integration</title>
+<title>DevOps in a nutshell</title>
 <meta name="description" content="Make things work, keep them working, move fast">
 <meta name="author" content="Danilo Pianini">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -23,14 +23,296 @@
       <div class="slides">
   
 
-    <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
+    <section><h1 id="development-and-programming-paradigms">Development and programming paradigms</h1>
 <h2 id="continuous-integration">Continuous Integration</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
 2021-04-13
 
+</section>
+<section data-noprocess data-shortcode-slide>
+  <h1 id="development">Development</h1>
+<ul>
+<li>Analysis of a domain</li>
+<li>Design of a solution</li>
+<li>Implementation</li>
+<li>Testing</li>
+</ul>
+</section>
+<section data-noprocess data-shortcode-slide>
+<h1 id="operations">Operations</h1>
+<ul>
+<li>IT infrastructure</li>
+<li>Deployment</li>
+<li>Maintenance</li>
+</ul>
+</section>
+<section data-noprocess data-shortcode-slide>
+<h1 id="silo-mentality">Silo mentality</h1>
+<img src="../assets/silos.svg" onerror="this.onerror=null; this.src='../../assets/silos.svg'" style="max-height: 70vh; object-fit: contain;"/>
+</section>
+<section data-noprocess data-shortcode-slide>
+<h1 id="no-silos"><strong>No</strong> silos</h1>
+<img src="../assets/no-silos.svg" onerror="this.onerror=null; this.src='../../assets/no-silos.svg'" style="max-height: 70vh; object-fit: contain;"/>
+</section>
+<section data-noprocess data-shortcode-slide>
+<h1 id="devops-culture">DevOps culture</h1>
+<ul>
+<li>
+<p><strong>Increased collaboration</strong></p>
+<ul>
+<li>Dev and Ops should <em>exchange information</em> and <em>work together</em></li>
+</ul>
+</li>
+<li>
+<p><strong>Shared responsibility</strong></p>
+<ul>
+<li>A team is responsible for the (sub) product for its <em>whole lifetime</em></li>
+<li><em>No handing over</em> projects from devs to ops</li>
+</ul>
+</li>
+<li>
+<p><strong>Autonomous teams</strong></p>
+<ul>
+<li><em>Lightweight decision making</em> process</li>
+</ul>
+</li>
+<li>
+<p><strong>Focus on the process, not just the product</strong></p>
+<ul>
+<li>Promote small, <em>incremental changes</em></li>
+<li><em>Automate</em> as much as possible</li>
+<li>Leverage the right <em>tool</em> for the job at hand</li>
+</ul>
+</li>
+</ul>
+</section>
+<section data-noprocess data-shortcode-slide>
+<h1 id="why-bother">Why bother?</h1>
+<ol>
+<li>
+<p><strong>Risk management</strong></p>
+<ul>
+<li>Reduce the probability of <em>failure</em></li>
+<li>Detect <em>defects</em> before hitting the market</li>
+<li>Quickly <em>react</em> to problems</li>
+</ul>
+</li>
+<li>
+<p><strong>Resource exploitation</strong></p>
+<ul>
+<li>Use <em>human resources</em> for human-y work</li>
+<li>Reduce <em>time to market</em></li>
+<li>Embrace <em>innovation</em></li>
+<li>Exploit <em>emerging technologies</em></li>
+</ul>
+</li>
+</ol>
+</section>
+<section data-noprocess data-shortcode-slide>
+<h1 id="devops">DevOps</h1>
+<ol>
+<li><strong>Principles</strong></li>
+<li><strong>Practices</strong></li>
+<li><strong>Tools</strong></li>
+</ol>
+<p><strong>Principles</strong> <em>inspire</em> <strong>practices</strong></p>
+<p><strong>Practices</strong> <em>require</em> <strong>tools</strong></p>
+</section>
+<section data-noprocess data-shortcode-slide>
+<h1 id="devops-principles">DevOps principles</h1>
+<h3 id="not-exhaustive">(not exhaustive)</h3>
+<ul>
+<li>Collaboration</li>
+<li>Reproducibility</li>
+<li>Automation</li>
+<li>Incrementality</li>
+<li>Robustness</li>
+</ul>
+</section>
+<section data-noprocess data-shortcode-slide>
+<h1 id="devops-practices">DevOps practices</h1>
+<ul>
+<li>Workflow organization</li>
+<li>Build automation</li>
+<li>Self-testing code</li>
+<li>Code quality control</li>
+<li>Continuous Integration</li>
+<li>Continuous Delivery</li>
+<li>Continuous Deployment</li>
+<li>Continuous Monitoring</li>
+</ul>
+</section><section>
+<h1 id="worflow-organization">Worflow organization</h1>
+<ul>
+<li>Design a workflow that <strong>fits the team</strong>
+<ul>
+<li>Delicate balance between <em>chaotic organization</em> and <em>excessive bureaucracy</em></li>
+<li>The larger the team, the more control is usually needed</li>
+<li>Sparse teams and localized teams have different requisites</li>
+</ul>
+</li>
+<li>Project progress is marked also by progress <strong>version control system</strong></li>
+<li>Select a <em>branching model</em> model that matches the organization
+<ul>
+<li>possibly, a <em>forking model</em> for certain kinds of organization</li>
+</ul>
+</li>
+<li><strong>Standardize</strong> the development environment
+<ul>
+<li>Which newlines on which kind of files?</li>
+<li>What should be in tracking?</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h1 id="version-control-systems">Version Control Systems</h1>
+<p>A system responsible for managing changes to the project files</p>
+<ul>
+<li>Records the history</li>
+<li>Enables roll-backs</li>
+<li>Promotes collaborative workflows</li>
+<li><strong>Distributed</strong> vs. <em>Centralized</em>
+<ul>
+<li><strong>Every developer has a whole copy of the entire history</strong></li>
+<li><em>There exist a central point of synchronization</em></li>
+</ul>
+</li>
+<li>Also called Source Content Management (SCM)</li>
+</ul>
+</section><section>
+<h1 id="reference-dvcs-git">Reference DVCS: Git</h1>
+<p>De-facto reference distributed version control system</p>
+<ul>
+<li><em>Distributed</em></li>
+<li><em>Differential tracking</em></li>
+<li>Born in <em>2005</em> to replace BitKeeper as SCM for the Linux kernel
+<ul>
+<li>Performance was a major concern</li>
+<li>Written in C</li>
+</ul>
+</li>
+<li>Developed by Linus Torvalds
+<ul>
+<li>Now maintained by Hamano and others</li>
+</ul>
+</li>
+<li><em>Unix-oriented</em>
+<ul>
+<li>Tracks Unix file permissions</li>
+</ul>
+</li>
+<li>Very <em>fast</em>
+<ul>
+<li>At conception, 10 times faster than Mercurial¹, 100 times faster than Bazaar</li>
+</ul>
+</li>
+</ul>
+<p>¹ Now the difference is much less marked, Facebook vastly improved Mercurial</p>
+</section><section>
+<h2 id="funny-historical-introduction">Funny historical introduction</h2>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/4XpnKHJAok8?autoplay=1" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+</section><section>
+<h2 id="distributed-version-control-with-git-a-recap">Distributed version control with git: a recap</h2>
+<p>You should already be acquainted with the tool, this is an express guide/recap</p>
+<p>Sub-commands and files are in <code>monospace</code>, concepts in <em>italic</em></p>
+</section><section>
+<h2 id="distributed-version-control-with-git-a-recap-1">Distributed version control with git: a recap</h2>
+<h3 id="repository"><em>Repository</em></h3>
+<ul>
+<li>Collection of metadata containing the history of the project</li>
+<li>Reified in the <code>.git</code> folder</li>
+<li>The location of the <code>.git</code> folder marks the root of the repository</li>
+</ul>
+</section><section>
+<h2 id="distributed-version-control-with-git-a-recap-2">Distributed version control with git: a recap</h2>
+<h3 id="working-tree"><em>Working tree</em></h3>
+<ul>
+<li>The directory associated with the root of your repository and its contents</li>
+<li>Contains the files tracked by git</li>
+<li>Not all files in the working tree are tracked</li>
+</ul>
+</section><section>
+<h2 id="distributed-version-control-with-git-a-recap-3">Distributed version control with git: a recap</h2>
+<h3 id="git-init"><code>git init</code></h3>
+<ul>
+<li>Initializes a new repository from the current directory</li>
+</ul>
+</section><section>
+<h2 id="distributed-version-control-with-git-a-recap-4">Distributed version control with git: a recap</h2>
+<h3 id="stage"><em>Stage</em></h3>
+<ul>
+<li>The <strong>changes</strong> that will be saved next</li>
+</ul>
+<img src="staging.png" style='
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+
+</section>
+<section data-noprocess data-shortcode-slide>
+  <h1 id="build-automation">Build automation</h1>
+<p>The process of automating the creation of <em>software artifacts</em>
+<br/>
+going from <em>source</em> code to <em>tested</em> deployable artifact</p>
+<p>May include, depending on the system specifics:</p>
+<ul>
+<li>Automated <em>source code manipulation</em> and generation</li>
+<li>Source code <em>quality assurance</em></li>
+<li><em>Dependency management</em></li>
+<li><em>Compilation</em>, linking</li>
+<li><em>Binary manipulation</em></li>
+<li><em>Test execution</em></li>
+<li>Test <em>quality assurance</em> (e.g., coverage)</li>
+<li>API <em>documentation</em></li>
+<li><em>Packaging</em></li>
+<li><em>Delivery</em></li>
+</ul>
+</section>
+<section data-noprocess data-shortcode-slide>
+<h2 id="build-automation-basics-and-styles">Build automation: basics and styles</h2>
+<p>It&rsquo;s just a software that automates the building of some software
+<br/>
+hence, all concerns that hold for sofware creation hold for build systems creation.</p>
+<p><strong>Imperative style</strong>: write a script that tells the system what to do to get
+from code to artifacts</p>
+<ul>
+<li><em>Examples</em>: make, cmake, Apache Ant</li>
+<li>Verbose, repetitive</li>
+<li>Configuration (declarative) and actionable (imperative) logics mixed together</li>
+<li>Highly configurable</li>
+</ul>
+<p><strong>Declarative style</strong>: adhere to some convention, specify additional configuration,
+and let the tool decide what to do actually</p>
+<ul>
+<li><em>Examples</em>: Apache Maven</li>
+<li>Separation between <em>what</em> to do and <em>how</em> to do it</li>
+<li>Configuration limited by the provided options</li>
+</ul>
+</section>
+<section data-noprocess data-shortcode-slide>
+<h2 id="hybrid-automators">Hybrid automators</h2>
+<p>Create a <em>declarative infrastructure</em> upon an <em>imperative basis</em>, and
+<em>allow easy access to the underlying machinery</em></p>
+<p><strong>DSL</strong>s are helpful in this context: they can &ldquo;hide&rdquo; imperativity without ruling it out</p>
+<p>Still, many challenges remain open:</p>
+<ul>
+<li>How to reuse the build logic?
+<ul>
+<li>within a project, and among projects</li>
+</ul>
+</li>
+<li>How to structure multiple logical and interdependent parts?</li>
+</ul>
 </section><section>
 <h1 id="continuous-integration-1">Continuous Integration</h1>
-<p>The practice of integrating code with a main development line <strong>continuously</strong>
+<p>The practice of integrating code with the main development line <strong>continuously</strong>
 <br>
 <em>Verifying</em> that the build remains intact</p>
 <ul>
