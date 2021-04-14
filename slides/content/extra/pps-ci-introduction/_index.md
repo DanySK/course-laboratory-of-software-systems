@@ -60,7 +60,25 @@ A system responsible for managing changes to the project files
 
 ---
 
-# Reference DVCS: Git
+## Centralized Version Control Systems
+
+{{< image src="2021-04-14-centralized-vcs.svg" max-h="65">}}
+
+---
+
+## Decentralized VCS
+
+{{< image src="2021-04-14-decentralized-vcs.svg" max-h="65">}}
+
+---
+
+## Real-world DVCS
+
+{{< image src="2021-04-14-dvcs-sink.svg" max-h="65">}}
+
+---
+
+## Reference DVCS: Git
 
 De-facto reference distributed version control system
 
@@ -77,7 +95,7 @@ De-facto reference distributed version control system
   * At conception, 10 times faster than Mercurial¹, 100 times faster than Bazaar
 
 
-¹ Now the difference is much less marked, Facebook vastly improved Mercurial
+¹ Less difference now, Facebook vastly improved Mercurial
 
 ---
 
@@ -127,6 +145,306 @@ Sub-commands and files are in `monospace`, concepts in *italic*
 * The **changes** that will be saved next
 
 {{< image src="staging.png" >}}
+
+---
+
+## Distributed version control with git: a recap
+
+### `git add <files>`
+* Moves the current **changes** in `<files>` into the *stage*
+
+### `git reset <files>`
+* Removes the current **changes** to `<files>` from the *stage*
+
+---
+
+## Distributed version control with git: a recap
+
+### `.gitignore`
+* A file listing the pathspecs that git should **ignore** even if added
+* Adding is still possible via `--force`
+
+### `.gitattributes`
+* Defines attributes for path names
+* Can enforce the correct line ending
+* Can provide ways to diff binary file (by conversion to text, needs configuration)
+* Example: 
+```.gitattributes
+* text=auto eol=lf
+*.[cC][mM][dD] text eol=crlf
+*.[bB][aA][tT] text eol=crlf
+*.[pP][sS]1 text eol=crlf
+```
+---
+
+## Distributed version control with git: a recap
+
+### `git commit`
+* Create a new *changeset* with the contents of the stage
+* Requires a **message**
+* Using appropriate messages is **extremely important**
+
+### *HEAD*
+* Pointer to the current commit
+
+---
+
+## Distributed version control with git: a recap
+
+### `git tag -a`
+* Associates a **symbolic name** to a commit
+* Often used for **versioning**
+* Advanced uses in **{{< course_name >}}**
+
+---
+
+## Distributed version control with git: a recap
+
+### *Branch*
+* A **named** development line
+<br>
+{{< image src="branches.svg" >}}
+
+### `master`
+* Default branch name
+  * legacy of BitKeeper
+  * Modern versions of git let user select
+  * Some prefer `main`
+
+---
+
+## Distributed version control with git: a recap
+
+### `git checkout`
+* Moves *HEAD* across commits
+* Used to switch *branches*
+* Can be used to create new *branches* (with `-b`)
+
+### *detached HEAD*
+* Special mode in which commits are not saved
+* The system goes in *detached HEAD* when *HEAD* is not the last commit on a *branch*
+
+---
+
+## Distributed version control with git: a recap
+
+### `git branch`
+* Controls creation, visualization, and deletion (`-d`) of branches
+
+### `git merge`
+* **Unifies** a target branch with the current branch
+* Creates a *merge commit*
+* The merging algorithm is configurable
+* **Conflicts** must be solved manually
+
+### *fast-forward*
+* A special merge mode applicable when a branch is behind another
+* The merge behind is updated without a commit
+* Active by default, can be disabled (`--no-ff`)
+
+---
+
+## Distributed version control with git: a recap
+
+### *Remote*
+* (possibly remote) locations hosting copies of branches of this repository exist
+
+### `git remote`
+* Configures the *remotes*
+
+### *upstream*
+* The default *remote* for network operations.
+
+---
+
+## Distributed version control with git: a recap
+
+### `git clone`
+* Copies a repository from a possibly remote location.
+* Alternative to `init`
+* Automatically sets the local branch *upstream* to the cloned location.
+
+---
+
+## Distributed version control with git: a recap
+
+### `git fetch <remote>`
+* **Updates** the state of `<remote>`
+* If remote is omitted, updates the state of the branch *upstream*'s *remote*
+
+### `git pull <remote> <branch>`
+* **Shortcut** for `git fetch && git merge FETCH_HEAD`
+
+### `git push <remote> <branch>`
+* Sends local changes *remote* *branch*
+* Requires branches to **share a root**
+* If remote and branch are omitted, updates are sent to the *upstream*
+
+---
+
+## Advanced git
+
+Discussed in **{{< course_name >}}**
+
+* Lightweight vs. annotated tagging
+* Stashing
+* Rebasing
+* Rebased pulling
+* Squashing
+* Cherry picking
+* Submodules
+* Hooks
+
+---
+
+## Best practices
+
+* The CLI is your truth
+  * Beware of the GUIs
+* Prepare an ignore list early
+  * And maintain it
+  * And maybe prepare it manually and don't copy/paste it
+* When you have untracked files, decide whether you want to track them or ignore them
+* Be very careful with *what* you track
+* Prepare an attribute file
+
+---
+
+## GitHub
+
+* Hosting for git repositories
+* Free for open source
+* Some limitations for closed source
+* Academic accounts
+* De-facto standard for open source projects
+* One static website per-project, per-user, and per-organization
+  * first-class support for Jellyll (a Ruby framework for static website generation)
+
+---
+
+# DVCS: Workflows
+
+> with great power comes great responsibility
+
+and also
+
+> power is nothing without control
+
+Elements to consider:
+* How *large* is the team?
+* How *complex* is the project?
+* Do team members work *together* (in spacetime)?
+* Do team members *trust* each other?
+
+---
+
+## Trunk-based development(-like)
+
+Single branch, shared truth repository, frequent merges
+<br>
+{{< image src="2021-04-14-dvcs-sink.svg" max-h="55">}}
+
+* *Small* teams, *low-complexity* projects, *colocated* teams, *high* trust
+* Typical of small company projects
+
+---
+
+## Git flow (classic)
+
+Multiple branches, shared truth repository
+<br>
+{{< image src="2021-04-14-dvcs-flow-sink.svg" max-h="55">}}
+
+* *Large* teams, *high-complexity* projects, *preferably colocated* teams, *high* trust
+* Typical of large company projects
+
+---
+
+## Git flow structure
+
+{{< image src="2021-04-13-gitflow.svg" max-h="55">}}
+
+---
+
+## Forks versus branches
+
+* In Git, separate *development lines* are separate *branches*
+* However, everyone has a *copy* of the *same repository*
+* Git *hosting services* can *identify copies* of the same project belonging to different users
+
+These copies are called **forks**
+
+* Branches on one fork can be requested to be merged on another fork
+  * With **merge request** (also called **pull request**, depending on the host)
+* Pull requests enable easier code review
+  * Necessary when the developer *does not trust* the contributor
+  * But very useful anyway
+* Working with pull requests is **not part of git** and *requires host support*
+  * GitHub, GitLab, and Bitbucket all support pull requests
+
+---
+
+## Single branch, multiple forks
+
+* Single branch, multiple independent repository copies
+
+<p>
+{{< image src="2021-04-14-dvcs-fork.svg" max-h="55">}}
+</p>
+
+* *Unknown* team size, *low-complexity* projects, *sparse* teams, *low* trust
+* Typical of small open source projects
+
+---
+
+## Git flow over multiple forks
+
+* Single branch, multiple independent repository copies
+
+<p>
+{{< image src="2021-04-14-dvcs-flow-fork.svg" max-h="55">}}
+</p>
+
+* *Unknown* team size, *high-complexity* projects, *sparse* teams, *low* trust
+* Typical of complex source projects
+
+---
+
+# Documenting projects using GitHub
+
+Documentation of a project is **part of the project**
+
+* **Documentation** must stay in the same repository of the project
+* However, it should be *accessible to non-developers*
+
+Meet GitHub Pages
+
+* GitHub provides an *automated* way to publish *webpages from **Markdown*** text
+* Markdown is a *human readable markup language*, [easy to learn](https://learnxinyminutes.com/docs/markdown/)
+  * These slides are written in Markdown
+  * (generation is a bit richer, but just to make the point)
+* Supports *Jekyll* (a Ruby framework for static website generation) out of the box
+  * We will not discuss it today
+  * But maybe in LSS...
+
+---
+
+## Setting up a GitHub Pages website
+
+Two possibilities:
+1. Select a branch to host the pages
+    * Create an orphan branch with `git checkout --orphan <branchname>`
+    * Write your website, one Markdown per page
+    * Push the new branch
+1. Use a `docs/` folder in a root of some branch
+    * Could be `master` or any other branch
+
+---
+
+## Setting up a GitHub Pages website
+
+Once done, enable GitHub pages on the repository settings:
+{{< image src="gh-pages.png" >}}
 
 ---
 
@@ -606,7 +924,7 @@ deploy:
 2. *Nobody touches it* for months
 3. Untouched stuff is now *borked*!
 
-Ever happenend?
+Ever happenened?
 
 * Connected to the issue of build reproducibility
 * The default configuration of Travis CI may change
