@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/css/reset.css">
 <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/css/reveal.css">
-  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.1e2604bf0c24e445faa3ae7d68b2f0146c34bc9e7b9bd6aee2b7187115560e96.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
+  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.7e71d4d77314b7e7f613c83fb069708c4948bef6fef4458398e916efc37ce185.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
     
 <link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
 <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
@@ -27,7 +27,7 @@
     <section><h1 id="development-and-programming-paradigms">Development and programming paradigms</h1>
 <h2 id="continuous-integration">Continuous Integration</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2021-04-13
+2021-04-14
 
 </section>
 <section data-noprocess data-shortcode-slide>
@@ -181,7 +181,37 @@
 <li>Also called Source Content Management (SCM)</li>
 </ul>
 </section><section>
-<h1 id="reference-dvcs-git">Reference DVCS: Git</h1>
+<h2 id="centralized-version-control-systems">Centralized Version Control Systems</h2>
+<img src="2021-04-14-centralized-vcs.svg" style='
+    
+    
+    max-width: 95vw;
+    max-height: 65vh;
+    object-fit: contain;
+'>
+
+</section><section>
+<h2 id="decentralized-vcs">Decentralized VCS</h2>
+<img src="2021-04-14-decentralized-vcs.svg" style='
+    
+    
+    max-width: 95vw;
+    max-height: 65vh;
+    object-fit: contain;
+'>
+
+</section><section>
+<h2 id="real-world-dvcs">Real-world DVCS</h2>
+<img src="2021-04-14-dvcs-sink.svg" style='
+    
+    
+    max-width: 95vw;
+    max-height: 65vh;
+    object-fit: contain;
+'>
+
+</section><section>
+<h2 id="reference-dvcs-git">Reference DVCS: Git</h2>
 <p>De-facto reference distributed version control system</p>
 <ul>
 <li><em>Distributed</em></li>
@@ -208,7 +238,7 @@
 </ul>
 </li>
 </ul>
-<p>¹ Now the difference is much less marked, Facebook vastly improved Mercurial</p>
+<p>¹ Less difference now, Facebook vastly improved Mercurial</p>
 </section><section>
 <h2 id="funny-historical-introduction">Funny historical introduction</h2>
 
@@ -256,6 +286,368 @@
     object-fit: contain;
 '>
 
+</section><section>
+<h2 id="distributed-version-control-with-git-a-recap-5">Distributed version control with git: a recap</h2>
+<h3 id="git-add-files"><code>git add &lt;files&gt;</code></h3>
+<ul>
+<li>Moves the current <strong>changes</strong> in <code>&lt;files&gt;</code> into the <em>stage</em></li>
+</ul>
+<h3 id="git-reset-files"><code>git reset &lt;files&gt;</code></h3>
+<ul>
+<li>Removes the current <strong>changes</strong> to <code>&lt;files&gt;</code> from the <em>stage</em></li>
+</ul>
+</section><section>
+<h2 id="distributed-version-control-with-git-a-recap-6">Distributed version control with git: a recap</h2>
+<h3 id="gitignore"><code>.gitignore</code></h3>
+<ul>
+<li>A file listing the pathspecs that git should <strong>ignore</strong> even if added</li>
+<li>Adding is still possible via <code>--force</code></li>
+</ul>
+<h3 id="gitattributes"><code>.gitattributes</code></h3>
+<ul>
+<li>Defines attributes for path names</li>
+<li>Can enforce the correct line ending</li>
+<li>Can provide ways to diff binary file (by conversion to text, needs configuration)</li>
+<li>Example:</li>
+</ul>
+<pre><code class="language-.gitattributes" data-lang=".gitattributes">* text=auto eol=lf
+*.[cC][mM][dD] text eol=crlf
+*.[bB][aA][tT] text eol=crlf
+*.[pP][sS]1 text eol=crlf
+</code></pre></section><section>
+<h2 id="distributed-version-control-with-git-a-recap-7">Distributed version control with git: a recap</h2>
+<h3 id="git-commit"><code>git commit</code></h3>
+<ul>
+<li>Create a new <em>changeset</em> with the contents of the stage</li>
+<li>Requires a <strong>message</strong></li>
+<li>Using appropriate messages is <strong>extremely important</strong></li>
+</ul>
+<h3 id="head"><em>HEAD</em></h3>
+<ul>
+<li>Pointer to the current commit</li>
+</ul>
+</section><section>
+<h2 id="distributed-version-control-with-git-a-recap-8">Distributed version control with git: a recap</h2>
+<h3 id="git-tag--a"><code>git tag -a</code></h3>
+<ul>
+<li>Associates a <strong>symbolic name</strong> to a commit</li>
+<li>Often used for <strong>versioning</strong></li>
+<li>Advanced uses in <strong>Laboratory of Software Systems</strong></li>
+</ul>
+</section><section>
+<h2 id="distributed-version-control-with-git-a-recap-9">Distributed version control with git: a recap</h2>
+<h3 id="branch"><em>Branch</em></h3>
+<ul>
+<li>A <strong>named</strong> development line
+<br>
+<img src="branches.svg" style='
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+</li>
+</ul>
+<h3 id="master"><code>master</code></h3>
+<ul>
+<li>Default branch name
+<ul>
+<li>legacy of BitKeeper</li>
+<li>Modern versions of git let user select</li>
+<li>Some prefer <code>main</code></li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="distributed-version-control-with-git-a-recap-10">Distributed version control with git: a recap</h2>
+<h3 id="git-checkout"><code>git checkout</code></h3>
+<ul>
+<li>Moves <em>HEAD</em> across commits</li>
+<li>Used to switch <em>branches</em></li>
+<li>Can be used to create new <em>branches</em> (with <code>-b</code>)</li>
+</ul>
+<h3 id="detached-head"><em>detached HEAD</em></h3>
+<ul>
+<li>Special mode in which commits are not saved</li>
+<li>The system goes in <em>detached HEAD</em> when <em>HEAD</em> is not the last commit on a <em>branch</em></li>
+</ul>
+</section><section>
+<h2 id="distributed-version-control-with-git-a-recap-11">Distributed version control with git: a recap</h2>
+<h3 id="git-branch"><code>git branch</code></h3>
+<ul>
+<li>Controls creation, visualization, and deletion (<code>-d</code>) of branches</li>
+</ul>
+<h3 id="git-merge"><code>git merge</code></h3>
+<ul>
+<li><strong>Unifies</strong> a target branch with the current branch</li>
+<li>Creates a <em>merge commit</em></li>
+<li>The merging algorithm is configurable</li>
+<li><strong>Conflicts</strong> must be solved manually</li>
+</ul>
+<h3 id="fast-forward"><em>fast-forward</em></h3>
+<ul>
+<li>A special merge mode applicable when a branch is behind another</li>
+<li>The merge behind is updated without a commit</li>
+<li>Active by default, can be disabled (<code>--no-ff</code>)</li>
+</ul>
+</section><section>
+<h2 id="distributed-version-control-with-git-a-recap-12">Distributed version control with git: a recap</h2>
+<h3 id="remote"><em>Remote</em></h3>
+<ul>
+<li>(possibly remote) locations hosting copies of branches of this repository exist</li>
+</ul>
+<h3 id="git-remote"><code>git remote</code></h3>
+<ul>
+<li>Configures the <em>remotes</em></li>
+</ul>
+<h3 id="upstream"><em>upstream</em></h3>
+<ul>
+<li>The default <em>remote</em> for network operations.</li>
+</ul>
+</section><section>
+<h2 id="distributed-version-control-with-git-a-recap-13">Distributed version control with git: a recap</h2>
+<h3 id="git-clone"><code>git clone</code></h3>
+<ul>
+<li>Copies a repository from a possibly remote location.</li>
+<li>Alternative to <code>init</code></li>
+<li>Automatically sets the local branch <em>upstream</em> to the cloned location.</li>
+</ul>
+</section><section>
+<h2 id="distributed-version-control-with-git-a-recap-14">Distributed version control with git: a recap</h2>
+<h3 id="git-fetch-remote"><code>git fetch &lt;remote&gt;</code></h3>
+<ul>
+<li><strong>Updates</strong> the state of <code>&lt;remote&gt;</code></li>
+<li>If remote is omitted, updates the state of the branch <em>upstream</em>&rsquo;s <em>remote</em></li>
+</ul>
+<h3 id="git-pull-remote-branch"><code>git pull &lt;remote&gt; &lt;branch&gt;</code></h3>
+<ul>
+<li><strong>Shortcut</strong> for <code>git fetch &amp;&amp; git merge FETCH_HEAD</code></li>
+</ul>
+<h3 id="git-push-remote-branch"><code>git push &lt;remote&gt; &lt;branch&gt;</code></h3>
+<ul>
+<li>Sends local changes <em>remote</em> <em>branch</em></li>
+<li>Requires branches to <strong>share a root</strong></li>
+<li>If remote and branch are omitted, updates are sent to the <em>upstream</em></li>
+</ul>
+</section><section>
+<h2 id="advanced-git">Advanced git</h2>
+<p>Discussed in <strong>Laboratory of Software Systems</strong></p>
+<ul>
+<li>Lightweight vs. annotated tagging</li>
+<li>Stashing</li>
+<li>Rebasing</li>
+<li>Rebased pulling</li>
+<li>Squashing</li>
+<li>Cherry picking</li>
+<li>Submodules</li>
+<li>Hooks</li>
+</ul>
+</section><section>
+<h2 id="best-practices">Best practices</h2>
+<ul>
+<li>The CLI is your truth
+<ul>
+<li>Beware of the GUIs</li>
+</ul>
+</li>
+<li>Prepare an ignore list early
+<ul>
+<li>And maintain it</li>
+<li>And maybe prepare it manually and don&rsquo;t copy/paste it</li>
+</ul>
+</li>
+<li>When you have untracked files, decide whether you want to track them or ignore them</li>
+<li>Be very careful with <em>what</em> you track</li>
+<li>Prepare an attribute file</li>
+</ul>
+</section><section>
+<h2 id="github">GitHub</h2>
+<ul>
+<li>Hosting for git repositories</li>
+<li>Free for open source</li>
+<li>Some limitations for closed source</li>
+<li>Academic accounts</li>
+<li>De-facto standard for open source projects</li>
+<li>One static website per-project, per-user, and per-organization
+<ul>
+<li>first-class support for Jellyll (a Ruby framework for static website generation)</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h1 id="dvcs-workflows">DVCS: Workflows</h1>
+<blockquote>
+<p>with great power comes great responsibility</p>
+</blockquote>
+<p>and also</p>
+<blockquote>
+<p>power is nothing without control</p>
+</blockquote>
+<p>Elements to consider:</p>
+<ul>
+<li>How <em>large</em> is the team?</li>
+<li>How <em>complex</em> is the project?</li>
+<li>Do team members work <em>together</em> (in spacetime)?</li>
+<li>Do team members <em>trust</em> each other?</li>
+</ul>
+</section><section>
+<h2 id="trunk-based-development-like">Trunk-based development(-like)</h2>
+<p>Single branch, shared truth repository, frequent merges
+<br>
+<img src="2021-04-14-dvcs-sink.svg" style='
+    
+    
+    max-width: 95vw;
+    max-height: 55vh;
+    object-fit: contain;
+'>
+</p>
+<ul>
+<li><em>Small</em> teams, <em>low-complexity</em> projects, <em>colocated</em> teams, <em>high</em> trust</li>
+<li>Typical of small company projects</li>
+</ul>
+</section><section>
+<h2 id="git-flow-classic">Git flow (classic)</h2>
+<p>Multiple branches, shared truth repository
+<br>
+<img src="2021-04-14-dvcs-flow-sink.svg" style='
+    
+    
+    max-width: 95vw;
+    max-height: 55vh;
+    object-fit: contain;
+'>
+</p>
+<ul>
+<li><em>Large</em> teams, <em>high-complexity</em> projects, <em>preferably colocated</em> teams, <em>high</em> trust</li>
+<li>Typical of large company projects</li>
+</ul>
+</section><section>
+<h2 id="git-flow-structure">Git flow structure</h2>
+<img src="2021-04-13-gitflow.svg" style='
+    
+    
+    max-width: 95vw;
+    max-height: 55vh;
+    object-fit: contain;
+'>
+
+</section><section>
+<h2 id="forks-versus-branches">Forks versus branches</h2>
+<ul>
+<li>In Git, separate <em>development lines</em> are separate <em>branches</em></li>
+<li>However, everyone has a <em>copy</em> of the <em>same repository</em></li>
+<li>Git <em>hosting services</em> can <em>identify copies</em> of the same project belonging to different users</li>
+</ul>
+<p>These copies are called <strong>forks</strong></p>
+<ul>
+<li>Branches on one fork can be requested to be merged on another fork
+<ul>
+<li>With <strong>merge request</strong> (also called <strong>pull request</strong>, depending on the host)</li>
+</ul>
+</li>
+<li>Pull requests enable easier code review
+<ul>
+<li>Necessary when the developer <em>does not trust</em> the contributor</li>
+<li>But very useful anyway</li>
+</ul>
+</li>
+<li>Working with pull requests is <strong>not part of git</strong> and <em>requires host support</em>
+<ul>
+<li>GitHub, GitLab, and Bitbucket all support pull requests</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="single-branch-multiple-forks">Single branch, multiple forks</h2>
+<ul>
+<li>Single branch, multiple independent repository copies</li>
+</ul>
+<p>
+<img src="2021-04-14-dvcs-fork.svg" style='
+    
+    
+    max-width: 95vw;
+    max-height: 55vh;
+    object-fit: contain;
+'>
+
+</p>
+<ul>
+<li><em>Unknown</em> team size, <em>low-complexity</em> projects, <em>sparse</em> teams, <em>low</em> trust</li>
+<li>Typical of small open source projects</li>
+</ul>
+</section><section>
+<h2 id="git-flow-over-multiple-forks">Git flow over multiple forks</h2>
+<ul>
+<li>Single branch, multiple independent repository copies</li>
+</ul>
+<p>
+<img src="2021-04-14-dvcs-flow-fork.svg" style='
+    
+    
+    max-width: 95vw;
+    max-height: 55vh;
+    object-fit: contain;
+'>
+
+</p>
+<ul>
+<li><em>Unknown</em> team size, <em>high-complexity</em> projects, <em>sparse</em> teams, <em>low</em> trust</li>
+<li>Typical of complex source projects</li>
+</ul>
+</section><section>
+<h1 id="documenting-projects-using-github">Documenting projects using GitHub</h1>
+<p>Documentation of a project is <strong>part of the project</strong></p>
+<ul>
+<li><strong>Documentation</strong> must stay in the same repository of the project</li>
+<li>However, it should be <em>accessible to non-developers</em></li>
+</ul>
+<p>Meet GitHub Pages</p>
+<ul>
+<li>GitHub provides an <em>automated</em> way to publish <em>webpages from <strong>Markdown</strong></em> text</li>
+<li>Markdown is a <em>human readable markup language</em>, <a href="https://learnxinyminutes.com/docs/markdown/">easy to learn</a>
+<ul>
+<li>These slides are written in Markdown</li>
+<li>(generation is a bit richer, but just to make the point)</li>
+</ul>
+</li>
+<li>Supports <em>Jekyll</em> (a Ruby framework for static website generation) out of the box
+<ul>
+<li>We will not discuss it today</li>
+<li>But maybe in LSS&hellip;</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="setting-up-a-github-pages-website">Setting up a GitHub Pages website</h2>
+<p>Two possibilities:</p>
+<ol>
+<li>Select a branch to host the pages
+<ul>
+<li>Create an orphan branch with <code>git checkout --orphan &lt;branchname&gt;</code></li>
+<li>Write your website, one Markdown per page</li>
+<li>Push the new branch</li>
+</ul>
+</li>
+<li>Use a <code>docs/</code> folder in a root of some branch
+<ul>
+<li>Could be <code>master</code> or any other branch</li>
+</ul>
+</li>
+</ol>
+</section><section>
+<h2 id="setting-up-a-github-pages-website-1">Setting up a GitHub Pages website</h2>
+<p>Once done, enable GitHub pages on the repository settings:
+<img src="gh-pages.png" style='
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+'>
+</p>
 </section>
 <section data-noprocess data-shortcode-slide>
   <h1 id="build-automation">Build automation</h1>
@@ -836,7 +1228,7 @@ is to use <strong>conditional jobs, stages, and deployments</strong></p>
 <li><em>Nobody touches it</em> for months</li>
 <li>Untouched stuff is now <em>borked</em>!</li>
 </ol>
-<p>Ever happenend?</p>
+<p>Ever happenened?</p>
 <ul>
 <li>Connected to the issue of build reproducibility</li>
 <li>The default configuration of Travis CI may change
