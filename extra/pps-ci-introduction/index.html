@@ -27,7 +27,7 @@
     <section><h1 id="development-and-programming-paradigms">Development and programming paradigms</h1>
 <h2 id="continuous-integration">Continuous Integration</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2021-04-14
+2021-04-15
 
 </section>
 <section data-noprocess data-shortcode-slide>
@@ -648,6 +648,21 @@
     object-fit: contain;
 '>
 </p>
+</section><section>
+<h2 id="github-pages-urls">GitHub Pages URLs</h2>
+<ul>
+<li>Repository web-pages are available at <code>https://&lt;username&gt;.github.io/&lt;reponame&gt;</code></li>
+<li>User web-pages are available at <code>https://&lt;username&gt;.github.io/</code>
+<ul>
+<li>They are generated from a repository named <code>&lt;username&gt;.github.io</code></li>
+</ul>
+</li>
+<li>Organization web-pages are available at <code>https://&lt;organization&gt;.github.io/</code>
+<ul>
+<li>They are generated from a repository named <code>&lt;organization&gt;.github.io</code></li>
+</ul>
+</li>
+</ul>
 </section>
 <section data-noprocess data-shortcode-slide>
   <h1 id="build-automation">Build automation</h1>
@@ -703,6 +718,315 @@ and let the tool decide what to do actually</p>
 </li>
 <li>How to structure multiple logical and interdependent parts?</li>
 </ul>
+</section><section>
+<h1 id="dependency-management">Dependency management</h1>
+<ul>
+<li>Any software <strong>depends</strong> on other software
+<ul>
+<li>The <em>runtime environment</em> (think of the Java Virtual Machine)</li>
+<li>The <em>core libraries</em> (e.g., <code>java.*</code>, or <code>scala.*</code>, or <code>kotlin.*</code>)</li>
+<li>Possibly <em>third-party libraries</em> (e.g., Google Guava, Apache Commons&hellip;)</li>
+<li>Possibly <em>external resources</em> (e.g., images, sounds, translation files&hellip;)</li>
+</ul>
+</li>
+<li>Normally, this <em>software depends on other software</em>
+<ul>
+<li>That <em>depends on other software</em>
+<ul>
+<li>That <em>depends on other software</em>
+<ul>
+<li>That <em>depends on other software</em>, and so on&hellip;</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>A normal applications has a <strong>tree</strong> of dependencies</li>
+</ul>
+</section><section>
+<h2 id="simple-example-print-titles">Simple example: print titles</h2>
+<p>Example <strong>requirements</strong>:</p>
+<ul>
+<li><em>Visit TheTVDB</em>.org (public TV Series database)</li>
+<li><em>Search</em> for a TV series (e.g., Breaking Bad)</li>
+<li><em>Download</em> and <em>print</em> titles of all episodes</li>
+</ul>
+</section><section>
+<div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'>
+    <iframe
+        sandbox='allow-scripts allow-same-origin'
+        allowfullscreen='true'
+        allowtransparency='true'
+        frameborder='0'
+        height='315'
+        src='https://www.mentimeter.com/embed/66b4eb67105e9c1fa3916b9344d6b8ad/a62cf5c48ed8'
+        style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;'
+        width='420'
+        >
+    </iframe>
+</div>
+</section><section>
+<h2 id="actual-result">Actual result</h2>
+
+
+
+
+
+<div style="display: inline-block; align-items: center;">
+    <script src="https://gist-it.appspot.com/github/APICe-at-DISI/PPS-ci-examples/blob/master/01-dependencies/src/main/java/it/unibo/ci/PrintBreakingBad.java?footer=no"></script>
+</div>
+
+</section><section>
+<h2 id="the-trick-using-a-few-libraries">The trick: using a few libraries</h2>
+<ul>
+<li><strong>Jooq Jooλ</strong>
+<ul>
+<li>Unchecked lambda functions</li>
+</ul>
+</li>
+<li><strong>Apache Commons I/O</strong>
+<ul>
+<li><code>Resource</code> to <code>String</code></li>
+</ul>
+</li>
+<li>A <strong>library for TheTVDB</strong>
+<ul>
+<li>Queries TheTVDB given a valid API key, hiding HTTP, communication, and parsing</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="actual-dependency-tree">Actual dependency tree</h2>
+<pre><code>+--- commons-io:commons-io:+ -&gt; 2.8.0
++--- com.uwetrottmann.thetvdb-java:thetvdb-java:+ -&gt; 2.4.0
+|    +--- com.squareup.retrofit2:retrofit:2.6.2
+|    |    \--- com.squareup.okhttp3:okhttp:3.12.0
+|    |         \--- com.squareup.okio:okio:1.15.0
+|    \--- com.squareup.retrofit2:converter-gson:2.6.2
+|         +--- com.squareup.retrofit2:retrofit:2.6.2 (*)
+|         \--- com.google.code.gson:gson:2.8.5
+\--- org.jooq:jool-java-8:+ -&gt; 0.9.14
+</code></pre><ul>
+<li>three <em>direct</em> dependencies</li>
+<li>six <em>transitive</em> dependencies</li>
+</ul>
+<p>In large projects, <em>transitive</em> dependencies often dominate</p>
+</section><section>
+<h2 id="towards-a-dependency-hell">Towards a <strong>dependency hell</strong></h2>
+<ul>
+<li>It&rsquo;s common for non-toy projects to get past 50 dependencies</li>
+<li><em>Searching</em>, <em>downloading</em> and <em>verifying compatibility</em> by hand is unbearable</li>
+<li><strong>Version conflicts</strong> arise soon
+<ul>
+<li>one of your direct dependencies uses library A at version 1</li>
+<li>another uses library A at version 2</li>
+<li>$\Rightarrow$  <em>transitive dependency conflict</em> on A</li>
+</ul>
+</li>
+<li><strong>Upgrading</strong> by hand requires, <em>time</em>, <em>effort</em> and <em>tons of testing</em></li>
+</ul>
+</section><section>
+<h2 id="dealing-with-dependencies">Dealing with dependencies</h2>
+<p><strong>Source import</strong></p>
+<p>Duplication, more library code than business code, updates almost impossible, inconsistencies, unmaintainable</p>
+<p><strong>Binary import</strong></p>
+<p>Hard to update, <a href="https://bitbucket.org/danysk/exploded-repository-example">toxic for the VCS</a></p>
+<p><strong>Desiderata</strong></p>
+<ul>
+<li><em>Declarative</em> specification of libraries and versions</li>
+<li><em>Automatic retrieval</em></li>
+<li>Automatic <em>resolution of transitive dependencies</em></li>
+<li>Dependency <strong>scopes</strong>
+<ul>
+<li>You may need <em>compile-only</em>, <em>test-only</em>, and <em>runtime-only</em> dependencies</li>
+</ul>
+</li>
+<li>Customizable software <em>sources</em></li>
+</ul>
+</section><section>
+<h1 id="gradle">Gradle</h1>
+<p>A paradigmatic example of a hybrid automator:</p>
+<ul>
+<li>Written mostly in Java</li>
+<li>with an outer Groovy DSL</li>
+<li>&hellip;and, more recently, a Kotlin DSL</li>
+</ul>
+<h3 id="our-approach-to-gradle">Our approach to Gradle</h3>
+<ul>
+<li>We are going to learn <em>a bit of how to use</em> Gradle for <em>simple JVM projects</em>
+<ul>
+<li>Mostly by example</li>
+</ul>
+</li>
+<li>We are <strong>not</strong> going to <em>learn Gradle</em>
+<ul>
+<li>Again, this is done in LSS for those interested</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="gradle-main-concepts">Gradle: main concepts</h2>
+<ul>
+<li><strong>Project</strong> &ndash; A collection of files composing the software
+<ul>
+<li>The <em>root</em> project can contain <em>subprojects</em></li>
+</ul>
+</li>
+<li><strong>Build file</strong> &ndash; A special file, with the build information
+<ul>
+<li>situated in the root directory of a project</li>
+<li>instructs Gradle on the organization of the project</li>
+</ul>
+</li>
+<li><strong>Dependency</strong> &ndash; A resource required by some operation.
+<ul>
+<li>May have dependencies itself</li>
+<li>Dependencies of dependencies are called <em>transitive</em> dependencies</li>
+</ul>
+</li>
+<li><strong>Configuration</strong> &ndash; A group of dependencies with <em>three roles</em>:
+<ol>
+<li><em>Declare</em> dependencies</li>
+<li><em>Resolve</em> dependency declarations to actual artifacts/resources</li>
+<li><em>Present</em> the dependencies to consumers in a suitable format</li>
+</ol>
+</li>
+<li><strong>Task</strong> &ndash; An atomic operation on the project, which can:
+<ul>
+<li>have input and output files</li>
+<li>depend on other tasks (can be executed only if those are completed)</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="gradle-under-the-hood">Gradle: under the hood</h2>
+<ul>
+<li>The Gradle build script is <em>a valid Kotlin script</em> (using the Gradle API)</li>
+<li>Anything that has not a valid <em>Kotlin syntax</em> is not a valid Gradle build script</li>
+<li><em>Kotlin</em> and <em>Groovy</em> picked as they allow <em>easy DSL creation</em></li>
+<li>The <em>feeling</em> is to just have <em>to configure</em> an existing software
+<ul>
+<li><em>Declarative</em>, much like Maven plugins</li>
+</ul>
+</li>
+<li>When needed, it is easy to configure <em>custom behaviour</em>
+<ul>
+<li>fiddle with internals</li>
+<li>write in functional or imperative fashion</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="gradle-minimal-java-build">Gradle: minimal java build</h2>
+<ul>
+<li>By default, Gradle inherits the maven convention for source organization:</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>+-- src <span style="color:#888"># All sources</span>
+    +-- main <span style="color:#888"># One folder per &#34;source set&#34;, all code in a source set shares dependencies</span>
+    |   +-- java <span style="color:#888"># One folder per language</span>
+    |   +-- kotlin
+    |   +-- resources <span style="color:#888"># Resources go here</span>
+    |   \-- scala
+    \-- <span style="color:#038">test</span> <span style="color:#888"># Test sources are separated, different dependencies        </span>
+        +-- java <span style="color:#888"># Same structure as main</span>
+        +-- kotlin
+        +-- resources <span style="color:#888"># Resources go here</span>
+        \-- scala
+</code></pre></div></section><section>
+<h2 id="gradle-minimal-java-build-1">Gradle: minimal java build</h2>
+<p><code>src/main/java/HelloWorld.java</code></p>
+
+
+
+
+
+<div style="display: inline-block; align-items: center;">
+    <script src="https://gist-it.appspot.com/github/APICe-at-DISI/PPS-ci-examples/blob/master/00-minimal/src/main/java/HelloWorld.java?footer=no"></script>
+</div>
+
+<p><code>build.gradle.kts</code></p>
+
+
+
+
+
+<div style="display: inline-block; align-items: center;">
+    <script src="https://gist-it.appspot.com/github/APICe-at-DISI/PPS-ci-examples/blob/master/00-minimal/build.gradle.kts?footer=no"></script>
+</div>
+
+<p>Yes, it&rsquo;s a one-liner</p>
+</section><section>
+<h2 id="dependency-management-in-gradle">Dependency management in Gradle</h2>
+<p><code>repositories</code></p>
+<ul>
+<li>Where to retrieve software from
+<ul>
+<li>suggested ones are <code>mavenCentral()</code> and <code>google()</code></li>
+<li><code>jcenter()</code> is common but sunsetted (May 2021), <em>do not use it</em></li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="dependency-management-in-gradle-1">Dependency management in Gradle</h2>
+<p><code>dependencies</code></p>
+<ul>
+<li>Separated by <strong>scope</strong>
+<ul>
+<li>Scopes define <em>when</em> a dependency should be available
+<ul>
+<li><code>api</code> (libraries only): abstractions are exposed publicly and clients are expected to use them</li>
+<li><code>implementation</code>: used internally, clients should not care</li>
+<li><code>testImplementation</code>: used to compile and run tests</li>
+<li>(<code>test</code>)<code>compileOnly</code>: only available when compiling (typically used for annotations)</li>
+<li>(<code>test</code>)<code>runtimeOnly</code>: only required at runtime (typically used when components are loaded reflectively)</li>
+</ul>
+</li>
+<li>Scopes map to <strong>configurations</strong></li>
+</ul>
+</li>
+<li>Specified as <code>&lt;group&gt;:&lt;artifact&gt;:&lt;version&gt;</code>
+<ul>
+<li><code>+</code> is a special marker for &ldquo;latest&rdquo;</li>
+<li>Maven-style ranges supported (e.g., (1.2, 1.4])</li>
+</ul>
+</li>
+<li>Transitive dependencies are resolved automatically (if available in some repository)</li>
+</ul>
+</section><section>
+<h2 id="gradle-our-toy-example">Gradle: our toy example</h2>
+<p><code>src/main/java/it/unibo/ci/PrintBreakingBad.java</code></p>
+
+
+
+
+
+<div style="display: inline-block; align-items: center;">
+    <script src="https://gist-it.appspot.com/github/APICe-at-DISI/PPS-ci-examples/blob/master/01-dependencies/src/main/java/it/unibo/ci/PrintBreakingBad.java?footer=no"></script>
+</div>
+
+</section><section>
+<h2 id="gradle-our-toy-example-1">Gradle: our toy example</h2>
+<p><code>build.gradle.kts</code></p>
+
+
+
+
+
+<div style="display: inline-block; align-items: center;">
+    <script src="https://gist-it.appspot.com/github/APICe-at-DISI/PPS-ci-examples/blob/master/01-dependencies/build.gradle.kts?footer=no"></script>
+</div>
+
+<p><code>settings.gradle.kts</code></p>
+
+
+
+
+
+<div style="display: inline-block; align-items: center;">
+    <script src="https://gist-it.appspot.com/github/APICe-at-DISI/PPS-ci-examples/blob/master/01-dependencies/settings.gradle.kts?footer=no"></script>
+</div>
+
 </section><section>
 <h1 id="continuous-integration-1">Continuous Integration</h1>
 <p>The practice of integrating code with the main development line <strong>continuously</strong>

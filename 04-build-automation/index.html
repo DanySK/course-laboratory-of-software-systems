@@ -27,7 +27,7 @@
     <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
 <h2 id="build-automation">Build Automation</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2021-04-14
+2021-04-15
 
 </section><section>
 <h1 id="overview">Overview</h1>
@@ -118,15 +118,17 @@ and let the tool decide what to do actually</p>
 </section><section>
 <h2 id="gradle-main-concepts">Gradle: main concepts</h2>
 <ul>
-<li><strong>Project</strong> &ndash; A collection of files comprising the software
+<li><strong>Project</strong> &ndash; A collection of files composing the software
 <ul>
-<li>A project can contain another project:</li>
-<li>the container project is the <strong>root project</strong></li>
-<li>the contained projects are <strong>subproject</strong>s</li>
+<li>The <em>root</em> project can contain <em>subprojects</em></li>
 </ul>
 </li>
-<li><strong>Build file</strong> &ndash; A special file, situated in the root directory of a project,
-instructing Gradle on the actual organization of the project projects</li>
+<li><strong>Build file</strong> &ndash; A special file, with the build information
+<ul>
+<li>situated in the root directory of a project</li>
+<li>instructs Gradle on the organization of the project</li>
+</ul>
+</li>
 <li><strong>Dependency</strong> &ndash; A resource required by some operation.
 <ul>
 <li>May have dependencies itself</li>
@@ -137,7 +139,7 @@ instructing Gradle on the actual organization of the project projects</li>
 <ol>
 <li><em>Declare</em> dependencies</li>
 <li><em>Resolve</em> dependency declarations to actual artifacts/resources</li>
-<li><em>Present</em> the dependencies to consumer in a suitable format</li>
+<li><em>Present</em> the dependencies to consumers in a suitable format</li>
 </ol>
 </li>
 <li><strong>Task</strong> &ndash; An atomic operation on the project, which can
