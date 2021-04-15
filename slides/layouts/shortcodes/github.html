@@ -1,0 +1,8 @@
+{{ $owner := .Get "owner" | default "DanySK" }}
+{{ $repo := .Get "repo" | default "Course-Laboratory-of-Software-Systems" }}
+{{ $path := .Get "path" | default "README.md" }}
+{{ $branch := .Get "branch" | default "master" }}
+
+<div style="display: inline-block; align-items: center;">
+    <script src="https://gist-it.appspot.com/github/{{ $owner }}/{{ $repo }}/blob/{{ $branch }}/{{ $path }}?footer=no{{ with .Get "slice" }}&slice={{ . }}{{ end }}"></script>
+</div>

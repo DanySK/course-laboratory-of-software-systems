@@ -448,7 +448,248 @@ Once done, enable GitHub pages on the repository settings:
 
 ---
 
+## GitHub Pages URLs
+
+* Repository web-pages are available at `https://<username>.github.io/<reponame>`
+* User web-pages are available at `https://<username>.github.io/`
+  * They are generated from a repository named `<username>.github.io`
+* Organization web-pages are available at `https://<organization>.github.io/`
+  * They are generated from a repository named `<organization>.github.io`
+
+---
+
+
 {{% slide content="build-automation.intro" %}}
+
+---
+
+# Dependency management
+
+* Any software **depends** on other software
+    * The *runtime environment* (think of the Java Virtual Machine)
+    * The *core libraries* (e.g., `java.*`, or `scala.*`, or `kotlin.*`)
+    * Possibly *third-party libraries* (e.g., Google Guava, Apache Commons...)
+    * Possibly *external resources* (e.g., images, sounds, translation files...)
+* Normally, this *software depends on other software*
+    * That *depends on other software*
+        * That *depends on other software*
+            * That *depends on other software*, and so on...
+* A normal applications has a **tree** of dependencies
+
+---
+
+## Simple example: print titles
+
+Example **requirements**:
+* *Visit TheTVDB*.org (public TV Series database)
+* *Search* for a TV series (e.g., Breaking Bad)
+* *Download* and *print* titles of all episodes
+
+---
+
+{{< mentimeter "66b4eb67105e9c1fa3916b9344d6b8ad/a62cf5c48ed8" >}}
+
+---
+
+## Actual result
+
+{{< github owner="APICe-at-DISI" repo="PPS-ci-examples" path="01-dependencies/src/main/java/it/unibo/ci/PrintBreakingBad.java">}}
+
+---
+
+## The trick: using a few libraries
+
+* **Jooq Jooλ**
+    * Unchecked lambda functions
+* **Apache Commons I/O**
+    * `Resource` to `String`
+* A **library for TheTVDB**
+    * Queries TheTVDB given a valid API key, hiding HTTP, communication, and parsing
+
+---
+
+## Actual dependency tree
+
+```
++--- commons-io:commons-io:+ -> 2.8.0
++--- com.uwetrottmann.thetvdb-java:thetvdb-java:+ -> 2.4.0
+|    +--- com.squareup.retrofit2:retrofit:2.6.2
+|    |    \--- com.squareup.okhttp3:okhttp:3.12.0
+|    |         \--- com.squareup.okio:okio:1.15.0
+|    \--- com.squareup.retrofit2:converter-gson:2.6.2
+|         +--- com.squareup.retrofit2:retrofit:2.6.2 (*)
+|         \--- com.google.code.gson:gson:2.8.5
+\--- org.jooq:jool-java-8:+ -> 0.9.14
+```
+
+* three *direct* dependencies
+* six *transitive* dependencies
+
+In large projects, *transitive* dependencies often dominate
+
+---
+
+## Towards a **dependency hell**
+
+* It's common for non-toy projects to get past 50 dependencies
+* *Searching*, *downloading* and *verifying compatibility* by hand is unbearable
+* **Version conflicts** arise soon
+  * one of your direct dependencies uses library A at version 1
+  * another uses library A at version 2
+  * $\Rightarrow$  *transitive dependency conflict* on A
+* **Upgrading** by hand requires, *time*, *effort* and *tons of testing*
+
+---
+
+## Dealing with dependencies
+
+**Source import**
+
+Duplication, more library code than business code, updates almost impossible, inconsistencies, unmaintainable
+
+**Binary import**
+
+Hard to update, [toxic for the VCS](https://bitbucket.org/danysk/exploded-repository-example)
+
+**Desiderata**
+
+* *Declarative* specification of libraries and versions
+* *Automatic retrieval*
+* Automatic *resolution of transitive dependencies*
+* Dependency **scopes**
+  * You may need *compile-only*, *test-only*, and *runtime-only* dependencies
+* Customizable software *sources*
+
+---
+
+# Gradle
+
+A paradigmatic example of a hybrid automator:
+* Written mostly in Java
+* with an outer Groovy DSL
+* ...and, more recently, a Kotlin DSL
+
+### Our approach to Gradle
+
+* We are going to learn *a bit of how to use* Gradle for *simple JVM projects*
+    * Mostly by example
+* We are **not** going to *learn Gradle*
+    * Again, this is done in LSS for those interested
+
+---
+
+## Gradle: main concepts
+
+* **Project** -- A collection of files composing the software
+    * The *root* project can contain *subprojects*
+* **Build file** -- A special file, with the build information
+    * situated in the root directory of a project
+    * instructs Gradle on the organization of the project
+* **Dependency** -- A resource required by some operation.
+    * May have dependencies itself
+    * Dependencies of dependencies are called *transitive* dependencies
+* **Configuration** -- A group of dependencies with *three roles*:
+    1. *Declare* dependencies
+    2. *Resolve* dependency declarations to actual artifacts/resources
+    2. *Present* the dependencies to consumers in a suitable format
+* **Task** -- An atomic operation on the project, which can:
+  * have input and output files
+  * depend on other tasks (can be executed only if those are completed)
+
+
+---
+
+## Gradle: under the hood
+
+* The Gradle build script is *a valid Kotlin script* (using the Gradle API)
+* Anything that has not a valid *Kotlin syntax* is not a valid Gradle build script
+* *Kotlin* and *Groovy* picked as they allow *easy DSL creation*
+* The *feeling* is to just have *to configure* an existing software
+    * *Declarative*, much like Maven plugins
+* When needed, it is easy to configure *custom behaviour*
+    * fiddle with internals
+    * write in functional or imperative fashion
+
+---
+
+## Gradle: minimal java build
+
+* By default, Gradle inherits the maven convention for source organization:
+
+```ruby
++-- src # All sources
+    +-- main # One folder per "source set", all code in a source set shares dependencies
+    |   +-- java # One folder per language
+    |   +-- kotlin
+    |   +-- resources # Resources go here
+    |   \-- scala
+    \-- test # Test sources are separated, different dependencies        
+        +-- java # Same structure as main
+        +-- kotlin
+        +-- resources # Resources go here
+        \-- scala
+```
+
+---
+
+## Gradle: minimal java build
+
+`src/main/java/HelloWorld.java`
+
+{{< github owner="APICe-at-DISI" repo="PPS-ci-examples" path="00-minimal/src/main/java/HelloWorld.java">}}
+
+`build.gradle.kts`
+
+{{< github owner="APICe-at-DISI" repo="PPS-ci-examples" path="00-minimal/build.gradle.kts">}}
+
+Yes, it's a one-liner
+
+---
+
+## Dependency management in Gradle
+
+`repositories`
+* Where to retrieve software from
+    * suggested ones are `mavenCentral()` and `google()`
+    * `jcenter()` is common but sunsetted (May 2021), *do not use it*
+
+---
+
+## Dependency management in Gradle
+
+`dependencies`
+* Separated by **scope**
+    * Scopes define *when* a dependency should be available
+        * `api` (libraries only): abstractions are exposed publicly and clients are expected to use them
+        * `implementation`: used internally, clients should not care
+        * `testImplementation`: used to compile and run tests
+        * (`test`)`compileOnly`: only available when compiling (typically used for annotations)
+        * (`test`)`runtimeOnly`: only required at runtime (typically used when components are loaded reflectively)
+    * Scopes map to **configurations**
+* Specified as `<group>:<artifact>:<version>`
+    * `+` is a special marker for "latest"
+    * Maven-style ranges supported (e.g., (1.2, 1.4])
+* Transitive dependencies are resolved automatically (if available in some repository)
+
+---
+
+## Gradle: our toy example
+
+`src/main/java/it/unibo/ci/PrintBreakingBad.java`
+
+{{< github owner="APICe-at-DISI" repo="PPS-ci-examples" path="01-dependencies/src/main/java/it/unibo/ci/PrintBreakingBad.java">}}
+
+---
+
+## Gradle: our toy example
+
+`build.gradle.kts`
+
+{{< github owner="APICe-at-DISI" repo="PPS-ci-examples" path="01-dependencies/build.gradle.kts">}}
+
+`settings.gradle.kts`
+
+{{< github owner="APICe-at-DISI" repo="PPS-ci-examples" path="01-dependencies/settings.gradle.kts">}}
 
 ---
 

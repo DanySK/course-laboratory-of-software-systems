@@ -64,19 +64,18 @@ A paradigmatic example of a hybrid automator:
 
 ## Gradle: main concepts
 
-* **Project** -- A collection of files comprising the software
-    * A project can contain another project:
-    * the container project is the **root project**
-    * the contained projects are **subproject**s
-* **Build file** -- A special file, situated in the root directory of a project,
-instructing Gradle on the actual organization of the project projects
+* **Project** -- A collection of files composing the software
+    * The *root* project can contain *subprojects*
+* **Build file** -- A special file, with the build information
+    * situated in the root directory of a project
+    * instructs Gradle on the organization of the project
 * **Dependency** -- A resource required by some operation.
     * May have dependencies itself
     * Dependencies of dependencies are called *transitive* dependencies
 * **Configuration** -- A group of dependencies with *three roles*:
     1. *Declare* dependencies
     2. *Resolve* dependency declarations to actual artifacts/resources
-    2. *Present* the dependencies to consumer in a suitable format
+    2. *Present* the dependencies to consumers in a suitable format
 * **Task** -- An atomic operation on the project, which can
   * have input and output files
   * depend on other tasks (can be executed only if those are completed)
