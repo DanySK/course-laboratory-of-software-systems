@@ -70,3 +70,7 @@ section.has-light-background {
 .reveal ul {
 	margin: .2em .2em .2em;
 }
+
+.gist-it-gist .gist-file .gist-data pre, .gister-gist .gist-file .gist-data pre {
+	box-shadow: none !important;
+}

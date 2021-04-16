@@ -458,7 +458,6 @@ Once done, enable GitHub pages on the repository settings:
 
 ---
 
-
 {{% slide content="build-automation.intro" %}}
 
 ---
@@ -596,7 +595,6 @@ A paradigmatic example of a hybrid automator:
   * have input and output files
   * depend on other tasks (can be executed only if those are completed)
 
-
 ---
 
 ## Gradle: under the hood
@@ -646,6 +644,18 @@ Yes, it's a one-liner
 
 ---
 
+## Gradle: minimal example execution
+
+* The `gradle` command accepts the names of *tasks*  to execute as parameters
+* The `java` plugin introduces several tasks:
+  * `compile<source set><language name>` (e.g., `compileTestJava`): compiles a specific source set
+  * `compile<language name>`: compiles all source sets of a language
+  * `build`: runs all compilation tasks
+  * `tasks`: displays available tasks
+    * usually used as `tasks --all` to show also *uncategorized* tasks
+
+---
+
 ## Dependency management in Gradle
 
 `repositories`
@@ -673,6 +683,35 @@ Yes, it's a one-liner
 
 ---
 
+## The build system as dependency
+
+
+* *no guarantee*  that automation written with some tool at version `X`, will work at version `Y`!
+* $\Rightarrow$ **The build system is itself a dependency**
+
+* A global dependency on the build tool is **hard to capture**
+* Often, it becomes a *prerequisite expressed in natural language*
+    * e.g., "you need Maven 3.6.1 to build this software"
+* *Critical* issues when different pieces of the same system depend on different build tool versions
+
+---
+
+## The Gradle wrapper
+
+Gradle proposes a (partial) solution with the so-called *Gradle wrapper*
+
+* *A minimal program* that simply downloads the version of gradle written in a configuration file
+* *Generable* with the built-in task `wrapper`
+    * `gradle wrapper --gradle-version=<VERSION>`
+* Prepares scripts for bash and cmd to run Gradle at the specified version
+    * `gradlew`
+    * `gradlew.bat`
+
+The Gradle wrapper is *__the__ correct way* to use gradle, and we'll be using it from now on.
+
+
+---
+
 ## Gradle: our toy example
 
 `src/main/java/it/unibo/ci/PrintBreakingBad.java`
@@ -690,6 +729,234 @@ Yes, it's a one-liner
 `settings.gradle.kts`
 
 {{< github owner="APICe-at-DISI" repo="PPS-ci-examples" path="01-dependencies/settings.gradle.kts">}}
+
+---
+
+## Gradle: toy example execution
+
+* The `application` plugin introduces a `run` task:
+  * Depends on `build`
+  * runs the specified main class passing the `runtimeClasspath` to the `-cp` option of `java`
+  * `./gradlew` run
+
+**Note**: exectution requires a valid TheTVDB API Key in a plain text file `src/main/resources/APIKey`
+
+---
+
+## Gradle: multi-language projects
+
+`src/main/groovy/HelloGroovy.groovy`
+
+{{< github owner="APICe-at-DISI" repo="PPS-ci-examples" path="02-multilang/src/main/groovy/HelloGroovy.groovy">}}
+
+`src/main/java/HelloWorld.java`
+
+{{< github owner="APICe-at-DISI" repo="PPS-ci-examples" path="02-multilang/src/main/java/HelloWorld.java">}}
+
+---
+
+## Gradle: multi-language projects
+
+`src/main/kotlin/HelloKt.kt`
+
+{{< github owner="APICe-at-DISI" repo="PPS-ci-examples" path="02-multilang/src/main/kotlin/HelloKt.kt">}}
+
+`src/main/scala/HelloScala.scala`
+
+{{< github owner="APICe-at-DISI" repo="PPS-ci-examples" path="02-multilang/src/main/scala/HelloScala.scala">}}
+
+---
+
+## Gradle: multi-language projects
+
+`build.gradle.kts`
+
+{{< github owner="APICe-at-DISI" repo="PPS-ci-examples" path="02-multilang/build.gradle.kts">}}
+
+---
+
+# Quality Assurance
+
+*"It works"* **is _not_ good enough**
+
+(besides, the very notion of "it works" is rather debatable)
+
+* Software quality should be *continuously assessed*
+* The assessment should *automatic* whenever possible
+* **QA should be integrated in the build system!**
+  * It is fine to *fail the build* if quality criteria are not met
+
+---
+
+## Quality Assurance: levels
+
+* *Style* and *coherence*
+* *Flawed programming* patterns
+* Violations of the *DRY* principle
+* **Testing**
+  * Multifaceted issue
+  * To be executed along the whole software lifecycle
+  * $\Rightarrow$ Plenty of detail in upcoming lectures
+
+---
+
+## Quality Assurance: style and coherence
+
+Automated checkers are also called *linters*, often provide an auto-formatting tool
+
+**Idiomatic** and **standardized** code:
+* reduces *complexity*
+* improves *understandandability*
+* prevents *style-changing commits* with *unintelligible diffs*
+* lowers the *maintenance* burden and related *costs*
+* simplifies *code reviews*
+
+In *Java*:
+[Checkstyle](https://checkstyle.sourceforge.io/),
+[PMD](https://pmd.github.io/)
+
+In *Kotlin*:
+[IDEA Inspection](https://github.com/JetBrains/inspection-plugin),
+[Ktlint](https://ktlint.github.io/)
+
+In *Scala*:
+[Scalafmt](https://scalameta.org/scalafmt/),
+[Scalastyle](http://www.scalastyle.org/rules-1.0.0.html)
+
+---
+
+## Quality Assurance: flawed programming patterns
+
+Identification and reporting of *patterns* known to be *problematic*
+
+* Early-interception of *potential bugs*
+* Enforce *good programming principles*
+* Improves *performance*
+* Reduces *complexity*
+* Reduces *maintenance cost*
+
+In *Java*:
+[PMD](https://pmd.github.io/),
+[SpotBugs](https://spotbugs.github.io/)
+
+In *Kotlin*:
+[Detekt](https://detekt.github.io/detekt/)
+[IDEA Inspection](https://github.com/JetBrains/inspection-plugin)
+
+In *Scala*:
+[Scalafix](htthttps://scalacenter.github.io/scalafix/),
+[Wartremover](http://www.wartremover.org/)
+
+---
+
+## Quality Assurance: violations of the DRY principle
+
+Code *replicated* rather than *reused*
+
+* improves *understandandability*
+* Reduces *maintenance cost*
+* simplifies *code reviews*
+
+General advice: **never copy/paste** your code
+* If you need to copy something, you probably need to *refactor* something
+
+Multi-language tool: [Copy/Paste Detector (CPD)](https://pmd.github.io/latest/pmd_userdocs_cpd.html) (part of PMD)
+
+---
+
+## Quality Assurance: testing and coverage
+
+**Automated** software verification
+* Unit level
+* Integration testing
+* End-to-end testing
+
+Extension of testing can be evaluated via **coverage**.
+* Coverage tells you *how much code is **untested**, not how much is tested*
+
+Several frameworks, recommended ones:
+
+* Testing for *all JVM languages*: [Junit/Jupiter (JUnit 5)](https://junit.org/junit5/docs/current/user-guide/)
+* Testing for *Kotlin*: [Kotest](https://kotest.io/)
+* Testing for *Scala*: [Scalatest](https://www.scalatest.org/)
+* Coverage for all JVM languages: [JaCoCo](https://www.eclemma.org/jacoco/)
+* Coverage for Scala: [Scoverage](http://scoverage.org/)
+
+---
+
+## Quality Assurance: JUnit + Gradle
+
+`src/main/scala/it/unibo/test/Test.scala`
+
+{{< github owner="APICe-at-DISI" repo="PPS-ci-examples" path="04-junit/src/main/scala/it/unibo/test/Test.scala">}}
+
+---
+
+## Quality Assurance: JUnit + Gradle
+
+`src/test/scala/MyTest.scala`
+
+{{< github owner="APICe-at-DISI" repo="PPS-ci-examples" path="04-junit/src/test/scala/MyTest.scala">}}
+
+---
+
+## Quality Assurance: JUnit + Gradle
+
+`build.gradle.kts`
+
+{{< github owner="APICe-at-DISI" repo="PPS-ci-examples" path="04-junit/build.gradle.kts">}}
+
+---
+
+## Quality Assurance: Scalatest + Scoverage
+
+Let's switch *testing framework* and enable *coverage*
+
+`src/main/scala/it/unibo/test/Test.scala`
+
+{{< github owner="APICe-at-DISI" repo="PPS-ci-examples" path="03-scalatest/src/main/scala/it/unibo/test/Test.scala">}}
+
+---
+
+## Quality Assurance: Scalatest + Scoverage
+
+`src/test/scala/Test.scala`
+
+{{< github owner="APICe-at-DISI" repo="PPS-ci-examples" path="03-scalatest/src/test/scala/Test.scala">}}
+
+---
+
+## Quality Assurance: Scalatest + Scoverage
+
+`build.gradle.kts`
+
+{{< github owner="APICe-at-DISI" repo="PPS-ci-examples" path="03-scalatest/build.gradle.kts">}}
+
+---
+
+## Gradle: QA execution
+
+* The `java` plugin (applied by the `scala` plugin under the hood) also introduces:
+  * `test`: a task that runs all tests
+  * `check`: a task that runs the whole quality assurance suite
+
+---
+
+## Additional checks and reportings
+
+There exist a number of recommended services that provide additional QA and reports.
+
+Non exhaustive list:
+* [Codecov.io](https://codecov.io/)
+    * Code coverage
+    * Supports Jacoco XML reports
+    * Nice data reporting system
+* [Sonarcloud](https://sonarcloud.io/)
+    * Multiple measures, covering reliability, security, maintainability, duplication, complexity...
+* [Codacy](https://www.codacy.com/)
+    * Automated software QA for several languages
+* [Code Factor](https://www.codefactor.io/)
+    * Automated software QA
 
 ---
 
@@ -761,450 +1028,197 @@ Software that promotes CI practices should:
 * Support for *authentication* and deployment to external services
 
 **Plenty** of integrators on the market
-* Circle CI, Travis CI, Werker, done.io, Codefresh, Codeship, Bitbucket Pipelines...
-
-We will use Travis CI
-* GitHub integration
-* Free for academy
-* Multiple OSs supported
+* GitHub Actions, Circle CI, Travis CI, Werker, done.io, Codefresh, Codeship, Bitbucket Pipelines...
 
 ---
 
 # Core concepts
 
-**phase**
-* A *named sequence of commands*
-* A phase succeeds if all the commands succeed
-* The next phase starts only if the previous was successful
-* The names and order of phases are *pre-determined*
+Naming and organization is variable across platforms, but *in general*:
+
+* One or more **pipelines** can be associated to **events**
+  * For instance, a *new commit*, an update to a *pull request*, or a *timeout*
+* Every pipeline is composed of a **sequence** of **operations** (*jobs*, *stages*, *phases*)
+* Every **operation** could be composed of sequential or parallel **sub-operations** (*jobs*, *phases*, *steps*)
+* How many hierarchical levels are available depends on the specific platform
+  * GitHub Actions: *workflow* $\Rightarrow$ *job* $\Rightarrow$ *step* 
+  * Travis CI: *build* $\Rightarrow$ *stage* $\Rightarrow$ *job*  $\Rightarrow$ *phase*
+* Execution happens in a **fresh system** (virtual machine or container)
+  * Often containers inside virtual machines
+  * The specific point of the hierarchy at which the VM/container is spawned depends on the CI platform
+
+---
+
+## CI in GitHub Actions
+
+* Very *open-source friendly*
+* Integrated in GitHub
+* *Less mature* than other integrators
+  * My personal feeling is that it was built *bottom-up*...
+* Some questionable limitations
+* A lot of parallelism (20 concurrent jobs, 5 for MacOS X)
+
+---
+
+## CI in GitHub Actions
+
+**step**
+* A (*possibly named*) *command* or *sequence of commands*
+* Can be executed on the virtual machine or inside a container
+* Defines *success* or *failure*
+  * Usually, the return value of the last command
+
+**action**
+* A *reusable step*
+  * DRY in CI $\Rightarrow$ {{< course_name >}}
+
+---
+
+## CI in GitHub Actions
 
 **job**
-* Operation consisting in:
-    * *spawning* of a fresh *virtual environment*
-    * *configuration* of the virtual environment
-    * *cloning* of the repository
-    * *ordered execution of all phases* 
+* A *sequence of steps* that run in parallel
+* Executed on a *virtual machine*
+* A job is *successful* if all its steps are successful
+* Multiple jobs can be spawned at once via *matrix expansion*
+  * e.g., spawn one job for each OS and version of the JVM
+  * CI Matrix expansion $\Rightarrow$ {{< course_name >}}
+
+**workflow**
+* A *named sequence of steps*
+* There can be multiple workflows per repository
+* Workflows are *isolated*
 
 ---
 
-# Core concepts
+## GitHub Actions: Configuration
 
-**stage**
-* A *group of jobs* that run in parallel
-* A build finishes when all of its jobs are finished.
-* A stage is successful if all of its jobs are successful
-* The next stages starts only if the previous was successful
-
-**build**
-* A *group of stages* that run in *sequence*
-* A build finishes when all of its stages are finished.
-* A build is successful if all of its stages are successful
+Workflows are configured in the `.github/workflows/` folder of the repository
+* One **YAML** file per *workflow*
+* GHA YAML is (sic) *non-standard*
+  * DRY is limited: *__no__ anchors*, *__no__ merge keys*
+* In the following, I assume you know YAML
+  * You can [learn it in minutes](https://learnxinyminutes.com/docs/yaml/)
+  * Just remember that anchors and merge keys are not supported
 
 ---
 
-## Job lifecycle
+## GitHub Actions: Triggering event
 
-
-{{< gravizo "Travis CI Job lifecycle" >}}
-@startuml
-
-(*) -right-> "before_install"
-"before_install" -right-> "install"
-"install" -right-> "before_script"
-"before_script" -right-> "script"
-"script" -right-> "before_cache"
-if "TRAVIS_TEST_RESULT" then
-  --> [true] "after_success"
-  --> "before_deploy"
-else
-  --> [false] "after_failure"
-  --> "before_deploy"
-"before_deploy" -left-> "deploy"
-"deploy" -left-> "after_deploy"
-"after_deploy" -left-> "after_script"
-"after_script" -left-> (*)
-
-@enduml
-{{< /gravizo >}}
-
-* If `before_install`, `install` or `before_script` returns a non-zero exit code, the build is errored and stops immediately.
-* If `script` returns a non-zero exit code, the build is failed, but *continues to run* before being marked as failed.
-* The exit code of `after_success`, `after_failure`, `after_script`, `after_deploy` and subsequent stages *do not affect the build result*.
-    * However, if one of these stages times out, the build is marked as failed.
-
----
-
-## Travis CI: Configuration
-
-Travis CI is configured in a single `travis.yml` file located in the repository root
-
-At registration time, it integrates with GitHub
-
-New pushes on repositories which contain `.travis.yml` get automatically built
-
----
-
-## Travis CI: Environment selection
-
-By default, travis tries to build a *Ruby* project
-<br>
-Travis itself is written in Ruby
-
-Selection of a different system configuration can be operated with the `language` keyword.
-<br>
-Over [30 languages](https://docs.travis-ci.com/user/language-specific/) are natively supported.
-
-Some of the most interesting for us are:
-* `java`
-* `scala`
-* `minimal` (bare environment with just bash and Ruby)
-
-Every environment has some *pre-defined behaviour*,
-for instance the `language: java` environment automatically searches for a `pom.xml` and in case runs Maven,
-if not found searches for a `gradlew` file and runs `./gradlew assemble` in the `install` phase and `./gradlew check` in the `script` phase.
-* Default phase behavior can be disabled with `<phase_name>: true`
-
----
-
-## Travis CI: clone depth control
-
-By default, Travis CI *does not clone the entire history* of a repository.
-<br>
-It performs instead a *shallow clone*, by running `git clone --depth 50 <repo-url>`
-
-This *interferes with DVCS-based versioning*, which may well need to look behind of many commits.
-
-This behaviour can be controlled with the `git` key:
+Workflows *react* to [events](https://docs.github.com/en/actions/reference/events-that-trigger-workflows)
+* Events that trigger a workflow are specified under the `on` key
 
 ```yaml
-git:
-  depth: false # Accepts false or any number representing the commit count, defaults to 50
-```
-
-The same key allows for controlling further behaviour, such as disabling `autocrlf`:
-
-```yaml
-git:
-  depth: false # Accepts false or any number representing the commit count, defaults to 50
-  autocrlf: input # Prevents git from trying to be smart with line endings
+on:
+  push: # Trigger the workflow on push
+    branches:
+      - main # but only for the main branch
+  pull_request: # Also trigger for pull requests
+    branches:
+      - main # but only for the main branch
+  page_build: # Also trigger on page_build
+  release: # Also trigger on release...
+    types:
+      - created # ...created
+  schedule:
+    - cron:  '*/30 5,17 * * *' # Cron syntax (see crontab.guru)
 ```
 
 ---
 
-## Travis CI: Testing on different OSs
+## GitHub Actions: Environment preparation
 
-If our software supports *multiple operating systems*, it is a good practice to verify that changes do not *break compatibility*
+GitHub actions job run on a *fresh virtual machine*
+* The *operating system* can be selected (Windows, Ubuntu, MacOS X)
+  * Multi OS builds $\Rightarrow$ {{< course_name >}}
+* The repository needs to be *cloned manually*
+* Any operation should be *configured manually*
 
-A few integrators allow to perform a multi-os build. In Travis it is possible via the `os` key, supporting:
-* `linux` -- A Ubuntu Linux installation
-* `macos` -- A MacOS X installation
-* `windows` -- A Windows Server installation
-
-Specifying *multiple operating systems* causes the execution of *multiple jobs* in the same build
-
-*Note*: Some languages or system configurations may be unavailable for some environments!
-* e.g., there is no `java` environment available on `windows`
+Rather than *convention over configuration*, GHA use **actions** as a form of configuration reuse
+* Actions can be found on the [GH marketplace](https://github.com/marketplace?type=actions)
+* Developing new actions $\Rightarrow$ {{< course_name >}}
 
 ---
 
-## Custom environment
-
-If a particular environment of need is unavailable, one solution is
-<br>
-**build it yourself**
-
-* start from `language: minimal`
-* if the software you need is installable via **apt** or **homebrew**, use the `addons` keyword:
-```yaml
-addons:
-  apt:
-    packages: foo
-  homebrew:
-    packages: bar
-```
-* install packages under windows using **[chocolatey](https://chocolatey.org/)** (pre installed on Travis Windows instances)
-* if you need to perform a manual installation, you can write it in bash
-
----
-
-## Improved resilience on Travis
-
-* operations that may fail due to network issues or long time can be worked around using Travis built in functions:
-    * `travis_retry COMMAND` tries the same `COMMAND` three times, giving up only if it fails for three times
-    * `travis_wait N COMMAND` allows `COMMAND` to run without any output for longer than the default 10 minutes.
-        * The hard limit on 50 minutes per job however remains
-
----
-
-## A Java custom environment
-
-It could be useful to test on specific versions of the JDK, for instance.
-<br>
-A multi platform installer exists: [Jabba](https://github.com/shyiko/jabba)
-
-Also, a Travis-CI dedicated tool has been written to ease installation via Travis: [Gravis-CI](Gravis-CI)
-* Automatically installs Jabba
-* Uses Jabba to install the version of the JDK specified in the `JDK` environment variable
+## GitHub Actions: a simple gradle build
 
 ```yaml
-env:
-  global:
-    - GRAVIS_REPO="https://github.com/DanySK/Gravis-CI.git" # Convenience variable for shortening commands
-    - GRAVIS="$HOME/gravis" # Convenience variable for shortening commands
-    - JDK="adopt@1.11.0-8" # Partial versions supported, adopt@1.11 would pull the latest adopt 1.11
-
-before_install:
-  - travis_retry git clone --depth 1 $GRAVIS_REPO $GRAVIS # Check out the script set
-  - source $GRAVIS/install-jdk # Install the JDK you configured in the $JDK environment variable
-```
-
----
-
-## Build Matrix
-
-Similarly to the operating systems, other environment features may need to get tested, e.g. the JDK versions
-
-Travis automatically combines some variables into a *[build matrix](https://docs.travis-ci.com/user/build-matrix/)*
-* Generates one job for each combination of such variable
-* Expands `os`, custom language keys (such as `rvm` or `python`), and `env.matrix` keys
-* `jobs.include` can be used to add further jobs to the matrix
-* `jobs.exclude` can be used to filter jobs out of the matrix
-
-```yaml
-...
-env:
-  global:
-    ...
-  matrix:
-    - JDK="adopt@"
-    - JDK="adopt@1.11"
-    - JDK="adopt-openj9@"
-    - JDK="adopt-openj9@1.11"
+name: Clone Repository
+on:
+  push: # On every push on any branch
 jobs:
-  include: # Add a job with default OS and the specified matrix environment
-    env:
-      - JDK="adopt@1.8" 
-  exclude: # Excludes builds with OSX and OpenJ9
-    - { os: osx, env: [ JDK="adopt-openj9@" ] } # JSON-like syntax, YAML is a superset of JSON
-    - { os: osx, env: [ JDK="adopt-openj9@1.11" ] }
+  Build: # Job name
+    runs-on: ubuntu-latest # Operating system selection
+    env: # Environment can be controlled at the job or step level
+      TERM: dumb # Sets the environment variable TERM to "dumb"
+    steps:
+      - name: Checkout # custom name Checkout the repository
+        uses: actions/checkout@v2 # Action implemented in this repository, tag "2"
+      - uses: joschi/setup-jdk@v2.3.0 # Action implemented in repository "joschi/setup-jdk" tag "2.3.0"
+        with: # Actions parameters (action name omitted)
+          java-version: 15
+      - name: Build
+        run: ./gradlew check
 ```
 
 ---
 
-## Build Stages and workspaces
+# Automated delivery
 
-Spanning several jobs upfront may make the build very slow
-* A single mistake will be detected only after all jobs failed
-* In case of limited resources, it can take a long time
-* Most errors will affect *all* builds
+Once the *reference environment* in CI completed the software construction and testing,
+it should **sign** and then **deliver** the result.
+* Possibly, even **deploy** the result, putting it at work
 
-**Build stages** allow to group one or more jobs that are to be run in parallel
-* By default, all jobs run the `test` stage
-* Jobs from a stage can communicate with jobs on another stage via **[workspaces](https://docs.travis-ci.com/user/using-workspaces/)**
+### Some delivery targets
 
-Consider for instance this structure:
-1. Run a build on the *reference* environment
-2. If successul, then *test on all the supported configurations*
-3. If everything is successful, then *deploy*
+* [GitHub releases](https://docs.github.com/en/github/administering-a-repository/about-releases)
+  * Retract, language agnostic, good for releases
+* [Sonatype OSSRH (a.k.a. *Maven Central*)](https://search.maven.org/)
+  * De-facto standard for JVM products, no retract policy
+* [GitHub packages](https://github.com/features/packages)
+  * No retract, authentication required also in read mode, immagure
+* ~~JFrog Bintray~~ [✝ 2021-05-01](https://jfrog.com/blog/into-the-sunset-bintray-jcenter-gocenter-and-chartcenter/)
+  * Maven Central + other stuff
 
-this can be mapped into a *three-stages* configuration
-
----
-
-## Travis YAML validation
-
-* Builds can get *complex*
-* The corrisponding YAML file can get *rich*
-* Syntax *errors are possible and likely*
-
-* Use *[anchors](https://yaml.org/spec/1.2/spec.html#id2765878)* and *[merge keys](https://yaml.org/type/merge.html)* to foster reuse
-* *Validate* YAML before pushing
-    * Travis CI provides a Ruby tool for this!
-
-<br>
-<br>
-
-#### Using `travis` from the local terminal
-* Installation: `gem install travis`
-    * Make sure you have the Gem install folder in your `PATH`
-* Run `travis lint` to verify if your YAML file complies
+In [this repository](https://github.com/AlchemistSimulator/Alchemist/tree/3535e1b42097c86c6d5d3662fff554558381e5fc),
+delivery is enabled towards all the aforementioned destinations
 
 ---
 
-## Private data and continuous integration
+# No-retract
 
-We would like the CI to be able to
-* Sign our artifacts
-* Delivery/Deploy our artifacts on remote targets
+Your error will remain in the repositories *forever* and you will *never* be able to
+fix it, you will need to *create a new release* with a *different version number*.
 
-Both operations **require private information to be shared**
+**Anectodal apology of no-retract policies**
 
-Of course, private data *can't be shared*
-* Attackers may steal the identity
-* Attackers may compromise deployments
-* In case of open projects, attackers may exploit *pull requests*!
-    * Fork your project (which has e.g. a secret environment variable)
-    * Print the value of the secret (e.g. with `printenv`)
-
-How to *share a secret* with the build environment?
-
----
-
-## Sharing a secret
-
-Travis supports the insertion of secret **variables** in two ways:
-* From the *web interface* (easier, quicker)
-    * More options $\Rightarrow$ Settings $\Rightarrow$ Environment variables
-* From the *command line* (more compleicated)
-    * `travis encrypt <String to encrypt>  --pro`
-        * e.g., `travis encrypt 'PASSWORD="foobar"'`
-    * produces a `secure: <code>` entry that can be pasted in `.travis.yml`
-        * e.g.:
-```yaml
-env:
-  global:
-    secure: <code>
-```
-
-Travis also supports sharing a **single secret file**
-* It gets encrypted using `travis encrypt-file <file> --pro`
-* The output command must be included in `.travis.yml`
-    * e.g. in the `before_install` phase of any job requiring it
-* The resulting encrypted file must be tracked
-    * Be careful not to track the original one!
+In March 2016, Azer Koçlu unpublished more than 250 of his modules
+from NPM, which is a popular package manager used by Javascript
+projects to install dependencies, because he was asked to rename the
+module `Kik`, whose name is the same of an instant messaging app that
+wanted to publish a homonym module.
+Unfortunately, one of those dependencies was `left-pad`, a *11-line-long*
+Javascript module, used by *thousands* of projects. This brought
+breackages throughout many Javascript products (most notably Node and
+Babel). NPM had to un-unpublish `left-pad`.
 
 ---
 
-## Shared secrets: best practices
+## Picking version numbers
 
-* Leverage the single shared file for sharing an **ASCII-armored** PGP key
-    * Allows for *signing* artifacts
-    * *Signing keys are large* and cannot fit a variable
-    * Obtain it with `gpg --armor --export-secret-keys > secrets.asc`
-    * Encrypt with `travis encrypt-file secrets.asc --pro`
-    * Remove it (`rm secrets.asc`)
-    * Track the encrypted file `git add secrets.asc.enc`
-    * In the `install` or `before_install` phase:
-        * Add the `openssl` command printed by travis in the `before_install` phase
-        * Add `export ORG_GRADLE_PROJECT_signingKey=$(cat secrets.asc)`
-* In case you need *multiple files*:
-    * create an archive, encrypt it, decrypt on the build server, and unpack there
-* Store *passwords* into *encrypted variables*
-* Secrets are *only available in builds launched from the original repository*
-    * Otherwise there'd be no protection from *pull request attacks*
-    * *Make sure pull requests can build without secrets*!
-    * e.g. by *excluding phases or jobs* that use secrets
+> Without compliance to some sort of formal specification, version
+numbers are essentially useless for dependency management. By
+giving a name and clear definition to the above ideas, it becomes
+easy to communicate your intentions to the users of your software.
 
----
+### [Semantic versioning](http://semver.org/)
 
-## Signing using in-memory keys in Gradle
-
-```kotlin
-if (System.getenv("CI") == true.toString()) {
-    signing {
-        val signingKey: String? by project
-        val signingPassword: String? by project
-        useInMemoryPgpKeys(signingKey, signingPassword)
-    }
-}
-```
-* The `CI` environment variable is automatically set to true on Travis CI
-    * See [https://docs.travis-ci.com/user/environment-variables/#default-environment-variables](https://docs.travis-ci.com/user/environment-variables/#default-environment-variables)
-* The `signingKey` and `signingPassword` properties must get *passed* to Gradle
-    * The best way is probably by exporting them as environment variables
-    * Gradle auto-imports properties named `ORG_GRADLE_PROJECT_<variableName>`
-    * This mechanism can be exploited to inject properties using environment variables:
-        * `export ORG_GRADLE_PROJECT_signingKey=$(cat secrets.asc)`
-        * A secret variable named `ORG_GRADLE_PROJECT_signingPassword` from the web UI
-
----
-
-## Conditional jobs, stages, and deployments
-
-One way to prevent pull requests to run deployment phases that would fail
-<br>
-(due to unavailability of secrets)
-<br>
-is to use **conditional jobs, stages, and deployments**
-
-To do so, the keyword `if` can be used:
-* On the whole build, to skip it entirely
-* On a `stages` entry, to skip a single stage
-* On a `jobs.include` entry, to exclude that job
-
-The [Travis condition syntax is documented at https://docs.travis-ci.com/user/conditions-v1](https://docs.travis-ci.com/user/conditions-v1)
-
----
-
-## Travis CI's `deploy`
-
-The `deploy` phase is special in Travis:
-* It does not allow to run custom commands
-* It expects entries with:
-    * A deploy provider
-    * A configuration
-
-Full reference: [https://docs.travis-ci.com/user/deployment-v2](https://docs.travis-ci.com/user/deployment-v2)
-
-Example:
-```yaml
-deploy:
-  provider: releases # Deploys on GitHub Releases
-  file: build/libs/*.jar # Files to deploy
-  edge: true # opt in to the new deploy API
-  on: # filter
-    all_branches: true
-    # tags: true # deploy only tags
-```
-
----
-
-# Stale builds
-
-1. Stuff *works*
-2. *Nobody touches it* for months
-3. Untouched stuff is now *borked*!
-
-Ever happenened?
-
-* Connected to the issue of build reproducibility
-* The default configuration of Travis CI may change
-    * By the way, explicitly using `dist` for Linux builds may help
-* Some tools may become unavailable
-* Some dependencies may get unavailable
-
-**The sooner the issue is known, the better**
-
-$\Rightarrow$ *Automatically run the build every some time* even if nobody touches the project
-* How often? Depends on the project...
-
----
-
-## Additional checks and reportings
-
-There exist a number of recommended services that provide additional QA and reports.
-
-Non exhaustive list:
-* [Codecov.io](https://codecov.io/)
-    * Code coverage
-    * Supports Jacoco XML reports
-    * Nice data reporting system
-* [Sonarcloud](https://sonarcloud.io/)
-    * Multiple measures, covering reliability, security, maintainability, duplication, complexity...
-* [Codacy](https://www.codacy.com/)
-    * Automated software QA for several languages
-* [Code Factor](https://www.codefactor.io/)
-    * Automated software QA
-
----
-
-## High quality FLOSS checklist
-
-The [Linux Foundation](https://www.linuxfoundation.org/) [Core Infrastructure Initiative](https://www.coreinfrastructure.org/) created a checklist for high quality FLOSS.
-
-**[CII Best Practices Badge Program https://bestpractices.coreinfrastructure.org/en](https://bestpractices.coreinfrastructure.org/en)**
-
-
-* *Self-certification*: no need for bureaucracy
-* Provides a nice *TODO list* for a high quality product
-* Releases a *badge* that can be added e.g. to the project homepage
+* Formally described, RFC-style
+* Three levels plus optional: `MAJOR.MINOR.PATCH[-OTHER][+BUILD]`
+  * `MAJOR` — Any incompatible API change
+    * Major `0` is for initial development: anything may change at any time.
+  * `MINOR` — Add functionality in a backwards-compatible manner
+  * `PATCH` — Backwards-compatible bug fixes
+  * `OTHER` — Optionally decorates the version with additional information.
+  * `BUILD` — Optionally decorates the version with build information.
+* First release: `0.1.0`, `1.0.0` formalizes the API

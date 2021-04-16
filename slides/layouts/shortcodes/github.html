@@ -3,6 +3,6 @@
 {{ $path := .Get "path" | default "README.md" }}
 {{ $branch := .Get "branch" | default "master" }}
 
-<div style="display: inline-block; align-items: center;">
+<div style="display: inline-block; width: fit-content; min-width: 25em;">
     <script src="https://gist-it.appspot.com/github/{{ $owner }}/{{ $repo }}/blob/{{ $branch }}/{{ $path }}?footer=no{{ with .Get "slice" }}&slice={{ . }}{{ end }}"></script>
 </div>
