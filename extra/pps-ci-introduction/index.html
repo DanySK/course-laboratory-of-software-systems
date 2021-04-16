@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/css/reset.css">
 <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/css/reveal.css">
-  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.7e71d4d77314b7e7f613c83fb069708c4948bef6fef4458398e916efc37ce185.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
+  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.0f87e7d61ea41006cfd5671ae5bbfff8e09ee42d07f34b7f130db0c5e72dd058.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
     
 <link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
 <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
@@ -27,7 +27,7 @@
     <section><h1 id="development-and-programming-paradigms">Development and programming paradigms</h1>
 <h2 id="continuous-integration">Continuous Integration</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2021-04-15
+2021-04-16
 
 </section>
 <section data-noprocess data-shortcode-slide>
@@ -773,7 +773,7 @@ and let the tool decide what to do actually</p>
 
 
 
-<div style="display: inline-block; align-items: center;">
+<div style="display: inline-block; width: fit-content; min-width: 25em;">
     <script src="https://gist-it.appspot.com/github/APICe-at-DISI/PPS-ci-examples/blob/master/01-dependencies/src/main/java/it/unibo/ci/PrintBreakingBad.java?footer=no"></script>
 </div>
 
@@ -941,7 +941,7 @@ and let the tool decide what to do actually</p>
 
 
 
-<div style="display: inline-block; align-items: center;">
+<div style="display: inline-block; width: fit-content; min-width: 25em;">
     <script src="https://gist-it.appspot.com/github/APICe-at-DISI/PPS-ci-examples/blob/master/00-minimal/src/main/java/HelloWorld.java?footer=no"></script>
 </div>
 
@@ -951,11 +951,28 @@ and let the tool decide what to do actually</p>
 
 
 
-<div style="display: inline-block; align-items: center;">
+<div style="display: inline-block; width: fit-content; min-width: 25em;">
     <script src="https://gist-it.appspot.com/github/APICe-at-DISI/PPS-ci-examples/blob/master/00-minimal/build.gradle.kts?footer=no"></script>
 </div>
 
 <p>Yes, it&rsquo;s a one-liner</p>
+</section><section>
+<h2 id="gradle-minimal-example-execution">Gradle: minimal example execution</h2>
+<ul>
+<li>The <code>gradle</code> command accepts the names of <em>tasks</em>  to execute as parameters</li>
+<li>The <code>java</code> plugin introduces several tasks:
+<ul>
+<li><code>compile&lt;source set&gt;&lt;language name&gt;</code> (e.g., <code>compileTestJava</code>): compiles a specific source set</li>
+<li><code>compile&lt;language name&gt;</code>: compiles all source sets of a language</li>
+<li><code>build</code>: runs all compilation tasks</li>
+<li><code>tasks</code>: displays available tasks
+<ul>
+<li>usually used as <code>tasks --all</code> to show also <em>uncategorized</em> tasks</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 </section><section>
 <h2 id="dependency-management-in-gradle">Dependency management in Gradle</h2>
 <p><code>repositories</code></p>
@@ -994,6 +1011,46 @@ and let the tool decide what to do actually</p>
 <li>Transitive dependencies are resolved automatically (if available in some repository)</li>
 </ul>
 </section><section>
+<h2 id="the-build-system-as-dependency">The build system as dependency</h2>
+<ul>
+<li>
+<p><em>no guarantee</em>  that automation written with some tool at version <code>X</code>, will work at version <code>Y</code>!</p>
+</li>
+<li>
+<p>$\Rightarrow$ <strong>The build system is itself a dependency</strong></p>
+</li>
+<li>
+<p>A global dependency on the build tool is <strong>hard to capture</strong></p>
+</li>
+<li>
+<p>Often, it becomes a <em>prerequisite expressed in natural language</em></p>
+<ul>
+<li>e.g., &ldquo;you need Maven 3.6.1 to build this software&rdquo;</li>
+</ul>
+</li>
+<li>
+<p><em>Critical</em> issues when different pieces of the same system depend on different build tool versions</p>
+</li>
+</ul>
+</section><section>
+<h2 id="the-gradle-wrapper">The Gradle wrapper</h2>
+<p>Gradle proposes a (partial) solution with the so-called <em>Gradle wrapper</em></p>
+<ul>
+<li><em>A minimal program</em> that simply downloads the version of gradle written in a configuration file</li>
+<li><em>Generable</em> with the built-in task <code>wrapper</code>
+<ul>
+<li><code>gradle wrapper --gradle-version=&lt;VERSION&gt;</code></li>
+</ul>
+</li>
+<li>Prepares scripts for bash and cmd to run Gradle at the specified version
+<ul>
+<li><code>gradlew</code></li>
+<li><code>gradlew.bat</code></li>
+</ul>
+</li>
+</ul>
+<p>The Gradle wrapper is <em><strong>the</strong> correct way</em> to use gradle, and we&rsquo;ll be using it from now on.</p>
+</section><section>
 <h2 id="gradle-our-toy-example">Gradle: our toy example</h2>
 <p><code>src/main/java/it/unibo/ci/PrintBreakingBad.java</code></p>
 
@@ -1001,7 +1058,7 @@ and let the tool decide what to do actually</p>
 
 
 
-<div style="display: inline-block; align-items: center;">
+<div style="display: inline-block; width: fit-content; min-width: 25em;">
     <script src="https://gist-it.appspot.com/github/APICe-at-DISI/PPS-ci-examples/blob/master/01-dependencies/src/main/java/it/unibo/ci/PrintBreakingBad.java?footer=no"></script>
 </div>
 
@@ -1013,7 +1070,7 @@ and let the tool decide what to do actually</p>
 
 
 
-<div style="display: inline-block; align-items: center;">
+<div style="display: inline-block; width: fit-content; min-width: 25em;">
     <script src="https://gist-it.appspot.com/github/APICe-at-DISI/PPS-ci-examples/blob/master/01-dependencies/build.gradle.kts?footer=no"></script>
 </div>
 
@@ -1023,10 +1080,288 @@ and let the tool decide what to do actually</p>
 
 
 
-<div style="display: inline-block; align-items: center;">
+<div style="display: inline-block; width: fit-content; min-width: 25em;">
     <script src="https://gist-it.appspot.com/github/APICe-at-DISI/PPS-ci-examples/blob/master/01-dependencies/settings.gradle.kts?footer=no"></script>
 </div>
 
+</section><section>
+<h2 id="gradle-toy-example-execution">Gradle: toy example execution</h2>
+<ul>
+<li>The <code>application</code> plugin introduces a <code>run</code> task:
+<ul>
+<li>Depends on <code>build</code></li>
+<li>runs the specified main class passing the <code>runtimeClasspath</code> to the <code>-cp</code> option of <code>java</code></li>
+<li><code>./gradlew</code> run</li>
+</ul>
+</li>
+</ul>
+<p><strong>Note</strong>: exectution requires a valid TheTVDB API Key in a plain text file <code>src/main/resources/APIKey</code></p>
+</section><section>
+<h2 id="gradle-multi-language-projects">Gradle: multi-language projects</h2>
+<p><code>src/main/groovy/HelloGroovy.groovy</code></p>
+
+
+
+
+
+<div style="display: inline-block; width: fit-content; min-width: 25em;">
+    <script src="https://gist-it.appspot.com/github/APICe-at-DISI/PPS-ci-examples/blob/master/02-multilang/src/main/groovy/HelloGroovy.groovy?footer=no"></script>
+</div>
+
+<p><code>src/main/java/HelloWorld.java</code></p>
+
+
+
+
+
+<div style="display: inline-block; width: fit-content; min-width: 25em;">
+    <script src="https://gist-it.appspot.com/github/APICe-at-DISI/PPS-ci-examples/blob/master/02-multilang/src/main/java/HelloWorld.java?footer=no"></script>
+</div>
+
+</section><section>
+<h2 id="gradle-multi-language-projects-1">Gradle: multi-language projects</h2>
+<p><code>src/main/kotlin/HelloKt.kt</code></p>
+
+
+
+
+
+<div style="display: inline-block; width: fit-content; min-width: 25em;">
+    <script src="https://gist-it.appspot.com/github/APICe-at-DISI/PPS-ci-examples/blob/master/02-multilang/src/main/kotlin/HelloKt.kt?footer=no"></script>
+</div>
+
+<p><code>src/main/scala/HelloScala.scala</code></p>
+
+
+
+
+
+<div style="display: inline-block; width: fit-content; min-width: 25em;">
+    <script src="https://gist-it.appspot.com/github/APICe-at-DISI/PPS-ci-examples/blob/master/02-multilang/src/main/scala/HelloScala.scala?footer=no"></script>
+</div>
+
+</section><section>
+<h2 id="gradle-multi-language-projects-2">Gradle: multi-language projects</h2>
+<p><code>build.gradle.kts</code></p>
+
+
+
+
+
+<div style="display: inline-block; width: fit-content; min-width: 25em;">
+    <script src="https://gist-it.appspot.com/github/APICe-at-DISI/PPS-ci-examples/blob/master/02-multilang/build.gradle.kts?footer=no"></script>
+</div>
+
+</section><section>
+<h1 id="quality-assurance">Quality Assurance</h1>
+<p><em>&ldquo;It works&rdquo;</em> <strong>is <em>not</em> good enough</strong></p>
+<p>(besides, the very notion of &ldquo;it works&rdquo; is rather debatable)</p>
+<ul>
+<li>Software quality should be <em>continuously assessed</em></li>
+<li>The assessment should <em>automatic</em> whenever possible</li>
+<li><strong>QA should be integrated in the build system!</strong>
+<ul>
+<li>It is fine to <em>fail the build</em> if quality criteria are not met</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="quality-assurance-levels">Quality Assurance: levels</h2>
+<ul>
+<li><em>Style</em> and <em>coherence</em></li>
+<li><em>Flawed programming</em> patterns</li>
+<li>Violations of the <em>DRY</em> principle</li>
+<li><strong>Testing</strong>
+<ul>
+<li>Multifaceted issue</li>
+<li>To be executed along the whole software lifecycle</li>
+<li>$\Rightarrow$ Plenty of detail in upcoming lectures</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="quality-assurance-style-and-coherence">Quality Assurance: style and coherence</h2>
+<p>Automated checkers are also called <em>linters</em>, often provide an auto-formatting tool</p>
+<p><strong>Idiomatic</strong> and <strong>standardized</strong> code:</p>
+<ul>
+<li>reduces <em>complexity</em></li>
+<li>improves <em>understandandability</em></li>
+<li>prevents <em>style-changing commits</em> with <em>unintelligible diffs</em></li>
+<li>lowers the <em>maintenance</em> burden and related <em>costs</em></li>
+<li>simplifies <em>code reviews</em></li>
+</ul>
+<p>In <em>Java</em>:
+<a href="https://checkstyle.sourceforge.io/">Checkstyle</a>,
+<a href="https://pmd.github.io/">PMD</a></p>
+<p>In <em>Kotlin</em>:
+<a href="https://github.com/JetBrains/inspection-plugin">IDEA Inspection</a>,
+<a href="https://ktlint.github.io/">Ktlint</a></p>
+<p>In <em>Scala</em>:
+<a href="https://scalameta.org/scalafmt/">Scalafmt</a>,
+<a href="http://www.scalastyle.org/rules-1.0.0.html">Scalastyle</a></p>
+</section><section>
+<h2 id="quality-assurance-flawed-programming-patterns">Quality Assurance: flawed programming patterns</h2>
+<p>Identification and reporting of <em>patterns</em> known to be <em>problematic</em></p>
+<ul>
+<li>Early-interception of <em>potential bugs</em></li>
+<li>Enforce <em>good programming principles</em></li>
+<li>Improves <em>performance</em></li>
+<li>Reduces <em>complexity</em></li>
+<li>Reduces <em>maintenance cost</em></li>
+</ul>
+<p>In <em>Java</em>:
+<a href="https://pmd.github.io/">PMD</a>,
+<a href="https://spotbugs.github.io/">SpotBugs</a></p>
+<p>In <em>Kotlin</em>:
+<a href="https://detekt.github.io/detekt/">Detekt</a>
+<a href="https://github.com/JetBrains/inspection-plugin">IDEA Inspection</a></p>
+<p>In <em>Scala</em>:
+<a href="htthttps://scalacenter.github.io/scalafix/">Scalafix</a>,
+<a href="http://www.wartremover.org/">Wartremover</a></p>
+</section><section>
+<h2 id="quality-assurance-violations-of-the-dry-principle">Quality Assurance: violations of the DRY principle</h2>
+<p>Code <em>replicated</em> rather than <em>reused</em></p>
+<ul>
+<li>improves <em>understandandability</em></li>
+<li>Reduces <em>maintenance cost</em></li>
+<li>simplifies <em>code reviews</em></li>
+</ul>
+<p>General advice: <strong>never copy/paste</strong> your code</p>
+<ul>
+<li>If you need to copy something, you probably need to <em>refactor</em> something</li>
+</ul>
+<p>Multi-language tool: <a href="https://pmd.github.io/latest/pmd_userdocs_cpd.html">Copy/Paste Detector (CPD)</a> (part of PMD)</p>
+</section><section>
+<h2 id="quality-assurance-testing-and-coverage">Quality Assurance: testing and coverage</h2>
+<p><strong>Automated</strong> software verification</p>
+<ul>
+<li>Unit level</li>
+<li>Integration testing</li>
+<li>End-to-end testing</li>
+</ul>
+<p>Extension of testing can be evaluated via <strong>coverage</strong>.</p>
+<ul>
+<li>Coverage tells you <em>how much code is <strong>untested</strong>, not how much is tested</em></li>
+</ul>
+<p>Several frameworks, recommended ones:</p>
+<ul>
+<li>Testing for <em>all JVM languages</em>: <a href="https://junit.org/junit5/docs/current/user-guide/">Junit/Jupiter (JUnit 5)</a></li>
+<li>Testing for <em>Kotlin</em>: <a href="https://kotest.io/">Kotest</a></li>
+<li>Testing for <em>Scala</em>: <a href="https://www.scalatest.org/">Scalatest</a></li>
+<li>Coverage for all JVM languages: <a href="https://www.eclemma.org/jacoco/">JaCoCo</a></li>
+<li>Coverage for Scala: <a href="http://scoverage.org/">Scoverage</a></li>
+</ul>
+</section><section>
+<h2 id="quality-assurance-junit--gradle">Quality Assurance: JUnit + Gradle</h2>
+<p><code>src/main/scala/it/unibo/test/Test.scala</code></p>
+
+
+
+
+
+<div style="display: inline-block; width: fit-content; min-width: 25em;">
+    <script src="https://gist-it.appspot.com/github/APICe-at-DISI/PPS-ci-examples/blob/master/04-junit/src/main/scala/it/unibo/test/Test.scala?footer=no"></script>
+</div>
+
+</section><section>
+<h2 id="quality-assurance-junit--gradle-1">Quality Assurance: JUnit + Gradle</h2>
+<p><code>src/test/scala/MyTest.scala</code></p>
+
+
+
+
+
+<div style="display: inline-block; width: fit-content; min-width: 25em;">
+    <script src="https://gist-it.appspot.com/github/APICe-at-DISI/PPS-ci-examples/blob/master/04-junit/src/test/scala/MyTest.scala?footer=no"></script>
+</div>
+
+</section><section>
+<h2 id="quality-assurance-junit--gradle-2">Quality Assurance: JUnit + Gradle</h2>
+<p><code>build.gradle.kts</code></p>
+
+
+
+
+
+<div style="display: inline-block; width: fit-content; min-width: 25em;">
+    <script src="https://gist-it.appspot.com/github/APICe-at-DISI/PPS-ci-examples/blob/master/04-junit/build.gradle.kts?footer=no"></script>
+</div>
+
+</section><section>
+<h2 id="quality-assurance-scalatest--scoverage">Quality Assurance: Scalatest + Scoverage</h2>
+<p>Let&rsquo;s switch <em>testing framework</em> and enable <em>coverage</em></p>
+<p><code>src/main/scala/it/unibo/test/Test.scala</code></p>
+
+
+
+
+
+<div style="display: inline-block; width: fit-content; min-width: 25em;">
+    <script src="https://gist-it.appspot.com/github/APICe-at-DISI/PPS-ci-examples/blob/master/03-scalatest/src/main/scala/it/unibo/test/Test.scala?footer=no"></script>
+</div>
+
+</section><section>
+<h2 id="quality-assurance-scalatest--scoverage-1">Quality Assurance: Scalatest + Scoverage</h2>
+<p><code>src/test/scala/Test.scala</code></p>
+
+
+
+
+
+<div style="display: inline-block; width: fit-content; min-width: 25em;">
+    <script src="https://gist-it.appspot.com/github/APICe-at-DISI/PPS-ci-examples/blob/master/03-scalatest/src/test/scala/Test.scala?footer=no"></script>
+</div>
+
+</section><section>
+<h2 id="quality-assurance-scalatest--scoverage-2">Quality Assurance: Scalatest + Scoverage</h2>
+<p><code>build.gradle.kts</code></p>
+
+
+
+
+
+<div style="display: inline-block; width: fit-content; min-width: 25em;">
+    <script src="https://gist-it.appspot.com/github/APICe-at-DISI/PPS-ci-examples/blob/master/03-scalatest/build.gradle.kts?footer=no"></script>
+</div>
+
+</section><section>
+<h2 id="gradle-qa-execution">Gradle: QA execution</h2>
+<ul>
+<li>The <code>java</code> plugin (applied by the <code>scala</code> plugin under the hood) also introduces:
+<ul>
+<li><code>test</code>: a task that runs all tests</li>
+<li><code>check</code>: a task that runs the whole quality assurance suite</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="additional-checks-and-reportings">Additional checks and reportings</h2>
+<p>There exist a number of recommended services that provide additional QA and reports.</p>
+<p>Non exhaustive list:</p>
+<ul>
+<li><a href="https://codecov.io/">Codecov.io</a>
+<ul>
+<li>Code coverage</li>
+<li>Supports Jacoco XML reports</li>
+<li>Nice data reporting system</li>
+</ul>
+</li>
+<li><a href="https://sonarcloud.io/">Sonarcloud</a>
+<ul>
+<li>Multiple measures, covering reliability, security, maintainability, duplication, complexity&hellip;</li>
+</ul>
+</li>
+<li><a href="https://www.codacy.com/">Codacy</a>
+<ul>
+<li>Automated software QA for several languages</li>
+</ul>
+</li>
+<li><a href="https://www.codefactor.io/">Code Factor</a>
+<ul>
+<li>Automated software QA</li>
+</ul>
+</li>
+</ul>
 </section><section>
 <h1 id="continuous-integration-1">Continuous Integration</h1>
 <p>The practice of integrating code with the main development line <strong>continuously</strong>
@@ -1137,473 +1472,227 @@ and let the tool decide what to do actually</p>
 </ul>
 <p><strong>Plenty</strong> of integrators on the market</p>
 <ul>
-<li>Circle CI, Travis CI, Werker, done.io, Codefresh, Codeship, Bitbucket Pipelines&hellip;</li>
-</ul>
-<p>We will use Travis CI</p>
-<ul>
-<li>GitHub integration</li>
-<li>Free for academy</li>
-<li>Multiple OSs supported</li>
+<li>GitHub Actions, Circle CI, Travis CI, Werker, done.io, Codefresh, Codeship, Bitbucket Pipelines&hellip;</li>
 </ul>
 </section><section>
 <h1 id="core-concepts">Core concepts</h1>
-<p><strong>phase</strong></p>
+<p>Naming and organization is variable across platforms, but <em>in general</em>:</p>
 <ul>
-<li>A <em>named sequence of commands</em></li>
-<li>A phase succeeds if all the commands succeed</li>
-<li>The next phase starts only if the previous was successful</li>
-<li>The names and order of phases are <em>pre-determined</em></li>
+<li>One or more <strong>pipelines</strong> can be associated to <strong>events</strong>
+<ul>
+<li>For instance, a <em>new commit</em>, an update to a <em>pull request</em>, or a <em>timeout</em></li>
 </ul>
+</li>
+<li>Every pipeline is composed of a <strong>sequence</strong> of <strong>operations</strong> (<em>jobs</em>, <em>stages</em>, <em>phases</em>)</li>
+<li>Every <strong>operation</strong> could be composed of sequential or parallel <strong>sub-operations</strong> (<em>jobs</em>, <em>phases</em>, <em>steps</em>)</li>
+<li>How many hierarchical levels are available depends on the specific platform
+<ul>
+<li>GitHub Actions: <em>workflow</em> $\Rightarrow$ <em>job</em> $\Rightarrow$ <em>step</em></li>
+<li>Travis CI: <em>build</em> $\Rightarrow$ <em>stage</em> $\Rightarrow$ <em>job</em>  $\Rightarrow$ <em>phase</em></li>
+</ul>
+</li>
+<li>Execution happens in a <strong>fresh system</strong> (virtual machine or container)
+<ul>
+<li>Often containers inside virtual machines</li>
+<li>The specific point of the hierarchy at which the VM/container is spawned depends on the CI platform</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="ci-in-github-actions">CI in GitHub Actions</h2>
+<ul>
+<li>Very <em>open-source friendly</em></li>
+<li>Integrated in GitHub</li>
+<li><em>Less mature</em> than other integrators
+<ul>
+<li>My personal feeling is that it was built <em>bottom-up</em>&hellip;</li>
+</ul>
+</li>
+<li>Some questionable limitations</li>
+<li>A lot of parallelism (20 concurrent jobs, 5 for MacOS X)</li>
+</ul>
+</section><section>
+<h2 id="ci-in-github-actions-1">CI in GitHub Actions</h2>
+<p><strong>step</strong></p>
+<ul>
+<li>A (<em>possibly named</em>) <em>command</em> or <em>sequence of commands</em></li>
+<li>Can be executed on the virtual machine or inside a container</li>
+<li>Defines <em>success</em> or <em>failure</em>
+<ul>
+<li>Usually, the return value of the last command</li>
+</ul>
+</li>
+</ul>
+<p><strong>action</strong></p>
+<ul>
+<li>A <em>reusable step</em>
+<ul>
+<li>DRY in CI $\Rightarrow$ Laboratory of Software Systems</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="ci-in-github-actions-2">CI in GitHub Actions</h2>
 <p><strong>job</strong></p>
 <ul>
-<li>Operation consisting in:
+<li>A <em>sequence of steps</em> that run in parallel</li>
+<li>Executed on a <em>virtual machine</em></li>
+<li>A job is <em>successful</em> if all its steps are successful</li>
+<li>Multiple jobs can be spawned at once via <em>matrix expansion</em>
 <ul>
-<li><em>spawning</em> of a fresh <em>virtual environment</em></li>
-<li><em>configuration</em> of the virtual environment</li>
-<li><em>cloning</em> of the repository</li>
-<li><em>ordered execution of all phases</em></li>
+<li>e.g., spawn one job for each OS and version of the JVM</li>
+<li>CI Matrix expansion $\Rightarrow$ Laboratory of Software Systems</li>
+</ul>
+</li>
+</ul>
+<p><strong>workflow</strong></p>
+<ul>
+<li>A <em>named sequence of steps</em></li>
+<li>There can be multiple workflows per repository</li>
+<li>Workflows are <em>isolated</em></li>
+</ul>
+</section><section>
+<h2 id="github-actions-configuration">GitHub Actions: Configuration</h2>
+<p>Workflows are configured in the <code>.github/workflows/</code> folder of the repository</p>
+<ul>
+<li>One <strong>YAML</strong> file per <em>workflow</em></li>
+<li>GHA YAML is (sic) <em>non-standard</em>
+<ul>
+<li>DRY is limited: <em><strong>no</strong> anchors</em>, <em><strong>no</strong> merge keys</em></li>
+</ul>
+</li>
+<li>In the following, I assume you know YAML
+<ul>
+<li>You can <a href="https://learnxinyminutes.com/docs/yaml/">learn it in minutes</a></li>
+<li>Just remember that anchors and merge keys are not supported</li>
 </ul>
 </li>
 </ul>
 </section><section>
-<h1 id="core-concepts-1">Core concepts</h1>
-<p><strong>stage</strong></p>
+<h2 id="github-actions-triggering-event">GitHub Actions: Triggering event</h2>
+<p>Workflows <em>react</em> to <a href="https://docs.github.com/en/actions/reference/events-that-trigger-workflows">events</a></p>
 <ul>
-<li>A <em>group of jobs</em> that run in parallel</li>
-<li>A build finishes when all of its jobs are finished.</li>
-<li>A stage is successful if all of its jobs are successful</li>
-<li>The next stages starts only if the previous was successful</li>
+<li>Events that trigger a workflow are specified under the <code>on</code> key</li>
 </ul>
-<p><strong>build</strong></p>
-<ul>
-<li>A <em>group of stages</em> that run in <em>sequence</em></li>
-<li>A build finishes when all of its stages are finished.</li>
-<li>A build is successful if all of its stages are successful</li>
-</ul>
-</section><section>
-<h2 id="job-lifecycle">Job lifecycle</h2>
-
-
-  
-    
-  
-
-
-<figure>
-  <img
-    src='https://g.gravizo.com/svg?%0a%40startuml%0a%0a%28%2a%29%20-right-%3e%20%22before_install%22%0a%22before_install%22%20-right-%3e%20%22install%22%0a%22install%22%20-right-%3e%20%22before_script%22%0a%22before_script%22%20-right-%3e%20%22script%22%0a%22script%22%20-right-%3e%20%22before_cache%22%0aif%20%22TRAVIS_TEST_RESULT%22%20then%0a%20%20--%3e%20%5btrue%5d%20%22after_success%22%0a%20%20--%3e%20%22before_deploy%22%0aelse%0a%20%20--%3e%20%5bfalse%5d%20%22after_failure%22%0a%20%20--%3e%20%22before_deploy%22%0a%22before_deploy%22%20-left-%3e%20%22deploy%22%0a%22deploy%22%20-left-%3e%20%22after_deploy%22%0a%22after_deploy%22%20-left-%3e%20%22after_script%22%0a%22after_script%22%20-left-%3e%20%28%2a%29%0a%0a%40enduml%0a'
-    alt='Travis CI Job lifecycle'
-    />
-    <figcaption>Travis CI Job lifecycle</figcaption>
-</figure>
-
-<ul>
-<li>If <code>before_install</code>, <code>install</code> or <code>before_script</code> returns a non-zero exit code, the build is errored and stops immediately.</li>
-<li>If <code>script</code> returns a non-zero exit code, the build is failed, but <em>continues to run</em> before being marked as failed.</li>
-<li>The exit code of <code>after_success</code>, <code>after_failure</code>, <code>after_script</code>, <code>after_deploy</code> and subsequent stages <em>do not affect the build result</em>.
-<ul>
-<li>However, if one of these stages times out, the build is marked as failed.</li>
-</ul>
-</li>
-</ul>
-</section><section>
-<h2 id="travis-ci-configuration">Travis CI: Configuration</h2>
-<p>Travis CI is configured in a single <code>travis.yml</code> file located in the repository root</p>
-<p>At registration time, it integrates with GitHub</p>
-<p>New pushes on repositories which contain <code>.travis.yml</code> get automatically built</p>
-</section><section>
-<h2 id="travis-ci-environment-selection">Travis CI: Environment selection</h2>
-<p>By default, travis tries to build a <em>Ruby</em> project
-<br>
-Travis itself is written in Ruby</p>
-<p>Selection of a different system configuration can be operated with the <code>language</code> keyword.
-<br>
-Over <a href="https://docs.travis-ci.com/user/language-specific/">30 languages</a> are natively supported.</p>
-<p>Some of the most interesting for us are:</p>
-<ul>
-<li><code>java</code></li>
-<li><code>scala</code></li>
-<li><code>minimal</code> (bare environment with just bash and Ruby)</li>
-</ul>
-<p>Every environment has some <em>pre-defined behaviour</em>,
-for instance the <code>language: java</code> environment automatically searches for a <code>pom.xml</code> and in case runs Maven,
-if not found searches for a <code>gradlew</code> file and runs <code>./gradlew assemble</code> in the <code>install</code> phase and <code>./gradlew check</code> in the <code>script</code> phase.</p>
-<ul>
-<li>Default phase behavior can be disabled with <code>&lt;phase_name&gt;: true</code></li>
-</ul>
-</section><section>
-<h2 id="travis-ci-clone-depth-control">Travis CI: clone depth control</h2>
-<p>By default, Travis CI <em>does not clone the entire history</em> of a repository.
-<br>
-It performs instead a <em>shallow clone</em>, by running <code>git clone --depth 50 &lt;repo-url&gt;</code></p>
-<p>This <em>interferes with DVCS-based versioning</em>, which may well need to look behind of many commits.</p>
-<p>This behaviour can be controlled with the <code>git</code> key:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">git</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">depth</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">false</span><span style="color:#bbb"> </span><span style="color:#888"># Accepts false or any number representing the commit count, defaults to 50</span><span style="color:#bbb">
-</span></code></pre></div><p>The same key allows for controlling further behaviour, such as disabling <code>autocrlf</code>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">git</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">depth</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">false</span><span style="color:#bbb"> </span><span style="color:#888"># Accepts false or any number representing the commit count, defaults to 50</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">autocrlf</span>:<span style="color:#bbb"> </span>input<span style="color:#bbb"> </span><span style="color:#888"># Prevents git from trying to be smart with line endings</span><span style="color:#bbb">
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">on</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">push</span>:<span style="color:#bbb"> </span><span style="color:#888"># Trigger the workflow on push</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">branches</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- main<span style="color:#bbb"> </span><span style="color:#888"># but only for the main branch</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">pull_request</span>:<span style="color:#bbb"> </span><span style="color:#888"># Also trigger for pull requests</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">branches</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- main<span style="color:#bbb"> </span><span style="color:#888"># but only for the main branch</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">page_build</span>:<span style="color:#bbb"> </span><span style="color:#888"># Also trigger on page_build</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">release</span>:<span style="color:#bbb"> </span><span style="color:#888"># Also trigger on release...</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">types</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- created<span style="color:#bbb"> </span><span style="color:#888"># ...created</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">schedule</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- <span style="color:#080;font-weight:bold">cron</span>:<span style="color:#bbb">  </span><span style="color:#d20;background-color:#fff0f0">&#39;*/30 5,17 * * *&#39;</span><span style="color:#bbb"> </span><span style="color:#888"># Cron syntax (see crontab.guru)</span><span style="color:#bbb">
 </span></code></pre></div></section><section>
-<h2 id="travis-ci-testing-on-different-oss">Travis CI: Testing on different OSs</h2>
-<p>If our software supports <em>multiple operating systems</em>, it is a good practice to verify that changes do not <em>break compatibility</em></p>
-<p>A few integrators allow to perform a multi-os build. In Travis it is possible via the <code>os</code> key, supporting:</p>
+<h2 id="github-actions-environment-preparation">GitHub Actions: Environment preparation</h2>
+<p>GitHub actions job run on a <em>fresh virtual machine</em></p>
 <ul>
-<li><code>linux</code> &ndash; A Ubuntu Linux installation</li>
-<li><code>macos</code> &ndash; A MacOS X installation</li>
-<li><code>windows</code> &ndash; A Windows Server installation</li>
-</ul>
-<p>Specifying <em>multiple operating systems</em> causes the execution of <em>multiple jobs</em> in the same build</p>
-<p><em>Note</em>: Some languages or system configurations may be unavailable for some environments!</p>
+<li>The <em>operating system</em> can be selected (Windows, Ubuntu, MacOS X)
 <ul>
-<li>e.g., there is no <code>java</code> environment available on <code>windows</code></li>
-</ul>
-</section><section>
-<h2 id="custom-environment">Custom environment</h2>
-<p>If a particular environment of need is unavailable, one solution is
-<br>
-<strong>build it yourself</strong></p>
-<ul>
-<li>start from <code>language: minimal</code></li>
-<li>if the software you need is installable via <strong>apt</strong> or <strong>homebrew</strong>, use the <code>addons</code> keyword:</li>
-</ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">addons</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">apt</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">packages</span>:<span style="color:#bbb"> </span>foo<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">homebrew</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">packages</span>:<span style="color:#bbb"> </span>bar<span style="color:#bbb">
-</span></code></pre></div><ul>
-<li>install packages under windows using <strong><a href="https://chocolatey.org/">chocolatey</a></strong> (pre installed on Travis Windows instances)</li>
-<li>if you need to perform a manual installation, you can write it in bash</li>
-</ul>
-</section><section>
-<h2 id="improved-resilience-on-travis">Improved resilience on Travis</h2>
-<ul>
-<li>operations that may fail due to network issues or long time can be worked around using Travis built in functions:
-<ul>
-<li><code>travis_retry COMMAND</code> tries the same <code>COMMAND</code> three times, giving up only if it fails for three times</li>
-<li><code>travis_wait N COMMAND</code> allows <code>COMMAND</code> to run without any output for longer than the default 10 minutes.
-<ul>
-<li>The hard limit on 50 minutes per job however remains</li>
+<li>Multi OS builds $\Rightarrow$ Laboratory of Software Systems</li>
 </ul>
 </li>
+<li>The repository needs to be <em>cloned manually</em></li>
+<li>Any operation should be <em>configured manually</em></li>
 </ul>
-</li>
+<p>Rather than <em>convention over configuration</em>, GHA use <strong>actions</strong> as a form of configuration reuse</p>
+<ul>
+<li>Actions can be found on the <a href="https://github.com/marketplace?type=actions">GH marketplace</a></li>
+<li>Developing new actions $\Rightarrow$ Laboratory of Software Systems</li>
 </ul>
 </section><section>
-<h2 id="a-java-custom-environment">A Java custom environment</h2>
-<p>It could be useful to test on specific versions of the JDK, for instance.
-<br>
-A multi platform installer exists: <a href="https://github.com/shyiko/jabba">Jabba</a></p>
-<p>Also, a Travis-CI dedicated tool has been written to ease installation via Travis: <a href="Gravis-CI">Gravis-CI</a></p>
-<ul>
-<li>Automatically installs Jabba</li>
-<li>Uses Jabba to install the version of the JDK specified in the <code>JDK</code> environment variable</li>
-</ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">env</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">global</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>- GRAVIS_REPO=<span style="color:#d20;background-color:#fff0f0">&#34;https://github.com/DanySK/Gravis-CI.git&#34;</span><span style="color:#bbb"> </span><span style="color:#888"># Convenience variable for shortening commands</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span>- GRAVIS=<span style="color:#d20;background-color:#fff0f0">&#34;$HOME/gravis&#34;</span><span style="color:#bbb"> </span><span style="color:#888"># Convenience variable for shortening commands</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span>- JDK=<span style="color:#d20;background-color:#fff0f0">&#34;adopt@1.11.0-8&#34;</span><span style="color:#bbb"> </span><span style="color:#888"># Partial versions supported, adopt@1.11 would pull the latest adopt 1.11</span><span style="color:#bbb">
-</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">before_install</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>- travis_retry<span style="color:#bbb"> </span>git<span style="color:#bbb"> </span>clone<span style="color:#bbb"> </span>--depth<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">1</span><span style="color:#bbb"> </span>$GRAVIS_REPO<span style="color:#bbb"> </span>$GRAVIS<span style="color:#bbb"> </span><span style="color:#888"># Check out the script set</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span>- source<span style="color:#bbb"> </span>$GRAVIS/install-jdk<span style="color:#bbb"> </span><span style="color:#888"># Install the JDK you configured in the $JDK environment variable</span><span style="color:#bbb">
-</span></code></pre></div></section><section>
-<h2 id="build-matrix">Build Matrix</h2>
-<p>Similarly to the operating systems, other environment features may need to get tested, e.g. the JDK versions</p>
-<p>Travis automatically combines some variables into a <em><a href="https://docs.travis-ci.com/user/build-matrix/">build matrix</a></em></p>
-<ul>
-<li>Generates one job for each combination of such variable</li>
-<li>Expands <code>os</code>, custom language keys (such as <code>rvm</code> or <code>python</code>), and <code>env.matrix</code> keys</li>
-<li><code>jobs.include</code> can be used to add further jobs to the matrix</li>
-<li><code>jobs.exclude</code> can be used to filter jobs out of the matrix</li>
-</ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>...<span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">env</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">global</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>...<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">matrix</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>- JDK=<span style="color:#d20;background-color:#fff0f0">&#34;adopt@&#34;</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span>- JDK=<span style="color:#d20;background-color:#fff0f0">&#34;adopt@1.11&#34;</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span>- JDK=<span style="color:#d20;background-color:#fff0f0">&#34;adopt-openj9@&#34;</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span>- JDK=<span style="color:#d20;background-color:#fff0f0">&#34;adopt-openj9@1.11&#34;</span><span style="color:#bbb">
+<h2 id="github-actions-a-simple-gradle-build">GitHub Actions: a simple gradle build</h2>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Clone<span style="color:#bbb"> </span>Repository<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">on</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">push</span>:<span style="color:#bbb"> </span><span style="color:#888"># On every push on any branch</span><span style="color:#bbb">
 </span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">jobs</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">include</span>:<span style="color:#bbb"> </span><span style="color:#888"># Add a job with default OS and the specified matrix environment</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">env</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>- JDK=<span style="color:#d20;background-color:#fff0f0">&#34;adopt@1.8&#34;</span><span style="color:#bbb"> 
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">exclude</span>:<span style="color:#bbb"> </span><span style="color:#888"># Excludes builds with OSX and OpenJ9</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span>- {<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">os: osx, env</span>:<span style="color:#bbb"> </span>[<span style="color:#bbb"> </span>JDK=<span style="color:#d20;background-color:#fff0f0">&#34;adopt-openj9@&#34;</span><span style="color:#bbb"> </span>]<span style="color:#bbb"> </span>}<span style="color:#bbb"> </span><span style="color:#888"># JSON-like syntax, YAML is a superset of JSON</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span>- {<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">os: osx, env</span>:<span style="color:#bbb"> </span>[<span style="color:#bbb"> </span>JDK=<span style="color:#d20;background-color:#fff0f0">&#34;adopt-openj9@1.11&#34;</span><span style="color:#bbb"> </span>]<span style="color:#bbb"> </span>}<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">Build</span>:<span style="color:#bbb"> </span><span style="color:#888"># Job name</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">runs-on</span>:<span style="color:#bbb"> </span>ubuntu-latest<span style="color:#bbb"> </span><span style="color:#888"># Operating system selection</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">env</span>:<span style="color:#bbb"> </span><span style="color:#888"># Environment can be controlled at the job or step level</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#080;font-weight:bold">TERM</span>:<span style="color:#bbb"> </span>dumb<span style="color:#bbb"> </span><span style="color:#888"># Sets the environment variable TERM to &#34;dumb&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">steps</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#080;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Checkout<span style="color:#bbb"> </span><span style="color:#888"># custom name Checkout the repository</span><span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#080;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@v2<span style="color:#bbb"> </span><span style="color:#888"># Action implemented in this repository, tag &#34;2&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#080;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>joschi/setup-jdk@v2<span style="color:#00d;font-weight:bold">.3.0</span><span style="color:#bbb"> </span><span style="color:#888"># Action implemented in repository &#34;joschi/setup-jdk&#34; tag &#34;2.3.0&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#080;font-weight:bold">with</span>:<span style="color:#bbb"> </span><span style="color:#888"># Actions parameters (action name omitted)</span><span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#080;font-weight:bold">java-version</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">15</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#080;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Build<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#080;font-weight:bold">run</span>:<span style="color:#bbb"> </span>./gradlew<span style="color:#bbb"> </span>check<span style="color:#bbb">
 </span></code></pre></div></section><section>
-<h2 id="build-stages-and-workspaces">Build Stages and workspaces</h2>
-<p>Spanning several jobs upfront may make the build very slow</p>
+<h1 id="automated-delivery">Automated delivery</h1>
+<p>Once the <em>reference environment</em> in CI completed the software construction and testing,
+it should <strong>sign</strong> and then <strong>deliver</strong> the result.</p>
 <ul>
-<li>A single mistake will be detected only after all jobs failed</li>
-<li>In case of limited resources, it can take a long time</li>
-<li>Most errors will affect <em>all</em> builds</li>
+<li>Possibly, even <strong>deploy</strong> the result, putting it at work</li>
 </ul>
-<p><strong>Build stages</strong> allow to group one or more jobs that are to be run in parallel</p>
+<h3 id="some-delivery-targets">Some delivery targets</h3>
 <ul>
-<li>By default, all jobs run the <code>test</code> stage</li>
-<li>Jobs from a stage can communicate with jobs on another stage via <strong><a href="https://docs.travis-ci.com/user/using-workspaces/">workspaces</a></strong></li>
+<li><a href="https://docs.github.com/en/github/administering-a-repository/about-releases">GitHub releases</a>
+<ul>
+<li>Retract, language agnostic, good for releases</li>
 </ul>
-<p>Consider for instance this structure:</p>
-<ol>
-<li>Run a build on the <em>reference</em> environment</li>
-<li>If successul, then <em>test on all the supported configurations</em></li>
-<li>If everything is successful, then <em>deploy</em></li>
-</ol>
-<p>this can be mapped into a <em>three-stages</em> configuration</p>
+</li>
+<li><a href="https://search.maven.org/">Sonatype OSSRH (a.k.a. <em>Maven Central</em>)</a>
+<ul>
+<li>De-facto standard for JVM products, no retract policy</li>
+</ul>
+</li>
+<li><a href="https://github.com/features/packages">GitHub packages</a>
+<ul>
+<li>No retract, authentication required also in read mode, immagure</li>
+</ul>
+</li>
+<li><del>JFrog Bintray</del> <a href="https://jfrog.com/blog/into-the-sunset-bintray-jcenter-gocenter-and-chartcenter/">✝ 2021-05-01</a>
+<ul>
+<li>Maven Central + other stuff</li>
+</ul>
+</li>
+</ul>
+<p>In <a href="https://github.com/AlchemistSimulator/Alchemist/tree/3535e1b42097c86c6d5d3662fff554558381e5fc">this repository</a>,
+delivery is enabled towards all the aforementioned destinations</p>
 </section><section>
-<h2 id="travis-yaml-validation">Travis YAML validation</h2>
-<ul>
-<li>
-<p>Builds can get <em>complex</em></p>
-</li>
-<li>
-<p>The corrisponding YAML file can get <em>rich</em></p>
-</li>
-<li>
-<p>Syntax <em>errors are possible and likely</em></p>
-</li>
-<li>
-<p>Use <em><a href="https://yaml.org/spec/1.2/spec.html#id2765878">anchors</a></em> and <em><a href="https://yaml.org/type/merge.html">merge keys</a></em> to foster reuse</p>
-</li>
-<li>
-<p><em>Validate</em> YAML before pushing</p>
-<ul>
-<li>Travis CI provides a Ruby tool for this!</li>
-</ul>
-</li>
-</ul>
-<br>
-<br>
-<h4 id="using-travis-from-the-local-terminal">Using <code>travis</code> from the local terminal</h4>
-<ul>
-<li>Installation: <code>gem install travis</code>
-<ul>
-<li>Make sure you have the Gem install folder in your <code>PATH</code></li>
-</ul>
-</li>
-<li>Run <code>travis lint</code> to verify if your YAML file complies</li>
-</ul>
+<h1 id="no-retract">No-retract</h1>
+<p>Your error will remain in the repositories <em>forever</em> and you will <em>never</em> be able to
+fix it, you will need to <em>create a new release</em> with a <em>different version number</em>.</p>
+<p><strong>Anectodal apology of no-retract policies</strong></p>
+<p>In March 2016, Azer Koçlu unpublished more than 250 of his modules
+from NPM, which is a popular package manager used by Javascript
+projects to install dependencies, because he was asked to rename the
+module <code>Kik</code>, whose name is the same of an instant messaging app that
+wanted to publish a homonym module.
+Unfortunately, one of those dependencies was <code>left-pad</code>, a <em>11-line-long</em>
+Javascript module, used by <em>thousands</em> of projects. This brought
+breackages throughout many Javascript products (most notably Node and
+Babel). NPM had to un-unpublish <code>left-pad</code>.</p>
 </section><section>
-<h2 id="private-data-and-continuous-integration">Private data and continuous integration</h2>
-<p>We would like the CI to be able to</p>
+<h2 id="picking-version-numbers">Picking version numbers</h2>
+<blockquote>
+<p>Without compliance to some sort of formal specification, version
+numbers are essentially useless for dependency management. By
+giving a name and clear definition to the above ideas, it becomes
+easy to communicate your intentions to the users of your software.</p>
+</blockquote>
+<h3 id="semantic-versioninghttpsemverorg"><a href="http://semver.org/">Semantic versioning</a></h3>
 <ul>
-<li>Sign our artifacts</li>
-<li>Delivery/Deploy our artifacts on remote targets</li>
-</ul>
-<p>Both operations <strong>require private information to be shared</strong></p>
-<p>Of course, private data <em>can&rsquo;t be shared</em></p>
+<li>Formally described, RFC-style</li>
+<li>Three levels plus optional: <code>MAJOR.MINOR.PATCH[-OTHER][+BUILD]</code>
 <ul>
-<li>Attackers may steal the identity</li>
-<li>Attackers may compromise deployments</li>
-<li>In case of open projects, attackers may exploit <em>pull requests</em>!
+<li><code>MAJOR</code> — Any incompatible API change
 <ul>
-<li>Fork your project (which has e.g. a secret environment variable)</li>
-<li>Print the value of the secret (e.g. with <code>printenv</code>)</li>
-</ul>
-</li>
-</ul>
-<p>How to <em>share a secret</em> with the build environment?</p>
-</section><section>
-<h2 id="sharing-a-secret">Sharing a secret</h2>
-<p>Travis supports the insertion of secret <strong>variables</strong> in two ways:</p>
-<ul>
-<li>From the <em>web interface</em> (easier, quicker)
-<ul>
-<li>More options $\Rightarrow$ Settings $\Rightarrow$ Environment variables</li>
+<li>Major <code>0</code> is for initial development: anything may change at any time.</li>
 </ul>
 </li>
-<li>From the <em>command line</em> (more compleicated)
-<ul>
-<li><code>travis encrypt &lt;String to encrypt&gt;  --pro</code>
-<ul>
-<li>e.g., <code>travis encrypt 'PASSWORD=&quot;foobar&quot;'</code></li>
+<li><code>MINOR</code> — Add functionality in a backwards-compatible manner</li>
+<li><code>PATCH</code> — Backwards-compatible bug fixes</li>
+<li><code>OTHER</code> — Optionally decorates the version with additional information.</li>
+<li><code>BUILD</code> — Optionally decorates the version with build information.</li>
 </ul>
 </li>
-<li>produces a <code>secure: &lt;code&gt;</code> entry that can be pasted in <code>.travis.yml</code>
-<ul>
-<li>e.g.:</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">env</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">global</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">secure</span>:<span style="color:#bbb"> </span>&lt;code&gt;<span style="color:#bbb">
-</span></code></pre></div><p>Travis also supports sharing a <strong>single secret file</strong></p>
-<ul>
-<li>It gets encrypted using <code>travis encrypt-file &lt;file&gt; --pro</code></li>
-<li>The output command must be included in <code>.travis.yml</code>
-<ul>
-<li>e.g. in the <code>before_install</code> phase of any job requiring it</li>
-</ul>
-</li>
-<li>The resulting encrypted file must be tracked
-<ul>
-<li>Be careful not to track the original one!</li>
-</ul>
-</li>
-</ul>
-</section><section>
-<h2 id="shared-secrets-best-practices">Shared secrets: best practices</h2>
-<ul>
-<li>Leverage the single shared file for sharing an <strong>ASCII-armored</strong> PGP key
-<ul>
-<li>Allows for <em>signing</em> artifacts</li>
-<li><em>Signing keys are large</em> and cannot fit a variable</li>
-<li>Obtain it with <code>gpg --armor --export-secret-keys &gt; secrets.asc</code></li>
-<li>Encrypt with <code>travis encrypt-file secrets.asc --pro</code></li>
-<li>Remove it (<code>rm secrets.asc</code>)</li>
-<li>Track the encrypted file <code>git add secrets.asc.enc</code></li>
-<li>In the <code>install</code> or <code>before_install</code> phase:
-<ul>
-<li>Add the <code>openssl</code> command printed by travis in the <code>before_install</code> phase</li>
-<li>Add <code>export ORG_GRADLE_PROJECT_signingKey=$(cat secrets.asc)</code></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>In case you need <em>multiple files</em>:
-<ul>
-<li>create an archive, encrypt it, decrypt on the build server, and unpack there</li>
-</ul>
-</li>
-<li>Store <em>passwords</em> into <em>encrypted variables</em></li>
-<li>Secrets are <em>only available in builds launched from the original repository</em>
-<ul>
-<li>Otherwise there&rsquo;d be no protection from <em>pull request attacks</em></li>
-<li><em>Make sure pull requests can build without secrets</em>!</li>
-<li>e.g. by <em>excluding phases or jobs</em> that use secrets</li>
-</ul>
-</li>
-</ul>
-</section><section>
-<h2 id="signing-using-in-memory-keys-in-gradle">Signing using in-memory keys in Gradle</h2>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">if</span> (System.getenv(<span style="color:#d20;background-color:#fff0f0">&#34;CI&#34;</span>) == <span style="color:#080;font-weight:bold">true</span>.toString()) {
-    signing {
-        <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">signingKey</span>: String? <span style="color:#080;font-weight:bold">by</span> project
-        <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">signingPassword</span>: String? <span style="color:#080;font-weight:bold">by</span> project
-        useInMemoryPgpKeys(signingKey, signingPassword)
-    }
-}
-</code></pre></div><ul>
-<li>The <code>CI</code> environment variable is automatically set to true on Travis CI
-<ul>
-<li>See <a href="https://docs.travis-ci.com/user/environment-variables/#default-environment-variables">https://docs.travis-ci.com/user/environment-variables/#default-environment-variables</a></li>
-</ul>
-</li>
-<li>The <code>signingKey</code> and <code>signingPassword</code> properties must get <em>passed</em> to Gradle
-<ul>
-<li>The best way is probably by exporting them as environment variables</li>
-<li>Gradle auto-imports properties named <code>ORG_GRADLE_PROJECT_&lt;variableName&gt;</code></li>
-<li>This mechanism can be exploited to inject properties using environment variables:
-<ul>
-<li><code>export ORG_GRADLE_PROJECT_signingKey=$(cat secrets.asc)</code></li>
-<li>A secret variable named <code>ORG_GRADLE_PROJECT_signingPassword</code> from the web UI</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</section><section>
-<h2 id="conditional-jobs-stages-and-deployments">Conditional jobs, stages, and deployments</h2>
-<p>One way to prevent pull requests to run deployment phases that would fail
-<br>
-(due to unavailability of secrets)
-<br>
-is to use <strong>conditional jobs, stages, and deployments</strong></p>
-<p>To do so, the keyword <code>if</code> can be used:</p>
-<ul>
-<li>On the whole build, to skip it entirely</li>
-<li>On a <code>stages</code> entry, to skip a single stage</li>
-<li>On a <code>jobs.include</code> entry, to exclude that job</li>
-</ul>
-<p>The <a href="https://docs.travis-ci.com/user/conditions-v1">Travis condition syntax is documented at https://docs.travis-ci.com/user/conditions-v1</a></p>
-</section><section>
-<h2 id="travis-cis-deploy">Travis CI&rsquo;s <code>deploy</code></h2>
-<p>The <code>deploy</code> phase is special in Travis:</p>
-<ul>
-<li>It does not allow to run custom commands</li>
-<li>It expects entries with:
-<ul>
-<li>A deploy provider</li>
-<li>A configuration</li>
-</ul>
-</li>
-</ul>
-<p>Full reference: <a href="https://docs.travis-ci.com/user/deployment-v2">https://docs.travis-ci.com/user/deployment-v2</a></p>
-<p>Example:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">deploy</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">provider</span>:<span style="color:#bbb"> </span>releases<span style="color:#bbb"> </span><span style="color:#888"># Deploys on GitHub Releases</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">file</span>:<span style="color:#bbb"> </span>build/libs/<span style="color:#c00;font-weight:bold">*.jar</span><span style="color:#bbb"> </span><span style="color:#888"># Files to deploy</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">edge</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb"> </span><span style="color:#888"># opt in to the new deploy API</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">on</span>:<span style="color:#bbb"> </span><span style="color:#888"># filter</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">all_branches</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#888"># tags: true # deploy only tags</span><span style="color:#bbb">
-</span></code></pre></div></section><section>
-<h1 id="stale-builds">Stale builds</h1>
-<ol>
-<li>Stuff <em>works</em></li>
-<li><em>Nobody touches it</em> for months</li>
-<li>Untouched stuff is now <em>borked</em>!</li>
-</ol>
-<p>Ever happenened?</p>
-<ul>
-<li>Connected to the issue of build reproducibility</li>
-<li>The default configuration of Travis CI may change
-<ul>
-<li>By the way, explicitly using <code>dist</code> for Linux builds may help</li>
-</ul>
-</li>
-<li>Some tools may become unavailable</li>
-<li>Some dependencies may get unavailable</li>
-</ul>
-<p><strong>The sooner the issue is known, the better</strong></p>
-<p>$\Rightarrow$ <em>Automatically run the build every some time</em> even if nobody touches the project</p>
-<ul>
-<li>How often? Depends on the project&hellip;</li>
-</ul>
-</section><section>
-<h2 id="additional-checks-and-reportings">Additional checks and reportings</h2>
-<p>There exist a number of recommended services that provide additional QA and reports.</p>
-<p>Non exhaustive list:</p>
-<ul>
-<li><a href="https://codecov.io/">Codecov.io</a>
-<ul>
-<li>Code coverage</li>
-<li>Supports Jacoco XML reports</li>
-<li>Nice data reporting system</li>
-</ul>
-</li>
-<li><a href="https://sonarcloud.io/">Sonarcloud</a>
-<ul>
-<li>Multiple measures, covering reliability, security, maintainability, duplication, complexity&hellip;</li>
-</ul>
-</li>
-<li><a href="https://www.codacy.com/">Codacy</a>
-<ul>
-<li>Automated software QA for several languages</li>
-</ul>
-</li>
-<li><a href="https://www.codefactor.io/">Code Factor</a>
-<ul>
-<li>Automated software QA</li>
-</ul>
-</li>
-</ul>
-</section><section>
-<h2 id="high-quality-floss-checklist">High quality FLOSS checklist</h2>
-<p>The <a href="https://www.linuxfoundation.org/">Linux Foundation</a> <a href="https://www.coreinfrastructure.org/">Core Infrastructure Initiative</a> created a checklist for high quality FLOSS.</p>
-<p><strong><a href="https://bestpractices.coreinfrastructure.org/en">CII Best Practices Badge Program https://bestpractices.coreinfrastructure.org/en</a></strong></p>
-<ul>
-<li><em>Self-certification</em>: no need for bureaucracy</li>
-<li>Provides a nice <em>TODO list</em> for a high quality product</li>
-<li>Releases a <em>badge</em> that can be added e.g. to the project homepage</li>
+<li>First release: <code>0.1.0</code>, <code>1.0.0</code> formalizes the API</li>
 </ul>
 </section>
 
