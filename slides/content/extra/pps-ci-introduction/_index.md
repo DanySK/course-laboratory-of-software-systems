@@ -1176,7 +1176,7 @@ it should **sign** and then **deliver** the result.
 * [Sonatype OSSRH (a.k.a. *Maven Central*)](https://search.maven.org/)
   * De-facto standard for JVM products, no retract policy
 * [GitHub packages](https://github.com/features/packages)
-  * No retract, authentication required also in read mode, immagure
+  * No retract, authentication required also in read mode, immature
 * ~~JFrog Bintray~~ [✝ 2021-05-01](https://jfrog.com/blog/into-the-sunset-bintray-jcenter-gocenter-and-chartcenter/)
   * Maven Central + other stuff
 
