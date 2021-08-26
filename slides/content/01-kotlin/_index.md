@@ -1037,7 +1037,7 @@ a == b.toInt() // true
 
 ## `infix` calls
 
-Kotlin is less permissive than scala:
+Kotlin is less permissive than Scala:
 * In Scala, every instance method with a single parameter can be invoked as infix operator:
 ```scala
 1 equals 1 // infix invocation of 1.equals(1)
@@ -1500,7 +1500,7 @@ object : Test {
 ## Type aliases
 * Types can be aliased
 * Only at the top level
-* Type aliases in kotlin **are not** Scala's `type` definitions
+* Type aliases in Kotlin **are not** Scala's `type` definitions
 * Kotlin has no equivalent of Scala's `type`
 
 ```kotlin
@@ -1743,7 +1743,7 @@ println("Finished")
 
 ## Closures
 
-Closures are supoorted
+Closures are supported
 <br/>
 They are allowed on `var`s as well as on `val`s
 
