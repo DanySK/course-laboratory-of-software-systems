@@ -1,6 +1,6 @@
 baseURL = "https://danysk.github.io/Course-Laboratory-of-Software-Systems"
 languageCode = "en-us"
-title = "Time Fluid Field Based Coordination"
+title = "Laboratory of Software Systems"
 disableKinds = ["sitemap", "RSS"]
 theme = "reveal-hugo"
 # relativeURLs = "true"
