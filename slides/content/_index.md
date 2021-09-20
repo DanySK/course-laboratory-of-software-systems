@@ -39,9 +39,9 @@ enableSourceMap = true
 
 ---
 
-# Forum and contacts
+# Contacts
 
-#### Prioritize the forum [`http://bit.ly/lss-2020`](http://bit.ly/lss-2020):
+#### Prioritize the forum [`https://virtuale.unibo.it/course/view.php?id=30734`](https://virtuale.unibo.it/course/view.php?id=30734):
   * All technical question
   * Any other non personal question
 
@@ -75,7 +75,7 @@ No mandatory books, but there are both:
 * Recommended readings
 * Additional useful books
 
-On [the course webpage](https://www.unibo.it/it/didattica/insegnamenti/insegnamento/2020/412677)
+On [the course webpage](https://www.unibo.it/it/didattica/insegnamenti/insegnamento/2021/412677)
 
 ---
 
@@ -87,15 +87,17 @@ If you are following remotely, make sure you can experiment using your local sys
 
 ## Anti-coronavirus measures
 
+* **Reduced room capacity** (will be relaxed maybe if things go well)
+* **Mandatory _"certificazione verde"_ a.k.a. _green pass_**
 * **Mandatory face masks** (sorry, no way around)
 * **Immuni** app warmly recommended to all those with a compatible device
 
 ## Timetable
 
-* **Thursday 14:00--17:00** --- Lab 3.1 
-* **Friday 14:00--17:00** --- Lab 3.1
-<br>
-Changes will be published on [the forum](http://bit.ly/lss-2020)
+* **Wednesday 13:00--16:00** --- Lab 3.1 --- Usually with Pianini
+* **Friday 14:00--17:00** --- Lab 3.1 --- Usually with Croatti
+
+Changes will be published on the forum
 
 ---
 
@@ -121,27 +123,16 @@ Changes will be published on [the forum](http://bit.ly/lss-2020)
 
 ---
 
-# Help me help you
-
-<iframe src="https://giphy.com/embed/fdLR6LGwAiVNhGQNvf" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p></p>
-
-* [Language survey at https://virtuale.unibo.it/mod/choice/view.php?id=363641](https://virtuale.unibo.it/mod/choice/view.php?id=363641)
-  * We might switch to full English, but we don't want to scare people away
-* [ATTLS Survey at https://virtuale.unibo.it/mod/survey/view.php?id=363472](https://virtuale.unibo.it/mod/survey/view.php?id=363472)
-  * Helps the teachers understand the best way to present information
-
----
-
 # Exam
 
 ### **Discussion** of a **group project**
 * Must feature:
-  * Domain-driven design
-  * Clear development process and agile practices
-  * Automation
-  * Continuous integration and delivery
-* Can be a joint effort with other courses
-  * Discussed case-by-case
+  * *Domain-driven* design
+  * Clear development process and *DevOps* practices
+  * Full-scale *automation*
+    * Including *continuous integration* and delivery
+* Can be a **joint effort** with other courses
+  * Discussed on a case-by-case basis
 
 ---
 
@@ -165,27 +156,27 @@ Changes will be published on [the forum](http://bit.ly/lss-2020)
 
 # Course Container
 
-Feeling lazy?
+### Feeling lazy?
 We prepared a container with all the course's software:
   * [https://hub.docker.com/repository/docker/danysk/linux-didattica](https://hub.docker.com/repository/docker/danysk/linux-didattica)
 
 Follow the instructions at [https://github.com/DanySK/docker-linux-didattica](https://github.com/DanySK/docker-linux-didattica)
 
+### Feeling Windows-y?
+
+The container can be converted into a WSL2 Linux distribution.
+
+
+
 ---
 
 # Software in lab
 
-The PCs are equipped with the container
-1. Launch Docker
-1. Launch the script on the Desktop
-1. Wait for it to start
-1. Close it, stop Docker
-1. Restart Docker
-1. Launch the X Server
-1. Now use the container freely
-1. Data is saved in your desktop in `DockerHome` (preserve the folder if you need)
+The PCs are equipped with the WSL2 image
 
-Note: data is not persisted automatically, at end of the session you need to copy it in your home folder
+* There should be a link on the Desktop
+* Double-clicking it should pop up a zsh shell
+  * Wait for the first terminal to show before starting others
 
 ---
 
@@ -195,9 +186,9 @@ Note: data is not persisted automatically, at end of the session you need to cop
 
 **Module 1**
 
-* [Kotlin for Scala developers](01-kotlin)
-  * [Internal DSLs construction](02-internal-dsls)
-* [The DevOps philosophy](03-devops-intro)
+* [The DevOps philosophy](01-devops-intro)
+* [Kotlin for Scala developers](02-kotlin)
+  * [Internal DSLs construction](03-internal-dsls)
 * [Build automation](04-build-automation)
 * Sharing
   * [Software versioning](05-version-selection)
