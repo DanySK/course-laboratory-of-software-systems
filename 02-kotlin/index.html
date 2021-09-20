@@ -35,20 +35,22 @@
 <ul>
 <li>Focused on &ldquo;practical use&rdquo; (whatever that means)</li>
 </ul>
-<p>Gaining momentum since Google adopted is as <em>official Android language</em> (along with Java and C++)</p>
+<p>Gaining momentum since Google adopted is as <em>official Android language</em>
+<br>
+(along with Java and C++)</p>
 <p>Clearly inspired by a mixture of Java, C#, Scala, and Groovy</p>
 <p><strong>In this course</strong> &ndash; we&rsquo;ll need it for Gradle and <em>internal</em> domain specific languages</p>
 </section><section>
-<h1 id="philosophy-kotlin-vs-scala">Philosophy: Kotlin vs. Scala</h1>
+<h2 id="philosophy-kotlin-vs-scala">Philosophy: Kotlin vs. Scala</h2>
 <p><strong>Sca</strong><em>la</em> is a <strong>scalable</strong> <em>language</em></p>
 <ul>
 <li>Few core constructs that enable a huge variety of programming patterns</li>
-<li>Born in academia</li>
+<li>Born in academia, adopted by some industries</li>
 <li>State of the art type checker with advanced features
 <ul>
 <li>Higher Kinded Types</li>
 <li>Type lambdas</li>
-<li>Enough to do type programming&hellip;</li>
+<li>macros</li>
 </ul>
 </li>
 </ul>
@@ -395,18 +397,18 @@ Imports go at the top of file, no locally scoped imports as in Scala</p>
 </span></code></pre></div></section><section>
 <h1 id="kotlin-101-20">Kotlin 101</h1>
 <h2 id="varargs">Varargs</h2>
-<p>Functions can have a parameter marked as <code>vararg </code>, accepting multiple entries</p>
+<p>Functions can have a parameter marked as <code>vararg</code>, accepting multiple entries</p>
 <ul>
 <li>Typically the last one (but not mandatorily as in Java)</li>
-<li>Maps to an `Array<out ></li>
+<li>Maps to an <code>Array&lt;out T&gt;</code></li>
 </ul>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">printall</span>(<span style="color:#080;font-weight:bold">vararg</span> strings: String) {
     strings.forEach { println(it) } <span style="color:#888">// We&#39;ll discuss this syntax later...
 </span><span style="color:#888"></span>}
 printall(<span style="color:#d20;background-color:#fff0f0">&#34;Lorem&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;ipsum&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;dolor&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;sit&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;amet&#34;</span>)
 </code></pre></div></section><section>
-<h1 id="kotlin-101-21">Kotlin 101</h1>
-<h2 id="naming-in-kotlin">Naming in Kotlin</h2>
+<h2 id="kotlin-101-21">Kotlin 101</h2>
+<h3 id="naming-in-kotlin">Naming in Kotlin</h3>
 <p>Kotlin is less permissive than Scala:</p>
 <ul>
 <li>Arbitrary symbols are not accepted as valid function names</li>
@@ -423,11 +425,8 @@ printall(<span style="color:#d20;background-color:#fff0f0">&#34;Lorem&#34;</span
 <li>Tolerated in tests with Junit (but Kotlin-native suites as Kotest do not need it)</li>
 </ul>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">JunitTest</span> {
-    @Test
-    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#a61717;background-color:#e3d2d2">`404 </span><span style="color:#06b;font-weight:bold">errors</span> should cause a wait and retry<span style="color:#a61717;background-color:#e3d2d2">`</span>() { <span style="color:#888">// Nice and very clear name
-</span><span style="color:#888"></span>        TODO()
-    }
-}
+    @Test <span style="color:#080;font-weight:bold">fun</span> <span style="color:#a61717;background-color:#e3d2d2">`404 </span><span style="color:#06b;font-weight:bold">errors</span> should cause a wait and retry<span style="color:#a61717;background-color:#e3d2d2">`</span>() = TODO() <span style="color:#888">// Nice and very clear name
+</span><span style="color:#888"></span>}
 </code></pre></div></section><section>
 <h1 id="kotlin-101-22">Kotlin 101</h1>
 <h2 id="local-functions">Local functions</h2>
@@ -448,6 +447,7 @@ printall(<span style="color:#d20;background-color:#fff0f0">&#34;Lorem&#34;</span
 <li><code>if</code>/<code>else</code> is an expression and works just as in Scala</li>
 <li>No ternary operator</li>
 <li><code>if</code> alone is not an expression</li>
+<li><strong>No</strong> <em>partial functions</em>!</li>
 </ul>
 </section><section>
 <h1 id="kotlin-101----flow-control-1">Kotlin 101 &ndash; Flow control</h1>
@@ -510,22 +510,7 @@ The base version (without subject) is a more elegant &ldquo;<code>if</code>/<cod
     <span style="color:#080;font-weight:bold">else</span> -&gt; TODO()
 }
 </code></pre></div></section><section>
-<h1 id="kotlin-101----flow-control-5">Kotlin 101 &ndash; Flow control</h1>
-<h3 id="when-1"><code>when</code></h3>
-<p>Checks if the value of subjects is the same of the expression on the right</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">baseForSingleDigitOrNull</span>(digit: UInt) = <span style="color:#080;font-weight:bold">when</span>(digit) {
-    <span style="color:#00d;font-weight:bold">0u</span>, <span style="color:#00d;font-weight:bold">1u</span> -&gt; <span style="color:#d20;background-color:#fff0f0">&#34;binary&#34;</span>
-    <span style="color:#00d;font-weight:bold">2u</span> -&gt; <span style="color:#d20;background-color:#fff0f0">&#34;ternary&#34;</span>
-    <span style="color:#080;font-weight:bold">in</span> <span style="color:#00d;font-weight:bold">0u</span>..<span style="color:#00d;font-weight:bold">7u</span> -&gt; <span style="color:#d20;background-color:#fff0f0">&#34;octal&#34;</span> <span style="color:#888">// This is a range!
-</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">in</span> <span style="color:#00d;font-weight:bold">0u</span>..<span style="color:#00d;font-weight:bold">15u</span> -&gt; <span style="color:#d20;background-color:#fff0f0">&#34;hexadecimal&#34;</span>
-    <span style="color:#080;font-weight:bold">in</span> <span style="color:#00d;font-weight:bold">0u</span>..<span style="color:#00d;font-weight:bold">36u</span> -&gt; <span style="color:#d20;background-color:#fff0f0">&#34;base36&#34;</span>
-    <span style="color:#080;font-weight:bold">else</span> -&gt; <span style="color:#080;font-weight:bold">null</span>
-}
-</code></pre></div><ul>
-<li><code>when</code> is an expression in any case</li>
-</ul>
-</section><section>
-<h1 id="kotlin-101----flow-control-6">Kotlin 101 &ndash; Flow control</h1>
+<h2 id="kotlin-101----flow-control-5">Kotlin 101 &ndash; Flow control</h2>
 <h3 id="jumping">Jumping</h3>
 <p><strong>Jumping is awful, imperative, and you should not use it</strong>
 <br/>
@@ -534,7 +519,7 @@ The base version (without subject) is a more elegant &ldquo;<code>if</code>/<cod
 <li><code>break</code> and <code>continue</code> work as in Java</li>
 <li><code>return</code> does not, as we will see when discussing higher order functions&hellip;</li>
 </ul>
-<h4 id="labeling">labeling</h4>
+<h4 id="labelling">labelling</h4>
 <ul>
 <li>Any expression can be labeled: <code>label@ 1</code> is a valid expression</li>
 <li><code>break</code>, <code>continue</code>, and <code>return</code> can be <em>qualified</em> with a label</li>
@@ -602,9 +587,10 @@ Foo() <span style="color:#888">// a new Foo is created, no new keyword
 </tbody>
 </table>
 <p>In Scala, at the caller site, methods and fields are hard to distinguish, as parentheses for 0-ary method calls are optional</p>
-<p>In Kotlin, methods/functions (except when defined <code>infix</code>) are invoked with mandatory parentheses
-<br/>
-properties are instead invoked without parentheses</p>
+<ul>
+<li>In Kotlin, <strong>methods/functions</strong> (except when defined <code>infix</code>) are invoked with <em>mandatory parentheses</em></li>
+<li><strong>properties</strong> are instead invoked <em>without parentheses</em></li>
+</ul>
 </section><section>
 <h1 id="kotlin-102----oop-2">Kotlin 102 &ndash; OOP</h1>
 <h2 id="properties-vs-fields">Properties vs. fields</h2>
@@ -622,10 +608,10 @@ and provide access only via <code>get</code>/<code>set</code> methods: the actua
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Foo</span> {
     <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">bar</span> = <span style="color:#00d;font-weight:bold">1</span>
     <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">baz</span>: String? = <span style="color:#080;font-weight:bold">null</span>
-    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">bazLength</span>: Int
-        <span style="color:#080;font-weight:bold">get</span>() = baz?.length ?: <span style="color:#00d;font-weight:bold">0</span>
-    <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">stringRepresentation</span>: String = <span style="color:#d20;background-color:#fff0f0">&#34;&#34;</span>
-        <span style="color:#080;font-weight:bold">get</span>() = baz ?: field
+    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">bazLength</span>: Int <span style="color:#888">// Property with no &#34;backing field&#34;
+</span><span style="color:#888"></span>        <span style="color:#080;font-weight:bold">get</span>() = baz?.length ?: <span style="color:#00d;font-weight:bold">0</span> <span style="color:#888">// As its value will be computed every time
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">stringRepresentation</span>: String = <span style="color:#d20;background-color:#fff0f0">&#34;&#34;</span> <span style="color:#888">// Backing fields can be accessed as a keyword inside property definitions
+</span><span style="color:#888"></span>        <span style="color:#080;font-weight:bold">get</span>() = baz ?: field
         <span style="color:#080;font-weight:bold">set</span>(value) {
             field = <span style="color:#d20;background-color:#fff0f0">&#34;custom: $value&#34;</span>
         }
@@ -641,10 +627,11 @@ foo.stringRepresentation = <span style="color:#d20;background-color:#fff0f0">&#3
 <p>The keyword <code>field</code> allows access to a backing field of a property
 <br/>
 <strong>in case it is present</strong></p>
-<p>The Kotlin compiler, in fact, generates backing fields only where it&rsquo;s needed</p>
+<p>The Kotlin compiler, in fact, generates backing fields only when needed</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Student</span> {
     <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">id</span>: String? = <span style="color:#080;font-weight:bold">null</span> <span style="color:#888">// Backing field generated
-</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">identifier</span>: String = <span style="color:#d20;background-color:#fff0f0">&#34;Student[${id ?: &#34;</span>unknown<span style="color:#d20;background-color:#fff0f0">&#34;}]&#34;</span> <span style="color:#888">// No backing field
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">identifier</span>: String = <span style="color:#d20;background-color:#fff0f0">&#34;Student[${id ?: &#34;</span>unknown<span style="color:#d20;background-color:#fff0f0">&#34;}]&#34;</span> <span style="color:#888">// Backing field generated
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">identifier</span>: String <span style="color:#080;font-weight:bold">get</span>() = <span style="color:#d20;background-color:#fff0f0">&#34;Student[${id ?: &#34;</span>unknown<span style="color:#d20;background-color:#fff0f0">&#34;}]&#34;</span> <span style="color:#888">// No backing field
 </span><span style="color:#888"></span>}
 </code></pre></div><p>When designing with Kotlin, you must consider methods and properties, and forget about fields.</p>
 </section><section>
