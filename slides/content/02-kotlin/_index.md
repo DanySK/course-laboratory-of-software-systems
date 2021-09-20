@@ -32,7 +32,9 @@ enableSourceMap = true
 JetBrains-made modern programming language 
 * Focused on "practical use" (whatever that means)
 
-Gaining momentum since Google adopted is as *official Android language* (along with Java and C++)
+Gaining momentum since Google adopted is as *official Android language*
+<br>
+(along with Java and C++)
 
 Clearly inspired by a mixture of Java, C#, Scala, and Groovy
 
@@ -40,15 +42,15 @@ Clearly inspired by a mixture of Java, C#, Scala, and Groovy
 
 ---
 
-# Philosophy: Kotlin vs. Scala
+## Philosophy: Kotlin vs. Scala
 
 **Sca**_la_ is a **scalable** _language_
 * Few core constructs that enable a huge variety of programming patterns
-* Born in academia
+* Born in academia, adopted by some industries
 * State of the art type checker with advanced features
     * Higher Kinded Types
     * Type lambdas
-    * Enough to do type programming...
+    * macros
 
 **Kotlin** is somewhat *a better java*
 * Born in industry, for the industry
@@ -438,9 +440,9 @@ import org.company.someproduct.Entity as SomeProductEntity // Aliasing, accessib
 
 ## Varargs
 
-Functions can have a parameter marked as `vararg `, accepting multiple entries
+Functions can have a parameter marked as `vararg`, accepting multiple entries
 * Typically the last one (but not mandatorily as in Java)
-* Maps to an `Array<out >
+* Maps to an `Array<out T>`
 
 ```kotlin
 fun printall(vararg strings: String) {
@@ -451,9 +453,9 @@ printall("Lorem", "ipsum", "dolor", "sit", "amet")
 
 ---
 
-# Kotlin 101
+## Kotlin 101
 
-## Naming in Kotlin
+### Naming in Kotlin
 
 Kotlin is less permissive than Scala:
 * Arbitrary symbols are not accepted as valid function names
@@ -475,10 +477,7 @@ val `names can also contain spaces` = 1
 
 ```kotlin
 class JunitTest {
-    @Test
-    fun `404 errors should cause a wait and retry`() { // Nice and very clear name
-        TODO()
-    }
+    @Test fun `404 errors should cause a wait and retry`() = TODO() // Nice and very clear name
 }
 ```
 
@@ -510,6 +509,7 @@ Warning: local functions often hinder clarity
 * `if`/`else` is an expression and works just as in Scala
 * No ternary operator
 * `if` alone is not an expression
+* **No** *partial functions*!
 
 ---
 
@@ -588,26 +588,7 @@ fun splitAnything(input: Any) = when(input) {
 
 ---
 
-# Kotlin 101 -- Flow control
-
-### `when` 
-Checks if the value of subjects is the same of the expression on the right
-
-```kotlin
-fun baseForSingleDigitOrNull(digit: UInt) = when(digit) {
-    0u, 1u -> "binary"
-    2u -> "ternary"
-    in 0u..7u -> "octal" // This is a range!
-    in 0u..15u -> "hexadecimal"
-    in 0u..36u -> "base36"
-    else -> null
-}
-```
-* `when` is an expression in any case
-
----
-
-# Kotlin 101 -- Flow control
+## Kotlin 101 -- Flow control
 
 ### Jumping
 **Jumping is awful, imperative, and you should not use it**
@@ -617,7 +598,7 @@ fun baseForSingleDigitOrNull(digit: UInt) = when(digit) {
 * `break` and `continue` work as in Java
 * `return` does not, as we will see when discussing higher order functions...
 
-#### labeling
+#### labelling
 * Any expression can be labeled: `label@ 1` is a valid expression
 * `break`, `continue`, and `return` can be *qualified* with a label
 
@@ -665,9 +646,8 @@ Kotlin classes have two types of members: **methods** and **properties**
 
 In Scala, at the caller site, methods and fields are hard to distinguish, as parentheses for 0-ary method calls are optional
 
-In Kotlin, methods/functions (except when defined `infix`) are invoked with mandatory parentheses
-<br/>
-properties are instead invoked without parentheses
+* In Kotlin, **methods/functions** (except when defined `infix`) are invoked with *mandatory parentheses*
+* **properties** are instead invoked *without parentheses*
 
 ---
 
@@ -694,9 +674,9 @@ In Kotlin, fields are entirely hidden, and cannot be exposed in any way, enforci
 class Foo {
     val bar = 1
     var baz: String? = null
-    val bazLength: Int
-        get() = baz?.length ?: 0
-    var stringRepresentation: String = ""
+    val bazLength: Int // Property with no "backing field"
+        get() = baz?.length ?: 0 // As its value will be computed every time
+    var stringRepresentation: String = "" // Backing fields can be accessed as a keyword inside property definitions
         get() = baz ?: field
         set(value) {
             field = "custom: $value"
@@ -719,12 +699,13 @@ The keyword `field` allows access to a backing field of a property
 <br/>
 **in case it is present**
 
-The Kotlin compiler, in fact, generates backing fields only where it's needed
+The Kotlin compiler, in fact, generates backing fields only when needed
 
 ```kotlin
 class Student {
     var id: String? = null // Backing field generated
-    val identifier: String = "Student[${id ?: "unknown"}]" // No backing field
+    val identifier: String = "Student[${id ?: "unknown"}]" // Backing field generated
+    val identifier: String get() = "Student[${id ?: "unknown"}]" // No backing field
 }
 ```
 
