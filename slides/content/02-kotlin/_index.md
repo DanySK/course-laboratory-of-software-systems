@@ -704,8 +704,8 @@ The Kotlin compiler, in fact, generates backing fields only when needed
 ```kotlin
 class Student {
     var id: String? = null // Backing field generated
-    val identifier: String = "Student[${id ?: "unknown"}]" // Backing field generated
-    val identifier: String get() = "Student[${id ?: "unknown"}]" // No backing field
+    val identifierOnce: String = "Student[${id ?: "unknown"}]" // Backing field generated
+    val identifierUpdated: String get() = "Student[${id ?: "unknown"}]" // No backing field
 }
 ```
 
@@ -768,7 +768,7 @@ So, no mixins
 
 ## Implementing interfaces
 
-Much like Java. Subtyping keyword is `:`, overrides must be marked with `override`:
+Much like Java. Subtyping keyword is `:`, overrides *must* be marked with `override`:
 ```kotlin
 interface Shape {
     val area: Double
@@ -837,7 +837,7 @@ Foo("bar", 0)
 
 ## Secondary `constructor`s
 
-More constructors can be added to a class, but them:
+More constructors can be added to a class, but they:
 1. Must call another constructor
 2. The primary constructor must be in its *delegation calls chain*
 
@@ -876,7 +876,7 @@ val son = Son(father)
 father.son = son
 father.son.father // error, needs ?.
 ```
-Solution 1: take responsibility from the compiler (*less bad*)
+Solution 2: take responsibility from the compiler (*less bad*)
 ```kotlin
 class Son(val father: Father)
 class Father { lateinit var son: Son } // lateinit: I will initialize it later, stay cool
