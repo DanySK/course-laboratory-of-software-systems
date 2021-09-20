@@ -142,6 +142,780 @@
 <li>Continuous Deployment</li>
 <li>Continuous Monitoring</li>
 </ul>
+</section><section>
+<h1 id="a-real-world-test-case">A real-world test case</h1>
+<p>We applied DevOps (and microservice-ification) to an existing software project,
+measuring some metrics <em>before</em> and <em>after</em> the operation.</p>
+<ul>
+<li>The detailed <em>experience report</em> will be presented at the 37th International Conference on Software Maintenance and Evolution (<a href="https://icsme2021.github.io/">ICSME 2021</a>)
+<ul>
+<li><a href="https://www.morressier.com/article/breaking-down-monoliths-microservices-devops-industrial-experience-report/613b5418842293c031b5b603?">Temporary conference submission</a></li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="the-target">The target</h2>
+<h3 id="maggioli-spa">Maggioli S.p.A</h3>
+<ul>
+<li><em>Multinational</em>, based in Italy</li>
+<li><em>~2000 collaborators</em> at the time of writing</li>
+<li>An <em>internal IT/Operations</em> team</li>
+<li>Our target team was composed of <strong>five people</strong></li>
+</ul>
+<h3 id="sisred-before-intervention">sisred (before intervention)</h3>
+<ul>
+<li><em>Client-server</em> stand-alone application</li>
+<li><em>Delphi</em> front-end, <em>Microsoft SQL Server</em> backend</li>
+<li>Editors (paid by Maggioli) are <em>experts in law entering information on the client</em></li>
+<li>The information is the exposed into a (paid access) <em>portal</em> with up-to-date legal information</li>
+</ul>
+</section><section>
+<h2 id="previous-architecture">Previous architecture</h2>
+<p><img src="sisred-old-arch.svg" alt="old-arch"></p>
+</section><section>
+<h1 id="heading"></h1>
+<table>
+<thead>
+<tr>
+<th align="left">Metric</th>
+<th align="center">Prev.</th>
+<th align="center">Now</th>
+<th align="right">Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Release frequency ($\frac{releases}{day}$)</td>
+<td align="center"><a href="">0.071</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">Commit to release time (hours)</td>
+<td align="center"><a href="">8 to 24</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">Commits per day ($\frac{commits}{day}$)</td>
+<td align="center"><a href="">2</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">MTTR (hours)</td>
+<td align="center"><a href="">36</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">Prod. env. setup (working hours)</td>
+<td align="center"><a href="">16</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">Dev. env. setup (minutes)</td>
+<td align="center"><a href="">120</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">Nightly downtime ($\frac{minutes}{night}$)</td>
+<td align="center"><a href="">30</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">Support ticket frequency ($\frac{tickets}{month}$)</td>
+<td align="center"><a href="">40</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">Issue resulution time (days)</td>
+<td align="center"><a href="">4</a></td>
+<td align="center"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section><section>
+<h2 id="microservice-ified-architecture">Microservice-ified architecture</h2>
+<p><img src="sisred-new-arch.svg" alt="new-arch"></p>
+</section><section>
+<h2 id="ci-pipeline">CI Pipeline</h2>
+<p><img src="docker-publish.svg" alt="pipeline"></p>
+</section><section>
+<h2 id="timeline">Timeline</h2>
+<p><img src="timeline.svg" alt="timeline"></p>
+</section>
+
+<section data-noprocess data-shortcode-slide
+      data-transition="none">
+  
+<table>
+<thead>
+<tr>
+<th align="left">Metric</th>
+<th align="center">Prev.</th>
+<th align="center">Now</th>
+<th align="right">Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Release frequency ($\frac{releases}{day}$)</td>
+<td align="center"><a href="">0.071</a></td>
+<td align="center"><em>2.7</em></td>
+<td align="right"><strong>+3700%</strong></td>
+</tr>
+<tr>
+<td align="left">Commit to release time (hours)</td>
+<td align="center"><a href="">8 to 24</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">Commits per day ($\frac{commits}{day}$)</td>
+<td align="center"><a href="">2</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">MTTR (hours)</td>
+<td align="center"><a href="">36</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">Prod. env. setup (working hours)</td>
+<td align="center"><a href="">16</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">Dev. env. setup (minutes)</td>
+<td align="center"><a href="">120</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">Nightly downtime ($\frac{minutes}{night}$)</td>
+<td align="center"><a href="">30</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">Support ticket frequency ($\frac{tickets}{month}$)</td>
+<td align="center"><a href="">40</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">Issue resulution time (days)</td>
+<td align="center"><a href="">4</a></td>
+<td align="center"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+<section data-noprocess data-shortcode-slide
+      data-transition="none">
+  
+<table>
+<thead>
+<tr>
+<th align="left">Metric</th>
+<th align="center">Prev.</th>
+<th align="center">Now</th>
+<th align="right">Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Release frequency ($\frac{releases}{day}$)</td>
+<td align="center"><a href="">0.071</a></td>
+<td align="center"><em>2.7</em></td>
+<td align="right"><strong>+3700%</strong></td>
+</tr>
+<tr>
+<td align="left">Commit to release time (hours)</td>
+<td align="center"><a href="">8 to 24</a></td>
+<td align="center"><em>0.19</em></td>
+<td align="right"><strong>~ -98.5%</strong></td>
+</tr>
+<tr>
+<td align="left">Commits per day ($\frac{commits}{day}$)</td>
+<td align="center"><a href="">2</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">MTTR (hours)</td>
+<td align="center"><a href="">36</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">Prod. env. setup (working hours)</td>
+<td align="center"><a href="">16</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">Dev. env. setup (minutes)</td>
+<td align="center"><a href="">120</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">Nightly downtime ($\frac{minutes}{night}$)</td>
+<td align="center"><a href="">30</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">Support ticket frequency ($\frac{tickets}{month}$)</td>
+<td align="center"><a href="">40</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">Issue resulution time (days)</td>
+<td align="center"><a href="">4</a></td>
+<td align="center"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+<section data-noprocess data-shortcode-slide
+      data-transition="none">
+  
+<table>
+<thead>
+<tr>
+<th align="left">Metric</th>
+<th align="center">Prev.</th>
+<th align="center">Now</th>
+<th align="right">Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Release frequency ($\frac{releases}{day}$)</td>
+<td align="center"><a href="">0.071</a></td>
+<td align="center"><em>2.7</em></td>
+<td align="right"><strong>+3700%</strong></td>
+</tr>
+<tr>
+<td align="left">Commit to release time (hours)</td>
+<td align="center"><a href="">8 to 24</a></td>
+<td align="center"><em>0.19</em></td>
+<td align="right"><strong>~ -98.5%</strong></td>
+</tr>
+<tr>
+<td align="left">Commits per day ($\frac{commits}{day}$)</td>
+<td align="center"><a href="">2</a></td>
+<td align="center"><em>7.1</em></td>
+<td align="right"><strong>+255%</strong></td>
+</tr>
+<tr>
+<td align="left">MTTR (hours)</td>
+<td align="center"><a href="">36</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">Prod. env. setup (working hours)</td>
+<td align="center"><a href="">16</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">Dev. env. setup (minutes)</td>
+<td align="center"><a href="">120</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">Nightly downtime ($\frac{minutes}{night}$)</td>
+<td align="center"><a href="">30</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">Support ticket frequency ($\frac{tickets}{month}$)</td>
+<td align="center"><a href="">40</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">Issue resulution time (days)</td>
+<td align="center"><a href="">4</a></td>
+<td align="center"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+<section data-noprocess data-shortcode-slide
+      data-transition="none">
+  
+<table>
+<thead>
+<tr>
+<th align="left">Metric</th>
+<th align="center">Prev.</th>
+<th align="center">Now</th>
+<th align="right">Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Release frequency ($\frac{releases}{day}$)</td>
+<td align="center"><a href="">0.071</a></td>
+<td align="center"><em>2.7</em></td>
+<td align="right"><strong>+3700%</strong></td>
+</tr>
+<tr>
+<td align="left">Commit to release time (hours)</td>
+<td align="center"><a href="">8 to 24</a></td>
+<td align="center"><em>0.19</em></td>
+<td align="right"><strong>~ -98.5%</strong></td>
+</tr>
+<tr>
+<td align="left">Commits per day ($\frac{commits}{day}$)</td>
+<td align="center"><a href="">2</a></td>
+<td align="center"><em>7.1</em></td>
+<td align="right"><strong>+255%</strong></td>
+</tr>
+<tr>
+<td align="left">MTTR (hours)</td>
+<td align="center"><a href="">36</a></td>
+<td align="center"><em>0.5</em></td>
+<td align="right"><strong>-98.6%</strong></td>
+</tr>
+<tr>
+<td align="left">Prod. env. setup (working hours)</td>
+<td align="center"><a href="">16</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">Dev. env. setup (minutes)</td>
+<td align="center"><a href="">120</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">Nightly downtime ($\frac{minutes}{night}$)</td>
+<td align="center"><a href="">30</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">Support ticket frequency ($\frac{tickets}{month}$)</td>
+<td align="center"><a href="">40</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">Issue resulution time (days)</td>
+<td align="center"><a href="">4</a></td>
+<td align="center"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+<section data-noprocess data-shortcode-slide
+      data-transition="none">
+  
+<table>
+<thead>
+<tr>
+<th align="left">Metric</th>
+<th align="center">Prev.</th>
+<th align="center">Now</th>
+<th align="right">Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Release frequency ($\frac{releases}{day}$)</td>
+<td align="center"><a href="">0.071</a></td>
+<td align="center"><em>2.7</em></td>
+<td align="right"><strong>+3700%</strong></td>
+</tr>
+<tr>
+<td align="left">Commit to release time (hours)</td>
+<td align="center"><a href="">8 to 24</a></td>
+<td align="center"><em>0.19</em></td>
+<td align="right"><strong>~ -98.5%</strong></td>
+</tr>
+<tr>
+<td align="left">Commits per day ($\frac{commits}{day}$)</td>
+<td align="center"><a href="">2</a></td>
+<td align="center"><em>7.1</em></td>
+<td align="right"><strong>+255%</strong></td>
+</tr>
+<tr>
+<td align="left">MTTR (hours)</td>
+<td align="center"><a href="">36</a></td>
+<td align="center"><em>0.5</em></td>
+<td align="right"><strong>-98.6%</strong></td>
+</tr>
+<tr>
+<td align="left">Prod. env. setup (working hours)</td>
+<td align="center"><a href="">16</a></td>
+<td align="center"><em>0.35</em></td>
+<td align="right"><strong>-97.8%</strong></td>
+</tr>
+<tr>
+<td align="left">Dev. env. setup (minutes)</td>
+<td align="center"><a href="">120</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">Nightly downtime ($\frac{minutes}{night}$)</td>
+<td align="center"><a href="">30</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">Support ticket frequency ($\frac{tickets}{month}$)</td>
+<td align="center"><a href="">40</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">Issue resulution time (days)</td>
+<td align="center"><a href="">4</a></td>
+<td align="center"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+<section data-noprocess data-shortcode-slide
+      data-transition="none">
+  
+<table>
+<thead>
+<tr>
+<th align="left">Metric</th>
+<th align="center">Prev.</th>
+<th align="center">Now</th>
+<th align="right">Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Release frequency ($\frac{releases}{day}$)</td>
+<td align="center"><a href="">0.071</a></td>
+<td align="center"><em>2.7</em></td>
+<td align="right"><strong>+3700%</strong></td>
+</tr>
+<tr>
+<td align="left">Commit to release time (hours)</td>
+<td align="center"><a href="">8 to 24</a></td>
+<td align="center"><em>0.19</em></td>
+<td align="right"><strong>~ -98.5%</strong></td>
+</tr>
+<tr>
+<td align="left">Commits per day ($\frac{commits}{day}$)</td>
+<td align="center"><a href="">2</a></td>
+<td align="center"><em>7.1</em></td>
+<td align="right"><strong>+255%</strong></td>
+</tr>
+<tr>
+<td align="left">MTTR (hours)</td>
+<td align="center"><a href="">36</a></td>
+<td align="center"><em>0.5</em></td>
+<td align="right"><strong>-98.6%</strong></td>
+</tr>
+<tr>
+<td align="left">Prod. env. setup (working hours)</td>
+<td align="center"><a href="">16</a></td>
+<td align="center"><em>0.35</em></td>
+<td align="right"><strong>-97.8%</strong></td>
+</tr>
+<tr>
+<td align="left">Dev. env. setup (minutes)</td>
+<td align="center"><a href="">120</a></td>
+<td align="center"><em>9</em></td>
+<td align="right"><strong>-92.5%</strong></td>
+</tr>
+<tr>
+<td align="left">Nightly downtime ($\frac{minutes}{night}$)</td>
+<td align="center"><a href="">30</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">Support ticket frequency ($\frac{tickets}{month}$)</td>
+<td align="center"><a href="">40</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">Issue resulution time (days)</td>
+<td align="center"><a href="">4</a></td>
+<td align="center"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+<section data-noprocess data-shortcode-slide
+      data-transition="none">
+  
+<table>
+<thead>
+<tr>
+<th align="left">Metric</th>
+<th align="center">Prev.</th>
+<th align="center">Now</th>
+<th align="right">Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Release frequency ($\frac{releases}{day}$)</td>
+<td align="center"><a href="">0.071</a></td>
+<td align="center"><em>2.7</em></td>
+<td align="right"><strong>+3700%</strong></td>
+</tr>
+<tr>
+<td align="left">Commit to release time (hours)</td>
+<td align="center"><a href="">8 to 24</a></td>
+<td align="center"><em>0.19</em></td>
+<td align="right"><strong>~ -98.5%</strong></td>
+</tr>
+<tr>
+<td align="left">Commits per day ($\frac{commits}{day}$)</td>
+<td align="center"><a href="">2</a></td>
+<td align="center"><em>7.1</em></td>
+<td align="right"><strong>+255%</strong></td>
+</tr>
+<tr>
+<td align="left">MTTR (hours)</td>
+<td align="center"><a href="">36</a></td>
+<td align="center"><em>0.5</em></td>
+<td align="right"><strong>-98.6%</strong></td>
+</tr>
+<tr>
+<td align="left">Prod. env. setup (working hours)</td>
+<td align="center"><a href="">16</a></td>
+<td align="center"><em>0.35</em></td>
+<td align="right"><strong>-97.8%</strong></td>
+</tr>
+<tr>
+<td align="left">Dev. env. setup (minutes)</td>
+<td align="center"><a href="">120</a></td>
+<td align="center"><em>9</em></td>
+<td align="right"><strong>-92.5%</strong></td>
+</tr>
+<tr>
+<td align="left">Nightly downtime ($\frac{minutes}{night}$)</td>
+<td align="center"><a href="">30</a></td>
+<td align="center"><em>0</em></td>
+<td align="right"><strong>-100%</strong></td>
+</tr>
+<tr>
+<td align="left">Support ticket frequency ($\frac{tickets}{month}$)</td>
+<td align="center"><a href="">40</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">Issue resulution time (days)</td>
+<td align="center"><a href="">4</a></td>
+<td align="center"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+<section data-noprocess data-shortcode-slide
+      data-transition="none">
+  
+<table>
+<thead>
+<tr>
+<th align="left">Metric</th>
+<th align="center">Prev.</th>
+<th align="center">Now</th>
+<th align="right">Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Release frequency ($\frac{releases}{day}$)</td>
+<td align="center"><a href="">0.071</a></td>
+<td align="center"><em>2.7</em></td>
+<td align="right"><strong>+3700%</strong></td>
+</tr>
+<tr>
+<td align="left">Commit to release time (hours)</td>
+<td align="center"><a href="">8 to 24</a></td>
+<td align="center"><em>0.19</em></td>
+<td align="right"><strong>~ -98.5%</strong></td>
+</tr>
+<tr>
+<td align="left">Commits per day ($\frac{commits}{day}$)</td>
+<td align="center"><a href="">2</a></td>
+<td align="center"><em>7.1</em></td>
+<td align="right"><strong>+255%</strong></td>
+</tr>
+<tr>
+<td align="left">MTTR (hours)</td>
+<td align="center"><a href="">36</a></td>
+<td align="center"><em>0.5</em></td>
+<td align="right"><strong>-98.6%</strong></td>
+</tr>
+<tr>
+<td align="left">Prod. env. setup (working hours)</td>
+<td align="center"><a href="">16</a></td>
+<td align="center"><em>0.35</em></td>
+<td align="right"><strong>-97.8%</strong></td>
+</tr>
+<tr>
+<td align="left">Dev. env. setup (minutes)</td>
+<td align="center"><a href="">120</a></td>
+<td align="center"><em>9</em></td>
+<td align="right"><strong>-92.5%</strong></td>
+</tr>
+<tr>
+<td align="left">Nightly downtime ($\frac{minutes}{night}$)</td>
+<td align="center"><a href="">30</a></td>
+<td align="center"><em>0</em></td>
+<td align="right"><strong>-100%</strong></td>
+</tr>
+<tr>
+<td align="left">Support ticket frequency ($\frac{tickets}{month}$)</td>
+<td align="center"><a href="">40</a></td>
+<td align="center"><em>19</em></td>
+<td align="right"><strong>-52.5%</strong></td>
+</tr>
+<tr>
+<td align="left">Issue resulution time (days)</td>
+<td align="center"><a href="">4</a></td>
+<td align="center"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+<section data-noprocess data-shortcode-slide
+      data-transition="none">
+  
+<table>
+<thead>
+<tr>
+<th align="left">Metric</th>
+<th align="center">Prev.</th>
+<th align="center">Now</th>
+<th align="right">Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Release frequency ($\frac{releases}{day}$)</td>
+<td align="center"><a href="">0.071</a></td>
+<td align="center"><em>2.7</em></td>
+<td align="right"><strong>+3700%</strong></td>
+</tr>
+<tr>
+<td align="left">Commit to release time (hours)</td>
+<td align="center"><a href="">8 to 24</a></td>
+<td align="center"><em>0.19</em></td>
+<td align="right"><strong>~ -98.5%</strong></td>
+</tr>
+<tr>
+<td align="left">Commits per day ($\frac{commits}{day}$)</td>
+<td align="center"><a href="">2</a></td>
+<td align="center"><em>7.1</em></td>
+<td align="right"><strong>+255%</strong></td>
+</tr>
+<tr>
+<td align="left">MTTR (hours)</td>
+<td align="center"><a href="">36</a></td>
+<td align="center"><em>0.5</em></td>
+<td align="right"><strong>-98.6%</strong></td>
+</tr>
+<tr>
+<td align="left">Prod. env. setup (working hours)</td>
+<td align="center"><a href="">16</a></td>
+<td align="center"><em>0.35</em></td>
+<td align="right"><strong>-97.8%</strong></td>
+</tr>
+<tr>
+<td align="left">Dev. env. setup (minutes)</td>
+<td align="center"><a href="">120</a></td>
+<td align="center"><em>9</em></td>
+<td align="right"><strong>-92.5%</strong></td>
+</tr>
+<tr>
+<td align="left">Nightly downtime ($\frac{minutes}{night}$)</td>
+<td align="center"><a href="">30</a></td>
+<td align="center"><em>0</em></td>
+<td align="right"><strong>-100%</strong></td>
+</tr>
+<tr>
+<td align="left">Support ticket frequency ($\frac{tickets}{month}$)</td>
+<td align="center"><a href="">40</a></td>
+<td align="center"><em>19</em></td>
+<td align="right"><strong>-52.5%</strong></td>
+</tr>
+<tr>
+<td align="left">Issue resulution time (days)</td>
+<td align="center"><a href="">4</a></td>
+<td align="center"><em>3</em></td>
+<td align="right"><strong>-25%</strong></td>
+</tr>
+</tbody>
+</table>
+</section><section>
+<h2 id="benefits">Benefits</h2>
+<ul>
+<li>Much less <strong>maintenance</strong> in the traditional meaning: <em>&ldquo;Time spent to keep the system in nominal conditions&rdquo;</em>
+<ul>
+<li>No more issues with Windows updates</li>
+<li>No more downtimes related to internal network / electricity / public infrastructure maintenance</li>
+<li>Improved security</li>
+<li>No more critical failures caused by testing stored procedures directly in production my mistake</li>
+</ul>
+</li>
+<li>Much more maintenance in terms of <em>software evolution</em>
+<ul>
+<li>Application (or verification of automatic application) of updates</li>
+<li>Security audits</li>
+<li>Maintenance and update of the pipeline</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="lessons-learned">Lessons learned</h2>
+<ul>
+<li>The teams must be <strong>autonomous</strong></li>
+<li>Practices must be <em>tailored</em> to the team</li>
+<li>Time-consuming, repetitive, and cumbersome procedures must be <em>automated</em></li>
+<li>Obsolete practices must be <em>removed</em></li>
+<li><strong>Communication</strong> is key, awareness must be shed across the team of the expected benefits</li>
+</ul>
 </section>
 
   
