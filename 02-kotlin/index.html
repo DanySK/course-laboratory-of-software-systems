@@ -630,8 +630,8 @@ foo.stringRepresentation = <span style="color:#d20;background-color:#fff0f0">&#3
 <p>The Kotlin compiler, in fact, generates backing fields only when needed</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Student</span> {
     <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">id</span>: String? = <span style="color:#080;font-weight:bold">null</span> <span style="color:#888">// Backing field generated
-</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">identifier</span>: String = <span style="color:#d20;background-color:#fff0f0">&#34;Student[${id ?: &#34;</span>unknown<span style="color:#d20;background-color:#fff0f0">&#34;}]&#34;</span> <span style="color:#888">// Backing field generated
-</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">identifier</span>: String <span style="color:#080;font-weight:bold">get</span>() = <span style="color:#d20;background-color:#fff0f0">&#34;Student[${id ?: &#34;</span>unknown<span style="color:#d20;background-color:#fff0f0">&#34;}]&#34;</span> <span style="color:#888">// No backing field
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">identifierOnce</span>: String = <span style="color:#d20;background-color:#fff0f0">&#34;Student[${id ?: &#34;</span>unknown<span style="color:#d20;background-color:#fff0f0">&#34;}]&#34;</span> <span style="color:#888">// Backing field generated
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">identifierUpdated</span>: String <span style="color:#080;font-weight:bold">get</span>() = <span style="color:#d20;background-color:#fff0f0">&#34;Student[${id ?: &#34;</span>unknown<span style="color:#d20;background-color:#fff0f0">&#34;}]&#34;</span> <span style="color:#888">// No backing field
 </span><span style="color:#888"></span>}
 </code></pre></div><p>When designing with Kotlin, you must consider methods and properties, and forget about fields.</p>
 </section><section>
@@ -681,7 +681,7 @@ bar.imaginary = <span style="color:#00d;font-weight:bold">0.1</span>
 </section><section>
 <h1 id="kotlin-102----oop-7">Kotlin 102 &ndash; OOP</h1>
 <h2 id="implementing-interfaces">Implementing interfaces</h2>
-<p>Much like Java. Subtyping keyword is <code>:</code>, overrides must be marked with <code>override</code>:</p>
+<p>Much like Java. Subtyping keyword is <code>:</code>, overrides <em>must</em> be marked with <code>override</code>:</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">Shape</span> {
     <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">area</span>: Double
     <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">perimeter</span>: Double
@@ -731,7 +731,7 @@ Foo(<span style="color:#d20;background-color:#fff0f0">&#34;bar&#34;</span>, <spa
 </code></pre></div></section><section>
 <h1 id="kotlin-102----oop-10">Kotlin 102 &ndash; OOP</h1>
 <h2 id="secondary-constructors">Secondary <code>constructor</code>s</h2>
-<p>More constructors can be added to a class, but them:</p>
+<p>More constructors can be added to a class, but they:</p>
 <ol>
 <li>Must call another constructor</li>
 <li>The primary constructor must be in its <em>delegation calls chain</em></li>
@@ -757,7 +757,7 @@ Foo(<span style="color:#00d;font-weight:bold">1</span>).bar <span style="color:#
 <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">son</span> = Son(father)
 father.son = son
 father.son.father <span style="color:#888">// error, needs ?.
-</span></code></pre></div><p>Solution 1: take responsibility from the compiler (<em>less bad</em>)</p>
+</span></code></pre></div><p>Solution 2: take responsibility from the compiler (<em>less bad</em>)</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Son</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">father</span>: Father)
 <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Father</span> { <span style="color:#080;font-weight:bold">lateinit</span> <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">son</span>: Son } <span style="color:#888">// lateinit: I will initialize it later, stay cool
 </span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">father</span> = Father()
