@@ -166,7 +166,7 @@ Follow the instructions at [https://github.com/DanySK/docker-linux-didattica](ht
 
 The container can be converted into a WSL2 Linux distribution.
 
-
+(Instructions available in the same repository as above)
 
 ---
 
