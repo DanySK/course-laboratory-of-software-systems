@@ -1,7 +1,7 @@
 plugins {
     `java-gradle-plugin`
     kotlin("jvm") version "1.5.31"
-    id ("org.danilopianini.git-sensitive-semantic-versioning") version "0.2.2"
+    id ("org.danilopianini.git-sensitive-semantic-versioning") version "0.3.0"
     id("com.gradle.plugin-publish") version "0.16.0"
 }
 
