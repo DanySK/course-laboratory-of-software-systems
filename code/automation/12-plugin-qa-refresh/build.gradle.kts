@@ -6,7 +6,7 @@ plugins {
     id("com.gradle.plugin-publish") version "0.16.0"
     id("pl.droidsonroids.jacoco.testkit") version "1.0.9"
     id("org.jlleitschuh.gradle.ktlint") version "9.4.1"
-    id("io.gitlab.arturbosch.detekt") version "1.14.1"
+    id("io.gitlab.arturbosch.detekt") version "1.18.1"
 }
 
 group = "it.unibo.lss2020"
