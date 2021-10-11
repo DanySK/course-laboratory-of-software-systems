@@ -460,10 +460,9 @@ We just need to write `forEachLibrary`, but that is just a Kotlin exercise...
 ...not particularly difficult to solve:
 1. It's just something we need to do for each library
 ```kotlin
-// In the context of a DependencyHandlerScope
-fun DependencyHandlerScope.forEachLibrary(todo: DependencyHandlerScope.(String) -> Unit) {
-    findLibraries().forEach { // For each library (function to be written)
-        todo(it) // this.todo(it) -> invoke todo on this passing the library
+fun forEachLibrary(todo: (String) -> Unit) {
+    findLibraries().forEach {
+        todo(it)
     }
 }
 ```
@@ -626,7 +625,7 @@ Gradle proposes a (partial) solution with the so-called *Gradle wrapper*
     * `gradlew`
     * `gradlew.bat`
 
-The Gradle wrapper is *the correct way* to use gradle, and we'll be using it from now on.
+The Gradle wrapper is ***the** correct way* to use gradle, and we'll be using it from now on.
 
 ---
 
@@ -884,7 +883,7 @@ In general, it is a good practice (that will become mandatory in future gradle r
 to *annotate every public property* of a task with a marker annotation that determines whether it is an *input* or an *output*.
 * `@Input`, `@InputFile`, `@InputFiles`, `@InputDirectory`, `@InputDirectories`
 * `@OutputFile`, `@OutputFiles`, `@OutputDirectory`, `@OutputDirectories`
-    * `@Internal` marks some property that is used as output *internally* (not reified on the file system)
+    * `@Internal` marks *internal* output properties (not reified on the file system)
 
 #### Why?
 
@@ -893,8 +892,8 @@ to *annotate every public property* of a task with a marker annotation that dete
     * This allows for *much* faster builds while working on large projects
         * Time to build completion can decrease from tens on minutes to seconds!
 2. **Continuous build**
-    * When launched with the `-t` option, Gradle re-runs the requested tasks every time *something changes*
-    * (In/Out)put markers are used to understand *what* to actually run again
+    * Re run tasks upon changes with the `-t` option
+    * (In/Out)put markers are used to understand *what* to re-run
 
 ---
 
@@ -1042,21 +1041,18 @@ tasks.register<RunJava>("runJava") {
 
 General approach to a *new* build automation problem:
 
-**Divide**
-* Identify the *base steps*, they could become your task
-    * Or any concept your build system exposes to model an atomic operation
+**Divide**: Identify the *base steps*, they could become your tasks
 
-**Conquer**
-* Clearly express the *dependencies* among them
-    * Build a *pipeline*
-* Implement them
-* Provide a clean API
+* Or any concept your build system exposes to model atomic operations
 
-**Encapsulate**
-* Confine imperative logic, make it an *implementation detail*
+**Conquer**: Clearly express the *dependencies* among them
 
-**Adorn**
-* Provide expressive, easy, immedate access to the API via *DSL*!
+* Build a *pipeline*
+* Implement them Providing a *clean API*
+
+**Encapsulate**: confine imperative logic, make it an *implementation detail*
+
+**Adorn**: provide expressive, easy, immedate access to the API via *DSL*!
 
 *Not very different than what's usually done in (good) software development*
 
@@ -1079,7 +1075,7 @@ A *plugin* is a software component that *extends the API* of the base system
 It usually includes:
 * A set of `Task`s
 * An `Extension` -- An object incapsulating the global configuration options
-    * this is where the DSL capabilities get usually leveraged
+    * leveraging an appropriate *DSL*
 * A `Plugin` object, implementing an `apply(Project)` function
     * Application must create the extension, the tasks, and the rest of the imperative stuff
 * A **manifest** file declaring which of the classes implementing `Plugin` is the entry point of the declared plugin
@@ -1182,8 +1178,7 @@ Libraries can be imported in Gradle from `repositories`
 ```kotlin
 // Configuration of software sources
 repositories {
-    jcenter() // points to JCenter Bintray
-    // mavenCentral() // points to Maven Central instead or additionally
+    mavenCentral() // points to Maven Central
 }
 
 dependencies {
@@ -1229,7 +1224,7 @@ implementation-class=it.unibo.lss.firstplugin.GreetingPlugin
 
 ## Plugin implementation
 
-Usually, composed by:
+Usually, composed of:
 * A *clean API*, if the controlled system is not trivial
 * A set of *tasks* incapuslating the imperative logic
 * An *extension* containing the DSL for configuring the plugin

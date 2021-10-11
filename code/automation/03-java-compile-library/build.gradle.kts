@@ -15,7 +15,7 @@ data class FinderInFolder(val directory: String) {
 fun findFilesIn(directory: String) = FinderInFolder(directory)
 fun findSources() = findFilesIn("src").withExtension("java")
 fun findLibraries() = findFilesIn("lib").withExtension("jar")
-fun DependencyHandlerScope.forEachLibrary(todo: DependencyHandlerScope.(String) -> Unit) {
+fun forEachLibrary(todo: (String) -> Unit) {
     findLibraries().forEach {
         todo(it)
     }
