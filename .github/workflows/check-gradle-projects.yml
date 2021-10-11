@@ -13,7 +13,7 @@ on:
   pull_request:
 
 jobs:
-  Check-Project-0:
+  Check-Projects:
     strategy:
       matrix:
         os: [windows, macos, ubuntu]
@@ -41,5 +41,4 @@ jobs:
             ${{ runner.os }}-gradle-    steps:
       - name: Checkout
         uses: danysk/action-checkout@0.1.0
-      - run: cd code/automation
-      - run: ./integrity-check.sh
+      - run: cd code/automation && ./integrity-check.sh
