@@ -52,6 +52,12 @@ section.has-light-background {
 	box-shadow: none;
 }
 
+.reveal div .gist .hljs-ln {
+	color: black;
+	font-size: 60%;
+	line-height: 100%;
+}
+
 .reveal code {
 	color: deeppink;
 	line-height: 140%;
@@ -84,3 +90,4 @@ section.has-light-background {
 	background: rgba(255, 255, 255, 0.08) !important;
 	box-shadow: 0 0 3em 0.6em rgba(255, 255, 255, 0.2);
 }
+

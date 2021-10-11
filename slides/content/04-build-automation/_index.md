@@ -954,7 +954,7 @@ Gradle provides the functionality we need (project-global type definitions) usin
 
 inside `buildSrc/build.gradle.kts` (clearer in future):
 
-```kotlin
+```gradle
 plugins {
     `kotlin-dsl`
 }
@@ -1157,22 +1157,8 @@ plugins {
 }
 ```
 
-The Kotlin plugin introduces:
-* Several *tasks*, among which:
-    * `compileJava`
-    * `compileKotlin`
-* A number of *configurations*
-    * `api`: available both at compile- and run- time, *exported to consumers*
-    * `implementation`: available both at compile- and run- time, *not exported to consumers*
-        * internal logic, implementation details
-    * `compileOnly`: available at *compile time only* (e.g. compile time annotations)
-    * `runtimeOnly`: available at *runtime only*
+The Kotlin plugin introduces:```
 
----
-
-## Importing the standard library
-Libraries can be imported in Gradle from `repositories`
-* Several packaging formats supported, among wich Maven repositories
 * Maven repositories are a de-facto standard for shipping JVM libraries
 
 ```kotlin
@@ -1495,6 +1481,79 @@ runner.task(":someExistingTask")?.outcome shouldBe TaskOutcome.SUCCESS
 runner.output shouldContain "Hello from Gradle"
 ```
 Final result in the [attached code](https://github.com/DanySK/Course-Laboratory-of-Software-Systems/blob/master/code/automation/10-greetings-plugin/src/test/kotlin/PluginTest.kt)!
+
+---
+
+## DRY with dependencies declaration
+
+Look at the following code:
+
+```kotlin
+dependencies {
+    testImplementation("io.kotest:kotest-runner-junit5:4.2.5")
+    testImplementation("io.kotest:kotest-assertions-core:4.2.5")
+    testImplementation("io.kotest:kotest-assertions-core-jvm:4.2.5")
+}
+```
+It is *repetitive* and *fragile* (what if you change the version of a single kotest module?)
+
+---
+
+## DRY with dependencies declaration
+
+Let's patch fragility:
+
+```kotlin
+dependencies {
+    val kotestVersion = "4.2.5"
+    testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
+    testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
+    testImplementation("io.kotest:kotest-assertions-core-jvm:$kotestVersion")
+}
+```
+Still, quite repetitive...
+
+---
+
+## DRY with dependencies declaration
+
+```kotlin
+dependencies {
+    val kotestVersion = "4.2.5"
+    fun kotest(module: String) = "io.kotest:kotest-$module:$kotestVersion"
+    testImplementation(kotest("runner-junit5")
+    testImplementation(kotest("assertions-core")
+    testImplementation(kotest("assertions-core-jvm")
+}
+```
+Uhmm...
+* it's still repetitive (can be furter factorized by bundling the kotest modules)
+* the function and version could be included in `buildSrc`
+* very custom! Nicer, but...
+    1. Harder to understand for newbies
+    2. May make further automation harder (automatic updates?)
+
+---
+
+## Declaring dependencies in a *catalog*
+
+Gradle 7 introduced the *catalogs*, a standardized way to collect dependencies and bundle them.
+
+Catalogs can be declared in:
+* the `build.gradle.kts` file (they are API, of course)
+* a [TOML](https://github.com/toml-lang/toml) configuration file (default: `gradle/libs.versions.toml`)
+
+{{< github repo="Template-for-Gradle-Plugins" path="gradle/libs.versions.toml" >}}
+
+* Gradle auto-generates *type-safe accessors* for the definitions
+
+---
+
+## Using the default catalog
+
+{{< github repo="Template-for-Gradle-Plugins" path="build.gradle.kts" slice="L4-L14">}}
+
+{{< github repo="Template-for-Gradle-Plugins" path="build.gradle.kts" slice="L60-L69">}}
 
 ---
 
