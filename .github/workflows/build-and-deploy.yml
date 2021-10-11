@@ -5,7 +5,11 @@ on:
     branches-ignore:
       - 'autodelivery**'
       - 'bump-**'
-      - 'renovate**'
+      - 'renovate/**'
+    paths-ignore:
+      - 'README.md'
+      - 'CHANGELOG.md'
+      - 'LICENSE'
   pull_request:
 
 jobs:
