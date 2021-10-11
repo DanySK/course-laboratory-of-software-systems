@@ -12,6 +12,7 @@ on:
       - 'LICENSE'
       - 'slides/**'
   pull_request:
+  workflow_dispatch:
 
 jobs:
   Check-Projects:

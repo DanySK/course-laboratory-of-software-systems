@@ -12,6 +12,7 @@ on:
       - 'LICENSE'
       - 'code/**'
   pull_request:
+  workflow_dispatch:
 
 jobs:
   Build-Slides:
