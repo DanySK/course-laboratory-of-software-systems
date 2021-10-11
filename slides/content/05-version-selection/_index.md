@@ -137,7 +137,7 @@ Combination of all the techniques:
     * e.g., Windows 7 is actually Windows 6.1, and Windows 10 is actually Windows 6.4
     * One future Windows may actually become Windows 7.0, clashing with the “commercial” version of an older product
 
-**Proliferation of methodologies and inconsistencies lead to issues**
+**Proliferation of methodologies and inconsistencies leads to issues**
 * Ever wondered why there is no Windows 9?
 
 ---
