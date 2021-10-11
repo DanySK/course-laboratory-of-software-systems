@@ -43,3 +43,4 @@ jobs:
       - name: Checkout
         uses: danysk/action-checkout@0.1.0
       - run: cd code/automation && pwd && ls -ahl && ./integrity_check.sh
+        shell: bash
