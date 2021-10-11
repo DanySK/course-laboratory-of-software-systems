@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/css/reset.css">
 <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/css/reveal.css">
-  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.80ba79e26c704def36ff94de66c82ff200680e7e49c9c52824025b17ab4846b1.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
+  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.be512a7a38c6a076f199e8fc44e3e94a0640dc07526d85ed758ad2fc13bdb8fe.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
     
 <link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
 <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
@@ -1158,32 +1158,8 @@ greetings {
     <span style="color:#888">// No magic: calls a method running behind the scenes the same of id(&#34;org.jetbrains.kotlin-&#34; + &#34;jvm&#34;)
 </span><span style="color:#888"></span>    kotlin(<span style="color:#d20;background-color:#fff0f0">&#34;jvm&#34;</span>) version <span style="color:#d20;background-color:#fff0f0">&#34;1.4.10&#34;</span> <span style="color:#888">// version is necessary
 </span><span style="color:#888"></span>}
-</code></pre></div><p>The Kotlin plugin introduces:</p>
+</code></pre></div><p>The Kotlin plugin introduces:```</p>
 <ul>
-<li>Several <em>tasks</em>, among which:
-<ul>
-<li><code>compileJava</code></li>
-<li><code>compileKotlin</code></li>
-</ul>
-</li>
-<li>A number of <em>configurations</em>
-<ul>
-<li><code>api</code>: available both at compile- and run- time, <em>exported to consumers</em></li>
-<li><code>implementation</code>: available both at compile- and run- time, <em>not exported to consumers</em>
-<ul>
-<li>internal logic, implementation details</li>
-</ul>
-</li>
-<li><code>compileOnly</code>: available at <em>compile time only</em> (e.g. compile time annotations)</li>
-<li><code>runtimeOnly</code>: available at <em>runtime only</em></li>
-</ul>
-</li>
-</ul>
-</section><section>
-<h2 id="importing-the-standard-library">Importing the standard library</h2>
-<p>Libraries can be imported in Gradle from <code>repositories</code></p>
-<ul>
-<li>Several packaging formats supported, among wich Maven repositories</li>
 <li>Maven repositories are a de-facto standard for shipping JVM libraries</li>
 </ul>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#888">// Configuration of software sources
@@ -1458,6 +1434,85 @@ We want to inject our plugin into the distribution.</p>
 </span><span style="color:#888"></span>runner.task(<span style="color:#d20;background-color:#fff0f0">&#34;:someExistingTask&#34;</span>)?.outcome shouldBe TaskOutcome.SUCCESS
 runner.output shouldContain <span style="color:#d20;background-color:#fff0f0">&#34;Hello from Gradle&#34;</span>
 </code></pre></div><p>Final result in the <a href="https://github.com/DanySK/Course-Laboratory-of-Software-Systems/blob/master/code/automation/10-greetings-plugin/src/test/kotlin/PluginTest.kt">attached code</a>!</p>
+</section><section>
+<h2 id="dry-with-dependencies-declaration">DRY with dependencies declaration</h2>
+<p>Look at the following code:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>dependencies {
+    testImplementation(<span style="color:#d20;background-color:#fff0f0">&#34;io.kotest:kotest-runner-junit5:4.2.5&#34;</span>)
+    testImplementation(<span style="color:#d20;background-color:#fff0f0">&#34;io.kotest:kotest-assertions-core:4.2.5&#34;</span>)
+    testImplementation(<span style="color:#d20;background-color:#fff0f0">&#34;io.kotest:kotest-assertions-core-jvm:4.2.5&#34;</span>)
+}
+</code></pre></div><p>It is <em>repetitive</em> and <em>fragile</em> (what if you change the version of a single kotest module?)</p>
+</section><section>
+<h2 id="dry-with-dependencies-declaration-1">DRY with dependencies declaration</h2>
+<p>Let&rsquo;s patch fragility:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>dependencies {
+    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">kotestVersion</span> = <span style="color:#d20;background-color:#fff0f0">&#34;4.2.5&#34;</span>
+    testImplementation(<span style="color:#d20;background-color:#fff0f0">&#34;io.kotest:kotest-runner-junit5:$kotestVersion&#34;</span>)
+    testImplementation(<span style="color:#d20;background-color:#fff0f0">&#34;io.kotest:kotest-assertions-core:$kotestVersion&#34;</span>)
+    testImplementation(<span style="color:#d20;background-color:#fff0f0">&#34;io.kotest:kotest-assertions-core-jvm:$kotestVersion&#34;</span>)
+}
+</code></pre></div><p>Still, quite repetitive&hellip;</p>
+</section><section>
+<h2 id="dry-with-dependencies-declaration-2">DRY with dependencies declaration</h2>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>dependencies {
+    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">kotestVersion</span> = <span style="color:#d20;background-color:#fff0f0">&#34;4.2.5&#34;</span>
+    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">kotest</span>(module: String) = <span style="color:#d20;background-color:#fff0f0">&#34;io.kotest:kotest-$module:$kotestVersion&#34;</span>
+    testImplementation(kotest(<span style="color:#d20;background-color:#fff0f0">&#34;runner-junit5&#34;</span>)
+    testImplementation(kotest(<span style="color:#d20;background-color:#fff0f0">&#34;assertions-core&#34;</span>)
+    testImplementation(kotest(<span style="color:#d20;background-color:#fff0f0">&#34;assertions-core-jvm&#34;</span>)
+}
+</code></pre></div><p>Uhmm&hellip;</p>
+<ul>
+<li>it&rsquo;s still repetitive (can be furter factorized by bundling the kotest modules)</li>
+<li>the function and version could be included in <code>buildSrc</code></li>
+<li>very custom! Nicer, but&hellip;
+<ol>
+<li>Harder to understand for newbies</li>
+<li>May make further automation harder (automatic updates?)</li>
+</ol>
+</li>
+</ul>
+</section><section>
+<h2 id="declaring-dependencies-in-a-catalog">Declaring dependencies in a <em>catalog</em></h2>
+<p>Gradle 7 introduced the <em>catalogs</em>, a standardized way to collect dependencies and bundle them.</p>
+<p>Catalogs can be declared in:</p>
+<ul>
+<li>the <code>build.gradle.kts</code> file (they are API, of course)</li>
+<li>a <a href="https://github.com/toml-lang/toml">TOML</a> configuration file (default: <code>gradle/libs.versions.toml</code>)</li>
+</ul>
+
+
+
+
+
+<div class="gist" style="display: inline-block; width: fit-content; min-width: 25em;">
+    <script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2FDanySK%2FTemplate-for-Gradle-Plugins%2Fblob%2Fmaster%2Fgradle%2flibs.versions.toml&style=googlecode&showBorder=on&showLineNumbers=on"></script>
+</div>
+
+<ul>
+<li>Gradle auto-generates <em>type-safe accessors</em> for the definitions</li>
+</ul>
+</section><section>
+<h2 id="using-the-default-catalog">Using the default catalog</h2>
+
+
+
+
+
+<div class="gist" style="display: inline-block; width: fit-content; min-width: 25em;">
+    <script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2FDanySK%2FTemplate-for-Gradle-Plugins%2Fblob%2Fmaster%2Fbuild.gradle.kts%23L4-L14&style=googlecode&showBorder=on&showLineNumbers=on"></script>
+</div>
+
+
+
+
+
+
+<div class="gist" style="display: inline-block; width: fit-content; min-width: 25em;">
+    <script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2FDanySK%2FTemplate-for-Gradle-Plugins%2Fblob%2Fmaster%2Fbuild.gradle.kts%23L60-L69&style=googlecode&showBorder=on&showLineNumbers=on"></script>
+</div>
+
 </section><section>
 <h2 id="making-the-plugin-available">Making the plugin available</h2>
 <p>We now know how to run the plugin,
