@@ -1,13 +1,14 @@
 intro = '''
 
-# Build automation
+# The build "life cycle"
+#### (Not to be confused with the system development life cycle (SDLC))
 
-The process of automating the creation of *software artifacts*
+The process of creating *tested deployable software artifacts*
 <br/>
-going from *source* code to *tested* deployable artifact
+from *source* code
 
 May include, depending on the system specifics:
-* Automated *source code manipulation* and generation
+* *Source code manipulation* and generation
 * Source code *quality assurance*
 * *Dependency management*
 * *Compilation*, linking
@@ -20,24 +21,47 @@ May include, depending on the system specifics:
 
 ---
 
+# Lifecycle styles
+
+* **Custom**: select some phases that the product needs and perform them.
+    * *Flexible and configurable*: tailored on each project's needs
+    * *Hard to adapt and port*
+
+* **Standard**: run a sequence of pre-defined actions/phases.
+    * *Portable and easy to understand*: replicated on every product
+    * *Limited configuration options*
+
+---
+
+# Build automation
+
+Automation of the build lifecycle
+
+* In principle, the lifecycle could be executed manually
+* In reality *time is precious* and *repetitivy is boring*
+
+$\Rightarrow$ Create software that automates the building of some software!
+
+* All those concerns that hold for sofware creation hold for build systems creation...
+
+---
+
 ## Build automation: basics and styles
 
-It's just a software that automates the building of some software
-<br/>
-hence, all concerns that hold for sofware creation hold for build systems creation.
+Different lifecycle types generate different build automation **styles**
 
-**Imperative style**: write a script that tells the system what to do to get
+**Imperative**: write a script that tells the system what to do to get
 from code to artifacts
 * *Examples*: make, cmake, Apache Ant
-* Verbose, repetitive
-* Configuration (declarative) and actionable (imperative) logics mixed together
-* Highly configurable
+* *Abstraction gap*: verbose, repetitive
+* Configuration (*declarative*) and actionable (*imperative*) logics *mixed* together
+* Highly *configurable*
 
-**Declarative style**: adhere to some convention, specify additional configuration,
-and let the tool decide what to do actually
+**Declarative**: adhere to some convention, customizing some settings
 * *Examples*: Apache Maven
 * Separation between *what* to do and *how* to do it
-* Configuration limited by the provided options
+  * The build system decides how to do the stuff
+* *Configuration limited* by the provided options
 
 ---
 

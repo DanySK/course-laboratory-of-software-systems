@@ -30,7 +30,9 @@ enableSourceMap = true
 
 # Overview
 
-* Build automation: basics, styles
+* Build automation:
+  * The software lifecycle
+  * Automation styles
 * Gradle as paradigmatic build automator
     * Core concepts and basics
     * Dependency management and configurations
@@ -45,6 +47,40 @@ enableSourceMap = true
 ---
 
 {{% slide content="build-automation.intro" %}}
+
+---
+
+# The Apache Maven build lifecycle
+
+1. `validate` - validate the project is correct and all necessary information is available
+2. `compile` - compile the source code of the project
+3. `test` - test the compiled source code using a suitable unit testing framework. These tests should not require the code be packaged or deployed
+4. `package` - take the compiled code and package it in its distributable format, such as a JAR.
+5. `verify` - run any checks on results of integration tests to ensure quality criteria are met
+6. `install` - install the package into the local repository, for use as a dependency in other projects locally
+7. `deploy` - done in the build environment, copies the final package to the remote repository for sharing with other developers and projects.
+
+* Phases are made of *plugin goals*
+* **Execution** requires the name of a *phase* or *goal* (dependent goals will get executed)
+* **Convention over configuration**: *sensible defaults*
+
+What if there is no plugin for something peculiar of the project?
+
+---
+
+# A lifecycle for build lifecycles
+
+1. **Initialization**: understand what is part of a build
+2. **Configuration**: create the necessary phases / goals and configure them
+    * Define the *goals* (or *tasks*)
+    * Configure the *options*
+    * Define *dependencies* among tasks
+        * Forming a *directed acyclic graph*
+3. **Execution**: run the tasks necessary to achieve the build goal
+
+Rather than declaratively fit the build into a predefined lifecycle, declaratively define a build lifecycle
+
+$\Rightarrow$ Typical of *hybrid automators*
 
 ---
 
@@ -201,7 +237,7 @@ Build Setup tasks
 
 **Reason**: the build script executes when Gradle is invoked, and *configures* tasks and dependencies.
 <br>
-Only later, when a task is invoked, it is *actually executed*
+Only later, when a task is invoked, the block gets *actually executed*
 
 ---
 
@@ -228,9 +264,12 @@ Hello, World!
 
 ## Gradle: configuration vs execution
 
-### Why two separate phases?
+* The *build configuration* happens **first**
+    * Tasks and their dependencies are a **result of the configuration**
+* The *task execution* happens **later**
+    * As per the "meta-lifecycle" discussed before
 
-Delaying the actual execution allows for a more *fine grained configuration*
+Delaying the actual execution allows for a more *delayed configuration*
 <br>
 This will be especially useful when *modifying existing behavior*
 
