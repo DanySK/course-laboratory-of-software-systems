@@ -74,3 +74,13 @@ section.has-light-background {
 .gist-it-gist .gist-file .gist-data pre, .gister-gist .gist-file .gist-data pre {
 	box-shadow: none !important;
 }
+
+.reveal pre code {
+	color: rgb(0, 0, 0);
+	max-height: none;
+}
+
+.hljs {
+	background: rgba(255, 255, 255, 0.08) !important;
+	box-shadow: 0 0 3em 0.6em rgba(255, 255, 255, 0.2);
+}
