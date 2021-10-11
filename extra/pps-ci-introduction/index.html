@@ -665,13 +665,14 @@
 </ul>
 </section>
 <section data-noprocess data-shortcode-slide>
-  <h1 id="build-automation">Build automation</h1>
-<p>The process of automating the creation of <em>software artifacts</em>
+  <h1 id="the-build-life-cycle">The build &ldquo;life cycle&rdquo;</h1>
+<h4 id="not-to-be-confused-with-the-system-development-life-cycle-sdlc">(Not to be confused with the system development life cycle (SDLC))</h4>
+<p>The process of creating <em>tested deployable software artifacts</em>
 <br/>
-going from <em>source</em> code to <em>tested</em> deployable artifact</p>
+from <em>source</em> code</p>
 <p>May include, depending on the system specifics:</p>
 <ul>
-<li>Automated <em>source code manipulation</em> and generation</li>
+<li><em>Source code manipulation</em> and generation</li>
 <li>Source code <em>quality assurance</em></li>
 <li><em>Dependency management</em></li>
 <li><em>Compilation</em>, linking</li>
@@ -684,24 +685,56 @@ going from <em>source</em> code to <em>tested</em> deployable artifact</p>
 </ul>
 </section>
 <section data-noprocess data-shortcode-slide>
+<h1 id="lifecycle-styles">Lifecycle styles</h1>
+<ul>
+<li>
+<p><strong>Custom</strong>: select some phases that the product needs and perform them.</p>
+<ul>
+<li><em>Flexible and configurable</em>: tailored on each project&rsquo;s needs</li>
+<li><em>Hard to adapt and port</em></li>
+</ul>
+</li>
+<li>
+<p><strong>Standard</strong>: run a sequence of pre-defined actions/phases.</p>
+<ul>
+<li><em>Portable and easy to understand</em>: replicated on every product</li>
+<li><em>Limited configuration options</em></li>
+</ul>
+</li>
+</ul>
+</section>
+<section data-noprocess data-shortcode-slide>
+<h1 id="build-automation">Build automation</h1>
+<p>Automation of the build lifecycle</p>
+<ul>
+<li>In principle, the lifecycle could be executed manually</li>
+<li>In reality <em>time is precious</em> and <em>repetitivy is boring</em></li>
+</ul>
+<p>$\Rightarrow$ Create software that automates the building of some software!</p>
+<ul>
+<li>All those concerns that hold for sofware creation hold for build systems creation&hellip;</li>
+</ul>
+</section>
+<section data-noprocess data-shortcode-slide>
 <h2 id="build-automation-basics-and-styles">Build automation: basics and styles</h2>
-<p>It&rsquo;s just a software that automates the building of some software
-<br/>
-hence, all concerns that hold for sofware creation hold for build systems creation.</p>
-<p><strong>Imperative style</strong>: write a script that tells the system what to do to get
+<p>Different lifecycle types generate different build automation <strong>styles</strong></p>
+<p><strong>Imperative</strong>: write a script that tells the system what to do to get
 from code to artifacts</p>
 <ul>
 <li><em>Examples</em>: make, cmake, Apache Ant</li>
-<li>Verbose, repetitive</li>
-<li>Configuration (declarative) and actionable (imperative) logics mixed together</li>
-<li>Highly configurable</li>
+<li><em>Abstraction gap</em>: verbose, repetitive</li>
+<li>Configuration (<em>declarative</em>) and actionable (<em>imperative</em>) logics <em>mixed</em> together</li>
+<li>Highly <em>configurable</em></li>
 </ul>
-<p><strong>Declarative style</strong>: adhere to some convention, specify additional configuration,
-and let the tool decide what to do actually</p>
+<p><strong>Declarative</strong>: adhere to some convention, customizing some settings</p>
 <ul>
 <li><em>Examples</em>: Apache Maven</li>
-<li>Separation between <em>what</em> to do and <em>how</em> to do it</li>
-<li>Configuration limited by the provided options</li>
+<li>Separation between <em>what</em> to do and <em>how</em> to do it
+<ul>
+<li>The build system decides how to do the stuff</li>
+</ul>
+</li>
+<li><em>Configuration limited</em> by the provided options</li>
 </ul>
 </section>
 <section data-noprocess data-shortcode-slide>

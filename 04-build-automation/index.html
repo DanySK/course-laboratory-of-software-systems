@@ -32,7 +32,12 @@
 </section><section>
 <h1 id="overview">Overview</h1>
 <ul>
-<li>Build automation: basics, styles</li>
+<li>Build automation:
+<ul>
+<li>The software lifecycle</li>
+<li>Automation styles</li>
+</ul>
+</li>
 <li>Gradle as paradigmatic build automator
 <ul>
 <li>Core concepts and basics</li>
@@ -49,13 +54,14 @@
 </ul>
 </section>
 <section data-noprocess data-shortcode-slide>
-  <h1 id="build-automation">Build automation</h1>
-<p>The process of automating the creation of <em>software artifacts</em>
+  <h1 id="the-build-life-cycle">The build &ldquo;life cycle&rdquo;</h1>
+<h4 id="not-to-be-confused-with-the-system-development-life-cycle-sdlc">(Not to be confused with the system development life cycle (SDLC))</h4>
+<p>The process of creating <em>tested deployable software artifacts</em>
 <br/>
-going from <em>source</em> code to <em>tested</em> deployable artifact</p>
+from <em>source</em> code</p>
 <p>May include, depending on the system specifics:</p>
 <ul>
-<li>Automated <em>source code manipulation</em> and generation</li>
+<li><em>Source code manipulation</em> and generation</li>
 <li>Source code <em>quality assurance</em></li>
 <li><em>Dependency management</em></li>
 <li><em>Compilation</em>, linking</li>
@@ -68,24 +74,56 @@ going from <em>source</em> code to <em>tested</em> deployable artifact</p>
 </ul>
 </section>
 <section data-noprocess data-shortcode-slide>
+<h1 id="lifecycle-styles">Lifecycle styles</h1>
+<ul>
+<li>
+<p><strong>Custom</strong>: select some phases that the product needs and perform them.</p>
+<ul>
+<li><em>Flexible and configurable</em>: tailored on each project&rsquo;s needs</li>
+<li><em>Hard to adapt and port</em></li>
+</ul>
+</li>
+<li>
+<p><strong>Standard</strong>: run a sequence of pre-defined actions/phases.</p>
+<ul>
+<li><em>Portable and easy to understand</em>: replicated on every product</li>
+<li><em>Limited configuration options</em></li>
+</ul>
+</li>
+</ul>
+</section>
+<section data-noprocess data-shortcode-slide>
+<h1 id="build-automation">Build automation</h1>
+<p>Automation of the build lifecycle</p>
+<ul>
+<li>In principle, the lifecycle could be executed manually</li>
+<li>In reality <em>time is precious</em> and <em>repetitivy is boring</em></li>
+</ul>
+<p>$\Rightarrow$ Create software that automates the building of some software!</p>
+<ul>
+<li>All those concerns that hold for sofware creation hold for build systems creation&hellip;</li>
+</ul>
+</section>
+<section data-noprocess data-shortcode-slide>
 <h2 id="build-automation-basics-and-styles">Build automation: basics and styles</h2>
-<p>It&rsquo;s just a software that automates the building of some software
-<br/>
-hence, all concerns that hold for sofware creation hold for build systems creation.</p>
-<p><strong>Imperative style</strong>: write a script that tells the system what to do to get
+<p>Different lifecycle types generate different build automation <strong>styles</strong></p>
+<p><strong>Imperative</strong>: write a script that tells the system what to do to get
 from code to artifacts</p>
 <ul>
 <li><em>Examples</em>: make, cmake, Apache Ant</li>
-<li>Verbose, repetitive</li>
-<li>Configuration (declarative) and actionable (imperative) logics mixed together</li>
-<li>Highly configurable</li>
+<li><em>Abstraction gap</em>: verbose, repetitive</li>
+<li>Configuration (<em>declarative</em>) and actionable (<em>imperative</em>) logics <em>mixed</em> together</li>
+<li>Highly <em>configurable</em></li>
 </ul>
-<p><strong>Declarative style</strong>: adhere to some convention, specify additional configuration,
-and let the tool decide what to do actually</p>
+<p><strong>Declarative</strong>: adhere to some convention, customizing some settings</p>
 <ul>
 <li><em>Examples</em>: Apache Maven</li>
-<li>Separation between <em>what</em> to do and <em>how</em> to do it</li>
-<li>Configuration limited by the provided options</li>
+<li>Separation between <em>what</em> to do and <em>how</em> to do it
+<ul>
+<li>The build system decides how to do the stuff</li>
+</ul>
+</li>
+<li><em>Configuration limited</em> by the provided options</li>
 </ul>
 </section>
 <section data-noprocess data-shortcode-slide>
@@ -102,6 +140,42 @@ and let the tool decide what to do actually</p>
 </li>
 <li>How to structure multiple logical and interdependent parts?</li>
 </ul>
+</section><section>
+<h1 id="the-apache-maven-build-lifecycle">The Apache Maven build lifecycle</h1>
+<ol>
+<li><code>validate</code> - validate the project is correct and all necessary information is available</li>
+<li><code>compile</code> - compile the source code of the project</li>
+<li><code>test</code> - test the compiled source code using a suitable unit testing framework. These tests should not require the code be packaged or deployed</li>
+<li><code>package</code> - take the compiled code and package it in its distributable format, such as a JAR.</li>
+<li><code>verify</code> - run any checks on results of integration tests to ensure quality criteria are met</li>
+<li><code>install</code> - install the package into the local repository, for use as a dependency in other projects locally</li>
+<li><code>deploy</code> - done in the build environment, copies the final package to the remote repository for sharing with other developers and projects.</li>
+</ol>
+<ul>
+<li>Phases are made of <em>plugin goals</em></li>
+<li><strong>Execution</strong> requires the name of a <em>phase</em> or <em>goal</em> (dependent goals will get executed)</li>
+<li><strong>Convention over configuration</strong>: <em>sensible defaults</em></li>
+</ul>
+<p>What if there is no plugin for something peculiar of the project?</p>
+</section><section>
+<h1 id="a-lifecycle-for-build-lifecycles">A lifecycle for build lifecycles</h1>
+<ol>
+<li><strong>Initialization</strong>: understand what is part of a build</li>
+<li><strong>Configuration</strong>: create the necessary phases / goals and configure them
+<ul>
+<li>Define the <em>goals</em> (or <em>tasks</em>)</li>
+<li>Configure the <em>options</em></li>
+<li>Define <em>dependencies</em> among tasks
+<ul>
+<li>Forming a <em>directed acyclic graph</em></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Execution</strong>: run the tasks necessary to achieve the build goal</li>
+</ol>
+<p>Rather than declaratively fit the build into a predefined lifecycle, declaratively define a build lifecycle</p>
+<p>$\Rightarrow$ Typical of <em>hybrid automators</em></p>
 </section><section>
 <h1 id="gradle">Gradle</h1>
 <p>A paradigmatic example of a hybrid automator:</p>
@@ -232,7 +306,7 @@ Build Setup tasks
 </code></pre></div><p><strong>Ouch!</strong></p>
 <p><strong>Reason</strong>: the build script executes when Gradle is invoked, and <em>configures</em> tasks and dependencies.
 <br>
-Only later, when a task is invoked, it is <em>actually executed</em></p>
+Only later, when a task is invoked, the block gets <em>actually executed</em></p>
 </section><section>
 <h2 id="gradle-configuration-vs-execution-2">Gradle: configuration vs execution</h2>
 <p>Let&rsquo;s write a <em>correct</em> task</p>
@@ -248,8 +322,19 @@ Only later, when a task is invoked, it is <em>actually executed</em></p>
 Hello, World!
 </code></pre></div></section><section>
 <h2 id="gradle-configuration-vs-execution-3">Gradle: configuration vs execution</h2>
-<h3 id="why-two-separate-phases">Why two separate phases?</h3>
-<p>Delaying the actual execution allows for a more <em>fine grained configuration</em>
+<ul>
+<li>The <em>build configuration</em> happens <strong>first</strong>
+<ul>
+<li>Tasks and their dependencies are a <strong>result of the configuration</strong></li>
+</ul>
+</li>
+<li>The <em>task execution</em> happens <strong>later</strong>
+<ul>
+<li>As per the &ldquo;meta-lifecycle&rdquo; discussed before</li>
+</ul>
+</li>
+</ul>
+<p>Delaying the actual execution allows for a more <em>delayed configuration</em>
 <br>
 This will be especially useful when <em>modifying existing behavior</em></p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>tasks.<span style="color:#369">register</span>(<span style="color:#d20;background-color:#fff0f0">&#34;helloWorld&#34;</span>) {
