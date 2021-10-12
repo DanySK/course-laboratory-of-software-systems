@@ -1,8 +1,14 @@
-{{ $owner := .Get "owner" | default "DanySK" }}
-{{ $repo := .Get "repo" | default "Course-Laboratory-of-Software-Systems" }}
-{{ $path := .Get "path" | default "README.md" }}
-{{ $branch := .Get "branch" | default "master" }}
-
-<div class="gist" style="display: inline-block; width: fit-content; min-width: 25em;">
-    <script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2F{{ $owner }}%2F{{ $repo }}%2Fblob%2F{{ $branch }}%2F{{ $path }}{{ with .Get "slice" }}%23{{ . }}{{ end }}&style=googlecode&showBorder=on&showLineNumbers=on"></script>
-</div>
+{{- $owner := .Get "owner" | default "DanySK" -}}
+{{- $repo := .Get "repo" | default "Course-Laboratory-of-Software-Systems" -}}
+{{- $path := .Get "path" | default "README.md" -}}
+{{- $branch := .Get "branch" | default "master" -}}
+{{- $json := getJSON "https://api.github.com/repos/" $owner "/" $repo "/contents/" $path -}}
+{{- $content := $json.content | base64Decode | htmlUnescape -}}
+{{- $content := split $content "\n" -}}
+{{- $start := .Get "from" | default "1" | int | add -1 }}
+{{- $end := .Get "to" | default (len $content) | int }}
+{{- $end := sub $end $start }}
+{{- $content := after $start (first (add $start $end) $content) -}}
+{{- $content := delimit $content "\n" -}}
+{{- $language := .Get "language" | default (cond (or (strings.HasSuffix $path ".kt") (strings.HasSuffix $path ".kts")) "kotlin" "markdown") -}}
+{{- highlight ($content) ($language) "" -}}

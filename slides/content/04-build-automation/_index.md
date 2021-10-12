@@ -2029,49 +2029,13 @@ I produced a plugin that pre-configures `maven-publish` to point to Maven Centra
     * `MAVEN_CENTRAL_USERNAME`
     * `MAVEN_CENTRAL_PASSWORD`
 
-
-
-
 ---
 
 ## Preconfigured Central publication
 
-{{< github repo="publish-on-central" slice="L43-L45">}}
-<br>
-
----
-
-{{< github repo="publish-on-central" path="build.gradle.kts" slice="L21-L25">}}
-<br>
-{{< github repo="publish-on-central" path="build.gradle.kts" slice="L92-L117">}}
-
----
-
-# (Semi)Automatic updates
-
-We automated everything from source writing to delivery!
-<br>
-Yet there is a missing piece: we need to *fetch library updates manually*
-<br>
-Also, version numbers are strings scattered around our build file
-
-**Possible solution**
-
-A plugin that stores versions in a properties file, and fetches updates automatically: [refreshVersions](https://github.com/jmfayard/refreshVersions/)
-* The plugin is applied project-wise to the `settings.gradle.kts`
-```kotlin
-import de.fayard.refreshVersions.bootstrapRefreshVersions
-buildscript {
-    repositories { gradlePluginPortal() }
-    dependencies { classpath("de.fayard.refreshVersions:refreshVersions:0.9.5") }
-}
-bootstrapRefreshVersions()
-```
-* Hardcoded versions can get substitued with `_`
-* Hardcoded plugin versions can be removed
-* Adds task `refreshVersions` to update versions in `versions.properties`
-* *Note*: this plugin is *still in development*, your mileage may vary
-
+{{< github repo="publish-on-central" from=43 to=45 language="kotlin" >}}
+{{< github repo="publish-on-central" path="build.gradle.kts" from=21 to=25 >}}
+{{< github repo="publish-on-central" path="build.gradle.kts" from=92 to=117 >}}
 
 ---
 
@@ -2085,6 +2049,21 @@ In rich projects, most of the build-related issues are due to pesky stuff going 
 
 Gradle allows for **inspection** of the dependencies:
 * `./gradlew dependencies` prints the dependency trees for each configuration
+
+Inspecting multiple large trees can be difficult
+* A single dependency inspection is available
+* `./gradlew dependencyInsight --dependency <DepName> `
+    * Optionally, fiterable by configuration: `--configuration <ConfName>`
+
+---
+
+# Inspecting dependencies *among tasks*
+
+When developing plugins or rich builds, the issue of dependencies also affect **tasks**
+
+Gradle *does not* provide tools to ispect the task graph graphically, but a plugin exists.
+
+{{< github >}}
 
 Inspecting multiple large trees can be difficult
 * A single dependency inspection is available
