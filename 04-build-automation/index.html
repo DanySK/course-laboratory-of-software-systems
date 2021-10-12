@@ -1926,31 +1926,37 @@ publishing {
 </ul>
 </section><section>
 <h2 id="preconfigured-central-publication-1">Preconfigured Central publication</h2>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins {
-    `java`
-    <span style="color:#a61717;background-color:#e3d2d2">`</span>maven-publish<span style="color:#a61717;background-color:#e3d2d2">`</span>
-    `signing`
-    id (<span style="color:#d20;background-color:#fff0f0">&#34;org.danilopianini.publish-on-central&#34;</span>) version <span style="color:#d20;background-color:#fff0f0">&#34;0.3.0&#34;</span>
-}
-</code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>group = <span style="color:#d20;background-color:#fff0f0">&#34;your.group.id&#34;</span> <span style="color:#888">// This must be configured for the generated pom.xml to work correctly
-</span><span style="color:#888"></span>publishOnCentral {
-    projectDescription.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;description&#34;</span>) <span style="color:#888">// Defaults to &#34;No description provided&#34;
-</span><span style="color:#888"></span>    projectLongName.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;full project name&#34;</span>) <span style="color:#888">// Defaults to the project name
-</span><span style="color:#888"></span>    licenseName.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;your license&#34;</span>) <span style="color:#888">// Default &#34;Apache License, Version 2.0&#34;
-</span><span style="color:#888"></span>    licenseUrl.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;link to your license&#34;</span>) <span style="color:#888">// Default http://www.apache.org/licenses/LICENSE-2.0
-</span><span style="color:#888"></span>    projectUrl.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;website url&#34;</span>) <span style="color:#888">// Default &#34;https://github.com/DanySK/${project.name}&#34;
-</span><span style="color:#888"></span>    scmConnection.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;git:git@github.com:youruser/yourrepo&#34;</span>) <span style="color:#888">// Default &#34;git:git@github.com:DanySK/${project.name}&#34;
-</span><span style="color:#888"></span>}
-</code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>publishing {
-    publications { withType&lt;MavenPublication&gt; { pom { developers {
-        developer {
-            name.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;Danilo Pianini&#34;</span>)
-            email.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;danilo.pianini@gmail.com&#34;</span>)
-            url.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;http://www.danilopianini.org/&#34;</span>)
-        }
-    }}}}
-}
-</code></pre></div></section><section>
+<p>
+
+
+
+
+<div class="gist" style="display: inline-block; width: fit-content; min-width: 25em;">
+    <script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2FDanySK%2Fpublish-on-central%2Fblob%2Fmaster%2FREADME.md%23L43-L45&style=googlecode&showBorder=on&showLineNumbers=on"></script>
+</div>
+
+<br></p>
+</section><section>
+<p>
+
+
+
+
+<div class="gist" style="display: inline-block; width: fit-content; min-width: 25em;">
+    <script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2FDanySK%2Fpublish-on-central%2Fblob%2Fmaster%2Fbuild.gradle.kts%23L21-L25&style=googlecode&showBorder=on&showLineNumbers=on"></script>
+</div>
+
+<br>
+
+
+
+
+
+<div class="gist" style="display: inline-block; width: fit-content; min-width: 25em;">
+    <script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2FDanySK%2Fpublish-on-central%2Fblob%2Fmaster%2Fbuild.gradle.kts%23L92-L117&style=googlecode&showBorder=on&showLineNumbers=on"></script>
+</div>
+</p>
+</section><section>
 <h1 id="semiautomatic-updates">(Semi)Automatic updates</h1>
 <p>We automated everything from source writing to delivery!
 <br>
