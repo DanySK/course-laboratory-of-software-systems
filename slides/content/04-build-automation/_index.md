@@ -1997,7 +1997,7 @@ Requires some manual configuration:
 ```kotlin
 plugins { `maven-publish` }
 publishing {
-    repositories { maven { url = uri("https://oss.sonatype.org" } }
+    repositories { maven { url = uri("https://s01.oss.sonatype.org" } }
     publications {
         create<MavenPublication>("publicationName") {
             from(components["java"])
