@@ -1877,51 +1877,19 @@ Adds the `detekt` task, failing in case of violation
 
 ---
 
-# Detekt
-## Recommended configuration
+# DRY!
 
-```yaml
-comments:
-  EndOfSentenceFormat:
-    active: true
-  UndocumentedPublicClass:
-    active: true
-  UndocumentedPublicFunction:
-    active: true
-  UndocumentedPublicProperty:
-    active: true
-```
-```yaml
-complexity:
-  LongMethod:
-    active: false
-  LongParameterList:
-    active: false
-  NestedBlockDepth:
-    threshold: 5
-  TooManyFunctions:
-    ignoreDeprecated: true
-    ignorePrivate: true
-    ignoreOverridden: true
-    thresholdInInterfaces: 20
-```
----
+You know how to build and publish Gradle plugins: **factorize the common part!**
 
-# Detekt
-## Recommended configuration
+### Example: Preconfigured Kotlin QA
 
-```yaml
-naming:
-  MemberNameEqualsClassName:
-    active: false
-performance:
-  SpreadOperator:
-    active: false
-style:
-  MagicNumber:
-    ignoreNumbers: ['-2', '-1', '0', '0.5', '1', '2', '3', '4', '10', '360.0']
-  ForbiddenComment:
-    allowedPatterns: 'TODO:'
+```kotlin
+plugins {
+    // Just applies and pre-configures jacoco, detekt, and ktlint
+    id("org.danilopianini.gradle-kotlin-qa") version "0.2.1"
+    // Just applies and pre-configures jacoco, Spotbugs, PMD, and checkstyle
+    id("org.danilopianini.gradle-java-qa") version "0.2.1"
+}
 ```
 
 ---
