@@ -1851,17 +1851,16 @@ Adds the following tasks:
 # Detekt
 
 * Configurable static source code analyzer
-* Requires an external module *not found on Maven Central*
-    * If you are using JCenter, no worries
-    * Otherwise, you need to add it and whitelist the `detekt` configuration
 
 ```kotlin
 plugins {
     id("io.gitlab.arturbosch.detekt") version "1.14.1"
 }
+
 repositories {
-    jcenter { content { onlyForConfigurations("detekt") } } // configuration-based content filtering
+    mavenCentral()
 }
+
 dependencies {
     // Adds a configuration "detektPlugins"
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.14.1")
@@ -1923,6 +1922,11 @@ val javadocJar by tasks.registering(Jar::class) {
     archiveClassifier.set("javadoc")
     from(tasks.dokkaJavadoc.get().outputDirectory) // Automatically makes it depend on dokkaJavadoc
 }
+val sourceJar by tasks.registering(Jar::class) {
+    archiveClassifier.set("source")
+    from(tasks.compileKotlin.get().outputDirectory)
+    from(tasks.processResources.get().outputDirectory)
+}
 ```
 
 generates a jar file with classifier `javadoc` inside the `build/libs` folder
@@ -1954,7 +1958,7 @@ Once you have a key, you can use the `signing` plugin to have Gradle generate ar
 * "Old" deployment management, requires some machinery
 
 Other notable repositories:
-* *Bintray JCenter*: superset of Maven Central
+* ~~*Bintray JCenter*: superset of Maven Central~~ (**dismissed**)
 * *Jitpack*: code hosting with (semi-)automatic packaging
 * *NPM*: for Javascript code
 * *Pypy*: for Python code
