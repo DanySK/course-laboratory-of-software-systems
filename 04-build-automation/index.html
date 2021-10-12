@@ -1743,19 +1743,15 @@ Activating plugin it.unibo.lss2020.greetings-plugin version 0.1.0-archeo+ea6b9d7
 <h1 id="detekt">Detekt</h1>
 <ul>
 <li>Configurable static source code analyzer</li>
-<li>Requires an external module <em>not found on Maven Central</em>
-<ul>
-<li>If you are using JCenter, no worries</li>
-<li>Otherwise, you need to add it and whitelist the <code>detekt</code> configuration</li>
-</ul>
-</li>
 </ul>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins {
     id(<span style="color:#d20;background-color:#fff0f0">&#34;io.gitlab.arturbosch.detekt&#34;</span>) version <span style="color:#d20;background-color:#fff0f0">&#34;1.14.1&#34;</span>
 }
+
 repositories {
-    jcenter { content { onlyForConfigurations(<span style="color:#d20;background-color:#fff0f0">&#34;detekt&#34;</span>) } } <span style="color:#888">// configuration-based content filtering
-</span><span style="color:#888"></span>}
+    mavenCentral()
+}
+
 dependencies {
     <span style="color:#888">// Adds a configuration &#34;detektPlugins&#34;
 </span><span style="color:#888"></span>    detektPlugins(<span style="color:#d20;background-color:#fff0f0">&#34;io.gitlab.arturbosch.detekt:detekt-formatting:1.14.1&#34;</span>)
@@ -1808,6 +1804,11 @@ detekt {
     archiveClassifier.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;javadoc&#34;</span>)
     from(tasks.dokkaJavadoc.<span style="color:#080;font-weight:bold">get</span>().outputDirectory) <span style="color:#888">// Automatically makes it depend on dokkaJavadoc
 </span><span style="color:#888"></span>}
+<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">sourceJar</span> <span style="color:#080;font-weight:bold">by</span> tasks.registering(Jar::<span style="color:#080;font-weight:bold">class</span>) {
+    archiveClassifier.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;source&#34;</span>)
+    from(tasks.compileKotlin.<span style="color:#080;font-weight:bold">get</span>().outputDirectory)
+    from(tasks.processResources.<span style="color:#080;font-weight:bold">get</span>().outputDirectory)
+}
 </code></pre></div><p>generates a jar file with classifier <code>javadoc</code> inside the <code>build/libs</code> folder</p>
 </section><section>
 <h2 id="signing-artifacts">Signing artifacts</h2>
@@ -1838,7 +1839,7 @@ detekt {
 </ul>
 <p>Other notable repositories:</p>
 <ul>
-<li><em>Bintray JCenter</em>: superset of Maven Central</li>
+<li><del><em>Bintray JCenter</em>: superset of Maven Central</del> (<strong>dismissed</strong>)</li>
 <li><em>Jitpack</em>: code hosting with (semi-)automatic packaging</li>
 <li><em>NPM</em>: for Javascript code</li>
 <li><em>Pypy</em>: for Python code</li>
