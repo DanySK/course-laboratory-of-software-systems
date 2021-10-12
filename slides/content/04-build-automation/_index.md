@@ -2036,36 +2036,14 @@ I produced a plugin that pre-configures `maven-publish` to point to Maven Centra
 
 ## Preconfigured Central publication
 
-```kotlin
-plugins {
-    `java`
-    `maven-publish`
-    `signing`
-    id ("org.danilopianini.publish-on-central") version "0.3.0"
-}
-```
-```kotlin
-group = "your.group.id" // This must be configured for the generated pom.xml to work correctly
-publishOnCentral {
-    projectDescription.set("description") // Defaults to "No description provided"
-    projectLongName.set("full project name") // Defaults to the project name
-    licenseName.set("your license") // Default "Apache License, Version 2.0"
-    licenseUrl.set("link to your license") // Default http://www.apache.org/licenses/LICENSE-2.0
-    projectUrl.set("website url") // Default "https://github.com/DanySK/${project.name}"
-    scmConnection.set("git:git@github.com:youruser/yourrepo") // Default "git:git@github.com:DanySK/${project.name}"
-}
-```
-```kotlin
-publishing {
-    publications { withType<MavenPublication> { pom { developers {
-        developer {
-            name.set("Danilo Pianini")
-            email.set("danilo.pianini@gmail.com")
-            url.set("http://www.danilopianini.org/")
-        }
-    }}}}
-}
-```
+{{< github repo="publish-on-central" slice="L43-L45">}}
+<br>
+
+---
+
+{{< github repo="publish-on-central" path="build.gradle.kts" slice="L21-L25">}}
+<br>
+{{< github repo="publish-on-central" path="build.gradle.kts" slice="L92-L117">}}
 
 ---
 
