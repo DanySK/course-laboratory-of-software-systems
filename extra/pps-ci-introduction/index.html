@@ -801,15 +801,40 @@ from code to artifacts</p>
 </div>
 </section><section>
 <h2 id="actual-result">Actual result</h2>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>package it.unibo.ci;
+import com.uwetrottmann.thetvdb.TheTvdb;
+import org.apache.commons.io.IOUtils;
+import retrofit2.Response;
+import java.io.IOException;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.IntStream;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.jooq.lambda.Unchecked.intFunction;
 
+public final class PrintBreakingBad {
 
+    private PrintBreakingBad() { }
 
-
-
-<div class="gist" style="display: inline-block; width: fit-content; min-width: 25em;">
-    <script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2FAPICe-at-DISI%2FPPS-ci-examples%2Fblob%2Fmaster%2F01-dependencies%2fsrc%2fmain%2fjava%2fit%2funibo%2fci%2fPrintBreakingBad.java&style=googlecode&showBorder=on&showLineNumbers=on"></script>
-</div>
-
+    public static void main(String... args) throws IOException {
+        final TheTvdb api = new TheTvdb(IOUtils.toString(ClassLoader.getSystemResource(&#34;APIKey&#34;), UTF_8));
+        Optional.of(api.search().series(&#34;Breaking Bad&#34;, null, null, null, &#34;it&#34;).execute())
+            .filter(Response::isSuccessful)
+            .flatMap(response -&gt; response.body().data.stream().findFirst())
+            .stream()
+            .flatMap(serie -&gt; // Every serie becomes a stream of pages
+                IntStream.iterate(1, it -&gt; it + 1)
+                    .mapToObj(intFunction(page -&gt; api.series().episodes(serie.id, page, &#34;it&#34;).execute()))
+                    .takeWhile(Response::isSuccessful)
+            )
+            .flatMap(it -&gt; it.body().data.stream()) // every page becomes a stream of episodes
+            .map(it -&gt; it.episodeName)
+            .filter(Objects::nonNull)
+            .forEach(System.out::println);
+        System.exit(0);
+    }
+}
+</code></pre></div>
 </section><section>
 <h2 id="the-trick-using-a-few-libraries">The trick: using a few libraries</h2>
 <ul>
@@ -969,25 +994,17 @@ from code to artifacts</p>
 </code></pre></div></section><section>
 <h2 id="gradle-minimal-java-build-1">Gradle: minimal java build</h2>
 <p><code>src/main/java/HelloWorld.java</code></p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>public class HelloWorld {
 
-
-
-
-
-<div class="gist" style="display: inline-block; width: fit-content; min-width: 25em;">
-    <script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2FAPICe-at-DISI%2FPPS-ci-examples%2Fblob%2Fmaster%2F00-minimal%2fsrc%2fmain%2fjava%2fHelloWorld.java&style=googlecode&showBorder=on&showLineNumbers=on"></script>
-</div>
-
+    public static void main(String... args) {
+        System.out.println(&#34;Hello, world!&#34;);
+    }
+    
+}
+</code></pre></div>
 <p><code>build.gradle.kts</code></p>
-
-
-
-
-
-<div class="gist" style="display: inline-block; width: fit-content; min-width: 25em;">
-    <script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2FAPICe-at-DISI%2FPPS-ci-examples%2Fblob%2Fmaster%2F00-minimal%2fbuild.gradle.kts&style=googlecode&showBorder=on&showLineNumbers=on"></script>
-</div>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins { java }
+</code></pre></div>
 <p>Yes, it&rsquo;s a one-liner</p>
 </section><section>
 <h2 id="gradle-minimal-example-execution">Gradle: minimal example execution</h2>
@@ -1086,37 +1103,62 @@ from code to artifacts</p>
 </section><section>
 <h2 id="gradle-our-toy-example">Gradle: our toy example</h2>
 <p><code>src/main/java/it/unibo/ci/PrintBreakingBad.java</code></p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>package it.unibo.ci;
+import com.uwetrottmann.thetvdb.TheTvdb;
+import org.apache.commons.io.IOUtils;
+import retrofit2.Response;
+import java.io.IOException;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.IntStream;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.jooq.lambda.Unchecked.intFunction;
 
+public final class PrintBreakingBad {
 
+    private PrintBreakingBad() { }
 
-
-
-<div class="gist" style="display: inline-block; width: fit-content; min-width: 25em;">
-    <script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2FAPICe-at-DISI%2FPPS-ci-examples%2Fblob%2Fmaster%2F01-dependencies%2fsrc%2fmain%2fjava%2fit%2funibo%2fci%2fPrintBreakingBad.java&style=googlecode&showBorder=on&showLineNumbers=on"></script>
-</div>
-
+    public static void main(String... args) throws IOException {
+        final TheTvdb api = new TheTvdb(IOUtils.toString(ClassLoader.getSystemResource(&#34;APIKey&#34;), UTF_8));
+        Optional.of(api.search().series(&#34;Breaking Bad&#34;, null, null, null, &#34;it&#34;).execute())
+            .filter(Response::isSuccessful)
+            .flatMap(response -&gt; response.body().data.stream().findFirst())
+            .stream()
+            .flatMap(serie -&gt; // Every serie becomes a stream of pages
+                IntStream.iterate(1, it -&gt; it + 1)
+                    .mapToObj(intFunction(page -&gt; api.series().episodes(serie.id, page, &#34;it&#34;).execute()))
+                    .takeWhile(Response::isSuccessful)
+            )
+            .flatMap(it -&gt; it.body().data.stream()) // every page becomes a stream of episodes
+            .map(it -&gt; it.episodeName)
+            .filter(Objects::nonNull)
+            .forEach(System.out::println);
+        System.exit(0);
+    }
+}
+</code></pre></div>
 </section><section>
 <h2 id="gradle-our-toy-example-1">Gradle: our toy example</h2>
 <p><code>build.gradle.kts</code></p>
-
-
-
-
-
-<div class="gist" style="display: inline-block; width: fit-content; min-width: 25em;">
-    <script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2FAPICe-at-DISI%2FPPS-ci-examples%2Fblob%2Fmaster%2F01-dependencies%2fbuild.gradle.kts&style=googlecode&showBorder=on&showLineNumbers=on"></script>
-</div>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins {
+    java
+    application
+}
+repositories {
+    mavenCentral()
+}
+dependencies {
+    implementation(<span style="color:#d20;background-color:#fff0f0">&#34;commons-io:commons-io:+&#34;</span>)
+    implementation(<span style="color:#d20;background-color:#fff0f0">&#34;com.uwetrottmann.thetvdb-java:thetvdb-java:+&#34;</span>)
+    implementation(<span style="color:#d20;background-color:#fff0f0">&#34;org.jooq:jool-java-8:+&#34;</span>)
+}
+application {
+    mainClassName = <span style="color:#d20;background-color:#fff0f0">&#34;it.unibo.ci.PrintBreakingBad&#34;</span> 
+}
+</code></pre></div>
 <p><code>settings.gradle.kts</code></p>
-
-
-
-
-
-<div class="gist" style="display: inline-block; width: fit-content; min-width: 25em;">
-    <script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2FAPICe-at-DISI%2FPPS-ci-examples%2Fblob%2Fmaster%2F01-dependencies%2fsettings.gradle.kts&style=googlecode&showBorder=on&showLineNumbers=on"></script>
-</div>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>rootProject.name = <span style="color:#d20;background-color:#fff0f0">&#34;dependency-management&#34;</span>
+</code></pre></div>
 </section><section>
 <h2 id="gradle-toy-example-execution">Gradle: toy example execution</h2>
 <ul>
@@ -1132,59 +1174,48 @@ from code to artifacts</p>
 </section><section>
 <h2 id="gradle-multi-language-projects">Gradle: multi-language projects</h2>
 <p><code>src/main/groovy/HelloGroovy.groovy</code></p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>println &#34;Hello, Groovy&#34;
 
-
-
-
-
-<div class="gist" style="display: inline-block; width: fit-content; min-width: 25em;">
-    <script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2FAPICe-at-DISI%2FPPS-ci-examples%2Fblob%2Fmaster%2F02-multilang%2fsrc%2fmain%2fgroovy%2fHelloGroovy.groovy&style=googlecode&showBorder=on&showLineNumbers=on"></script>
-</div>
-
+</code></pre></div>
 <p><code>src/main/java/HelloWorld.java</code></p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>public class HelloWorld {
 
-
-
-
-
-<div class="gist" style="display: inline-block; width: fit-content; min-width: 25em;">
-    <script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2FAPICe-at-DISI%2FPPS-ci-examples%2Fblob%2Fmaster%2F02-multilang%2fsrc%2fmain%2fjava%2fHelloWorld.java&style=googlecode&showBorder=on&showLineNumbers=on"></script>
-</div>
-
+    public static void main(String... args) {
+        System.out.println(&#34;Hello, world!&#34;);
+    }
+    
+}
+</code></pre></div>
 </section><section>
 <h2 id="gradle-multi-language-projects-1">Gradle: multi-language projects</h2>
 <p><code>src/main/kotlin/HelloKt.kt</code></p>
-
-
-
-
-
-<div class="gist" style="display: inline-block; width: fit-content; min-width: 25em;">
-    <script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2FAPICe-at-DISI%2FPPS-ci-examples%2Fblob%2Fmaster%2F02-multilang%2fsrc%2fmain%2fkotlin%2fHelloKt.kt&style=googlecode&showBorder=on&showLineNumbers=on"></script>
-</div>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">main</span>() { 
+  println(<span style="color:#d20;background-color:#fff0f0">&#34;Hello, world!&#34;</span>) 
+}
+</code></pre></div>
 <p><code>src/main/scala/HelloScala.scala</code></p>
-
-
-
-
-
-<div class="gist" style="display: inline-block; width: fit-content; min-width: 25em;">
-    <script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2FAPICe-at-DISI%2FPPS-ci-examples%2Fblob%2Fmaster%2F02-multilang%2fsrc%2fmain%2fscala%2fHelloScala.scala&style=googlecode&showBorder=on&showLineNumbers=on"></script>
-</div>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>object HelloScala extends App  {
+    println(&#34;Hello Scala&#34;)
+}
+</code></pre></div>
 </section><section>
 <h2 id="gradle-multi-language-projects-2">Gradle: multi-language projects</h2>
 <p><code>build.gradle.kts</code></p>
-
-
-
-
-
-<div class="gist" style="display: inline-block; width: fit-content; min-width: 25em;">
-    <script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2FAPICe-at-DISI%2FPPS-ci-examples%2Fblob%2Fmaster%2F02-multilang%2fbuild.gradle.kts&style=googlecode&showBorder=on&showLineNumbers=on"></script>
-</div>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins {
+    java
+    scala
+    groovy
+    kotlin(<span style="color:#d20;background-color:#fff0f0">&#34;jvm&#34;</span>) version <span style="color:#d20;background-color:#fff0f0">&#34;1.3.31&#34;</span>
+}
+repositories {
+    mavenCentral()
+}
+dependencies {
+    implementation(<span style="color:#d20;background-color:#fff0f0">&#34;org.codehaus.groovy:groovy:2.3.7&#34;</span>)
+    implementation(kotlin(<span style="color:#d20;background-color:#fff0f0">&#34;stdlib&#34;</span>))
+    implementation(<span style="color:#d20;background-color:#fff0f0">&#34;org.scala-lang:scala-library:2.12.2&#34;</span>)
+}
+</code></pre></div>
 </section><section>
 <h1 id="quality-assurance">Quality Assurance</h1>
 <p><em>&ldquo;It works&rdquo;</em> <strong>is <em>not</em> good enough</strong></p>
@@ -1287,76 +1318,128 @@ from code to artifacts</p>
 </section><section>
 <h2 id="quality-assurance-junit--gradle">Quality Assurance: JUnit + Gradle</h2>
 <p><code>src/main/scala/it/unibo/test/Test.scala</code></p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>package it.unibo.test
 
+trait Sometrait {
+  def f: Int
+  def g: Int
+}
 
-
-
-
-<div class="gist" style="display: inline-block; width: fit-content; min-width: 25em;">
-    <script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2FAPICe-at-DISI%2FPPS-ci-examples%2Fblob%2Fmaster%2F04-junit%2fsrc%2fmain%2fscala%2fit%2funibo%2ftest%2fTest.scala&style=googlecode&showBorder=on&showLineNumbers=on"></script>
-</div>
-
+object Someobject {
+  def f = 10
+  def g = 77
+}
+</code></pre></div>
 </section><section>
 <h2 id="quality-assurance-junit--gradle-1">Quality Assurance: JUnit + Gradle</h2>
 <p><code>src/test/scala/MyTest.scala</code></p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>import it.unibo.test.{Someobject, Sometrait}
+import org.junit.jupiter.api.Assertions._
+import org.junit.jupiter.api.Test
 
+class MyTest {
 
+  @Test
+  def emptySetShouldHaveSizeZero(): Unit = {
+    assertEquals(0, Set.empty.size)
+  }
 
-
-
-<div class="gist" style="display: inline-block; width: fit-content; min-width: 25em;">
-    <script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2FAPICe-at-DISI%2FPPS-ci-examples%2Fblob%2Fmaster%2F04-junit%2fsrc%2ftest%2fscala%2fMyTest.scala&style=googlecode&showBorder=on&showLineNumbers=on"></script>
-</div>
-
+  @Test
+  def thisTestIsActuallyUseless(): Unit = {
+    val someStub = new Sometrait {
+      override def f: Int = 42
+      override def g: Int = ???
+    }
+    assertEquals(42, someStub.f)
+    assertNotEquals(Someobject.f, someStub.f)
+  }
+}
+</code></pre></div>
 </section><section>
 <h2 id="quality-assurance-junit--gradle-2">Quality Assurance: JUnit + Gradle</h2>
 <p><code>build.gradle.kts</code></p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins {
+    java
+    scala
+    jacoco
+}
 
+repositories {
+    mavenCentral()
+}
 
+dependencies {
+    implementation(<span style="color:#d20;background-color:#fff0f0">&#34;org.scala-lang:scala-library:+&#34;</span>)
+    testImplementation(<span style="color:#d20;background-color:#fff0f0">&#34;org.junit.jupiter:junit-jupiter-api:+&#34;</span>)
+    testRuntimeOnly(<span style="color:#d20;background-color:#fff0f0">&#34;org.junit.jupiter:junit-jupiter-engine:+&#34;</span>)
+}
 
-
-
-<div class="gist" style="display: inline-block; width: fit-content; min-width: 25em;">
-    <script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2FAPICe-at-DISI%2FPPS-ci-examples%2Fblob%2Fmaster%2F04-junit%2fbuild.gradle.kts&style=googlecode&showBorder=on&showLineNumbers=on"></script>
-</div>
-
+<span style="color:#888">// Enables JUnit Platform (needed for JUnit 5)
+</span><span style="color:#888"></span>tasks.named&lt;Test&gt;(<span style="color:#d20;background-color:#fff0f0">&#34;test&#34;</span>) {
+    useJUnitPlatform()
+}
+</code></pre></div>
 </section><section>
 <h2 id="quality-assurance-scalatest--scoverage">Quality Assurance: Scalatest + Scoverage</h2>
 <p>Let&rsquo;s switch <em>testing framework</em> and enable <em>coverage</em></p>
 <p><code>src/main/scala/it/unibo/test/Test.scala</code></p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>package it.unibo.test
 
+trait Sometrait {
+  def f: Int
+  def g: Int
+}
 
-
-
-
-<div class="gist" style="display: inline-block; width: fit-content; min-width: 25em;">
-    <script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2FAPICe-at-DISI%2FPPS-ci-examples%2Fblob%2Fmaster%2F03-scalatest%2fsrc%2fmain%2fscala%2fit%2funibo%2ftest%2fTest.scala&style=googlecode&showBorder=on&showLineNumbers=on"></script>
-</div>
-
+object Someobject {
+  def f = 10
+  def g = 77
+}
+</code></pre></div>
 </section><section>
 <h2 id="quality-assurance-scalatest--scoverage-1">Quality Assurance: Scalatest + Scoverage</h2>
 <p><code>src/test/scala/Test.scala</code></p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>import it.unibo.test.Sometrait
+import org.scalamock.scalatest.MockFactory
+import org.scalatest.funsuite.AnyFunSuite
 
-
-
-
-
-<div class="gist" style="display: inline-block; width: fit-content; min-width: 25em;">
-    <script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2FAPICe-at-DISI%2FPPS-ci-examples%2Fblob%2Fmaster%2F03-scalatest%2fsrc%2ftest%2fscala%2fTest.scala&style=googlecode&showBorder=on&showLineNumbers=on"></script>
-</div>
-
+class MyTests extends AnyFunSuite with MockFactory {
+  test(&#34;An empty Set should have size 0&#34;) {
+    println(&#34;Test1&#34;)
+    assert(Set.empty.size == 0)
+  }
+  test(&#34;Some useless test&#34;) {
+    println(&#34;Test2&#34;)
+    val someStub = stub[Sometrait]
+    (someStub.f _).when().returns(42)
+    assert(someStub.f == 42)
+  }
+}
+</code></pre></div>
 </section><section>
 <h2 id="quality-assurance-scalatest--scoverage-2">Quality Assurance: Scalatest + Scoverage</h2>
 <p><code>build.gradle.kts</code></p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins {
+    java
+    scala
+    id(<span style="color:#d20;background-color:#fff0f0">&#34;org.scoverage&#34;</span>) version <span style="color:#d20;background-color:#fff0f0">&#34;5.0.0&#34;</span>
+    id(<span style="color:#d20;background-color:#fff0f0">&#34;com.github.maiflai.scalatest&#34;</span>) version <span style="color:#d20;background-color:#fff0f0">&#34;0.31&#34;</span>
+}
 
+repositories {
+    mavenCentral()
+}
 
+dependencies {
+    implementation(<span style="color:#d20;background-color:#fff0f0">&#34;org.scala-lang:scala-library:+&#34;</span>)
+    testImplementation(<span style="color:#d20;background-color:#fff0f0">&#34;org.scalatest:scalatest_2.13:+&#34;</span>)
+    testImplementation(<span style="color:#d20;background-color:#fff0f0">&#34;org.scalamock:scalamock_2.13:+&#34;</span>)
+    testRuntimeOnly(<span style="color:#d20;background-color:#fff0f0">&#34;com.vladsch.flexmark:flexmark-profile-pegdown:0.36.8&#34;</span>)
+    scoverage(<span style="color:#d20;background-color:#fff0f0">&#34;org.scoverage:scalac-scoverage-plugin_2.13:+&#34;</span>)
+    scoverage(<span style="color:#d20;background-color:#fff0f0">&#34;org.scoverage:scalac-scoverage-runtime_2.13:+&#34;</span>)
+}
 
-
-
-<div class="gist" style="display: inline-block; width: fit-content; min-width: 25em;">
-    <script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2FAPICe-at-DISI%2FPPS-ci-examples%2Fblob%2Fmaster%2F03-scalatest%2fbuild.gradle.kts&style=googlecode&showBorder=on&showLineNumbers=on"></script>
-</div>
-
+<span style="color:#888">// gradle clean reportScoverage
+</span></code></pre></div>
 </section><section>
 <h2 id="gradle-qa-execution">Gradle: QA execution</h2>
 <ul>

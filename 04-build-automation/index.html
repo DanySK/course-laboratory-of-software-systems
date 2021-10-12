@@ -1481,38 +1481,351 @@ runner.output shouldContain <span style="color:#d20;background-color:#fff0f0">&#
 <li>the <code>build.gradle.kts</code> file (they are API, of course)</li>
 <li>a <a href="https://github.com/toml-lang/toml">TOML</a> configuration file (default: <code>gradle/libs.versions.toml</code>)</li>
 </ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>[versions]
+konf = &#34;1.1.2&#34;
+kotest = &#34;4.6.3&#34;
+kotlin = &#34;1.5.31&#34;
+mockito = &#34;4.0.0&#34;
 
+[libraries]
+classgraph = &#34;io.github.classgraph:classgraph:4.8.126&#34;
+konf-yaml = { module = &#34;com.uchuhimo:konf-yaml&#34;, version.ref = &#34;konf&#34; }
+kotest-junit5-jvm = { module = &#34;io.kotest:kotest-runner-junit5-jvm&#34;, version.ref = &#34;kotest&#34; }
+kotest-assertions-core-jvm = { module = &#34;io.kotest:kotest-assertions-core-jvm&#34;, version.ref = &#34;kotest&#34; }
+mockito-core = { module = &#34;org.mockito:mockito-core&#34;, version.ref = &#34;mockito&#34; }
 
+[bundles]
+kotlin-testing = [ &#34;kotest-junit5-jvm&#34;, &#34;kotest-assertions-core-jvm&#34;, &#34;mockito-core&#34; ]
 
-
-
-<div class="gist" style="display: inline-block; width: fit-content; min-width: 25em;">
-    <script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2FDanySK%2FTemplate-for-Gradle-Plugins%2Fblob%2Fmaster%2Fgradle%2flibs.versions.toml&style=googlecode&showBorder=on&showLineNumbers=on"></script>
-</div>
-
+[plugins]
+dokka = { id = &#34;org.jetbrains.dokka&#34;, version.ref = &#34;kotlin&#34; }
+gitSemVer = { id = &#34;org.danilopianini.git-sensitive-semantic-versioning&#34;, version = &#34;0.3.0&#34; }
+gradlePluginPublish = { id = &#34;com.gradle.plugin-publish&#34;, version = &#34;0.16.0&#34; }
+kotlin-jvm = { id = &#34;org.jetbrains.kotlin.jvm&#34;, version.ref = &#34;kotlin&#34; }
+kotlin-qa = { id = &#34;org.danilopianini.gradle-kotlin-qa&#34;, version = &#34;0.2.1&#34; }
+multiJvmTesting = { id = &#34;org.danilopianini.multi-jvm-test-plugin&#34;, version = &#34;0.1.0&#34; }
+publishOnCentral = { id = &#34;org.danilopianini.publish-on-central&#34;, version = &#34;0.6.1&#34; }
+taskTree = { id = &#34;com.dorongold.task-tree&#34;, version = &#34;2.1.0&#34; }
+</code></pre></div>
 <ul>
 <li>Gradle auto-generates <em>type-safe accessors</em> for the definitions</li>
 </ul>
 </section><section>
 <h2 id="using-the-default-catalog">Using the default catalog</h2>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.jetbrains.kotlin.config.KotlinCompilerVersion.VERSION</span> <span style="color:#080;font-weight:bold">as</span> KOTLIN_VERSION
 
+@Suppress(<span style="color:#d20;background-color:#fff0f0">&#34;DSL_SCOPE_VIOLATION&#34;</span>)
+plugins {
+    <span style="color:#a61717;background-color:#e3d2d2">`</span>java-gradle-plugin<span style="color:#a61717;background-color:#e3d2d2">`</span>
+    alias(libs.plugins.dokka)
+    alias(libs.plugins.gitSemVer)
+    alias(libs.plugins.gradlePluginPublish)
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlin.qa)
+    alias(libs.plugins.publishOnCentral)
+    alias(libs.plugins.multiJvmTesting)
+    alias(libs.plugins.taskTree)
+}
 
+<span style="color:#888">/*
+</span><span style="color:#888"> * Project information
+</span><span style="color:#888"> */</span>
+group = <span style="color:#d20;background-color:#fff0f0">&#34;org.danilopianini&#34;</span>
+description = <span style="color:#d20;background-color:#fff0f0">&#34;A template repository for kickstarting Gradle Plugins&#34;</span>
+<span style="color:#080;font-weight:bold">inner</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ProjectInfo</span> {
+    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">longName</span> = <span style="color:#d20;background-color:#fff0f0">&#34;Template for Gradle Plugins&#34;</span>
+    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">website</span> = <span style="color:#d20;background-color:#fff0f0">&#34;https://github.com/DanySK/$name&#34;</span>
+    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">scm</span> = <span style="color:#d20;background-color:#fff0f0">&#34;git@github.com:DanySK/$name.git&#34;</span>
+    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">pluginImplementationClass</span> = <span style="color:#d20;background-color:#fff0f0">&#34;$group.template.HelloGradle&#34;</span>
+    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">tags</span> = listOf(<span style="color:#d20;background-color:#fff0f0">&#34;template&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;kickstart&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;example&#34;</span>)
+}
+<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">info</span> = ProjectInfo()
 
+gitSemVer {
+    buildMetadataSeparator.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;-&#34;</span>)
+}
 
+repositories {
+    mavenCentral()
+}
 
-<div class="gist" style="display: inline-block; width: fit-content; min-width: 25em;">
-    <script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2FDanySK%2FTemplate-for-Gradle-Plugins%2Fblob%2Fmaster%2Fbuild.gradle.kts%23L4-L14&style=googlecode&showBorder=on&showLineNumbers=on"></script>
-</div>
+multiJvm {
+    maximumSupportedJvmVersion.<span style="color:#080;font-weight:bold">set</span>(latestJavaSupportedByGradle)
+}
 
+<span style="color:#888">/*
+</span><span style="color:#888"> * By default, Gradle does not include all the plugin classpath into the testing classpath.
+</span><span style="color:#888"> * This task creates a descriptor of the runtime classpath, to be injected (manually) when running tests.
+</span><span style="color:#888"> */</span>
+<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">createClasspathManifest</span> = tasks.register(<span style="color:#d20;background-color:#fff0f0">&#34;createClasspathManifest&#34;</span>) {
+    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">outputDir</span> = file(<span style="color:#d20;background-color:#fff0f0">&#34;$buildDir/$name&#34;</span>)
+    inputs.files(sourceSets.main.<span style="color:#080;font-weight:bold">get</span>().runtimeClasspath)
+    outputs.dir(outputDir)
+    doLast {
+        outputDir.mkdirs()
+        file(<span style="color:#d20;background-color:#fff0f0">&#34;$outputDir/plugin-classpath.txt&#34;</span>).writeText(sourceSets.main.<span style="color:#080;font-weight:bold">get</span>().runtimeClasspath.joinToString(<span style="color:#d20;background-color:#fff0f0">&#34;\n&#34;</span>))
+    }
+}
 
+tasks.withType&lt;Test&gt; {
+    dependsOn(createClasspathManifest)
+}
 
+dependencies {
+    api(gradleApi())
+    api(gradleKotlinDsl())
+    implementation(kotlin(<span style="color:#d20;background-color:#fff0f0">&#34;stdlib-jdk8&#34;</span>))
+    testImplementation(gradleTestKit())
+    testImplementation(libs.konf.yaml)
+    testImplementation(libs.classgraph)
+    testImplementation(libs.bundles.kotlin.testing)
+    testRuntimeOnly(files(createClasspathManifest))
+}
 
+<span style="color:#888">// Enforce Kotlin version coherence
+</span><span style="color:#888"></span>configurations.all {
+    resolutionStrategy.eachDependency {
+        <span style="color:#080;font-weight:bold">if</span> (requested.group == <span style="color:#d20;background-color:#fff0f0">&#34;org.jetbrains.kotlin&#34;</span> &amp;&amp; requested.name.startsWith(<span style="color:#d20;background-color:#fff0f0">&#34;kotlin&#34;</span>)) {
+            useVersion(KOTLIN_VERSION)
+            because(<span style="color:#d20;background-color:#fff0f0">&#34;All Kotlin modules should use the same version, and compiler uses $KOTLIN_VERSION&#34;</span>)
+        }
+    }
+}
 
+kotlin {
+    target {
+        compilations.all {
+            kotlinOptions {
+                allWarningsAsErrors = <span style="color:#080;font-weight:bold">true</span>
+                freeCompilerArgs = listOf(<span style="color:#d20;background-color:#fff0f0">&#34;-XXLanguage:+InlineClasses&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;-Xopt-in=kotlin.RequiresOptIn&#34;</span>)
+            }
+        }
+    }
+}
 
-<div class="gist" style="display: inline-block; width: fit-content; min-width: 25em;">
-    <script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2FDanySK%2FTemplate-for-Gradle-Plugins%2Fblob%2Fmaster%2Fbuild.gradle.kts%23L60-L69&style=googlecode&showBorder=on&showLineNumbers=on"></script>
-</div>
+tasks.withType&lt;Test&gt; {
+    useJUnitPlatform()
+    testLogging {
+        showStandardStreams = <span style="color:#080;font-weight:bold">true</span>
+        showCauses = <span style="color:#080;font-weight:bold">true</span>
+        showStackTraces = <span style="color:#080;font-weight:bold">true</span>
+        events(*org.gradle.api.tasks.testing.logging.TestLogEvent.values())
+        exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+    }
+}
 
+signing {
+    <span style="color:#080;font-weight:bold">if</span> (System.getenv()[<span style="color:#d20;background-color:#fff0f0">&#34;CI&#34;</span>].equals(<span style="color:#d20;background-color:#fff0f0">&#34;true&#34;</span>, ignoreCase = <span style="color:#080;font-weight:bold">true</span>)) {
+        <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">signingKey</span>: String? <span style="color:#080;font-weight:bold">by</span> project
+        <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">signingPassword</span>: String? <span style="color:#080;font-weight:bold">by</span> project
+        useInMemoryPgpKeys(signingKey, signingPassword)
+    }
+}
+
+<span style="color:#888">/*
+</span><span style="color:#888"> * Publication on Maven Central and the Plugin portal
+</span><span style="color:#888"> */</span>
+publishOnCentral {
+    projectLongName = info.longName
+    projectDescription = description ?: TODO(<span style="color:#d20;background-color:#fff0f0">&#34;Missing description&#34;</span>)
+    projectUrl = info.website
+    scmConnection = info.scm
+    repository(<span style="color:#d20;background-color:#fff0f0">&#34;https://maven.pkg.github.com/DanySK/${rootProject.name}&#34;</span>.toLowerCase(), name = <span style="color:#d20;background-color:#fff0f0">&#34;github&#34;</span>) {
+        user = <span style="color:#d20;background-color:#fff0f0">&#34;danysk&#34;</span>
+        password = System.getenv(<span style="color:#d20;background-color:#fff0f0">&#34;GITHUB_TOKEN&#34;</span>)
+    }
+    publishing {
+        publications {
+            withType&lt;MavenPublication&gt; {
+                configurePomForMavenCentral()
+                pom {
+                    developers {
+                        developer {
+                            name.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;Danilo Pianini&#34;</span>)
+                            email.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;danilo.pianini@gmail.com&#34;</span>)
+                            url.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;http://www.danilopianini.org/&#34;</span>)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+pluginBundle {
+    website = info.website
+    vcsUrl = info.website
+    tags = info.tags
+}
+
+gradlePlugin {
+    plugins {
+        create(<span style="color:#d20;background-color:#fff0f0">&#34;plugin-template&#34;</span>) {
+            id = <span style="color:#d20;background-color:#fff0f0">&#34;$group.${project.name}&#34;</span>
+            displayName = info.longName
+            description = project.description
+            implementationClass = info.pluginImplementationClass
+        }
+    }
+}
+</code></pre></div>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.jetbrains.kotlin.config.KotlinCompilerVersion.VERSION</span> <span style="color:#080;font-weight:bold">as</span> KOTLIN_VERSION
+
+@Suppress(<span style="color:#d20;background-color:#fff0f0">&#34;DSL_SCOPE_VIOLATION&#34;</span>)
+plugins {
+    <span style="color:#a61717;background-color:#e3d2d2">`</span>java-gradle-plugin<span style="color:#a61717;background-color:#e3d2d2">`</span>
+    alias(libs.plugins.dokka)
+    alias(libs.plugins.gitSemVer)
+    alias(libs.plugins.gradlePluginPublish)
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlin.qa)
+    alias(libs.plugins.publishOnCentral)
+    alias(libs.plugins.multiJvmTesting)
+    alias(libs.plugins.taskTree)
+}
+
+<span style="color:#888">/*
+</span><span style="color:#888"> * Project information
+</span><span style="color:#888"> */</span>
+group = <span style="color:#d20;background-color:#fff0f0">&#34;org.danilopianini&#34;</span>
+description = <span style="color:#d20;background-color:#fff0f0">&#34;A template repository for kickstarting Gradle Plugins&#34;</span>
+<span style="color:#080;font-weight:bold">inner</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ProjectInfo</span> {
+    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">longName</span> = <span style="color:#d20;background-color:#fff0f0">&#34;Template for Gradle Plugins&#34;</span>
+    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">website</span> = <span style="color:#d20;background-color:#fff0f0">&#34;https://github.com/DanySK/$name&#34;</span>
+    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">scm</span> = <span style="color:#d20;background-color:#fff0f0">&#34;git@github.com:DanySK/$name.git&#34;</span>
+    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">pluginImplementationClass</span> = <span style="color:#d20;background-color:#fff0f0">&#34;$group.template.HelloGradle&#34;</span>
+    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">tags</span> = listOf(<span style="color:#d20;background-color:#fff0f0">&#34;template&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;kickstart&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;example&#34;</span>)
+}
+<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">info</span> = ProjectInfo()
+
+gitSemVer {
+    buildMetadataSeparator.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;-&#34;</span>)
+}
+
+repositories {
+    mavenCentral()
+}
+
+multiJvm {
+    maximumSupportedJvmVersion.<span style="color:#080;font-weight:bold">set</span>(latestJavaSupportedByGradle)
+}
+
+<span style="color:#888">/*
+</span><span style="color:#888"> * By default, Gradle does not include all the plugin classpath into the testing classpath.
+</span><span style="color:#888"> * This task creates a descriptor of the runtime classpath, to be injected (manually) when running tests.
+</span><span style="color:#888"> */</span>
+<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">createClasspathManifest</span> = tasks.register(<span style="color:#d20;background-color:#fff0f0">&#34;createClasspathManifest&#34;</span>) {
+    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">outputDir</span> = file(<span style="color:#d20;background-color:#fff0f0">&#34;$buildDir/$name&#34;</span>)
+    inputs.files(sourceSets.main.<span style="color:#080;font-weight:bold">get</span>().runtimeClasspath)
+    outputs.dir(outputDir)
+    doLast {
+        outputDir.mkdirs()
+        file(<span style="color:#d20;background-color:#fff0f0">&#34;$outputDir/plugin-classpath.txt&#34;</span>).writeText(sourceSets.main.<span style="color:#080;font-weight:bold">get</span>().runtimeClasspath.joinToString(<span style="color:#d20;background-color:#fff0f0">&#34;\n&#34;</span>))
+    }
+}
+
+tasks.withType&lt;Test&gt; {
+    dependsOn(createClasspathManifest)
+}
+
+dependencies {
+    api(gradleApi())
+    api(gradleKotlinDsl())
+    implementation(kotlin(<span style="color:#d20;background-color:#fff0f0">&#34;stdlib-jdk8&#34;</span>))
+    testImplementation(gradleTestKit())
+    testImplementation(libs.konf.yaml)
+    testImplementation(libs.classgraph)
+    testImplementation(libs.bundles.kotlin.testing)
+    testRuntimeOnly(files(createClasspathManifest))
+}
+
+<span style="color:#888">// Enforce Kotlin version coherence
+</span><span style="color:#888"></span>configurations.all {
+    resolutionStrategy.eachDependency {
+        <span style="color:#080;font-weight:bold">if</span> (requested.group == <span style="color:#d20;background-color:#fff0f0">&#34;org.jetbrains.kotlin&#34;</span> &amp;&amp; requested.name.startsWith(<span style="color:#d20;background-color:#fff0f0">&#34;kotlin&#34;</span>)) {
+            useVersion(KOTLIN_VERSION)
+            because(<span style="color:#d20;background-color:#fff0f0">&#34;All Kotlin modules should use the same version, and compiler uses $KOTLIN_VERSION&#34;</span>)
+        }
+    }
+}
+
+kotlin {
+    target {
+        compilations.all {
+            kotlinOptions {
+                allWarningsAsErrors = <span style="color:#080;font-weight:bold">true</span>
+                freeCompilerArgs = listOf(<span style="color:#d20;background-color:#fff0f0">&#34;-XXLanguage:+InlineClasses&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;-Xopt-in=kotlin.RequiresOptIn&#34;</span>)
+            }
+        }
+    }
+}
+
+tasks.withType&lt;Test&gt; {
+    useJUnitPlatform()
+    testLogging {
+        showStandardStreams = <span style="color:#080;font-weight:bold">true</span>
+        showCauses = <span style="color:#080;font-weight:bold">true</span>
+        showStackTraces = <span style="color:#080;font-weight:bold">true</span>
+        events(*org.gradle.api.tasks.testing.logging.TestLogEvent.values())
+        exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+    }
+}
+
+signing {
+    <span style="color:#080;font-weight:bold">if</span> (System.getenv()[<span style="color:#d20;background-color:#fff0f0">&#34;CI&#34;</span>].equals(<span style="color:#d20;background-color:#fff0f0">&#34;true&#34;</span>, ignoreCase = <span style="color:#080;font-weight:bold">true</span>)) {
+        <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">signingKey</span>: String? <span style="color:#080;font-weight:bold">by</span> project
+        <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">signingPassword</span>: String? <span style="color:#080;font-weight:bold">by</span> project
+        useInMemoryPgpKeys(signingKey, signingPassword)
+    }
+}
+
+<span style="color:#888">/*
+</span><span style="color:#888"> * Publication on Maven Central and the Plugin portal
+</span><span style="color:#888"> */</span>
+publishOnCentral {
+    projectLongName = info.longName
+    projectDescription = description ?: TODO(<span style="color:#d20;background-color:#fff0f0">&#34;Missing description&#34;</span>)
+    projectUrl = info.website
+    scmConnection = info.scm
+    repository(<span style="color:#d20;background-color:#fff0f0">&#34;https://maven.pkg.github.com/DanySK/${rootProject.name}&#34;</span>.toLowerCase(), name = <span style="color:#d20;background-color:#fff0f0">&#34;github&#34;</span>) {
+        user = <span style="color:#d20;background-color:#fff0f0">&#34;danysk&#34;</span>
+        password = System.getenv(<span style="color:#d20;background-color:#fff0f0">&#34;GITHUB_TOKEN&#34;</span>)
+    }
+    publishing {
+        publications {
+            withType&lt;MavenPublication&gt; {
+                configurePomForMavenCentral()
+                pom {
+                    developers {
+                        developer {
+                            name.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;Danilo Pianini&#34;</span>)
+                            email.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;danilo.pianini@gmail.com&#34;</span>)
+                            url.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;http://www.danilopianini.org/&#34;</span>)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+pluginBundle {
+    website = info.website
+    vcsUrl = info.website
+    tags = info.tags
+}
+
+gradlePlugin {
+    plugins {
+        create(<span style="color:#d20;background-color:#fff0f0">&#34;plugin-template&#34;</span>) {
+            id = <span style="color:#d20;background-color:#fff0f0">&#34;$group.${project.name}&#34;</span>
+            displayName = info.longName
+            description = project.description
+            implementationClass = info.pluginImplementationClass
+        }
+    }
+}
+</code></pre></div>
 </section><section>
 <h2 id="making-the-plugin-available">Making the plugin available</h2>
 <p>We now know how to run the plugin,
@@ -1926,60 +2239,40 @@ publishing {
 </ul>
 </section><section>
 <h2 id="preconfigured-central-publication-1">Preconfigured Central publication</h2>
-<p>
-
-
-
-
-<div class="gist" style="display: inline-block; width: fit-content; min-width: 25em;">
-    <script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2FDanySK%2Fpublish-on-central%2Fblob%2Fmaster%2FREADME.md%23L43-L45&style=googlecode&showBorder=on&showLineNumbers=on"></script>
-</div>
-
-<br></p>
-</section><section>
-<p>
-
-
-
-
-<div class="gist" style="display: inline-block; width: fit-content; min-width: 25em;">
-    <script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2FDanySK%2Fpublish-on-central%2Fblob%2Fmaster%2Fbuild.gradle.kts%23L21-L25&style=googlecode&showBorder=on&showLineNumbers=on"></script>
-</div>
-
-<br>
-
-
-
-
-
-<div class="gist" style="display: inline-block; width: fit-content; min-width: 25em;">
-    <script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2FDanySK%2Fpublish-on-central%2Fblob%2Fmaster%2Fbuild.gradle.kts%23L92-L117&style=googlecode&showBorder=on&showLineNumbers=on"></script>
-</div>
-</p>
-</section><section>
-<h1 id="semiautomatic-updates">(Semi)Automatic updates</h1>
-<p>We automated everything from source writing to delivery!
-<br>
-Yet there is a missing piece: we need to <em>fetch library updates manually</em>
-<br>
-Also, version numbers are strings scattered around our build file</p>
-<p><strong>Possible solution</strong></p>
-<p>A plugin that stores versions in a properties file, and fetches updates automatically: <a href="https://github.com/jmfayard/refreshVersions/">refreshVersions</a></p>
-<ul>
-<li>The plugin is applied project-wise to the <code>settings.gradle.kts</code></li>
-</ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">de.fayard.refreshVersions.bootstrapRefreshVersions</span>
-buildscript {
-    repositories { gradlePluginPortal() }
-    dependencies { classpath(<span style="color:#d20;background-color:#fff0f0">&#34;de.fayard.refreshVersions:refreshVersions:0.9.5&#34;</span>) }
-}
-bootstrapRefreshVersions()
-</code></pre></div><ul>
-<li>Hardcoded versions can get substitued with <code>_</code></li>
-<li>Hardcoded plugin versions can be removed</li>
-<li>Adds task <code>refreshVersions</code> to update versions in <code>versions.properties</code></li>
-<li><em>Note</em>: this plugin is <em>still in development</em>, your mileage may vary</li>
-</ul>
+<p><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins {
+    id (<span style="color:#d20;background-color:#fff0f0">&#34;org.danilopianini.publish-on-central&#34;</span>) version <span style="color:#d20;background-color:#fff0f0">&#34;0.5.1&#34;</span>
+}</code></pre></div>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>group = <span style="color:#d20;background-color:#fff0f0">&#34;org.danilopianini&#34;</span>
+<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">projectId</span> = <span style="color:#d20;background-color:#fff0f0">&#34;$group.$name&#34;</span>
+<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">fullName</span> = <span style="color:#d20;background-color:#fff0f0">&#34;Gradle Publish On Maven Central Plugin&#34;</span>
+<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">websiteUrl</span> = <span style="color:#d20;background-color:#fff0f0">&#34;https://github.com/DanySK/$name&#34;</span>
+<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">projectDetails</span> = <span style="color:#d20;background-color:#fff0f0">&#34;A Plugin for easily publishing artifacts on Maven Central&#34;</span></code></pre></div>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>publishOnCentral {
+    projectDescription = projectDetails
+    projectLongName = fullName
+    projectUrl = websiteUrl
+    scmConnection = <span style="color:#d20;background-color:#fff0f0">&#34;git:git@github.com:DanySK/$name&#34;</span>
+    repository(<span style="color:#d20;background-color:#fff0f0">&#34;https://maven.pkg.github.com/DanySK/$name&#34;</span>.toLowerCase()) {
+        user = <span style="color:#d20;background-color:#fff0f0">&#34;danysk&#34;</span>
+        password = System.getenv(<span style="color:#d20;background-color:#fff0f0">&#34;GITHUB_TOKEN&#34;</span>)
+    }
+    publishing {
+        publications {
+            withType&lt;MavenPublication&gt; {
+                configurePomForMavenCentral()
+                pom {
+                    developers {
+                        developer {
+                            name.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;Danilo Pianini&#34;</span>)
+                            email.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;danilo.pianini@gmail.com&#34;</span>)
+                            url.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;http://www.danilopianini.org/&#34;</span>)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}</code></pre></div></p>
 </section><section>
 <h1 id="inspecting-dependencies">Inspecting dependencies</h1>
 <p>In rich projects, most of the build-related issues are due to pesky stuff going on with <em>dependencies</em></p>
@@ -1996,6 +2289,70 @@ bootstrapRefreshVersions()
 <ul>
 <li><code>./gradlew dependencies</code> prints the dependency trees for each configuration</li>
 </ul>
+<p>Inspecting multiple large trees can be difficult</p>
+<ul>
+<li>A single dependency inspection is available</li>
+<li><code>./gradlew dependencyInsight --dependency &lt;DepName&gt; </code>
+<ul>
+<li>Optionally, fiterable by configuration: <code>--configuration &lt;ConfName&gt;</code></li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h1 id="inspecting-dependencies-among-tasks">Inspecting dependencies <em>among tasks</em></h1>
+<p>When developing plugins or rich builds, the issue of dependencies also affect <strong>tasks</strong></p>
+<p>Gradle <em>does not</em> provide tools to ispect the task graph graphically, but a plugin exists.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>Alma Mater Studiorum - Università di Bologna  
+Computer Science and Engineering Department (DISI)
+
+<span style="color:#333"># Laboratory of Software Systems (LSS) Course
+</span><span style="color:#333"></span>@ Computer Science and Engineering Master
+
+<span style="color:#666">## Course Description
+</span><span style="color:#666"></span>
+TBA
+
+<span style="color:#666">## Course Final Exam
+</span><span style="color:#666"></span>
+The Final Exam of this course requires candidates to propose a project in order to demonstrate their familiarity and expertise with course topics. Each project must be proposed by groups composed of 4 people (variations to this number must be discussed with the teacher).
+
+<span style="color:#080;font-weight:bold">1.</span> <span style="font-weight:bold">**Project Proposal**</span>
+    <span style="color:#080;font-weight:bold">*</span> Each project proposal must be added as a new topic on the &#34;projects forum&#34; active on the LLS &#34;Virtuale&#34; Web Site.
+    <span style="color:#080;font-weight:bold">*</span> Each proposal must report (1) group&#39;s components, (2) project scenario (its main objective), and (3) coarse-grained domain requirements.
+
+<span style="color:#080;font-weight:bold">2.</span> <span style="font-weight:bold">**Project &#34;must-have&#34; requirements**</span>
+    <span style="color:#080;font-weight:bold">*</span> The design and development of the project must be carried out according to the domain-driven approach. In particular:
+        <span style="color:#080;font-weight:bold">*</span> A knowledge crunching session must be carried out (and properly described within the project report) for the exploration of the problem space.
+        <span style="color:#080;font-weight:bold">*</span> Ubiquitous Language must be clearly identified and discussed.
+        <span style="color:#080;font-weight:bold">*</span> The requirements analysis must be carried out to identify the project&#39;s use-cases (using the most appropriate tools and methodologies studied during the course).
+        <span style="color:#080;font-weight:bold">*</span> Considering the requirements analysis, the problem space must be split into appropriate bounded contexts, defined in an appropriate Context Map.
+        <span style="color:#080;font-weight:bold">*</span> Referring only to the core bounded contexts, tactical patterns must be used to define the domain model of the project.
+        <span style="color:#080;font-weight:bold">*</span> The logical architecture of each core bounded context must be appropriately designed (according to the Clean Architecture vision) and properly described in the project report and implemented into the code (in its main elements, assuming the development of a coarse-grained prototype of the system).
+
+    <span style="color:#080;font-weight:bold">*</span> The project must be managed in a DevOps scenario. In particular:
+        <span style="color:#080;font-weight:bold">*</span> Appropriate versioning and licensing
+        <span style="color:#080;font-weight:bold">*</span> Appropriate strategy for version control (e.g., rebasing policy)
+        <span style="color:#080;font-weight:bold">*</span> Full build automation
+        <span style="color:#080;font-weight:bold">*</span> Full continuous integration
+        <span style="color:#080;font-weight:bold">*</span> Automated quality assurance: code quality, testing, reporting
+        <span style="color:#080;font-weight:bold">*</span> Automatic delivery, possibly, automated deployment
+        <span style="color:#080;font-weight:bold">*</span> When applicable, a containerized version of the application
+
+<span style="color:#080;font-weight:bold">3.</span> <span style="font-weight:bold">**Project delivery**</span>
+    <span style="color:#080;font-weight:bold">*</span> The project must be made available on a dedicated GitHub public repository
+    <span style="color:#080;font-weight:bold">*</span> This repository must contain:
+        <span style="color:#080;font-weight:bold">*</span> Source code of the project
+        <span style="color:#080;font-weight:bold">*</span> DevOps setup related to the project
+        <span style="color:#080;font-weight:bold">*</span> Project report (ideally as a set of linked markdown documents starting from the repository README)
+    <span style="color:#080;font-weight:bold">*</span> The Project Report must describe the project rationale and must contain all artifacts related to the problem analysis and the design phases
+
+<span style="color:#080;font-weight:bold">4.</span> <span style="font-weight:bold">**Project discussion**</span>
+    <span style="color:#080;font-weight:bold">*</span> The project will be discussed during an oral exam
+    <span style="color:#080;font-weight:bold">*</span> The oral exam will be organized as follows:
+        <span style="color:#080;font-weight:bold">*</span> Students must show their project in a 5 minutes per student (maximum 15 minutes) long presentation (possibly using slides or other material)
+        <span style="color:#080;font-weight:bold">*</span> The contribution of each team member must emerge from the presentation
+        <span style="color:#080;font-weight:bold">*</span> After the presentation, teachers can ask questions to students related to the proposed project, considering the presentation, the project report and the developed code
+</code></pre></div>
 <p>Inspecting multiple large trees can be difficult</p>
 <ul>
 <li>A single dependency inspection is available</li>
