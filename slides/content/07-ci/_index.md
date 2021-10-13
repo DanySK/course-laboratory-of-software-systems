@@ -95,86 +95,162 @@ Software that promotes CI practices should:
 * Support for *authentication* and deployment to external services
 
 **Plenty** of integrators on the market
-* Circle CI, Travis CI, Werker, done.io, Codefresh, Codeship, Bitbucket Pipelines...
 
-We will use Travis CI
-* GitHub integration
-* Free for academy
-* Multiple OSs supported
+Circle CI, Travis CI, Werker, done.io, Codefresh, Codeship, Bitbucket Pipelines, GitHub Actions, GitLab CI/CD Pipelines, JetBrains TeamCity...
 
----
+We will use GitHub actions: GitHub integration, free for FOSS, multi-os OSs supported
 
-# Core concepts
-
-**phase**
-* A *named sequence of commands*
-* A phase succeeds if all the commands succeed
-* The next phase starts only if the previous was successful
-* The names and order of phases are *pre-determined*
-
-**job**
-* Operation consisting in:
-    * *spawning* of a fresh *virtual environment*
-    * *configuration* of the virtual environment
-    * *cloning* of the repository
-    * *ordered execution of all phases* 
+(Travis CI was better designed, but it has been essentially killed for FOSS)
 
 ---
 
 # Core concepts
 
-**stage**
-* A *group of jobs* that run in parallel
-* A build finishes when all of its jobs are finished.
-* A stage is successful if all of its jobs are successful
-* The next stages starts only if the previous was successful
+Structure operations into groups of *tasks* that execute either in sequence or in parallel
 
-**build**
-* A *group of stages* that run in *sequence*
-* A build finishes when all of its stages are finished.
-* A build is successful if all of its stages are successful
+(not so different than Gradle tasks...)
 
----
+The hierarchy an naming of each *task* changes with the specific product.
 
-## Job lifecycle
+In **Travis CI**:
+* *builds* contain *stages* that run sequentially
+* *stages* contain *jobs* that run in parallel on separate VMs
+* *jobs* contain *phases* that run sequentially
+* *phases* are commands or sequences of commands
 
+In GitHub Actions:
+* *workflows* contain *jobs* that run in parallel on separate VMs, but can express dependencies
+* *jobs* contain *steps* that run sequentially on the same VM
+* *steps* can be either commands or sequences of commands, or application of *actions*
+* *actions* can be scripts or sequences of *actions*
 
-{{< gravizo "Travis CI Job lifecycle" >}}
-@startuml
-
-(*) -right-> "before_install"
-"before_install" -right-> "install"
-"install" -right-> "before_script"
-"before_script" -right-> "script"
-"script" -right-> "before_cache"
-if "TRAVIS_TEST_RESULT" then
-  --> [true] "after_success"
-  --> "before_deploy"
-else
-  --> [false] "after_failure"
-  --> "before_deploy"
-"before_deploy" -left-> "deploy"
-"deploy" -left-> "after_deploy"
-"after_deploy" -left-> "after_script"
-"after_script" -left-> (*)
-
-@enduml
-{{< /gravizo >}}
-
-* If `before_install`, `install` or `before_script` returns a non-zero exit code, the build is errored and stops immediately.
-* If `script` returns a non-zero exit code, the build is failed, but *continues to run* before being marked as failed.
-* The exit code of `after_success`, `after_failure`, `after_script`, `after_deploy` and subsequent stages *do not affect the build result*.
-    * However, if one of these stages times out, the build is marked as failed.
+**No standard architecture!**
 
 ---
 
-## Travis CI: Configuration
+## Pipeline design
 
-Travis CI is configured in a single `travis.yml` file located in the repository root
+In essence, designing a CI system is designing a software construction, verification, and delivery *pipeline*
+with the abstractions provided by the selected provider.
 
-At registration time, it integrates with GitHub
+1. **Think** of all the operations required starting from one or more *blank* VMs
+    * OS configuration
+    * Software installation
+    * Project checkout
+    * Compilation
+    * Testing
+    * Secrets configuration
+    * Delivery
+    * ...
+2. **Organize** them in a dependency graph
+3. **Model** the graph with the provided CI tooling
 
-New pushes on repositories which contain `.travis.yml` get automatically built
+Configuration can grow complex, and is usually stored in a YAML file
+<br>
+(but there are exceptions, JetBrains TeamCity uses a Kotlin DSL).
+
+---
+
+## GitHub Actions: Configuration
+
+Workflows are configured in YAML files located in the default branch of the repository in the `.github/workflows` folder.
+
+One configuration file $\Rightarrow$ one workflow
+
+For security reasons, workflows may need to be manually activated in the *Actions* tab of the GitHub web interface.
+
+---
+
+## GitHub Actions: Runners
+
+Executors of GitHub actions are called *runners*: virtual machines
+(hosted by GitHub)
+with the GitHub Actions runner application installed.
+
+**Note**: the GitHub Actions application is open source and can be installed locally,
+creating "*self-hosted runners*". Self-hosted and GitHub-hosted runners can work together.
+
+Upon their creation, runners have a default environment, which depends on their *operating system*
+* Documentation available at [https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#preinstalled-software](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#preinstalled-software)
+
+---
+
+## Convention over configuration
+
+Several CI systems inherit the "*convention over configuration* principle.
+
+For instance, by default (with an empty configuration file) Travis CI builds a Ruby project using `rake`.
+
+GitHub actions **does not** adhere to the principle:
+if left unconfigured, the runner does nothing
+(it does not even clone the repository locally).
+
+Probable reason: Actions is an *all-round* repository automation system for GitHub,
+not just a "plain" CI/CD pipeline
+
+$\Rightarrow$ It can react to many different events, not just changes to the git repository history
+
+---
+
+## GHA: basic workflow structure
+
+Minimal, simplified workflow structure:
+
+```yaml
+# Mandatory workflow name
+name: Workflow Name
+on: # Events that trigger the workflow
+jobs: # Jobs composing the workflow, each one will run on a different runner
+    Job-Name: # Every job must be named
+        # The type of runner executing the job, usually the OS
+        runs-on: runner-name
+        steps: # A list of commands, or "actions"
+            - # first step
+            - # second step
+    Another-Job: # This one runs in parallel with Job-Name
+        runs-on: '...'
+        steps: [ ... ]
+```
+
+---
+
+### DRY CI
+
+We discussed that automation / integration pipelines **are** part of the software
+* They are subject to the same (or even higher) quality standards
+* All the good engineering principles apply!
+
+YAML is often used by CI integrators as preferred configuration language as it enables some form of DRY:
+1. Anchors (`&` / `*`)
+2. Merge keys (`<<:`)
+
+```yaml
+hey: &ref
+  look: at
+  me: [ "I'm", 'dancing' ]
+merged:
+  foo: *ref
+  <<: *ref
+  look: to
+```
+
+Same as:
+
+```yaml
+hey: { look: at, me: [ "I'm", 'dancing' ] }
+merged: { foo: { look: at, me: [ "I'm", 'dancing' ] }, look: to, me: [ "I'm", 'dancing' ] }
+```
+
+---
+
+## GitHub Actions' actions
+
+GHA's YAML parser *does not support standard YAML anchors and merge keys*
+
+(it is a well-known limit with a bug open since ages)
+
+GHA achieves reuse via "**actions**":
+* Reusable operations
 
 ---
 
