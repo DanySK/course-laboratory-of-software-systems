@@ -27,7 +27,7 @@
     <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
 <h2 id="continuous-integration">Continuous Integration</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2021-10-12
+2021-10-13
 
 </section><section>
 <h1 id="continuous-integration-1">Continuous Integration</h1>
@@ -138,81 +138,124 @@
 <li>Support for <em>authentication</em> and deployment to external services</li>
 </ul>
 <p><strong>Plenty</strong> of integrators on the market</p>
-<ul>
-<li>Circle CI, Travis CI, Werker, done.io, Codefresh, Codeship, Bitbucket Pipelines&hellip;</li>
-</ul>
-<p>We will use Travis CI</p>
-<ul>
-<li>GitHub integration</li>
-<li>Free for academy</li>
-<li>Multiple OSs supported</li>
-</ul>
+<p>Circle CI, Travis CI, Werker, done.io, Codefresh, Codeship, Bitbucket Pipelines, GitHub Actions, GitLab CI/CD Pipelines, JetBrains TeamCity&hellip;</p>
+<p>We will use GitHub actions: GitHub integration, free for FOSS, multi-os OSs supported</p>
+<p>(Travis CI was better designed, but it has been essentially killed for FOSS)</p>
 </section><section>
 <h1 id="core-concepts">Core concepts</h1>
-<p><strong>phase</strong></p>
+<p>Structure operations into groups of <em>tasks</em> that execute either in sequence or in parallel</p>
+<p>(not so different than Gradle tasks&hellip;)</p>
+<p>The hierarchy an naming of each <em>task</em> changes with the specific product.</p>
+<p>In <strong>Travis CI</strong>:</p>
 <ul>
-<li>A <em>named sequence of commands</em></li>
-<li>A phase succeeds if all the commands succeed</li>
-<li>The next phase starts only if the previous was successful</li>
-<li>The names and order of phases are <em>pre-determined</em></li>
+<li><em>builds</em> contain <em>stages</em> that run sequentially</li>
+<li><em>stages</em> contain <em>jobs</em> that run in parallel on separate VMs</li>
+<li><em>jobs</em> contain <em>phases</em> that run sequentially</li>
+<li><em>phases</em> are commands or sequences of commands</li>
 </ul>
-<p><strong>job</strong></p>
+<p>In GitHub Actions:</p>
 <ul>
-<li>Operation consisting in:
+<li><em>workflows</em> contain <em>jobs</em> that run in parallel on separate VMs, but can express dependencies</li>
+<li><em>jobs</em> contain <em>steps</em> that run sequentially on the same VM</li>
+<li><em>steps</em> can be either commands or sequences of commands, or application of <em>actions</em></li>
+<li><em>actions</em> can be scripts or sequences of <em>actions</em></li>
+</ul>
+<p><strong>No standard architecture!</strong></p>
+</section><section>
+<h2 id="pipeline-design">Pipeline design</h2>
+<p>In essence, designing a CI system is designing a software construction, verification, and delivery <em>pipeline</em>
+with the abstractions provided by the selected provider.</p>
+<ol>
+<li><strong>Think</strong> of all the operations required starting from one or more <em>blank</em> VMs
 <ul>
-<li><em>spawning</em> of a fresh <em>virtual environment</em></li>
-<li><em>configuration</em> of the virtual environment</li>
-<li><em>cloning</em> of the repository</li>
-<li><em>ordered execution of all phases</em></li>
+<li>OS configuration</li>
+<li>Software installation</li>
+<li>Project checkout</li>
+<li>Compilation</li>
+<li>Testing</li>
+<li>Secrets configuration</li>
+<li>Delivery</li>
+<li>&hellip;</li>
 </ul>
 </li>
+<li><strong>Organize</strong> them in a dependency graph</li>
+<li><strong>Model</strong> the graph with the provided CI tooling</li>
+</ol>
+<p>Configuration can grow complex, and is usually stored in a YAML file
+<br>
+(but there are exceptions, JetBrains TeamCity uses a Kotlin DSL).</p>
+</section><section>
+<h2 id="github-actions-configuration">GitHub Actions: Configuration</h2>
+<p>Workflows are configured in YAML files located in the default branch of the repository in the <code>.github/workflows</code> folder.</p>
+<p>One configuration file $\Rightarrow$ one workflow</p>
+<p>For security reasons, workflows may need to be manually activated in the <em>Actions</em> tab of the GitHub web interface.</p>
+</section><section>
+<h2 id="github-actions-runners">GitHub Actions: Runners</h2>
+<p>Executors of GitHub actions are called <em>runners</em>: virtual machines
+(hosted by GitHub)
+with the GitHub Actions runner application installed.</p>
+<p><strong>Note</strong>: the GitHub Actions application is open source and can be installed locally,
+creating &ldquo;<em>self-hosted runners</em>&rdquo;. Self-hosted and GitHub-hosted runners can work together.</p>
+<p>Upon their creation, runners have a default environment, which depends on their <em>operating system</em></p>
+<ul>
+<li>Documentation available at <a href="https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#preinstalled-software">https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#preinstalled-software</a></li>
 </ul>
 </section><section>
-<h1 id="core-concepts-1">Core concepts</h1>
-<p><strong>stage</strong></p>
-<ul>
-<li>A <em>group of jobs</em> that run in parallel</li>
-<li>A build finishes when all of its jobs are finished.</li>
-<li>A stage is successful if all of its jobs are successful</li>
-<li>The next stages starts only if the previous was successful</li>
-</ul>
-<p><strong>build</strong></p>
-<ul>
-<li>A <em>group of stages</em> that run in <em>sequence</em></li>
-<li>A build finishes when all of its stages are finished.</li>
-<li>A build is successful if all of its stages are successful</li>
-</ul>
+<h2 id="convention-over-configuration">Convention over configuration</h2>
+<p>Several CI systems inherit the &ldquo;<em>convention over configuration</em> principle.</p>
+<p>For instance, by default (with an empty configuration file) Travis CI builds a Ruby project using <code>rake</code>.</p>
+<p>GitHub actions <strong>does not</strong> adhere to the principle:
+if left unconfigured, the runner does nothing
+(it does not even clone the repository locally).</p>
+<p>Probable reason: Actions is an <em>all-round</em> repository automation system for GitHub,
+not just a &ldquo;plain&rdquo; CI/CD pipeline</p>
+<p>$\Rightarrow$ It can react to many different events, not just changes to the git repository history</p>
 </section><section>
-<h2 id="job-lifecycle">Job lifecycle</h2>
-
-
-  
-    
-  
-
-
-<figure>
-  <img
-    src='https://g.gravizo.com/svg?%0a%40startuml%0a%0a%28%2a%29%20-right-%3e%20%22before_install%22%0a%22before_install%22%20-right-%3e%20%22install%22%0a%22install%22%20-right-%3e%20%22before_script%22%0a%22before_script%22%20-right-%3e%20%22script%22%0a%22script%22%20-right-%3e%20%22before_cache%22%0aif%20%22TRAVIS_TEST_RESULT%22%20then%0a%20%20--%3e%20%5btrue%5d%20%22after_success%22%0a%20%20--%3e%20%22before_deploy%22%0aelse%0a%20%20--%3e%20%5bfalse%5d%20%22after_failure%22%0a%20%20--%3e%20%22before_deploy%22%0a%22before_deploy%22%20-left-%3e%20%22deploy%22%0a%22deploy%22%20-left-%3e%20%22after_deploy%22%0a%22after_deploy%22%20-left-%3e%20%22after_script%22%0a%22after_script%22%20-left-%3e%20%28%2a%29%0a%0a%40enduml%0a'
-    alt='Travis CI Job lifecycle'
-    />
-    <figcaption>Travis CI Job lifecycle</figcaption>
-</figure>
-
+<h2 id="gha-basic-workflow-structure">GHA: basic workflow structure</h2>
+<p>Minimal, simplified workflow structure:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#888"># Mandatory workflow name</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Workflow<span style="color:#bbb"> </span>Name<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">on</span>:<span style="color:#bbb"> </span><span style="color:#888"># Events that trigger the workflow</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">jobs</span>:<span style="color:#bbb"> </span><span style="color:#888"># Jobs composing the workflow, each one will run on a different runner</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">Job-Name</span>:<span style="color:#bbb"> </span><span style="color:#888"># Every job must be named</span><span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#888"># The type of runner executing the job, usually the OS</span><span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#080;font-weight:bold">runs-on</span>:<span style="color:#bbb"> </span>runner-name<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#080;font-weight:bold">steps</span>:<span style="color:#bbb"> </span><span style="color:#888"># A list of commands, or &#34;actions&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">            </span>- <span style="color:#888"># first step</span><span style="color:#bbb">
+</span><span style="color:#bbb">            </span>- <span style="color:#888"># second step</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">Another-Job</span>:<span style="color:#bbb"> </span><span style="color:#888"># This one runs in parallel with Job-Name</span><span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#080;font-weight:bold">runs-on</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;...&#39;</span><span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#080;font-weight:bold">steps</span>:<span style="color:#bbb"> </span>[<span style="color:#bbb"> </span>...<span style="color:#bbb"> </span>]<span style="color:#bbb">
+</span></code></pre></div></section><section>
+<h3 id="dry-ci">DRY CI</h3>
+<p>We discussed that automation / integration pipelines <strong>are</strong> part of the software</p>
 <ul>
-<li>If <code>before_install</code>, <code>install</code> or <code>before_script</code> returns a non-zero exit code, the build is errored and stops immediately.</li>
-<li>If <code>script</code> returns a non-zero exit code, the build is failed, but <em>continues to run</em> before being marked as failed.</li>
-<li>The exit code of <code>after_success</code>, <code>after_failure</code>, <code>after_script</code>, <code>after_deploy</code> and subsequent stages <em>do not affect the build result</em>.
+<li>They are subject to the same (or even higher) quality standards</li>
+<li>All the good engineering principles apply!</li>
+</ul>
+<p>YAML is often used by CI integrators as preferred configuration language as it enables some form of DRY:</p>
+<ol>
+<li>Anchors (<code>&amp;</code> / <code>*</code>)</li>
+<li>Merge keys (<code>&lt;&lt;:</code>)</li>
+</ol>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">hey</span>:<span style="color:#bbb"> </span><span style="color:#c00;font-weight:bold">&amp;ref</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">look</span>:<span style="color:#bbb"> </span>at<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">me</span>:<span style="color:#bbb"> </span>[<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#34;I&#39;m&#34;</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;dancing&#39;</span><span style="color:#bbb"> </span>]<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">merged</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">foo</span>:<span style="color:#bbb"> </span><span style="color:#c00;font-weight:bold">*ref</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">&lt;&lt;</span>:<span style="color:#bbb"> </span><span style="color:#c00;font-weight:bold">*ref</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">look</span>:<span style="color:#bbb"> </span>to<span style="color:#bbb">
+</span></code></pre></div><p>Same as:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">hey</span>:<span style="color:#bbb"> </span>{<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">look: at, me</span>:<span style="color:#bbb"> </span>[<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#34;I&#39;m&#34;</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;dancing&#39;</span><span style="color:#bbb"> </span>]<span style="color:#bbb"> </span>}<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">merged</span>:<span style="color:#bbb"> </span>{<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">foo</span>:<span style="color:#bbb"> </span>{<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">look: at, me</span>:<span style="color:#bbb"> </span>[<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#34;I&#39;m&#34;</span><span style="color:#080;font-weight:bold">, &#39;dancing&#39; ] }, look: to, me</span>:<span style="color:#bbb"> </span>[<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#34;I&#39;m&#34;</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;dancing&#39;</span><span style="color:#bbb"> </span>]<span style="color:#bbb"> </span>}<span style="color:#bbb">
+</span></code></pre></div></section><section>
+<h2 id="github-actions-actions">GitHub Actions&rsquo; actions</h2>
+<p>GHA&rsquo;s YAML parser <em>does not support standard YAML anchors and merge keys</em></p>
+<p>(it is a well-known limit with a bug open since ages)</p>
+<p>GHA achieves reuse via &ldquo;<strong>actions</strong>&quot;:</p>
 <ul>
-<li>However, if one of these stages times out, the build is marked as failed.</li>
+<li>Reusable operations</li>
 </ul>
-</li>
-</ul>
-</section><section>
-<h2 id="travis-ci-configuration">Travis CI: Configuration</h2>
-<p>Travis CI is configured in a single <code>travis.yml</code> file located in the repository root</p>
-<p>At registration time, it integrates with GitHub</p>
-<p>New pushes on repositories which contain <code>.travis.yml</code> get automatically built</p>
 </section><section>
 <h2 id="travis-ci-environment-selection">Travis CI: Environment selection</h2>
 <p>By default, travis tries to build a <em>Ruby</em> project

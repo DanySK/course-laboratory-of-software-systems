@@ -27,7 +27,7 @@
     <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
 <h2 id="build-automation">Build Automation</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2021-10-12
+2021-10-13
 
 </section><section>
 <h1 id="overview">Overview</h1>
@@ -2302,70 +2302,14 @@ publishing {
 <h1 id="inspecting-dependencies-among-tasks">Inspecting dependencies <em>among tasks</em></h1>
 <p>When developing plugins or rich builds, the issue of dependencies also affect <strong>tasks</strong></p>
 <p>Gradle <em>does not</em> provide tools to ispect the task graph graphically, but a plugin exists.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>Alma Mater Studiorum - Università di Bologna  
-Computer Science and Engineering Department (DISI)
-
-<span style="color:#333"># Laboratory of Software Systems (LSS) Course
-</span><span style="color:#333"></span>@ Computer Science and Engineering Master
-
-<span style="color:#666">## Course Description
-</span><span style="color:#666"></span>
-TBA
-
-<span style="color:#666">## Course Final Exam
-</span><span style="color:#666"></span>
-The Final Exam of this course requires candidates to propose a project in order to demonstrate their familiarity and expertise with course topics. Each project must be proposed by groups composed of 4 people (variations to this number must be discussed with the teacher).
-
-<span style="color:#080;font-weight:bold">1.</span> <span style="font-weight:bold">**Project Proposal**</span>
-    <span style="color:#080;font-weight:bold">*</span> Each project proposal must be added as a new topic on the &#34;projects forum&#34; active on the LLS &#34;Virtuale&#34; Web Site.
-    <span style="color:#080;font-weight:bold">*</span> Each proposal must report (1) group&#39;s components, (2) project scenario (its main objective), and (3) coarse-grained domain requirements.
-
-<span style="color:#080;font-weight:bold">2.</span> <span style="font-weight:bold">**Project &#34;must-have&#34; requirements**</span>
-    <span style="color:#080;font-weight:bold">*</span> The design and development of the project must be carried out according to the domain-driven approach. In particular:
-        <span style="color:#080;font-weight:bold">*</span> A knowledge crunching session must be carried out (and properly described within the project report) for the exploration of the problem space.
-        <span style="color:#080;font-weight:bold">*</span> Ubiquitous Language must be clearly identified and discussed.
-        <span style="color:#080;font-weight:bold">*</span> The requirements analysis must be carried out to identify the project&#39;s use-cases (using the most appropriate tools and methodologies studied during the course).
-        <span style="color:#080;font-weight:bold">*</span> Considering the requirements analysis, the problem space must be split into appropriate bounded contexts, defined in an appropriate Context Map.
-        <span style="color:#080;font-weight:bold">*</span> Referring only to the core bounded contexts, tactical patterns must be used to define the domain model of the project.
-        <span style="color:#080;font-weight:bold">*</span> The logical architecture of each core bounded context must be appropriately designed (according to the Clean Architecture vision) and properly described in the project report and implemented into the code (in its main elements, assuming the development of a coarse-grained prototype of the system).
-
-    <span style="color:#080;font-weight:bold">*</span> The project must be managed in a DevOps scenario. In particular:
-        <span style="color:#080;font-weight:bold">*</span> Appropriate versioning and licensing
-        <span style="color:#080;font-weight:bold">*</span> Appropriate strategy for version control (e.g., rebasing policy)
-        <span style="color:#080;font-weight:bold">*</span> Full build automation
-        <span style="color:#080;font-weight:bold">*</span> Full continuous integration
-        <span style="color:#080;font-weight:bold">*</span> Automated quality assurance: code quality, testing, reporting
-        <span style="color:#080;font-weight:bold">*</span> Automatic delivery, possibly, automated deployment
-        <span style="color:#080;font-weight:bold">*</span> When applicable, a containerized version of the application
-
-<span style="color:#080;font-weight:bold">3.</span> <span style="font-weight:bold">**Project delivery**</span>
-    <span style="color:#080;font-weight:bold">*</span> The project must be made available on a dedicated GitHub public repository
-    <span style="color:#080;font-weight:bold">*</span> This repository must contain:
-        <span style="color:#080;font-weight:bold">*</span> Source code of the project
-        <span style="color:#080;font-weight:bold">*</span> DevOps setup related to the project
-        <span style="color:#080;font-weight:bold">*</span> Project report (ideally as a set of linked markdown documents starting from the repository README)
-    <span style="color:#080;font-weight:bold">*</span> The Project Report must describe the project rationale and must contain all artifacts related to the problem analysis and the design phases
-
-<span style="color:#080;font-weight:bold">4.</span> <span style="font-weight:bold">**Project discussion**</span>
-    <span style="color:#080;font-weight:bold">*</span> The project will be discussed during an oral exam
-    <span style="color:#080;font-weight:bold">*</span> The oral exam will be organized as follows:
-        <span style="color:#080;font-weight:bold">*</span> Students must show their project in a 5 minutes per student (maximum 15 minutes) long presentation (possibly using slides or other material)
-        <span style="color:#080;font-weight:bold">*</span> The contribution of each team member must emerge from the presentation
-        <span style="color:#080;font-weight:bold">*</span> After the presentation, teachers can ask questions to students related to the proposed project, considering the presentation, the project report and the developed code
-</code></pre></div>
-<p>Inspecting multiple large trees can be difficult</p>
-<ul>
-<li>A single dependency inspection is available</li>
-<li><code>./gradlew dependencyInsight --dependency &lt;DepName&gt; </code>
-<ul>
-<li>Optionally, fiterable by configuration: <code>--configuration &lt;ConfName&gt;</code></li>
-</ul>
-</li>
-</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins {
+    id <span style="color:#d20;background-color:#fff0f0">&#34;com.dorongold.task-tree&#34;</span> version <span style="color:#d20;background-color:#fff0f0">&#34;2.1.0&#34;</span>
+}</code></pre></div>
+<p>Generates a <code>taskTree</code> task printing the task tree of the tasks listed along with <code>taskTree</code>.</p>
 </section><section>
 <h1 id="build-reporting">Build reporting</h1>
 <ul>
-<li>Builds can get complicated when automation is pushed forward
+<li>As any software, complex builds need rich inspection tools
 <ul>
 <li>Performance issues may arise</li>
 <li>Some tests may run anomalously slow</li>
@@ -2384,6 +2328,20 @@ The Final Exam of this course requires candidates to propose a project in order 
 <li><a href="https://scans.gradle.com/s/5i6ai7gz6qzmc">https://scans.gradle.com/s/5i6ai7gz6qzmc</a></li>
 <li><a href="https://scans.gradle.com/s/5jmd7avh2gnvi">https://scans.gradle.com/s/5jmd7avh2gnvi</a></li>
 </ul>
+</section><section>
+<h2 id="automated-scans-without---scan">Automated scans without &ndash;scan</h2>
+<p>In <code>settings.gradle.kts</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins {
+    id(<span style="color:#d20;background-color:#fff0f0">&#34;com.gradle.enterprise&#34;</span>) version <span style="color:#d20;background-color:#fff0f0">&#34;3.7&#34;</span>
+}
+
+gradleEnterprise {
+    buildScan {
+        termsOfServiceUrl = <span style="color:#d20;background-color:#fff0f0">&#34;https://gradle.com/terms-of-service&#34;</span>
+        termsOfServiceAgree = <span style="color:#d20;background-color:#fff0f0">&#34;yes&#34;</span>
+        publishOnFailure()
+    }
+}</code></pre></div>
 </section>
 
   
