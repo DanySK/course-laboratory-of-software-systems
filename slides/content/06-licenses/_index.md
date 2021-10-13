@@ -279,7 +279,7 @@ as the name is changed.
 
 1. Create a `LICENSE` or `COPYING` plain text file in the repository with the *full license* text
     * Full text can be easy found online
-    * Change the owner and the copyright year
+    * *Change the owner and the copyright year*
 2. Apply a **copyright notice header** to *every source file*
     * Use an automated tool to do it 
     * Most IDEs can deal with this
