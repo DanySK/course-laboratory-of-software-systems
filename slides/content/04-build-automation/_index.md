@@ -2063,18 +2063,15 @@ When developing plugins or rich builds, the issue of dependencies also affect **
 
 Gradle *does not* provide tools to ispect the task graph graphically, but a plugin exists.
 
-{{< github >}}
+{{< github owner="dorongold" repo="gradle-task-tree" from=18 to=20 language=kotlin >}}
 
-Inspecting multiple large trees can be difficult
-* A single dependency inspection is available
-* `./gradlew dependencyInsight --dependency <DepName> `
-    * Optionally, fiterable by configuration: `--configuration <ConfName>`
+Generates a `taskTree` task printing the task tree of the tasks listed along with `taskTree`.
 
 ---
 
 # Build reporting
 
-* Builds can get complicated when automation is pushed forward
+* As any software, complex builds need rich inspection tools
     * Performance issues may arise
     * Some tests may run anomalously slow
     * Dependency trees may get hard to analyze in a terminal
@@ -2087,3 +2084,11 @@ Gradle supports a reporting system called *Gradle build scans*
 Example scans:
 * [https://scans.gradle.com/s/5i6ai7gz6qzmc](https://scans.gradle.com/s/5i6ai7gz6qzmc)
 * [https://scans.gradle.com/s/5jmd7avh2gnvi](https://scans.gradle.com/s/5jmd7avh2gnvi)
+
+---
+
+## Automated scans without --scan
+
+In `settings.gradle.kts`:
+
+{{< github repo="Template-for-Gradle-Plugins" path="settings.gradle.kts" to=11 >}}
