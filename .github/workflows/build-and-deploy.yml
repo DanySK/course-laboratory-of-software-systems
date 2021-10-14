@@ -11,6 +11,8 @@ on:
       - 'CHANGELOG.md'
       - 'LICENSE'
       - 'code/**'
+      - '.github/workflows/update-hugo.yml'
+      - '.github/workflows/check-gradle-projects.yml'
   pull_request:
   workflow_dispatch:
 
