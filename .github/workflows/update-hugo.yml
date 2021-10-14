@@ -15,11 +15,14 @@ jobs:
         run: |
           LATEST_HUGO=$(curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/gohugoio/hugo/releases/latest" | jq -r ".name" | cut -c2-)
           echo Found version $HUGO
-          echo "::set-output name=hugo-version::$LATEST_HUGO\n"
+          echo "::set-output name=latest-hugo::$LATEST_HUGO\n"
       - name: Update the build workflow
         run: |
-          sed -i .github/workflows/build-and-deploy.yml -e "s/HUGO_VERSION\\: \".*\"/HUGO_VERSION: \"$HUGO_VERSION\"/"
+          sed -i .github/workflows/build-and-deploy.yml -e "s/HUGO_VERSION\\: \".*\"/HUGO_VERSION: \"${{ steps.find.outputs.latest-hugo }}\"/"
       - name: Open pull request
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.AUTOMERGE_TOKEN }}
+          branch: bump-hugo-to-${{ steps.find.outputs.latest-hugo }}
+          delete-branch: true
+          title: Upgrade Hugo to ${{ steps.find.outputs.latest-hugo }}
