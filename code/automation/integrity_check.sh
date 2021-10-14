@@ -14,45 +14,45 @@ gradle compileJava
 cd ..
 
 cd 03*
-gradle compileJava
+./gradlew compileJava
 cd ..
 
 cd 04*
-gradle runJava
+./gradlew runJava
 cd ..
 
 cd 05*
-gradle clean runJava
+./gradlew clean runJava
 cd ..
 
 cd 06*
-gradle clean compileJava
+./gradlew clean compileJava
 cd ..
 
 cd 07*
-gradle clean compileJava
+./gradlew clean compileJava
 cd ..
 
 cd 08*
-gradle clean compileJava
+./gradlew clean compileJava
 cd ..
 
 cd 09*
-gradle build
+./gradlew build
 cd ..
 
 cd 10*
-gradle build
+./gradlew build
 cd ..
 
 cd 11*
-gradle build
+./gradlew build
 cd ..
 
 cd 12*
-gradle build
+./gradlew build
 cd ..
 
 cd 13*
-gradle build
+./gradlew build
 cd ..

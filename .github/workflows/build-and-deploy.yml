@@ -30,7 +30,11 @@ jobs:
       - name: Download Hugo
         run: wget --retry-connrefused --waitretry=1 --read-timeout=20 https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_Linux-64bit.deb --output-document=hugo.deb
         env:
+<<<<<<< Updated upstream
           HUGO_VERSION: "0.88.0"
+=======
+          HUGO_VERSION: "0.88.1"
+>>>>>>> Stashed changes
       - name: List files
         run: ls -ahl
       - name: Install Hugo
