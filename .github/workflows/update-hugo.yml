@@ -15,7 +15,7 @@ jobs:
         run: |
           LATEST_HUGO=$(curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/gohugoio/hugo/releases/latest" | jq -r ".name" | cut -c2-)
           echo Found version $HUGO
-          echo "::set-output name=latest-hugo::$LATEST_HUGO\n"
+          echo "::set-output name=latest-hugo::$LATEST_HUGO"
       - name: Update the build workflow
         run: |
           sed -i .github/workflows/build-and-deploy.yml -e "s/HUGO_VERSION\\: \".*\"/HUGO_VERSION: \"${{ steps.find.outputs.latest-hugo }}\"/"
@@ -26,3 +26,4 @@ jobs:
           branch: bump-hugo-to-${{ steps.find.outputs.latest-hugo }}
           delete-branch: true
           title: Upgrade Hugo to ${{ steps.find.outputs.latest-hugo }}
+          assignees: DanySK
