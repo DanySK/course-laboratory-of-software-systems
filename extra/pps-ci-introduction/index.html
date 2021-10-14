@@ -801,37 +801,37 @@ from code to artifacts</p>
 </div>
 </section><section>
 <h2 id="actual-result">Actual result</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>package it.unibo.ci;
-import com.uwetrottmann.thetvdb.TheTvdb;
-import org.apache.commons.io.IOUtils;
-import retrofit2.Response;
-import java.io.IOException;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.IntStream;
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.jooq.lambda.Unchecked.intFunction;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">package</span> <span style="color:#b06;font-weight:bold">it.unibo.ci</span>;
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">com.uwetrottmann.thetvdb.TheTvdb</span>;
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.apache.commons.io.IOUtils</span>;
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">retrofit2.Response</span>;
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">java.io.IOException</span>;
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">java.util.Objects</span>;
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">java.util.Optional</span>;
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">java.util.stream.IntStream</span>;
+<span style="color:#080;font-weight:bold">import static</span> <span style="color:#b06;font-weight:bold">java.nio.charset.StandardCharsets.UTF_8</span>;
+<span style="color:#080;font-weight:bold">import static</span> <span style="color:#b06;font-weight:bold">org.jooq.lambda.Unchecked.intFunction</span>;
 
-public final class PrintBreakingBad {
+<span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">final</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">PrintBreakingBad</span> {
 
-    private PrintBreakingBad() { }
+    <span style="color:#080;font-weight:bold">private</span> <span style="color:#06b;font-weight:bold">PrintBreakingBad</span>() { }
 
-    public static void main(String... args) throws IOException {
-        final TheTvdb api = new TheTvdb(IOUtils.toString(ClassLoader.getSystemResource(&#34;APIKey&#34;), UTF_8));
-        Optional.of(api.search().series(&#34;Breaking Bad&#34;, null, null, null, &#34;it&#34;).execute())
-            .filter(Response::isSuccessful)
-            .flatMap(response -&gt; response.body().data.stream().findFirst())
-            .stream()
-            .flatMap(serie -&gt; // Every serie becomes a stream of pages
-                IntStream.iterate(1, it -&gt; it + 1)
-                    .mapToObj(intFunction(page -&gt; api.series().episodes(serie.id, page, &#34;it&#34;).execute()))
-                    .takeWhile(Response::isSuccessful)
+    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#888;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">main</span>(String... args) <span style="color:#080;font-weight:bold">throws</span> IOException {
+        <span style="color:#080;font-weight:bold">final</span> TheTvdb api = <span style="color:#080;font-weight:bold">new</span> TheTvdb(IOUtils.<span style="color:#369">toString</span>(ClassLoader.<span style="color:#369">getSystemResource</span>(<span style="color:#d20;background-color:#fff0f0">&#34;APIKey&#34;</span>), UTF_8));
+        Optional.<span style="color:#369">of</span>(api.<span style="color:#369">search</span>().<span style="color:#369">series</span>(<span style="color:#d20;background-color:#fff0f0">&#34;Breaking Bad&#34;</span>, <span style="color:#080;font-weight:bold">null</span>, <span style="color:#080;font-weight:bold">null</span>, <span style="color:#080;font-weight:bold">null</span>, <span style="color:#d20;background-color:#fff0f0">&#34;it&#34;</span>).<span style="color:#369">execute</span>())
+            .<span style="color:#369">filter</span>(Response::isSuccessful)
+            .<span style="color:#369">flatMap</span>(response -&gt; response.<span style="color:#369">body</span>().<span style="color:#369">data</span>.<span style="color:#369">stream</span>().<span style="color:#369">findFirst</span>())
+            .<span style="color:#369">stream</span>()
+            .<span style="color:#369">flatMap</span>(serie -&gt; <span style="color:#888">// Every serie becomes a stream of pages
+</span><span style="color:#888"></span>                IntStream.<span style="color:#369">iterate</span>(1, it -&gt; it + 1)
+                    .<span style="color:#369">mapToObj</span>(intFunction(page -&gt; api.<span style="color:#369">series</span>().<span style="color:#369">episodes</span>(serie.<span style="color:#369">id</span>, page, <span style="color:#d20;background-color:#fff0f0">&#34;it&#34;</span>).<span style="color:#369">execute</span>()))
+                    .<span style="color:#369">takeWhile</span>(Response::isSuccessful)
             )
-            .flatMap(it -&gt; it.body().data.stream()) // every page becomes a stream of episodes
-            .map(it -&gt; it.episodeName)
-            .filter(Objects::nonNull)
-            .forEach(System.out::println);
-        System.exit(0);
+            .<span style="color:#369">flatMap</span>(it -&gt; it.<span style="color:#369">body</span>().<span style="color:#369">data</span>.<span style="color:#369">stream</span>()) <span style="color:#888">// every page becomes a stream of episodes
+</span><span style="color:#888"></span>            .<span style="color:#369">map</span>(it -&gt; it.<span style="color:#369">episodeName</span>)
+            .<span style="color:#369">filter</span>(Objects::nonNull)
+            .<span style="color:#369">forEach</span>(System.<span style="color:#369">out</span>::println);
+        System.<span style="color:#369">exit</span>(0);
     }
 }
 </code></pre></div>
@@ -994,10 +994,10 @@ public final class PrintBreakingBad {
 </code></pre></div></section><section>
 <h2 id="gradle-minimal-java-build-1">Gradle: minimal java build</h2>
 <p><code>src/main/java/HelloWorld.java</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>public class HelloWorld {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">HelloWorld</span> {
 
-    public static void main(String... args) {
-        System.out.println(&#34;Hello, world!&#34;);
+    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#888;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">main</span>(String... args) {
+        System.<span style="color:#369">out</span>.<span style="color:#369">println</span>(<span style="color:#d20;background-color:#fff0f0">&#34;Hello, world!&#34;</span>);
     }
     
 }
@@ -1103,37 +1103,37 @@ public final class PrintBreakingBad {
 </section><section>
 <h2 id="gradle-our-toy-example">Gradle: our toy example</h2>
 <p><code>src/main/java/it/unibo/ci/PrintBreakingBad.java</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>package it.unibo.ci;
-import com.uwetrottmann.thetvdb.TheTvdb;
-import org.apache.commons.io.IOUtils;
-import retrofit2.Response;
-import java.io.IOException;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.IntStream;
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.jooq.lambda.Unchecked.intFunction;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">package</span> <span style="color:#b06;font-weight:bold">it.unibo.ci</span>;
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">com.uwetrottmann.thetvdb.TheTvdb</span>;
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.apache.commons.io.IOUtils</span>;
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">retrofit2.Response</span>;
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">java.io.IOException</span>;
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">java.util.Objects</span>;
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">java.util.Optional</span>;
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">java.util.stream.IntStream</span>;
+<span style="color:#080;font-weight:bold">import static</span> <span style="color:#b06;font-weight:bold">java.nio.charset.StandardCharsets.UTF_8</span>;
+<span style="color:#080;font-weight:bold">import static</span> <span style="color:#b06;font-weight:bold">org.jooq.lambda.Unchecked.intFunction</span>;
 
-public final class PrintBreakingBad {
+<span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">final</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">PrintBreakingBad</span> {
 
-    private PrintBreakingBad() { }
+    <span style="color:#080;font-weight:bold">private</span> <span style="color:#06b;font-weight:bold">PrintBreakingBad</span>() { }
 
-    public static void main(String... args) throws IOException {
-        final TheTvdb api = new TheTvdb(IOUtils.toString(ClassLoader.getSystemResource(&#34;APIKey&#34;), UTF_8));
-        Optional.of(api.search().series(&#34;Breaking Bad&#34;, null, null, null, &#34;it&#34;).execute())
-            .filter(Response::isSuccessful)
-            .flatMap(response -&gt; response.body().data.stream().findFirst())
-            .stream()
-            .flatMap(serie -&gt; // Every serie becomes a stream of pages
-                IntStream.iterate(1, it -&gt; it + 1)
-                    .mapToObj(intFunction(page -&gt; api.series().episodes(serie.id, page, &#34;it&#34;).execute()))
-                    .takeWhile(Response::isSuccessful)
+    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#888;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">main</span>(String... args) <span style="color:#080;font-weight:bold">throws</span> IOException {
+        <span style="color:#080;font-weight:bold">final</span> TheTvdb api = <span style="color:#080;font-weight:bold">new</span> TheTvdb(IOUtils.<span style="color:#369">toString</span>(ClassLoader.<span style="color:#369">getSystemResource</span>(<span style="color:#d20;background-color:#fff0f0">&#34;APIKey&#34;</span>), UTF_8));
+        Optional.<span style="color:#369">of</span>(api.<span style="color:#369">search</span>().<span style="color:#369">series</span>(<span style="color:#d20;background-color:#fff0f0">&#34;Breaking Bad&#34;</span>, <span style="color:#080;font-weight:bold">null</span>, <span style="color:#080;font-weight:bold">null</span>, <span style="color:#080;font-weight:bold">null</span>, <span style="color:#d20;background-color:#fff0f0">&#34;it&#34;</span>).<span style="color:#369">execute</span>())
+            .<span style="color:#369">filter</span>(Response::isSuccessful)
+            .<span style="color:#369">flatMap</span>(response -&gt; response.<span style="color:#369">body</span>().<span style="color:#369">data</span>.<span style="color:#369">stream</span>().<span style="color:#369">findFirst</span>())
+            .<span style="color:#369">stream</span>()
+            .<span style="color:#369">flatMap</span>(serie -&gt; <span style="color:#888">// Every serie becomes a stream of pages
+</span><span style="color:#888"></span>                IntStream.<span style="color:#369">iterate</span>(1, it -&gt; it + 1)
+                    .<span style="color:#369">mapToObj</span>(intFunction(page -&gt; api.<span style="color:#369">series</span>().<span style="color:#369">episodes</span>(serie.<span style="color:#369">id</span>, page, <span style="color:#d20;background-color:#fff0f0">&#34;it&#34;</span>).<span style="color:#369">execute</span>()))
+                    .<span style="color:#369">takeWhile</span>(Response::isSuccessful)
             )
-            .flatMap(it -&gt; it.body().data.stream()) // every page becomes a stream of episodes
-            .map(it -&gt; it.episodeName)
-            .filter(Objects::nonNull)
-            .forEach(System.out::println);
-        System.exit(0);
+            .<span style="color:#369">flatMap</span>(it -&gt; it.<span style="color:#369">body</span>().<span style="color:#369">data</span>.<span style="color:#369">stream</span>()) <span style="color:#888">// every page becomes a stream of episodes
+</span><span style="color:#888"></span>            .<span style="color:#369">map</span>(it -&gt; it.<span style="color:#369">episodeName</span>)
+            .<span style="color:#369">filter</span>(Objects::nonNull)
+            .<span style="color:#369">forEach</span>(System.<span style="color:#369">out</span>::println);
+        System.<span style="color:#369">exit</span>(0);
     }
 }
 </code></pre></div>
@@ -1174,14 +1174,14 @@ application {
 </section><section>
 <h2 id="gradle-multi-language-projects">Gradle: multi-language projects</h2>
 <p><code>src/main/groovy/HelloGroovy.groovy</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>println &#34;Hello, Groovy&#34;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>println <span style="color:#d20;background-color:#fff0f0">&#34;Hello, Groovy&#34;</span>
 
 </code></pre></div>
 <p><code>src/main/java/HelloWorld.java</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>public class HelloWorld {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">HelloWorld</span> {
 
-    public static void main(String... args) {
-        System.out.println(&#34;Hello, world!&#34;);
+    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#888;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">main</span>(String... args) {
+        System.<span style="color:#369">out</span>.<span style="color:#369">println</span>(<span style="color:#d20;background-color:#fff0f0">&#34;Hello, world!&#34;</span>);
     }
     
 }
@@ -1194,8 +1194,8 @@ application {
 }
 </code></pre></div>
 <p><code>src/main/scala/HelloScala.scala</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>object HelloScala extends App  {
-    println(&#34;Hello Scala&#34;)
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">HelloScala</span> <span style="color:#080;font-weight:bold">extends</span> <span style="color:#b06;font-weight:bold">App</span>  {
+    println(<span style="color:#d20;background-color:#fff0f0">&#34;Hello Scala&#34;</span>)
 }
 </code></pre></div>
 </section><section>
@@ -1318,40 +1318,40 @@ dependencies {
 </section><section>
 <h2 id="quality-assurance-junit--gradle">Quality Assurance: JUnit + Gradle</h2>
 <p><code>src/main/scala/it/unibo/test/Test.scala</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>package it.unibo.test
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">package</span> <span style="color:#b06;font-weight:bold">it.unibo.test</span>
 
-trait Sometrait {
-  def f: Int
-  def g: Int
+<span style="color:#080;font-weight:bold">trait</span> <span style="color:#b06;font-weight:bold">Sometrait</span> {
+  <span style="color:#080;font-weight:bold">def</span> f<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Int</span>
+  <span style="color:#080;font-weight:bold">def</span> g<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Int</span>
 }
 
-object Someobject {
-  def f = 10
-  def g = 77
+<span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">Someobject</span> {
+  <span style="color:#080;font-weight:bold">def</span> f <span style="color:#080;font-weight:bold">=</span> <span style="color:#00d;font-weight:bold">10</span>
+  <span style="color:#080;font-weight:bold">def</span> g <span style="color:#080;font-weight:bold">=</span> <span style="color:#00d;font-weight:bold">77</span>
 }
 </code></pre></div>
 </section><section>
 <h2 id="quality-assurance-junit--gradle-1">Quality Assurance: JUnit + Gradle</h2>
 <p><code>src/test/scala/MyTest.scala</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>import it.unibo.test.{Someobject, Sometrait}
-import org.junit.jupiter.api.Assertions._
-import org.junit.jupiter.api.Test
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">it.unibo.test.</span>{<span style="color:#b06;font-weight:bold">Someobject</span>, <span style="color:#b06;font-weight:bold">Sometrait</span>}
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.junit.jupiter.api.Assertions._</span>
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.junit.jupiter.api.Test</span>
 
-class MyTest {
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyTest</span> {
 
-  @Test
-  def emptySetShouldHaveSizeZero(): Unit = {
-    assertEquals(0, Set.empty.size)
+  <span style="color:#555">@Test</span>
+  <span style="color:#080;font-weight:bold">def</span> emptySetShouldHaveSizeZero()<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Unit</span> = {
+    assertEquals(<span style="color:#00d;font-weight:bold">0</span>, <span style="color:#b06;font-weight:bold">Set</span>.empty.size)
   }
 
-  @Test
-  def thisTestIsActuallyUseless(): Unit = {
-    val someStub = new Sometrait {
-      override def f: Int = 42
-      override def g: Int = ???
+  <span style="color:#555">@Test</span>
+  <span style="color:#080;font-weight:bold">def</span> thisTestIsActuallyUseless()<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Unit</span> = {
+    <span style="color:#080;font-weight:bold">val</span> someStub <span style="color:#080;font-weight:bold">=</span> <span style="color:#080;font-weight:bold">new</span> <span style="color:#b06;font-weight:bold">Sometrait</span> {
+      <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">def</span> f<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Int</span> = <span style="color:#00d;font-weight:bold">42</span>
+      <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">def</span> g<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Int</span> = ???
     }
-    assertEquals(42, someStub.f)
-    assertNotEquals(Someobject.f, someStub.f)
+    assertEquals(<span style="color:#00d;font-weight:bold">42</span>, someStub.f)
+    assertNotEquals(<span style="color:#b06;font-weight:bold">Someobject</span>.f, someStub.f)
   }
 }
 </code></pre></div>
@@ -1383,35 +1383,35 @@ dependencies {
 <h2 id="quality-assurance-scalatest--scoverage">Quality Assurance: Scalatest + Scoverage</h2>
 <p>Let&rsquo;s switch <em>testing framework</em> and enable <em>coverage</em></p>
 <p><code>src/main/scala/it/unibo/test/Test.scala</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>package it.unibo.test
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">package</span> <span style="color:#b06;font-weight:bold">it.unibo.test</span>
 
-trait Sometrait {
-  def f: Int
-  def g: Int
+<span style="color:#080;font-weight:bold">trait</span> <span style="color:#b06;font-weight:bold">Sometrait</span> {
+  <span style="color:#080;font-weight:bold">def</span> f<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Int</span>
+  <span style="color:#080;font-weight:bold">def</span> g<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Int</span>
 }
 
-object Someobject {
-  def f = 10
-  def g = 77
+<span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">Someobject</span> {
+  <span style="color:#080;font-weight:bold">def</span> f <span style="color:#080;font-weight:bold">=</span> <span style="color:#00d;font-weight:bold">10</span>
+  <span style="color:#080;font-weight:bold">def</span> g <span style="color:#080;font-weight:bold">=</span> <span style="color:#00d;font-weight:bold">77</span>
 }
 </code></pre></div>
 </section><section>
 <h2 id="quality-assurance-scalatest--scoverage-1">Quality Assurance: Scalatest + Scoverage</h2>
 <p><code>src/test/scala/Test.scala</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>import it.unibo.test.Sometrait
-import org.scalamock.scalatest.MockFactory
-import org.scalatest.funsuite.AnyFunSuite
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">it.unibo.test.Sometrait</span>
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.scalamock.scalatest.MockFactory</span>
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.scalatest.funsuite.AnyFunSuite</span>
 
-class MyTests extends AnyFunSuite with MockFactory {
-  test(&#34;An empty Set should have size 0&#34;) {
-    println(&#34;Test1&#34;)
-    assert(Set.empty.size == 0)
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyTests</span> <span style="color:#080;font-weight:bold">extends</span> <span style="color:#b06;font-weight:bold">AnyFunSuite</span> <span style="color:#080;font-weight:bold">with</span> <span style="color:#b06;font-weight:bold">MockFactory</span> {
+  test(<span style="color:#d20;background-color:#fff0f0">&#34;An empty Set should have size 0&#34;</span>) {
+    println(<span style="color:#d20;background-color:#fff0f0">&#34;Test1&#34;</span>)
+    assert(<span style="color:#b06;font-weight:bold">Set</span>.empty.size == <span style="color:#00d;font-weight:bold">0</span>)
   }
-  test(&#34;Some useless test&#34;) {
-    println(&#34;Test2&#34;)
-    val someStub = stub[Sometrait]
-    (someStub.f _).when().returns(42)
-    assert(someStub.f == 42)
+  test(<span style="color:#d20;background-color:#fff0f0">&#34;Some useless test&#34;</span>) {
+    println(<span style="color:#d20;background-color:#fff0f0">&#34;Test2&#34;</span>)
+    <span style="color:#080;font-weight:bold">val</span> someStub <span style="color:#080;font-weight:bold">=</span> stub[<span style="color:#888;font-weight:bold">Sometrait</span>]
+    (someStub.f <span style="color:#080;font-weight:bold">_</span>).when().returns(<span style="color:#00d;font-weight:bold">42</span>)
+    assert(someStub.f == <span style="color:#00d;font-weight:bold">42</span>)
   }
 }
 </code></pre></div>
