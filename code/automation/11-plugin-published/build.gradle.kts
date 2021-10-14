@@ -7,10 +7,6 @@ plugins {
 
 group = "it.unibo.lss2020"
 
-gitSemVer {
-    version = computeGitSemVer()
-}
-
 repositories {
     jcenter()
 }
