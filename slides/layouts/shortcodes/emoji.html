@@ -1,1 +1,1 @@
-{{ emojify (.Get 0) }}
+{{ emojify (delimit (slice ":" (.Get 0) ":") "") }}

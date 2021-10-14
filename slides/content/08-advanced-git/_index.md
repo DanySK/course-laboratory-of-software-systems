@@ -47,7 +47,7 @@ Git supports two types of tags:
 
 Nice people *signs* commits, certifying their authorship.
 
-* Signed commits appear with a {{< emoji ":white_check_mark:" >}} on GitHub
+* Signed commits appear with a {{< emoji "white_check_mark" >}} on GitHub
 
 If you do not have a signature yet, [time to create one](https://central.sonatype.org/pages/working-with-pgp-signatures.html)
 * Creation: `gpg --gen-key`
@@ -470,3 +470,14 @@ Changes into submodules are dealt with as if they were on a *separate repository
 
 ## Removing submodules
 
+No single built-in command {{< emoji "expressionless" >}}
+
+1. De-init the submodule
+  * `git submodule deinit -f -- sub/module/path`
+2. Cleanup the submodule worktree
+  * `rm -rf .git/modules/sub/module/path`
+  * Failing to do so will make it impossible to re-add the module in future, as the repository will appear corrupted
+3. Remove the files from the work tree
+  * `git rm -f sub/module/path`
+
+**Note**: Do not use a trailing slash on the submodule path when using these commands!
