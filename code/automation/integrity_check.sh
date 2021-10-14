@@ -1,4 +1,6 @@
 #!/bin/sh
+set -e
+
 cd 00*
 gradle helloWorld
 cd ..
