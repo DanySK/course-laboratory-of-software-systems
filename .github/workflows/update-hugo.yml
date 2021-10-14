@@ -21,7 +21,5 @@ jobs:
           sed -i .github/workflows/build-and-deploy.yml -e "s/HUGO_VERSION\\: \".*\"/HUGO_VERSION: \"$HUGO_VERSION\"/"
       - name: Open pull request
         uses: peter-evans/create-pull-request@v3
-        env:
-          PR_TOKEN: ${{ secrets.AUTOMERGE_TOKEN }}
         with:
-          token: PR_TOKEN
+          token: ${{ secrets.AUTOMERGE_TOKEN }}
