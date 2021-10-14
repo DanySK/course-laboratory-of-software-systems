@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/css/reset.css">
 <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/css/reveal.css">
-  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.be512a7a38c6a076f199e8fc44e3e94a0640dc07526d85ed758ad2fc13bdb8fe.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
+  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.0ab8c954a02adc8ff8cfc306d8ab3bd3463c057f69a5aaef066c5efaa444854e.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
     
 <link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
 <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
@@ -27,7 +27,7 @@
     <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
 <h2 id="kotlin-for-scala-developers">Kotlin (for Scala developers)</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2021-10-13
+2021-10-14
 
 </section><section>
 <h1 id="why-kotlin">Why Kotlin</h1>
@@ -70,7 +70,7 @@
 <h1 id="kotlin-101">Kotlin 101</h1>
 <h2 id="defining-functions-constant-variables">Defining functions, constant, variables</h2>
 <p>Similar to Scala. The keyword <code>def</code> is replaced by <code>fun</code></p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">x</span> = <span style="color:#00d;font-weight:bold">10</span> <span style="color:#888">// constant
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">x</span> = <span style="color:#00d;font-weight:bold">10</span> <span style="color:#888">// constant
 </span><span style="color:#888"></span><span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">y</span> = <span style="color:#00d;font-weight:bold">20</span> <span style="color:#888">// variable, can be reassigned
 </span><span style="color:#888"></span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">foo</span>() = <span style="color:#00d;font-weight:bold">20</span> <span style="color:#888">// function definition, single expression
 </span><span style="color:#888"></span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">bar</span>(): Int { <span style="color:#888">// same as above with multiple expression
@@ -88,7 +88,7 @@
 <li>Types are annotated after the parameter name</li>
 <li>Invocation can be positional or by name, with the rule that once a named parameter is used, subsequent parameters must be named as well</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">foo</span>(a: Int = <span style="color:#00d;font-weight:bold">0</span>, b: String = <span style="color:#d20;background-color:#fff0f0">&#34;foo&#34;</span>): Int = TODO() <span style="color:#888">// TODO() is a builtin function throwing a `NotImplementedError`
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">foo</span>(a: Int = <span style="color:#00d;font-weight:bold">0</span>, b: String = <span style="color:#d20;background-color:#fff0f0">&#34;foo&#34;</span>): Int = TODO() <span style="color:#888">// TODO() is a builtin function throwing a `NotImplementedError`
 </span><span style="color:#888"></span>foo(<span style="color:#00d;font-weight:bold">1</span>, <span style="color:#d20;background-color:#fff0f0">&#34;bar&#34;</span>) <span style="color:#888">// OK, positional
 </span><span style="color:#888"></span>foo(a = <span style="color:#00d;font-weight:bold">1</span>, b = <span style="color:#d20;background-color:#fff0f0">&#34;bar&#34;</span>) <span style="color:#888">// OK, named
 </span><span style="color:#888"></span>foo(<span style="color:#00d;font-weight:bold">1</span>, b = <span style="color:#d20;background-color:#fff0f0">&#34;bar&#34;</span>) <span style="color:#888">// OK, hybrid
@@ -101,11 +101,11 @@
 <h1 id="kotlin-101-2">Kotlin 101</h1>
 <h2 id="top-level-functions">Top level functions</h2>
 <p>Kotlin supports top level functions</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">foo</span>() {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">foo</span>() {
     ...
 }
 </code></pre></div><p>By contrast, Scala requires to put them in an <code>object</code></p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">Foo</span> {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">Foo</span> {
     <span style="color:#080;font-weight:bold">def</span> foo() {
         ...
     }
@@ -116,9 +116,9 @@ The behaviour can be controlled via annotations.</p>
 <h1 id="kotlin-101-3">Kotlin 101</h1>
 <h2 id="program-entry-point">Program entry point</h2>
 <p>Naming a function <code>main</code> makes it a valid entry point:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">main</span>() = println(<span style="color:#d20;background-color:#fff0f0">&#34;Hello World&#34;</span>) <span style="color:#888">// Valid entry point
-</span></code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">main</span>(arguments: Array&lt;String&gt;) = println(<span style="color:#d20;background-color:#fff0f0">&#34;Hello World&#34;</span>) <span style="color:#888">// Valid entry point
-</span></code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">main</span>(arguments: Array&lt;String&gt;) {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">main</span>() = println(<span style="color:#d20;background-color:#fff0f0">&#34;Hello World&#34;</span>) <span style="color:#888">// Valid entry point
+</span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">main</span>(arguments: Array&lt;String&gt;) = println(<span style="color:#d20;background-color:#fff0f0">&#34;Hello World&#34;</span>) <span style="color:#888">// Valid entry point
+</span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">main</span>(arguments: Array&lt;String&gt;) {
     println(<span style="color:#d20;background-color:#fff0f0">&#34;Hello World&#34;</span>) <span style="color:#888">// Return type is Unit, no need to return
 </span><span style="color:#888"></span>} 
 </code></pre></div></section><section>
@@ -132,7 +132,7 @@ Nullable types are suffixed by a <code>?</code> and require special handling
 <ul>
 <li>Nullables are the Kotlin way to deal with <code>Option</code> types</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">foo</span> = <span style="color:#d20;background-color:#fff0f0">&#34;bar&#34;</span> <span style="color:#888">// Okay, type is String
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">foo</span> = <span style="color:#d20;background-color:#fff0f0">&#34;bar&#34;</span> <span style="color:#888">// Okay, type is String
 </span><span style="color:#888"></span><span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">baz</span>: String? = foo <span style="color:#888">// Okay, normal types can be assigned to nullables
 </span><span style="color:#888"></span>foo = baz <span style="color:#888">// error: type mismatch: inferred type is String? but String was expected
 </span><span style="color:#888"></span>foo = <span style="color:#080;font-weight:bold">null</span> <span style="color:#888">// error: null can not be a value of a non-null type String
@@ -140,15 +140,15 @@ Nullable types are suffixed by a <code>?</code> and require special handling
 <h1 id="kotlin-101-5">Kotlin 101</h1>
 <h2 id="accessing-nullable-types">Accessing nullable types</h2>
 <p>Nullable types memebers can&rsquo;t be accessed by <code>.</code>.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">baz</span>: String? = <span style="color:#d20;background-color:#fff0f0">&#34;foo&#34;</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">baz</span>: String? = <span style="color:#d20;background-color:#fff0f0">&#34;foo&#34;</span>
 baz.length <span style="color:#888">// error: only safe (?.) or non-null asserted (!!.) calls are allowed...
 </span><span style="color:#888">// on a nullable receiver of type String?
 </span></code></pre></div><h3 id="safe-call-operator-">Safe call operator <code>?.</code></h3>
 <p>Performs runtime access to a member of a nullable object if it&rsquo;s not <code>null</code>, otherwise returns <code>null</code></p>
 <ul>
-<li>Somewhat similar to Scala&rsquo;s <code>Option</code>'s <code>map</code> (but no monad involved)</li>
+<li>Somewhat similar to Scala&rsquo;s <code>Option</code>&rsquo;s <code>map</code> (but no monad involved)</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">baz</span>: String? = <span style="color:#d20;background-color:#fff0f0">&#34;foo&#34;</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">baz</span>: String? = <span style="color:#d20;background-color:#fff0f0">&#34;foo&#34;</span>
 baz?.length <span style="color:#888">// returns 3, return type is &#34;Int?&#34;, in fact...
 </span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">bar</span>: Int = baz?.length <span style="color:#888">// ...error: type mismatch: inferred type is Int? but Int was expected
 </span><span style="color:#888"></span>baz = <span style="color:#080;font-weight:bold">null</span>
@@ -166,7 +166,7 @@ baz?.length <span style="color:#888">// returns null, return type is still &#34;
 </ul>
 </li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">baz</span>: String? = <span style="color:#d20;background-color:#fff0f0">&#34;foo&#34;</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">baz</span>: String? = <span style="color:#d20;background-color:#fff0f0">&#34;foo&#34;</span>
 baz!!<span class='fragment '  style="color: #888;"> // Returns &#39;foo&#39;, type String (non nullable)</span>
 baz!!.length<span class='fragment '  style="color: #888;"> // returns 3, return type is Int</span>
 baz = <span style="color:#080;font-weight:bold">null</span>
@@ -179,7 +179,7 @@ baz!!<span class='fragment '  style="color: #888;"> // throws a KotlinNullPointe
 <ul>
 <li>Returns the left operand if it&rsquo;s not <code>null</code>, otherwise the right one</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">baz</span>: String? = <span style="color:#d20;background-color:#fff0f0">&#34;foo&#34;</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">baz</span>: String? = <span style="color:#d20;background-color:#fff0f0">&#34;foo&#34;</span>
 baz ?: <span style="color:#d20;background-color:#fff0f0">&#34;bar&#34;</span> <span style="color:#888">// Returns &#34;foo&#34;, type String
 </span><span style="color:#888"></span>baz?.length ?: <span style="color:#00d;font-weight:bold">0</span> <span style="color:#888">// returns 3, return type is Int
 </span><span style="color:#888"></span>baz = <span style="color:#080;font-weight:bold">null</span>
@@ -310,10 +310,10 @@ baz ?: <span style="color:#d20;background-color:#fff0f0">&#34;bar&#34;</span> <s
 <p>Implicit type conversion to &ldquo;bigger&rdquo; types is source of nasty errors when automatic boxing is involved.
 <br/>
 Consider the following Scala code:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#b06;font-weight:bold">Double</span>.<span style="color:#b06;font-weight:bold">NaN</span> == <span style="color:#b06;font-weight:bold">Double</span>.<span style="color:#b06;font-weight:bold">NaN</span> <span style="color:#888">// false, OK, as every sane language
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#b06;font-weight:bold">Double</span>.<span style="color:#b06;font-weight:bold">NaN</span> == <span style="color:#b06;font-weight:bold">Double</span>.<span style="color:#b06;font-weight:bold">NaN</span> <span style="color:#888">// false, OK, as every sane language
 </span><span style="color:#888"></span><span style="color:#b06;font-weight:bold">Double</span>.<span style="color:#b06;font-weight:bold">NaN</span> equals <span style="color:#b06;font-weight:bold">Double</span>.<span style="color:#b06;font-weight:bold">NaN</span> <span style="color:#888">// true! Boxing + Singleton make equality inconsistent!
 </span></code></pre></div><p>Another example:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> a<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Int</span> = <span style="color:#00d;font-weight:bold">1</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> a<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Int</span> = <span style="color:#00d;font-weight:bold">1</span>
 <span style="color:#080;font-weight:bold">val</span> b<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Long</span> = a
 a == b <span style="color:#888">// true
 </span><span style="color:#888"></span>a equals b <span style="color:#888">// false
@@ -322,7 +322,7 @@ a == b <span style="color:#888">// true
 <h1 id="kotlin-101-15">Kotlin 101</h1>
 <h2 id="numeric-type-conversions-in-kotlin">Numeric type conversions in Kotlin</h2>
 <p>Kotlin numeric types are converted manually to prevent these issues:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">i</span>: Int = <span style="color:#00d;font-weight:bold">1</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">i</span>: Int = <span style="color:#00d;font-weight:bold">1</span>
 <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">l</span>: Long = <span style="color:#00d;font-weight:bold">1</span>
 <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">l</span>: Long = i<span class='fragment '  style="color: #888;"> // error: type mismatch: inferred type is Int but Long was expected</span>
 <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">l</span>: Long = i.toLong()<span class='fragment '  style="color: #888;"> // OK</span>
@@ -331,7 +331,7 @@ l + i<span class='fragment '  style="color: #888;"> // OK, operators are overloa
 </code></pre></div></section><section>
 <h1 id="kotlin-101-16">Kotlin 101</h1>
 <h2 id="numeric-literals">Numeric literals</h2>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#00d;font-weight:bold">1234567</span> <span style="color:#888">// Literal Int
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#00d;font-weight:bold">1234567</span> <span style="color:#888">// Literal Int
 </span><span style="color:#888"></span><span style="color:#00d;font-weight:bold">1</span>_234_567 <span style="color:#888">// Literal Int, underscored syntax (preferable)
 </span><span style="color:#888"></span><span style="color:#00d;font-weight:bold">123L</span> <span style="color:#888">// Literal Long
 </span><span style="color:#888"></span><span style="color:#00d;font-weight:bold">1.0</span> <span style="color:#888">// Literal Double
@@ -355,11 +355,11 @@ l + i<span class='fragment '  style="color: #888;"> // OK, operators are overloa
 <li><code>$</code> begins a template expression</li>
 <li>Curly brackets must be used to disambiguate in case of calls inside the template: <code>${}</code></li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">batman</span> = <span style="color:#d20;background-color:#fff0f0">&#34;Batman&#34;</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">batman</span> = <span style="color:#d20;background-color:#fff0f0">&#34;Batman&#34;</span>
 <span style="color:#888">// Groovy templating and Java-style concatenation both work
-</span><span style="color:#888"></span><span style="color:#d20;background-color:#fff0f0">&#34;${Double.NaN}&#34;</span>.repeat(<span style="color:#00d;font-weight:bold">10</span>) + <span style="color:#d20;background-color:#fff0f0">&#34; $batman!&#34;</span><span class='fragment '  style="color: #888;"> // NaNNaNNaNNaNNaNNaNNaNNaNNaNaN Batman!</span>
-<span style="color:#d20;background-color:#fff0f0">&#34;Batman is $batman.length characters long&#34;</span><span class='fragment '  style="color: #888;"> // Batman is Batman.length characters long</span>
-<span style="color:#d20;background-color:#fff0f0">&#34;Batman is ${batman.length} characters long&#34;</span><span class='fragment '  style="color: #888;"> // Batman is 6 characters long</span>
+</span><span style="color:#888"></span><span style="color:#d20;background-color:#fff0f0">&#34;</span><span style="color:#33b;background-color:#fff0f0">${Double.NaN}</span><span style="color:#d20;background-color:#fff0f0">&#34;</span>.repeat(<span style="color:#00d;font-weight:bold">10</span>) + <span style="color:#d20;background-color:#fff0f0">&#34; </span><span style="color:#33b;background-color:#fff0f0">$batman</span><span style="color:#d20;background-color:#fff0f0">!&#34;</span><span class='fragment '  style="color: #888;"> // NaNNaNNaNNaNNaNNaNNaNNaNNaNaN Batman!</span>
+<span style="color:#d20;background-color:#fff0f0">&#34;Batman is </span><span style="color:#33b;background-color:#fff0f0">$batman</span><span style="color:#d20;background-color:#fff0f0">.length characters long&#34;</span><span class='fragment '  style="color: #888;"> // Batman is Batman.length characters long</span>
+<span style="color:#d20;background-color:#fff0f0">&#34;Batman is </span><span style="color:#33b;background-color:#fff0f0">${batman.length}</span><span style="color:#d20;background-color:#fff0f0"> characters long&#34;</span><span class='fragment '  style="color: #888;"> // Batman is 6 characters long</span>
 </code></pre></div></section><section>
 <h1 id="kotlin-101-18">Kotlin 101</h1>
 <h2 id="raw-strings">Raw Strings</h2>
@@ -374,14 +374,14 @@ l + i<span class='fragment '  style="color: #888;"> // OK, operators are overloa
 </ul>
 </li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">dante</span> = <span style="color:#d20;background-color:#fff0f0">&#34;&#34;&#34;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">dante</span> = <span style="color:#d20;background-color:#fff0f0">&#34;&#34;&#34;
 </span><span style="color:#d20;background-color:#fff0f0">    Tanto gentile e tanto onesta pare
 </span><span style="color:#d20;background-color:#fff0f0">    la donna mia quand&#39;ella altrui saluta,
 </span><span style="color:#d20;background-color:#fff0f0">    ch&#39;ogne lingua devèn, tremando, muta
 </span><span style="color:#d20;background-color:#fff0f0">    e li occhi non l&#39;ardiscon di guardare.
 </span><span style="color:#d20;background-color:#fff0f0">    &#34;&#34;&#34;</span>.trimIndent() <span style="color:#888">// Indentation can be trimmed
-</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">finalWordsEndingInA</span> = <span style="color:#d20;background-color:#fff0f0">&#34;&#34;&#34;\W*(\w*a)\W*${&#39;$&#39;}&#34;&#34;&#34;</span>.toRegex(RegexOption.MULTILINE) <span style="color:#888">// See how $ must be escaped
-</span><span style="color:#888"></span>finalWordsEndingInA.findAll(dante).map { it.groups[<span style="color:#00d;font-weight:bold">1</span>]?.value }.toList() <span class='fragment '  style="color: #888;"> // [saluta, muta]</span>
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">finalWordsEndingInA</span> = <span style="color:#d20;background-color:#fff0f0">&#34;&#34;&#34;\W*(\w*a)\W*</span><span style="color:#33b;background-color:#fff0f0">${&#39;$&#39;}</span><span style="color:#d20;background-color:#fff0f0">&#34;&#34;&#34;</span>.toRegex(RegexOption.MULTILINE) <span style="color:#888">// See how $ must be escaped
+</span><span style="color:#888"></span>finalWordsEndingInA.findAll(dante).map { <span style="color:#080;font-weight:bold">it</span>.groups[<span style="color:#00d;font-weight:bold">1</span>]?.value }.toList() <span class='fragment '  style="color: #888;"> // [saluta, muta]</span>
 </code></pre></div></section><section>
 <h1 id="kotlin-101-19">Kotlin 101</h1>
 <h2 id="packages-and-imports">Packages and imports</h2>
@@ -391,7 +391,7 @@ Imports go at the top of file, no locally scoped imports as in Scala</p>
 <ul>
 <li>There are no <code>implicit</code>s in Kotlin, the <code>import</code> statement does not modify context</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">package</span> <span style="color:#b06;font-weight:bold">it.unibo.lss.experiments</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">package</span> <span style="color:#b06;font-weight:bold">it.unibo.lss.experiments</span>
 <span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">it.unibo.lss.ddd.Entity</span> <span style="color:#888">// Available as Entity locally
 </span><span style="color:#888"></span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.company.someproduct.Entity</span> <span style="color:#080;font-weight:bold">as</span> SomeProductEntity <span style="color:#888">// Aliasing, accessible as SomeProductEntity
 </span></code></pre></div></section><section>
@@ -402,8 +402,8 @@ Imports go at the top of file, no locally scoped imports as in Scala</p>
 <li>Typically the last one (but not mandatorily as in Java)</li>
 <li>Maps to an <code>Array&lt;out T&gt;</code></li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">printall</span>(<span style="color:#080;font-weight:bold">vararg</span> strings: String) {
-    strings.forEach { println(it) } <span style="color:#888">// We&#39;ll discuss this syntax later...
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">printall</span>(<span style="color:#080;font-weight:bold">vararg</span> strings: String) {
+    strings.forEach { println(<span style="color:#080;font-weight:bold">it</span>) } <span style="color:#888">// We&#39;ll discuss this syntax later...
 </span><span style="color:#888"></span>}
 printall(<span style="color:#d20;background-color:#fff0f0">&#34;Lorem&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;ipsum&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;dolor&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;sit&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;amet&#34;</span>)
 </code></pre></div></section><section>
@@ -414,9 +414,9 @@ printall(<span style="color:#d20;background-color:#fff0f0">&#34;Lorem&#34;</span
 <li>Arbitrary symbols are not accepted as valid function names</li>
 <li>&hellip;unless you explicitly surround them with backtics</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">def</span> ##<span style="color:#a61717;background-color:#e3d2d2">°</span>@??%&amp;@^^() <span style="color:#080;font-weight:bold">=</span> <span style="color:#00d;font-weight:bold">1</span> <span style="color:#888">// Super ok for Scala: def $hash$hash$u00B0$at$qmark$qmark$percent$amp$at$up$up(): Int
-</span></code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#a61717;background-color:#e3d2d2">`##°@??%&amp;@^^`() = 1 // </span><span style="color:#06b;font-weight:bold">OK</span>
-<span style="color:#a61717;background-color:#e3d2d2">`##°@</span>??%&amp;<span style="color:#a61717;background-color:#e3d2d2">@</span>^^<span style="color:#a61717;background-color:#e3d2d2">`</span>() <span style="color:#888">// 1. Must be invoked with backticks!
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">def</span> ##<span style="color:#a61717;background-color:#e3d2d2">°</span>@??%&amp;@^^() <span style="color:#080;font-weight:bold">=</span> <span style="color:#00d;font-weight:bold">1</span> <span style="color:#888">// Super ok for Scala: def $hash$hash$u00B0$at$qmark$qmark$percent$amp$at$up$up(): Int
+</span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">`##°@??%&amp;@^^`</span>() = <span style="color:#00d;font-weight:bold">1</span> <span style="color:#888">// OK
+</span><span style="color:#888"></span><span style="color:#a61717;background-color:#e3d2d2">`##°@</span>??%&amp;<span style="color:#a61717;background-color:#e3d2d2">@</span>^^<span style="color:#a61717;background-color:#e3d2d2">`</span>() <span style="color:#888">// 1. Must be invoked with backticks!
 </span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">`val`</span> = <span style="color:#d20;background-color:#fff0f0">&#34;Hey look I can name things with keywords!&#34;</span>
 <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">`names can also contain spaces`</span> = <span style="color:#00d;font-weight:bold">1</span>
 </code></pre></div><ul>
@@ -424,14 +424,14 @@ printall(<span style="color:#d20;background-color:#fff0f0">&#34;Lorem&#34;</span
 <li>It might be needed for interoperability with other languages, e.g. if a Java field is named <code>val</code></li>
 <li>Tolerated in tests with Junit (but Kotlin-native suites as Kotest do not need it)</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">JunitTest</span> {
-    @Test <span style="color:#080;font-weight:bold">fun</span> <span style="color:#a61717;background-color:#e3d2d2">`404 </span><span style="color:#06b;font-weight:bold">errors</span> should cause a wait and retry<span style="color:#a61717;background-color:#e3d2d2">`</span>() = TODO() <span style="color:#888">// Nice and very clear name
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">JunitTest</span> {
+    <span style="color:#555">@Test</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">`404 errors should cause a wait and retry`</span>() = TODO() <span style="color:#888">// Nice and very clear name
 </span><span style="color:#888"></span>}
 </code></pre></div></section><section>
 <h1 id="kotlin-101-22">Kotlin 101</h1>
 <h2 id="local-functions">Local functions</h2>
 <p>Functions can contain other functions (as in Scala)</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">factorial</span>(n: UInt): ULong {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">factorial</span>(n: UInt): ULong {
     <span style="color:#888">// tailrec forces optimization of tail recursion (and blocks compilation if recursion is non-tail)
 </span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">tailrec</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">factorialWithAccumulator</span>(current: UInt, accumulator: ULong): ULong = <span style="color:#080;font-weight:bold">when</span> {
         current &gt;= n -&gt; accumulator * current
@@ -464,14 +464,14 @@ printall(<span style="color:#d20;background-color:#fff0f0">&#34;Lorem&#34;</span
 <ul>
 <li>Same as Java, but with <em>visibility of variables defined in the <code>do</code>-block</em></li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">kotlin.random.Random</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">kotlin.random.Random</span>
 <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">lucky</span> = <span style="color:#00d;font-weight:bold">6</span>
 <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">attempts</span> = <span style="color:#00d;font-weight:bold">0</span>
 <span style="color:#080;font-weight:bold">do</span> {
     <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">draw</span> = Random.nextInt(lucky + <span style="color:#00d;font-weight:bold">1</span>)
     attempts++
 } <span style="color:#080;font-weight:bold">while</span> (draw != lucky) <span style="color:#888">// draw is visible here
-</span><span style="color:#888"></span>println(<span style="color:#d20;background-color:#fff0f0">&#34;Launched $attempts dice before a lucky shot&#34;</span>)
+</span><span style="color:#888"></span>println(<span style="color:#d20;background-color:#fff0f0">&#34;Launched </span><span style="color:#33b;background-color:#fff0f0">$attempts</span><span style="color:#d20;background-color:#fff0f0"> dice before a lucky shot&#34;</span>)
 </code></pre></div></section><section>
 <h1 id="kotlin-101----flow-control-3">Kotlin 101 &ndash; Flow control</h1>
 <h3 id="when"><code>when</code></h3>
@@ -480,7 +480,7 @@ printall(<span style="color:#d20;background-color:#fff0f0">&#34;Lorem&#34;</span
 The <code>when</code> block is somewhat a mild surrogate, more similar to a <code>switch</code> on steroids
 <br/>
 The base version (without subject) is a more elegant &ldquo;<code>if</code>/<code>else if</code>/<code>else</code>&rdquo; chain</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">countBatmans</span>(subject: String) = <span style="color:#080;font-weight:bold">when</span> {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">countBatmans</span>(subject: String) = <span style="color:#080;font-weight:bold">when</span> {
     subject.length &lt; <span style="color:#d20;background-color:#fff0f0">&#34;batman&#34;</span>.length -&gt; <span style="color:#00d;font-weight:bold">0</span>
     subject.length &lt; <span style="color:#00d;font-weight:bold">2</span> * <span style="color:#d20;background-color:#fff0f0">&#34;batman&#34;</span>.length &amp;&amp; subject.contains(<span style="color:#d20;background-color:#fff0f0">&#34;batman&#34;</span>) -&gt; <span style="color:#00d;font-weight:bold">1</span>
     <span style="color:#080;font-weight:bold">else</span> -&gt; <span style="color:#d20;background-color:#fff0f0">&#34;.*?(batman)&#34;</span>.toRegex().findAll(subject).count().toInt()
@@ -492,7 +492,7 @@ The base version (without subject) is a more elegant &ldquo;<code>if</code>/<cod
 <h1 id="kotlin-101----flow-control-4">Kotlin 101 &ndash; Flow control</h1>
 <h3 id="when-subject"><code>when (subject)</code></h3>
 <p>Checks if the value of subjects is the same of the expression on the right</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">baseForSingleDigitOrNull</span>(digit: UInt) = <span style="color:#080;font-weight:bold">when</span>(digit) {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">baseForSingleDigitOrNull</span>(digit: UInt) = <span style="color:#080;font-weight:bold">when</span>(digit) {
     <span style="color:#00d;font-weight:bold">0u</span>, <span style="color:#00d;font-weight:bold">1u</span> -&gt; <span style="color:#d20;background-color:#fff0f0">&#34;binary&#34;</span>
     <span style="color:#00d;font-weight:bold">2u</span> -&gt; <span style="color:#d20;background-color:#fff0f0">&#34;ternary&#34;</span>
     <span style="color:#080;font-weight:bold">in</span> <span style="color:#00d;font-weight:bold">0u</span>..<span style="color:#00d;font-weight:bold">7u</span> -&gt; <span style="color:#d20;background-color:#fff0f0">&#34;octal&#34;</span> <span style="color:#888">// This is a range!
@@ -503,7 +503,7 @@ The base version (without subject) is a more elegant &ldquo;<code>if</code>/<cod
 </code></pre></div><ul>
 <li><code>when</code> with subject can be used to elegantly check for subtypes</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">splitAnything</span>(input: Any) = <span style="color:#080;font-weight:bold">when</span>(input) {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">splitAnything</span>(input: Any) = <span style="color:#080;font-weight:bold">when</span>(input) {
     <span style="color:#080;font-weight:bold">is</span> Int -&gt; input / <span style="color:#00d;font-weight:bold">2</span> <span style="color:#888">// No need to cast! The compiler infers type automatically (smart cast)
 </span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">is</span> String -&gt; input.substring(input.length / <span style="color:#00d;font-weight:bold">2</span>)
     <span style="color:#080;font-weight:bold">is</span> Double -&gt; input / <span style="color:#00d;font-weight:bold">2</span>
@@ -524,11 +524,11 @@ The base version (without subject) is a more elegant &ldquo;<code>if</code>/<cod
 <li>Any expression can be labeled: <code>label@ 1</code> is a valid expression</li>
 <li><code>break</code>, <code>continue</code>, and <code>return</code> can be <em>qualified</em> with a label</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>outerloop<span style="color:#a61717;background-color:#e3d2d2">@</span> <span style="color:#080;font-weight:bold">for</span> (i <span style="color:#080;font-weight:bold">in</span> <span style="color:#00d;font-weight:bold">1.</span>.<span style="color:#00d;font-weight:bold">100</span>) {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>outerloop<span style="color:#a61717;background-color:#e3d2d2">@</span> <span style="color:#080;font-weight:bold">for</span> (i <span style="color:#080;font-weight:bold">in</span> <span style="color:#00d;font-weight:bold">1.</span>.<span style="color:#00d;font-weight:bold">100</span>) {
     <span style="color:#080;font-weight:bold">for</span> (j <span style="color:#080;font-weight:bold">in</span> <span style="color:#00d;font-weight:bold">1.</span>.<span style="color:#00d;font-weight:bold">100</span>) {
         <span style="color:#080;font-weight:bold">if</span> (i * j == i + j) {
-            println(<span style="color:#d20;background-color:#fff0f0">&#34;$i * $j equals $i + $j&#34;</span>)
-            <span style="color:#080;font-weight:bold">break</span>@outerloop <span style="color:#888">// Qualified break
+            println(<span style="color:#d20;background-color:#fff0f0">&#34;</span><span style="color:#33b;background-color:#fff0f0">$i</span><span style="color:#d20;background-color:#fff0f0"> * </span><span style="color:#33b;background-color:#fff0f0">$j</span><span style="color:#d20;background-color:#fff0f0"> equals </span><span style="color:#33b;background-color:#fff0f0">$i</span><span style="color:#d20;background-color:#fff0f0"> + </span><span style="color:#33b;background-color:#fff0f0">$j</span><span style="color:#d20;background-color:#fff0f0">&#34;</span>)
+            <span style="color:#080;font-weight:bold">break</span><span style="color:#555">@outerloop</span> <span style="color:#888">// Qualified break
 </span><span style="color:#888"></span>        }
     }
 }
@@ -544,7 +544,7 @@ The base version (without subject) is a more elegant &ldquo;<code>if</code>/<cod
 </li>
 <li>Objecs get built from classes by just invoking the class name:</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Foo</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Foo</span>
 Foo() <span style="color:#888">// a new Foo is created, no new keyword
 </span></code></pre></div></section><section>
 <h1 id="kotlin-102----oop-1">Kotlin 102 &ndash; OOP</h1>
@@ -554,7 +554,7 @@ Foo() <span style="color:#888">// a new Foo is created, no new keyword
 <thead>
 <tr>
 <th>Language / Member Type</th>
-<th align="center">Fields</th>
+<th style="text-align:center">Fields</th>
 <th>Methods</th>
 <th>Properties</th>
 </tr>
@@ -562,25 +562,25 @@ Foo() <span style="color:#888">// a new Foo is created, no new keyword
 <tbody>
 <tr>
 <td>Java</td>
-<td align="center"><em>Yes</em></td>
+<td style="text-align:center"><em>Yes</em></td>
 <td><em>Yes</em></td>
 <td><strong>No</strong></td>
 </tr>
 <tr>
 <td>Scala</td>
-<td align="center"><em>Yes</em></td>
+<td style="text-align:center"><em>Yes</em></td>
 <td><em>Yes</em></td>
 <td><strong>No</strong></td>
 </tr>
 <tr>
 <td>Kotlin</td>
-<td align="center"><strong>No</strong> (Hidden)</td>
+<td style="text-align:center"><strong>No</strong> (Hidden)</td>
 <td><em>Yes</em></td>
 <td><em>Yes</em></td>
 </tr>
 <tr>
 <td>C#</td>
-<td align="center"><em>Yes</em></td>
+<td style="text-align:center"><em>Yes</em></td>
 <td><em>Yes</em></td>
 <td><em>Yes</em></td>
 </tr>
@@ -605,15 +605,15 @@ and provide access only via <code>get</code>/<code>set</code> methods: the actua
 </section><section>
 <h1 id="kotlin-102----oop-3">Kotlin 102 &ndash; OOP</h1>
 <h2 id="defining-properties-for-classes">Defining properties for classes</h2>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Foo</span> {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Foo</span> {
     <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">bar</span> = <span style="color:#00d;font-weight:bold">1</span>
     <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">baz</span>: String? = <span style="color:#080;font-weight:bold">null</span>
     <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">bazLength</span>: Int <span style="color:#888">// Property with no &#34;backing field&#34;
 </span><span style="color:#888"></span>        <span style="color:#080;font-weight:bold">get</span>() = baz?.length ?: <span style="color:#00d;font-weight:bold">0</span> <span style="color:#888">// As its value will be computed every time
 </span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">stringRepresentation</span>: String = <span style="color:#d20;background-color:#fff0f0">&#34;&#34;</span> <span style="color:#888">// Backing fields can be accessed as a keyword inside property definitions
-</span><span style="color:#888"></span>        <span style="color:#080;font-weight:bold">get</span>() = baz ?: field
+</span><span style="color:#888"></span>        <span style="color:#080;font-weight:bold">get</span>() = baz ?: <span style="color:#080;font-weight:bold">field</span>
         <span style="color:#080;font-weight:bold">set</span>(value) {
-            field = <span style="color:#d20;background-color:#fff0f0">&#34;custom: $value&#34;</span>
+            <span style="color:#080;font-weight:bold">field</span> = <span style="color:#d20;background-color:#fff0f0">&#34;custom: </span><span style="color:#33b;background-color:#fff0f0">$value</span><span style="color:#d20;background-color:#fff0f0">&#34;</span>
         }
 
 }
@@ -628,22 +628,22 @@ foo.stringRepresentation = <span style="color:#d20;background-color:#fff0f0">&#3
 <br/>
 <strong>in case it is present</strong></p>
 <p>The Kotlin compiler, in fact, generates backing fields only when needed</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Student</span> {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Student</span> {
     <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">id</span>: String? = <span style="color:#080;font-weight:bold">null</span> <span style="color:#888">// Backing field generated
-</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">identifierOnce</span>: String = <span style="color:#d20;background-color:#fff0f0">&#34;Student[${id ?: &#34;</span>unknown<span style="color:#d20;background-color:#fff0f0">&#34;}]&#34;</span> <span style="color:#888">// Backing field generated
-</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">identifierUpdated</span>: String <span style="color:#080;font-weight:bold">get</span>() = <span style="color:#d20;background-color:#fff0f0">&#34;Student[${id ?: &#34;</span>unknown<span style="color:#d20;background-color:#fff0f0">&#34;}]&#34;</span> <span style="color:#888">// No backing field
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">identifierOnce</span>: String = <span style="color:#d20;background-color:#fff0f0">&#34;Student[</span><span style="color:#33b;background-color:#fff0f0">${id ?: &#34;unknown&#34;}</span><span style="color:#d20;background-color:#fff0f0">]&#34;</span> <span style="color:#888">// Backing field generated
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">identifierUpdated</span>: String <span style="color:#080;font-weight:bold">get</span>() = <span style="color:#d20;background-color:#fff0f0">&#34;Student[</span><span style="color:#33b;background-color:#fff0f0">${id ?: &#34;unknown&#34;}</span><span style="color:#d20;background-color:#fff0f0">]&#34;</span> <span style="color:#888">// No backing field
 </span><span style="color:#888"></span>}
 </code></pre></div><p>When designing with Kotlin, you must consider methods and properties, and forget about fields.</p>
 </section><section>
 <h1 id="kotlin-102----oop-5">Kotlin 102 &ndash; OOP</h1>
 <h2 id="defining-methods">Defining methods</h2>
 <p>Methods are defined as <code>fun</code>ctions within the scope of a class</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MutableComplex</span> {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MutableComplex</span> {
     <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">real</span>: Double = <span style="color:#00d;font-weight:bold">0.0</span>
     <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">imaginary</span>: Double = <span style="color:#00d;font-weight:bold">0.0</span>
     <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">plus</span>(other: MutableComplex): MutableComplex = MutableComplex().also {
-        it.real = real + other.real
-        it.imaginary = imaginary + other.imaginary
+        <span style="color:#080;font-weight:bold">it</span>.real = real + other.real
+        <span style="color:#080;font-weight:bold">it</span>.imaginary = imaginary + other.imaginary
     }
 }
 <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">foo</span> = MutableComplex()
@@ -653,7 +653,7 @@ foo.imaginary = <span style="color:#00d;font-weight:bold">2.0</span>
 bar.real = <span style="color:#00d;font-weight:bold">4.1</span>
 bar.imaginary = <span style="color:#00d;font-weight:bold">0.1</span>
 <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">baz</span> = foo.plus(bar)
-<span style="color:#d20;background-color:#fff0f0">&#34;${baz.real}+${baz.imaginary}i&#34;</span><span class='fragment '  style="color: #888;"> // 5.1&#43;2.1i</span>
+<span style="color:#d20;background-color:#fff0f0">&#34;</span><span style="color:#33b;background-color:#fff0f0">${baz.real}</span><span style="color:#d20;background-color:#fff0f0">+</span><span style="color:#33b;background-color:#fff0f0">${baz.imaginary}</span><span style="color:#d20;background-color:#fff0f0">i&#34;</span><span class='fragment '  style="color: #888;"> // 5.1&#43;2.1i</span>
 </code></pre></div></section><section>
 <h1 id="kotlin-102----oop-6">Kotlin 102 &ndash; OOP</h1>
 <h2 id="interfaces">Interfaces</h2>
@@ -673,16 +673,16 @@ bar.imaginary = <span style="color:#00d;font-weight:bold">0.1</span>
 </ul>
 </li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">A</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">A</span>
 <span style="color:#080;font-weight:bold">trait</span> <span style="color:#b06;font-weight:bold">B</span> <span style="color:#080;font-weight:bold">extends</span> A <span style="color:#888">// All fine in Scala
-</span></code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">open</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">A</span>
+</span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">open</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">A</span>
 <span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">B</span> : A <span style="color:#888">// error: an interface cannot inherit from a class
 </span></code></pre></div><p>So, no mixins</p>
 </section><section>
 <h1 id="kotlin-102----oop-7">Kotlin 102 &ndash; OOP</h1>
 <h2 id="implementing-interfaces">Implementing interfaces</h2>
 <p>Much like Java. Subtyping keyword is <code>:</code>, overrides <em>must</em> be marked with <code>override</code>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">Shape</span> {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">Shape</span> {
     <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">area</span>: Double
     <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">perimeter</span>: Double
 }
@@ -702,7 +702,7 @@ bar.imaginary = <span style="color:#00d;font-weight:bold">0.1</span>
 <h1 id="kotlin-102----oop-8">Kotlin 102 &ndash; OOP</h1>
 <h2 id="superclass-disambiguation">Superclass disambiguation</h2>
 <p>A call to <code>super</code> can be qualified to disambiguate between conflincting interface declarations:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">A</span> {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">A</span> {
     <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">foo</span>() = <span style="color:#d20;background-color:#fff0f0">&#34;foo&#34;</span>
 }
 <span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">B</span> {
@@ -718,12 +718,12 @@ C().foo()<span class='fragment '  style="color: #888;"> // foobar</span>
 <p>Similar to Scala, but code in the class body is not part of a constructor
 <br/>
 Primary constructor code (if any) must be in an <code>init</code> block</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Foo</span>(
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Foo</span>(
     <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">bar</span>: String, <span style="color:#888">// This is a val property of the class
 </span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">baz</span>: Int, <span style="color:#888">// This is a var property of the class
 </span><span style="color:#888"></span>    greeting: String = <span style="color:#d20;background-color:#fff0f0">&#34;Hello from constructor&#34;</span> <span style="color:#888">// Constructor parameter, not a property. Default values allowed.
 </span><span style="color:#888"></span>) {
-    init {
+    <span style="color:#080;font-weight:bold">init</span> {
         println(greeting)
     }
 }
@@ -737,28 +737,28 @@ Foo(<span style="color:#d20;background-color:#fff0f0">&#34;bar&#34;</span>, <spa
 <li>The primary constructor must be in its <em>delegation calls chain</em></li>
 </ol>
 <p>Call to another constructor is performed using <code>:</code></p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Foo</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">bar</span>: String) {
-    <span style="color:#080;font-weight:bold">constructor</span>(longBar: Long) : <span style="color:#080;font-weight:bold">this</span>(<span style="color:#d20;background-color:#fff0f0">&#34;number ${longBar.toString()}&#34;</span>)
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Foo</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">bar</span>: String) {
+    <span style="color:#080;font-weight:bold">constructor</span>(longBar: Long) : <span style="color:#080;font-weight:bold">this</span>(<span style="color:#d20;background-color:#fff0f0">&#34;number </span><span style="color:#33b;background-color:#fff0f0">${longBar.toString()}</span><span style="color:#d20;background-color:#fff0f0">&#34;</span>)
     <span style="color:#080;font-weight:bold">constructor</span>(intBar: Int) : <span style="color:#080;font-weight:bold">this</span>(intBar.toLong())
 }
 Foo(<span style="color:#00d;font-weight:bold">1</span>).bar <span style="color:#888">// number 1
 </span></code></pre></div><p>The primary constructor can be written in a longer form with the <code>constructor</code> keyword as well</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Foo</span> <span style="color:#080;font-weight:bold">constructor</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">bar</span>: String) <span style="color:#888">// OK
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Foo</span> <span style="color:#080;font-weight:bold">constructor</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">bar</span>: String) <span style="color:#888">// OK
 </span></code></pre></div></section><section>
 <h1 id="kotlin-102----oop-11">Kotlin 102 &ndash; OOP</h1>
 <h2 id="nullability-and-lateinit">Nullability and <code>lateinit</code></h2>
 <p>It is possible that some <code>var</code> property needs to get initialized after the object construction:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Son</span>(<span style="color:#080;font-weight:bold">val</span>: Father)
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Son</span>(<span style="color:#080;font-weight:bold">val</span>: Father)
 <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Father</span>(<span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">son</span>: Son) <span style="color:#888">// Impossible to build either
 </span></code></pre></div><p>Solution 1: allow nullability (<strong>BAD</strong>)</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Son</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">father</span>: Father)
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Son</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">father</span>: Father)
 <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Father</span>(<span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">son</span>: Son? = <span style="color:#080;font-weight:bold">null</span>)
 <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">father</span> = Father()
 <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">son</span> = Son(father)
 father.son = son
 father.son.father <span style="color:#888">// error, needs ?.
 </span></code></pre></div><p>Solution 2: take responsibility from the compiler (<em>less bad</em>)</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Son</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">father</span>: Father)
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Son</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">father</span>: Father)
 <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Father</span> { <span style="color:#080;font-weight:bold">lateinit</span> <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">son</span>: Son } <span style="color:#888">// lateinit: I will initialize it later, stay cool
 </span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">father</span> = Father()
 father.son <span style="color:#888">// UninitializedPropertyAccessException: lateinit property son has not been initialized
@@ -773,7 +773,7 @@ father.son.father <span style="color:#888">// OK!
 </blockquote>
 <h2 id="closed-hierarchies-and-open">Closed hierarchies and <code>open</code></h2>
 <p>Kotlin enforces EJ-17 by design: all classes are final if the keyword <code>open</code> is not specified</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">A</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">A</span>
 <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">B</span> : A() <span style="color:#888">// error: this type is final, so it cannot be inherited from
 </span><span style="color:#888"></span><span style="color:#080;font-weight:bold">open</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">A</span>
 <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">B</span> : A() <span style="color:#888">// OK
@@ -784,12 +784,12 @@ Differently than Scala, such invocatin <em>always requires parentheses</em></p>
 <h1 id="kotlin-102----oop-13">Kotlin 102 &ndash; OOP</h1>
 <h2 id="abstract-vs-open"><code>abstract</code> vs. <code>open</code></h2>
 <p>The same effect of <code>open</code> can be achieved with <code>abstract</code>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">abstract</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">A</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">abstract</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">A</span>
 <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">B</span> : A() <span style="color:#888">// Perfectly fine
 </span></code></pre></div><p>With abstract, however, the superclass cannot be created
 <br/>
 (and it should have actual <code>abstract</code> memebers anyway)</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">open</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Open</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">open</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Open</span>
 <span style="color:#080;font-weight:bold">abstract</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Abstract</span>
 <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">FromOpen</span> : Open()
 <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">FromAbstract</span> : Abstract()
@@ -803,10 +803,10 @@ FromAbstract() <span style="color:#888">// OK
 <p>Same as Scala, but with explicit <code>companion</code>s
 <br/>
 In Scala</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">A</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">A</span>
 <span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">A</span> <span style="color:#888">// Same file and same name identify a companion
 </span></code></pre></div><p>In Kotlin</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">A</span> {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">A</span> {
     <span style="color:#080;font-weight:bold">companion</span> <span style="color:#080;font-weight:bold">object</span> <span style="color:#888">// Companions are inner to classes 
 </span><span style="color:#888"></span>}
 A <span style="color:#888">// refers to A.Companion
@@ -829,7 +829,7 @@ A <span style="color:#888">// refers to A.Companion
 </section><section>
 <h1 id="kotlin-102----oop-16">Kotlin 102 &ndash; OOP</h1>
 <h2 id="visibility-control">Visibility control</h2>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Visibility</span> <span style="color:#080;font-weight:bold">internal</span> <span style="color:#080;font-weight:bold">constructor</span>( <span style="color:#888">// constructor is required to apply visibility restrictionss
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Visibility</span> <span style="color:#080;font-weight:bold">internal</span> <span style="color:#080;font-weight:bold">constructor</span>( <span style="color:#888">// constructor is required to apply visibility restrictionss
 </span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">id</span>: Int <span style="color:#888">// Same as Scala
 </span><span style="color:#888"></span>) { 
     <span style="color:#080;font-weight:bold">protected</span> <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">state</span> = <span style="color:#00d;font-weight:bold">0</span>
@@ -845,12 +845,12 @@ A <span style="color:#888">// refers to A.Companion
 </ul>
 <p>Kotlin does not suffer of Scala&rsquo;s equality issues
 (no automatic conversion of types)</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> a<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Int</span> = <span style="color:#00d;font-weight:bold">1</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> a<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Int</span> = <span style="color:#00d;font-weight:bold">1</span>
 <span style="color:#080;font-weight:bold">val</span> b<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Long</span> = a
 a == b <span style="color:#888">// true
 </span><span style="color:#888"></span>a equals b <span style="color:#888">// false O_O
 </span></code></pre></div><p>Kotlin:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">a</span>: Int = <span style="color:#00d;font-weight:bold">1</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">a</span>: Int = <span style="color:#00d;font-weight:bold">1</span>
 <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">b</span>: Long = a <span style="color:#888">// error: type mismatch: inferred type is Int but Long was expected
 </span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">b</span>: Long = a.toLong()
 a == b <span style="color:#888">// error: operator &#39;==&#39; cannot be applied to &#39;Int&#39; and &#39;Long&#39;
@@ -863,17 +863,17 @@ a == b <span style="color:#888">// error: operator &#39;==&#39; cannot be applie
 <ul>
 <li>In Scala, every instance method with a single parameter can be invoked as infix operator:</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#00d;font-weight:bold">1</span> equals <span style="color:#00d;font-weight:bold">1</span> <span style="color:#888">// infix invocation of 1.equals(1)
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#00d;font-weight:bold">1</span> equals <span style="color:#00d;font-weight:bold">1</span> <span style="color:#888">// infix invocation of 1.equals(1)
 </span></code></pre></div><ul>
 <li>In Kotlin, this is not allowed:</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#00d;font-weight:bold">1</span> equals <span style="color:#00d;font-weight:bold">1</span> <span style="color:#888">// error: &#39;infix&#39; modifier is required on &#39;equals&#39; in &#39;kotlin.Int&#39;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#00d;font-weight:bold">1</span> equals <span style="color:#00d;font-weight:bold">1</span> <span style="color:#888">// error: &#39;infix&#39; modifier is required on &#39;equals&#39; in &#39;kotlin.Int&#39;
 </span></code></pre></div><ul>
 <li>Kotlin requires that the <code>infix</code> keyword for a method to be usable as infix</li>
 <li><code>infix</code> functions have <em>lower precedence</em> than operators</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Infix</span> {
-    <span style="color:#080;font-weight:bold">infix</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">with</span>(s: String) = <span style="color:#d20;background-color:#fff0f0">&#34;in... $s ...fix!&#34;</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Infix</span> {
+    <span style="color:#080;font-weight:bold">infix</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">with</span>(s: String) = <span style="color:#d20;background-color:#fff0f0">&#34;in... </span><span style="color:#33b;background-color:#fff0f0">$s</span><span style="color:#d20;background-color:#fff0f0"> ...fix!&#34;</span>
 }
 Infix() with <span style="color:#d20;background-color:#fff0f0">&#34;Foo&#34;</span> <span style="color:#888">// in... Foo ...fix!
 </span><span style="color:#888"></span>Infix() with <span style="color:#d20;background-color:#fff0f0">&#34;Foo&#34;</span> + <span style="color:#d20;background-color:#fff0f0">&#34;Bar&#34;</span> <span class='fragment '  style="color: #888;"> // in... FooBar ...fix</span>
@@ -890,7 +890,7 @@ Infix() with <span style="color:#d20;background-color:#fff0f0">&#34;Foo&#34;</sp
 </ul>
 </li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>executer(<span style="color:#080;font-weight:bold">:</span><span style="color:#888;font-weight:bold">/</span>(<span style="color:#888;font-weight:bold">host</span>, <span style="color:#888;font-weight:bold">port</span>) / target &lt;&lt; reqBody &gt;- { fromRespStr }) <span style="color:#888">// Using Databinder Dispatch
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>executer(<span style="color:#080;font-weight:bold">:</span><span style="color:#888;font-weight:bold">/</span>(<span style="color:#888;font-weight:bold">host</span>, <span style="color:#888;font-weight:bold">port</span>) / target &lt;&lt; reqBody &gt;- { fromRespStr }) <span style="color:#888">// Using Databinder Dispatch
 </span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> graph <span style="color:#080;font-weight:bold">=</span> <span style="color:#b06;font-weight:bold">Graph</span>((jfc ~+#&gt; fra)(<span style="color:#b06;font-weight:bold">Any</span>()), (fra ~+#&gt; dme)(<span style="color:#b06;font-weight:bold">Any</span>()) <span style="color:#888">// Using ScalaGraph
 </span></code></pre></div><p>Operators are succint, but cryptic, and their meaning changes with context</p>
 <p>This has been a source of cricism, Kotlin <strong>does not allow to define custom operators</strong></p>
@@ -898,7 +898,7 @@ Infix() with <span style="color:#d20;background-color:#fff0f0">&#34;Foo&#34;</sp
 <li>At most, back-ticked names, but some characters are disallowed (<code>&gt;</code>, <code>/</code>, <code>:</code>, etc.)</li>
 <li>Clumsy, defies the reason why one would use them (terse and succint code)</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">A</span> { <span style="color:#080;font-weight:bold">infix</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#a61717;background-color:#e3d2d2">`~+#-`(</span><span style="color:#06b;font-weight:bold">other</span>: A) = <span style="color:#d20;background-color:#fff0f0">&#34;I&#39;m an arcane operator&#34;</span> }
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">A</span> { <span style="color:#080;font-weight:bold">infix</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">`~+#-`</span>(other: A) = <span style="color:#d20;background-color:#fff0f0">&#34;I&#39;m an arcane operator&#34;</span> }
 A() <span style="color:#a61717;background-color:#e3d2d2">`</span>~+<span style="color:#a61717;background-color:#e3d2d2">#</span>-<span style="color:#a61717;background-color:#e3d2d2">`</span> A() <span style="color:#888">// I&#39;m an arcane operator
 </span></code></pre></div></section><section>
 <h1 id="kotlin-102----oop-conventions-3">Kotlin 102 &ndash; OOP Conventions</h1>
@@ -908,13 +908,13 @@ A() <span style="color:#a61717;background-color:#e3d2d2">`</span>~+<span style="
 <li>Method names must match a convention</li>
 <li>Methods must be annotated with the <code>operator</code> keyword</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Complex</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">real</span>: Double, <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">imaginary</span>: Double) {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Complex</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">real</span>: Double, <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">imaginary</span>: Double) {
     <span style="color:#080;font-weight:bold">operator</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">plus</span>(other: Complex) = Complex(real + other.real, imaginary + other.imaginary)
     <span style="color:#080;font-weight:bold">operator</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">plus</span>(other: Double) = plus(Complex(other, <span style="color:#00d;font-weight:bold">0.0</span>))
     <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">toString</span>() = real.toString() + <span style="color:#080;font-weight:bold">when</span> {
         imaginary == <span style="color:#00d;font-weight:bold">0.0</span> -&gt; <span style="color:#d20;background-color:#fff0f0">&#34;&#34;</span>
-        imaginary &gt; <span style="color:#00d;font-weight:bold">0.0</span> -&gt; <span style="color:#d20;background-color:#fff0f0">&#34;+${imaginary}i&#34;</span>
-        <span style="color:#080;font-weight:bold">else</span> -&gt; <span style="color:#d20;background-color:#fff0f0">&#34;${imaginary}i&#34;</span>
+        imaginary &gt; <span style="color:#00d;font-weight:bold">0.0</span> -&gt; <span style="color:#d20;background-color:#fff0f0">&#34;+</span><span style="color:#33b;background-color:#fff0f0">${imaginary}</span><span style="color:#d20;background-color:#fff0f0">i&#34;</span>
+        <span style="color:#080;font-weight:bold">else</span> -&gt; <span style="color:#d20;background-color:#fff0f0">&#34;</span><span style="color:#33b;background-color:#fff0f0">${imaginary}</span><span style="color:#d20;background-color:#fff0f0">i&#34;</span>
     }
 }
 Complex(<span style="color:#00d;font-weight:bold">1.0</span>, <span style="color:#00d;font-weight:bold">1.0</span>) + <span style="color:#00d;font-weight:bold">3.4</span> <span style="color:#888">// 4.4+1.0i
@@ -925,49 +925,49 @@ Complex(<span style="color:#00d;font-weight:bold">1.0</span>, <span style="color
 <thead>
 <tr>
 <th>Expression</th>
-<th align="center">Method Name</th>
+<th style="text-align:center">Method Name</th>
 <th>Translation</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>+x</code></td>
-<td align="center"><code>unaryPlus</code></td>
+<td style="text-align:center"><code>unaryPlus</code></td>
 <td><code>x.unaryPlus()</code></td>
 </tr>
 <tr>
 <td><code>-x</code></td>
-<td align="center"><code>unaryMinus</code></td>
+<td style="text-align:center"><code>unaryMinus</code></td>
 <td><code>x.unaryMinus()</code></td>
 </tr>
 <tr>
 <td><code>++x</code></td>
-<td align="center"><code>inc</code></td>
+<td style="text-align:center"><code>inc</code></td>
 <td><code>x.inc().also { x = it }</code></td>
 </tr>
 <tr>
 <td><code>x++</code></td>
-<td align="center"><code>inc</code></td>
+<td style="text-align:center"><code>inc</code></td>
 <td><code>x.also { x = it.inc() }</code></td>
 </tr>
 <tr>
 <td><code>--x</code></td>
-<td align="center"><code>dec</code></td>
+<td style="text-align:center"><code>dec</code></td>
 <td><code>x.dec().also { x = it }</code></td>
 </tr>
 <tr>
 <td><code>x--</code></td>
-<td align="center"><code>dec</code></td>
+<td style="text-align:center"><code>dec</code></td>
 <td><code>x.also { x = it.dec() }</code></td>
 </tr>
 <tr>
 <td><code>!x</code></td>
-<td align="center"><code>not</code></td>
+<td style="text-align:center"><code>not</code></td>
 <td><code>x.not()</code></td>
 </tr>
 <tr>
 <td><code>x()</code></td>
-<td align="center"><code>invoke</code></td>
+<td style="text-align:center"><code>invoke</code></td>
 <td><code>x.invoke()</code></td>
 </tr>
 </tbody>
@@ -982,34 +982,34 @@ This will turn useful in future&hellip;</p>
 <thead>
 <tr>
 <th>Expression</th>
-<th align="center">Method Name</th>
+<th style="text-align:center">Method Name</th>
 <th>Translation</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>x + y</code></td>
-<td align="center"><code>plus</code></td>
+<td style="text-align:center"><code>plus</code></td>
 <td><code>x.plus(y)</code></td>
 </tr>
 <tr>
 <td><code>x - y</code></td>
-<td align="center"><code>minus</code></td>
+<td style="text-align:center"><code>minus</code></td>
 <td><code>x.minus(y)</code></td>
 </tr>
 <tr>
 <td><code>x * y</code></td>
-<td align="center"><code>times</code></td>
+<td style="text-align:center"><code>times</code></td>
 <td><code>x.times(y)</code></td>
 </tr>
 <tr>
 <td><code>x / y</code></td>
-<td align="center"><code>div</code></td>
+<td style="text-align:center"><code>div</code></td>
 <td><code>x.div(y)</code></td>
 </tr>
 <tr>
 <td><code>x % y</code></td>
-<td align="center"><code>rem</code></td>
+<td style="text-align:center"><code>rem</code></td>
 <td><code>x.rem(y)</code></td>
 </tr>
 </tbody>
@@ -1021,34 +1021,34 @@ This will turn useful in future&hellip;</p>
 <thead>
 <tr>
 <th>Expression</th>
-<th align="center">Method Name</th>
+<th style="text-align:center">Method Name</th>
 <th>Translation</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>x += y</code></td>
-<td align="center"><code>plusAssign</code></td>
+<td style="text-align:center"><code>plusAssign</code></td>
 <td><code>x.plusAssign(y)</code></td>
 </tr>
 <tr>
 <td><code>x -= y</code></td>
-<td align="center"><code>minusAssign</code></td>
+<td style="text-align:center"><code>minusAssign</code></td>
 <td><code>x.minusAssign(y)</code></td>
 </tr>
 <tr>
 <td><code>x *= y</code></td>
-<td align="center"><code>timesAssign</code></td>
+<td style="text-align:center"><code>timesAssign</code></td>
 <td><code>x.timesAssign(y)</code></td>
 </tr>
 <tr>
 <td><code>x /= y</code></td>
-<td align="center"><code>divAssign</code></td>
+<td style="text-align:center"><code>divAssign</code></td>
 <td><code>x.divAssign(y)</code></td>
 </tr>
 <tr>
 <td><code>x %= y</code></td>
-<td align="center"><code>remAssign</code></td>
+<td style="text-align:center"><code>remAssign</code></td>
 <td><code>x.remAssign(y)</code></td>
 </tr>
 </tbody>
@@ -1068,39 +1068,39 @@ This will turn useful in future&hellip;</p>
 <thead>
 <tr>
 <th>Expression</th>
-<th align="center">Method Name</th>
+<th style="text-align:center">Method Name</th>
 <th>Translation</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>x == y</code></td>
-<td align="center"><code>equals</code></td>
+<td style="text-align:center"><code>equals</code></td>
 <td><code>x?.equals(y) ?: (b === null)</code></td>
 </tr>
 <tr>
 <td><code>x != y</code></td>
-<td align="center"><code>equals</code></td>
+<td style="text-align:center"><code>equals</code></td>
 <td><code>!(x?.equals(y) ?: (b === null))</code></td>
 </tr>
 <tr>
 <td><code>x &gt; y</code></td>
-<td align="center"><code>compareTo</code></td>
+<td style="text-align:center"><code>compareTo</code></td>
 <td><code>x.compareTo(y) &gt; 0</code></td>
 </tr>
 <tr>
 <td><code>x &lt; y</code></td>
-<td align="center"><code>compareTo</code></td>
+<td style="text-align:center"><code>compareTo</code></td>
 <td><code>x.compareTo(y) &lt; 0</code></td>
 </tr>
 <tr>
 <td><code>x &gt;= y</code></td>
-<td align="center"><code>compareTo</code></td>
+<td style="text-align:center"><code>compareTo</code></td>
 <td><code>x.compareTo(y) &gt;= 0</code></td>
 </tr>
 <tr>
 <td><code>x &lt;= y</code></td>
-<td align="center"><code>compareTo</code></td>
+<td style="text-align:center"><code>compareTo</code></td>
 <td><code>x.compareTo(y) &lt;= 0</code></td>
 </tr>
 </tbody>
@@ -1112,34 +1112,34 @@ This will turn useful in future&hellip;</p>
 <thead>
 <tr>
 <th>Expression</th>
-<th align="center">Method Name</th>
+<th style="text-align:center">Method Name</th>
 <th>Translation</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>x..y</code></td>
-<td align="center"><code>rangeTo</code></td>
+<td style="text-align:center"><code>rangeTo</code></td>
 <td><code>x.rangeTo(y)</code></td>
 </tr>
 <tr>
 <td><code>x in y</code></td>
-<td align="center"><code>contains</code></td>
+<td style="text-align:center"><code>contains</code></td>
 <td><code>y.contains(x)</code></td>
 </tr>
 <tr>
 <td><code>x !in y</code></td>
-<td align="center"><code>contains</code></td>
+<td style="text-align:center"><code>contains</code></td>
 <td><code>!y.contains(x)</code></td>
 </tr>
 <tr>
 <td><code>x[y]</code></td>
-<td align="center"><code>get</code></td>
+<td style="text-align:center"><code>get</code></td>
 <td><code>x.get(y)</code></td>
 </tr>
 <tr>
 <td><code>x(y)</code></td>
-<td align="center"><code>invoke</code></td>
+<td style="text-align:center"><code>invoke</code></td>
 <td><code>x.invoke(y)</code></td>
 </tr>
 </tbody>
@@ -1151,24 +1151,24 @@ This will turn useful in future&hellip;</p>
 <thead>
 <tr>
 <th>Expression</th>
-<th align="center">Method Name</th>
+<th style="text-align:center">Method Name</th>
 <th>Translation</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>x[y, z]</code></td>
-<td align="center"><code>get</code></td>
+<td style="text-align:center"><code>get</code></td>
 <td><code>x.get(y, z)</code></td>
 </tr>
 <tr>
 <td><code>x[y] = z</code></td>
-<td align="center"><code>set</code></td>
+<td style="text-align:center"><code>set</code></td>
 <td><code>x.set(y) = z</code></td>
 </tr>
 <tr>
 <td><code>x(y, z)</code></td>
-<td align="center"><code>invoke</code></td>
+<td style="text-align:center"><code>invoke</code></td>
 <td><code>x.invoke(y, z)</code></td>
 </tr>
 </tbody>
@@ -1180,24 +1180,24 @@ This will turn useful in future&hellip;</p>
 <thead>
 <tr>
 <th>Expression</th>
-<th align="center">Method Name</th>
+<th style="text-align:center">Method Name</th>
 <th>Translation</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>x[y, ..., z]</code></td>
-<td align="center"><code>get</code></td>
+<td style="text-align:center"><code>get</code></td>
 <td><code>x.get(y, ..., z)</code></td>
 </tr>
 <tr>
 <td><code>x[y, ..., z] = a</code></td>
-<td align="center"><code>set</code></td>
+<td style="text-align:center"><code>set</code></td>
 <td><code>x.set(y, ..., z) = a</code></td>
 </tr>
 <tr>
 <td><code>x(y, ..., z)</code></td>
-<td align="center"><code>invoke</code></td>
+<td style="text-align:center"><code>invoke</code></td>
 <td><code>x.invoke(y, ..., z)</code></td>
 </tr>
 </tbody>
@@ -1214,14 +1214,14 @@ This will turn useful in future&hellip;</p>
 <li>Declaration-site variance (absent in Java)</li>
 <li>Generic type reification via inlining (not found in Java nor Scala)</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">trait</span> <span style="color:#b06;font-weight:bold">Functor</span>[<span style="color:#888;font-weight:bold">F</span>[<span style="color:#080;font-weight:bold">_</span>]] <span style="color:#888">// There is no Kotlin equivalent for these lines
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">trait</span> <span style="color:#b06;font-weight:bold">Functor</span>[<span style="color:#888;font-weight:bold">F</span>[<span style="color:#080;font-weight:bold">_</span>]] <span style="color:#888">// There is no Kotlin equivalent for these lines
 </span><span style="color:#888"></span><span style="color:#080;font-weight:bold">type</span> <span style="color:#888;font-weight:bold">MapFunctor</span> = <span style="color:#b06;font-weight:bold">Functor</span>[({ <span style="color:#080;font-weight:bold">type</span> <span style="color:#888;font-weight:bold">T</span>[<span style="color:#888;font-weight:bold">A</span>] <span style="color:#888;font-weight:bold">=</span> <span style="color:#888;font-weight:bold">Map</span>[<span style="color:#888;font-weight:bold">Int</span>, <span style="color:#888;font-weight:bold">A</span>] })<span style="color:#080;font-weight:bold">#</span><span style="color:#888;font-weight:bold">T</span>]
 </code></pre></div></section><section>
 <h1 id="kotlin-103----generics-1">Kotlin 103 &ndash; Generics</h1>
 <h2 id="base-syntax">Base syntax</h2>
 <p>Syntax similar to Java generics</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Foo</span>&lt;A, B : CharSequence&gt;
-<span style="color:#080;font-weight:bold">fun</span> <span style="color:#a61717;background-color:#e3d2d2">&lt;</span><span style="color:#06b;font-weight:bold">T</span> : Comparable&lt;T&gt;&gt; maxOf3(first: T, second: T, third: T): T = <span style="color:#080;font-weight:bold">when</span> {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Foo</span>&lt;A, B : CharSequence&gt;
+<span style="color:#080;font-weight:bold">fun</span> &lt;<span style="color:#b06;font-weight:bold">T</span> : <span style="color:#b06;font-weight:bold">Comparable</span>&lt;<span style="color:#b06;font-weight:bold">T</span>&gt;&gt; <span style="color:#06b;font-weight:bold">maxOf3</span>(first: T, second: T, third: T): T = <span style="color:#080;font-weight:bold">when</span> {
     first &gt;= second &amp;&amp; first &gt;= third -&gt; first
     second &gt;= third -&gt; second
     <span style="color:#080;font-weight:bold">else</span> -&gt; third
@@ -1230,7 +1230,7 @@ This will turn useful in future&hellip;</p>
 <li>type upper bounds can be specified with <code>:</code></li>
 <li>if no bound is specified, the generic is <em>nullable</em>!</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> &lt;T&gt; <span style="color:#06b;font-weight:bold">className</span>(receiver: T) = receiver::<span style="color:#080;font-weight:bold">class</span>.simpleName
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> &lt;<span style="color:#b06;font-weight:bold">T</span>&gt; <span style="color:#06b;font-weight:bold">className</span>(<span style="color:#080;font-weight:bold">receiver</span>: T) = <span style="color:#080;font-weight:bold">receiver</span>::<span style="color:#080;font-weight:bold">class</span>.simpleName
 <span style="color:#888">// error: expression in a class literal has a nullable type &#39;T&#39;, use !! to make the type non-nullable
 </span></code></pre></div></section><section>
 <h1 id="kotlin-103----generics-2">Kotlin 103 &ndash; Generics</h1>
@@ -1238,7 +1238,7 @@ This will turn useful in future&hellip;</p>
 <p>In case multiple bounds are present, the definition can become cumbersome
 <br/>
 Kotlin provides a <code>where</code> keyword to specify type bounds separately from the rest of the signature</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#888">// From an actual Alchemist interface
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#888">// From an actual Alchemist interface
 </span><span style="color:#888"></span><span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">NavigationStrategy</span>&lt;T, P, A, L, R, N, E&gt;
     <span style="color:#080;font-weight:bold">where</span> P : Position&lt;P&gt;, P : Vector&lt;P&gt;,
           A : GeometricTransformation&lt;P&gt;,
@@ -1248,7 +1248,7 @@ Kotlin provides a <code>where</code> keyword to specify type bounds separately f
 </span><span style="color:#888"></span>}
 
 <span style="color:#888">// Function syntax
-</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">fun</span> &lt;T, P, A, L, R, N, E&gt; <span style="color:#06b;font-weight:bold">navigationStrategy</span>()
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">fun</span> &lt;<span style="color:#b06;font-weight:bold">T</span>, <span style="color:#b06;font-weight:bold">P</span>, <span style="color:#b06;font-weight:bold">A</span>, <span style="color:#b06;font-weight:bold">L</span>, <span style="color:#b06;font-weight:bold">R</span>, <span style="color:#b06;font-weight:bold">N</span>, <span style="color:#b06;font-weight:bold">E</span>&gt; <span style="color:#06b;font-weight:bold">navigationStrategy</span>()
     <span style="color:#080;font-weight:bold">where</span> P : Position&lt;P&gt;, P : Vector&lt;P&gt;,
           A : GeometricTransformation&lt;P&gt;,
           L : ConvexGeometricShape&lt;P, A&gt;,
@@ -1267,7 +1267,7 @@ Kotlin provides a <code>where</code> keyword to specify type bounds separately f
 <li>In Java type variance is only for methods</li>
 <li>In Kotlin type variance is only for classes and interfaces</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">ProduceAndConsume</span>&lt;<span style="color:#080;font-weight:bold">in</span> X, <span style="color:#080;font-weight:bold">out</span> Y&gt; {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">ProduceAndConsume</span>&lt;<span style="color:#080;font-weight:bold">in</span> X, <span style="color:#080;font-weight:bold">out</span> Y&gt; {
     <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">consume</span>(x: X): Any = TODO()<span class='fragment '  style="color: #888;"> // OK</span>
     <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">consume2</span>(y: Y): Any = TODO()<span class='fragment '  style="color: #888;"> // type parameter Y is declared as &#39;out&#39; but occurs in &#39;in&#39; position in type Y</span>
     <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">produce</span>(): Y = TODO()<span class='fragment '  style="color: #888;"> // OK</span>
@@ -1298,7 +1298,7 @@ Local monomorphization is expressed with the <code>reified</code> keyword.</p>
 </section><section>
 <h1 id="kotlin-103----generics-5">Kotlin 103 &ndash; Generics</h1>
 <h2 id="type-reification-example">Type reification example</h2>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">inline</span> <span style="color:#080;font-weight:bold">fun</span> &lt;reified T&gt; <span style="color:#06b;font-weight:bold">checkIsType</span>(a: Any): T = a <span style="color:#080;font-weight:bold">is</span> T <span style="color:#888">// instance check on a generic!
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">inline</span> <span style="color:#080;font-weight:bold">fun</span> &lt;<span style="color:#080;font-weight:bold">reified</span> <span style="color:#b06;font-weight:bold">T</span>&gt; <span style="color:#06b;font-weight:bold">checkIsType</span>(a: Any): T = a <span style="color:#080;font-weight:bold">is</span> T <span style="color:#888">// instance check on a generic!
 </span><span style="color:#888"></span>checkIsType&lt;Long&gt;(<span style="color:#00d;font-weight:bold">1</span>) <span style="color:#888">// false
 </span><span style="color:#888"></span>checkIsType&lt;Long&gt;(<span style="color:#00d;font-weight:bold">1L</span>) <span style="color:#888">// true
 </span></code></pre></div><p>Note on Java interoperability:</p>
@@ -1355,7 +1355,7 @@ the function code is <em>copied</em> on call site, and the compiler must know ho
 they can be &ldquo;destructured&rdquo;.
 <br>
 This feature is <em>way</em> less powerful than Scala&rsquo;s pattern matching.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#888">// to is an inline function that creates a Pair, similar to Scala&#39;s -&gt;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#888">// to is an inline function that creates a Pair, similar to Scala&#39;s -&gt;
 </span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">ferrari2021</span> = <span style="color:#d20;background-color:#fff0f0">&#34;Ferrari&#34;</span> to Pair(<span style="color:#d20;background-color:#fff0f0">&#34;Sainz&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;Leclerc&#34;</span>)
 <span style="color:#080;font-weight:bold">val</span> <span style="color:#a61717;background-color:#e3d2d2">(</span><span style="color:#369;font-weight:bold">team</span>, lineup) = ferrari2021
 team <span style="color:#888">// &#34;Ferrari&#34;
@@ -1363,13 +1363,13 @@ team <span style="color:#888">// &#34;Ferrari&#34;
 </span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#a61717;background-color:#e3d2d2">(</span><span style="color:#369;font-weight:bold">driver1</span>, driver2) = lineup
 driver1 <span style="color:#888">// Sainz
 </span><span style="color:#888"></span>driver2 <span style="color:#888">// Leclerc
-</span></code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">A</span> {
+</span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">A</span> {
     <span style="color:#080;font-weight:bold">operator</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">component1</span>() = <span style="color:#00d;font-weight:bold">1</span>
     <span style="color:#080;font-weight:bold">operator</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">component2</span>() = <span style="color:#00d;font-weight:bold">2</span>
     <span style="color:#080;font-weight:bold">operator</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">component3</span>() = <span style="color:#00d;font-weight:bold">3</span>
 }
 <span style="color:#080;font-weight:bold">val</span> <span style="color:#a61717;background-color:#e3d2d2">(</span><span style="color:#369;font-weight:bold">a</span>, b, c) = A()
-<span style="color:#d20;background-color:#fff0f0">&#34;$a$b$c&#34;</span>
+<span style="color:#d20;background-color:#fff0f0">&#34;</span><span style="color:#33b;background-color:#fff0f0">$a$b$c</span><span style="color:#d20;background-color:#fff0f0">&#34;</span>
 </code></pre></div></section><section>
 <h1 id="kotlin-201----advanced-oop-2">Kotlin 201 &ndash; Advanced OOP</h1>
 <h2 id="sealed-hierarchies">Sealed hierarchies</h2>
@@ -1379,7 +1379,7 @@ driver1 <span style="color:#888">// Sainz
 <li>subtypes must be defined inside the sealed class</li>
 <li>sealed hierarchies proved <em>exhaustive checking</em> inside <code>where</code> clauses</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">sealed</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Booze</span> {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">sealed</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Booze</span> {
     <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Rum</span> : Booze()
     <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Whisky</span> : Booze()
     <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Vodka</span> : Booze()
@@ -1401,18 +1401,18 @@ goGetMeA(Booze.Rum())
 </li>
 <li>To create an inner class, the <code>inner</code> modifier must be explicit</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Outer</span> {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Outer</span> {
     <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">readMeIfYouCan</span> = <span style="color:#00d;font-weight:bold">1</span>
     <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Nested</span> {
-        init { println(readMeIfYouCan) } <span style="color:#888">// error: unresolved reference: readMeIfYouCan
+        <span style="color:#080;font-weight:bold">init</span> { println(readMeIfYouCan) } <span style="color:#888">// error: unresolved reference: readMeIfYouCan
 </span><span style="color:#888"></span>    }
 }
-</code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Outer</span> { <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Nested</span> }
+</code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Outer</span> { <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Nested</span> }
 Outer.Nested() <span style="color:#888">// OK
-</span></code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Outer</span> {
+</span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Outer</span> {
     <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">readMeIfYouCan</span> = <span style="color:#00d;font-weight:bold">1</span>
     <span style="color:#080;font-weight:bold">inner</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Inner</span> {
-        init { println(readMeIfYouCan) } <span style="color:#888">// ok
+        <span style="color:#080;font-weight:bold">init</span> { println(readMeIfYouCan) } <span style="color:#888">// ok
 </span><span style="color:#888"></span>    }
 }
 Outer.Inner() <span style="color:#888">// error: constructor of inner class Inner can be called only with receiver of containing class
@@ -1423,7 +1423,7 @@ Outer.Inner() <span style="color:#888">// error: constructor of inner class Inne
 <p>Same as Java, with Kotlin syntax</p>
 <h2 id="object-expressions">Object expressions</h2>
 <p><code>object</code> expressions replace anonymous classes</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">Test</span> {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">Test</span> {
     <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">first</span>(): Unit
     <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">second</span>(): Unit
 }
@@ -1440,15 +1440,15 @@ Outer.Inner() <span style="color:#888">// error: constructor of inner class Inne
 <li>Type aliases in Kotlin <strong>are not</strong> Scala&rsquo;s <code>type</code> definitions</li>
 <li>Kotlin has no equivalent of Scala&rsquo;s <code>type</code></li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>typealias Drivers = Pair&lt;String, String&gt;
-typealias Team = Pair&lt;String, Drivers&gt;
-typealias Formula1 = Map&lt;String, Team&gt;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">typealias</span> Drivers = Pair&lt;String, String&gt;
+<span style="color:#080;font-weight:bold">typealias</span> Team = Pair&lt;String, Drivers&gt;
+<span style="color:#080;font-weight:bold">typealias</span> Formula1 = Map&lt;String, Team&gt;
 <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">`f1 2020`</span> = mapOf(
     Team(<span style="color:#d20;background-color:#fff0f0">&#34;Ferrari&#34;</span>, Drivers(<span style="color:#d20;background-color:#fff0f0">&#34;Vettel&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;Leclerc&#34;</span>)),
     Team(<span style="color:#d20;background-color:#fff0f0">&#34;RedBull&#34;</span>, Drivers(<span style="color:#d20;background-color:#fff0f0">&#34;Versbatten&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;Albon&#34;</span>)),
     Team(<span style="color:#d20;background-color:#fff0f0">&#34;Merdeces&#34;</span>, Drivers(<span style="color:#d20;background-color:#fff0f0">&#34;Hamilton&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;Bottas&#34;</span>)),
 )
-<span style="color:#a61717;background-color:#e3d2d2">`</span>f1 <span style="color:#00d;font-weight:bold">2020</span><span style="color:#a61717;background-color:#e3d2d2">`</span> <span style="color:#888">// Map&lt;String, Pair&lt;String, Pair&lt;String, String&gt;&gt;&gt;
+<span style="color:#555">`f1</span> <span style="color:#00d;font-weight:bold">2020</span><span style="color:#a61717;background-color:#e3d2d2">`</span> <span style="color:#888">// Map&lt;String, Pair&lt;String, Pair&lt;String, String&gt;&gt;&gt;
 </span></code></pre></div></section><section>
 <h1 id="kotlin-201----advanced-oop-6">Kotlin 201 &ndash; Advanced OOP</h1>
 <h2 id="delegation">Delegation</h2>
@@ -1461,7 +1461,7 @@ typealias Formula1 = Map&lt;String, Team&gt;
 see the <a href="https://en.wikipedia.org/wiki/Delegation_pattern">delegation pattern</a>
 <br/>
 Delegation is often verbose and very mechanic in implementation</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">data</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Student</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">name</span>: String, <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">surname</span>: String, <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">id</span>: String)
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">data</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Student</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">name</span>: String, <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">surname</span>: String, <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">id</span>: String)
 <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Exam</span> : MutableCollection&lt;Student&gt; {
     <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">representation</span> = mutableListOf&lt;Student&gt;()
     <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">add</span>(e E) = representation.add(e)
@@ -1473,7 +1473,7 @@ Delegation is often verbose and very mechanic in implementation</p>
 <h1 id="kotlin-201----advanced-oop-7">Kotlin 201 &ndash; Advanced OOP</h1>
 <h2 id="delegation-via-by">Delegation via <code>by</code></h2>
 <p>Kotlin supports delegation at the language level</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">data</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Student</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">name</span>: String, <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">surname</span>: String, <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">id</span>: String)
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">data</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Student</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">name</span>: String, <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">surname</span>: String, <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">id</span>: String)
 <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Exam</span> : MutableCollection&lt;Student&gt; <span style="color:#080;font-weight:bold">by</span> mutableListOf&lt;Student&gt;() {
     <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">register</span>(name: String, surname: String, id: String) = add(Student(name, surname, id))
     <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">toString</span>() = toList().toString() <span style="color:#888">// No access to the delegate! Can&#39;t call toString on it!
@@ -1489,7 +1489,7 @@ exam <span style="color:#888">// []
 <p>Properties and variables can be delegated as well
 <br/>
 some delegates are built-in, e.g. <code>lazy</code></p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">someLazyString</span> <span style="color:#080;font-weight:bold">by</span> lazy {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">someLazyString</span> <span style="color:#080;font-weight:bold">by</span> lazy {
     println(<span style="color:#d20;background-color:#fff0f0">&#34;I&#39;m initializing myself&#34;</span>)
     <span style="color:#d20;background-color:#fff0f0">&#34;I&#39;m intialized&#34;</span>
 }
@@ -1501,22 +1501,22 @@ println(someLazyString) <span style="color:#888">// &#34;I&#39;m initializing my
 <p>Class properties can be stored in an appropriate <code>Map</code>
 <br/>
 Useful when dealing with dynamic languages or untyped serialization (e.g. JSON or YAML)</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">fromJson</span> = mapOf(<span style="color:#d20;background-color:#fff0f0">&#34;name&#34;</span> to <span style="color:#d20;background-color:#fff0f0">&#34;John Smith&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;birthYear&#34;</span> to <span style="color:#00d;font-weight:bold">2020</span>)
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">fromJson</span> = mapOf(<span style="color:#d20;background-color:#fff0f0">&#34;name&#34;</span> to <span style="color:#d20;background-color:#fff0f0">&#34;John Smith&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;birthYear&#34;</span> to <span style="color:#00d;font-weight:bold">2020</span>)
 <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Person</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">jsonRepresentation</span>: Map&lt;String, Any&gt;) {
     <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">name</span> <span style="color:#080;font-weight:bold">by</span> jsonRepresentation
     <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">birthYear</span>: Int <span style="color:#080;font-weight:bold">by</span> jsonRepresentation
-    <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">toString</span>() = <span style="color:#d20;background-color:#fff0f0">&#34;$name born in $birthYear&#34;</span>
+    <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">toString</span>() = <span style="color:#d20;background-color:#fff0f0">&#34;</span><span style="color:#33b;background-color:#fff0f0">$name</span><span style="color:#d20;background-color:#fff0f0"> born in </span><span style="color:#33b;background-color:#fff0f0">$birthYear</span><span style="color:#d20;background-color:#fff0f0">&#34;</span>
 }
 Person(fromJson)
 </code></pre></div></section><section>
 <h1 id="kotlin-201----advanced-oop-10">Kotlin 201 &ndash; Advanced OOP</h1>
 <h2 id="delegation-via-maps-and-mutability">Delegation via maps and mutability</h2>
 <p>In case of mutable properties, a <code>MutableMap</code> is required as delegate</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">janesJson</span>: MutableMap&lt;String, Any&gt; = mutableMapOf(<span style="color:#d20;background-color:#fff0f0">&#34;name&#34;</span> to <span style="color:#d20;background-color:#fff0f0">&#34;Jane Smith&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;birthYear&#34;</span> to <span style="color:#00d;font-weight:bold">1999</span>)
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">janesJson</span>: MutableMap&lt;String, Any&gt; = mutableMapOf(<span style="color:#d20;background-color:#fff0f0">&#34;name&#34;</span> to <span style="color:#d20;background-color:#fff0f0">&#34;Jane Smith&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;birthYear&#34;</span> to <span style="color:#00d;font-weight:bold">1999</span>)
 <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MutablePerson</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">jsonRepresentation</span>: MutableMap&lt;String, Any&gt;) {
     <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">name</span> <span style="color:#080;font-weight:bold">by</span> jsonRepresentation
     <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">birthYear</span>: Int <span style="color:#080;font-weight:bold">by</span> jsonRepresentation
-    <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">toString</span>() = <span style="color:#d20;background-color:#fff0f0">&#34;$name born in $birthYear&#34;</span>
+    <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">toString</span>() = <span style="color:#d20;background-color:#fff0f0">&#34;</span><span style="color:#33b;background-color:#fff0f0">$name</span><span style="color:#d20;background-color:#fff0f0"> born in </span><span style="color:#33b;background-color:#fff0f0">$birthYear</span><span style="color:#d20;background-color:#fff0f0">&#34;</span>
 }
 <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">jane</span> = MutablePerson(janesJson)
 jane.toString()
@@ -1527,10 +1527,10 @@ janesJson <span style="color:#888">// Does it change? <span class='fragment '  s
 <h1 id="kotlin-201----advanced-oop-11">Kotlin 201 &ndash; Advanced OOP</h1>
 <h2 id="custom-delegates">Custom delegates</h2>
 <p>A valid delegate for a <code>val</code> is a <code>class</code> with a method:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">operator</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">getValue</span>(thisRef: T, property: KProperty&lt;*&gt;): R
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">operator</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">getValue</span>(thisRef: T, <span style="color:#080;font-weight:bold">property</span>: KProperty&lt;*&gt;): R
 </code></pre></div><p>where T is the &ldquo;owner&rdquo; type, and R is the type of the property</p>
 <p>A valid delegate for a <code>var</code> must also have a <code>setValue</code> method:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">operator</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">setValue</span>(thisRef: T, property: KProperty&lt;*&gt;, value: P): R
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">operator</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">setValue</span>(thisRef: T, <span style="color:#080;font-weight:bold">property</span>: KProperty&lt;*&gt;, value: P): R
 </code></pre></div><p>where T and R are the same as in <code>getValue</code>, and P is a supertype of R</p>
 </section><section>
 <h1 id="kotlin-202----functional-kotlin">Kotlin 202 &ndash; Functional Kotlin</h1>
@@ -1543,7 +1543,7 @@ and is similar to Smalltalk / Ceylon / Xtend / Ruby as well</p>
 <li>Parameters are listed <em>inside</em> the brackets, a <code>-&gt;</code> separates them from the body</li>
 <li>If there is one single parameter, it can be unspecified and referred with the keyword <code>it</code></li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">myLambda</span> = {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">myLambda</span> = {
     println(<span style="color:#d20;background-color:#fff0f0">&#34;Hey I&#39;m computing&#34;</span>)
 }
 <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">whatsMyReturnType</span>() = { 
@@ -1568,7 +1568,7 @@ No need for verbose interfaces such as <code>Function&lt;T, R&gt;</code>, <code>
 <li><code>(String, Int?) -&gt; Any?</code> &ndash; A binary function taking a <code>String</code> and a nullable <code>Int?</code> returning a nullable <code>Any?</code></li>
 </ul>
 <p>Function type literals allow for writing cleaner <em>higher-order functions</em></p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> &lt;T, I, R&gt; <span style="color:#06b;font-weight:bold">compose</span>(f: (I) -&gt; R, g: (T) -&gt; I): (T) -&gt; R = { f(g(it)) }
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> &lt;<span style="color:#b06;font-weight:bold">T</span>, <span style="color:#b06;font-weight:bold">I</span>, <span style="color:#b06;font-weight:bold">R</span>&gt; <span style="color:#06b;font-weight:bold">compose</span>(f: (I) -&gt; R, g: (T) -&gt; I): (T) -&gt; R = { f(g(<span style="color:#080;font-weight:bold">it</span>)) }
 compose({v: Int -&gt; v * v}, {v: Double -&gt; v.toInt()})(<span style="color:#00d;font-weight:bold">3.9</span>) <span style="color:#888">// 9
 </span></code></pre></div></section><section>
 <h1 id="kotlin-202----functional-kotlin-2">Kotlin 202 &ndash; Functional Kotlin</h1>
@@ -1578,7 +1578,7 @@ compose({v: Int -&gt; v * v}, {v: Double -&gt; v.toInt()})(<span style="color:#0
 the left operand is the receiver (if present)
 <br/>
 the right operand is the function name</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> &lt;T, I, R&gt; <span style="color:#06b;font-weight:bold">compose</span>(f: (I) -&gt; R, g: (T) -&gt; I): (T) -&gt; R = { f(g(it)) }
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> &lt;<span style="color:#b06;font-weight:bold">T</span>, <span style="color:#b06;font-weight:bold">I</span>, <span style="color:#b06;font-weight:bold">R</span>&gt; <span style="color:#06b;font-weight:bold">compose</span>(f: (I) -&gt; R, g: (T) -&gt; I): (T) -&gt; R = { f(g(<span style="color:#080;font-weight:bold">it</span>)) }
 <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">square</span>(v: Int) = v * v
 <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">floor</span>(v: Double) = v.toInt()
 compose(::square, ::floor)(<span style="color:#00d;font-weight:bold">3.9</span>)
@@ -1591,7 +1591,7 @@ compose(::square, ::floor)(<span style="color:#00d;font-weight:bold">3.9</span>)
 <br/>
 <em>then it can be placed outside of the parentheses</em></p>
 <p>If used correctly, feels like adding custom blocks to a language</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape> <span style="color:#888">// Java&#39;s thread + trailing lambda + SAM conversion
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape> <span style="color:#888">// Java&#39;s thread + trailing lambda + SAM conversion
 </span><span style="color:#888"></span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">delayed</span>(delay: Long = <span style="color:#00d;font-weight:bold">1000L</span>, operation: () -&gt; Unit) = Thread {
     Thread.sleep(delay)
     operation()
@@ -1609,11 +1609,11 @@ println(<span style="color:#d20;background-color:#fff0f0">&#34;Finished&#34;</sp
 <p>Closures are supported
 <br/>
 They are allowed on <code>var</code>s as well as on <code>val</code>s</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#888">// Side effecting from functional manipulation is bad though
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#888">// Side effecting from functional manipulation is bad though
 </span><span style="color:#888"></span><span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">sum</span> = <span style="color:#00d;font-weight:bold">0</span>
 (<span style="color:#00d;font-weight:bold">0.</span>.<span style="color:#00d;font-weight:bold">100</span>).map {
-    sum += it
-    it * <span style="color:#00d;font-weight:bold">2</span>
+    sum += <span style="color:#080;font-weight:bold">it</span>
+    <span style="color:#080;font-weight:bold">it</span> * <span style="color:#00d;font-weight:bold">2</span>
 }
 sum
 sum == (<span style="color:#00d;font-weight:bold">0.</span>.<span style="color:#00d;font-weight:bold">100</span>).sum()
@@ -1621,28 +1621,28 @@ sum == (<span style="color:#00d;font-weight:bold">0.</span>.<span style="color:#
 <h1 id="kotlin-202----functional-kotlin-5">Kotlin 202 &ndash; Functional Kotlin</h1>
 <h2 id="flow-control-with-lambdas">Flow control with lambdas</h2>
 <p>Kotlin rule: <code>return</code> returns from the closest <em>named</em> <code>fun</code>ction</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">breakingFlow</span>(): List&lt;Int&gt; = (<span style="color:#00d;font-weight:bold">0.</span>.<span style="color:#00d;font-weight:bold">10</span>).toList().map {
-    <span style="color:#080;font-weight:bold">if</span> (it &gt; <span style="color:#00d;font-weight:bold">4</span>) {
-        <span style="color:#080;font-weight:bold">return</span> (<span style="color:#00d;font-weight:bold">0.</span>.it).toList() <span style="color:#888">// returns from breakingFlow
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">breakingFlow</span>(): List&lt;Int&gt; = (<span style="color:#00d;font-weight:bold">0.</span>.<span style="color:#00d;font-weight:bold">10</span>).toList().map {
+    <span style="color:#080;font-weight:bold">if</span> (<span style="color:#080;font-weight:bold">it</span> &gt; <span style="color:#00d;font-weight:bold">4</span>) {
+        <span style="color:#080;font-weight:bold">return</span> (<span style="color:#00d;font-weight:bold">0.</span>.<span style="color:#080;font-weight:bold">it</span>).toList() <span style="color:#888">// returns from breakingFlow
 </span><span style="color:#888"></span>    }
-    it
+    <span style="color:#080;font-weight:bold">it</span>
 }
 breakingFlow()
 </code></pre></div><p>A <em>qualified <code>return</code></em> can be used to return from lambdas:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">breakingFlow</span>(): List&lt;Int&gt; = (<span style="color:#00d;font-weight:bold">0.</span>.<span style="color:#00d;font-weight:bold">10</span>).toList().map {
-    <span style="color:#080;font-weight:bold">if</span> (it &gt; <span style="color:#00d;font-weight:bold">4</span>) {
-        <span style="color:#080;font-weight:bold">return</span>@map it * <span style="color:#00d;font-weight:bold">10</span> <span style="color:#888">// returns from the lambda
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">breakingFlow</span>(): List&lt;Int&gt; = (<span style="color:#00d;font-weight:bold">0.</span>.<span style="color:#00d;font-weight:bold">10</span>).toList().map {
+    <span style="color:#080;font-weight:bold">if</span> (<span style="color:#080;font-weight:bold">it</span> &gt; <span style="color:#00d;font-weight:bold">4</span>) {
+        <span style="color:#080;font-weight:bold">return</span><span style="color:#555">@map</span> <span style="color:#080;font-weight:bold">it</span> * <span style="color:#00d;font-weight:bold">10</span> <span style="color:#888">// returns from the lambda
 </span><span style="color:#888"></span>    }
-    it
+    <span style="color:#080;font-weight:bold">it</span>
 }
 breakingFlow()
 </code></pre></div></section><section>
 <h1 id="kotlin-202----functional-kotlin-6">Kotlin 202 &ndash; Functional Kotlin</h1>
 <h2 id="destructuring-lambda-parameters">Destructuring lambda parameters</h2>
 <p>Lambda parameters can be destructured</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>mapOf(<span style="color:#00d;font-weight:bold">46</span> to <span style="color:#d20;background-color:#fff0f0">&#34;Rossi&#34;</span>, <span style="color:#00d;font-weight:bold">4</span> to <span style="color:#d20;background-color:#fff0f0">&#34;Dovizioso&#34;</span>).map { (number, rider) -&gt;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>mapOf(<span style="color:#00d;font-weight:bold">46</span> to <span style="color:#d20;background-color:#fff0f0">&#34;Rossi&#34;</span>, <span style="color:#00d;font-weight:bold">4</span> to <span style="color:#d20;background-color:#fff0f0">&#34;Dovizioso&#34;</span>).map { (number, rider) -&gt;
     <span style="color:#888">// destructured Pair
-</span><span style="color:#888"></span>    <span style="color:#d20;background-color:#fff0f0">&#34;$rider has number $number&#34;</span>
+</span><span style="color:#888"></span>    <span style="color:#d20;background-color:#fff0f0">&#34;</span><span style="color:#33b;background-color:#fff0f0">$rider</span><span style="color:#d20;background-color:#fff0f0"> has number </span><span style="color:#33b;background-color:#fff0f0">$number</span><span style="color:#d20;background-color:#fff0f0">&#34;</span>
 }
 </code></pre></div></section><section>
 <h1 id="kotlin-202----functional-kotlin-7">Kotlin 202 &ndash; Functional Kotlin</h1>
@@ -1650,7 +1650,7 @@ breakingFlow()
 <p>Kotlin allows to extend any type capabilities from anywhere
 <br/>
 via <strong>extension functions</strong></p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">String</span>.containsBatman(): Boolean = <span style="color:#d20;background-color:#fff0f0">&#34;.*b.*a.*t.*m.*a.*n.*&#34;</span>.toRegex().matches(<span style="color:#080;font-weight:bold">this</span>)
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">String</span>.containsBatman(): Boolean = <span style="color:#d20;background-color:#fff0f0">&#34;.*b.*a.*t.*m.*a.*n.*&#34;</span>.toRegex().matches(<span style="color:#080;font-weight:bold">this</span>)
 <span style="color:#d20;background-color:#fff0f0">&#34;battere le mani&#34;</span>.containsBatman() <span style="color:#888">// true
 </span></code></pre></div><p>Inside extension functions, the <em>receiver</em> of the method is overridden
 <br/>
@@ -1666,7 +1666,7 @@ Namely, <em>the receiver type is determined at compile time</em>.</p>
 <h1 id="kotlin-202----functional-kotlin-8">Kotlin 202 &ndash; Functional Kotlin</h1>
 <h2 id="extension-properties">Extension properties</h2>
 <p>Same as functions, but for properties</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">String</span>.containsBatman <span style="color:#080;font-weight:bold">get</span>(): Boolean = <span style="color:#d20;background-color:#fff0f0">&#34;.*b.*a.*t.*m.*a.*n.*&#34;</span>.toRegex().matches(<span style="color:#080;font-weight:bold">this</span>)
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">String</span>.containsBatman <span style="color:#080;font-weight:bold">get</span>(): Boolean = <span style="color:#d20;background-color:#fff0f0">&#34;.*b.*a.*t.*m.*a.*n.*&#34;</span>.toRegex().matches(<span style="color:#080;font-weight:bold">this</span>)
 <span style="color:#d20;background-color:#fff0f0">&#34;battere le mani&#34;</span>.containsBatman <span style="color:#888">// true
 </span></code></pre></div><p>Note:</p>
 <ol>
@@ -1685,8 +1685,8 @@ as such, their type can be legally expressed by:</p>
 <li>following by a <code>.</code></li>
 <li>then list parameters and return types as for any function type literal</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#888">// Extension function taking an extension function as parameter
-</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">fun</span> &lt;T&gt; <span style="color:#06b;font-weight:bold">MutableList</span>&lt;T&gt;.configure(configuration: MutableList&lt;T&gt;.() -&gt; Unit): MutableList&lt;T&gt; {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#888">// Extension function taking an extension function as parameter
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">fun</span> &lt;<span style="color:#b06;font-weight:bold">T</span>&gt; <span style="color:#06b;font-weight:bold">MutableList</span>&lt;T&gt;.configure(configuration: MutableList&lt;T&gt;.() -&gt; Unit): MutableList&lt;T&gt; {
     configuration()
     <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">this</span>
 }
@@ -1707,12 +1707,12 @@ as such, their type can be legally expressed by:</p>
 </ol>
 <p><em>Extension receivers have priority</em>, dispatch receivers access requires the <em>qualified <code>this</code></em> syntax
 <br/></p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">Batman</span> { <span style="color:#888">// the Batman object is the dispatch receiver
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">Batman</span> { <span style="color:#888">// the Batman object is the dispatch receiver
 </span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">name</span> = <span style="color:#d20;background-color:#fff0f0">&#34;Batman&#34;</span>
     <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">String</span>.Companion.intro <span style="color:#080;font-weight:bold">get</span>() = generateSequence { Double.NaN } <span style="color:#888">// String.Companion is extension receiver
 </span><span style="color:#888"></span>        .take(<span style="color:#00d;font-weight:bold">10</span>)
         .joinToString(separator = <span style="color:#d20;background-color:#fff0f0">&#34;&#34;</span>)
-    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">String</span>.withBatman() = <span style="color:#d20;background-color:#fff0f0">&#34;$this ${this@Batman.name}!&#34;</span> <span style="color:#888">// Qualified this access to the dispatch receiver
+    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">String</span>.withBatman() = <span style="color:#d20;background-color:#fff0f0">&#34;</span><span style="color:#33b;background-color:#fff0f0">$this</span><span style="color:#d20;background-color:#fff0f0"> </span><span style="color:#33b;background-color:#fff0f0">${this@Batman.name}</span><span style="color:#d20;background-color:#fff0f0">!&#34;</span> <span style="color:#888">// Qualified this access to the dispatch receiver
 </span><span style="color:#888"></span>}
 </code></pre></div></section><section>
 <h1 id="kotlin-202----functional-kotlin-11">Kotlin 202 &ndash; Functional Kotlin</h1>
@@ -1720,16 +1720,16 @@ as such, their type can be legally expressed by:</p>
 <p>Extension members are visible only when the dispatch receiver is the type where the extensions were defined
 <br/>
 This enables a powerful form of <em>scope control</em></p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">Batman</span> { <span style="color:#888">// Batman is the dispatch receiver
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">Batman</span> { <span style="color:#888">// Batman is the dispatch receiver
 </span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">name</span> = <span style="color:#d20;background-color:#fff0f0">&#34;Batman&#34;</span>
     <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">String</span>.Companion.intro <span style="color:#080;font-weight:bold">get</span>() = generateSequence { Double.NaN } <span style="color:#888">// String is extension receiver
 </span><span style="color:#888"></span>        .take(<span style="color:#00d;font-weight:bold">10</span>)
         .joinToString(separator = <span style="color:#d20;background-color:#fff0f0">&#34;&#34;</span>)
-    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">String</span>.withBatman() = <span style="color:#d20;background-color:#fff0f0">&#34;$this ${this@Batman.name}!&#34;</span> <span style="color:#888">// Qualified this access to the dispatch receiver
+    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">String</span>.withBatman() = <span style="color:#d20;background-color:#fff0f0">&#34;</span><span style="color:#33b;background-color:#fff0f0">$this</span><span style="color:#d20;background-color:#fff0f0"> </span><span style="color:#33b;background-color:#fff0f0">${this@Batman.name}</span><span style="color:#d20;background-color:#fff0f0">!&#34;</span> <span style="color:#888">// Qualified this access to the dispatch receiver
 </span><span style="color:#888"></span>}
 <span style="color:#888">// Extension members are actual members! They require a receiver!
 </span><span style="color:#888"></span>String.intro.withBatman() <span style="color:#888">// error: unresolved reference: intro
-</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">fun</span> &lt;T, R&gt; <span style="color:#06b;font-weight:bold">insideTheScopeOf</span>(receiver: T, method: T.() -&gt; R): R = receiver.method() 
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">fun</span> &lt;<span style="color:#b06;font-weight:bold">T</span>, <span style="color:#b06;font-weight:bold">R</span>&gt; <span style="color:#06b;font-weight:bold">insideTheScopeOf</span>(<span style="color:#080;font-weight:bold">receiver</span>: T, method: T.() -&gt; R): R = <span style="color:#080;font-weight:bold">receiver</span>.method() 
 insideTheScopeOf(Batman) { <span style="color:#888">// inside this function, Batman is the dispatch receiver!
 </span><span style="color:#888"></span>    String.intro.withBatman() <span style="color:#888">// OK!
 </span><span style="color:#888"></span>}
@@ -1751,8 +1751,8 @@ insideTheScopeOf(Batman) { <span style="color:#888">// inside this function, Bat
 The method receiver is bound to the lambda parameter
 <br/>
 the return type is the result of the function</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#00d;font-weight:bold">1.l</span>et { <span style="color:#d20;background-color:#fff0f0">&#34;${it + 1}1&#34;</span> } <span style="color:#888">// 21: String
-</span><span style="color:#888"></span><span style="color:#00d;font-weight:bold">1.l</span>et { one -&gt; <span style="color:#d20;background-color:#fff0f0">&#34;${one + 1}1&#34;</span> } <span style="color:#888">// Same as above: it&#39;s a normal lambda
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#00d;font-weight:bold">1.l</span>et { <span style="color:#d20;background-color:#fff0f0">&#34;</span><span style="color:#33b;background-color:#fff0f0">${it + 1}</span><span style="color:#d20;background-color:#fff0f0">1&#34;</span> } <span style="color:#888">// 21: String
+</span><span style="color:#888"></span><span style="color:#00d;font-weight:bold">1.l</span>et { one -&gt; <span style="color:#d20;background-color:#fff0f0">&#34;</span><span style="color:#33b;background-color:#fff0f0">${one + 1}</span><span style="color:#d20;background-color:#fff0f0">1&#34;</span> } <span style="color:#888">// Same as above: it&#39;s a normal lambda
 </span></code></pre></div></section><section>
 <h1 id="kotlin-202----functional-kotlin-14">Kotlin 202 &ndash; Functional Kotlin</h1>
 <h2 id="scope-functions-2">Scope functions</h2>
@@ -1762,7 +1762,7 @@ the return type is the result of the function</p>
 The method receiver is bound to the implicit receiver <code>this</code>
 <br/>
 the return type is the result of the function</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#00d;font-weight:bold">1.</span>run { <span style="color:#d20;background-color:#fff0f0">&#34;${this + 1}1&#34;</span> } <span style="color:#888">// 21: String
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#00d;font-weight:bold">1.</span>run { <span style="color:#d20;background-color:#fff0f0">&#34;</span><span style="color:#33b;background-color:#fff0f0">${this + 1}</span><span style="color:#d20;background-color:#fff0f0">1&#34;</span> } <span style="color:#888">// 21: String
 </span></code></pre></div></section><section>
 <h1 id="kotlin-202----functional-kotlin-15">Kotlin 202 &ndash; Functional Kotlin</h1>
 <h2 id="scope-functions-3">Scope functions</h2>
@@ -1773,7 +1773,7 @@ the context object is passed as first parameter
 The method receiver is bound to the implicit receiver <code>this</code>
 <br/>
 the return type is the result of the function</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>with(<span style="color:#00d;font-weight:bold">1</span>) { <span style="color:#d20;background-color:#fff0f0">&#34;${this + 1}1&#34;</span> } <span style="color:#888">// 21: String
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>with(<span style="color:#00d;font-weight:bold">1</span>) { <span style="color:#d20;background-color:#fff0f0">&#34;</span><span style="color:#33b;background-color:#fff0f0">${this + 1}</span><span style="color:#d20;background-color:#fff0f0">1&#34;</span> } <span style="color:#888">// 21: String
 </span></code></pre></div></section><section>
 <h1 id="kotlin-202----functional-kotlin-16">Kotlin 202 &ndash; Functional Kotlin</h1>
 <h2 id="scope-functions-4">Scope functions</h2>
@@ -1783,7 +1783,7 @@ but returns the context object
 <br/>
 Used to cause side effects from a specific context,
 and returning the original object</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#00d;font-weight:bold">1.</span>apply { println(<span style="color:#d20;background-color:#fff0f0">&#34;${this + 1}1&#34;</span>) } <span style="color:#888">// Prints 21, returns 1
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#00d;font-weight:bold">1.</span>apply { println(<span style="color:#d20;background-color:#fff0f0">&#34;</span><span style="color:#33b;background-color:#fff0f0">${this + 1}</span><span style="color:#d20;background-color:#fff0f0">1&#34;</span>) } <span style="color:#888">// Prints 21, returns 1
 </span><span style="color:#888"></span>mutableListOf&lt;Int&gt;().apply {
     addAll((<span style="color:#00d;font-weight:bold">1.</span>.<span style="color:#00d;font-weight:bold">10</span>).toList())
 } <span style="color:#888">// [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -1796,7 +1796,7 @@ and returning the original object</p>
 the context object is bound to the first lambda parameter
 <br/>
 Used to cause side effects and returning the original object</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#00d;font-weight:bold">1.</span>also { println(<span style="color:#d20;background-color:#fff0f0">&#34;${it + 1}1&#34;</span>) } <span style="color:#888">// Prints 21, returns 1
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#00d;font-weight:bold">1.</span>also { println(<span style="color:#d20;background-color:#fff0f0">&#34;</span><span style="color:#33b;background-color:#fff0f0">${it + 1}</span><span style="color:#d20;background-color:#fff0f0">1&#34;</span>) } <span style="color:#888">// Prints 21, returns 1
 </span></code></pre></div></section><section>
 <h1 id="extra-content">Extra content</h1>
 <p>A lot of language details have been left out of this guide, non complete list:</p>

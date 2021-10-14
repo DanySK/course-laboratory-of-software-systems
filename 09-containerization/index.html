@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/css/reset.css">
 <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/css/reveal.css">
-  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.be512a7a38c6a076f199e8fc44e3e94a0640dc07526d85ed758ad2fc13bdb8fe.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
+  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.0ab8c954a02adc8ff8cfc306d8ab3bd3463c057f69a5aaef066c5efaa444854e.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
     
 <link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
 <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
@@ -27,7 +27,7 @@
     <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
 <h2 id="containerization-basics-and-ci">Containerization: Basics and CI</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2021-10-13
+2021-10-14
 
 </section><section>
 <h1 id="containers">Containers</h1>
@@ -193,7 +193,7 @@
 <p>Changes to a layer do not invalidate previous layers</p>
 </section><section>
 <h1 id="dockerfile-syntax">Dockerfile syntax</h1>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#888"># Pulls an image from docker hub with this name. Alternatively, &#34;scratch&#34; can be used for an empty container</span><span style="color:#a61717;background-color:#e3d2d2">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#888"># Pulls an image from docker hub with this name. Alternatively, &#34;scratch&#34; can be used for an empty container</span><span style="color:#a61717;background-color:#e3d2d2">
 </span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">FROM</span><span style="color:#d20;background-color:#fff0f0"> manjarolinux/base </span><span style="color:#a61717;background-color:#e3d2d2">
 </span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Runs a command</span><span style="color:#a61717;background-color:#e3d2d2">
 </span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">RUN</span> pacman -Sy --noconfirm gnupg archlinux-keyring manjaro-keyring<span style="color:#a61717;background-color:#e3d2d2">
@@ -208,7 +208,7 @@
 <p>Image naming is done via <em>tags</em></p>
 <p>The easiest way to do so is assigning tags at <em>build time</em> with the <code>-t</code> options of <code>docker build</code></p>
 <p>The option can be repeated multiple times to make multiple tags</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>docker build -t <span style="color:#d20;background-color:#fff0f0">&#34;myImage:latest&#34;</span> -t <span style="color:#d20;background-color:#fff0f0">&#34;myImage:0.1.0&#34;</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>docker build -t <span style="color:#d20;background-color:#fff0f0">&#34;myImage:latest&#34;</span> -t <span style="color:#d20;background-color:#fff0f0">&#34;myImage:0.1.0&#34;</span>
 </code></pre></div><p><code>latest</code> is usually used to identify the most recent version of some image</p>
 </section><section>
 <h1 id="publishing-docker-images">Publishing docker images</h1>
@@ -231,27 +231,27 @@
 <p>More in general, there is <em>no limit on how much containers can be nested into each other</em></p>
 </section><section>
 <h1 id="travis-ci-example">Travis CI example</h1>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#888"># Required: enables the service</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">services</span>:<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#888"># Required: enables the service</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">  </span>- docker<span style="color:#bbb">
 </span><span style="color:#bbb"></span><span style="color:#888"># Optionally, specify where you want your container built, I like to use the latest version of Linux</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">dist</span>:<span style="color:#bbb"> </span>focal<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">dist</span>:<span style="color:#bbb"> </span>focal<span style="color:#bbb">
 </span><span style="color:#bbb"></span><span style="color:#888"># Utilities</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">env</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">global</span>:<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">env</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">global</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">    </span>- TZ=UTC<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>- IMAGE_NAME=<span style="color:#d20;background-color:#fff0f0">&#34;danysk/manjaro-with-yay&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- IMAGE_NAME=&#34;danysk/manjaro-with-yay&#34;<span style="color:#bbb">
 </span><span style="color:#bbb"></span><span style="color:#888"># Version computation. Here dates are used instead of Semantic Versioning</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">before_script</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>- export<span style="color:#bbb"> </span>TAG=<span style="color:#d20;background-color:#fff0f0">&#34;$(git describe || git log -n1 --date=format:&#39;%Y-%m-%dT%H%M%S&#39; --format=%cd)$(date +%Y-%m-%d_%H%M)&#34;</span><span style="color:#bbb">
-</span></code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">script</span>:<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">before_script</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>- export TAG=&#34;$(git describe || git log -n1 --date=format:&#39;%Y-%m-%dT%H%M%S&#39; --format=%cd)$(date +%Y-%m-%d_%H%M)&#34;<span style="color:#bbb">
+</span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#b06;font-weight:bold">script</span>:<span style="color:#bbb">
 </span><span style="color:#bbb"></span><span style="color:#888"># Build the image</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span>- docker<span style="color:#bbb"> </span>build<span style="color:#bbb"> </span>-t<span style="color:#bbb"> </span>$IMAGE_NAME:latest<span style="color:#bbb"> </span>-t<span style="color:#bbb"> </span>$IMAGE_NAME:$TAG<span style="color:#bbb"> </span>.<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>- docker build -t $IMAGE_NAME:latest -t $IMAGE_NAME:$TAG .<span style="color:#bbb">
 </span><span style="color:#bbb"></span><span style="color:#888"># Login into docker hub from a non-interactive terminal</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span>- echo<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#34;$DOCKER_PASSWORD&#34;</span><span style="color:#bbb"> </span>|<span style="color:#bbb"> </span>docker<span style="color:#bbb"> </span>login<span style="color:#bbb"> </span>-u<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#34;$DOCKER_USERNAME&#34;</span><span style="color:#bbb"> </span>--password-stdin<span style="color:#bbb"> </span>docker.io<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>- echo &#34;$DOCKER_PASSWORD&#34; | docker login -u &#34;$DOCKER_USERNAME&#34; --password-stdin docker.io<span style="color:#bbb">
 </span><span style="color:#bbb"></span><span style="color:#888"># Push the images, with both names (upload will happen only once, as they refer the same layer)</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span>- docker<span style="color:#bbb"> </span>push<span style="color:#bbb"> </span>$IMAGE_NAME:$TAG<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>- docker<span style="color:#bbb"> </span>push<span style="color:#bbb"> </span>$IMAGE_NAME:latest<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>- docker push $IMAGE_NAME:$TAG<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>- docker push $IMAGE_NAME:latest<span style="color:#bbb">
 </span></code></pre></div></section>
 
   

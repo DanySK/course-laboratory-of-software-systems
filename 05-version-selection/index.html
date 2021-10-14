@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/css/reset.css">
 <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/css/reveal.css">
-  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.be512a7a38c6a076f199e8fc44e3e94a0640dc07526d85ed758ad2fc13bdb8fe.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
+  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.0ab8c954a02adc8ff8cfc306d8ab3bd3463c057f69a5aaef066c5efaa444854e.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
     
 <link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
 <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
@@ -27,7 +27,7 @@
     <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
 <h2 id="selecting-a-version-number">Selecting a version number</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2021-10-13
+2021-10-14
 
 </section><section>
 <h1 id="software-versioning">Software versioning</h1>
@@ -364,7 +364,7 @@ The public API should not be considered stable.</li>
 <li>The result is a &ldquo;human-readable&rdquo; object name which can also be used to identify the commit to other git commands.</li>
 </ul>
 <p>In case no tag is present, <code>git describe</code> fails, but the last commit date could be used instead:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>git describe || <span style="color:#038">echo</span> <span style="color:#d20;background-color:#fff0f0">&#34;0.1.0-</span><span style="color:#080;font-weight:bold">$(</span>git log -n1 --date=format:<span style="color:#d20;background-color:#fff0f0">&#39;%Y-%m-%dT%H%M%S&#39;</span> --format=%cd<span style="color:#080;font-weight:bold">)</span><span style="color:#d20;background-color:#fff0f0">&#34;</span> 
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>git describe || <span style="color:#038">echo</span> <span style="color:#d20;background-color:#fff0f0">&#34;0.1.0-</span><span style="color:#080;font-weight:bold">$(</span>git log -n1 --date=format:<span style="color:#d20;background-color:#fff0f0">&#39;%Y-%m-%dT%H%M%S&#39;</span> --format=%cd<span style="color:#080;font-weight:bold">)</span><span style="color:#d20;background-color:#fff0f0">&#34;</span> 
 </code></pre></div></section>
 
   

@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/css/reset.css">
 <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/css/reveal.css">
-  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.be512a7a38c6a076f199e8fc44e3e94a0640dc07526d85ed758ad2fc13bdb8fe.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
+  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.0ab8c954a02adc8ff8cfc306d8ab3bd3463c057f69a5aaef066c5efaa444854e.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
     
 <link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
 <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
@@ -27,7 +27,7 @@
     <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
 <h2 id="continuous-integration">Continuous Integration</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2021-10-13
+2021-10-14
 
 </section><section>
 <h1 id="continuous-integration-1">Continuous Integration</h1>
@@ -108,7 +108,7 @@
 <li>The build process should be <em>rich</em> and <em>fast</em></li>
 <li>Operations requiring a long time should be <em>automated</em>
 <ul>
-<li>And run somewhere else than devs&rsquo; PCs</li>
+<li>And run somewhere else than devs' PCs</li>
 </ul>
 </li>
 </ul>
@@ -213,19 +213,19 @@ not just a &ldquo;plain&rdquo; CI/CD pipeline</p>
 </section><section>
 <h2 id="gha-basic-workflow-structure">GHA: basic workflow structure</h2>
 <p>Minimal, simplified workflow structure:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#888"># Mandatory workflow name</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Workflow<span style="color:#bbb"> </span>Name<span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">on</span>:<span style="color:#bbb"> </span><span style="color:#888"># Events that trigger the workflow</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">jobs</span>:<span style="color:#bbb"> </span><span style="color:#888"># Jobs composing the workflow, each one will run on a different runner</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">Job-Name</span>:<span style="color:#bbb"> </span><span style="color:#888"># Every job must be named</span><span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#888"># Mandatory workflow name</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Workflow Name<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">on</span>:<span style="color:#bbb"> </span><span style="color:#888"># Events that trigger the workflow</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">jobs</span>:<span style="color:#bbb"> </span><span style="color:#888"># Jobs composing the workflow, each one will run on a different runner</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">Job-Name</span>:<span style="color:#bbb"> </span><span style="color:#888"># Every job must be named</span><span style="color:#bbb">
 </span><span style="color:#bbb">        </span><span style="color:#888"># The type of runner executing the job, usually the OS</span><span style="color:#bbb">
-</span><span style="color:#bbb">        </span><span style="color:#080;font-weight:bold">runs-on</span>:<span style="color:#bbb"> </span>runner-name<span style="color:#bbb">
-</span><span style="color:#bbb">        </span><span style="color:#080;font-weight:bold">steps</span>:<span style="color:#bbb"> </span><span style="color:#888"># A list of commands, or &#34;actions&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">runs-on</span>:<span style="color:#bbb"> </span>runner-name<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">steps</span>:<span style="color:#bbb"> </span><span style="color:#888"># A list of commands, or &#34;actions&#34;</span><span style="color:#bbb">
 </span><span style="color:#bbb">            </span>- <span style="color:#888"># first step</span><span style="color:#bbb">
 </span><span style="color:#bbb">            </span>- <span style="color:#888"># second step</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">Another-Job</span>:<span style="color:#bbb"> </span><span style="color:#888"># This one runs in parallel with Job-Name</span><span style="color:#bbb">
-</span><span style="color:#bbb">        </span><span style="color:#080;font-weight:bold">runs-on</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;...&#39;</span><span style="color:#bbb">
-</span><span style="color:#bbb">        </span><span style="color:#080;font-weight:bold">steps</span>:<span style="color:#bbb"> </span>[<span style="color:#bbb"> </span>...<span style="color:#bbb"> </span>]<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">Another-Job</span>:<span style="color:#bbb"> </span><span style="color:#888"># This one runs in parallel with Job-Name</span><span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">runs-on</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;...&#39;</span><span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">steps</span>:<span style="color:#bbb"> </span>[<span style="color:#bbb"> </span>... ]<span style="color:#bbb">
 </span></code></pre></div></section><section>
 <h3 id="dry-ci">DRY CI</h3>
 <p>We discussed that automation / integration pipelines <strong>are</strong> part of the software</p>
@@ -238,58 +238,173 @@ not just a &ldquo;plain&rdquo; CI/CD pipeline</p>
 <li>Anchors (<code>&amp;</code> / <code>*</code>)</li>
 <li>Merge keys (<code>&lt;&lt;:</code>)</li>
 </ol>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">hey</span>:<span style="color:#bbb"> </span><span style="color:#c00;font-weight:bold">&amp;ref</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">look</span>:<span style="color:#bbb"> </span>at<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">me</span>:<span style="color:#bbb"> </span>[<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#34;I&#39;m&#34;</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;dancing&#39;</span><span style="color:#bbb"> </span>]<span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">merged</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">foo</span>:<span style="color:#bbb"> </span><span style="color:#c00;font-weight:bold">*ref</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">&lt;&lt;</span>:<span style="color:#bbb"> </span><span style="color:#c00;font-weight:bold">*ref</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">look</span>:<span style="color:#bbb"> </span>to<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#b06;font-weight:bold">hey</span>:<span style="color:#bbb"> </span><span style="color:#c00;font-weight:bold">&amp;ref</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">look</span>:<span style="color:#bbb"> </span>at<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">me</span>:<span style="color:#bbb"> </span>[<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#34;I&#39;m&#34;</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;dancing&#39;</span><span style="color:#bbb"> </span>]<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">merged</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">foo</span>:<span style="color:#bbb"> </span><span style="color:#c00;font-weight:bold">*ref</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">&lt;&lt;</span>:<span style="color:#bbb"> </span><span style="color:#c00;font-weight:bold">*ref</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">look</span>:<span style="color:#bbb"> </span>to<span style="color:#bbb">
 </span></code></pre></div><p>Same as:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">hey</span>:<span style="color:#bbb"> </span>{<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">look: at, me</span>:<span style="color:#bbb"> </span>[<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#34;I&#39;m&#34;</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;dancing&#39;</span><span style="color:#bbb"> </span>]<span style="color:#bbb"> </span>}<span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">merged</span>:<span style="color:#bbb"> </span>{<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">foo</span>:<span style="color:#bbb"> </span>{<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">look: at, me</span>:<span style="color:#bbb"> </span>[<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#34;I&#39;m&#34;</span><span style="color:#080;font-weight:bold">, &#39;dancing&#39; ] }, look: to, me</span>:<span style="color:#bbb"> </span>[<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#34;I&#39;m&#34;</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;dancing&#39;</span><span style="color:#bbb"> </span>]<span style="color:#bbb"> </span>}<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#b06;font-weight:bold">hey</span>:<span style="color:#bbb"> </span>{<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">look: at, me</span>:<span style="color:#bbb"> </span>[<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#34;I&#39;m&#34;</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;dancing&#39;</span><span style="color:#bbb"> </span>]<span style="color:#bbb"> </span>}<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">merged</span>:<span style="color:#bbb"> </span>{<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">foo</span>:<span style="color:#bbb"> </span>{<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">look: at, me</span>:<span style="color:#bbb"> </span>[<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#34;I&#39;m&#34;</span><span style="color:#b06;font-weight:bold">, &#39;dancing&#39; ] }, look: to, me</span>:<span style="color:#bbb"> </span>[<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#34;I&#39;m&#34;</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;dancing&#39;</span><span style="color:#bbb"> </span>]<span style="color:#bbb"> </span>}<span style="color:#bbb">
 </span></code></pre></div></section><section>
-<h2 id="github-actions-actions">GitHub Actions&rsquo; actions</h2>
+<h2 id="github-actions-actions">GitHub Actions' actions</h2>
 <p>GHA&rsquo;s YAML parser <em>does not support standard YAML anchors and merge keys</em></p>
 <p>(it is a well-known limit with a bug open since ages)</p>
-<p>GHA achieves reuse via &ldquo;<strong>actions</strong>&quot;:</p>
+<p>GHA achieves reuse via &ldquo;<strong>actions</strong>&quot;: <em>reusable blocks of operations</em></p>
 <ul>
-<li>Reusable operations</li>
+<li>Three kinds:
+<ul>
+<li><em>JavaScript</em> (working on any OS)</li>
+<li><em>Docker container</em>-based (linux only)</li>
+<li><em>Composite</em> (assemblage of other actions)</li>
 </ul>
+</li>
+<li>Allow input and output parameters</li>
+</ul>
+<p>Many basic actions are provided by GitHub directly,
+and many are developed by the community.</p>
 </section><section>
-<h2 id="travis-ci-environment-selection">Travis CI: Environment selection</h2>
-<p>By default, travis tries to build a <em>Ruby</em> project
-<br>
-Travis itself is written in Ruby</p>
-<p>Selection of a different system configuration can be operated with the <code>language</code> keyword.
-<br>
-Over <a href="https://docs.travis-ci.com/user/language-specific/">30 languages</a> are natively supported.</p>
-<p>Some of the most interesting for us are:</p>
-<ul>
-<li><code>java</code></li>
-<li><code>scala</code></li>
-<li><code>minimal</code> (bare environment with just bash and Ruby)</li>
-</ul>
-<p>Every environment has some <em>pre-defined behaviour</em>,
-for instance the <code>language: java</code> environment automatically searches for a <code>pom.xml</code> and in case runs Maven,
-if not found searches for a <code>gradlew</code> file and runs <code>./gradlew assemble</code> in the <code>install</code> phase and <code>./gradlew check</code> in the <code>script</code> phase.</p>
-<ul>
-<li>Default phase behavior can be disabled with <code>&lt;phase_name&gt;: true</code></li>
-</ul>
+<h2 id="workflow-minimal-example">Workflow minimal example</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#888"># This is a basic workflow to help you get started with Actions</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>CI<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#888"># Controls when the workflow will run</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">on</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">push</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">tags</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;*&#39;</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">branches-ignore</span>:<span style="color:#bbb"> </span><span style="color:#888"># Pushes on these branches won&#39;t start a build</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#d20;background-color:#fff0f0">&#39;autodelivery**&#39;</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#d20;background-color:#fff0f0">&#39;bump-**&#39;</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#d20;background-color:#fff0f0">&#39;renovate/**&#39;</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">paths-ignore</span>:<span style="color:#bbb"> </span><span style="color:#888"># Pushes that change only these file won&#39;t start the workflow</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#d20;background-color:#fff0f0">&#39;README.md&#39;</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#d20;background-color:#fff0f0">&#39;CHANGELOG.md&#39;</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#d20;background-color:#fff0f0">&#39;LICENSE&#39;</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">pull_request</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">branches</span>:<span style="color:#bbb"> </span><span style="color:#888"># Only pull requests based on these branches will start the workflow</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- master<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#888"># Allows you to run this workflow manually from the Actions tab</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>workflow_dispatch:</code></pre></div>
 </section><section>
-<h2 id="travis-ci-clone-depth-control">Travis CI: clone depth control</h2>
-<p>By default, Travis CI <em>does not clone the entire history</em> of a repository.
-<br>
-It performs instead a <em>shallow clone</em>, by running <code>git clone --depth 50 &lt;repo-url&gt;</code></p>
-<p>This <em>interferes with DVCS-based versioning</em>, which may well need to look behind of many commits.</p>
-<p>This behaviour can be controlled with the <code>git</code> key:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">git</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">depth</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">false</span><span style="color:#bbb"> </span><span style="color:#888"># Accepts false or any number representing the commit count, defaults to 50</span><span style="color:#bbb">
-</span></code></pre></div><p>The same key allows for controlling further behaviour, such as disabling <code>autocrlf</code>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">git</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">depth</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">false</span><span style="color:#bbb"> </span><span style="color:#888"># Accepts false or any number representing the commit count, defaults to 50</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">autocrlf</span>:<span style="color:#bbb"> </span>input<span style="color:#bbb"> </span><span style="color:#888"># Prevents git from trying to be smart with line endings</span><span style="color:#bbb">
-</span></code></pre></div></section><section>
+<h2 id="workflow-minimal-example-1">Workflow minimal example</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#888"># A workflow run is made up of one or more jobs that can run sequentially or in parallel</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">jobs</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#888"># This workflow contains a single job called &#34;build&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">Default-Example</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#888"># The type of runner that the job will run on</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">runs-on</span>:<span style="color:#bbb"> </span>macos-latest<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#888"># Steps represent a sequence of tasks that will be executed as part of the job</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">steps</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#888"># Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@v2<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#888"># Runs a single command using the runners shell</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Run a one-line script<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>echo Hello from a ${{ runner.os }} machine!<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#888"># Runs a set of commands using the runners shell</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Run a multi-line script<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>|<span style="color:#d20;background-color:#fff0f0">
+</span><span style="color:#d20;background-color:#fff0f0">          echo Add other actions to build,
+</span><span style="color:#d20;background-color:#fff0f0">          echo test, and deploy your project.</span><span style="color:#bbb">          </span></code></pre></div>
+</section><section>
+<h2 id="workflow-minimal-example-2">Workflow minimal example</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">Explore-GitHub-Actions</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">runs-on</span>:<span style="color:#bbb"> </span>ubuntu-latest<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">steps</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>echo &#34;🎉 The job was automatically triggered by a ${{ github.event_name }} event.&#34;<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>echo &#34;🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!&#34;<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>echo &#34;🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}.&#34;<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Check out repository code<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@v2<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>echo &#34;💡 The ${{ github.repository }} repository has been cloned to the runner.&#34;<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>echo &#34;🖥️ The workflow is now ready to test your code on the runner.&#34;<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>List files in the repository<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>ls ${{ github.workspace }}<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>echo &#34;🍏 This job&#39;s status is ${{ job.status }}.&#34;<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#888"># Steps can be executed conditionally</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Skipped conditional step<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">if</span>:<span style="color:#bbb"> </span>runner.os == &#39;Windows&#39;<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>echo this step won&#39;t run, it has been excluded!<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>|<span style="color:#d20;background-color:#fff0f0">
+</span><span style="color:#d20;background-color:#fff0f0">          echo This is
+</span><span style="color:#d20;background-color:#fff0f0">          echo a multi-line
+</span><span style="color:#d20;background-color:#fff0f0">          echo script.</span><span style="color:#bbb">          </span></code></pre></div>
+</section><section>
+<h2 id="workflow-minimal-example-3">Workflow minimal example</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">Conclusion</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">runs-on</span>:<span style="color:#bbb"> </span>windows-latest<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#888"># Jobs may require other jobs</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">needs</span>:<span style="color:#bbb"> </span>[<span style="color:#bbb"> </span>Default-Example, Explore-GitHub-Actions ]<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#888"># Typically, steps that follow failed steps won&#39;t execute.</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#888"># However, this behavior can be changed by using the built-in function &#34;always()&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">if</span>:<span style="color:#bbb"> </span>always()<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">steps</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Run something on powershell<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>echo By default, ${{ runner.os }} runners execute with powershell<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Run something on bash<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">shell</span>:<span style="color:#bbb"> </span>bash<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>echo However, it is allowed to force the shell type and there is a bash available for ${{ runner.os }} too.<span style="color:#bbb">
+</span><span style="color:#bbb">      
+</span></code></pre></div>
+</section><section>
+<h2 id="checking-out-the-repository">Checking out the repository</h2>
+<p>By default, GitHub actions' <em>runners do <strong>not</strong> check out the repository</em></p>
+<ul>
+<li>Actions may not need to access the code
+<ul>
+<li>e.g., Actions automating issues, projects</li>
+</ul>
+</li>
+</ul>
+<p>It is a <em>common</em> and <em>non-trivial</em> operation (the checked out version must be the version originating the workflow), thus GitHub provides an action:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Check out repository code<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@v2</code></pre></div>
+<p>Since actions typically do not need the entire history of the project, by default the action checks out <em>only the commit that originated the workflow</em> (<code>--depth=1</code> when cloning)</p>
+<ul>
+<li><em>Shallow cloning</em> has better <em>performance</em></li>
+<li>$\Rightarrow$ It may break operations that rely on the entire history!
+<ul>
+<li>e.g., the git-sensitive semantic versioning system</li>
+</ul>
+</li>
+</ul>
+<p>Also, <em><strong>tags</strong> don&rsquo;t get checked out</em></p>
+</section><section>
+<h2 id="checking-out-the-whole-history">Checking out the whole history</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Checkout<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@v2<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">with</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">fetch-depth</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">0</span><span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">submodules</span>:<span style="color:#bbb"> </span>recursive<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Fetch tags<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">shell</span>:<span style="color:#bbb"> </span>bash<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>git fetch --tags -f<span style="color:#bbb">
+</span></code></pre></div>
+</section><section>
+<h2 id="dry-with-composite-actions">DRY with composite actions</h2>
+<p>Composite actions allow the execution of multiple steps.</p>
+<p>They can be written by simply creating an <code>action.yml</code> file in the project root</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;Checkout the whole repository&#39;</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">description</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;Checkout all commits, all tags, and initialize all submodules.&#39;</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">runs</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">using</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#34;composite&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">steps</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Checkout<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@v2<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">with</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">fetch-depth</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">0</span><span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">submodules</span>:<span style="color:#bbb"> </span>recursive<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Fetch tags<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">shell</span>:<span style="color:#bbb"> </span>bash<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>git fetch --tags -f<span style="color:#bbb">
+</span></code></pre></div>
+<p>See: <a href="https://github.com/DanySK/action-checkout">https://github.com/DanySK/action-checkout</a></p>
+<p>It can be used as:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Checkout<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>danysk/action-checkout@0.1.0</code></pre></div>
+</section><section>
+</section><section>
 <h2 id="travis-ci-testing-on-different-oss">Travis CI: Testing on different OSs</h2>
 <p>If our software supports <em>multiple operating systems</em>, it is a good practice to verify that changes do not <em>break compatibility</em></p>
 <p>A few integrators allow to perform a multi-os build. In Travis it is possible via the <code>os</code> key, supporting:</p>
@@ -312,11 +427,11 @@ It performs instead a <em>shallow clone</em>, by running <code>git clone --depth
 <li>start from <code>language: minimal</code></li>
 <li>if the software you need is installable via <strong>apt</strong> or <strong>homebrew</strong>, use the <code>addons</code> keyword:</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">addons</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">apt</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">packages</span>:<span style="color:#bbb"> </span>foo<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">homebrew</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">packages</span>:<span style="color:#bbb"> </span>bar<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#b06;font-weight:bold">addons</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">apt</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">packages</span>:<span style="color:#bbb"> </span>foo<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">homebrew</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">packages</span>:<span style="color:#bbb"> </span>bar<span style="color:#bbb">
 </span></code></pre></div><ul>
 <li>install packages under windows using <strong><a href="https://chocolatey.org/">chocolatey</a></strong> (pre installed on Travis Windows instances)</li>
 <li>if you need to perform a manual installation, you can write it in bash</li>
@@ -345,15 +460,15 @@ A multi platform installer exists: <a href="https://github.com/shyiko/jabba">Jab
 <li>Automatically installs Jabba</li>
 <li>Uses Jabba to install the version of the JDK specified in the <code>JDK</code> environment variable</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">env</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">global</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>- GRAVIS_REPO=<span style="color:#d20;background-color:#fff0f0">&#34;https://github.com/DanySK/Gravis-CI.git&#34;</span><span style="color:#bbb"> </span><span style="color:#888"># Convenience variable for shortening commands</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span>- GRAVIS=<span style="color:#d20;background-color:#fff0f0">&#34;$HOME/gravis&#34;</span><span style="color:#bbb"> </span><span style="color:#888"># Convenience variable for shortening commands</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span>- JDK=<span style="color:#d20;background-color:#fff0f0">&#34;adopt@1.11.0-8&#34;</span><span style="color:#bbb"> </span><span style="color:#888"># Partial versions supported, adopt@1.11 would pull the latest adopt 1.11</span><span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#b06;font-weight:bold">env</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">global</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- GRAVIS_REPO=&#34;https://github.com/DanySK/Gravis-CI.git&#34;<span style="color:#bbb"> </span><span style="color:#888"># Convenience variable for shortening commands</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- GRAVIS=&#34;$HOME/gravis&#34;<span style="color:#bbb"> </span><span style="color:#888"># Convenience variable for shortening commands</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- JDK=&#34;adopt@1.11.0-8&#34;<span style="color:#bbb"> </span><span style="color:#888"># Partial versions supported, adopt@1.11 would pull the latest adopt 1.11</span><span style="color:#bbb">
 </span><span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">before_install</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>- travis_retry<span style="color:#bbb"> </span>git<span style="color:#bbb"> </span>clone<span style="color:#bbb"> </span>--depth<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">1</span><span style="color:#bbb"> </span>$GRAVIS_REPO<span style="color:#bbb"> </span>$GRAVIS<span style="color:#bbb"> </span><span style="color:#888"># Check out the script set</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span>- source<span style="color:#bbb"> </span>$GRAVIS/install-jdk<span style="color:#bbb"> </span><span style="color:#888"># Install the JDK you configured in the $JDK environment variable</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">before_install</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>- travis_retry git clone --depth 1 $GRAVIS_REPO $GRAVIS<span style="color:#bbb"> </span><span style="color:#888"># Check out the script set</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>- source $GRAVIS/install-jdk<span style="color:#bbb"> </span><span style="color:#888"># Install the JDK you configured in the $JDK environment variable</span><span style="color:#bbb">
 </span></code></pre></div></section><section>
 <h2 id="build-matrix">Build Matrix</h2>
 <p>Similarly to the operating systems, other environment features may need to get tested, e.g. the JDK versions</p>
@@ -364,22 +479,22 @@ A multi platform installer exists: <a href="https://github.com/shyiko/jabba">Jab
 <li><code>jobs.include</code> can be used to add further jobs to the matrix</li>
 <li><code>jobs.exclude</code> can be used to filter jobs out of the matrix</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>...<span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">env</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">global</span>:<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#b06;font-weight:bold">...</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">env</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">global</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">    </span>...<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">matrix</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>- JDK=<span style="color:#d20;background-color:#fff0f0">&#34;adopt@&#34;</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span>- JDK=<span style="color:#d20;background-color:#fff0f0">&#34;adopt@1.11&#34;</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span>- JDK=<span style="color:#d20;background-color:#fff0f0">&#34;adopt-openj9@&#34;</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span>- JDK=<span style="color:#d20;background-color:#fff0f0">&#34;adopt-openj9@1.11&#34;</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">jobs</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">include</span>:<span style="color:#bbb"> </span><span style="color:#888"># Add a job with default OS and the specified matrix environment</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">env</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>- JDK=<span style="color:#d20;background-color:#fff0f0">&#34;adopt@1.8&#34;</span><span style="color:#bbb"> 
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">exclude</span>:<span style="color:#bbb"> </span><span style="color:#888"># Excludes builds with OSX and OpenJ9</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span>- {<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">os: osx, env</span>:<span style="color:#bbb"> </span>[<span style="color:#bbb"> </span>JDK=<span style="color:#d20;background-color:#fff0f0">&#34;adopt-openj9@&#34;</span><span style="color:#bbb"> </span>]<span style="color:#bbb"> </span>}<span style="color:#bbb"> </span><span style="color:#888"># JSON-like syntax, YAML is a superset of JSON</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span>- {<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">os: osx, env</span>:<span style="color:#bbb"> </span>[<span style="color:#bbb"> </span>JDK=<span style="color:#d20;background-color:#fff0f0">&#34;adopt-openj9@1.11&#34;</span><span style="color:#bbb"> </span>]<span style="color:#bbb"> </span>}<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">matrix</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- JDK=&#34;adopt@&#34;<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- JDK=&#34;adopt@1.11&#34;<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- JDK=&#34;adopt-openj9@&#34;<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- JDK=&#34;adopt-openj9@1.11&#34;<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">jobs</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">include</span>:<span style="color:#bbb"> </span><span style="color:#888"># Add a job with default OS and the specified matrix environment</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">env</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- JDK=&#34;adopt@1.8&#34; <span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">exclude</span>:<span style="color:#bbb"> </span><span style="color:#888"># Excludes builds with OSX and OpenJ9</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- {<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">os: osx, env</span>:<span style="color:#bbb"> </span>[<span style="color:#bbb"> </span>JDK=&#34;adopt-openj9@&#34; ] }<span style="color:#bbb"> </span><span style="color:#888"># JSON-like syntax, YAML is a superset of JSON</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- {<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">os: osx, env</span>:<span style="color:#bbb"> </span>[<span style="color:#bbb"> </span>JDK=&#34;adopt-openj9@1.11&#34; ] }<span style="color:#bbb">
 </span></code></pre></div></section><section>
 <h2 id="build-stages-and-workspaces">Build Stages and workspaces</h2>
 <p>Spanning several jobs upfront may make the build very slow</p>
@@ -477,9 +592,9 @@ A multi platform installer exists: <a href="https://github.com/shyiko/jabba">Jab
 </ul>
 </li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">env</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">global</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">secure</span>:<span style="color:#bbb"> </span>&lt;code&gt;<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#b06;font-weight:bold">env</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">global</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">secure</span>:<span style="color:#bbb"> </span>&lt;code&gt;<span style="color:#bbb">
 </span></code></pre></div><p>Travis also supports sharing a <strong>single secret file</strong></p>
 <ul>
 <li>It gets encrypted using <code>travis encrypt-file &lt;file&gt; --pro</code></li>
@@ -529,7 +644,7 @@ A multi platform installer exists: <a href="https://github.com/shyiko/jabba">Jab
 </ul>
 </section><section>
 <h2 id="signing-using-in-memory-keys-in-gradle">Signing using in-memory keys in Gradle</h2>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">if</span> (System.getenv(<span style="color:#d20;background-color:#fff0f0">&#34;CI&#34;</span>) == <span style="color:#080;font-weight:bold">true</span>.toString()) {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">if</span> (System.getenv(<span style="color:#d20;background-color:#fff0f0">&#34;CI&#34;</span>) == <span style="color:#080;font-weight:bold">true</span>.toString()) {
     signing {
         <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">signingKey</span>: String? <span style="color:#080;font-weight:bold">by</span> project
         <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">signingPassword</span>: String? <span style="color:#080;font-weight:bold">by</span> project
@@ -583,12 +698,12 @@ is to use <strong>conditional jobs, stages, and deployments</strong></p>
 </ul>
 <p>Full reference: <a href="https://docs.travis-ci.com/user/deployment-v2">https://docs.travis-ci.com/user/deployment-v2</a></p>
 <p>Example:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">deploy</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">provider</span>:<span style="color:#bbb"> </span>releases<span style="color:#bbb"> </span><span style="color:#888"># Deploys on GitHub Releases</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">file</span>:<span style="color:#bbb"> </span>build/libs/<span style="color:#c00;font-weight:bold">*.jar</span><span style="color:#bbb"> </span><span style="color:#888"># Files to deploy</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">edge</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb"> </span><span style="color:#888"># opt in to the new deploy API</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">on</span>:<span style="color:#bbb"> </span><span style="color:#888"># filter</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">all_branches</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#b06;font-weight:bold">deploy</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">provider</span>:<span style="color:#bbb"> </span>releases<span style="color:#bbb"> </span><span style="color:#888"># Deploys on GitHub Releases</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">file</span>:<span style="color:#bbb"> </span>build/libs/*.jar<span style="color:#bbb"> </span><span style="color:#888"># Files to deploy</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">edge</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb"> </span><span style="color:#888"># opt in to the new deploy API</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">on</span>:<span style="color:#bbb"> </span><span style="color:#888"># filter</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">all_branches</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">
 </span><span style="color:#bbb">    </span><span style="color:#888"># tags: true # deploy only tags</span><span style="color:#bbb">
 </span></code></pre></div></section><section>
 <h1 id="stale-builds">Stale builds</h1>

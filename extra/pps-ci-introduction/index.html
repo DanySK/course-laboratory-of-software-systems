@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/css/reset.css">
 <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/css/reveal.css">
-  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.be512a7a38c6a076f199e8fc44e3e94a0640dc07526d85ed758ad2fc13bdb8fe.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
+  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.0ab8c954a02adc8ff8cfc306d8ab3bd3463c057f69a5aaef066c5efaa444854e.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
     
 <link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
 <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
@@ -27,7 +27,7 @@
     <section><h1 id="development-and-programming-paradigms">Development and programming paradigms</h1>
 <h2 id="continuous-integration">Continuous Integration</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2021-10-13
+2021-10-14
 
 </section>
 <section data-noprocess data-shortcode-slide>
@@ -243,7 +243,7 @@
 <h2 id="funny-historical-introduction">Funny historical introduction</h2>
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/4XpnKHJAok8?autoplay=1" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+  <iframe src="https://www.youtube.com/embed/4XpnKHJAok8?autoplay=1" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="Linus Torvalds introduces Git at Google"></iframe>
 </div>
 
 </section><section>
@@ -310,7 +310,7 @@
 <li>Can provide ways to diff binary file (by conversion to text, needs configuration)</li>
 <li>Example:</li>
 </ul>
-<pre><code class="language-.gitattributes" data-lang=".gitattributes">* text=auto eol=lf
+<pre tabindex="0"><code class="language-.gitattributes" data-lang=".gitattributes">* text=auto eol=lf
 *.[cC][mM][dD] text eol=crlf
 *.[bB][aA][tT] text eol=crlf
 *.[pP][sS]1 text eol=crlf
@@ -801,7 +801,7 @@ from code to artifacts</p>
 </div>
 </section><section>
 <h2 id="actual-result">Actual result</h2>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>package it.unibo.ci;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>package it.unibo.ci;
 import com.uwetrottmann.thetvdb.TheTvdb;
 import org.apache.commons.io.IOUtils;
 import retrofit2.Response;
@@ -856,7 +856,7 @@ public final class PrintBreakingBad {
 </ul>
 </section><section>
 <h2 id="actual-dependency-tree">Actual dependency tree</h2>
-<pre><code>+--- commons-io:commons-io:+ -&gt; 2.8.0
+<pre tabindex="0"><code>+--- commons-io:commons-io:+ -&gt; 2.8.0
 +--- com.uwetrottmann.thetvdb-java:thetvdb-java:+ -&gt; 2.4.0
 |    +--- com.squareup.retrofit2:retrofit:2.6.2
 |    |    \--- com.squareup.okhttp3:okhttp:3.12.0
@@ -980,7 +980,7 @@ public final class PrintBreakingBad {
 <ul>
 <li>By default, Gradle inherits the maven convention for source organization:</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>+-- src <span style="color:#888"># All sources</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>+-- src <span style="color:#888"># All sources</span>
     +-- main <span style="color:#888"># One folder per &#34;source set&#34;, all code in a source set shares dependencies</span>
     |   +-- java <span style="color:#888"># One folder per language</span>
     |   +-- kotlin
@@ -994,7 +994,7 @@ public final class PrintBreakingBad {
 </code></pre></div></section><section>
 <h2 id="gradle-minimal-java-build-1">Gradle: minimal java build</h2>
 <p><code>src/main/java/HelloWorld.java</code></p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>public class HelloWorld {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>public class HelloWorld {
 
     public static void main(String... args) {
         System.out.println(&#34;Hello, world!&#34;);
@@ -1003,7 +1003,7 @@ public final class PrintBreakingBad {
 }
 </code></pre></div>
 <p><code>build.gradle.kts</code></p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins { java }
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins { java }
 </code></pre></div>
 <p>Yes, it&rsquo;s a one-liner</p>
 </section><section>
@@ -1103,7 +1103,7 @@ public final class PrintBreakingBad {
 </section><section>
 <h2 id="gradle-our-toy-example">Gradle: our toy example</h2>
 <p><code>src/main/java/it/unibo/ci/PrintBreakingBad.java</code></p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>package it.unibo.ci;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>package it.unibo.ci;
 import com.uwetrottmann.thetvdb.TheTvdb;
 import org.apache.commons.io.IOUtils;
 import retrofit2.Response;
@@ -1140,7 +1140,7 @@ public final class PrintBreakingBad {
 </section><section>
 <h2 id="gradle-our-toy-example-1">Gradle: our toy example</h2>
 <p><code>build.gradle.kts</code></p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins {
     java
     application
 }
@@ -1157,7 +1157,7 @@ application {
 }
 </code></pre></div>
 <p><code>settings.gradle.kts</code></p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>rootProject.name = <span style="color:#d20;background-color:#fff0f0">&#34;dependency-management&#34;</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>rootProject.name = <span style="color:#d20;background-color:#fff0f0">&#34;dependency-management&#34;</span>
 </code></pre></div>
 </section><section>
 <h2 id="gradle-toy-example-execution">Gradle: toy example execution</h2>
@@ -1174,11 +1174,11 @@ application {
 </section><section>
 <h2 id="gradle-multi-language-projects">Gradle: multi-language projects</h2>
 <p><code>src/main/groovy/HelloGroovy.groovy</code></p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>println &#34;Hello, Groovy&#34;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>println &#34;Hello, Groovy&#34;
 
 </code></pre></div>
 <p><code>src/main/java/HelloWorld.java</code></p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>public class HelloWorld {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>public class HelloWorld {
 
     public static void main(String... args) {
         System.out.println(&#34;Hello, world!&#34;);
@@ -1189,19 +1189,19 @@ application {
 </section><section>
 <h2 id="gradle-multi-language-projects-1">Gradle: multi-language projects</h2>
 <p><code>src/main/kotlin/HelloKt.kt</code></p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">main</span>() { 
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">main</span>() { 
   println(<span style="color:#d20;background-color:#fff0f0">&#34;Hello, world!&#34;</span>) 
 }
 </code></pre></div>
 <p><code>src/main/scala/HelloScala.scala</code></p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>object HelloScala extends App  {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>object HelloScala extends App  {
     println(&#34;Hello Scala&#34;)
 }
 </code></pre></div>
 </section><section>
 <h2 id="gradle-multi-language-projects-2">Gradle: multi-language projects</h2>
 <p><code>build.gradle.kts</code></p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins {
     java
     scala
     groovy
@@ -1318,7 +1318,7 @@ dependencies {
 </section><section>
 <h2 id="quality-assurance-junit--gradle">Quality Assurance: JUnit + Gradle</h2>
 <p><code>src/main/scala/it/unibo/test/Test.scala</code></p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>package it.unibo.test
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>package it.unibo.test
 
 trait Sometrait {
   def f: Int
@@ -1333,7 +1333,7 @@ object Someobject {
 </section><section>
 <h2 id="quality-assurance-junit--gradle-1">Quality Assurance: JUnit + Gradle</h2>
 <p><code>src/test/scala/MyTest.scala</code></p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>import it.unibo.test.{Someobject, Sometrait}
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>import it.unibo.test.{Someobject, Sometrait}
 import org.junit.jupiter.api.Assertions._
 import org.junit.jupiter.api.Test
 
@@ -1358,7 +1358,7 @@ class MyTest {
 </section><section>
 <h2 id="quality-assurance-junit--gradle-2">Quality Assurance: JUnit + Gradle</h2>
 <p><code>build.gradle.kts</code></p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins {
     java
     scala
     jacoco
@@ -1383,7 +1383,7 @@ dependencies {
 <h2 id="quality-assurance-scalatest--scoverage">Quality Assurance: Scalatest + Scoverage</h2>
 <p>Let&rsquo;s switch <em>testing framework</em> and enable <em>coverage</em></p>
 <p><code>src/main/scala/it/unibo/test/Test.scala</code></p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>package it.unibo.test
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>package it.unibo.test
 
 trait Sometrait {
   def f: Int
@@ -1398,7 +1398,7 @@ object Someobject {
 </section><section>
 <h2 id="quality-assurance-scalatest--scoverage-1">Quality Assurance: Scalatest + Scoverage</h2>
 <p><code>src/test/scala/Test.scala</code></p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>import it.unibo.test.Sometrait
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>import it.unibo.test.Sometrait
 import org.scalamock.scalatest.MockFactory
 import org.scalatest.funsuite.AnyFunSuite
 
@@ -1418,7 +1418,7 @@ class MyTests extends AnyFunSuite with MockFactory {
 </section><section>
 <h2 id="quality-assurance-scalatest--scoverage-2">Quality Assurance: Scalatest + Scoverage</h2>
 <p><code>build.gradle.kts</code></p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins {
     java
     scala
     id(<span style="color:#d20;background-color:#fff0f0">&#34;org.scoverage&#34;</span>) version <span style="color:#d20;background-color:#fff0f0">&#34;5.0.0&#34;</span>
@@ -1557,7 +1557,7 @@ dependencies {
 <li>The build process should be <em>rich</em> and <em>fast</em></li>
 <li>Operations requiring a long time should be <em>automated</em>
 <ul>
-<li>And run somewhere else than devs&rsquo; PCs</li>
+<li>And run somewhere else than devs' PCs</li>
 </ul>
 </li>
 </ul>
@@ -1690,19 +1690,19 @@ dependencies {
 <ul>
 <li>Events that trigger a workflow are specified under the <code>on</code> key</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">on</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">push</span>:<span style="color:#bbb"> </span><span style="color:#888"># Trigger the workflow on push</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">branches</span>:<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#b06;font-weight:bold">on</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">push</span>:<span style="color:#bbb"> </span><span style="color:#888"># Trigger the workflow on push</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">branches</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">      </span>- main<span style="color:#bbb"> </span><span style="color:#888"># but only for the main branch</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">pull_request</span>:<span style="color:#bbb"> </span><span style="color:#888"># Also trigger for pull requests</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">branches</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">pull_request</span>:<span style="color:#bbb"> </span><span style="color:#888"># Also trigger for pull requests</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">branches</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">      </span>- main<span style="color:#bbb"> </span><span style="color:#888"># but only for the main branch</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">page_build</span>:<span style="color:#bbb"> </span><span style="color:#888"># Also trigger on page_build</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">release</span>:<span style="color:#bbb"> </span><span style="color:#888"># Also trigger on release...</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">types</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">page_build</span>:<span style="color:#bbb"> </span><span style="color:#888"># Also trigger on page_build</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">release</span>:<span style="color:#bbb"> </span><span style="color:#888"># Also trigger on release...</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">types</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">      </span>- created<span style="color:#bbb"> </span><span style="color:#888"># ...created</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">schedule</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>- <span style="color:#080;font-weight:bold">cron</span>:<span style="color:#bbb">  </span><span style="color:#d20;background-color:#fff0f0">&#39;*/30 5,17 * * *&#39;</span><span style="color:#bbb"> </span><span style="color:#888"># Cron syntax (see crontab.guru)</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">schedule</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">cron</span>:<span style="color:#bbb">  </span><span style="color:#d20;background-color:#fff0f0">&#39;*/30 5,17 * * *&#39;</span><span style="color:#bbb"> </span><span style="color:#888"># Cron syntax (see crontab.guru)</span><span style="color:#bbb">
 </span></code></pre></div></section><section>
 <h2 id="github-actions-environment-preparation">GitHub Actions: Environment preparation</h2>
 <p>GitHub actions job run on a <em>fresh virtual machine</em></p>
@@ -1722,22 +1722,22 @@ dependencies {
 </ul>
 </section><section>
 <h2 id="github-actions-a-simple-gradle-build">GitHub Actions: a simple gradle build</h2>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Clone<span style="color:#bbb"> </span>Repository<span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">on</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">push</span>:<span style="color:#bbb"> </span><span style="color:#888"># On every push on any branch</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">jobs</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">Build</span>:<span style="color:#bbb"> </span><span style="color:#888"># Job name</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">runs-on</span>:<span style="color:#bbb"> </span>ubuntu-latest<span style="color:#bbb"> </span><span style="color:#888"># Operating system selection</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">env</span>:<span style="color:#bbb"> </span><span style="color:#888"># Environment can be controlled at the job or step level</span><span style="color:#bbb">
-</span><span style="color:#bbb">      </span><span style="color:#080;font-weight:bold">TERM</span>:<span style="color:#bbb"> </span>dumb<span style="color:#bbb"> </span><span style="color:#888"># Sets the environment variable TERM to &#34;dumb&#34;</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">steps</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>- <span style="color:#080;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Checkout<span style="color:#bbb"> </span><span style="color:#888"># custom name Checkout the repository</span><span style="color:#bbb">
-</span><span style="color:#bbb">        </span><span style="color:#080;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@v2<span style="color:#bbb"> </span><span style="color:#888"># Action implemented in this repository, tag &#34;2&#34;</span><span style="color:#bbb">
-</span><span style="color:#bbb">      </span>- <span style="color:#080;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>joschi/setup-jdk@v2<span style="color:#00d;font-weight:bold">.3.0</span><span style="color:#bbb"> </span><span style="color:#888"># Action implemented in repository &#34;joschi/setup-jdk&#34; tag &#34;2.3.0&#34;</span><span style="color:#bbb">
-</span><span style="color:#bbb">        </span><span style="color:#080;font-weight:bold">with</span>:<span style="color:#bbb"> </span><span style="color:#888"># Actions parameters (action name omitted)</span><span style="color:#bbb">
-</span><span style="color:#bbb">          </span><span style="color:#080;font-weight:bold">java-version</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">15</span><span style="color:#bbb">
-</span><span style="color:#bbb">      </span>- <span style="color:#080;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Build<span style="color:#bbb">
-</span><span style="color:#bbb">        </span><span style="color:#080;font-weight:bold">run</span>:<span style="color:#bbb"> </span>./gradlew<span style="color:#bbb"> </span>check<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Clone Repository<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">on</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">push</span>:<span style="color:#bbb"> </span><span style="color:#888"># On every push on any branch</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">jobs</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">Build</span>:<span style="color:#bbb"> </span><span style="color:#888"># Job name</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">runs-on</span>:<span style="color:#bbb"> </span>ubuntu-latest<span style="color:#bbb"> </span><span style="color:#888"># Operating system selection</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">env</span>:<span style="color:#bbb"> </span><span style="color:#888"># Environment can be controlled at the job or step level</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">TERM</span>:<span style="color:#bbb"> </span>dumb<span style="color:#bbb"> </span><span style="color:#888"># Sets the environment variable TERM to &#34;dumb&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">steps</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Checkout<span style="color:#bbb"> </span><span style="color:#888"># custom name Checkout the repository</span><span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@v2<span style="color:#bbb"> </span><span style="color:#888"># Action implemented in this repository, tag &#34;2&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>joschi/setup-jdk@v2.3.0<span style="color:#bbb"> </span><span style="color:#888"># Action implemented in repository &#34;joschi/setup-jdk&#34; tag &#34;2.3.0&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">with</span>:<span style="color:#bbb"> </span><span style="color:#888"># Actions parameters (action name omitted)</span><span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">java-version</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">15</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Build<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>./gradlew check<span style="color:#bbb">
 </span></code></pre></div></section><section>
 <h1 id="automated-delivery">Automated delivery</h1>
 <p>Once the <em>reference environment</em> in CI completed the software construction and testing,
