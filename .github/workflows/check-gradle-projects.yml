@@ -11,6 +11,7 @@ on:
       - 'CHANGELOG.md'
       - 'LICENSE'
       - 'slides/**'
+      - '.github/workflows/build-and-deploy.yml'
       - '.github/workflows/update-hugo.yml'
   pull_request:
   workflow_dispatch:
