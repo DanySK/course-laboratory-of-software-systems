@@ -10,5 +10,9 @@
 {{- $end := sub $end $start }}
 {{- $content := after $start (first (add $start $end) $content) -}}
 {{- $content := delimit $content "\n" -}}
-{{- $language := .Get "language" | default (cond (or (strings.HasSuffix $path ".kt") (strings.HasSuffix $path ".kts")) "kotlin" "markdown") -}}
+{{- $language := .Get "language" | default (
+    cond (or (strings.HasSuffix $path ".kt") (strings.HasSuffix $path ".kts")) "kotlin"
+        (cond (or (strings.HasSuffix $path ".yml") (strings.HasSuffix $path ".yaml")) "yaml"
+        "markdown"
+    )) -}}
 {{- highlight ($content) ($language) "" -}}

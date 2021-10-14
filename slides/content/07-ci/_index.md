@@ -249,55 +249,84 @@ GHA's YAML parser *does not support standard YAML anchors and merge keys*
 
 (it is a well-known limit with a bug open since ages)
 
-GHA achieves reuse via "**actions**":
-* Reusable operations
+GHA achieves reuse via "**actions**": *reusable blocks of operations*
+* Three kinds:
+    * *JavaScript* (working on any OS)
+    * *Docker container*-based (linux only)
+    * *Composite* (assemblage of other actions)
+* Allow input and output parameters
+
+Many basic actions are provided by GitHub directly,
+and many are developed by the community.
 
 ---
 
-## Travis CI: Environment selection
+## Workflow minimal example
 
-By default, travis tries to build a *Ruby* project
-<br>
-Travis itself is written in Ruby
-
-Selection of a different system configuration can be operated with the `language` keyword.
-<br>
-Over [30 languages](https://docs.travis-ci.com/user/language-specific/) are natively supported.
-
-Some of the most interesting for us are:
-* `java`
-* `scala`
-* `minimal` (bare environment with just bash and Ruby)
-
-Every environment has some *pre-defined behaviour*,
-for instance the `language: java` environment automatically searches for a `pom.xml` and in case runs Maven,
-if not found searches for a `gradlew` file and runs `./gradlew assemble` in the `install` phase and `./gradlew check` in the `script` phase.
-* Default phase behavior can be disabled with `<phase_name>: true`
+{{< github repo="Tutorial-GitHub-Actions-Minimal" path=".github/workflows/workflow-example.yml" to=20 >}}
 
 ---
 
-## Travis CI: clone depth control
+## Workflow minimal example
 
-By default, Travis CI *does not clone the entire history* of a repository.
-<br>
-It performs instead a *shallow clone*, by running `git clone --depth 50 <repo-url>`
+{{< github repo="Tutorial-GitHub-Actions-Minimal" path=".github/workflows/workflow-example.yml" from=22 to=39 >}}
 
-This *interferes with DVCS-based versioning*, which may well need to look behind of many commits.
+---
 
-This behaviour can be controlled with the `git` key:
+## Workflow minimal example
 
-```yaml
-git:
-  depth: false # Accepts false or any number representing the commit count, defaults to 50
-```
+{{< github repo="Tutorial-GitHub-Actions-Minimal" path=".github/workflows/workflow-example.yml" from=40 to=60 >}}
 
-The same key allows for controlling further behaviour, such as disabling `autocrlf`:
+---
 
-```yaml
-git:
-  depth: false # Accepts false or any number representing the commit count, defaults to 50
-  autocrlf: input # Prevents git from trying to be smart with line endings
-```
+## Workflow minimal example
+
+{{< github repo="Tutorial-GitHub-Actions-Minimal" path=".github/workflows/workflow-example.yml" from=61 >}}
+
+---
+
+## Checking out the repository
+
+By default, GitHub actions' *runners do **not** check out the repository*
+* Actions may not need to access the code
+    * e.g., Actions automating issues, projects
+
+It is a *common* and *non-trivial* operation (the checked out version must be the version originating the workflow), thus GitHub provides an action:
+
+{{< github repo="Tutorial-GitHub-Actions-Minimal" path=".github/workflows/workflow-example.yml" from=46 to=47 >}}
+
+Since actions typically do not need the entire history of the project, by default the action checks out *only the commit that originated the workflow* (`--depth=1` when cloning)
+* *Shallow cloning* has better *performance*
+* $\Rightarrow$ It may break operations that rely on the entire history!
+    * e.g., the git-sensitive semantic versioning system
+
+Also, *__tags__ don't get checked out*
+
+---
+
+## Checking out the whole history
+
+{{< github repo="action-checkout" path="action.yml" from=6 >}}
+
+---
+
+## DRY with composite actions
+
+Composite actions allow the execution of multiple steps.
+
+They can be written by simply creating an `action.yml` file in the project root
+
+{{< github repo="action-checkout" path="action.yml" >}}
+
+See: [https://github.com/DanySK/action-checkout](https://github.com/DanySK/action-checkout)
+
+It can be used as:
+
+{{< github path=".github/workflows/build-and-deploy.yml" from=22 to=23 >}}
+
+---
+
+
 
 ---
 
