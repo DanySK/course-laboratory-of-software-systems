@@ -38,12 +38,14 @@ abstract class JavaTask(javaExecutable: File = Jvm.current().javaExecutable) : E
 
     init { executable = javaExecutable.absolutePath }
 
+    @Internal
     var classPath: Set<File> = FinderInFolder(project, "lib")
             .withExtension("jar")
             .map { project.file(it) }
             .toSet()
         protected set
-    val classPathDescriptor get() = classPath.joinToString(separator = separator)
+
+    private val classPathDescriptor get() = classPath.joinToString(separator = separator)
 
     fun fromConfiguration(configuration: Configuration) {
         classPath = configuration.resolve()
@@ -64,11 +66,15 @@ abstract class JavaTask(javaExecutable: File = Jvm.current().javaExecutable) : E
 }
 
 open class CompileJava @javax.inject.Inject constructor() : JavaTask(Jvm.current().javacExecutable) {
+
+    @org.gradle.api.tasks.OutputDirectory
     var outputFolder: String = "${project.buildDir}/bin/"
         set(value) {
             field = value
             update()
         }
+
+    @org.gradle.api.tasks.Input
     // The shorter version does not work due to a Gradle/Kotlin bug
     var sources: Set<String> = FinderInFolder(project, "src").withExtension("java").toSet()
         set(value) {
