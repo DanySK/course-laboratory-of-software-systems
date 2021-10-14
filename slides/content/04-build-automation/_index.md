@@ -1551,9 +1551,9 @@ Catalogs can be declared in:
 
 ## Using the default catalog
 
-{{< github repo="Template-for-Gradle-Plugins" path="build.gradle.kts" slice="L4-L14">}}
+{{< github repo="Template-for-Gradle-Plugins" path="build.gradle.kts" from=4 to=14 >}}
 
-{{< github repo="Template-for-Gradle-Plugins" path="build.gradle.kts" slice="L60-L69">}}
+{{< github repo="Template-for-Gradle-Plugins" path="build.gradle.kts" from=60 to=69 >}}
 
 ---
 
@@ -2087,7 +2087,7 @@ Example scans:
 
 ---
 
-## Automated scans without --scan
+## Automated scans without `--scan`
 
 In `settings.gradle.kts`:
 
