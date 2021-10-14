@@ -43,6 +43,56 @@ Git supports two types of tags:
 
 ---
 
+# Signing commits
+
+Nice people *signs* commits, certifying their authorship.
+
+* Signed commits appear with a {{< emoji ":white_check_mark:" >}} on GitHub
+
+If you do not have a signature yet, [time to create one](https://central.sonatype.org/pages/working-with-pgp-signatures.html)
+* Creation: `gpg --gen-key`
+* List: `gpg --list-keys`
+* Distribution: `gpg --keyserver hkp://pool.sks-keyservers.net --send-keys`
+
+Once you have a private key to sign with, you can configure Git to use it for signing things by setting the user.signingkey config setting.
+
+`git config --global user.signingkey <YOUR_KEY_ID>`
+
+---
+
+# Stashing
+
+Classic situation:
+1. Work on some project, have the project in inconsistent state
+2. Something needs to be fixed on another branch
+
+$\Rightarrow$ You don't want to have commits half-way, but you can't lose what you have done...
+
+## `git stash` to the rescue
+
+Stashing takes the dirty state of the working directory and saves it on a **stack** of *unfinished changes* that you can *reapply at any time*
+  * application on different branches allowed!
+
+---
+
+## Practical stashing
+
+* `git stash`
+  * **Pushes** *all* dangling changes (staged or unstaged) to the stash
+* `git stash list`
+  * **Shows** all the accumulated stashes
+* `git stash apply [stash@{N}] [--index]`
+  * No option specified: **Re-applies**, *without removing* from the stash, the *latest* stashed change
+  * If `stash@{N}`, applies the *N-th* stashed change
+  * If `--index` is specified, the changes that were staged at the time of push get *re-staged*
+* `git stash drop stash@{N}`
+  * **Deletes** the *N-th* stashed change
+* `git stash pop`
+  * **Re-applies** *the most recent* stash, *removing* it from the stash
+  * Same as `git stash apply && git stash drop stash@{0}`
+
+---
+
 # Advanced merging
 
 * In classic merging, diverging branches are reunited through a **merge commit**
@@ -155,7 +205,7 @@ There is no reason why the operation of branch joining must be `merge`: it could
 
 Rebasing *rewrites the project history* and as such generates *incompatible histories*
 * Remote pushes may get *refused*!
-* pushing with `--force` *rewrites history remotely* and **may delete other people commits**!
+* pushing with `--force` *rewrites history remotely* and **may delete other people's commits**!
 * `git pull --rebase` is safe, if the local commits where never pushed in any remote
     * It is actually a good practice to default to it
     * `git config --global pull.rebase true`
@@ -340,7 +390,7 @@ Squashing results in *further alteration* than rebase
 
 **Rebase** only when you are the only one with the commits, to favor *linearity*
 
-**Squash** when you are the only one, and some of the commits are somewhat "tests", points in time you do not want to get back to anyway
+**Squash** when some of the commits are somewhat "tests", points in time you do not want to get back to anyway
 
 ---
 
@@ -418,11 +468,5 @@ Changes into submodules are dealt with as if they were on a *separate repository
 
 ---
 
-## Submodules and CI
+## Removing submodules
 
-* Submodules require care in CI
-* The *clone command* needs to get *altered* for them to checkout correctly
-* On *Travis CI*, modules are pulled in *automatically*
-    * *SSH keys* however are not trivial to be managed
-    * *Prefer HTTPS*
-* Other integrators may require to clone with `--recurse-submodules` explicitly specified
