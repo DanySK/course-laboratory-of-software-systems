@@ -51,6 +51,66 @@
 </li>
 </ul>
 </section><section>
+<h1 id="signing-commits">Signing commits</h1>
+<p>Nice people <em>signs</em> commits, certifying their authorship.</p>
+<ul>
+<li>Signed commits appear with a ✅
+ on GitHub</li>
+</ul>
+<p>If you do not have a signature yet, <a href="https://central.sonatype.org/pages/working-with-pgp-signatures.html">time to create one</a></p>
+<ul>
+<li>Creation: <code>gpg --gen-key</code></li>
+<li>List: <code>gpg --list-keys</code></li>
+<li>Distribution: <code>gpg --keyserver hkp://pool.sks-keyservers.net --send-keys</code></li>
+</ul>
+<p>Once you have a private key to sign with, you can configure Git to use it for signing things by setting the user.signingkey config setting.</p>
+<p><code>git config --global user.signingkey &lt;YOUR_KEY_ID&gt;</code></p>
+</section><section>
+<h1 id="stashing">Stashing</h1>
+<p>Classic situation:</p>
+<ol>
+<li>Work on some project, have the project in inconsistent state</li>
+<li>Something needs to be fixed on another branch</li>
+</ol>
+<p>$\Rightarrow$ You don&rsquo;t want to have commits half-way, but you can&rsquo;t lose what you have done&hellip;</p>
+<h2 id="git-stash-to-the-rescue"><code>git stash</code> to the rescue</h2>
+<p>Stashing takes the dirty state of the working directory and saves it on a <strong>stack</strong> of <em>unfinished changes</em> that you can <em>reapply at any time</em></p>
+<ul>
+<li>application on different branches allowed!</li>
+</ul>
+</section><section>
+<h2 id="practical-stashing">Practical stashing</h2>
+<ul>
+<li><code>git stash</code>
+<ul>
+<li><strong>Pushes</strong> <em>all</em> dangling changes (staged or unstaged) to the stash</li>
+</ul>
+</li>
+<li><code>git stash list</code>
+<ul>
+<li><strong>Shows</strong> all the accumulated stashes</li>
+</ul>
+</li>
+<li><code>git stash apply [stash@{N}] [--index]</code>
+<ul>
+<li>No option specified: <strong>Re-applies</strong>, <em>without removing</em> from the stash, the <em>latest</em> stashed change</li>
+<li>If <code>stash@{N}</code>, applies the <em>N-th</em> stashed change</li>
+<li>If <code>--index</code> is specified, the changes that were staged at the time of push get <em>re-staged</em></li>
+</ul>
+</li>
+<li><code>git stash drop stash@{N}</code>
+<ul>
+<li><strong>Deletes</strong> the <em>N-th</em> stashed change</li>
+</ul>
+</li>
+<li><code>git stash pop</code>
+<ul>
+<li><strong>Re-applies</strong> <em>the most recent</em> stash, <em>removing</em> it from the stash</li>
+<li>Same as <code>git stash apply &amp;&amp; git stash drop stash@{0}</code></li>
+</ul>
+</li>
+</ul>
+</section><section>
 <h1 id="advanced-merging">Advanced merging</h1>
 <ul>
 <li>In classic merging, diverging branches are reunited through a <strong>merge commit</strong></li>
@@ -138,7 +198,7 @@ git merge experiment <span style="color:#888"># Fast forward!</span>
 <p>Rebasing <em>rewrites the project history</em> and as such generates <em>incompatible histories</em></p>
 <ul>
 <li>Remote pushes may get <em>refused</em>!</li>
-<li>pushing with <code>--force</code> <em>rewrites history remotely</em> and <strong>may delete other people commits</strong>!</li>
+<li>pushing with <code>--force</code> <em>rewrites history remotely</em> and <strong>may delete other people&rsquo;s commits</strong>!</li>
 <li><code>git pull --rebase</code> is safe, if the local commits where never pushed in any remote
 <ul>
 <li>It is actually a good practice to default to it</li>
@@ -312,7 +372,7 @@ git merge experiment <span style="color:#888"># Fast forward!</span>
 <p>Squashing results in <em>further alteration</em> than rebase</p>
 <p><strong>Merge</strong> when you want to <em>retain history</em>, keeping track of what happened</p>
 <p><strong>Rebase</strong> only when you are the only one with the commits, to favor <em>linearity</em></p>
-<p><strong>Squash</strong> when you are the only one, and some of the commits are somewhat &ldquo;tests&rdquo;, points in time you do not want to get back to anyway</p>
+<p><strong>Squash</strong> when some of the commits are somewhat &ldquo;tests&rdquo;, points in time you do not want to get back to anyway</p>
 </section><section>
 <h1 id="cherry-picking">Cherry picking</h1>
 <p>Selecting and importing a single commit (or commit range) from another branch</p>
@@ -393,18 +453,7 @@ git merge experiment <span style="color:#888"># Fast forward!</span>
 <li><em>recursive behavior</em> can be obtained with <code>--recurse-submodules</code></li>
 </ul>
 </section><section>
-<h2 id="submodules-and-ci">Submodules and CI</h2>
-<ul>
-<li>Submodules require care in CI</li>
-<li>The <em>clone command</em> needs to get <em>altered</em> for them to checkout correctly</li>
-<li>On <em>Travis CI</em>, modules are pulled in <em>automatically</em>
-<ul>
-<li><em>SSH keys</em> however are not trivial to be managed</li>
-<li><em>Prefer HTTPS</em></li>
-</ul>
-</li>
-<li>Other integrators may require to clone with <code>--recurse-submodules</code> explicitly specified</li>
-</ul>
+<h2 id="removing-submodules">Removing submodules</h2>
 </section>
 
   
