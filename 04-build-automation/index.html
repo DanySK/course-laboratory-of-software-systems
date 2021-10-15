@@ -27,7 +27,7 @@
     <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
 <h2 id="build-automation">Build Automation</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2021-10-14
+2021-10-15
 
 </section><section>
 <h1 id="overview">Overview</h1>
@@ -1155,10 +1155,10 @@ greetings {
 <h2 id="setting-up-a-kotlin-build">Setting up a Kotlin build</h2>
 <p>First step: we need to set up a Kotlin build, we&rsquo;ll write our plugin in Kotlin</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins {
-    <span style="color:#888">// No magic: calls a method running behind the scenes the same of id(&#34;org.jetbrains.kotlin-&#34; + &#34;jvm&#34;)
-</span><span style="color:#888"></span>    kotlin(<span style="color:#d20;background-color:#fff0f0">&#34;jvm&#34;</span>) version <span style="color:#d20;background-color:#fff0f0">&#34;1.4.10&#34;</span> <span style="color:#888">// version is necessary
+    <span style="color:#888">// No magic: calls a method running behind the scenes the same of id(&#34;org.jetbrains.kotlin-$jvm&#34;)
+</span><span style="color:#888"></span>    kotlin(<span style="color:#d20;background-color:#fff0f0">&#34;jvm&#34;</span>) version <span style="color:#d20;background-color:#fff0f0">&#34;1.5.31&#34;</span> <span style="color:#888">// version is necessary
 </span><span style="color:#888"></span>}
-</code></pre></div><p>The Kotlin plugin introduces:```</p>
+</code></pre></div><p>The Kotlin <em>plugin</em> introduces:</p>
 <ul>
 <li>Maven repositories are a de-facto standard for shipping JVM libraries</li>
 </ul>
@@ -1445,7 +1445,7 @@ runner.output shouldContain <span style="color:#d20;background-color:#fff0f0">&#
 </code></pre></div><p>It is <em>repetitive</em> and <em>fragile</em> (what if you change the version of a single kotest module?)</p>
 </section><section>
 <h2 id="dry-with-dependencies-declaration-1">DRY with dependencies declaration</h2>
-<p>Let&rsquo;s patch fragility:</p>
+<p>Let&rsquo;s patch all this fragility:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>dependencies {
     <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">kotestVersion</span> = <span style="color:#d20;background-color:#fff0f0">&#34;4.2.5&#34;</span>
     testImplementation(<span style="color:#d20;background-color:#fff0f0">&#34;io.kotest:kotest-runner-junit5:</span><span style="color:#33b;background-color:#fff0f0">$kotestVersion</span><span style="color:#d20;background-color:#fff0f0">&#34;</span>)
@@ -1456,8 +1456,8 @@ runner.output shouldContain <span style="color:#d20;background-color:#fff0f0">&#
 </section><section>
 <h2 id="dry-with-dependencies-declaration-2">DRY with dependencies declaration</h2>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>dependencies {
-    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">kotestVersion</span> = <span style="color:#d20;background-color:#fff0f0">&#34;4.2.5&#34;</span>
-    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">kotest</span>(module: String) = <span style="color:#d20;background-color:#fff0f0">&#34;io.kotest:kotest-</span><span style="color:#33b;background-color:#fff0f0">$module</span><span style="color:#d20;background-color:#fff0f0">:</span><span style="color:#33b;background-color:#fff0f0">$kotestVersion</span><span style="color:#d20;background-color:#fff0f0">&#34;</span>
+    val kotestVersion = <span style="color:#d20;background-color:#fff0f0">&#34;4.2.5&#34;</span>
+    fun <span style="color:#06b;font-weight:bold">kotest</span>(<span style="color:#369;font-style:italic">module:</span> String) = <span style="color:#d20;background-color:#fff0f0">&#34;io.kotest:kotest-$module:$kotestVersion&#34;</span>
     testImplementation(kotest(<span style="color:#d20;background-color:#fff0f0">&#34;runner-junit5&#34;</span>)
     testImplementation(kotest(<span style="color:#d20;background-color:#fff0f0">&#34;assertions-core&#34;</span>)
     testImplementation(kotest(<span style="color:#d20;background-color:#fff0f0">&#34;assertions-core-jvm&#34;</span>)
@@ -1534,6 +1534,90 @@ taskTree = { id = <span style="color:#d20;background-color:#fff0f0">&#34;com.dor
     testRuntimeOnly(files(createClasspathManifest))
 }</code></pre></div>
 </section><section>
+<h2 id="build-vs-compile-vs-test-toolchains">Build vs. Compile vs. Test toolchains</h2>
+<p>We now have three different runtimes at play:</p>
+<ol>
+<li>One or more <strong>compilation targets</strong>
+<ul>
+<li>In case of JVM projects, the target bytecode version</li>
+<li>In case of .NET projects, the target .NET</li>
+<li>In case of native projects, the target OS / architecture</li>
+</ul>
+</li>
+<li>One or more <strong>runtime targets</strong>
+<ul>
+<li>In case of JVM or .NET projects the virtual machines we want to support</li>
+</ul>
+</li>
+<li>A <strong>built-time runtime</strong>
+<ul>
+<li>In case of Gradle, the JVM running the build system</li>
+</ul>
+</li>
+</ol>
+<p>These toolchains <em>should be controlled indipendently</em>!</p>
+<p>You may want to use Java 16 to run Gradle, but compile in a Java 8-compatible bytecode, and then test on Java 11.</p>
+</section><section>
+<h2 id="build-vs-compile-vs-test-toolchains-1">Build vs. Compile vs. Test toolchains</h2>
+<p>We now have three different runtimes at play:</p>
+<ol>
+<li>One or more <strong>compilation targets</strong>
+<ul>
+<li>In case of JVM projects, the target bytecode version</li>
+<li>In case of .NET projects, the target .NET</li>
+<li>In case of native projects, the target OS / architecture</li>
+</ul>
+</li>
+<li>One or more <strong>runtime targets</strong>
+<ul>
+<li>In case of JVM or .NET projects the virtual machines we want to support</li>
+</ul>
+</li>
+<li>A <strong>built-time runtime</strong>
+<ul>
+<li>In case of Gradle, the JVM running the build system</li>
+</ul>
+</li>
+</ol>
+<p>These toolchains <em>should be controlled indipendently</em>!</p>
+<p>You may want to use Java 16 to run Gradle, but compile in a Java 8-compatible bytecode, and then test on Java 11.</p>
+</section><section>
+<h2 id="gradle-and-the-toolchains">Gradle and the toolchains</h2>
+<p>Default behaviour: Gradle uses <em>the same JVM it is running in</em> as:</p>
+<ul>
+<li>build runtime (you don&rsquo;t say)</li>
+<li>compile target</li>
+<li>test runtime</li>
+</ul>
+<p>Supporting multiple toolchains may not be easy!</p>
+<ul>
+<li>Cross-compilers?</li>
+<li>Automatic retrieval of runtime environments?</li>
+<li>Emulators for native devices?</li>
+</ul>
+<p>Targeting a portable runtime (such as the JVM) <em>helps a lot</em>.</p>
+</section><section>
+<h2 id="introducing-the-gradle-toolchains">Introducing the Gradle toolchains</h2>
+<p>Relatively new tool, from Gradle 6.7 (October 2020)</p>
+<p>Define the reference toolchain version (<em>compilation target</em>):</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>java {
+    toolchain {
+        languageVersion.<span style="color:#080;font-weight:bold">set</span>(JavaLanguageVersion.of(<span style="color:#00d;font-weight:bold">11</span>))
+        vendor.<span style="color:#080;font-weight:bold">set</span>(JvmVendorSpec.ADOPTOPENJDK) <span style="color:#888">// Optionally, specify a vendor
+</span><span style="color:#888"></span>        implementation.<span style="color:#080;font-weight:bold">set</span>(JvmImplementation.J9) <span style="color:#888">// Optionally, select an implementation
+</span><span style="color:#888"></span>    }
+}
+</code></pre></div><p>Create tasks for running tests on specific environments:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>tasks.withType&lt;Test&gt;().toList().takeIf { <span style="color:#080;font-weight:bold">it</span>.size == <span style="color:#00d;font-weight:bold">1</span> }?.let{ <span style="color:#080;font-weight:bold">it</span>.first }.run {
+    <span style="color:#888">// If there exist a &#34;test&#34; task, run it with some specific JVM version
+</span><span style="color:#888"></span>    javaLauncher.<span style="color:#080;font-weight:bold">set</span>(javaToolchains.launcherFor { languageVersion.<span style="color:#080;font-weight:bold">set</span>(JavaLanguageVersion.of(<span style="color:#00d;font-weight:bold">8</span>)) })
+}
+<span style="color:#888">// Register another test task, with a different JVM
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">testWithJVM17</span> <span style="color:#080;font-weight:bold">by</span> tasks.registering&lt;Test&gt; { <span style="color:#888">// Also works with JavaExec
+</span><span style="color:#888"></span>    javaLauncher.<span style="color:#080;font-weight:bold">set</span>(javaToolchains.launcherFor { languageVersion.<span style="color:#080;font-weight:bold">set</span>(JavaLanguageVersion.of(<span style="color:#00d;font-weight:bold">17</span>)) })
+} <span style="color:#888">// You can pick JVM&#39;s not yet supported by Gradle!
+</span><span style="color:#888"></span>tasks.findByName(<span style="color:#d20;background-color:#fff0f0">&#34;check&#34;</span>)?.configure { <span style="color:#080;font-weight:bold">it</span>.dependsOn(testWithJVM17) } <span style="color:#888">// make it part of the QA suite
+</span></code></pre></div></section><section>
 <h2 id="making-the-plugin-available">Making the plugin available</h2>
 <p>We now know how to run the plugin,
 <br>
