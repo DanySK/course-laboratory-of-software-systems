@@ -1150,18 +1150,18 @@ greetings {
 
 First step: we need to set up a Kotlin build, we'll write our plugin in Kotlin
 
-```kotlin
+```groovy
 plugins {
-    // No magic: calls a method running behind the scenes the same of id("org.jetbrains.kotlin-" + "jvm")
-    kotlin("jvm") version "1.4.10" // version is necessary
+    // No magic: calls a method running behind the scenes the same of id("org.jetbrains.kotlin-$jvm")
+    kotlin("jvm") version "1.5.31" // version is necessary
 }
 ```
 
-The Kotlin plugin introduces:```
+The Kotlin *plugin* introduces:
 
 * Maven repositories are a de-facto standard for shipping JVM libraries
 
-```kotlin
+```groovy
 // Configuration of software sources
 repositories {
     mavenCentral() // points to Maven Central
@@ -1181,7 +1181,7 @@ dependencies {
 In order to develop a plugin, we need the Gradle API
 * Otherwise, we can't manipulate any Gradle entity...
 
-```kotlin
+```groovy
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation(gradleApi()) // Built-in method, returns a `Dependency` to the current Gradle version
@@ -1501,7 +1501,7 @@ It is *repetitive* and *fragile* (what if you change the version of a single kot
 
 ## DRY with dependencies declaration
 
-Let's patch fragility:
+Let's patch all this fragility:
 
 ```kotlin
 dependencies {
@@ -1517,7 +1517,7 @@ Still, quite repetitive...
 
 ## DRY with dependencies declaration
 
-```kotlin
+```groovy
 dependencies {
     val kotestVersion = "4.2.5"
     fun kotest(module: String) = "io.kotest:kotest-$module:$kotestVersion"
@@ -1526,6 +1526,7 @@ dependencies {
     testImplementation(kotest("assertions-core-jvm")
 }
 ```
+
 Uhmm...
 * it's still repetitive (can be furter factorized by bundling the kotest modules)
 * the function and version could be included in `buildSrc`
@@ -1557,6 +1558,91 @@ Catalogs can be declared in:
 
 ---
 
+## Build vs. Compile vs. Test toolchains
+
+We now have three different runtimes at play:
+1. One or more **compilation targets**
+    * In case of JVM projects, the target bytecode version
+    * In case of .NET projects, the target .NET
+    * In case of native projects, the target OS / architecture
+2. One or more **runtime targets**
+    * In case of JVM or .NET projects the virtual machines we want to support
+3. A **built-time runtime**
+    * In case of Gradle, the JVM running the build system
+
+These toolchains *should be controlled indipendently*!
+
+You may want to use Java 16 to run Gradle, but compile in a Java 8-compatible bytecode, and then test on Java 11.
+
+---
+
+## Build vs. Compile vs. Test toolchains
+
+We now have three different runtimes at play:
+1. One or more **compilation targets**
+    * In case of JVM projects, the target bytecode version
+    * In case of .NET projects, the target .NET
+    * In case of native projects, the target OS / architecture
+2. One or more **runtime targets**
+    * In case of JVM or .NET projects the virtual machines we want to support
+3. A **built-time runtime**
+    * In case of Gradle, the JVM running the build system
+
+These toolchains *should be controlled indipendently*!
+
+You may want to use Java 16 to run Gradle, but compile in a Java 8-compatible bytecode, and then test on Java 11.
+
+---
+
+## Gradle and the toolchains
+
+Default behaviour: Gradle uses *the same JVM it is running in* as:
+* build runtime (you don't say)
+* compile target
+* test runtime
+
+Supporting multiple toolchains may not be easy!
+* Cross-compilers?
+* Automatic retrieval of runtime environments?
+* Emulators for native devices?
+
+Targeting a portable runtime (such as the JVM) *helps a lot*.
+
+---
+
+## Introducing the Gradle toolchains
+
+Relatively new tool, from Gradle 6.7 (October 2020)
+
+Define the reference toolchain version (*compilation target*):
+
+```kotlin
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(11))
+        vendor.set(JvmVendorSpec.ADOPTOPENJDK) // Optionally, specify a vendor
+        implementation.set(JvmImplementation.J9) // Optionally, select an implementation
+    }
+}
+```
+
+Create tasks for running tests on specific environments:
+
+```kotlin
+tasks.withType<Test>().toList().takeIf { it.size == 1 }?.let{ it.first }.run {
+    // If there exist a "test" task, run it with some specific JVM version
+    javaLauncher.set(javaToolchains.launcherFor { languageVersion.set(JavaLanguageVersion.of(8)) })
+}
+// Register another test task, with a different JVM
+val testWithJVM17 by tasks.registering<Test> { // Also works with JavaExec
+    javaLauncher.set(javaToolchains.launcherFor { languageVersion.set(JavaLanguageVersion.of(17)) })
+} // You can pick JVM's not yet supported by Gradle!
+tasks.findByName("check")?.configure { it.dependsOn(testWithJVM17) } // make it part of the QA suite
+```
+
+
+---
+
 ## Making the plugin available
 
 We now know how to run the plugin,
@@ -1564,7 +1650,7 @@ We now know how to run the plugin,
 yet manual classpath modification is not the way we want to run our plugin
 
 We want something like:
-```kotlin
+```groovy
 plugins {
     id("it.unibo.lss.greetings") version "0.1.0"
 }
