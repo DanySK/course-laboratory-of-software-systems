@@ -2,10 +2,6 @@
 	path = slides/themes/reveal-hugo
 	url = https://github.com/dzello/reveal-hugo.git
 	branch = master
-[submodule "code/ci/00-ci-init"]
-	path = code/ci/00-ci-init
-	url = https://github.com/DanySK/Plugin-CI-Running-Example.git
-	branch = 00-ci-init
 [submodule "code/ci/01-multi-os"]
 	path = code/ci/01-multi-os
 	url = https://github.com/DanySK/Plugin-CI-Running-Example.git
@@ -29,3 +25,6 @@
 [submodule "code/automation/13-plugin-final"]
 	path = code/automation/13-plugin-final
 	url = https://github.com/DanySK/Template-for-Gradle-Plugins.git
+[submodule "code/ci/00-basic-example"]
+	path = code/ci/00-basic-example
+	url = https://github.com/DanySK/Tutorial-GitHub-Actions-Minimal.git
