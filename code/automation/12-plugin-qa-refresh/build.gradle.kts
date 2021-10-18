@@ -79,6 +79,13 @@ tasks.jacocoTestReport {
     }
 }
 
+// Disable JaCoCo on Windows, see: https://issueexplorer.com/issue/koral--/jacoco-gradle-testkit-plugin/9
+tasks.jacocoTestCoverageVerification {
+    enabled = !org.apache.tools.ant.taskdefs.condition.Os.isFamily(
+        org.apache.tools.ant.taskdefs.condition.Os.FAMILY_WINDOWS
+    )
+}
+
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions {
         allWarningsAsErrors = true
