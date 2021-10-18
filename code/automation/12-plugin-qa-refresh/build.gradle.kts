@@ -73,7 +73,7 @@ gradlePlugin {
 tasks.jacocoTestReport {
     reports {
         // xml.isEnabled = true
-        html.isEnabled = true
+        html.required.set(true)
     }
 }
 
@@ -84,7 +84,6 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 }
 
 detekt {
-    failFast = true // fail build on any finding
     buildUponDefaultConfig = true // preconfigure defaults
     config = files("$projectDir/config/detekt.yml")
 }
