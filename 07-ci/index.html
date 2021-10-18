@@ -381,6 +381,17 @@ and many are developed by the community.</p>
 </span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">shell</span>:<span style="color:#bbb"> </span>bash<span style="color:#bbb">
 </span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>git fetch --tags -f<span style="color:#bbb">
 </span></code></pre></div>
+<ul>
+<li>Check out the repo with the maximum <em>depth</em></li>
+<li>Recursively check out all <em>submodules</em></li>
+<li>Checkout all <em>tags</em></li>
+</ul>
+</section><section>
+<h2 id="build-matrices">Build matrices</h2>
+</section><section>
+<h2 id="secrets">Secrets</h2>
+</section><section>
+<h2 id="in-memory-signatures">In-memory signatures</h2>
 </section><section>
 <h2 id="dry-with-composite-actions">DRY with composite actions</h2>
 <p>Composite actions allow the execution of multiple steps.</p>
@@ -400,10 +411,45 @@ and many are developed by the community.</p>
 </span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>git fetch --tags -f<span style="color:#bbb">
 </span></code></pre></div>
 <p>See: <a href="https://github.com/DanySK/action-checkout">https://github.com/DanySK/action-checkout</a></p>
-<p>It can be used as:</p>
+<p>It can be used with:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">steps</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">      </span><span style="color:#888"># Checkout the repository</span></code></pre></div>
 </section><section>
+<h2 id="writing-custom-actions">Writing custom actions</h2>
+<ul>
+<li>Parameters</li>
+<li>Outputs</li>
+</ul>
+</section><section>
+<h2 id="composite-actions-limitations">Composite actions: limitations</h2>
+<ul>
+<li>No support for secrets, they must be passed <em>as parameters</em></li>
+<li>No conditional steps (ouch&hellip;)</li>
+</ul>
+</section><section>
+<h2 id="docker-container-actions">Docker container actions</h2>
+<h4 id="wait-what-is-a-container">Wait, what is a container?</h4>
+<ul>
+<li>We might need to deviate for a moment: &raquo; <a href="../09-containerization"><strong>click here!</strong></a> &laquo;</li>
+</ul>
+<h4 id="how-to">How to</h4>
+<ul>
+<li>Configure the <code>Dockerfile</code> of the container you want to use</li>
+<li>Prepare the main script and declare it as <code>ENTRYPOINT</code></li>
+<li>Define inputs and outputs in <code>action.yml</code></li>
+<li>In the <code>runs</code> section select <code>docker</code> and the arguments order</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#b06;font-weight:bold">runs</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">using</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;docker&#39;</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;Dockerfile&#39;</span><span style="color:#bbb"> </span><span style="color:#888"># Alternatively, the name of an existing image</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">args</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- ${{ inputs.some-input-name }}<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span></code></pre></div></section><section>
+<h2 id="limitations-of-docker-container-actions">Limitations of Docker container actions</h2>
+<p>No multi-OS</p>
+</section><section>
+<h2 id="javascript-actions">JavaScript actions</h2>
 </section><section>
 <h2 id="travis-ci-testing-on-different-oss">Travis CI: Testing on different OSs</h2>
 <p>If our software supports <em>multiple operating systems</em>, it is a good practice to verify that changes do not <em>break compatibility</em></p>

@@ -119,31 +119,12 @@
 </section><section>
 <h1 id="running-docker-containers">Running docker containers</h1>
 <ol>
-<li>
-<p>Install docker</p>
-</li>
-<li>
-<p>Add your user to the <code>docker</code> group</p>
-</li>
-<li>
-<p>Enable the docker service</p>
-</li>
+<li>Install docker</li>
+<li>Add your user to the <code>docker</code> group</li>
+<li>Enable the docker service (on most Linux distributions <code>systemctl start docker</code>)</li>
+<li>Pull an image: <code>docker pull adoptopenjdk</code></li>
+<li>Run a container! <code>docker run adoptopenjdk</code></li>
 </ol>
-<ul>
-<li>e.g. on most Linux distributions <code>systemctl start docker</code></li>
-</ul>
-<ol start="4">
-<li>Pull an image</li>
-</ol>
-<ul>
-<li>e.g., <code>docker pull adoptopenjdk</code></li>
-</ul>
-<ol start="5">
-<li>Run a container!</li>
-</ol>
-<ul>
-<li><code>docker run adoptopenjdk</code></li>
-</ul>
 <p>Every container provides a <em>default command</em>, running without options runs such default in a <em>non-interactive</em> terminal.</p>
 <p>Running in interactive mode can be achieved with the <code>-i</code> option</p>
 <p>Running a custom command can be achieved with writing the command after the image name</p>
@@ -151,6 +132,7 @@
 <li>e.g., <code>docker run -i adoptopenjdk bash</code></li>
 <li>parameters for the custom command can follow</li>
 <li>use the <code>t</code> option to run in a <em>pseudo-tty</em></li>
+<li>use the <code>--rm</code> to remove the container after use</li>
 </ul>
 </section><section>
 <h1 id="interaction-with-the-outside-world">Interaction with the outside world</h1>
@@ -226,33 +208,9 @@
 </section><section>
 <h1 id="building-docker-images-in-ci">Building docker images in CI</h1>
 <p>Of course, as any other software, <em>custom docker images should get built in CI</em></p>
-<p>Travis CI and most other integrators provide <em>direct support</em></p>
 <p>Several integrators use containers as build environments: it is possible to <em>build a container using a container</em></p>
-<p>More in general, there is <em>no limit on how much containers can be nested into each other</em></p>
-</section><section>
-<h1 id="travis-ci-example">Travis CI example</h1>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#888"># Required: enables the service</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>- docker<span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#888"># Optionally, specify where you want your container built, I like to use the latest version of Linux</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">dist</span>:<span style="color:#bbb"> </span>focal<span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#888"># Utilities</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">env</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">global</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>- TZ=UTC<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>- IMAGE_NAME=&#34;danysk/manjaro-with-yay&#34;<span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#888"># Version computation. Here dates are used instead of Semantic Versioning</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">before_script</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>- export TAG=&#34;$(git describe || git log -n1 --date=format:&#39;%Y-%m-%dT%H%M%S&#39; --format=%cd)$(date +%Y-%m-%d_%H%M)&#34;<span style="color:#bbb">
-</span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#b06;font-weight:bold">script</span>:<span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#888"># Build the image</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span>- docker build -t $IMAGE_NAME:latest -t $IMAGE_NAME:$TAG .<span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#888"># Login into docker hub from a non-interactive terminal</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span>- echo &#34;$DOCKER_PASSWORD&#34; | docker login -u &#34;$DOCKER_USERNAME&#34; --password-stdin docker.io<span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#888"># Push the images, with both names (upload will happen only once, as they refer the same layer)</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span>- docker push $IMAGE_NAME:$TAG<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>- docker push $IMAGE_NAME:latest<span style="color:#bbb">
-</span></code></pre></div></section>
+<p>More in general, there is <em>no inherent limit to nesting containers</em></p>
+</section>
 
   
 
