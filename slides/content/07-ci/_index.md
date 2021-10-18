@@ -308,6 +308,24 @@ Also, *__tags__ don't get checked out*
 
 {{< github repo="action-checkout" path="action.yml" from=6 >}}
 
+* Check out the repo with the maximum *depth*
+* Recursively check out all *submodules*
+* Checkout all *tags*
+
+---
+
+## Build matrices
+
+
+---
+
+## Secrets
+
+---
+
+## In-memory signatures
+
+
 ---
 
 ## DRY with composite actions
@@ -320,11 +338,57 @@ They can be written by simply creating an `action.yml` file in the project root
 
 See: [https://github.com/DanySK/action-checkout](https://github.com/DanySK/action-checkout)
 
-It can be used as:
+It can be used with:
 
 {{< github path=".github/workflows/build-and-deploy.yml" from=22 to=23 >}}
 
 ---
+
+## Writing custom actions
+
+* Parameters
+* Outputs
+
+---
+
+## Composite actions: limitations
+
+* No support for secrets, they must be passed *as parameters*
+* No conditional steps (ouch...)
+
+---
+
+## Docker container actions
+
+#### Wait, what is a container?
+
+* We might need to deviate for a moment: >> [**click here!**](../09-containerization) <<
+
+#### How to
+
+* Configure the `Dockerfile` of the container you want to use
+* Prepare the main script and declare it as `ENTRYPOINT`
+* Define inputs and outputs in `action.yml`
+* In the `runs` section select `docker` and the arguments order
+
+```yaml
+runs:
+  using: 'docker'
+  image: 'Dockerfile' # Alternatively, the name of an existing image
+  args:
+    - ${{ inputs.some-input-name }}
+
+```
+
+---
+
+## Limitations of Docker container actions
+
+No multi-OS
+
+---
+
+## JavaScript actions
 
 
 

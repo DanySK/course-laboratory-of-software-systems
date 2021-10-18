@@ -126,15 +126,9 @@ Docker is a containerization platform
 
 1. Install docker
 2. Add your user to the `docker` group
-
-3. Enable the docker service
-  * e.g. on most Linux distributions `systemctl start docker`
-
-4. Pull an image
-  * e.g., `docker pull adoptopenjdk`
-
-5. Run a container!
-  * `docker run adoptopenjdk`
+3. Enable the docker service (on most Linux distributions `systemctl start docker`)
+4. Pull an image: `docker pull adoptopenjdk`
+5. Run a container! `docker run adoptopenjdk`
 
 Every container provides a *default command*, running without options runs such default in a *non-interactive* terminal.
 
@@ -144,6 +138,7 @@ Running a custom command can be achieved with writing the command after the imag
 * e.g., `docker run -i adoptopenjdk bash`
 * parameters for the custom command can follow
 * use the `t` option to run in a *pseudo-tty*
+* use the `--rm` to remove the container after use
 
 ---
 
@@ -247,39 +242,6 @@ Once done, publication is performed via `push`:
 
 Of course, as any other software, *custom docker images should get built in CI*
 
-Travis CI and most other integrators provide *direct support*
-
 Several integrators use containers as build environments: it is possible to *build a container using a container*
 
-More in general, there is *no limit on how much containers can be nested into each other*
-
----
-
-# Travis CI example
-
-```yaml
-# Required: enables the service
-services:
-  - docker
-# Optionally, specify where you want your container built, I like to use the latest version of Linux
-dist: focal
-# Utilities
-env:
-  global:
-    - TZ=UTC
-    - IMAGE_NAME="danysk/manjaro-with-yay"
-# Version computation. Here dates are used instead of Semantic Versioning
-before_script:
-  - export TAG="$(git describe || git log -n1 --date=format:'%Y-%m-%dT%H%M%S' --format=%cd)$(date +%Y-%m-%d_%H%M)"
-```
-```yaml
-script:
-# Build the image
-  - docker build -t $IMAGE_NAME:latest -t $IMAGE_NAME:$TAG .
-# Login into docker hub from a non-interactive terminal
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin docker.io
-# Push the images, with both names (upload will happen only once, as they refer the same layer)
-  - docker push $IMAGE_NAME:$TAG
-  - docker push $IMAGE_NAME:latest
-```
-
+More in general, there is *no inherent limit to nesting containers*
