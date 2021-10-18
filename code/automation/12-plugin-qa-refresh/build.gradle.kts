@@ -63,7 +63,7 @@ pluginBundle { // These settings are set for the whole plugin bundle
 }
 gradlePlugin {
     plugins {
-        create("GradleLatex") { // One entry per plugin
+        create("GreetingPlugin") { // One entry per plugin
             id = "${project.group}.${project.name}"
             displayName = "LSS Greeting plugin"
             description = "Example plugin for the LSS course"
