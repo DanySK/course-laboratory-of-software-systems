@@ -19,11 +19,15 @@ class PluginTest : FreeSpec({
             .withPluginClasspath(classpath)
             .withArguments(greetTask)
             .also {
-                ClassLoader.getSystemResourceAsStream("testkit-gradle.properties")?.copyTo(
-                    File("${testFolder.root.absolutePath}/gradle.properties")
-                        .also { it.createNewFile() }
-                        .outputStream()
-                ) ?: throw IllegalStateException("Can't find testkit-gradle.properties")
+                ClassLoader.getSystemResourceAsStream("testkit-gradle.properties")
+                    ?.copyTo(
+                        File("${testFolder.root.absolutePath}/gradle.pidearoperties")
+                            .also { it.createNewFile() }
+                            .outputStream()
+                    )
+                    ?: println(
+                        "WARNING: Can't find testkit-gradle.properties, JaCoCo won't be able to measure the coverage"
+                    )
             }
     }
     "running the plugin with" - {
