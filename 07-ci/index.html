@@ -388,6 +388,54 @@ and many are developed by the community.</p>
 </ul>
 </section><section>
 <h2 id="build-matrices">Build matrices</h2>
+<p>Most software products are meant to be <em>portable</em></p>
+<ul>
+<li>Across operating systems</li>
+<li>Across different frameworks and languages</li>
+<li>Across runtime configuration</li>
+</ul>
+<p>A good continuous integration pipeline should test <em>all the supported combinations</em>*</p>
+<ul>
+<li>or a sample, if the performance is otherwise unbearable</li>
+</ul>
+<p>The solution is the adoption of a <strong>build matrix</strong></p>
+<ul>
+<li>Build variables and their allowed values are specified</li>
+<li>The CI integrator generates the <em>cartesian product</em> of the variable values, and launches a build for each!</li>
+</ul>
+</section><section>
+<h2 id="build-matrices-in-gha">Build matrices in GHA</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#b06;font-weight:bold">jobs</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">Build</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">strategy</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">matrix</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">os</span>:<span style="color:#bbb"> </span>[windows, macos, ubuntu]<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">jvm_version</span>:<span style="color:#bbb"> </span>[<span style="color:#00d;font-weight:bold">8</span>,<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">11</span>,<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">15</span>,<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">16</span>]<span style="color:#bbb"> </span><span style="color:#888"># Arbitrarily-made and arbitrarily-valued variables</span><span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">ruby_version</span>:<span style="color:#bbb"> </span>[<span style="color:#00d;font-weight:bold">2.7</span>,<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">3.0</span>]<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">python_version</span>:<span style="color:#bbb"> </span>[<span style="color:#00d;font-weight:bold">3.7</span>,<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">3.9.7</span>]<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">runs-on</span>:<span style="color:#bbb"> </span>${{ matrix.os }}-latest<span style="color:#bbb"> </span><span style="color:#888">## The string is computed interpolating a variable value</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">steps</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/setup-java@v2<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">with</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">distribution</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;adopt&#39;</span><span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">java-version</span>:<span style="color:#bbb"> </span>${{ matrix.jvm_version }}<span style="color:#bbb"> </span><span style="color:#888"># &#34;${{ }}&#34; contents are interpreted by the github actions runner</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/setup-python@v2<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">with</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">python-version</span>:<span style="color:#bbb"> </span>${{ matrix.python_version }} <span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>ruby/setup-ruby@v1<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">with</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">ruby-version</span>:<span style="color:#bbb"> </span>${{ matrix.ruby_version }}<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">shell</span>:<span style="color:#bbb"> </span>bash<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>java -version<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">shell</span>:<span style="color:#bbb"> </span>bash<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>ruby --version<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">shell</span>:<span style="color:#bbb"> </span>bash<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>python --version<span style="color:#bbb">
+</span></code></pre></div>
+</section><section>
+<h2 id="deployments">Deployments</h2>
+</section><section>
+<h1 id="pull-request-attacks">Pull request attacks</h1>
 </section><section>
 <h2 id="secrets">Secrets</h2>
 </section><section>
