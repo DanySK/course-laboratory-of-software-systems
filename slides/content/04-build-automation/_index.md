@@ -122,6 +122,7 @@ A paradigmatic example of a hybrid automator:
 
 Let's start as empty as possible, just point your terminal to an empty folder and:
 ```bash
+touch build.gradle.kts
 gradle tasks
 ```
 
