@@ -12,7 +12,7 @@ plugins {
 group = "it.unibo.lss"
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
