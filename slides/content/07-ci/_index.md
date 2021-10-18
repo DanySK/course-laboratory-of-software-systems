@@ -316,6 +316,31 @@ Also, *__tags__ don't get checked out*
 
 ## Build matrices
 
+Most software products are meant to be *portable*
+* Across operating systems
+* Across different frameworks and languages
+* Across runtime configuration
+
+A good continuous integration pipeline should test *all the supported combinations**
+* or a sample, if the performance is otherwise unbearable
+
+The solution is the adoption of a **build matrix**
+* Build variables and their allowed values are specified
+* The CI integrator generates the *cartesian product* of the variable values, and launches a build for each!
+
+---
+
+## Build matrices in GHA
+
+{{< github repo="Tutorial-GitHub-Actions-Minimal" path=".github/workflows/workflow-matrix.yml" from=19 >}}
+
+---
+
+## Deployments
+
+---
+
+# Pull request attacks
 
 ---
 
