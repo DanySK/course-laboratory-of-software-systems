@@ -87,5 +87,5 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 
 detekt {
     buildUponDefaultConfig = true // preconfigure defaults
-    config = files("$projectDir/config/detekt.yml")
+    config = files(File(projectDir, "config/detekt.yml"))
 }
