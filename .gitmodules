@@ -28,4 +28,4 @@
 	branch = 05-deploy
 [submodule "code/automation/13-plugin-final"]
 	path = code/automation/13-plugin-final
-	url = git@github.com:DanySK/Template-for-Gradle-Plugins.git
+	url = https://github.com/DanySK/Template-for-Gradle-Plugins.git
