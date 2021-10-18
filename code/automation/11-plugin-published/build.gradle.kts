@@ -5,7 +5,7 @@ plugins {
     id("com.gradle.plugin-publish") version "0.16.0"
 }
 
-group = "it.unibo.lss2020"
+group = "it.unibo.lss"
 
 repositories {
     jcenter()

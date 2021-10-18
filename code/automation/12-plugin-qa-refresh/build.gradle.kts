@@ -9,7 +9,7 @@ plugins {
     id("io.gitlab.arturbosch.detekt") version "1.18.1"
 }
 
-group = "it.unibo.lss2020"
+group = "it.unibo.lss"
 
 repositories {
     jcenter()
