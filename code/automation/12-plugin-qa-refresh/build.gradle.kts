@@ -43,7 +43,9 @@ val createClasspathManifest by tasks.registering {
     outputs.dir(outputDir)
     doLast {
         outputDir.mkdirs()
-        file("$outputDir/plugin-classpath.txt").writeText(sourceSets.main.get().runtimeClasspath.joinToString("\n"))
+        File(outputDir, "plugin-classpath.txt").writeText(
+            sourceSets.main.get().runtimeClasspath.joinToString("\n")
+        )
     }
 }
 
