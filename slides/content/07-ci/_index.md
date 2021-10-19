@@ -285,6 +285,16 @@ and many are developed by the community.
 
 ---
 
+## The GHA runner environment
+
+
+
+---
+
+## GHA expressions
+
+---
+
 ## Checking out the repository
 
 By default, GitHub actions' *runners do **not** check out the repository*
@@ -314,7 +324,7 @@ Also, *__tags__ don't get checked out*
 
 ---
 
-## Build matrices
+## Build matrix
 
 Most software products are meant to be *portable*
 * Across operating systems
@@ -327,20 +337,33 @@ A good continuous integration pipeline should test *all the supported combinatio
 The solution is the adoption of a **build matrix**
 * Build variables and their allowed values are specified
 * The CI integrator generates the *cartesian product* of the variable values, and launches a build for each!
+* Note: there is no built-in feature to exclude some combination
+    * It must be done manually using `if` conditionals
 
 ---
 
-## Build matrices in GHA
+## Build matrix in GHA
 
 {{< github repo="Tutorial-GitHub-Actions-Minimal" path=".github/workflows/workflow-matrix.yml" from=19 >}}
 
 ---
 
-## Deployments
+## Private data and continuous integration
 
----
+We would like the CI to be able to
+* Sign our artifacts
+* Delivery/Deploy our artifacts on remote targets
 
-# Pull request attacks
+Both operations **require private information to be shared**
+
+Of course, private data *can't be shared*
+* Attackers may steal the identity
+* Attackers may compromise deployments
+* In case of open projects, attackers may exploit *pull requests*!
+    * Fork your project (which has e.g. a secret environment variable)
+    * Print the value of the secret (e.g. with `printenv`)
+
+How to *share a secret* with the build environment?
 
 ---
 
@@ -350,6 +373,32 @@ The solution is the adoption of a **build matrix**
 
 ## In-memory signatures
 
+```kotlin
+if (System.getenv("CI") == true.toString()) {
+    signing {
+        val signingKey: String? by project
+        val signingPassword: String? by project
+        useInMemoryPgpKeys(signingKey, signingPassword)
+    }
+}
+```
+* The `CI` environment variable is automatically set to `"true"` on most CI environments
+    * Including GitHub Actions
+* The `signingKey` and `signingPassword` properties must get *passed* to Gradle
+    * One way is to pass them on the command line:
+        * `./gradlew -PsignigngKey=... -PsigningPassword=... <tasks>`
+    * Alternatively, they can be stored into environment variables
+        * Gradle auto-imports properties named `ORG_GRADLE_PROJECT_<variableName>`
+
+```yaml
+env:
+    ORG_GRADLE_PROJECT_signingKey: ${{ secrets.SIGNING_KEY }}
+    ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.SIGNING_PASSWORD }}
+```
+
+---
+
+## Deployments
 
 ---
 
@@ -415,275 +464,9 @@ No multi-OS
 
 ## JavaScript actions
 
-
-
 ---
 
-## Travis CI: Testing on different OSs
-
-If our software supports *multiple operating systems*, it is a good practice to verify that changes do not *break compatibility*
-
-A few integrators allow to perform a multi-os build. In Travis it is possible via the `os` key, supporting:
-* `linux` -- A Ubuntu Linux installation
-* `macos` -- A MacOS X installation
-* `windows` -- A Windows Server installation
-
-Specifying *multiple operating systems* causes the execution of *multiple jobs* in the same build
-
-*Note*: Some languages or system configurations may be unavailable for some environments!
-* e.g., there is no `java` environment available on `windows`
-
----
-
-## Custom environment
-
-If a particular environment of need is unavailable, one solution is
-<br>
-**build it yourself**
-
-* start from `language: minimal`
-* if the software you need is installable via **apt** or **homebrew**, use the `addons` keyword:
-```yaml
-addons:
-  apt:
-    packages: foo
-  homebrew:
-    packages: bar
-```
-* install packages under windows using **[chocolatey](https://chocolatey.org/)** (pre installed on Travis Windows instances)
-* if you need to perform a manual installation, you can write it in bash
-
----
-
-## Improved resilience on Travis
-
-* operations that may fail due to network issues or long time can be worked around using Travis built in functions:
-    * `travis_retry COMMAND` tries the same `COMMAND` three times, giving up only if it fails for three times
-    * `travis_wait N COMMAND` allows `COMMAND` to run without any output for longer than the default 10 minutes.
-        * The hard limit on 50 minutes per job however remains
-
----
-
-## A Java custom environment
-
-It could be useful to test on specific versions of the JDK, for instance.
-<br>
-A multi platform installer exists: [Jabba](https://github.com/shyiko/jabba)
-
-Also, a Travis-CI dedicated tool has been written to ease installation via Travis: [Gravis-CI](Gravis-CI)
-* Automatically installs Jabba
-* Uses Jabba to install the version of the JDK specified in the `JDK` environment variable
-
-```yaml
-env:
-  global:
-    - GRAVIS_REPO="https://github.com/DanySK/Gravis-CI.git" # Convenience variable for shortening commands
-    - GRAVIS="$HOME/gravis" # Convenience variable for shortening commands
-    - JDK="adopt@1.11.0-8" # Partial versions supported, adopt@1.11 would pull the latest adopt 1.11
-
-before_install:
-  - travis_retry git clone --depth 1 $GRAVIS_REPO $GRAVIS # Check out the script set
-  - source $GRAVIS/install-jdk # Install the JDK you configured in the $JDK environment variable
-```
-
----
-
-## Build Matrix
-
-Similarly to the operating systems, other environment features may need to get tested, e.g. the JDK versions
-
-Travis automatically combines some variables into a *[build matrix](https://docs.travis-ci.com/user/build-matrix/)*
-* Generates one job for each combination of such variable
-* Expands `os`, custom language keys (such as `rvm` or `python`), and `env.matrix` keys
-* `jobs.include` can be used to add further jobs to the matrix
-* `jobs.exclude` can be used to filter jobs out of the matrix
-
-```yaml
-...
-env:
-  global:
-    ...
-  matrix:
-    - JDK="adopt@"
-    - JDK="adopt@1.11"
-    - JDK="adopt-openj9@"
-    - JDK="adopt-openj9@1.11"
-jobs:
-  include: # Add a job with default OS and the specified matrix environment
-    env:
-      - JDK="adopt@1.8" 
-  exclude: # Excludes builds with OSX and OpenJ9
-    - { os: osx, env: [ JDK="adopt-openj9@" ] } # JSON-like syntax, YAML is a superset of JSON
-    - { os: osx, env: [ JDK="adopt-openj9@1.11" ] }
-```
-
----
-
-## Build Stages and workspaces
-
-Spanning several jobs upfront may make the build very slow
-* A single mistake will be detected only after all jobs failed
-* In case of limited resources, it can take a long time
-* Most errors will affect *all* builds
-
-**Build stages** allow to group one or more jobs that are to be run in parallel
-* By default, all jobs run the `test` stage
-* Jobs from a stage can communicate with jobs on another stage via **[workspaces](https://docs.travis-ci.com/user/using-workspaces/)**
-
-Consider for instance this structure:
-1. Run a build on the *reference* environment
-2. If successul, then *test on all the supported configurations*
-3. If everything is successful, then *deploy*
-
-this can be mapped into a *three-stages* configuration
-
----
-
-## Travis YAML validation
-
-* Builds can get *complex*
-* The corrisponding YAML file can get *rich*
-* Syntax *errors are possible and likely*
-
-* Use *[anchors](https://yaml.org/spec/1.2/spec.html#id2765878)* and *[merge keys](https://yaml.org/type/merge.html)* to foster reuse
-* *Validate* YAML before pushing
-    * Travis CI provides a Ruby tool for this!
-
-<br>
-<br>
-
-#### Using `travis` from the local terminal
-* Installation: `gem install travis`
-    * Make sure you have the Gem install folder in your `PATH`
-* Run `travis lint` to verify if your YAML file complies
-
----
-
-## Private data and continuous integration
-
-We would like the CI to be able to
-* Sign our artifacts
-* Delivery/Deploy our artifacts on remote targets
-
-Both operations **require private information to be shared**
-
-Of course, private data *can't be shared*
-* Attackers may steal the identity
-* Attackers may compromise deployments
-* In case of open projects, attackers may exploit *pull requests*!
-    * Fork your project (which has e.g. a secret environment variable)
-    * Print the value of the secret (e.g. with `printenv`)
-
-How to *share a secret* with the build environment?
-
----
-
-## Sharing a secret
-
-Travis supports the insertion of secret **variables** in two ways:
-* From the *web interface* (easier, quicker)
-    * More options $\Rightarrow$ Settings $\Rightarrow$ Environment variables
-* From the *command line* (more compleicated)
-    * `travis encrypt <String to encrypt>  --pro`
-        * e.g., `travis encrypt 'PASSWORD="foobar"'`
-    * produces a `secure: <code>` entry that can be pasted in `.travis.yml`
-        * e.g.:
-```yaml
-env:
-  global:
-    secure: <code>
-```
-
-Travis also supports sharing a **single secret file**
-* It gets encrypted using `travis encrypt-file <file> --pro`
-* The output command must be included in `.travis.yml`
-    * e.g. in the `before_install` phase of any job requiring it
-* The resulting encrypted file must be tracked
-    * Be careful not to track the original one!
-
----
-
-## Shared secrets: best practices
-
-* Leverage the single shared file for sharing an **ASCII-armored** PGP key
-    * Allows for *signing* artifacts
-    * *Signing keys are large* and cannot fit a variable
-    * Obtain it with `gpg --armor --export-secret-keys > secrets.asc`
-    * Encrypt with `travis encrypt-file secrets.asc --pro`
-    * Remove it (`rm secrets.asc`)
-    * Track the encrypted file `git add secrets.asc.enc`
-    * In the `install` or `before_install` phase:
-        * Add the `openssl` command printed by travis in the `before_install` phase
-        * Add `export ORG_GRADLE_PROJECT_signingKey=$(cat secrets.asc)`
-* In case you need *multiple files*:
-    * create an archive, encrypt it, decrypt on the build server, and unpack there
-* Store *passwords* into *encrypted variables*
-* Secrets are *only available in builds launched from the original repository*
-    * Otherwise there'd be no protection from *pull request attacks*
-    * *Make sure pull requests can build without secrets*!
-    * e.g. by *excluding phases or jobs* that use secrets
-
----
-
-## Signing using in-memory keys in Gradle
-
-```kotlin
-if (System.getenv("CI") == true.toString()) {
-    signing {
-        val signingKey: String? by project
-        val signingPassword: String? by project
-        useInMemoryPgpKeys(signingKey, signingPassword)
-    }
-}
-```
-* The `CI` environment variable is automatically set to true on Travis CI
-    * See [https://docs.travis-ci.com/user/environment-variables/#default-environment-variables](https://docs.travis-ci.com/user/environment-variables/#default-environment-variables)
-* The `signingKey` and `signingPassword` properties must get *passed* to Gradle
-    * The best way is probably by exporting them as environment variables
-    * Gradle auto-imports properties named `ORG_GRADLE_PROJECT_<variableName>`
-    * This mechanism can be exploited to inject properties using environment variables:
-        * `export ORG_GRADLE_PROJECT_signingKey=$(cat secrets.asc)`
-        * A secret variable named `ORG_GRADLE_PROJECT_signingPassword` from the web UI
-
----
-
-## Conditional jobs, stages, and deployments
-
-One way to prevent pull requests to run deployment phases that would fail
-<br>
-(due to unavailability of secrets)
-<br>
-is to use **conditional jobs, stages, and deployments**
-
-To do so, the keyword `if` can be used:
-* On the whole build, to skip it entirely
-* On a `stages` entry, to skip a single stage
-* On a `jobs.include` entry, to exclude that job
-
-The [Travis condition syntax is documented at https://docs.travis-ci.com/user/conditions-v1](https://docs.travis-ci.com/user/conditions-v1)
-
----
-
-## Travis CI's `deploy`
-
-The `deploy` phase is special in Travis:
-* It does not allow to run custom commands
-* It expects entries with:
-    * A deploy provider
-    * A configuration
-
-Full reference: [https://docs.travis-ci.com/user/deployment-v2](https://docs.travis-ci.com/user/deployment-v2)
-
-Example:
-```yaml
-deploy:
-  provider: releases # Deploys on GitHub Releases
-  file: build/libs/*.jar # Files to deploy
-  edge: true # opt in to the new deploy API
-  on: # filter
-    all_branches: true
-    # tags: true # deploy only tags
-```
+## Reusable workflows
 
 ---
 
@@ -695,9 +478,9 @@ deploy:
 
 Ever happenend?
 
-* Connected to the issue of build reproducibility
-* The default configuration of Travis CI may change
-    * By the way, explicitly using `dist` for Linux builds may help
+* Connected to the issue of **build reproducibility**
+    * The higher the build *reproducibility*, the higher its *robustness*
+* The default runner configuration may change
 * Some tools may become unavailable
 * Some dependencies may get unavailable
 
@@ -705,6 +488,11 @@ Ever happenend?
 
 $\Rightarrow$ *Automatically run the build every some time* even if nobody touches the project
 * How often? Depends on the project...
+* **Warning**: GitHub Actions disables `cron` CI jobs if there is no action on the repository, which makes the mechanism less useful
+
+---
+
+## Automated software upgrades
 
 ---
 
