@@ -27,7 +27,7 @@
     <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
 <h2 id="continuous-integration">Continuous Integration</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2021-10-18
+2021-10-19
 
 </section><section>
 <h1 id="continuous-integration-1">Continuous Integration</h1>
@@ -348,6 +348,10 @@ and many are developed by the community.</p>
 </span><span style="color:#bbb">      
 </span></code></pre></div>
 </section><section>
+<h2 id="the-gha-runner-environment">The GHA runner environment</h2>
+</section><section>
+<h2 id="gha-expressions">GHA expressions</h2>
+</section><section>
 <h2 id="checking-out-the-repository">Checking out the repository</h2>
 <p>By default, GitHub actions' <em>runners do <strong>not</strong> check out the repository</em></p>
 <ul>
@@ -387,7 +391,7 @@ and many are developed by the community.</p>
 <li>Checkout all <em>tags</em></li>
 </ul>
 </section><section>
-<h2 id="build-matrices">Build matrices</h2>
+<h2 id="build-matrix">Build matrix</h2>
 <p>Most software products are meant to be <em>portable</em></p>
 <ul>
 <li>Across operating systems</li>
@@ -402,9 +406,14 @@ and many are developed by the community.</p>
 <ul>
 <li>Build variables and their allowed values are specified</li>
 <li>The CI integrator generates the <em>cartesian product</em> of the variable values, and launches a build for each!</li>
+<li>Note: there is no built-in feature to exclude some combination
+<ul>
+<li>It must be done manually using <code>if</code> conditionals</li>
+</ul>
+</li>
 </ul>
 </section><section>
-<h2 id="build-matrices-in-gha">Build matrices in GHA</h2>
+<h2 id="build-matrix-in-gha">Build matrix in GHA</h2>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#b06;font-weight:bold">jobs</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">Build</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">strategy</span>:<span style="color:#bbb">
@@ -433,13 +442,62 @@ and many are developed by the community.</p>
 </span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>python --version<span style="color:#bbb">
 </span></code></pre></div>
 </section><section>
-<h2 id="deployments">Deployments</h2>
-</section><section>
-<h1 id="pull-request-attacks">Pull request attacks</h1>
+<h2 id="private-data-and-continuous-integration">Private data and continuous integration</h2>
+<p>We would like the CI to be able to</p>
+<ul>
+<li>Sign our artifacts</li>
+<li>Delivery/Deploy our artifacts on remote targets</li>
+</ul>
+<p>Both operations <strong>require private information to be shared</strong></p>
+<p>Of course, private data <em>can&rsquo;t be shared</em></p>
+<ul>
+<li>Attackers may steal the identity</li>
+<li>Attackers may compromise deployments</li>
+<li>In case of open projects, attackers may exploit <em>pull requests</em>!
+<ul>
+<li>Fork your project (which has e.g. a secret environment variable)</li>
+<li>Print the value of the secret (e.g. with <code>printenv</code>)</li>
+</ul>
+</li>
+</ul>
+<p>How to <em>share a secret</em> with the build environment?</p>
 </section><section>
 <h2 id="secrets">Secrets</h2>
 </section><section>
 <h2 id="in-memory-signatures">In-memory signatures</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">if</span> (System.getenv(<span style="color:#d20;background-color:#fff0f0">&#34;CI&#34;</span>) == <span style="color:#080;font-weight:bold">true</span>.toString()) {
+    signing {
+        <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">signingKey</span>: String? <span style="color:#080;font-weight:bold">by</span> project
+        <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">signingPassword</span>: String? <span style="color:#080;font-weight:bold">by</span> project
+        useInMemoryPgpKeys(signingKey, signingPassword)
+    }
+}
+</code></pre></div><ul>
+<li>The <code>CI</code> environment variable is automatically set to <code>&quot;true&quot;</code> on most CI environments
+<ul>
+<li>Including GitHub Actions</li>
+</ul>
+</li>
+<li>The <code>signingKey</code> and <code>signingPassword</code> properties must get <em>passed</em> to Gradle
+<ul>
+<li>One way is to pass them on the command line:
+<ul>
+<li><code>./gradlew -PsignigngKey=... -PsigningPassword=... &lt;tasks&gt;</code></li>
+</ul>
+</li>
+<li>Alternatively, they can be stored into environment variables
+<ul>
+<li>Gradle auto-imports properties named <code>ORG_GRADLE_PROJECT_&lt;variableName&gt;</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#b06;font-weight:bold">env</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">ORG_GRADLE_PROJECT_signingKey</span>:<span style="color:#bbb"> </span>${{ secrets.SIGNING_KEY }}<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">ORG_GRADLE_PROJECT_signingPassword</span>:<span style="color:#bbb"> </span>${{ secrets.SIGNING_PASSWORD }}<span style="color:#bbb">
+</span></code></pre></div></section><section>
+<h2 id="deployments">Deployments</h2>
 </section><section>
 <h2 id="dry-with-composite-actions">DRY with composite actions</h2>
 <p>Composite actions allow the execution of multiple steps.</p>
@@ -499,307 +557,8 @@ and many are developed by the community.</p>
 </section><section>
 <h2 id="javascript-actions">JavaScript actions</h2>
 </section><section>
-<h2 id="travis-ci-testing-on-different-oss">Travis CI: Testing on different OSs</h2>
-<p>If our software supports <em>multiple operating systems</em>, it is a good practice to verify that changes do not <em>break compatibility</em></p>
-<p>A few integrators allow to perform a multi-os build. In Travis it is possible via the <code>os</code> key, supporting:</p>
-<ul>
-<li><code>linux</code> &ndash; A Ubuntu Linux installation</li>
-<li><code>macos</code> &ndash; A MacOS X installation</li>
-<li><code>windows</code> &ndash; A Windows Server installation</li>
-</ul>
-<p>Specifying <em>multiple operating systems</em> causes the execution of <em>multiple jobs</em> in the same build</p>
-<p><em>Note</em>: Some languages or system configurations may be unavailable for some environments!</p>
-<ul>
-<li>e.g., there is no <code>java</code> environment available on <code>windows</code></li>
-</ul>
+<h2 id="reusable-workflows">Reusable workflows</h2>
 </section><section>
-<h2 id="custom-environment">Custom environment</h2>
-<p>If a particular environment of need is unavailable, one solution is
-<br>
-<strong>build it yourself</strong></p>
-<ul>
-<li>start from <code>language: minimal</code></li>
-<li>if the software you need is installable via <strong>apt</strong> or <strong>homebrew</strong>, use the <code>addons</code> keyword:</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#b06;font-weight:bold">addons</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">apt</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">packages</span>:<span style="color:#bbb"> </span>foo<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">homebrew</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">packages</span>:<span style="color:#bbb"> </span>bar<span style="color:#bbb">
-</span></code></pre></div><ul>
-<li>install packages under windows using <strong><a href="https://chocolatey.org/">chocolatey</a></strong> (pre installed on Travis Windows instances)</li>
-<li>if you need to perform a manual installation, you can write it in bash</li>
-</ul>
-</section><section>
-<h2 id="improved-resilience-on-travis">Improved resilience on Travis</h2>
-<ul>
-<li>operations that may fail due to network issues or long time can be worked around using Travis built in functions:
-<ul>
-<li><code>travis_retry COMMAND</code> tries the same <code>COMMAND</code> three times, giving up only if it fails for three times</li>
-<li><code>travis_wait N COMMAND</code> allows <code>COMMAND</code> to run without any output for longer than the default 10 minutes.
-<ul>
-<li>The hard limit on 50 minutes per job however remains</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</section><section>
-<h2 id="a-java-custom-environment">A Java custom environment</h2>
-<p>It could be useful to test on specific versions of the JDK, for instance.
-<br>
-A multi platform installer exists: <a href="https://github.com/shyiko/jabba">Jabba</a></p>
-<p>Also, a Travis-CI dedicated tool has been written to ease installation via Travis: <a href="Gravis-CI">Gravis-CI</a></p>
-<ul>
-<li>Automatically installs Jabba</li>
-<li>Uses Jabba to install the version of the JDK specified in the <code>JDK</code> environment variable</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#b06;font-weight:bold">env</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">global</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>- GRAVIS_REPO=&#34;https://github.com/DanySK/Gravis-CI.git&#34;<span style="color:#bbb"> </span><span style="color:#888"># Convenience variable for shortening commands</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span>- GRAVIS=&#34;$HOME/gravis&#34;<span style="color:#bbb"> </span><span style="color:#888"># Convenience variable for shortening commands</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span>- JDK=&#34;adopt@1.11.0-8&#34;<span style="color:#bbb"> </span><span style="color:#888"># Partial versions supported, adopt@1.11 would pull the latest adopt 1.11</span><span style="color:#bbb">
-</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">before_install</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>- travis_retry git clone --depth 1 $GRAVIS_REPO $GRAVIS<span style="color:#bbb"> </span><span style="color:#888"># Check out the script set</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span>- source $GRAVIS/install-jdk<span style="color:#bbb"> </span><span style="color:#888"># Install the JDK you configured in the $JDK environment variable</span><span style="color:#bbb">
-</span></code></pre></div></section><section>
-<h2 id="build-matrix">Build Matrix</h2>
-<p>Similarly to the operating systems, other environment features may need to get tested, e.g. the JDK versions</p>
-<p>Travis automatically combines some variables into a <em><a href="https://docs.travis-ci.com/user/build-matrix/">build matrix</a></em></p>
-<ul>
-<li>Generates one job for each combination of such variable</li>
-<li>Expands <code>os</code>, custom language keys (such as <code>rvm</code> or <code>python</code>), and <code>env.matrix</code> keys</li>
-<li><code>jobs.include</code> can be used to add further jobs to the matrix</li>
-<li><code>jobs.exclude</code> can be used to filter jobs out of the matrix</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#b06;font-weight:bold">...</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">env</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">global</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>...<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">matrix</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>- JDK=&#34;adopt@&#34;<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>- JDK=&#34;adopt@1.11&#34;<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>- JDK=&#34;adopt-openj9@&#34;<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>- JDK=&#34;adopt-openj9@1.11&#34;<span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">jobs</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">include</span>:<span style="color:#bbb"> </span><span style="color:#888"># Add a job with default OS and the specified matrix environment</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">env</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>- JDK=&#34;adopt@1.8&#34; <span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">exclude</span>:<span style="color:#bbb"> </span><span style="color:#888"># Excludes builds with OSX and OpenJ9</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span>- {<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">os: osx, env</span>:<span style="color:#bbb"> </span>[<span style="color:#bbb"> </span>JDK=&#34;adopt-openj9@&#34; ] }<span style="color:#bbb"> </span><span style="color:#888"># JSON-like syntax, YAML is a superset of JSON</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span>- {<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">os: osx, env</span>:<span style="color:#bbb"> </span>[<span style="color:#bbb"> </span>JDK=&#34;adopt-openj9@1.11&#34; ] }<span style="color:#bbb">
-</span></code></pre></div></section><section>
-<h2 id="build-stages-and-workspaces">Build Stages and workspaces</h2>
-<p>Spanning several jobs upfront may make the build very slow</p>
-<ul>
-<li>A single mistake will be detected only after all jobs failed</li>
-<li>In case of limited resources, it can take a long time</li>
-<li>Most errors will affect <em>all</em> builds</li>
-</ul>
-<p><strong>Build stages</strong> allow to group one or more jobs that are to be run in parallel</p>
-<ul>
-<li>By default, all jobs run the <code>test</code> stage</li>
-<li>Jobs from a stage can communicate with jobs on another stage via <strong><a href="https://docs.travis-ci.com/user/using-workspaces/">workspaces</a></strong></li>
-</ul>
-<p>Consider for instance this structure:</p>
-<ol>
-<li>Run a build on the <em>reference</em> environment</li>
-<li>If successul, then <em>test on all the supported configurations</em></li>
-<li>If everything is successful, then <em>deploy</em></li>
-</ol>
-<p>this can be mapped into a <em>three-stages</em> configuration</p>
-</section><section>
-<h2 id="travis-yaml-validation">Travis YAML validation</h2>
-<ul>
-<li>
-<p>Builds can get <em>complex</em></p>
-</li>
-<li>
-<p>The corrisponding YAML file can get <em>rich</em></p>
-</li>
-<li>
-<p>Syntax <em>errors are possible and likely</em></p>
-</li>
-<li>
-<p>Use <em><a href="https://yaml.org/spec/1.2/spec.html#id2765878">anchors</a></em> and <em><a href="https://yaml.org/type/merge.html">merge keys</a></em> to foster reuse</p>
-</li>
-<li>
-<p><em>Validate</em> YAML before pushing</p>
-<ul>
-<li>Travis CI provides a Ruby tool for this!</li>
-</ul>
-</li>
-</ul>
-<br>
-<br>
-<h4 id="using-travis-from-the-local-terminal">Using <code>travis</code> from the local terminal</h4>
-<ul>
-<li>Installation: <code>gem install travis</code>
-<ul>
-<li>Make sure you have the Gem install folder in your <code>PATH</code></li>
-</ul>
-</li>
-<li>Run <code>travis lint</code> to verify if your YAML file complies</li>
-</ul>
-</section><section>
-<h2 id="private-data-and-continuous-integration">Private data and continuous integration</h2>
-<p>We would like the CI to be able to</p>
-<ul>
-<li>Sign our artifacts</li>
-<li>Delivery/Deploy our artifacts on remote targets</li>
-</ul>
-<p>Both operations <strong>require private information to be shared</strong></p>
-<p>Of course, private data <em>can&rsquo;t be shared</em></p>
-<ul>
-<li>Attackers may steal the identity</li>
-<li>Attackers may compromise deployments</li>
-<li>In case of open projects, attackers may exploit <em>pull requests</em>!
-<ul>
-<li>Fork your project (which has e.g. a secret environment variable)</li>
-<li>Print the value of the secret (e.g. with <code>printenv</code>)</li>
-</ul>
-</li>
-</ul>
-<p>How to <em>share a secret</em> with the build environment?</p>
-</section><section>
-<h2 id="sharing-a-secret">Sharing a secret</h2>
-<p>Travis supports the insertion of secret <strong>variables</strong> in two ways:</p>
-<ul>
-<li>From the <em>web interface</em> (easier, quicker)
-<ul>
-<li>More options $\Rightarrow$ Settings $\Rightarrow$ Environment variables</li>
-</ul>
-</li>
-<li>From the <em>command line</em> (more compleicated)
-<ul>
-<li><code>travis encrypt &lt;String to encrypt&gt;  --pro</code>
-<ul>
-<li>e.g., <code>travis encrypt 'PASSWORD=&quot;foobar&quot;'</code></li>
-</ul>
-</li>
-<li>produces a <code>secure: &lt;code&gt;</code> entry that can be pasted in <code>.travis.yml</code>
-<ul>
-<li>e.g.:</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#b06;font-weight:bold">env</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">global</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">secure</span>:<span style="color:#bbb"> </span>&lt;code&gt;<span style="color:#bbb">
-</span></code></pre></div><p>Travis also supports sharing a <strong>single secret file</strong></p>
-<ul>
-<li>It gets encrypted using <code>travis encrypt-file &lt;file&gt; --pro</code></li>
-<li>The output command must be included in <code>.travis.yml</code>
-<ul>
-<li>e.g. in the <code>before_install</code> phase of any job requiring it</li>
-</ul>
-</li>
-<li>The resulting encrypted file must be tracked
-<ul>
-<li>Be careful not to track the original one!</li>
-</ul>
-</li>
-</ul>
-</section><section>
-<h2 id="shared-secrets-best-practices">Shared secrets: best practices</h2>
-<ul>
-<li>Leverage the single shared file for sharing an <strong>ASCII-armored</strong> PGP key
-<ul>
-<li>Allows for <em>signing</em> artifacts</li>
-<li><em>Signing keys are large</em> and cannot fit a variable</li>
-<li>Obtain it with <code>gpg --armor --export-secret-keys &gt; secrets.asc</code></li>
-<li>Encrypt with <code>travis encrypt-file secrets.asc --pro</code></li>
-<li>Remove it (<code>rm secrets.asc</code>)</li>
-<li>Track the encrypted file <code>git add secrets.asc.enc</code></li>
-<li>In the <code>install</code> or <code>before_install</code> phase:
-<ul>
-<li>Add the <code>openssl</code> command printed by travis in the <code>before_install</code> phase</li>
-<li>Add <code>export ORG_GRADLE_PROJECT_signingKey=$(cat secrets.asc)</code></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>In case you need <em>multiple files</em>:
-<ul>
-<li>create an archive, encrypt it, decrypt on the build server, and unpack there</li>
-</ul>
-</li>
-<li>Store <em>passwords</em> into <em>encrypted variables</em></li>
-<li>Secrets are <em>only available in builds launched from the original repository</em>
-<ul>
-<li>Otherwise there&rsquo;d be no protection from <em>pull request attacks</em></li>
-<li><em>Make sure pull requests can build without secrets</em>!</li>
-<li>e.g. by <em>excluding phases or jobs</em> that use secrets</li>
-</ul>
-</li>
-</ul>
-</section><section>
-<h2 id="signing-using-in-memory-keys-in-gradle">Signing using in-memory keys in Gradle</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">if</span> (System.getenv(<span style="color:#d20;background-color:#fff0f0">&#34;CI&#34;</span>) == <span style="color:#080;font-weight:bold">true</span>.toString()) {
-    signing {
-        <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">signingKey</span>: String? <span style="color:#080;font-weight:bold">by</span> project
-        <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">signingPassword</span>: String? <span style="color:#080;font-weight:bold">by</span> project
-        useInMemoryPgpKeys(signingKey, signingPassword)
-    }
-}
-</code></pre></div><ul>
-<li>The <code>CI</code> environment variable is automatically set to true on Travis CI
-<ul>
-<li>See <a href="https://docs.travis-ci.com/user/environment-variables/#default-environment-variables">https://docs.travis-ci.com/user/environment-variables/#default-environment-variables</a></li>
-</ul>
-</li>
-<li>The <code>signingKey</code> and <code>signingPassword</code> properties must get <em>passed</em> to Gradle
-<ul>
-<li>The best way is probably by exporting them as environment variables</li>
-<li>Gradle auto-imports properties named <code>ORG_GRADLE_PROJECT_&lt;variableName&gt;</code></li>
-<li>This mechanism can be exploited to inject properties using environment variables:
-<ul>
-<li><code>export ORG_GRADLE_PROJECT_signingKey=$(cat secrets.asc)</code></li>
-<li>A secret variable named <code>ORG_GRADLE_PROJECT_signingPassword</code> from the web UI</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</section><section>
-<h2 id="conditional-jobs-stages-and-deployments">Conditional jobs, stages, and deployments</h2>
-<p>One way to prevent pull requests to run deployment phases that would fail
-<br>
-(due to unavailability of secrets)
-<br>
-is to use <strong>conditional jobs, stages, and deployments</strong></p>
-<p>To do so, the keyword <code>if</code> can be used:</p>
-<ul>
-<li>On the whole build, to skip it entirely</li>
-<li>On a <code>stages</code> entry, to skip a single stage</li>
-<li>On a <code>jobs.include</code> entry, to exclude that job</li>
-</ul>
-<p>The <a href="https://docs.travis-ci.com/user/conditions-v1">Travis condition syntax is documented at https://docs.travis-ci.com/user/conditions-v1</a></p>
-</section><section>
-<h2 id="travis-cis-deploy">Travis CI&rsquo;s <code>deploy</code></h2>
-<p>The <code>deploy</code> phase is special in Travis:</p>
-<ul>
-<li>It does not allow to run custom commands</li>
-<li>It expects entries with:
-<ul>
-<li>A deploy provider</li>
-<li>A configuration</li>
-</ul>
-</li>
-</ul>
-<p>Full reference: <a href="https://docs.travis-ci.com/user/deployment-v2">https://docs.travis-ci.com/user/deployment-v2</a></p>
-<p>Example:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#b06;font-weight:bold">deploy</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">provider</span>:<span style="color:#bbb"> </span>releases<span style="color:#bbb"> </span><span style="color:#888"># Deploys on GitHub Releases</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">file</span>:<span style="color:#bbb"> </span>build/libs/*.jar<span style="color:#bbb"> </span><span style="color:#888"># Files to deploy</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">edge</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb"> </span><span style="color:#888"># opt in to the new deploy API</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">on</span>:<span style="color:#bbb"> </span><span style="color:#888"># filter</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">all_branches</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#888"># tags: true # deploy only tags</span><span style="color:#bbb">
-</span></code></pre></div></section><section>
 <h1 id="stale-builds">Stale builds</h1>
 <ol>
 <li>Stuff <em>works</em></li>
@@ -808,12 +567,12 @@ is to use <strong>conditional jobs, stages, and deployments</strong></p>
 </ol>
 <p>Ever happenend?</p>
 <ul>
-<li>Connected to the issue of build reproducibility</li>
-<li>The default configuration of Travis CI may change
+<li>Connected to the issue of <strong>build reproducibility</strong>
 <ul>
-<li>By the way, explicitly using <code>dist</code> for Linux builds may help</li>
+<li>The higher the build <em>reproducibility</em>, the higher its <em>robustness</em></li>
 </ul>
 </li>
+<li>The default runner configuration may change</li>
 <li>Some tools may become unavailable</li>
 <li>Some dependencies may get unavailable</li>
 </ul>
@@ -821,7 +580,10 @@ is to use <strong>conditional jobs, stages, and deployments</strong></p>
 <p>$\Rightarrow$ <em>Automatically run the build every some time</em> even if nobody touches the project</p>
 <ul>
 <li>How often? Depends on the project&hellip;</li>
+<li><strong>Warning</strong>: GitHub Actions disables <code>cron</code> CI jobs if there is no action on the repository, which makes the mechanism less useful</li>
 </ul>
+</section><section>
+<h2 id="automated-software-upgrades">Automated software upgrades</h2>
 </section><section>
 <h2 id="additional-checks-and-reportings">Additional checks and reportings</h2>
 <p>There exist a number of recommended services that provide additional QA and reports.</p>
