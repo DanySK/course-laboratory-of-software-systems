@@ -415,6 +415,7 @@ Compiled files are in `build/bin`!
 Dependency management in Gradle depends from two fundamental concepts:
 * **Dependency**, a resource of some kind, possibly having other (*transitive*) dependencies
 * **Configuration**, a *resolvable* (mappable to actual resources) set of dependencies
+    * $\Rightarrow$ Not to be confused with the configuration **phase**!
 
 Let's see a use case: compiling a Java source with a dependency
 * In `javac` terms, we need to feed some jars to the `-cp` flag of the compiler
