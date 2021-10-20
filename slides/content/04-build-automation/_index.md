@@ -892,7 +892,7 @@ to *annotate every public property* of a task with a marker annotation that dete
 1. **Performance**
     * Gradle caches intermediate build results, using input and output markers to undersand whether or not some task is *up to date*
     * This allows for *much* faster builds while working on large projects
-        * Time to build completion can decrease from tens on minutes to seconds!
+        * Time to build completion can decrease a dozen minutes to seconds!
 2. **Continuous build**
     * Re run tasks upon changes with the `-t` option
     * (In/Out)put markers are used to understand *what* to re-run
