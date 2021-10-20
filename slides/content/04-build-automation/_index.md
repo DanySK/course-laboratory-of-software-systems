@@ -906,7 +906,7 @@ In our main `build.gradle.kts`
 
 ```gradle
 // Imperative part
-abstract class JavaTask(javaExecutable: File = Jvm.current().javaExecutable) : Exec() { ... }sub
+abstract class JavaTask(javaExecutable: File = Jvm.current().javaExecutable) : Exec() { ... }
 open class CompileJava @javax.inject.Inject constructor() : JavaTask(Jvm.current().javacExecutable) { ... }
 open class RunJava @javax.inject.Inject constructor() : JavaTask() { ... }
 
