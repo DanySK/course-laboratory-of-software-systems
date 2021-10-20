@@ -298,7 +298,7 @@ Hello, World!
 
 ## Gradle: task types
 
-Gradle offers some facilities to make it writing new tasks easier
+Gradle offers some facilities to make writing new tasks easier
 <br>
 An example is the [`org.gradle.api.Exec`](https://docs.gradle.org/current/javadoc/org/gradle/api/tasks/Exec.html) task type, representing a command to be executed on the underlying command line
 
