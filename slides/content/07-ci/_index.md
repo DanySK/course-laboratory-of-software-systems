@@ -500,26 +500,57 @@ env:
 
 ---
 
-## DRY with composite actions
+## DRY with GitHub Actions
 
-Composite actions allow the execution of multiple steps.
+Imperative behaviour in GitHub Actions is encapsulated into *actions*
 
-They can be written by simply creating an `action.yml` file in the project root
+**Actions** are executed as a single logical step, with **inputs** and **outputs**
+
+Their metadata is written in a `actions.yml` file on the repository root
+
+GitHub actions stored on GitHub are usable without further deployment steps
+* By using `owner/repo@<tree-ish>` as reference
+
+---
+
+## GitHub Actions' metadata
+
+```yaml
+name: 'A string with the action name'
+description: 'A long description explaining what the action does'
+inputs:
+  input-name:  # id of input
+    description: 'Input description'
+    required: true # whether it should be mandatorily specified
+    default: 'default value' # Default value, if not specified by the caller
+outputs:
+  # Outputs will be set by the action when running
+  output-name: # id of output
+    description: 'Description of the output'
+runs: # Content depends on the action type
+```
+
+---
+
+## Composite actions
+
+Composite actions allow the *execution of multiple steps* that can be *scripts* or *other actions*.
+
+```yaml
+runs:
+    using: composite
+    steps: [ <list of steps> ]
+```
+
+The action is contained in its metadata descriptor `action.yml`root, e.g.:
 
 {{< github repo="action-checkout" path="action.yml" >}}
 
-See: [https://github.com/DanySK/action-checkout](https://github.com/DanySK/action-checkout)
+From: [https://github.com/DanySK/action-checkout](https://github.com/DanySK/action-checkout)
 
 It can be used with:
 
 {{< github path=".github/workflows/build-and-deploy.yml" from=22 to=23 >}}
-
----
-
-## Writing custom actions
-
-* Parameters
-* Outputs
 
 ---
 
