@@ -764,20 +764,46 @@ the alternative is to <em>install a private key in the runner</em></p>
 <li>Configure the <code>Dockerfile</code> of the container you want to use</li>
 <li>Prepare the main script and declare it as <code>ENTRYPOINT</code></li>
 <li>Define inputs and outputs in <code>action.yml</code></li>
-<li>In the <code>runs</code> section select <code>docker</code> and the arguments order</li>
+<li>In the <code>runs</code> section set <code>using: docker</code> and the arguments order
+<ul>
+<li>The order is relevant, they will be passed to the entrypoint script in order</li>
+</ul>
+</li>
 </ul>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#b06;font-weight:bold">runs</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">using</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;docker&#39;</span><span style="color:#bbb">
 </span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;Dockerfile&#39;</span><span style="color:#bbb"> </span><span style="color:#888"># Alternatively, the name of an existing image</span><span style="color:#bbb">
 </span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">args</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">    </span>- ${{ inputs.some-input-name }}<span style="color:#bbb">
-</span><span style="color:#bbb">
-</span></code></pre></div></section><section>
-<h2 id="limitations-of-docker-container-actions">Limitations of Docker container actions</h2>
-<p>No multi-OS</p>
+</span></code></pre></div><ul>
+<li>Docker container actions <em>work only on Linux</em></li>
+</ul>
 </section><section>
 <h2 id="javascript-actions">JavaScript actions</h2>
-</section><section>
+<p>The most flexible way of writing actions</p>
+<ul>
+<li>Portable across OSs</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#b06;font-weight:bold">runs</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">using</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;node12&#39;</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">main</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;index.js&#39;</span><span style="color:#bbb">
+</span></code></pre></div><ul>
+<li>Initialize a new NPM project: <code>npm init -y</code></li>
+<li>Install the toolkits you will use: <code>npm install @actions/&lt;toolkitname&gt;</code>
+<ul>
+<li>See: <a href="https://github.com/actions/toolkit">https://github.com/actions/toolkit</a></li>
+</ul>
+</li>
+<li>write your code</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">const</span> core = require(<span style="color:#d20;background-color:#fff0f0">&#39;@actions/core&#39;</span>);
+<span style="color:#080;font-weight:bold">try</span> {
+  <span style="color:#080;font-weight:bold">const</span> foo = core.getInput(<span style="color:#d20;background-color:#fff0f0">&#39;some-input&#39;</span>);
+  console.log(<span style="color:#d20;background-color:#fff0f0">`Hello </span><span style="color:#33b;background-color:#fff0f0">${</span>foo<span style="color:#33b;background-color:#fff0f0">}</span><span style="color:#d20;background-color:#fff0f0">!`</span>);
+} <span style="color:#080;font-weight:bold">catch</span> (error) {
+  core.setFailed(error.message);
+}
+</code></pre></div></section><section>
 <h2 id="reusable-workflows">Reusable workflows</h2>
 </section><section>
 <h1 id="stale-builds">Stale builds</h1>
