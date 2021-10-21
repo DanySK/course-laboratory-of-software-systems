@@ -654,9 +654,35 @@ the alternative is to <em>install a private key in the runner</em></p>
 </span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">ORG_GRADLE_PROJECT_signingKey</span>:<span style="color:#bbb"> </span>${{ secrets.SIGNING_KEY }}<span style="color:#bbb">
 </span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">ORG_GRADLE_PROJECT_signingPassword</span>:<span style="color:#bbb"> </span>${{ secrets.SIGNING_PASSWORD }}<span style="color:#bbb">
 </span></code></pre></div></section><section>
-<h2 id="dry-with-composite-actions">DRY with composite actions</h2>
-<p>Composite actions allow the execution of multiple steps.</p>
-<p>They can be written by simply creating an <code>action.yml</code> file in the project root</p>
+<h2 id="dry-with-github-actions">DRY with GitHub Actions</h2>
+<p>Imperative behaviour in GitHub Actions is encapsulated into <em>actions</em></p>
+<p><strong>Actions</strong> are executed as a single logical step, with <strong>inputs</strong> and <strong>outputs</strong></p>
+<p>Their metadata is written in a <code>actions.yml</code> file on the repository root</p>
+<p>GitHub actions stored on GitHub are usable without further deployment steps</p>
+<ul>
+<li>By using <code>owner/repo@&lt;tree-ish&gt;</code> as reference</li>
+</ul>
+</section><section>
+<h2 id="github-actions-metadata">GitHub Actions' metadata</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;A string with the action name&#39;</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">description</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;A long description explaining what the action does&#39;</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">inputs</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">input-name</span>:<span style="color:#bbb">  </span><span style="color:#888"># id of input</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">description</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;Input description&#39;</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">required</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb"> </span><span style="color:#888"># whether it should be mandatorily specified</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">default</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;default value&#39;</span><span style="color:#bbb"> </span><span style="color:#888"># Default value, if not specified by the caller</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">outputs</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#888"># Outputs will be set by the action when running</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">output-name</span>:<span style="color:#bbb"> </span><span style="color:#888"># id of output</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">description</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;Description of the output&#39;</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">runs</span>:<span style="color:#bbb"> </span><span style="color:#888"># Content depends on the action type</span><span style="color:#bbb">
+</span></code></pre></div></section><section>
+<h2 id="composite-actions">Composite actions</h2>
+<p>Composite actions allow the <em>execution of multiple steps</em> that can be <em>scripts</em> or <em>other actions</em>.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#b06;font-weight:bold">runs</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">using</span>:<span style="color:#bbb"> </span>composite<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">steps</span>:<span style="color:#bbb"> </span>[<span style="color:#bbb"> </span>&lt;list of steps&gt; ]<span style="color:#bbb">
+</span></code></pre></div><p>The action is contained in its metadata descriptor <code>action.yml</code>root, e.g.:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;Checkout the whole repository&#39;</span><span style="color:#bbb">
 </span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">description</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;Checkout all commits, all tags, and initialize all submodules.&#39;</span><span style="color:#bbb">
 </span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">runs</span>:<span style="color:#bbb">
@@ -671,16 +697,10 @@ the alternative is to <em>install a private key in the runner</em></p>
 </span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">shell</span>:<span style="color:#bbb"> </span>bash<span style="color:#bbb">
 </span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>git fetch --tags -f<span style="color:#bbb">
 </span></code></pre></div>
-<p>See: <a href="https://github.com/DanySK/action-checkout">https://github.com/DanySK/action-checkout</a></p>
+<p>From: <a href="https://github.com/DanySK/action-checkout">https://github.com/DanySK/action-checkout</a></p>
 <p>It can be used with:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">steps</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">      </span><span style="color:#888"># Checkout the repository</span></code></pre></div>
-</section><section>
-<h2 id="writing-custom-actions">Writing custom actions</h2>
-<ul>
-<li>Parameters</li>
-<li>Outputs</li>
-</ul>
 </section><section>
 <h2 id="composite-actions-limitations">Composite actions: limitations</h2>
 <ul>
