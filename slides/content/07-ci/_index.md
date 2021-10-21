@@ -604,7 +604,8 @@ runs:
 * Configure the `Dockerfile` of the container you want to use
 * Prepare the main script and declare it as `ENTRYPOINT`
 * Define inputs and outputs in `action.yml`
-* In the `runs` section select `docker` and the arguments order
+* In the `runs` section set `using: docker` and the arguments order
+    * The order is relevant, they will be passed to the entrypoint script in order
 
 ```yaml
 runs:
@@ -612,18 +613,37 @@ runs:
   image: 'Dockerfile' # Alternatively, the name of an existing image
   args:
     - ${{ inputs.some-input-name }}
-
 ```
 
----
-
-## Limitations of Docker container actions
-
-No multi-OS
+* Docker container actions *work only on Linux*
 
 ---
 
 ## JavaScript actions
+
+The most flexible way of writing actions
+* Portable across OSs
+
+```yaml
+runs:
+  using: 'node12'
+  main: 'index.js'
+```
+
+* Initialize a new NPM project: `npm init -y`
+* Install the toolkits you will use: `npm install @actions/<toolkitname>`
+    * See: [https://github.com/actions/toolkit](https://github.com/actions/toolkit)
+* write your code
+
+```javascript
+const core = require('@actions/core');
+try {
+  const foo = core.getInput('some-input');
+  console.log(`Hello ${foo}!`);
+} catch (error) {
+  core.setFailed(error.message);
+}
+```
 
 ---
 
