@@ -268,7 +268,7 @@ and many are developed by the community.</p>
 </section><section>
 <h2 id="workflow-minimal-example">Workflow minimal example</h2>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#888"># This is a basic workflow to help you get started with Actions</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>CI<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Example workflow<span style="color:#bbb">
 </span><span style="color:#bbb">
 </span><span style="color:#bbb"></span><span style="color:#888"># Controls when the workflow will run</span><span style="color:#bbb">
 </span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">on</span>:<span style="color:#bbb">
@@ -521,6 +521,35 @@ and many are developed by the community.</p>
 <li>Checkout all <em>tags</em></li>
 </ul>
 </section><section>
+<h2 id="writing-outputs">Writing outputs</h2>
+<p>Communication with the runner happens via <em><a href="docs.github.com/en/actions/learn-github-actions/workflow-commands-for-github-actions">workflow commands</a></em>
+<br>
+The simplest way to send commands is to print on standard output a message in the form:
+<br>
+<code>::workflow-command parameter1={data},parameter2={data}::{command value}</code></p>
+<p>In particular, actions can set outputs by printing:
+<br>
+<code>::set-output name={name}::{value}</code></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#b06;font-weight:bold">jobs</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">Build</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">runs-on</span>:<span style="color:#bbb"> </span>ubuntu-latest<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">steps</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Checkout<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>danysk/action-checkout@0.1.0<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">id</span>:<span style="color:#bbb"> </span>branch-name<span style="color:#bbb"> </span><span style="color:#888"># Custom id</span><span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>tj-actions/branch-names@v5<span style="color:#bbb"> </span><span style="color:#888"># An action that has some outputs</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">id</span>:<span style="color:#bbb"> </span>output-from-shell<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>ruby -e &#39;puts &#34;::set-output name=dice::#{rand(1..6)}&#34;&#39;<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>|<span style="color:#d20;background-color:#fff0f0">
+</span><span style="color:#d20;background-color:#fff0f0">          echo &#34;The dice roll resulted in number ${{ steps.output-from-shell.outputs.dice }}&#34;
+</span><span style="color:#d20;background-color:#fff0f0">          if ${{ steps.branch-name.outputs.is_tag }} ; then
+</span><span style="color:#d20;background-color:#fff0f0">            echo &#34;This is tag ${{ steps.branch-name.outputs.tag }}&#34;
+</span><span style="color:#d20;background-color:#fff0f0">          else
+</span><span style="color:#d20;background-color:#fff0f0">            echo &#34;This is branch ${{ steps.branch-name.outputs.current_branch }}&#34;
+</span><span style="color:#d20;background-color:#fff0f0">            echo &#34;Is this branch the default one? ${{ steps.branch-name.outputs.is_default }}&#34;
+</span><span style="color:#d20;background-color:#fff0f0">          fi</span><span style="color:#bbb">          
+</span></code></pre></div>
+</section><section>
 <h2 id="build-matrix">Build matrix</h2>
 <p>Most software products are meant to be <em>portable</em></p>
 <ul>
@@ -705,7 +734,24 @@ the alternative is to <em>install a private key in the runner</em></p>
 <h2 id="composite-actions-limitations">Composite actions: limitations</h2>
 <ul>
 <li>No support for secrets, they must be passed <em>as parameters</em></li>
-<li>No conditional steps (ouch&hellip;)</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;Composite action with a secret&#39;</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">description</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;For teaching purposes&#39;</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">inputs</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">token</span>:<span style="color:#bbb">  </span><span style="color:#888"># github token</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">description</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;Github token for deployment. Skips deployment otherwise.&#39;</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">required</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">runs</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">using</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#34;composite&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">steps</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;[[ -n &#34;${{ inputs.token }}&#34; ]] || false&#39;</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Fail if the toke is unset<span style="color:#bbb">
+</span></code></pre></div><ul>
+<li>No conditional steps (ouch&hellip;)
+<ul>
+<li>They can be somewhat emulated inside the script</li>
+</ul>
+</li>
 </ul>
 </section><section>
 <h2 id="docker-container-actions">Docker container actions</h2>
