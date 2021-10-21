@@ -27,7 +27,7 @@
     <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
 <h2 id="continuous-integration">Continuous Integration</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2021-10-20
+2021-10-21
 
 </section><section>
 <h1 id="continuous-integration-1">Continuous Integration</h1>
@@ -227,7 +227,7 @@ not just a &ldquo;plain&rdquo; CI/CD pipeline</p>
 </span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">runs-on</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;...&#39;</span><span style="color:#bbb">
 </span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">steps</span>:<span style="color:#bbb"> </span>[<span style="color:#bbb"> </span>... ]<span style="color:#bbb">
 </span></code></pre></div></section><section>
-<h3 id="dry-ci">DRY CI</h3>
+<h3 id="dry-with-yaml">DRY with YAML</h3>
 <p>We discussed that automation / integration pipelines <strong>are</strong> part of the software</p>
 <ul>
 <li>They are subject to the same (or even higher) quality standards</li>
@@ -252,18 +252,18 @@ not just a &ldquo;plain&rdquo; CI/CD pipeline</p>
 <h2 id="github-actions-actions">GitHub Actions' actions</h2>
 <p>GHA&rsquo;s YAML parser <em>does not support standard YAML anchors and merge keys</em></p>
 <p>(it is a well-known limit with a bug open since ages)</p>
-<p>GHA achieves reuse via &ldquo;<strong>actions</strong>&quot;: <em>reusable blocks of operations</em></p>
+<p>GHA achieves reuse via:</p>
 <ul>
-<li>Three kinds:
+<li>&ldquo;<strong>actions</strong>&quot;: <em>reusable parameterizable <strong>steps</strong></em>
 <ul>
 <li><em>JavaScript</em> (working on any OS)</li>
 <li><em>Docker container</em>-based (linux only)</li>
 <li><em>Composite</em> (assemblage of other actions)</li>
 </ul>
 </li>
-<li>Allow input and output parameters</li>
+<li>&ldquo;<strong>reusable workflows</strong>&quot;: <em>reusable and parameterizable <strong>jobs</strong></em></li>
 </ul>
-<p>Many basic actions are provided by GitHub directly,
+<p>Many actions are provided by GitHub directly,
 and many are developed by the community.</p>
 </section><section>
 <h2 id="workflow-minimal-example">Workflow minimal example</h2>
@@ -348,9 +348,139 @@ and many are developed by the community.</p>
 </span><span style="color:#bbb">      
 </span></code></pre></div>
 </section><section>
-<h2 id="the-gha-runner-environment">The GHA runner environment</h2>
-</section><section>
 <h2 id="gha-expressions">GHA expressions</h2>
+<p>GitHub Actions allows <em>expressions</em> to be included in the workflow file</p>
+<ul>
+<li>Syntax: <code>${{ &lt;expression&gt; }}</code></li>
+<li>Special rule: <code>if:</code> conditionals are automatically evaluated as expressions, so <code>${{ }}</code> is unnecessary
+<ul>
+<li><code>if: &lt;expression&gt;</code> works just fine</li>
+</ul>
+</li>
+</ul>
+<p>The language is rather limited, and documented at</p>
+<ul>
+<li>
+<p><a href="https://docs.github.com/en/actions/learn-github-actions/expressions">https://docs.github.com/en/actions/learn-github-actions/expressions</a></p>
+</li>
+<li>
+<p>The language performs a <em>loose equality</em></p>
+<ul>
+<li>Equal types are compared</li>
+<li>Different types are <em>coerced to integers</em> when compared</li>
+</ul>
+</li>
+<li>
+<p>When a string is required, any type is <em>coerced to string</em></p>
+<ul>
+<li>String comparison ignores case</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h3 id="gha-expressions-types">GHA Expressions Types</h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Literal</th>
+<th>Number coercion</th>
+<th>String coercion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Null</td>
+<td><code>null</code></td>
+<td><code>0</code></td>
+<td><code>''</code></td>
+</tr>
+<tr>
+<td>Boolean</td>
+<td><code>true</code> or <code>false</code></td>
+<td><code>true</code>: <code>1</code>, <code>false</code>: <code>0</code></td>
+<td><code>'true'</code> or <code>'false'</code></td>
+</tr>
+<tr>
+<td>String</td>
+<td><code>'...'</code> (mandatorily single quoted)</td>
+<td>Javascript&rsquo;s <code>parseInt</code>, with the exception that <code>''</code> is <code>0</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td>JSON Array</td>
+<td>unavailable</td>
+<td><code>NaN</code></td>
+<td>error</td>
+</tr>
+<tr>
+<td>JSON Object</td>
+<td>unavailable</td>
+<td><code>NaN</code></td>
+<td>error</td>
+</tr>
+</tbody>
+</table>
+<p>Arrays and objects exist and can be manipulated, but cannot be created</p>
+</section><section>
+<h3 id="gha-expressions-operators">GHA Expressions Operators</h3>
+<ul>
+<li>Grouping with <code>( )</code></li>
+<li>Array access by index with <code>[ ]</code></li>
+<li>Object deference with <code>.</code></li>
+<li>Logic operators: not <code>!</code>, and <code>&amp;&amp;</code>, or <code>||</code></li>
+<li>Comparison operators: <code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code></li>
+</ul>
+</section><section>
+<h3 id="gha-expressions-functions">GHA Expressions Functions</h3>
+<p>Functions <em>cannot be defined</em>. Some are <em>built-in</em>, their expressivity is <em>limited</em>. They are documented at</p>
+<p><a href="https://docs.github.com/en/actions/learn-github-actions/expressions#functions">https://docs.github.com/en/actions/learn-github-actions/expressions#functions</a></p>
+<h4 id="job-status-check-functions">Job status check functions</h4>
+<ul>
+<li><code>success()</code>: <code>true</code> if none of the previous steps failed
+<ul>
+<li>By default, every step has an implicit <code>if: success()</code> conditional</li>
+</ul>
+</li>
+<li><code>always()</code>: always <code>true</code>, causes the step evaluation even if previous failed, but supports combinations
+<ul>
+<li><code>always() &amp;&amp; &lt;expression returning false&gt;</code> evaluates the expression and does not run the step</li>
+</ul>
+</li>
+<li><code>cancelled()</code>: <code>true</code> if the workflow execution has been canceled</li>
+<li><code>failure()</code>: <code>true</code> if a previous step of any previous job has failed</li>
+</ul>
+</section><section>
+<h2 id="the-gha-context">The GHA context</h2>
+<p>The expression can refer to some objects provided by the context. They are documented at</p>
+<p><a href="https://docs.github.com/en/actions/learn-github-actions/contexts">https://docs.github.com/en/actions/learn-github-actions/contexts</a></p>
+<p>Some of the most useful are the following</p>
+<ul>
+<li><code>github</code>: information on the workflow context
+<ul>
+<li><code>.event_name</code>: the event that triggered the workflow</li>
+<li><code>.repository</code>: repository name</li>
+<li><code>.ref</code>: branch or tag that triggered the workflow
+<ul>
+<li>e.g., <code>refs/heads/&lt;branch&gt;</code> <code>refs/tags/&lt;tag&gt;</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>env</code>: access to the environment variables</li>
+<li><code>steps</code>: access to previous step information
+<ul>
+<li><code>.&lt;step id&gt;.outputs.&lt;output name&gt;</code>: information exchange between steps</li>
+</ul>
+</li>
+<li><code>runner</code>:
+<ul>
+<li><code>.os</code>: the operating system</li>
+</ul>
+</li>
+<li><code>secrets</code>: access to secret variables (in a moment&hellip;)</li>
+<li><code>matrix</code>: access to the build matrix variables (in a moment&hellip;)</li>
+</ul>
 </section><section>
 <h2 id="checking-out-the-repository">Checking out the repository</h2>
 <p>By default, GitHub actions' <em>runners do <strong>not</strong> check out the repository</em></p>
@@ -463,8 +593,35 @@ and many are developed by the community.</p>
 <p>How to <em>share a secret</em> with the build environment?</p>
 </section><section>
 <h2 id="secrets">Secrets</h2>
-</section><section>
-<h2 id="in-memory-signatures">In-memory signatures</h2>
+<p>Secrets can be stored in GitHub at the repository or organization level.</p>
+<p>GitHub Actions can access these secrets from the context:</p>
+<ul>
+<li>Using the <code>secrets.&lt;secret name&gt;</code> context object</li>
+<li>Access is allowed only for workflows generated by local events
+<ul>
+<li>Namely, no secrets for pull requests</li>
+</ul>
+</li>
+</ul>
+<p>Secrets can be added from the web interface (for mice lovers), or via the GitHub API.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#888">#!/usr/bin/env ruby</span>
+<span style="color:#038">require</span> <span style="color:#d20;background-color:#fff0f0">&#39;rubygems&#39;</span>
+<span style="color:#038">require</span> <span style="color:#d20;background-color:#fff0f0">&#39;bundler/setup&#39;</span>
+<span style="color:#038">require</span> <span style="color:#d20;background-color:#fff0f0">&#39;octokit&#39;</span>
+<span style="color:#038">require</span> <span style="color:#d20;background-color:#fff0f0">&#39;rbnacl&#39;</span>
+repo_slug, <span style="color:#038">name</span>, value = <span style="color:#036;font-weight:bold">ARGV</span>
+client = <span style="color:#036;font-weight:bold">Octokit</span>::<span style="color:#036;font-weight:bold">Client</span>.new(<span style="color:#a60;background-color:#fff0f0">:access_token</span> =&gt; <span style="color:#d20;background-color:#fff0f0">&#39;access_token_from_github&#39;</span>)
+pubkey = client.get_public_key(repo_slug)
+key = <span style="color:#036;font-weight:bold">Base64</span>.decode64(pubkey.key)
+sodium_box = <span style="color:#036;font-weight:bold">RbNaCl</span>::<span style="color:#036;font-weight:bold">Boxes</span>::<span style="color:#036;font-weight:bold">Sealed</span>.from_public_key(key)
+encrypted_value = <span style="color:#036;font-weight:bold">Base64</span>.strict_encode64(sodium_box.encrypt(value))
+payload = { <span style="color:#d20;background-color:#fff0f0">&#39;key_id&#39;</span> =&gt; pubkey.key_id, <span style="color:#d20;background-color:#fff0f0">&#39;encrypted_value&#39;</span> =&gt; encrypted_value }
+client.create_or_update_secret(repo_slug, <span style="color:#038">name</span>, payload)
+</code></pre></div></section><section>
+<h2 id="in-memory-signatures-with-gradle">In-memory signatures with Gradle</h2>
+<p>Signing in CI is easier if the key can be <em>stored in memory</em>
+<br>
+the alternative is to <em>install a private key in the runner</em></p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">if</span> (System.getenv(<span style="color:#d20;background-color:#fff0f0">&#34;CI&#34;</span>) == <span style="color:#080;font-weight:bold">true</span>.toString()) {
     signing {
         <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">signingKey</span>: String? <span style="color:#080;font-weight:bold">by</span> project
@@ -497,8 +654,6 @@ and many are developed by the community.</p>
 </span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">ORG_GRADLE_PROJECT_signingKey</span>:<span style="color:#bbb"> </span>${{ secrets.SIGNING_KEY }}<span style="color:#bbb">
 </span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">ORG_GRADLE_PROJECT_signingPassword</span>:<span style="color:#bbb"> </span>${{ secrets.SIGNING_PASSWORD }}<span style="color:#bbb">
 </span></code></pre></div></section><section>
-<h2 id="deployments">Deployments</h2>
-</section><section>
 <h2 id="dry-with-composite-actions">DRY with composite actions</h2>
 <p>Composite actions allow the execution of multiple steps.</p>
 <p>They can be written by simply creating an <code>action.yml</code> file in the project root</p>
