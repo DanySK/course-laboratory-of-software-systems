@@ -48,3 +48,7 @@ The Final Exam of this course requires candidates to propose a project in order 
         * Students must show their project in a 5 minutes per student (maximum 15 minutes) long presentation (possibly using slides or other material)
         * The contribution of each team member must emerge from the presentation
         * After the presentation, teachers can ask questions to students related to the proposed project, considering the presentation, the project report and the developed code
+
+## License
+
+The content of this project itself is licensed under the [Creative Commons Attribution-ShareAlike 4.0 International license](slides/LICENSE), and the underlying source code used to format and display that content is licensed under the [MIT license](code/LICENSE).
