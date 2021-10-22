@@ -2,6 +2,8 @@ Alma Mater Studiorum - Università di Bologna
 Computer Science and Engineering Department (DISI)
 
 # Laboratory of Software Systems (LSS) Course
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FDanySK%2FCourse-Laboratory-of-Software-Systems.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FDanySK%2FCourse-Laboratory-of-Software-Systems?ref=badge_shield)
+
 @ Computer Science and Engineering Master
 
 ## Course Description
@@ -48,3 +50,6 @@ The Final Exam of this course requires candidates to propose a project in order 
         * Students must show their project in a 5 minutes per student (maximum 15 minutes) long presentation (possibly using slides or other material)
         * The contribution of each team member must emerge from the presentation
         * After the presentation, teachers can ask questions to students related to the proposed project, considering the presentation, the project report and the developed code
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FDanySK%2FCourse-Laboratory-of-Software-Systems.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FDanySK%2FCourse-Laboratory-of-Software-Systems?ref=badge_large)
