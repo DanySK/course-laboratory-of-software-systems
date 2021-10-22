@@ -805,6 +805,63 @@ the alternative is to <em>install a private key in the runner</em></p>
 }
 </code></pre></div></section><section>
 <h2 id="reusable-workflows">Reusable workflows</h2>
+<p>GitHub actions also allows to configure <em>reusable workflows</em></p>
+<ul>
+<li>Similar in concept to <em>composite actions</em>, but capture larger operations
+<ul>
+<li>They can preconfigure <em>matrices</em></li>
+<li><em>Conditional steps</em> are supported</li>
+</ul>
+</li>
+<li>Limitation: can&rsquo;t be used in <code>workflow_dispatch</code> if they have more than 10 parameters</li>
+<li>Limitation: can&rsquo;t be used <em>recursively</em></li>
+<li>Limitation: <em>changes to the environment</em> variables (<code>env</code> context object) of the caller are <em>not propagated</em> to the callee</li>
+<li>Limitation: the callee has <em>no implicit access</em> to the caller&rsquo;s <em>secrets</em>
+<ul>
+<li>But they can be passed down</li>
+</ul>
+</li>
+</ul>
+<p>Still, the mechanism enables to some extent the creation of <a href="https://github.com/DanySK/workflows">libraries of reusable workflows</a></p>
+</section><section>
+<h2 id="defining-reusable-workflows">Defining Reusable workflows</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>...<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">on</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">workflow_call</span>:<span style="color:#bbb"> </span><span style="color:#888"># Trigger when someone calls the workflow</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">inputs</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">input-name</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">description</span>:<span style="color:#bbb"> </span>optional description<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">default</span>:<span style="color:#bbb"> </span>optional default (otherwise, it is assigned to a previous)<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">required</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb"> </span><span style="color:#888"># Or false, mandatory</span><span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">type: string # Mandatory</span>:<span style="color:#bbb"> </span>string, boolean, or number<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">secrets</span>:<span style="color:#bbb"> </span><span style="color:#888"># Secrets are listed separately</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">token</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">required</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">jobs</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">Job-1</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>...<span style="color:#bbb"> </span><span style="color:#888"># It can use a matrix, different OSs, and </span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">Job-2</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>...<span style="color:#bbb"> </span><span style="color:#888"># Multiple jobs are okay!</span><span style="color:#bbb">
+</span></code></pre></div></section><section>
+<h2 id="reusing-a-workflow">Reusing a workflow</h2>
+<p>Similar to using an action!</p>
+<ul>
+<li><code>uses</code> is applied to the entire <em>job</em></li>
+<li>further <code>steps</code> cannot be defined</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>...<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">on</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">push</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">pull_request</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#888">#any other event</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">jobs</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">Build</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>owner/repository/.github/workflows/build-and-deploy-gradle-project.yml@&lt;tree-ish&gt;<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">with</span>:<span style="color:#bbb"> </span><span style="color:#888"># Pass values for the expected inputs</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">deploy-command</span>:<span style="color:#bbb"> </span>./deploy.sh<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">secrets</span>:<span style="color:#bbb"> </span><span style="color:#888"># Pass down the secrets if needed</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">github-token</span>:<span style="color:#bbb"> </span>${{ secrets.GITHUB_TOKEN }}<span style="color:#bbb">
+</span></code></pre></div><p>$\Rightarrow$ <em>write <strong>workflows</strong></em>, <em>use <strong>jobs</strong></em></p>
 </section><section>
 <h1 id="stale-builds">Stale builds</h1>
 <ol>
@@ -829,8 +886,6 @@ the alternative is to <em>install a private key in the runner</em></p>
 <li>How often? Depends on the project&hellip;</li>
 <li><strong>Warning</strong>: GitHub Actions disables <code>cron</code> CI jobs if there is no action on the repository, which makes the mechanism less useful</li>
 </ul>
-</section><section>
-<h2 id="automated-software-upgrades">Automated software upgrades</h2>
 </section><section>
 <h2 id="additional-checks-and-reportings">Additional checks and reportings</h2>
 <p>There exist a number of recommended services that provide additional QA and reports.</p>
@@ -867,6 +922,43 @@ the alternative is to <em>install a private key in the runner</em></p>
 <li><em>Self-certification</em>: no need for bureaucracy</li>
 <li>Provides a nice <em>TODO list</em> for a high quality product</li>
 <li>Releases a <em>badge</em> that can be added e.g. to the project homepage</li>
+</ul>
+</section><section>
+<h2 id="automated-evolution">Automated evolution</h2>
+<p>A full-fledged CI system allows reasonably safe <em>automated evolution of software</em>
+<br>
+At least, in terms of <em>dependency updates</em></p>
+<p>Assuming that you can <em>effectively intercept issues</em>,
+here is a possible workflow for <strong>automatic</strong> dependency updates:</p>
+<ol>
+<li><em>Check</em> if there are new updates</li>
+<li><em>Apply</em> the update in a new branch</li>
+<li><em>Open</em> a pull request</li>
+<li><em>Verify</em> if changes break anything
+<ul>
+<li>If they do, manual intervention is required</li>
+</ul>
+</li>
+<li><em>Merge</em> (or rebase, or squash)</li>
+</ol>
+</section><section>
+<h2 id="automated-evolution-1">Automated evolution</h2>
+<p><strong>Bots</strong> performing the aforementioned process for a variety of build systems exist.</p>
+<p>They are usually integrated with the repository hosting provider</p>
+<ul>
+<li>Whitesource Renovate (Multiple)
+<ul>
+<li>Also updates github actions and Gradle Catalogs</li>
+</ul>
+</li>
+<li>Dependabot (Multiple)</li>
+<li>Gemnasium (Ruby)</li>
+<li>Greenkeeper (NPM)</li>
+<li>UpGradle (Gradle + RefreshVersions)
+<ul>
+<li>Experimental</li>
+</ul>
+</li>
 </ul>
 </section>
 
