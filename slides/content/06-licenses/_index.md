@@ -226,6 +226,16 @@ statement from your version.
 
 ---
 
+## FOSS Licence compatibility
+
+![floss license network](https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Floss-license-slide-image.svg/2560px-Floss-license-slide-image.svg.png)
+
+---
+
+![compatibility](https://upload.wikimedia.org/wikipedia/commons/6/6b/Software-license-compatiblity-graph.svg)
+
+---
+
 ## WTFPL
 
 * Extremely permissive but *problematic*
