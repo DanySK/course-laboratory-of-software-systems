@@ -649,6 +649,67 @@ try {
 
 ## Reusable workflows
 
+GitHub actions also allows to configure *reusable workflows*
+* Similar in concept to *composite actions*, but capture larger operations
+    * They can preconfigure *matrices*
+    * *Conditional steps* are supported
+* Limitation: can't be used in `workflow_dispatch` if they have more than 10 parameters
+* Limitation: can't be used *recursively*
+* Limitation: *changes to the environment* variables (`env` context object) of the caller are *not propagated* to the callee
+* Limitation: the callee has *no implicit access* to the caller's *secrets*
+    * But they can be passed down
+
+Still, the mechanism enables to some extent the creation of [libraries of reusable workflows](https://github.com/DanySK/workflows)
+
+---
+
+## Defining Reusable workflows
+
+```yaml
+name: ...
+on:
+  workflow_call: # Trigger when someone calls the workflow
+    inputs:
+      input-name:
+        description: optional description
+        default: optional default (otherwise, it is assigned to a previous)
+        required: true # Or false, mandatory
+        type: string # Mandatory: string, boolean, or number
+    secrets: # Secrets are listed separately
+      token:
+        required: true
+jobs:
+  Job-1:
+    ... # It can use a matrix, different OSs, and 
+  Job-2:
+    ... # Multiple jobs are okay!
+```
+
+---
+
+## Reusing a workflow
+
+Similar to using an action!
+* `uses` is applied to the entire *job*
+* further `steps` cannot be defined
+
+```yaml
+name: ...
+on:
+  push:
+  pull_request:
+  #any other event
+jobs:
+  Build:
+    uses: owner/repository/.github/workflows/build-and-deploy-gradle-project.yml@<tree-ish>
+    with: # Pass values for the expected inputs
+      deploy-command: ./deploy.sh
+    secrets: # Pass down the secrets if needed
+      github-token: ${{ secrets.GITHUB_TOKEN }}
+```
+
+$\Rightarrow$ *write __workflows__*, *use __jobs__*
+
 ---
 
 # Stale builds
@@ -670,10 +731,6 @@ Ever happenend?
 $\Rightarrow$ *Automatically run the build every some time* even if nobody touches the project
 * How often? Depends on the project...
 * **Warning**: GitHub Actions disables `cron` CI jobs if there is no action on the repository, which makes the mechanism less useful
-
----
-
-## Automated software upgrades
 
 ---
 
@@ -705,3 +762,37 @@ The [Linux Foundation](https://www.linuxfoundation.org/) [Core Infrastructure In
 * *Self-certification*: no need for bureaucracy
 * Provides a nice *TODO list* for a high quality product
 * Releases a *badge* that can be added e.g. to the project homepage
+
+---
+
+## Automated evolution
+
+A full-fledged CI system allows reasonably safe *automated evolution of software*
+<br>
+At least, in terms of *dependency updates*
+
+Assuming that you can *effectively intercept issues*,
+here is a possible workflow for **automatic** dependency updates:
+
+1. *Check* if there are new updates
+2. *Apply* the update in a new branch
+3. *Open* a pull request 
+4. *Verify* if changes break anything
+    * If they do, manual intervention is required
+5. *Merge* (or rebase, or squash)
+
+---
+
+## Automated evolution
+
+**Bots** performing the aforementioned process for a variety of build systems exist.
+
+They are usually integrated with the repository hosting provider
+
+* Whitesource Renovate (Multiple)
+    * Also updates github actions and Gradle Catalogs
+* Dependabot (Multiple)
+* Gemnasium (Ruby)
+* Greenkeeper (NPM)
+* UpGradle (Gradle + RefreshVersions)
+    * Experimental
