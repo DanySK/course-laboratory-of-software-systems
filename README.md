@@ -52,3 +52,5 @@ The Final Exam of this course requires candidates to propose a project in order 
 ## License
 
 The content of this project itself is licensed under the [Creative Commons Attribution-ShareAlike 4.0 International license](slides/LICENSE), and the underlying source code used to format and display that content is licensed under the [MIT license](LICENSE).
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FDanySK%2FCourse-Laboratory-of-Software-Systems.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FDanySK%2FCourse-Laboratory-of-Software-Systems?ref=badge_large)
