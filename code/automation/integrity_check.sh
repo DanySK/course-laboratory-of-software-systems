@@ -30,7 +30,7 @@ cd 06*
 cd ..
 
 cd 07*
-./gradlew clean compileJava
+./gradlew clean runJava
 cd ..
 
 cd 08*
