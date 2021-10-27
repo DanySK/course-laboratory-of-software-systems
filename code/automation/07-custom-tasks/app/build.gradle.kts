@@ -27,12 +27,14 @@ abstract class JavaTask(javaExecutable: File = Jvm.current().javaExecutable) : E
 
     init { executable = javaExecutable.absolutePath }
 
+    @org.gradle.api.tasks.Internal
     var classPath: Set<File> = FinderInFolder(project, "lib")
             .withExtension("jar")
             .map { project.file(it) }
             .toSet()
         protected set
-    val classPathDescriptor get() = classPath.joinToString(separator = separator)
+
+    private val classPathDescriptor get() = classPath.joinToString(separator = separator)
 
     fun fromConfiguration(configuration: Configuration) {
         classPath = configuration.resolve().filterNotNull().toSet()
@@ -53,6 +55,8 @@ abstract class JavaTask(javaExecutable: File = Jvm.current().javaExecutable) : E
 }
 
 open class RunJava @javax.inject.Inject constructor() : JavaTask() {
+
+    @org.gradle.api.tasks.Internal
     var mainClass: String = "Main"
         set(value) {
             field = value
