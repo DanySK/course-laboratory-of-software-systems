@@ -27,7 +27,7 @@
     <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
 <h2 id="build-automation">Build Automation</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2021-10-22
+2021-11-05
 
 </section><section>
 <h1 id="overview">Overview</h1>
@@ -1116,7 +1116,7 @@ It usually includes:</p>
 <p><strong>Example code</strong></p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins {
     pluginName <span style="color:#888">// Loads a plugin from the &#34;buildEnvironment&#34; classpath
-</span><span style="color:#888"></span>    <span style="color:#555">`plugin</span>-name<span style="color:#a61717;background-color:#e3d2d2">`</span> <span style="color:#888">// Syntax for non Kotlin-compliant plugin names
+</span><span style="color:#888"></span>    `plugin-name<span style="color:#a61717;background-color:#e3d2d2">`</span> <span style="color:#888">// Syntax for non Kotlin-compliant plugin names
 </span><span style="color:#888"></span>    id(<span style="color:#d20;background-color:#fff0f0">&#34;plugin2-name&#34;</span>) <span style="color:#888">// Alternative to the former
 </span><span style="color:#888"></span>    id(<span style="color:#d20;background-color:#fff0f0">&#34;some-custom-plugin&#34;</span>) version <span style="color:#d20;background-color:#fff0f0">&#34;1.2.3&#34;</span> <span style="color:#888">// if not found locally, gets fetched from the Gradle plugin portal
 </span><span style="color:#888"></span>}
@@ -1493,7 +1493,7 @@ kotlin = <span style="color:#d20;background-color:#fff0f0">&#34;1.5.31&#34;</spa
 mockito = <span style="color:#d20;background-color:#fff0f0">&#34;4.0.0&#34;</span>
 
 [libraries]
-classgraph = <span style="color:#d20;background-color:#fff0f0">&#34;io.github.classgraph:classgraph:4.8.128&#34;</span>
+classgraph = <span style="color:#d20;background-color:#fff0f0">&#34;io.github.classgraph:classgraph:4.8.129&#34;</span>
 konf-yaml = { module = <span style="color:#d20;background-color:#fff0f0">&#34;com.uchuhimo:konf-yaml&#34;</span>, version.ref = <span style="color:#d20;background-color:#fff0f0">&#34;konf&#34;</span> }
 kotest-junit5-jvm = { module = <span style="color:#d20;background-color:#fff0f0">&#34;io.kotest:kotest-runner-junit5-jvm&#34;</span>, version.ref = <span style="color:#d20;background-color:#fff0f0">&#34;kotest&#34;</span> }
 kotest-assertions-core-jvm = { module = <span style="color:#d20;background-color:#fff0f0">&#34;io.kotest:kotest-assertions-core-jvm&#34;</span>, version.ref = <span style="color:#d20;background-color:#fff0f0">&#34;kotest&#34;</span> }
@@ -1507,7 +1507,7 @@ dokka = { id = <span style="color:#d20;background-color:#fff0f0">&#34;org.jetbra
 gitSemVer = { id = <span style="color:#d20;background-color:#fff0f0">&#34;org.danilopianini.git-sensitive-semantic-versioning&#34;</span>, version = <span style="color:#d20;background-color:#fff0f0">&#34;0.3.0&#34;</span> }
 gradlePluginPublish = { id = <span style="color:#d20;background-color:#fff0f0">&#34;com.gradle.plugin-publish&#34;</span>, version = <span style="color:#d20;background-color:#fff0f0">&#34;0.16.0&#34;</span> }
 kotlin-jvm = { id = <span style="color:#d20;background-color:#fff0f0">&#34;org.jetbrains.kotlin.jvm&#34;</span>, version.ref = <span style="color:#d20;background-color:#fff0f0">&#34;kotlin&#34;</span> }
-kotlin-qa = { id = <span style="color:#d20;background-color:#fff0f0">&#34;org.danilopianini.gradle-kotlin-qa&#34;</span>, version = <span style="color:#d20;background-color:#fff0f0">&#34;0.2.1&#34;</span> }
+kotlin-qa = { id = <span style="color:#d20;background-color:#fff0f0">&#34;org.danilopianini.gradle-kotlin-qa&#34;</span>, version = <span style="color:#d20;background-color:#fff0f0">&#34;0.3.2&#34;</span> }
 multiJvmTesting = { id = <span style="color:#d20;background-color:#fff0f0">&#34;org.danilopianini.multi-jvm-test-plugin&#34;</span>, version = <span style="color:#d20;background-color:#fff0f0">&#34;0.1.0&#34;</span> }
 publishOnCentral = { id = <span style="color:#d20;background-color:#fff0f0">&#34;org.danilopianini.publish-on-central&#34;</span>, version = <span style="color:#d20;background-color:#fff0f0">&#34;0.6.1&#34;</span> }
 taskTree = { id = <span style="color:#d20;background-color:#fff0f0">&#34;com.dorongold.task-tree&#34;</span>, version = <span style="color:#d20;background-color:#fff0f0">&#34;2.1.0&#34;</span> }
@@ -1518,7 +1518,7 @@ taskTree = { id = <span style="color:#d20;background-color:#fff0f0">&#34;com.dor
 </section><section>
 <h2 id="using-the-default-catalog">Using the default catalog</h2>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins {
-    <span style="color:#555">`java</span>-gradle-plugin<span style="color:#a61717;background-color:#e3d2d2">`</span>
+    `java-gradle-plugin<span style="color:#a61717;background-color:#e3d2d2">`</span>
     alias(libs.plugins.dokka)
     alias(libs.plugins.gitSemVer)
     alias(libs.plugins.gradlePluginPublish)
@@ -1733,7 +1733,7 @@ the de-facto convention is <em>inherited from Maven</em>:</p>
 <h2 id="preparing-the-plugin-publication">Preparing the plugin publication</h2>
 <p>Gradle provides two plugins to simplify the assembly and upload of plugins</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins {
-  <span style="color:#555">`java</span>-gradle-plugin<span style="color:#a61717;background-color:#e3d2d2">`</span>
+  `java-gradle-plugin<span style="color:#a61717;background-color:#e3d2d2">`</span>
   id(<span style="color:#d20;background-color:#fff0f0">&#34;com.gradle.plugin-publish&#34;</span>) version <span style="color:#d20;background-color:#fff0f0">&#34;0.12.0&#34;</span>
 }
 </code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>pluginBundle { <span style="color:#888">// These settings are set for the whole plugin bundle
@@ -1995,7 +1995,7 @@ Requires some manual configuration:</p>
 <li>Generation of sources and javadoc jars</li>
 <li>Configuration of the <code>pom.xml</code> metadata</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins { <span style="color:#555">`maven</span>-publish<span style="color:#a61717;background-color:#e3d2d2">`</span> }
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins { `maven-publish<span style="color:#a61717;background-color:#e3d2d2">`</span> }
 publishing {
     repositories { maven { url = uri(<span style="color:#d20;background-color:#fff0f0">&#34;https://s01.oss.sonatype.org&#34;</span> } }
     publications {
