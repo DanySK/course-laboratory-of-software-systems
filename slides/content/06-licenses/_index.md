@@ -88,6 +88,10 @@ The software publisher grants *extensive rights to modify and redistribute* the 
 
 ---
 
+{{% mentimeter "266b9676f1c61f7d3791c65913e8e502" %}}
+
+---
+
 ## Freedom: as in beer vs. as in speech
 
 Much easier for italian speakers:
@@ -226,16 +230,6 @@ statement from your version.
 
 ---
 
-## FOSS Licence compatibility
-
-![floss license network](https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Floss-license-slide-image.svg/2560px-Floss-license-slide-image.svg.png)
-
----
-
-![compatibility](https://upload.wikimedia.org/wikipedia/commons/6/6b/Software-license-compatiblity-graph.svg)
-
----
-
 ## WTFPL
 
 * Extremely permissive but *problematic*
@@ -259,6 +253,16 @@ as the name is changed.
 
  0. You just DO WHAT THE FUCK YOU WANT TO.
 ```
+
+---
+
+## FOSS Licence compatibility
+
+![floss license network](https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Floss-license-slide-image.svg/2560px-Floss-license-slide-image.svg.png)
+
+---
+
+![compatibility](https://upload.wikimedia.org/wikipedia/commons/6/6b/Software-license-compatiblity-graph.svg)
 
 ---
 
