@@ -1,6 +1,6 @@
 plugins {
     // No magic: calls a method calling id("org.jetbrains.kotlin-" + "jvm")
-    kotlin("jvm") version "1.5.31" // version is necessary
+    kotlin("jvm") version "1.6.0" // version is necessary
 }
 
 // Configuration of software sources
