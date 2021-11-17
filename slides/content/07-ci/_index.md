@@ -566,7 +566,7 @@ From: [https://github.com/DanySK/action-checkout](https://github.com/DanySK/acti
 
 It can be used with:
 
-{{< github path=".github/workflows/build-and-deploy.yml" from=22 to=23 >}}
+{{< github path=".github/workflows/build-and-deploy.yml" from=22 to=25 >}}
 
 ---
 
