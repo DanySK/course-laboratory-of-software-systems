@@ -27,7 +27,7 @@
     <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
 <h2 id="advanced-versioning-techniques">Advanced Versioning Techniques</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2021-11-10
+2021-11-17
 
 </section><section>
 <h1 id="annotated-tagging">Annotated Tagging</h1>
@@ -376,10 +376,10 @@ git merge experiment <span style="color:#888"># Fast forward!</span>
 </section><section>
 <h1 id="cherry-picking">Cherry picking</h1>
 <p>Selecting and importing a single commit (or commit range) from another branch</p>
-<p><code>git cherry-pick commitRef</code></p>
+<p><code>git cherry-pick &lt;tree-ish&gt;</code></p>
 <ul>
-<li>Picks commitRef and adds it to HEAD</li>
-<li>If <code>commitRef</code> is a branch name, cherry picks the last commit of the branch</li>
+<li>Picks <code>&lt;tree-ish&gt;</code> and adds it to <code>HEAD</code></li>
+<li>If <code>&lt;tree-ish&gt;</code> is a branch name, cherry picks the last commit of the branch</li>
 </ul>
 <p><code>git cherry-pick from..to</code></p>
 <ul>
