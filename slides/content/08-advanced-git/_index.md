@@ -436,7 +436,7 @@ Adding an external submodule:
     * Clones the current repository status at `<DESTINATION>`
 * Contents of the submodules **are not tracked**, but **linked**
 * A project can have *multiple* submodules
-* *Nested* submodules are possible, although not recommended
+* *Nested* submodules are possible
 
 ---
 
@@ -474,9 +474,11 @@ No single built-in command {{< emoji "expressionless" >}}
 
 1. De-init the submodule
   * `git submodule deinit -f -- sub/module/path`
+
 2. Cleanup the submodule worktree
   * `rm -rf .git/modules/sub/module/path`
   * Failing to do so will make it impossible to re-add the module in future, as the repository will appear corrupted
+
 3. Remove the files from the work tree
   * `git rm -f sub/module/path`
 
