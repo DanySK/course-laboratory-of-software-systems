@@ -749,11 +749,12 @@ the alternative is to <em>install a private key in the runner</em></p>
 </span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#39;[[ -n &#34;${{ inputs.token }}&#34; ]] || false&#39;</span><span style="color:#bbb">
 </span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Fail if the toke is unset<span style="color:#bbb">
 </span></code></pre></div><ul>
-<li>No conditional steps (ouch&hellip;)
+<li><del>No conditional steps (ouch&hellip;)</del>
 <ul>
-<li>They can be somewhat emulated inside the script</li>
+<li><del>They can be somewhat emulated inside the script</del></li>
 </ul>
 </li>
+<li><a href="https://github.blog/changelog/2021-11-09-github-actions-conditional-execution-of-steps-in-actions/">Conditional steps introduced November 9th 2021</a></li>
 </ul>
 </section><section>
 <h2 id="docker-container-actions">Docker container actions</h2>
