@@ -247,7 +247,7 @@ merged: { foo: { look: at, me: [ "I'm", 'dancing' ] }, look: to, me: [ "I'm", 'd
 
 GHA's YAML parser *does not support standard YAML anchors and merge keys*
 
-(it is a well-known limit with a bug open since ages)
+(it is a well-known limit with [an issue report open since ages](https://github.com/actions/runner/issues/1182))
 
 GHA achieves reuse via:
 * "**actions**": *reusable parameterizable **steps***
