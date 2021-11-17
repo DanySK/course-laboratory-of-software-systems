@@ -398,9 +398,9 @@ Squashing results in *further alteration* than rebase
 
 Selecting and importing a single commit (or commit range) from another branch
 
-`git cherry-pick commitRef`
-* Picks commitRef and adds it to HEAD
-* If `commitRef` is a branch name, cherry picks the last commit of the branch
+`git cherry-pick <tree-ish>`
+* Picks `<tree-ish>` and adds it to `HEAD`
+* If `<tree-ish>` is a branch name, cherry picks the last commit of the branch
 
 `git cherry-pick from..to`
 * cherry picks commit range from ref `from` to ref `to`
