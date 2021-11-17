@@ -110,7 +110,7 @@ Structure operations into groups of *tasks* that execute either in sequence or i
 
 (not so different than Gradle tasks...)
 
-The hierarchy an naming of each *task* changes with the specific product.
+The hierarchy and naming of each *task* changes with the specific product.
 
 In **Travis CI**:
 * *builds* contain *stages* that run sequentially
