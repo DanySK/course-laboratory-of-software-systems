@@ -588,8 +588,9 @@ runs:
       name: Fail if the toke is unset
 ```
 
-* No conditional steps (ouch...)
-    * They can be somewhat emulated inside the script
+* ~~No conditional steps (ouch...)~~
+    * ~~They can be somewhat emulated inside the script~~
+* [Conditional steps introduced November 9th 2021](https://github.blog/changelog/2021-11-09-github-actions-conditional-execution-of-steps-in-actions/)
 
 ---
 
