@@ -2026,7 +2026,7 @@ Many repositories require artifacts to be **signed** in order for them to be del
 If you do not have a signature yet, [time to create one](https://central.sonatype.org/pages/working-with-pgp-signatures.html)
 * Creation: `gpg --gen-key`
 * List: `gpg --list-keys`
-* Distribution: `gpg --keyserver hkp://pool.sks-keyservers.net --send-keys`
+* Distribution: `gpg --keyserver keyserver.ubuntu.com --send-keys <KEY-ID>`
 
 Once you have a key, you can use the `signing` plugin to have Gradle generate artifact signatures
 
