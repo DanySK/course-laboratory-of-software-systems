@@ -572,7 +572,7 @@ It can be used with:
 
 ## Composite actions: limitations
 
-* No support for secrets, they must be passed *as parameters*
+* No support for secrets, they must be passed *as inputs*
 
 ```yaml
 name: 'Composite action with a secret'
