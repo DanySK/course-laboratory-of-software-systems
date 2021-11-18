@@ -1,8 +1,8 @@
 name: Update Hugo
 on:
   push:
-    branches-ignore:
-      - 'bump-hugo**'
+    branches:
+      - 'master'
   workflow_dispatch:
 
 jobs:
