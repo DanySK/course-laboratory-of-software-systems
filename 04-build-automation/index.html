@@ -27,7 +27,7 @@
     <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
 <h2 id="build-automation">Build Automation</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2021-11-22
+2021-11-26
 
 </section><section>
 <h1 id="overview">Overview</h1>
@@ -1489,11 +1489,11 @@ runner.output shouldContain <span style="color:#d20;background-color:#fff0f0">&#
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>[versions]
 konf = <span style="color:#d20;background-color:#fff0f0">&#34;1.1.2&#34;</span>
 kotest = <span style="color:#d20;background-color:#fff0f0">&#34;4.6.3&#34;</span>
-kotlin = <span style="color:#d20;background-color:#fff0f0">&#34;1.5.31&#34;</span>
+kotlin = <span style="color:#d20;background-color:#fff0f0">&#34;1.6.0&#34;</span>
 mockito = <span style="color:#d20;background-color:#fff0f0">&#34;4.1.0&#34;</span>
 
 [libraries]
-classgraph = <span style="color:#d20;background-color:#fff0f0">&#34;io.github.classgraph:classgraph:4.8.134&#34;</span>
+classgraph = <span style="color:#d20;background-color:#fff0f0">&#34;io.github.classgraph:classgraph:4.8.136&#34;</span>
 konf-yaml = { module = <span style="color:#d20;background-color:#fff0f0">&#34;com.uchuhimo:konf-yaml&#34;</span>, version.ref = <span style="color:#d20;background-color:#fff0f0">&#34;konf&#34;</span> }
 kotest-junit5-jvm = { module = <span style="color:#d20;background-color:#fff0f0">&#34;io.kotest:kotest-runner-junit5-jvm&#34;</span>, version.ref = <span style="color:#d20;background-color:#fff0f0">&#34;kotest&#34;</span> }
 kotest-assertions-core-jvm = { module = <span style="color:#d20;background-color:#fff0f0">&#34;io.kotest:kotest-assertions-core-jvm&#34;</span>, version.ref = <span style="color:#d20;background-color:#fff0f0">&#34;kotest&#34;</span> }
@@ -1509,7 +1509,7 @@ gradlePluginPublish = { id = <span style="color:#d20;background-color:#fff0f0">&
 kotlin-jvm = { id = <span style="color:#d20;background-color:#fff0f0">&#34;org.jetbrains.kotlin.jvm&#34;</span>, version.ref = <span style="color:#d20;background-color:#fff0f0">&#34;kotlin&#34;</span> }
 kotlin-qa = { id = <span style="color:#d20;background-color:#fff0f0">&#34;org.danilopianini.gradle-kotlin-qa&#34;</span>, version = <span style="color:#d20;background-color:#fff0f0">&#34;0.3.2&#34;</span> }
 multiJvmTesting = { id = <span style="color:#d20;background-color:#fff0f0">&#34;org.danilopianini.multi-jvm-test-plugin&#34;</span>, version = <span style="color:#d20;background-color:#fff0f0">&#34;0.2.0&#34;</span> }
-publishOnCentral = { id = <span style="color:#d20;background-color:#fff0f0">&#34;org.danilopianini.publish-on-central&#34;</span>, version = <span style="color:#d20;background-color:#fff0f0">&#34;0.6.1&#34;</span> }
+publishOnCentral = { id = <span style="color:#d20;background-color:#fff0f0">&#34;org.danilopianini.publish-on-central&#34;</span>, version = <span style="color:#d20;background-color:#fff0f0">&#34;0.7.4&#34;</span> }
 taskTree = { id = <span style="color:#d20;background-color:#fff0f0">&#34;com.dorongold.task-tree&#34;</span>, version = <span style="color:#d20;background-color:#fff0f0">&#34;2.1.0&#34;</span> }
 </code></pre></div>
 <ul>
@@ -1531,7 +1531,7 @@ taskTree = { id = <span style="color:#d20;background-color:#fff0f0">&#34;com.dor
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>dependencies {
     api(gradleApi())
     api(gradleKotlinDsl())
-    implementation(kotlin(<span style="color:#d20;background-color:#fff0f0">&#34;stdlib-jdk8&#34;</span>))
+    api(kotlin(<span style="color:#d20;background-color:#fff0f0">&#34;stdlib-jdk8&#34;</span>))
     testImplementation(gradleTestKit())
     testImplementation(libs.konf.yaml)
     testImplementation(libs.classgraph)
@@ -2032,27 +2032,29 @@ publishing {
 </ul>
 </section><section>
 <h2 id="preconfigured-central-publication-1">Preconfigured Central publication</h2>
-<p><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins {
-    id (<span style="color:#d20;background-color:#fff0f0">&#34;org.danilopianini.publish-on-central&#34;</span>) version <span style="color:#d20;background-color:#fff0f0">&#34;0.5.1&#34;</span>
-}</code></pre></div>
+<p><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>* `publishJavaMavenPublicationToMavenLocalRepository<span style="color:#a61717;background-color:#e3d2d2">`</span>
+* `publishKotlinMavenPublicationToMavenLocalRepository<span style="color:#a61717;background-color:#e3d2d2">`</span>
+* `publishAllPublicationsToMavenLocalRepository<span style="color:#a61717;background-color:#e3d2d2">`</span></code></pre></div>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>group = <span style="color:#d20;background-color:#fff0f0">&#34;org.danilopianini&#34;</span>
 <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">projectId</span> = <span style="color:#d20;background-color:#fff0f0">&#34;</span><span style="color:#33b;background-color:#fff0f0">$group</span><span style="color:#d20;background-color:#fff0f0">.</span><span style="color:#33b;background-color:#fff0f0">$name</span><span style="color:#d20;background-color:#fff0f0">&#34;</span>
 <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">fullName</span> = <span style="color:#d20;background-color:#fff0f0">&#34;Gradle Publish On Maven Central Plugin&#34;</span>
 <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">websiteUrl</span> = <span style="color:#d20;background-color:#fff0f0">&#34;https://github.com/DanySK/</span><span style="color:#33b;background-color:#fff0f0">$name</span><span style="color:#d20;background-color:#fff0f0">&#34;</span>
 <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">projectDetails</span> = <span style="color:#d20;background-color:#fff0f0">&#34;A Plugin for easily publishing artifacts on Maven Central&#34;</span></code></pre></div>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>publishOnCentral {
-    projectDescription = projectDetails
-    projectLongName = fullName
-    projectUrl = websiteUrl
-    scmConnection = <span style="color:#d20;background-color:#fff0f0">&#34;git:git@github.com:DanySK/</span><span style="color:#33b;background-color:#fff0f0">$name</span><span style="color:#d20;background-color:#fff0f0">&#34;</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>    }
+}
+
+publishOnCentral {
+    projectDescription.<span style="color:#080;font-weight:bold">set</span>(projectDetails)
+    projectLongName.<span style="color:#080;font-weight:bold">set</span>(fullName)
+    projectUrl.<span style="color:#080;font-weight:bold">set</span>(websiteUrl)
+    scmConnection.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;git:git@github.com:DanySK/</span><span style="color:#33b;background-color:#fff0f0">$name</span><span style="color:#d20;background-color:#fff0f0">&#34;</span>)
     repository(<span style="color:#d20;background-color:#fff0f0">&#34;https://maven.pkg.github.com/DanySK/</span><span style="color:#33b;background-color:#fff0f0">$name</span><span style="color:#d20;background-color:#fff0f0">&#34;</span>.toLowerCase()) {
-        user = <span style="color:#d20;background-color:#fff0f0">&#34;danysk&#34;</span>
-        password = System.getenv(<span style="color:#d20;background-color:#fff0f0">&#34;GITHUB_TOKEN&#34;</span>)
+        user.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;danysk&#34;</span>)
+        password.<span style="color:#080;font-weight:bold">set</span>(System.getenv(<span style="color:#d20;background-color:#fff0f0">&#34;GITHUB_TOKEN&#34;</span>))
     }
     publishing {
         publications {
             withType&lt;MavenPublication&gt; {
-                configurePomForMavenCentral()
                 pom {
                     developers {
                         developer {
@@ -2063,9 +2065,7 @@ publishing {
                     }
                 }
             }
-        }
-    }
-}</code></pre></div></p>
+        }</code></pre></div></p>
 </section><section>
 <h1 id="inspecting-dependencies">Inspecting dependencies</h1>
 <p>In rich projects, most of the build-related issues are due to pesky stuff going on with <em>dependencies</em></p>
