@@ -19,7 +19,7 @@ dependencies {
     implementation(gradleApi()) // Implementation: available at compile and runtime, non transitive
     testImplementation(gradleTestKit()) // Test implementation: available for testing compile and runtime
     testImplementation("io.kotest:kotest-runner-junit5:4.6.3") // for kotest framework
-    testImplementation("io.kotest:kotest-assertions-core:4.6.3") // for kotest core assertions
+    testImplementation("io.kotest:kotest-assertions-core:4.6.4") // for kotest core assertions
     testImplementation("io.kotest:kotest-assertions-core-jvm:4.6.3") // for kotest core jvm assertions
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.18.1")
 }
