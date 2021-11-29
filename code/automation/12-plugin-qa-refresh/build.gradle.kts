@@ -21,7 +21,7 @@ dependencies {
     testImplementation("io.kotest:kotest-runner-junit5:4.6.4") // for kotest framework
     testImplementation("io.kotest:kotest-assertions-core:4.6.4") // for kotest core assertions
     testImplementation("io.kotest:kotest-assertions-core-jvm:4.6.4") // for kotest core jvm assertions
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.18.1")
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.19.0")
 }
 
 tasks.withType<Test> {
