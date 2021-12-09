@@ -142,9 +142,11 @@ Sub-commands and files are in `monospace`, concepts in *italic*
 ## Distributed version control with git: a recap
 
 ### *Stage*
-* The **changes** that will be saved next
+
+The **changes** that will be saved next
 
 {{< image src="staging.png" >}}
+
 
 ---
 
