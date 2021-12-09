@@ -459,22 +459,15 @@ git merge experiment <span style="color:#888"># Fast forward!</span>
 <ol>
 <li>De-init the submodule</li>
 </ol>
-<ul>
-<li><code>git submodule deinit -f -- sub/module/path</code></li>
-</ul>
+<p><code>git submodule deinit -f -- sub/module/path</code></p>
 <ol start="2">
-<li>Cleanup the submodule worktree</li>
+<li>Cleanup the submodule worktree (otherwise, it will be impossible to re-add the module in future, as the repository will appear corrupted)</li>
 </ol>
-<ul>
-<li><code>rm -rf .git/modules/sub/module/path</code></li>
-<li>Failing to do so will make it impossible to re-add the module in future, as the repository will appear corrupted</li>
-</ul>
+<p><code>rm -rf .git/modules/sub/module/path</code></p>
 <ol start="3">
 <li>Remove the files from the work tree</li>
 </ol>
-<ul>
-<li><code>git rm -f sub/module/path</code></li>
-</ul>
+<p><code>git rm -f sub/module/path</code></p>
 <p><strong>Note</strong>: Do not use a trailing slash on the submodule path when using these commands!</p>
 </section>
 
