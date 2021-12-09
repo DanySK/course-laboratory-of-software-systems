@@ -1,2 +1,3 @@
 .gradle/
 build/
+slides/.hugo_build.lock
