@@ -473,13 +473,15 @@ Changes into submodules are dealt with as if they were on a *separate repository
 No single built-in command {{< emoji "expressionless" >}}
 
 1. De-init the submodule
-  * `git submodule deinit -f -- sub/module/path`
 
-2. Cleanup the submodule worktree
-  * `rm -rf .git/modules/sub/module/path`
-  * Failing to do so will make it impossible to re-add the module in future, as the repository will appear corrupted
+`git submodule deinit -f -- sub/module/path`
+
+2. Cleanup the submodule worktree (otherwise, it will be impossible to re-add the module in future, as the repository will appear corrupted)
+
+`rm -rf .git/modules/sub/module/path`
 
 3. Remove the files from the work tree
-  * `git rm -f sub/module/path`
+
+`git rm -f sub/module/path`
 
 **Note**: Do not use a trailing slash on the submodule path when using these commands!
