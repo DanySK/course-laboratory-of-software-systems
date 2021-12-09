@@ -240,8 +240,8 @@ The **changes** that will be saved next
 * **Conflicts** must be solved manually
 
 ### *fast-forward*
-* A special merge mode applicable when a branch is behind another
-* The merge behind is updated without a commit
+* A special merge mode applicable when a branch is *behind* another
+* The target branch is *updated without a commit*
 * Active by default, can be disabled (`--no-ff`)
 
 ---
@@ -395,7 +395,7 @@ These copies are called **forks**
 </p>
 
 * *Unknown* team size, *low-complexity* projects, *sparse* teams, *low* trust
-* Typical of small open source projects
+* Typical of small open-source projects
 
 ---
 
@@ -408,7 +408,7 @@ These copies are called **forks**
 </p>
 
 * *Unknown* team size, *high-complexity* projects, *sparse* teams, *low* trust
-* Typical of complex source projects
+* Typical of complex open-source projects
 
 ---
 
@@ -446,6 +446,7 @@ Two possibilities:
 ## Setting up a GitHub Pages website
 
 Once done, enable GitHub pages on the repository settings:
+
 {{< image src="gh-pages.png" >}}
 
 ---
@@ -1192,7 +1193,7 @@ delivery is enabled towards all the aforementioned destinations
 Your error will remain in the repositories *forever* and you will *never* be able to
 fix it, you will need to *create a new release* with a *different version number*.
 
-**Anectodal apology of no-retract policies**
+**Anectodal apologia of no-retract policies**
 
 In March 2016, Azer Koçlu unpublished more than 250 of his modules
 from NPM, which is a popular package manager used by Javascript
