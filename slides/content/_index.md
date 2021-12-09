@@ -182,10 +182,6 @@ The PCs are equipped with the WSL2 image
 
 # Overview
 
-<div class='left' style='float:left;width:50%'>
-
-**Module 1**
-
 * [The DevOps philosophy](01-devops-intro)
 * [Kotlin for Scala developers](02-kotlin)
   * [Internal DSLs construction](03-internal-dsls)
@@ -197,23 +193,6 @@ The PCs are equipped with the WSL2 image
 * [Advanced version control](08-advanced-git)
 * [Containerization](09-containerization)
 
-</div>
-
-<div class='right' style='float:right;width:50%'>
-
-**Module 2**
-
-* [Domain-Driven Design](21-ddd-intro)
-  * [Elements](22-ddd-elements)
-  * [Principles and Application](23-ddd-principles-and-application)
-  * [Strategic Patterns](24-ddd-strategic-patterns)
-  * [Tactical Patterns](25-ddd-tactical-patterns)
-  * [CQRS Pattern](26-ddd-cqrs)
-* [Enterprise Software Architectures](27-enterprise-software-architectures)
-* [Elements of Metamodeling](28-metamodeling)
-* [DSL Engineering](29-dsl-engineering)
-
-</div>
 
 ---
 
