@@ -22,7 +22,7 @@ jobs:
     steps:
       # Checkout the repository
       - name: Checkout
-        uses: danysk/action-checkout@0.1.0
+        uses: danysk/action-checkout@0.2.1
       - name: Update package list
         run: sudo apt-get update -y
       - name: Install Chromium
