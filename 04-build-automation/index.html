@@ -27,7 +27,7 @@
     <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
 <h2 id="build-automation">Build Automation</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2022-01-10
+2022-01-31
 
 </section><section>
 <h1 id="overview">Overview</h1>
@@ -1490,7 +1490,7 @@ runner.output shouldContain <span style="color:#d20;background-color:#fff0f0">&#
 konf = <span style="color:#d20;background-color:#fff0f0">&#34;1.1.2&#34;</span>
 kotest = <span style="color:#d20;background-color:#fff0f0">&#34;4.6.4&#34;</span>
 kotlin = <span style="color:#d20;background-color:#fff0f0">&#34;1.6.10&#34;</span>
-mockito = <span style="color:#d20;background-color:#fff0f0">&#34;4.2.0&#34;</span>
+mockito = <span style="color:#d20;background-color:#fff0f0">&#34;4.3.1&#34;</span>
 
 [libraries]
 classgraph = <span style="color:#d20;background-color:#fff0f0">&#34;io.github.classgraph:classgraph:4.8.138&#34;</span>
@@ -1505,11 +1505,11 @@ kotlin-testing = [ <span style="color:#d20;background-color:#fff0f0">&#34;kotest
 [plugins]
 dokka = { id = <span style="color:#d20;background-color:#fff0f0">&#34;org.jetbrains.dokka&#34;</span>, version.ref = <span style="color:#d20;background-color:#fff0f0">&#34;kotlin&#34;</span> }
 gitSemVer = { id = <span style="color:#d20;background-color:#fff0f0">&#34;org.danilopianini.git-sensitive-semantic-versioning&#34;</span>, version = <span style="color:#d20;background-color:#fff0f0">&#34;0.3.0&#34;</span> }
-gradlePluginPublish = { id = <span style="color:#d20;background-color:#fff0f0">&#34;com.gradle.plugin-publish&#34;</span>, version = <span style="color:#d20;background-color:#fff0f0">&#34;0.19.0&#34;</span> }
+gradlePluginPublish = { id = <span style="color:#d20;background-color:#fff0f0">&#34;com.gradle.plugin-publish&#34;</span>, version = <span style="color:#d20;background-color:#fff0f0">&#34;0.20.0&#34;</span> }
 kotlin-jvm = { id = <span style="color:#d20;background-color:#fff0f0">&#34;org.jetbrains.kotlin.jvm&#34;</span>, version.ref = <span style="color:#d20;background-color:#fff0f0">&#34;kotlin&#34;</span> }
-kotlin-qa = { id = <span style="color:#d20;background-color:#fff0f0">&#34;org.danilopianini.gradle-kotlin-qa&#34;</span>, version = <span style="color:#d20;background-color:#fff0f0">&#34;0.9.0&#34;</span> }
+kotlin-qa = { id = <span style="color:#d20;background-color:#fff0f0">&#34;org.danilopianini.gradle-kotlin-qa&#34;</span>, version = <span style="color:#d20;background-color:#fff0f0">&#34;0.10.0&#34;</span> }
 multiJvmTesting = { id = <span style="color:#d20;background-color:#fff0f0">&#34;org.danilopianini.multi-jvm-test-plugin&#34;</span>, version = <span style="color:#d20;background-color:#fff0f0">&#34;0.3.4&#34;</span> }
-publishOnCentral = { id = <span style="color:#d20;background-color:#fff0f0">&#34;org.danilopianini.publish-on-central&#34;</span>, version = <span style="color:#d20;background-color:#fff0f0">&#34;0.7.11&#34;</span> }
+publishOnCentral = { id = <span style="color:#d20;background-color:#fff0f0">&#34;org.danilopianini.publish-on-central&#34;</span>, version = <span style="color:#d20;background-color:#fff0f0">&#34;0.7.12&#34;</span> }
 taskTree = { id = <span style="color:#d20;background-color:#fff0f0">&#34;com.dorongold.task-tree&#34;</span>, version = <span style="color:#d20;background-color:#fff0f0">&#34;2.1.0&#34;</span> }
 </code></pre></div>
 <ul>
@@ -2125,7 +2125,7 @@ publishOnCentral {
 <h2 id="automated-scans-without---scan">Automated scans without <code>--scan</code></h2>
 <p>In <code>settings.gradle.kts</code>:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins {
-    id(<span style="color:#d20;background-color:#fff0f0">&#34;com.gradle.enterprise&#34;</span>) version <span style="color:#d20;background-color:#fff0f0">&#34;3.8&#34;</span>
+    id(<span style="color:#d20;background-color:#fff0f0">&#34;com.gradle.enterprise&#34;</span>) version <span style="color:#d20;background-color:#fff0f0">&#34;3.8.1&#34;</span>
 }
 
 gradleEnterprise {
