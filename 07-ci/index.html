@@ -27,7 +27,7 @@
     <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
 <h2 id="continuous-integration">Continuous Integration</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2022-02-24
+2022-03-02
 
 </section><section>
 <h1 id="continuous-integration-1">Continuous Integration</h1>
@@ -513,14 +513,14 @@ and many are developed by the community.</p>
 </span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">using</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#34;composite&#34;</span><span style="color:#bbb">
 </span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">steps</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Checkout with custom token<span style="color:#bbb">
-</span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@v2.4.0<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@v3.0.0<span style="color:#bbb">
 </span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">if</span>:<span style="color:#bbb"> </span>inputs.token != &#39;&#39;<span style="color:#bbb">
 </span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">with</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">fetch-depth</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">0</span><span style="color:#bbb">
 </span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">submodules</span>:<span style="color:#bbb"> </span>recursive<span style="color:#bbb">
 </span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">token</span>:<span style="color:#bbb"> </span>${{ inputs.token }}<span style="color:#bbb">
 </span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Checkout with default token<span style="color:#bbb">
-</span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@v2.4.0<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@v3.0.0<span style="color:#bbb">
 </span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">if</span>:<span style="color:#bbb"> </span>inputs.token == &#39;&#39;<span style="color:#bbb">
 </span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">with</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">fetch-depth</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">0</span><span style="color:#bbb">
@@ -738,14 +738,14 @@ the alternative is to <em>install a private key in the runner</em></p>
 </span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">using</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#34;composite&#34;</span><span style="color:#bbb">
 </span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">steps</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Checkout with custom token<span style="color:#bbb">
-</span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@v2.4.0<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@v3.0.0<span style="color:#bbb">
 </span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">if</span>:<span style="color:#bbb"> </span>inputs.token != &#39;&#39;<span style="color:#bbb">
 </span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">with</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">fetch-depth</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">0</span><span style="color:#bbb">
 </span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">submodules</span>:<span style="color:#bbb"> </span>recursive<span style="color:#bbb">
 </span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">token</span>:<span style="color:#bbb"> </span>${{ inputs.token }}<span style="color:#bbb">
 </span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Checkout with default token<span style="color:#bbb">
-</span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@v2.4.0<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@v3.0.0<span style="color:#bbb">
 </span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">if</span>:<span style="color:#bbb"> </span>inputs.token == &#39;&#39;<span style="color:#bbb">
 </span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">with</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">fetch-depth</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">0</span><span style="color:#bbb">
