@@ -82,7 +82,7 @@ measuring some metrics *before* and *after* the operation.
 | Dev. env. setup (minutes) | [120]() |
 | Nightly downtime ($\frac{minutes}{night}$) | [30]() | 
 | Support ticket frequency ($\frac{tickets}{month}$) | [40]() | 
-| Issue resulution time (days) | [4]() |  | 
+| Issue resolution time (days) | [4]() |  | 
 
 
 ---
@@ -117,7 +117,7 @@ measuring some metrics *before* and *after* the operation.
 | Dev. env. setup (minutes) | [120]() |
 | Nightly downtime ($\frac{minutes}{night}$) | [30]() | 
 | Support ticket frequency ($\frac{tickets}{month}$) | [40]() | 
-| Issue resulution time (days) | [4]() |  | 
+| Issue resolution time (days) | [4]() |  | 
 
 ---
 
@@ -133,7 +133,7 @@ measuring some metrics *before* and *after* the operation.
 | Dev. env. setup (minutes) | [120]() |
 | Nightly downtime ($\frac{minutes}{night}$) | [30]() | 
 | Support ticket frequency ($\frac{tickets}{month}$) | [40]() | 
-| Issue resulution time (days) | [4]() |  | 
+| Issue resolution time (days) | [4]() |  | 
 
 
 ---
@@ -151,7 +151,7 @@ measuring some metrics *before* and *after* the operation.
 | Dev. env. setup (minutes) | [120]() |
 | Nightly downtime ($\frac{minutes}{night}$) | [30]() | 
 | Support ticket frequency ($\frac{tickets}{month}$) | [40]() | 
-| Issue resulution time (days) | [4]() |  | 
+| Issue resolution time (days) | [4]() |  | 
 
 ---
 
@@ -168,7 +168,7 @@ measuring some metrics *before* and *after* the operation.
 | Dev. env. setup (minutes) | [120]() |
 | Nightly downtime ($\frac{minutes}{night}$) | [30]() | 
 | Support ticket frequency ($\frac{tickets}{month}$) | [40]() | 
-| Issue resulution time (days) | [4]() |  | 
+| Issue resolution time (days) | [4]() |  | 
 
 ---
 
@@ -184,7 +184,7 @@ measuring some metrics *before* and *after* the operation.
 | Dev. env. setup (minutes) | [120]() |
 | Nightly downtime ($\frac{minutes}{night}$) | [30]() | 
 | Support ticket frequency ($\frac{tickets}{month}$) | [40]() | 
-| Issue resulution time (days) | [4]() |  | 
+| Issue resolution time (days) | [4]() |  | 
 
 ---
 
@@ -200,7 +200,7 @@ measuring some metrics *before* and *after* the operation.
 | Dev. env. setup (minutes) | [120]() | *9* | **-92.5%**
 | Nightly downtime ($\frac{minutes}{night}$) | [30]() | 
 | Support ticket frequency ($\frac{tickets}{month}$) | [40]() | 
-| Issue resulution time (days) | [4]() |  | 
+| Issue resolution time (days) | [4]() |  | 
 
 ---
 
@@ -216,7 +216,7 @@ measuring some metrics *before* and *after* the operation.
 | Dev. env. setup (minutes) | [120]() | *9* | **-92.5%**
 | Nightly downtime ($\frac{minutes}{night}$) | [30]() | *0* | **-100%**
 | Support ticket frequency ($\frac{tickets}{month}$) | [40]() | 
-| Issue resulution time (days) | [4]() |  | 
+| Issue resolution time (days) | [4]() |  | 
 
 ---
 
@@ -232,7 +232,7 @@ measuring some metrics *before* and *after* the operation.
 | Dev. env. setup (minutes) | [120]() | *9* | **-92.5%**
 | Nightly downtime ($\frac{minutes}{night}$) | [30]() | *0* | **-100%**
 | Support ticket frequency ($\frac{tickets}{month}$) | [40]() | *19* | **-52.5%**
-| Issue resulution time (days) | [4]() |  | 
+| Issue resolution time (days) | [4]() |  | 
 
 ---
 
@@ -248,7 +248,7 @@ measuring some metrics *before* and *after* the operation.
 | Dev. env. setup (minutes) | [120]() | *9* | **-92.5%**
 | Nightly downtime ($\frac{minutes}{night}$) | [30]() | *0* | **-100%**
 | Support ticket frequency ($\frac{tickets}{month}$) | [40]() | *19* | **-52.5%**
-| Issue resulution time (days) | [4]() | *3* | **-25%**
+| Issue resolution time (days) | [4]() | *3* | **-25%**
 
 ---
 
