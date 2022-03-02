@@ -36,8 +36,8 @@ enableSourceMap = true
 We applied DevOps (and microservice-ification) to an existing software project,
 measuring some metrics *before* and *after* the operation.
 
-* The detailed *experience report* will be presented at the 37th International Conference on Software Maintenance and Evolution ([ICSME 2021](https://icsme2021.github.io/)) 
-    * [Temporary conference submission](https://www.morressier.com/article/breaking-down-monoliths-microservices-devops-industrial-experience-report/613b5418842293c031b5b603?)
+* The detailed *experience report* has been presented at the 37th International Conference on Software Maintenance and Evolution ([ICSME 2021](https://icsme2021.github.io/)) 
+    * [Scientific paper](https://doi.org/10.1109/ICSME52107.2021.00051)
 
 ---
 
