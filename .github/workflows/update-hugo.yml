@@ -21,7 +21,7 @@ jobs:
         run: |
           sed -i .github/workflows/build-and-deploy.yml -e "s/HUGO_VERSION\\: \".*\"/HUGO_VERSION: \"${{ steps.find.outputs.latest-hugo }}\"/"
       - name: Open pull request
-        uses: peter-evans/create-pull-request@v3
+        uses: peter-evans/create-pull-request@v4
         with:
           token: ${{ secrets.AUTOMERGE_TOKEN }}
           branch: bump-hugo-to-${{ steps.find.outputs.latest-hugo }}
