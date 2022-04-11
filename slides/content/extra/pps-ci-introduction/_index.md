@@ -301,14 +301,14 @@ Discussed in **{{< course_name >}}**
 
 ## Best practices
 
-* The CLI is your truth
+* The **CLI** is your *truth*
   * Beware of the GUIs
-* Prepare an ignore list early
-  * And maintain it
+* Prepare an *ignore list* early
+  * And *maintain it*
   * And maybe prepare it manually and don't copy/paste it
-* When you have untracked files, decide whether you want to track them or ignore them
+* When you have untracked files, *decide whether you want to track them or ignore them*
 * Be very careful with *what* you track
-* Prepare an attribute file
+* Prepare an *attribute file*
 
 ---
 
