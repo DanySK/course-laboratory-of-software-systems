@@ -27,16 +27,26 @@ jobs:
         run: sudo apt-get update -y
       - name: Install Chromium
         run: sudo apt-get install -y chromium-browser
+      - name: Compute the version of Hugo
+        id: hugo
+        shell: bash
+        run: |
+          # Idea: the regex matcher of Renovate keeps this string up to date automatically
+          # The version is extracted and used to access the correct version of the scripts
+          USES=$(cat <<TRICK_RENOVATE
+          - uses: gohugoio/hugo@v0.90.1
+          TRICK_RENOVATE
+          )
+          echo "Scripts update line: \"$USES\""
+          echo "Computed version: \"${USES#*@v}\""
+          echo "::set-output name=version::${USES#*@v}"
       - name: Download Hugo
-        run: wget --retry-connrefused --waitretry=1 --read-timeout=20 https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_Linux-64bit.deb --output-document=hugo.deb
-        env:
-          HUGO_VERSION: "0.90.1"
-      - name: List files
-        run: ls -ahl
+        run: |
+          HUGO_VERSION="${{ steps.hugo.outputs.version }}"
+          URL="https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_Linux-64bit.deb"
+          wget --retry-connrefused --waitretry=1 --read-timeout=20 "$URL" --output-document=hugo.deb
       - name: Install Hugo
         run: sudo dpkg -i hugo.deb
-      - name: Print Hugo version
-        run: hugo version
       - name: Remove Hugo Installer
         run: rm hugo.deb
       # - name: Start SSH session
