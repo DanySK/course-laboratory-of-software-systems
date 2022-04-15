@@ -48,7 +48,7 @@ enableSourceMap = true
 <p>
 
 #### When using the email
-  * Include *both* tachers, *always*
+  * Include *both* teachers, *always*
 
 <p>
 
