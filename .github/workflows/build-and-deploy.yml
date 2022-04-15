@@ -20,7 +20,7 @@ jobs:
   Build-Slides:
     runs-on: ubuntu-20.04
     concurrency:
-      group: slides
+      group: slides-${{ github.ref }}
       cancel-in-progress: false
     steps:
       # Checkout the repository
@@ -79,7 +79,7 @@ jobs:
             gh release upload "$TAG" "$pdf" --clobber
           done
       - name: Deploy website
-        if: ${{ github.event_name != 'pull_request' }}
+        if: ${{ github.event_name != 'pull_request' && github.ref == 'refs/heads/master' }}
         uses: JamesIves/github-pages-deploy-action@v4.3.0
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
