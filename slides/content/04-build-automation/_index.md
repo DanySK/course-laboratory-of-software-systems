@@ -2046,7 +2046,7 @@ Other notable repositories:
 * ~~*Bintray JCenter*: superset of Maven Central~~ (**dismissed**)
 * *Jitpack*: code hosting with (semi-)automatic packaging
 * *NPM*: for Javascript code
-* *Pypy*: for Python code
+* *PyPI*: for Python code
 * *RubyGems.org*: for Ruby code
 
 ---
