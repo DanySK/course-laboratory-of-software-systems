@@ -175,23 +175,23 @@
 <p>Changes to a layer do not invalidate previous layers</p>
 </section><section>
 <h1 id="dockerfile-syntax">Dockerfile syntax</h1>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#888"># Pulls an image from docker hub with this name. Alternatively, &#34;scratch&#34; can be used for an empty container</span><span style="color:#a61717;background-color:#e3d2d2">
-</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">FROM</span><span style="color:#d20;background-color:#fff0f0"> manjarolinux/base </span><span style="color:#a61717;background-color:#e3d2d2">
-</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Runs a command</span><span style="color:#a61717;background-color:#e3d2d2">
-</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">RUN</span> pacman -Sy --noconfirm gnupg archlinux-keyring manjaro-keyring<span style="color:#a61717;background-color:#e3d2d2">
-</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Copies a file from the local folder into the image</span><span style="color:#a61717;background-color:#e3d2d2">
-</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">COPY</span> makepkg.conf /etc/makepkg.conf<span style="color:#a61717;background-color:#e3d2d2">
-</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Adds a new environment variable</span><span style="color:#a61717;background-color:#e3d2d2">
-</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">ENV</span> <span style="color:#369">GEM_HOME</span>=/rubygems/bin<span style="color:#a61717;background-color:#e3d2d2">
-</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Configures the default command to execute</span><span style="color:#a61717;background-color:#e3d2d2">
-</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">CMD</span> bash<span style="color:#a61717;background-color:#e3d2d2">
-</span></code></pre></div></section><section>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#888"># Pulls an image from docker hub with this name. Alternatively, &#34;scratch&#34; can be used for an empty container</span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">FROM</span><span style="color:#d20;background-color:#fff0f0"> manjarolinux/base </span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Runs a command</span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">RUN</span> pacman -Sy --noconfirm gnupg archlinux-keyring manjaro-keyring<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Copies a file from the local folder into the image</span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">COPY</span> makepkg.conf /etc/makepkg.conf<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Adds a new environment variable</span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">ENV</span> <span style="color:#369">GEM_HOME</span>=/rubygems/bin<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Configures the default command to execute</span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">CMD</span> bash<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span></code></pre></div></section><section>
 <h1 id="naming-images">Naming images</h1>
 <p>Image naming is done via <em>tags</em></p>
 <p>The easiest way to do so is assigning tags at <em>build time</em> with the <code>-t</code> options of <code>docker build</code></p>
 <p>The option can be repeated multiple times to make multiple tags</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>docker build -t <span style="color:#d20;background-color:#fff0f0">&#34;myImage:latest&#34;</span> -t <span style="color:#d20;background-color:#fff0f0">&#34;myImage:0.1.0&#34;</span>
-</code></pre></div><p><code>latest</code> is usually used to identify the most recent version of some image</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>docker build -t <span style="color:#d20;background-color:#fff0f0">&#34;myImage:latest&#34;</span> -t <span style="color:#d20;background-color:#fff0f0">&#34;myImage:0.1.0&#34;</span>
+</span></span></code></pre></div><p><code>latest</code> is usually used to identify the most recent version of some image</p>
 </section><section>
 <h1 id="publishing-docker-images">Publishing docker images</h1>
 <p>Images get published in <em>registries</em></p>

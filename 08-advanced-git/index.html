@@ -118,9 +118,9 @@
 <p><img src="basic-rebase-1.png" alt=""></p>
 </section><section>
 <h1 id="advanced-merging-1">Advanced merging</h1>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>git checkout master
-git merge experiment
-</code></pre></div><p><img src="basic-rebase-2.png" alt=""></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>git checkout master
+</span></span><span style="display:flex;"><span>git merge experiment
+</span></span></code></pre></div><p><img src="basic-rebase-2.png" alt=""></p>
 </section><section>
 <h1 id="advanced-merging-rebase">Advanced merging: rebase</h1>
 <ul>
@@ -141,16 +141,16 @@ git merge experiment
 </section><section>
 <h1 id="advanced-merging-rebase-1">Advanced merging: rebase</h1>
 <p><img src="basic-rebase-1.png" alt=""></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>git checkout experiment
-git rebase master
-</code></pre></div></section><section>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>git checkout experiment
+</span></span><span style="display:flex;"><span>git rebase master
+</span></span></code></pre></div></section><section>
 <h1 id="advanced-merging-rebase-2">Advanced merging: rebase</h1>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>git checkout experiment
-git rebase master
-</code></pre></div><p><img src="basic-rebase-3.png" alt=""></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>git checkout master
-git merge experiment <span style="color:#888"># Fast forward!</span>
-</code></pre></div><p><img src="basic-rebase-4.png" alt=""></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>git checkout experiment
+</span></span><span style="display:flex;"><span>git rebase master
+</span></span></code></pre></div><p><img src="basic-rebase-3.png" alt=""></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>git checkout master
+</span></span><span style="display:flex;"><span>git merge experiment <span style="color:#888"># Fast forward!</span>
+</span></span></code></pre></div><p><img src="basic-rebase-4.png" alt=""></p>
 </section><section>
 <h1 id="advanced-rebasing">Advanced rebasing</h1>
 <p><img src="interesting-rebase-1.png" alt=""></p>
@@ -166,8 +166,8 @@ git merge experiment <span style="color:#888"># Fast forward!</span>
 </ul>
 </li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>git rebase --onto master server client
-</code></pre></div><p><img src="interesting-rebase-2.png" alt=""></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>git rebase --onto master server client
+</span></span></code></pre></div><p><img src="interesting-rebase-2.png" alt=""></p>
 <p>Reads: <em>pick all commits from <code>server</code> (excluded) to <code>client</code> (included), remove them and reply them starting from <code>master</code></em></p>
 </section><section>
 <h1 id="rebase-pull">Rebase pull</h1>

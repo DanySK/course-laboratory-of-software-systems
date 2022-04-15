@@ -799,40 +799,40 @@ from code to artifacts</p>
 </div>
 </section><section>
 <h2 id="actual-result">Actual result</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">package</span> <span style="color:#b06;font-weight:bold">it.unibo.ci</span>;
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">com.uwetrottmann.thetvdb.TheTvdb</span>;
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.apache.commons.io.IOUtils</span>;
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">retrofit2.Response</span>;
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">java.io.IOException</span>;
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">java.util.Objects</span>;
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">java.util.Optional</span>;
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">java.util.stream.IntStream</span>;
-<span style="color:#080;font-weight:bold">import static</span> <span style="color:#b06;font-weight:bold">java.nio.charset.StandardCharsets.UTF_8</span>;
-<span style="color:#080;font-weight:bold">import static</span> <span style="color:#b06;font-weight:bold">org.jooq.lambda.Unchecked.intFunction</span>;
-
-<span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">final</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">PrintBreakingBad</span> {
-
-    <span style="color:#080;font-weight:bold">private</span> <span style="color:#06b;font-weight:bold">PrintBreakingBad</span>() { }
-
-    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#888;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">main</span>(String... args) <span style="color:#080;font-weight:bold">throws</span> IOException {
-        <span style="color:#080;font-weight:bold">final</span> TheTvdb api = <span style="color:#080;font-weight:bold">new</span> TheTvdb(IOUtils.<span style="color:#369">toString</span>(ClassLoader.<span style="color:#369">getSystemResource</span>(<span style="color:#d20;background-color:#fff0f0">&#34;APIKey&#34;</span>), UTF_8));
-        Optional.<span style="color:#369">of</span>(api.<span style="color:#369">search</span>().<span style="color:#369">series</span>(<span style="color:#d20;background-color:#fff0f0">&#34;Breaking Bad&#34;</span>, <span style="color:#080;font-weight:bold">null</span>, <span style="color:#080;font-weight:bold">null</span>, <span style="color:#080;font-weight:bold">null</span>, <span style="color:#d20;background-color:#fff0f0">&#34;it&#34;</span>).<span style="color:#369">execute</span>())
-            .<span style="color:#369">filter</span>(Response::isSuccessful)
-            .<span style="color:#369">flatMap</span>(response -&gt; response.<span style="color:#369">body</span>().<span style="color:#369">data</span>.<span style="color:#369">stream</span>().<span style="color:#369">findFirst</span>())
-            .<span style="color:#369">stream</span>()
-            .<span style="color:#369">flatMap</span>(serie -&gt; <span style="color:#888">// Every serie becomes a stream of pages
-</span><span style="color:#888"></span>                IntStream.<span style="color:#369">iterate</span>(1, it -&gt; it + 1)
-                    .<span style="color:#369">mapToObj</span>(intFunction(page -&gt; api.<span style="color:#369">series</span>().<span style="color:#369">episodes</span>(serie.<span style="color:#369">id</span>, page, <span style="color:#d20;background-color:#fff0f0">&#34;it&#34;</span>).<span style="color:#369">execute</span>()))
-                    .<span style="color:#369">takeWhile</span>(Response::isSuccessful)
-            )
-            .<span style="color:#369">flatMap</span>(it -&gt; it.<span style="color:#369">body</span>().<span style="color:#369">data</span>.<span style="color:#369">stream</span>()) <span style="color:#888">// every page becomes a stream of episodes
-</span><span style="color:#888"></span>            .<span style="color:#369">map</span>(it -&gt; it.<span style="color:#369">episodeName</span>)
-            .<span style="color:#369">filter</span>(Objects::nonNull)
-            .<span style="color:#369">forEach</span>(System.<span style="color:#369">out</span>::println);
-        System.<span style="color:#369">exit</span>(0);
-    }
-}
-</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">package</span> <span style="color:#b06;font-weight:bold">it.unibo.ci</span>;
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">com.uwetrottmann.thetvdb.TheTvdb</span>;
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.apache.commons.io.IOUtils</span>;
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">retrofit2.Response</span>;
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">java.io.IOException</span>;
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">java.util.Objects</span>;
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">java.util.Optional</span>;
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">java.util.stream.IntStream</span>;
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import static</span> <span style="color:#b06;font-weight:bold">java.nio.charset.StandardCharsets.UTF_8</span>;
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import static</span> <span style="color:#b06;font-weight:bold">org.jooq.lambda.Unchecked.intFunction</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">final</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">PrintBreakingBad</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#06b;font-weight:bold">PrintBreakingBad</span>() { }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#888;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">main</span>(String... args) <span style="color:#080;font-weight:bold">throws</span> IOException {
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">final</span> TheTvdb api = <span style="color:#080;font-weight:bold">new</span> TheTvdb(IOUtils.<span style="color:#369">toString</span>(ClassLoader.<span style="color:#369">getSystemResource</span>(<span style="color:#d20;background-color:#fff0f0">&#34;APIKey&#34;</span>), UTF_8));
+</span></span><span style="display:flex;"><span>        Optional.<span style="color:#369">of</span>(api.<span style="color:#369">search</span>().<span style="color:#369">series</span>(<span style="color:#d20;background-color:#fff0f0">&#34;Breaking Bad&#34;</span>, <span style="color:#080;font-weight:bold">null</span>, <span style="color:#080;font-weight:bold">null</span>, <span style="color:#080;font-weight:bold">null</span>, <span style="color:#d20;background-color:#fff0f0">&#34;it&#34;</span>).<span style="color:#369">execute</span>())
+</span></span><span style="display:flex;"><span>            .<span style="color:#369">filter</span>(Response::isSuccessful)
+</span></span><span style="display:flex;"><span>            .<span style="color:#369">flatMap</span>(response -&gt; response.<span style="color:#369">body</span>().<span style="color:#369">data</span>.<span style="color:#369">stream</span>().<span style="color:#369">findFirst</span>())
+</span></span><span style="display:flex;"><span>            .<span style="color:#369">stream</span>()
+</span></span><span style="display:flex;"><span>            .<span style="color:#369">flatMap</span>(serie -&gt; <span style="color:#888">// Every serie becomes a stream of pages
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>                IntStream.<span style="color:#369">iterate</span>(1, it -&gt; it + 1)
+</span></span><span style="display:flex;"><span>                    .<span style="color:#369">mapToObj</span>(intFunction(page -&gt; api.<span style="color:#369">series</span>().<span style="color:#369">episodes</span>(serie.<span style="color:#369">id</span>, page, <span style="color:#d20;background-color:#fff0f0">&#34;it&#34;</span>).<span style="color:#369">execute</span>()))
+</span></span><span style="display:flex;"><span>                    .<span style="color:#369">takeWhile</span>(Response::isSuccessful)
+</span></span><span style="display:flex;"><span>            )
+</span></span><span style="display:flex;"><span>            .<span style="color:#369">flatMap</span>(it -&gt; it.<span style="color:#369">body</span>().<span style="color:#369">data</span>.<span style="color:#369">stream</span>()) <span style="color:#888">// every page becomes a stream of episodes
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>            .<span style="color:#369">map</span>(it -&gt; it.<span style="color:#369">episodeName</span>)
+</span></span><span style="display:flex;"><span>            .<span style="color:#369">filter</span>(Objects::nonNull)
+</span></span><span style="display:flex;"><span>            .<span style="color:#369">forEach</span>(System.<span style="color:#369">out</span>::println);
+</span></span><span style="display:flex;"><span>        System.<span style="color:#369">exit</span>(0);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
 </section><section>
 <h2 id="the-trick-using-a-few-libraries">The trick: using a few libraries</h2>
 <ul>
@@ -978,31 +978,31 @@ from code to artifacts</p>
 <ul>
 <li>By default, Gradle inherits the maven convention for source organization:</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>+-- src <span style="color:#888"># All sources</span>
-    +-- main <span style="color:#888"># One folder per &#34;source set&#34;, all code in a source set shares dependencies</span>
-    |   +-- java <span style="color:#888"># One folder per language</span>
-    |   +-- kotlin
-    |   +-- resources <span style="color:#888"># Resources go here</span>
-    |   \-- scala
-    \-- <span style="color:#038">test</span> <span style="color:#888"># Test sources are separated, different dependencies        </span>
-        +-- java <span style="color:#888"># Same structure as main</span>
-        +-- kotlin
-        +-- resources <span style="color:#888"># Resources go here</span>
-        \-- scala
-</code></pre></div></section><section>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>+-- src <span style="color:#888"># All sources</span>
+</span></span><span style="display:flex;"><span>    +-- main <span style="color:#888"># One folder per &#34;source set&#34;, all code in a source set shares dependencies</span>
+</span></span><span style="display:flex;"><span>    |   +-- java <span style="color:#888"># One folder per language</span>
+</span></span><span style="display:flex;"><span>    |   +-- kotlin
+</span></span><span style="display:flex;"><span>    |   +-- resources <span style="color:#888"># Resources go here</span>
+</span></span><span style="display:flex;"><span>    |   \-- scala
+</span></span><span style="display:flex;"><span>    \-- <span style="color:#038">test</span> <span style="color:#888"># Test sources are separated, different dependencies        </span>
+</span></span><span style="display:flex;"><span>        +-- java <span style="color:#888"># Same structure as main</span>
+</span></span><span style="display:flex;"><span>        +-- kotlin
+</span></span><span style="display:flex;"><span>        +-- resources <span style="color:#888"># Resources go here</span>
+</span></span><span style="display:flex;"><span>        \-- scala
+</span></span></code></pre></div></section><section>
 <h2 id="gradle-minimal-java-build-1">Gradle: minimal java build</h2>
 <p><code>src/main/java/HelloWorld.java</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">HelloWorld</span> {
-
-    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#888;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">main</span>(String... args) {
-        System.<span style="color:#369">out</span>.<span style="color:#369">println</span>(<span style="color:#d20;background-color:#fff0f0">&#34;Hello, world!&#34;</span>);
-    }
-    
-}
-</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">HelloWorld</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#888;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">main</span>(String... args) {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#369">out</span>.<span style="color:#369">println</span>(<span style="color:#d20;background-color:#fff0f0">&#34;Hello, world!&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
 <p><code>build.gradle.kts</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins { java }
-</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>plugins { java }
+</span></span></code></pre></div>
 <p>Yes, it&rsquo;s a one-liner</p>
 </section><section>
 <h2 id="gradle-minimal-example-execution">Gradle: minimal example execution</h2>
@@ -1101,62 +1101,62 @@ from code to artifacts</p>
 </section><section>
 <h2 id="gradle-our-toy-example">Gradle: our toy example</h2>
 <p><code>src/main/java/it/unibo/ci/PrintBreakingBad.java</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">package</span> <span style="color:#b06;font-weight:bold">it.unibo.ci</span>;
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">com.uwetrottmann.thetvdb.TheTvdb</span>;
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.apache.commons.io.IOUtils</span>;
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">retrofit2.Response</span>;
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">java.io.IOException</span>;
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">java.util.Objects</span>;
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">java.util.Optional</span>;
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">java.util.stream.IntStream</span>;
-<span style="color:#080;font-weight:bold">import static</span> <span style="color:#b06;font-weight:bold">java.nio.charset.StandardCharsets.UTF_8</span>;
-<span style="color:#080;font-weight:bold">import static</span> <span style="color:#b06;font-weight:bold">org.jooq.lambda.Unchecked.intFunction</span>;
-
-<span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">final</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">PrintBreakingBad</span> {
-
-    <span style="color:#080;font-weight:bold">private</span> <span style="color:#06b;font-weight:bold">PrintBreakingBad</span>() { }
-
-    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#888;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">main</span>(String... args) <span style="color:#080;font-weight:bold">throws</span> IOException {
-        <span style="color:#080;font-weight:bold">final</span> TheTvdb api = <span style="color:#080;font-weight:bold">new</span> TheTvdb(IOUtils.<span style="color:#369">toString</span>(ClassLoader.<span style="color:#369">getSystemResource</span>(<span style="color:#d20;background-color:#fff0f0">&#34;APIKey&#34;</span>), UTF_8));
-        Optional.<span style="color:#369">of</span>(api.<span style="color:#369">search</span>().<span style="color:#369">series</span>(<span style="color:#d20;background-color:#fff0f0">&#34;Breaking Bad&#34;</span>, <span style="color:#080;font-weight:bold">null</span>, <span style="color:#080;font-weight:bold">null</span>, <span style="color:#080;font-weight:bold">null</span>, <span style="color:#d20;background-color:#fff0f0">&#34;it&#34;</span>).<span style="color:#369">execute</span>())
-            .<span style="color:#369">filter</span>(Response::isSuccessful)
-            .<span style="color:#369">flatMap</span>(response -&gt; response.<span style="color:#369">body</span>().<span style="color:#369">data</span>.<span style="color:#369">stream</span>().<span style="color:#369">findFirst</span>())
-            .<span style="color:#369">stream</span>()
-            .<span style="color:#369">flatMap</span>(serie -&gt; <span style="color:#888">// Every serie becomes a stream of pages
-</span><span style="color:#888"></span>                IntStream.<span style="color:#369">iterate</span>(1, it -&gt; it + 1)
-                    .<span style="color:#369">mapToObj</span>(intFunction(page -&gt; api.<span style="color:#369">series</span>().<span style="color:#369">episodes</span>(serie.<span style="color:#369">id</span>, page, <span style="color:#d20;background-color:#fff0f0">&#34;it&#34;</span>).<span style="color:#369">execute</span>()))
-                    .<span style="color:#369">takeWhile</span>(Response::isSuccessful)
-            )
-            .<span style="color:#369">flatMap</span>(it -&gt; it.<span style="color:#369">body</span>().<span style="color:#369">data</span>.<span style="color:#369">stream</span>()) <span style="color:#888">// every page becomes a stream of episodes
-</span><span style="color:#888"></span>            .<span style="color:#369">map</span>(it -&gt; it.<span style="color:#369">episodeName</span>)
-            .<span style="color:#369">filter</span>(Objects::nonNull)
-            .<span style="color:#369">forEach</span>(System.<span style="color:#369">out</span>::println);
-        System.<span style="color:#369">exit</span>(0);
-    }
-}
-</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">package</span> <span style="color:#b06;font-weight:bold">it.unibo.ci</span>;
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">com.uwetrottmann.thetvdb.TheTvdb</span>;
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.apache.commons.io.IOUtils</span>;
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">retrofit2.Response</span>;
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">java.io.IOException</span>;
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">java.util.Objects</span>;
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">java.util.Optional</span>;
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">java.util.stream.IntStream</span>;
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import static</span> <span style="color:#b06;font-weight:bold">java.nio.charset.StandardCharsets.UTF_8</span>;
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import static</span> <span style="color:#b06;font-weight:bold">org.jooq.lambda.Unchecked.intFunction</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">final</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">PrintBreakingBad</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#06b;font-weight:bold">PrintBreakingBad</span>() { }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#888;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">main</span>(String... args) <span style="color:#080;font-weight:bold">throws</span> IOException {
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">final</span> TheTvdb api = <span style="color:#080;font-weight:bold">new</span> TheTvdb(IOUtils.<span style="color:#369">toString</span>(ClassLoader.<span style="color:#369">getSystemResource</span>(<span style="color:#d20;background-color:#fff0f0">&#34;APIKey&#34;</span>), UTF_8));
+</span></span><span style="display:flex;"><span>        Optional.<span style="color:#369">of</span>(api.<span style="color:#369">search</span>().<span style="color:#369">series</span>(<span style="color:#d20;background-color:#fff0f0">&#34;Breaking Bad&#34;</span>, <span style="color:#080;font-weight:bold">null</span>, <span style="color:#080;font-weight:bold">null</span>, <span style="color:#080;font-weight:bold">null</span>, <span style="color:#d20;background-color:#fff0f0">&#34;it&#34;</span>).<span style="color:#369">execute</span>())
+</span></span><span style="display:flex;"><span>            .<span style="color:#369">filter</span>(Response::isSuccessful)
+</span></span><span style="display:flex;"><span>            .<span style="color:#369">flatMap</span>(response -&gt; response.<span style="color:#369">body</span>().<span style="color:#369">data</span>.<span style="color:#369">stream</span>().<span style="color:#369">findFirst</span>())
+</span></span><span style="display:flex;"><span>            .<span style="color:#369">stream</span>()
+</span></span><span style="display:flex;"><span>            .<span style="color:#369">flatMap</span>(serie -&gt; <span style="color:#888">// Every serie becomes a stream of pages
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>                IntStream.<span style="color:#369">iterate</span>(1, it -&gt; it + 1)
+</span></span><span style="display:flex;"><span>                    .<span style="color:#369">mapToObj</span>(intFunction(page -&gt; api.<span style="color:#369">series</span>().<span style="color:#369">episodes</span>(serie.<span style="color:#369">id</span>, page, <span style="color:#d20;background-color:#fff0f0">&#34;it&#34;</span>).<span style="color:#369">execute</span>()))
+</span></span><span style="display:flex;"><span>                    .<span style="color:#369">takeWhile</span>(Response::isSuccessful)
+</span></span><span style="display:flex;"><span>            )
+</span></span><span style="display:flex;"><span>            .<span style="color:#369">flatMap</span>(it -&gt; it.<span style="color:#369">body</span>().<span style="color:#369">data</span>.<span style="color:#369">stream</span>()) <span style="color:#888">// every page becomes a stream of episodes
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>            .<span style="color:#369">map</span>(it -&gt; it.<span style="color:#369">episodeName</span>)
+</span></span><span style="display:flex;"><span>            .<span style="color:#369">filter</span>(Objects::nonNull)
+</span></span><span style="display:flex;"><span>            .<span style="color:#369">forEach</span>(System.<span style="color:#369">out</span>::println);
+</span></span><span style="display:flex;"><span>        System.<span style="color:#369">exit</span>(0);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
 </section><section>
 <h2 id="gradle-our-toy-example-1">Gradle: our toy example</h2>
 <p><code>build.gradle.kts</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins {
-    java
-    application
-}
-repositories {
-    mavenCentral()
-}
-dependencies {
-    implementation(<span style="color:#d20;background-color:#fff0f0">&#34;commons-io:commons-io:+&#34;</span>)
-    implementation(<span style="color:#d20;background-color:#fff0f0">&#34;com.uwetrottmann.thetvdb-java:thetvdb-java:+&#34;</span>)
-    implementation(<span style="color:#d20;background-color:#fff0f0">&#34;org.jooq:jool-java-8:+&#34;</span>)
-}
-application {
-    mainClassName = <span style="color:#d20;background-color:#fff0f0">&#34;it.unibo.ci.PrintBreakingBad&#34;</span> 
-}
-</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>plugins {
+</span></span><span style="display:flex;"><span>    java
+</span></span><span style="display:flex;"><span>    application
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>repositories {
+</span></span><span style="display:flex;"><span>    mavenCentral()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>dependencies {
+</span></span><span style="display:flex;"><span>    implementation(<span style="color:#d20;background-color:#fff0f0">&#34;commons-io:commons-io:+&#34;</span>)
+</span></span><span style="display:flex;"><span>    implementation(<span style="color:#d20;background-color:#fff0f0">&#34;com.uwetrottmann.thetvdb-java:thetvdb-java:+&#34;</span>)
+</span></span><span style="display:flex;"><span>    implementation(<span style="color:#d20;background-color:#fff0f0">&#34;org.jooq:jool-java-8:+&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>application {
+</span></span><span style="display:flex;"><span>    mainClassName = <span style="color:#d20;background-color:#fff0f0">&#34;it.unibo.ci.PrintBreakingBad&#34;</span> 
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
 <p><code>settings.gradle.kts</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>rootProject.name = <span style="color:#d20;background-color:#fff0f0">&#34;dependency-management&#34;</span>
-</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>rootProject.name = <span style="color:#d20;background-color:#fff0f0">&#34;dependency-management&#34;</span>
+</span></span></code></pre></div>
 </section><section>
 <h2 id="gradle-toy-example-execution">Gradle: toy example execution</h2>
 <ul>
@@ -1172,48 +1172,48 @@ application {
 </section><section>
 <h2 id="gradle-multi-language-projects">Gradle: multi-language projects</h2>
 <p><code>src/main/groovy/HelloGroovy.groovy</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>println <span style="color:#d20;background-color:#fff0f0">&#34;Hello, Groovy&#34;</span>
-
-</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>println <span style="color:#d20;background-color:#fff0f0">&#34;Hello, Groovy&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span></code></pre></div>
 <p><code>src/main/java/HelloWorld.java</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">HelloWorld</span> {
-
-    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#888;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">main</span>(String... args) {
-        System.<span style="color:#369">out</span>.<span style="color:#369">println</span>(<span style="color:#d20;background-color:#fff0f0">&#34;Hello, world!&#34;</span>);
-    }
-    
-}
-</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">HelloWorld</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#888;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">main</span>(String... args) {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#369">out</span>.<span style="color:#369">println</span>(<span style="color:#d20;background-color:#fff0f0">&#34;Hello, world!&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
 </section><section>
 <h2 id="gradle-multi-language-projects-1">Gradle: multi-language projects</h2>
 <p><code>src/main/kotlin/HelloKt.kt</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">main</span>() { 
-  println(<span style="color:#d20;background-color:#fff0f0">&#34;Hello, world!&#34;</span>) 
-}
-</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">main</span>() { 
+</span></span><span style="display:flex;"><span>  println(<span style="color:#d20;background-color:#fff0f0">&#34;Hello, world!&#34;</span>) 
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
 <p><code>src/main/scala/HelloScala.scala</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">HelloScala</span> <span style="color:#080;font-weight:bold">extends</span> <span style="color:#b06;font-weight:bold">App</span>  {
-    println(<span style="color:#d20;background-color:#fff0f0">&#34;Hello Scala&#34;</span>)
-}
-</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">HelloScala</span> <span style="color:#080;font-weight:bold">extends</span> <span style="color:#b06;font-weight:bold">App</span>  {
+</span></span><span style="display:flex;"><span>    println(<span style="color:#d20;background-color:#fff0f0">&#34;Hello Scala&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
 </section><section>
 <h2 id="gradle-multi-language-projects-2">Gradle: multi-language projects</h2>
 <p><code>build.gradle.kts</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins {
-    java
-    scala
-    groovy
-    kotlin(<span style="color:#d20;background-color:#fff0f0">&#34;jvm&#34;</span>) version <span style="color:#d20;background-color:#fff0f0">&#34;1.3.31&#34;</span>
-}
-repositories {
-    mavenCentral()
-}
-dependencies {
-    implementation(<span style="color:#d20;background-color:#fff0f0">&#34;org.codehaus.groovy:groovy:2.3.7&#34;</span>)
-    implementation(kotlin(<span style="color:#d20;background-color:#fff0f0">&#34;stdlib&#34;</span>))
-    implementation(<span style="color:#d20;background-color:#fff0f0">&#34;org.scala-lang:scala-library:2.12.2&#34;</span>)
-}
-</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>plugins {
+</span></span><span style="display:flex;"><span>    java
+</span></span><span style="display:flex;"><span>    scala
+</span></span><span style="display:flex;"><span>    groovy
+</span></span><span style="display:flex;"><span>    kotlin(<span style="color:#d20;background-color:#fff0f0">&#34;jvm&#34;</span>) version <span style="color:#d20;background-color:#fff0f0">&#34;1.3.31&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>repositories {
+</span></span><span style="display:flex;"><span>    mavenCentral()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>dependencies {
+</span></span><span style="display:flex;"><span>    implementation(<span style="color:#d20;background-color:#fff0f0">&#34;org.codehaus.groovy:groovy:2.3.7&#34;</span>)
+</span></span><span style="display:flex;"><span>    implementation(kotlin(<span style="color:#d20;background-color:#fff0f0">&#34;stdlib&#34;</span>))
+</span></span><span style="display:flex;"><span>    implementation(<span style="color:#d20;background-color:#fff0f0">&#34;org.scala-lang:scala-library:2.12.2&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
 </section><section>
 <h1 id="quality-assurance">Quality Assurance</h1>
 <p><em>&ldquo;It works&rdquo;</em> <strong>is <em>not</em> good enough</strong></p>
@@ -1316,128 +1316,128 @@ dependencies {
 </section><section>
 <h2 id="quality-assurance-junit--gradle">Quality Assurance: JUnit + Gradle</h2>
 <p><code>src/main/scala/it/unibo/test/Test.scala</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">package</span> <span style="color:#b06;font-weight:bold">it.unibo.test</span>
-
-<span style="color:#080;font-weight:bold">trait</span> <span style="color:#b06;font-weight:bold">Sometrait</span> {
-  <span style="color:#080;font-weight:bold">def</span> f<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Int</span>
-  <span style="color:#080;font-weight:bold">def</span> g<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Int</span>
-}
-
-<span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">Someobject</span> {
-  <span style="color:#080;font-weight:bold">def</span> f <span style="color:#080;font-weight:bold">=</span> <span style="color:#00d;font-weight:bold">10</span>
-  <span style="color:#080;font-weight:bold">def</span> g <span style="color:#080;font-weight:bold">=</span> <span style="color:#00d;font-weight:bold">77</span>
-}
-</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">package</span> <span style="color:#b06;font-weight:bold">it.unibo.test</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">trait</span> <span style="color:#b06;font-weight:bold">Sometrait</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#080;font-weight:bold">def</span> f<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Int</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#080;font-weight:bold">def</span> g<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Int</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">Someobject</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#080;font-weight:bold">def</span> f <span style="color:#080;font-weight:bold">=</span> <span style="color:#00d;font-weight:bold">10</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#080;font-weight:bold">def</span> g <span style="color:#080;font-weight:bold">=</span> <span style="color:#00d;font-weight:bold">77</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
 </section><section>
 <h2 id="quality-assurance-junit--gradle-1">Quality Assurance: JUnit + Gradle</h2>
 <p><code>src/test/scala/MyTest.scala</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">it.unibo.test.</span>{<span style="color:#b06;font-weight:bold">Someobject</span>, <span style="color:#b06;font-weight:bold">Sometrait</span>}
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.junit.jupiter.api.Assertions._</span>
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.junit.jupiter.api.Test</span>
-
-<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyTest</span> {
-
-  <span style="color:#555">@Test</span>
-  <span style="color:#080;font-weight:bold">def</span> emptySetShouldHaveSizeZero()<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Unit</span> = {
-    assertEquals(<span style="color:#00d;font-weight:bold">0</span>, <span style="color:#b06;font-weight:bold">Set</span>.empty.size)
-  }
-
-  <span style="color:#555">@Test</span>
-  <span style="color:#080;font-weight:bold">def</span> thisTestIsActuallyUseless()<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Unit</span> = {
-    <span style="color:#080;font-weight:bold">val</span> someStub <span style="color:#080;font-weight:bold">=</span> <span style="color:#080;font-weight:bold">new</span> <span style="color:#b06;font-weight:bold">Sometrait</span> {
-      <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">def</span> f<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Int</span> = <span style="color:#00d;font-weight:bold">42</span>
-      <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">def</span> g<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Int</span> = ???
-    }
-    assertEquals(<span style="color:#00d;font-weight:bold">42</span>, someStub.f)
-    assertNotEquals(<span style="color:#b06;font-weight:bold">Someobject</span>.f, someStub.f)
-  }
-}
-</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">it.unibo.test.</span>{<span style="color:#b06;font-weight:bold">Someobject</span>, <span style="color:#b06;font-weight:bold">Sometrait</span>}
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.junit.jupiter.api.Assertions._</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.junit.jupiter.api.Test</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyTest</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#555">@Test</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#080;font-weight:bold">def</span> emptySetShouldHaveSizeZero()<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Unit</span> = {
+</span></span><span style="display:flex;"><span>    assertEquals(<span style="color:#00d;font-weight:bold">0</span>, <span style="color:#b06;font-weight:bold">Set</span>.empty.size)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#555">@Test</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#080;font-weight:bold">def</span> thisTestIsActuallyUseless()<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Unit</span> = {
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> someStub <span style="color:#080;font-weight:bold">=</span> <span style="color:#080;font-weight:bold">new</span> <span style="color:#b06;font-weight:bold">Sometrait</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">def</span> f<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Int</span> = <span style="color:#00d;font-weight:bold">42</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">def</span> g<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Int</span> = ???
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    assertEquals(<span style="color:#00d;font-weight:bold">42</span>, someStub.f)
+</span></span><span style="display:flex;"><span>    assertNotEquals(<span style="color:#b06;font-weight:bold">Someobject</span>.f, someStub.f)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
 </section><section>
 <h2 id="quality-assurance-junit--gradle-2">Quality Assurance: JUnit + Gradle</h2>
 <p><code>build.gradle.kts</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins {
-    java
-    scala
-    jacoco
-}
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    implementation(<span style="color:#d20;background-color:#fff0f0">&#34;org.scala-lang:scala-library:+&#34;</span>)
-    testImplementation(<span style="color:#d20;background-color:#fff0f0">&#34;org.junit.jupiter:junit-jupiter-api:+&#34;</span>)
-    testRuntimeOnly(<span style="color:#d20;background-color:#fff0f0">&#34;org.junit.jupiter:junit-jupiter-engine:+&#34;</span>)
-}
-
-<span style="color:#888">// Enables JUnit Platform (needed for JUnit 5)
-</span><span style="color:#888"></span>tasks.named&lt;Test&gt;(<span style="color:#d20;background-color:#fff0f0">&#34;test&#34;</span>) {
-    useJUnitPlatform()
-}
-</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>plugins {
+</span></span><span style="display:flex;"><span>    java
+</span></span><span style="display:flex;"><span>    scala
+</span></span><span style="display:flex;"><span>    jacoco
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>repositories {
+</span></span><span style="display:flex;"><span>    mavenCentral()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>dependencies {
+</span></span><span style="display:flex;"><span>    implementation(<span style="color:#d20;background-color:#fff0f0">&#34;org.scala-lang:scala-library:+&#34;</span>)
+</span></span><span style="display:flex;"><span>    testImplementation(<span style="color:#d20;background-color:#fff0f0">&#34;org.junit.jupiter:junit-jupiter-api:+&#34;</span>)
+</span></span><span style="display:flex;"><span>    testRuntimeOnly(<span style="color:#d20;background-color:#fff0f0">&#34;org.junit.jupiter:junit-jupiter-engine:+&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#888">// Enables JUnit Platform (needed for JUnit 5)
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>tasks.named&lt;Test&gt;(<span style="color:#d20;background-color:#fff0f0">&#34;test&#34;</span>) {
+</span></span><span style="display:flex;"><span>    useJUnitPlatform()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
 </section><section>
 <h2 id="quality-assurance-scalatest--scoverage">Quality Assurance: Scalatest + Scoverage</h2>
 <p>Let&rsquo;s switch <em>testing framework</em> and enable <em>coverage</em></p>
 <p><code>src/main/scala/it/unibo/test/Test.scala</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">package</span> <span style="color:#b06;font-weight:bold">it.unibo.test</span>
-
-<span style="color:#080;font-weight:bold">trait</span> <span style="color:#b06;font-weight:bold">Sometrait</span> {
-  <span style="color:#080;font-weight:bold">def</span> f<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Int</span>
-  <span style="color:#080;font-weight:bold">def</span> g<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Int</span>
-}
-
-<span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">Someobject</span> {
-  <span style="color:#080;font-weight:bold">def</span> f <span style="color:#080;font-weight:bold">=</span> <span style="color:#00d;font-weight:bold">10</span>
-  <span style="color:#080;font-weight:bold">def</span> g <span style="color:#080;font-weight:bold">=</span> <span style="color:#00d;font-weight:bold">77</span>
-}
-</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">package</span> <span style="color:#b06;font-weight:bold">it.unibo.test</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">trait</span> <span style="color:#b06;font-weight:bold">Sometrait</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#080;font-weight:bold">def</span> f<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Int</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#080;font-weight:bold">def</span> g<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Int</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">Someobject</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#080;font-weight:bold">def</span> f <span style="color:#080;font-weight:bold">=</span> <span style="color:#00d;font-weight:bold">10</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#080;font-weight:bold">def</span> g <span style="color:#080;font-weight:bold">=</span> <span style="color:#00d;font-weight:bold">77</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
 </section><section>
 <h2 id="quality-assurance-scalatest--scoverage-1">Quality Assurance: Scalatest + Scoverage</h2>
 <p><code>src/test/scala/Test.scala</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">it.unibo.test.Sometrait</span>
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.scalamock.scalatest.MockFactory</span>
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.scalatest.funsuite.AnyFunSuite</span>
-
-<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyTests</span> <span style="color:#080;font-weight:bold">extends</span> <span style="color:#b06;font-weight:bold">AnyFunSuite</span> <span style="color:#080;font-weight:bold">with</span> <span style="color:#b06;font-weight:bold">MockFactory</span> {
-  test(<span style="color:#d20;background-color:#fff0f0">&#34;An empty Set should have size 0&#34;</span>) {
-    println(<span style="color:#d20;background-color:#fff0f0">&#34;Test1&#34;</span>)
-    assert(<span style="color:#b06;font-weight:bold">Set</span>.empty.size == <span style="color:#00d;font-weight:bold">0</span>)
-  }
-  test(<span style="color:#d20;background-color:#fff0f0">&#34;Some useless test&#34;</span>) {
-    println(<span style="color:#d20;background-color:#fff0f0">&#34;Test2&#34;</span>)
-    <span style="color:#080;font-weight:bold">val</span> someStub <span style="color:#080;font-weight:bold">=</span> stub[<span style="color:#888;font-weight:bold">Sometrait</span>]
-    (someStub.f <span style="color:#080;font-weight:bold">_</span>).when().returns(<span style="color:#00d;font-weight:bold">42</span>)
-    assert(someStub.f == <span style="color:#00d;font-weight:bold">42</span>)
-  }
-}
-</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">it.unibo.test.Sometrait</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.scalamock.scalatest.MockFactory</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.scalatest.funsuite.AnyFunSuite</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyTests</span> <span style="color:#080;font-weight:bold">extends</span> <span style="color:#b06;font-weight:bold">AnyFunSuite</span> <span style="color:#080;font-weight:bold">with</span> <span style="color:#b06;font-weight:bold">MockFactory</span> {
+</span></span><span style="display:flex;"><span>  test(<span style="color:#d20;background-color:#fff0f0">&#34;An empty Set should have size 0&#34;</span>) {
+</span></span><span style="display:flex;"><span>    println(<span style="color:#d20;background-color:#fff0f0">&#34;Test1&#34;</span>)
+</span></span><span style="display:flex;"><span>    assert(<span style="color:#b06;font-weight:bold">Set</span>.empty.size == <span style="color:#00d;font-weight:bold">0</span>)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  test(<span style="color:#d20;background-color:#fff0f0">&#34;Some useless test&#34;</span>) {
+</span></span><span style="display:flex;"><span>    println(<span style="color:#d20;background-color:#fff0f0">&#34;Test2&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> someStub <span style="color:#080;font-weight:bold">=</span> stub[<span style="color:#888;font-weight:bold">Sometrait</span>]
+</span></span><span style="display:flex;"><span>    (someStub.f <span style="color:#080;font-weight:bold">_</span>).when().returns(<span style="color:#00d;font-weight:bold">42</span>)
+</span></span><span style="display:flex;"><span>    assert(someStub.f == <span style="color:#00d;font-weight:bold">42</span>)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
 </section><section>
 <h2 id="quality-assurance-scalatest--scoverage-2">Quality Assurance: Scalatest + Scoverage</h2>
 <p><code>build.gradle.kts</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>plugins {
-    java
-    scala
-    id(<span style="color:#d20;background-color:#fff0f0">&#34;org.scoverage&#34;</span>) version <span style="color:#d20;background-color:#fff0f0">&#34;5.0.0&#34;</span>
-    id(<span style="color:#d20;background-color:#fff0f0">&#34;com.github.maiflai.scalatest&#34;</span>) version <span style="color:#d20;background-color:#fff0f0">&#34;0.31&#34;</span>
-}
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    implementation(<span style="color:#d20;background-color:#fff0f0">&#34;org.scala-lang:scala-library:+&#34;</span>)
-    testImplementation(<span style="color:#d20;background-color:#fff0f0">&#34;org.scalatest:scalatest_2.13:+&#34;</span>)
-    testImplementation(<span style="color:#d20;background-color:#fff0f0">&#34;org.scalamock:scalamock_2.13:+&#34;</span>)
-    testRuntimeOnly(<span style="color:#d20;background-color:#fff0f0">&#34;com.vladsch.flexmark:flexmark-profile-pegdown:0.36.8&#34;</span>)
-    scoverage(<span style="color:#d20;background-color:#fff0f0">&#34;org.scoverage:scalac-scoverage-plugin_2.13:+&#34;</span>)
-    scoverage(<span style="color:#d20;background-color:#fff0f0">&#34;org.scoverage:scalac-scoverage-runtime_2.13:+&#34;</span>)
-}
-
-<span style="color:#888">// gradle clean reportScoverage
-</span></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>plugins {
+</span></span><span style="display:flex;"><span>    java
+</span></span><span style="display:flex;"><span>    scala
+</span></span><span style="display:flex;"><span>    id(<span style="color:#d20;background-color:#fff0f0">&#34;org.scoverage&#34;</span>) version <span style="color:#d20;background-color:#fff0f0">&#34;5.0.0&#34;</span>
+</span></span><span style="display:flex;"><span>    id(<span style="color:#d20;background-color:#fff0f0">&#34;com.github.maiflai.scalatest&#34;</span>) version <span style="color:#d20;background-color:#fff0f0">&#34;0.31&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>repositories {
+</span></span><span style="display:flex;"><span>    mavenCentral()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>dependencies {
+</span></span><span style="display:flex;"><span>    implementation(<span style="color:#d20;background-color:#fff0f0">&#34;org.scala-lang:scala-library:+&#34;</span>)
+</span></span><span style="display:flex;"><span>    testImplementation(<span style="color:#d20;background-color:#fff0f0">&#34;org.scalatest:scalatest_2.13:+&#34;</span>)
+</span></span><span style="display:flex;"><span>    testImplementation(<span style="color:#d20;background-color:#fff0f0">&#34;org.scalamock:scalamock_2.13:+&#34;</span>)
+</span></span><span style="display:flex;"><span>    testRuntimeOnly(<span style="color:#d20;background-color:#fff0f0">&#34;com.vladsch.flexmark:flexmark-profile-pegdown:0.36.8&#34;</span>)
+</span></span><span style="display:flex;"><span>    scoverage(<span style="color:#d20;background-color:#fff0f0">&#34;org.scoverage:scalac-scoverage-plugin_2.13:+&#34;</span>)
+</span></span><span style="display:flex;"><span>    scoverage(<span style="color:#d20;background-color:#fff0f0">&#34;org.scoverage:scalac-scoverage-runtime_2.13:+&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#888">// gradle clean reportScoverage
+</span></span></span></code></pre></div>
 </section><section>
 <h2 id="gradle-qa-execution">Gradle: QA execution</h2>
 <ul>
@@ -1555,7 +1555,7 @@ dependencies {
 <li>The build process should be <em>rich</em> and <em>fast</em></li>
 <li>Operations requiring a long time should be <em>automated</em>
 <ul>
-<li>And run somewhere else than devs' PCs</li>
+<li>And run somewhere else than devs&rsquo; PCs</li>
 </ul>
 </li>
 </ul>
@@ -1688,20 +1688,20 @@ dependencies {
 <ul>
 <li>Events that trigger a workflow are specified under the <code>on</code> key</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#b06;font-weight:bold">on</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">push</span>:<span style="color:#bbb"> </span><span style="color:#888"># Trigger the workflow on push</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">branches</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>- main<span style="color:#bbb"> </span><span style="color:#888"># but only for the main branch</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">pull_request</span>:<span style="color:#bbb"> </span><span style="color:#888"># Also trigger for pull requests</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">branches</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>- main<span style="color:#bbb"> </span><span style="color:#888"># but only for the main branch</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">page_build</span>:<span style="color:#bbb"> </span><span style="color:#888"># Also trigger on page_build</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">release</span>:<span style="color:#bbb"> </span><span style="color:#888"># Also trigger on release...</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">types</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>- created<span style="color:#bbb"> </span><span style="color:#888"># ...created</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">schedule</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">cron</span>:<span style="color:#bbb">  </span><span style="color:#d20;background-color:#fff0f0">&#39;*/30 5,17 * * *&#39;</span><span style="color:#bbb"> </span><span style="color:#888"># Cron syntax (see crontab.guru)</span><span style="color:#bbb">
-</span></code></pre></div></section><section>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">on</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">push</span>:<span style="color:#bbb"> </span><span style="color:#888"># Trigger the workflow on push</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">branches</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- main<span style="color:#bbb"> </span><span style="color:#888"># but only for the main branch</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">pull_request</span>:<span style="color:#bbb"> </span><span style="color:#888"># Also trigger for pull requests</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">branches</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- main<span style="color:#bbb"> </span><span style="color:#888"># but only for the main branch</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">page_build</span>:<span style="color:#bbb"> </span><span style="color:#888"># Also trigger on page_build</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">release</span>:<span style="color:#bbb"> </span><span style="color:#888"># Also trigger on release...</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">types</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- created<span style="color:#bbb"> </span><span style="color:#888"># ...created</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">schedule</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">cron</span>:<span style="color:#bbb">  </span><span style="color:#d20;background-color:#fff0f0">&#39;*/30 5,17 * * *&#39;</span><span style="color:#bbb"> </span><span style="color:#888"># Cron syntax (see crontab.guru)</span><span style="color:#bbb">
+</span></span></span></code></pre></div></section><section>
 <h2 id="github-actions-environment-preparation">GitHub Actions: Environment preparation</h2>
 <p>GitHub actions job run on a <em>fresh virtual machine</em></p>
 <ul>
@@ -1720,23 +1720,23 @@ dependencies {
 </ul>
 </section><section>
 <h2 id="github-actions-a-simple-gradle-build">GitHub Actions: a simple gradle build</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Clone Repository<span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">on</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">push</span>:<span style="color:#bbb"> </span><span style="color:#888"># On every push on any branch</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">jobs</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">Build</span>:<span style="color:#bbb"> </span><span style="color:#888"># Job name</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">runs-on</span>:<span style="color:#bbb"> </span>ubuntu-latest<span style="color:#bbb"> </span><span style="color:#888"># Operating system selection</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">env</span>:<span style="color:#bbb"> </span><span style="color:#888"># Environment can be controlled at the job or step level</span><span style="color:#bbb">
-</span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">TERM</span>:<span style="color:#bbb"> </span>dumb<span style="color:#bbb"> </span><span style="color:#888"># Sets the environment variable TERM to &#34;dumb&#34;</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">steps</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Checkout<span style="color:#bbb"> </span><span style="color:#888"># custom name Checkout the repository</span><span style="color:#bbb">
-</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@v2<span style="color:#bbb"> </span><span style="color:#888"># Action implemented in this repository, tag &#34;2&#34;</span><span style="color:#bbb">
-</span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>joschi/setup-jdk@v2.3.0<span style="color:#bbb"> </span><span style="color:#888"># Action implemented in repository &#34;joschi/setup-jdk&#34; tag &#34;2.3.0&#34;</span><span style="color:#bbb">
-</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">with</span>:<span style="color:#bbb"> </span><span style="color:#888"># Actions parameters (action name omitted)</span><span style="color:#bbb">
-</span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">java-version</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">15</span><span style="color:#bbb">
-</span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Build<span style="color:#bbb">
-</span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>./gradlew check<span style="color:#bbb">
-</span></code></pre></div></section><section>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Clone Repository<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">on</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">push</span>:<span style="color:#bbb"> </span><span style="color:#888"># On every push on any branch</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">jobs</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">Build</span>:<span style="color:#bbb"> </span><span style="color:#888"># Job name</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">runs-on</span>:<span style="color:#bbb"> </span>ubuntu-latest<span style="color:#bbb"> </span><span style="color:#888"># Operating system selection</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">env</span>:<span style="color:#bbb"> </span><span style="color:#888"># Environment can be controlled at the job or step level</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">TERM</span>:<span style="color:#bbb"> </span>dumb<span style="color:#bbb"> </span><span style="color:#888"># Sets the environment variable TERM to &#34;dumb&#34;</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">steps</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Checkout<span style="color:#bbb"> </span><span style="color:#888"># custom name Checkout the repository</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@v2<span style="color:#bbb"> </span><span style="color:#888"># Action implemented in this repository, tag &#34;2&#34;</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>joschi/setup-jdk@v2.3.0<span style="color:#bbb"> </span><span style="color:#888"># Action implemented in repository &#34;joschi/setup-jdk&#34; tag &#34;2.3.0&#34;</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">with</span>:<span style="color:#bbb"> </span><span style="color:#888"># Actions parameters (action name omitted)</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">java-version</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">15</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Build<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>./gradlew check<span style="color:#bbb">
+</span></span></span></code></pre></div></section><section>
 <h1 id="automated-delivery">Automated delivery</h1>
 <p>Once the <em>reference environment</em> in CI completed the software construction and testing,
 it should <strong>sign</strong> and then <strong>deliver</strong> the result.</p>

@@ -364,8 +364,8 @@ The public API should not be considered stable.</li>
 <li>The result is a &ldquo;human-readable&rdquo; object name which can also be used to identify the commit to other git commands.</li>
 </ul>
 <p>In case no tag is present, <code>git describe</code> fails, but the last commit date could be used instead:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>git describe || <span style="color:#038">echo</span> <span style="color:#d20;background-color:#fff0f0">&#34;0.1.0-</span><span style="color:#080;font-weight:bold">$(</span>git log -n1 --date=format:<span style="color:#d20;background-color:#fff0f0">&#39;%Y-%m-%dT%H%M%S&#39;</span> --format=%cd<span style="color:#080;font-weight:bold">)</span><span style="color:#d20;background-color:#fff0f0">&#34;</span> 
-</code></pre></div></section>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>git describe || <span style="color:#038">echo</span> <span style="color:#d20;background-color:#fff0f0">&#34;0.1.0-</span><span style="color:#080;font-weight:bold">$(</span>git log -n1 --date=format:<span style="color:#d20;background-color:#fff0f0">&#39;%Y-%m-%dT%H%M%S&#39;</span> --format=%cd<span style="color:#080;font-weight:bold">)</span><span style="color:#d20;background-color:#fff0f0">&#34;</span> 
+</span></span></code></pre></div></section>
 
   
 
