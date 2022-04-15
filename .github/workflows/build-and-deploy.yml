@@ -19,7 +19,9 @@ on:
 jobs:
   Build-Slides:
     runs-on: ubuntu-20.04
-    concurrency: slides
+    concurrency:
+      group: slides
+      cancel-in-progress: false
     steps:
       # Checkout the repository
       - name: Checkout
