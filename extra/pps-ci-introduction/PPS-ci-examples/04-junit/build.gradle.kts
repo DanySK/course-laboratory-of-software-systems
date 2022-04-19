@@ -9,9 +9,10 @@ repositories {
 }
 
 dependencies {
-    implementation("org.scala-lang:scala-library:+")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:+")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:+")
+    implementation("org.scala-lang:scala-library:2.13.8")
+    val junitVersion = "5.8.2"
+    testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
 }
 
 // Enables JUnit Platform (needed for JUnit 5)
