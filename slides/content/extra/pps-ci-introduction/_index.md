@@ -495,7 +495,9 @@ Example **requirements**:
 
 ## Actual result
 
-{{< github owner="APICe-at-DISI" repo="PPS-ci-examples" path="01-dependencies/src/main/java/it/unibo/ci/PrintBreakingBad.java">}}
+{{% code path="PPS-ci-examples/01-dependencies/src/main/java/it/unibo/sampleapp/RateAMovie.java" from="16" to="54" %}}
+...
+{{% code path="PPS-ci-examples/01-dependencies/src/main/java/it/unibo/sampleapp/RateAMovie.java" from="66" %}}
 
 ---
 
@@ -503,31 +505,42 @@ Example **requirements**:
 
 * **Jooq Jooλ**
     * Unchecked lambda functions
-* **Apache Commons I/O**
-    * `Resource` to `String`
-* A **library for TheTVDB**
-    * Queries TheTVDB given a valid API key, hiding HTTP, communication, and parsing
+* A **library for OMDB**
+    * Queries OMDB given a valid API key, hiding HTTP, communication, and parsing
+* **SLF4J + Logback**
+    * Logging for Java
 
 ---
 
 ## Actual dependency tree
 
 ```
-+--- commons-io:commons-io:+ -> 2.8.0
-+--- com.uwetrottmann.thetvdb-java:thetvdb-java:+ -> 2.4.0
-|    +--- com.squareup.retrofit2:retrofit:2.6.2
-|    |    \--- com.squareup.okhttp3:okhttp:3.12.0
-|    |         \--- com.squareup.okio:okio:1.15.0
-|    \--- com.squareup.retrofit2:converter-gson:2.6.2
-|         +--- com.squareup.retrofit2:retrofit:2.6.2 (*)
-|         \--- com.google.code.gson:gson:2.8.5
-\--- org.jooq:jool-java-8:+ -> 0.9.14
++--- com.omertron:API-OMDB:1.5
+|    +--- commons-codec:commons-codec:1.10
+|    +--- org.apache.commons:commons-lang3:3.4
+|    +--- com.fasterxml.jackson.core:jackson-core:2.8.7
+|    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.7
+|    +--- com.fasterxml.jackson.core:jackson-databind:2.8.7
+|    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.0 -> 2.8.7
+|    |    \--- com.fasterxml.jackson.core:jackson-core:2.8.7
+|    +--- org.slf4j:slf4j-api:1.7.24 -> 1.7.36
+|    \--- org.yamj:api-common:2.1
+|         +--- org.apache.httpcomponents:httpclient:4.5.3
+|         |    +--- org.apache.httpcomponents:httpcore:4.4.6
+|         |    +--- commons-logging:commons-logging:1.2
+|         |    \--- commons-codec:commons-codec:1.9 -> 1.10
+|         \--- org.slf4j:slf4j-api:1.7.24 -> 1.7.36
++--- org.jooq:jool:0.9.14
++--- org.slf4j:slf4j-api:1.7.36
+\--- ch.qos.logback:logback-classic:1.2.11
+     +--- ch.qos.logback:logback-core:1.2.11
+     \--- org.slf4j:slf4j-api:1.7.32 -> 1.7.36
 ```
 
-* three *direct* dependencies
-* six *transitive* dependencies
+* few *direct* dependencies
+* many *transitive* dependencies
 
-In large projects, *transitive* dependencies often dominate
+In large projects, *transitive* dependencies dominate
 
 ---
 
@@ -637,11 +650,11 @@ A paradigmatic example of a hybrid automator:
 
 `src/main/java/HelloWorld.java`
 
-{{< github owner="APICe-at-DISI" repo="PPS-ci-examples" path="00-minimal/src/main/java/HelloWorld.java">}}
+{{% code path="PPS-ci-examples/00-minimal/src/main/java/HelloWorld.java" %}}
 
 `build.gradle.kts`
 
-{{< github owner="APICe-at-DISI" repo="PPS-ci-examples" path="00-minimal/build.gradle.kts">}}
+{{% code path="PPS-ci-examples/00-minimal/build.gradle.kts" %}}
 
 Yes, it's a one-liner
 
@@ -664,7 +677,7 @@ Yes, it's a one-liner
 `repositories`
 * Where to retrieve software from
     * suggested ones are `mavenCentral()` and `google()`
-    * `jcenter()` is common but sunsetted (May 2021), *do not use it*
+    * ~~`jcenter()`~~ was common, but it has been sunsetted (May 2021)
 
 ---
 
@@ -717,9 +730,11 @@ The Gradle wrapper is *__the__ correct way* to use gradle, and we'll be using it
 
 ## Gradle: our toy example
 
-`src/main/java/it/unibo/ci/PrintBreakingBad.java`
+`src/main/java/it/unibo/sampleapp/RateAMovie.java`
 
-{{< github owner="APICe-at-DISI" repo="PPS-ci-examples" path="01-dependencies/src/main/java/it/unibo/ci/PrintBreakingBad.java">}}
+{{% code path="PPS-ci-examples/01-dependencies/src/main/java/it/unibo/sampleapp/RateAMovie.java" from="16" to="45" %}}
+...
+{{% code path="PPS-ci-examples/01-dependencies/src/main/java/it/unibo/sampleapp/RateAMovie.java" from="67" %}}
 
 ---
 
@@ -727,11 +742,11 @@ The Gradle wrapper is *__the__ correct way* to use gradle, and we'll be using it
 
 `build.gradle.kts`
 
-{{< github owner="APICe-at-DISI" repo="PPS-ci-examples" path="01-dependencies/build.gradle.kts">}}
+{{% code path="PPS-ci-examples/01-dependencies/build.gradle.kts" %}}
 
 `settings.gradle.kts`
 
-{{< github owner="APICe-at-DISI" repo="PPS-ci-examples" path="01-dependencies/settings.gradle.kts">}}
+{{% code path="PPS-ci-examples/01-dependencies/settings.gradle.kts" %}}
 
 ---
 
@@ -750,11 +765,11 @@ The Gradle wrapper is *__the__ correct way* to use gradle, and we'll be using it
 
 `src/main/groovy/HelloGroovy.groovy`
 
-{{< github owner="APICe-at-DISI" repo="PPS-ci-examples" path="02-multilang/src/main/groovy/HelloGroovy.groovy">}}
+{{% code path="PPS-ci-examples/02-multilang/src/main/groovy/HelloGroovy.groovy" %}}
 
 `src/main/java/HelloWorld.java`
 
-{{< github owner="APICe-at-DISI" repo="PPS-ci-examples" path="02-multilang/src/main/java/HelloWorld.java">}}
+{{% code path="PPS-ci-examples/02-multilang/src/main/java/HelloWorld.java" %}}
 
 ---
 
@@ -762,11 +777,11 @@ The Gradle wrapper is *__the__ correct way* to use gradle, and we'll be using it
 
 `src/main/kotlin/HelloKt.kt`
 
-{{< github owner="APICe-at-DISI" repo="PPS-ci-examples" path="02-multilang/src/main/kotlin/HelloKt.kt">}}
+{{% code path="PPS-ci-examples/02-multilang/src/main/kotlin/HelloKt.kt" %}}
 
 `src/main/scala/HelloScala.scala`
 
-{{< github owner="APICe-at-DISI" repo="PPS-ci-examples" path="02-multilang/src/main/scala/HelloScala.scala">}}
+{{% code path="PPS-ci-examples/02-multilang/src/main/scala/HelloScala.scala" %}}
 
 ---
 
@@ -774,7 +789,7 @@ The Gradle wrapper is *__the__ correct way* to use gradle, and we'll be using it
 
 `build.gradle.kts`
 
-{{< github owner="APICe-at-DISI" repo="PPS-ci-examples" path="02-multilang/build.gradle.kts">}}
+{{% code path="PPS-ci-examples/02-multilang/build.gradle.kts" %}}
 
 ---
 
@@ -793,13 +808,15 @@ The Gradle wrapper is *__the__ correct way* to use gradle, and we'll be using it
 
 ## Quality Assurance: levels
 
-* *Style* and *coherence*
-* *Flawed programming* patterns
-* Violations of the *DRY* principle
-* **Testing**
-  * Multifaceted issue
-  * To be executed along the whole software lifecycle
-  * $\Rightarrow$ Plenty of detail in upcoming lectures
+* **Static**: the project is analyzed for defects without executing it or its components
+  * *Style* and *coherence*
+  * *Flawed programming* patterns
+    * Known bugs, suboptimal programming, security flaws, ...
+  * Violations of the *DRY* principle
+* **Dynamic**: the project (or some parts) are executed
+  * *Testing*
+    * Multifaceted issue
+    * $\Rightarrow$ Plenty of detail in the upcoming lectures
 
 ---
 
@@ -1181,7 +1198,7 @@ it should **sign** and then **deliver** the result.
 * [GitHub packages](https://github.com/features/packages)
   * No retract, authentication required also in read mode, immature
 * ~~JFrog Bintray~~ [✝ 2021-05-01](https://jfrog.com/blog/into-the-sunset-bintray-jcenter-gocenter-and-chartcenter/)
-  * Maven Central + other stuff
+  * ~~Maven Central + other stuff~~
 
 In [this repository](https://github.com/AlchemistSimulator/Alchemist/tree/3535e1b42097c86c6d5d3662fff554558381e5fc),
 delivery is enabled towards all the aforementioned destinations
@@ -1225,3 +1242,5 @@ easy to communicate your intentions to the users of your software.
   * `OTHER` — Optionally decorates the version with additional information.
   * `BUILD` — Optionally decorates the version with build information.
 * First release: `0.1.0`, `1.0.0` formalizes the API
+
+---
