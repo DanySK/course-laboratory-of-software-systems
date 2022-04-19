@@ -799,41 +799,52 @@ from code to artifacts</p>
 </div>
 </section><section>
 <h2 id="actual-result">Actual result</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">package</span> <span style="color:#b06;font-weight:bold">it.unibo.ci</span>;
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">com.uwetrottmann.thetvdb.TheTvdb</span>;
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.apache.commons.io.IOUtils</span>;
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">retrofit2.Response</span>;
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">java.io.IOException</span>;
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">java.util.Objects</span>;
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">java.util.Optional</span>;
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">java.util.stream.IntStream</span>;
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import static</span> <span style="color:#b06;font-weight:bold">java.nio.charset.StandardCharsets.UTF_8</span>;
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import static</span> <span style="color:#b06;font-weight:bold">org.jooq.lambda.Unchecked.intFunction</span>;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">final</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">RateAMovie</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#080;font-weight:bold">final</span> String DEFAULT_MOVIE = <span style="color:#d20;background-color:#fff0f0">&#34;Breaking Bad&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#080;font-weight:bold">final</span> String OMDB_API_KEY = System.<span style="color:#369">getenv</span>(<span style="color:#d20;background-color:#fff0f0">&#34;OMDB_API_KEY&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#080;font-weight:bold">final</span> Logger LOGGER = LoggerFactory.<span style="color:#369">getLogger</span>(RateAMovie.<span style="color:#369">class</span>);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">final</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">PrintBreakingBad</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#06b;font-weight:bold">RateAMovie</span>() {
+</span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#06b;font-weight:bold">PrintBreakingBad</span>() { }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#888;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">main</span>(String... args) <span style="color:#080;font-weight:bold">throws</span> IOException {
-</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">final</span> TheTvdb api = <span style="color:#080;font-weight:bold">new</span> TheTvdb(IOUtils.<span style="color:#369">toString</span>(ClassLoader.<span style="color:#369">getSystemResource</span>(<span style="color:#d20;background-color:#fff0f0">&#34;APIKey&#34;</span>), UTF_8));
-</span></span><span style="display:flex;"><span>        Optional.<span style="color:#369">of</span>(api.<span style="color:#369">search</span>().<span style="color:#369">series</span>(<span style="color:#d20;background-color:#fff0f0">&#34;Breaking Bad&#34;</span>, <span style="color:#080;font-weight:bold">null</span>, <span style="color:#080;font-weight:bold">null</span>, <span style="color:#080;font-weight:bold">null</span>, <span style="color:#d20;background-color:#fff0f0">&#34;it&#34;</span>).<span style="color:#369">execute</span>())
-</span></span><span style="display:flex;"><span>            .<span style="color:#369">filter</span>(Response::isSuccessful)
-</span></span><span style="display:flex;"><span>            .<span style="color:#369">flatMap</span>(response -&gt; response.<span style="color:#369">body</span>().<span style="color:#369">data</span>.<span style="color:#369">stream</span>().<span style="color:#369">findFirst</span>())
-</span></span><span style="display:flex;"><span>            .<span style="color:#369">stream</span>()
-</span></span><span style="display:flex;"><span>            .<span style="color:#369">flatMap</span>(serie -&gt; <span style="color:#888">// Every serie becomes a stream of pages
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>                IntStream.<span style="color:#369">iterate</span>(1, it -&gt; it + 1)
-</span></span><span style="display:flex;"><span>                    .<span style="color:#369">mapToObj</span>(intFunction(page -&gt; api.<span style="color:#369">series</span>().<span style="color:#369">episodes</span>(serie.<span style="color:#369">id</span>, page, <span style="color:#d20;background-color:#fff0f0">&#34;it&#34;</span>).<span style="color:#369">execute</span>()))
-</span></span><span style="display:flex;"><span>                    .<span style="color:#369">takeWhile</span>(Response::isSuccessful)
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#888;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">main</span>(<span style="color:#080;font-weight:bold">final</span> String[] args) {
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">if</span> (OMDB_API_KEY == <span style="color:#080;font-weight:bold">null</span> || OMDB_API_KEY.<span style="color:#369">isBlank</span>()) {
+</span></span><span style="display:flex;"><span>            LOGGER.<span style="color:#369">error</span>(
+</span></span><span style="display:flex;"><span>                <span style="color:#d20;background-color:#fff0f0">&#34;Invalid OMDB API Key {}, please set a valid API Key as the environment variable OMDB_API_KEY&#34;</span>,
+</span></span><span style="display:flex;"><span>                OMDB_API_KEY
+</span></span><span style="display:flex;"><span>            );
+</span></span><span style="display:flex;"><span>            System.<span style="color:#369">exit</span>(1);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">final</span> String[] titles = args.<span style="color:#369">length</span> == 0 ? <span style="color:#080;font-weight:bold">new</span> String[] { DEFAULT_MOVIE } : args;
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">final</span> OmdbApi omdb = <span style="color:#080;font-weight:bold">new</span> OmdbApi(OMDB_API_KEY);
+</span></span><span style="display:flex;"><span>        Arrays.<span style="color:#369">stream</span>(titles)
+</span></span><span style="display:flex;"><span>            .<span style="color:#369">map</span>(Unchecked.<span style="color:#369">function</span>(omdb::search)) <span style="color:#888">// Exceptions become RuntimeExceptions
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>            .<span style="color:#369">map</span>(SearchResults::getResults) <span style="color:#888">// get all results
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>            .<span style="color:#369">flatMap</span>(List::stream) <span style="color:#888">// as a flat stream
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>            <span style="color:#888">// then get more details
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>            .<span style="color:#369">map</span>(Unchecked.<span style="color:#369">function</span>(movie -&gt;
+</span></span><span style="display:flex;"><span>                <span style="color:#080;font-weight:bold">new</span> OmdbBuilder().<span style="color:#369">setApiKey</span>(OMDB_API_KEY).<span style="color:#369">setPlotFull</span>().<span style="color:#369">setImdbId</span>(movie.<span style="color:#369">getImdbID</span>()).<span style="color:#369">build</span>())
 </span></span><span style="display:flex;"><span>            )
-</span></span><span style="display:flex;"><span>            .<span style="color:#369">flatMap</span>(it -&gt; it.<span style="color:#369">body</span>().<span style="color:#369">data</span>.<span style="color:#369">stream</span>()) <span style="color:#888">// every page becomes a stream of episodes
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>            .<span style="color:#369">map</span>(it -&gt; it.<span style="color:#369">episodeName</span>)
-</span></span><span style="display:flex;"><span>            .<span style="color:#369">filter</span>(Objects::nonNull)
-</span></span><span style="display:flex;"><span>            .<span style="color:#369">forEach</span>(System.<span style="color:#369">out</span>::println);
-</span></span><span style="display:flex;"><span>        System.<span style="color:#369">exit</span>(0);
+</span></span><span style="display:flex;"><span>            .<span style="color:#369">map</span>(Unchecked.<span style="color:#369">function</span>(omdb::getInfo))
+</span></span><span style="display:flex;"><span>            .<span style="color:#369">forEach</span>(movie -&gt;
+</span></span><span style="display:flex;"><span>                LOGGER.<span style="color:#369">info</span>(
+</span></span><span style="display:flex;"><span>                    <span style="color:#d20;background-color:#fff0f0">&#34;\n=========================\n{}\n&#34;</span>
+</span></span><span style="display:flex;"><span>                        + <span style="color:#d20;background-color:#fff0f0">&#34;Directed by {}; {}; {}\n&#34;</span>
+</span></span><span style="display:flex;"><span>                        + <span style="color:#d20;background-color:#fff0f0">&#34;Written by {}\n&#34;</span>
+</span></span><span style="display:flex;"><span>                        + <span style="color:#d20;background-color:#fff0f0">&#34;Cast: {}\n&#34;</span>
+</span></span><span style="display:flex;"><span>                        + <span style="color:#d20;background-color:#fff0f0">&#34;{} {}\n&#34;</span>
+</span></span><span style="display:flex;"><span>                        + <span style="color:#d20;background-color:#fff0f0">&#34;IMDb {} (over {} votes), Rotten Tomatoes {}. {}\n&#34;</span>
+</span></span><span style="display:flex;"><span>                        + <span style="color:#d20;background-color:#fff0f0">&#34;{}\n&#34;</span>
+</span></span><span style="display:flex;"><span>                        + <span style="color:#d20;background-color:#fff0f0">&#34;IMDb handle: {}&#34;</span>,
+</span></span><span style="display:flex;"><span>                    movie.<span style="color:#369">getTitle</span>(),
+</span></span><span style="display:flex;"><span>                    movie.<span style="color:#369">getDirector</span>(),
+</span></span></code></pre></div><p>&hellip;</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>                    movie.<span style="color:#369">getImdbID</span>()
+</span></span><span style="display:flex;"><span>                )
+</span></span><span style="display:flex;"><span>            );
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div>
-</section><section>
+</span></span></code></pre></div></section><section>
 <h2 id="the-trick-using-a-few-libraries">The trick: using a few libraries</h2>
 <ul>
 <li><strong>Jooq Jooλ</strong>
@@ -841,33 +852,44 @@ from code to artifacts</p>
 <li>Unchecked lambda functions</li>
 </ul>
 </li>
-<li><strong>Apache Commons I/O</strong>
+<li>A <strong>library for OMDB</strong>
 <ul>
-<li><code>Resource</code> to <code>String</code></li>
+<li>Queries OMDB given a valid API key, hiding HTTP, communication, and parsing</li>
 </ul>
 </li>
-<li>A <strong>library for TheTVDB</strong>
+<li><strong>SLF4J + Logback</strong>
 <ul>
-<li>Queries TheTVDB given a valid API key, hiding HTTP, communication, and parsing</li>
+<li>Logging for Java</li>
 </ul>
 </li>
 </ul>
 </section><section>
 <h2 id="actual-dependency-tree">Actual dependency tree</h2>
-<pre tabindex="0"><code>+--- commons-io:commons-io:+ -&gt; 2.8.0
-+--- com.uwetrottmann.thetvdb-java:thetvdb-java:+ -&gt; 2.4.0
-|    +--- com.squareup.retrofit2:retrofit:2.6.2
-|    |    \--- com.squareup.okhttp3:okhttp:3.12.0
-|    |         \--- com.squareup.okio:okio:1.15.0
-|    \--- com.squareup.retrofit2:converter-gson:2.6.2
-|         +--- com.squareup.retrofit2:retrofit:2.6.2 (*)
-|         \--- com.google.code.gson:gson:2.8.5
-\--- org.jooq:jool-java-8:+ -&gt; 0.9.14
+<pre tabindex="0"><code>+--- com.omertron:API-OMDB:1.5
+|    +--- commons-codec:commons-codec:1.10
+|    +--- org.apache.commons:commons-lang3:3.4
+|    +--- com.fasterxml.jackson.core:jackson-core:2.8.7
+|    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.7
+|    +--- com.fasterxml.jackson.core:jackson-databind:2.8.7
+|    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.0 -&gt; 2.8.7
+|    |    \--- com.fasterxml.jackson.core:jackson-core:2.8.7
+|    +--- org.slf4j:slf4j-api:1.7.24 -&gt; 1.7.36
+|    \--- org.yamj:api-common:2.1
+|         +--- org.apache.httpcomponents:httpclient:4.5.3
+|         |    +--- org.apache.httpcomponents:httpcore:4.4.6
+|         |    +--- commons-logging:commons-logging:1.2
+|         |    \--- commons-codec:commons-codec:1.9 -&gt; 1.10
+|         \--- org.slf4j:slf4j-api:1.7.24 -&gt; 1.7.36
++--- org.jooq:jool:0.9.14
++--- org.slf4j:slf4j-api:1.7.36
+\--- ch.qos.logback:logback-classic:1.2.11
+     +--- ch.qos.logback:logback-core:1.2.11
+     \--- org.slf4j:slf4j-api:1.7.32 -&gt; 1.7.36
 </code></pre><ul>
-<li>three <em>direct</em> dependencies</li>
-<li>six <em>transitive</em> dependencies</li>
+<li>few <em>direct</em> dependencies</li>
+<li>many <em>transitive</em> dependencies</li>
 </ul>
-<p>In large projects, <em>transitive</em> dependencies often dominate</p>
+<p>In large projects, <em>transitive</em> dependencies dominate</p>
 </section><section>
 <h2 id="towards-a-dependency-hell">Towards a <strong>dependency hell</strong></h2>
 <ul>
@@ -999,11 +1021,9 @@ from code to artifacts</p>
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div>
-<p><code>build.gradle.kts</code></p>
+</span></span></code></pre></div><p><code>build.gradle.kts</code></p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>plugins { java }
-</span></span></code></pre></div>
-<p>Yes, it&rsquo;s a one-liner</p>
+</span></span></code></pre></div><p>Yes, it&rsquo;s a one-liner</p>
 </section><section>
 <h2 id="gradle-minimal-example-execution">Gradle: minimal example execution</h2>
 <ul>
@@ -1028,7 +1048,7 @@ from code to artifacts</p>
 <li>Where to retrieve software from
 <ul>
 <li>suggested ones are <code>mavenCentral()</code> and <code>google()</code></li>
-<li><code>jcenter()</code> is common but sunsetted (May 2021), <em>do not use it</em></li>
+<li><del><code>jcenter()</code></del> was common, but it has been sunsetted (May 2021)</li>
 </ul>
 </li>
 </ul>
@@ -1100,64 +1120,68 @@ from code to artifacts</p>
 <p>The Gradle wrapper is <em><strong>the</strong> correct way</em> to use gradle, and we&rsquo;ll be using it from now on.</p>
 </section><section>
 <h2 id="gradle-our-toy-example">Gradle: our toy example</h2>
-<p><code>src/main/java/it/unibo/ci/PrintBreakingBad.java</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">package</span> <span style="color:#b06;font-weight:bold">it.unibo.ci</span>;
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">com.uwetrottmann.thetvdb.TheTvdb</span>;
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.apache.commons.io.IOUtils</span>;
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">retrofit2.Response</span>;
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">java.io.IOException</span>;
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">java.util.Objects</span>;
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">java.util.Optional</span>;
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">java.util.stream.IntStream</span>;
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import static</span> <span style="color:#b06;font-weight:bold">java.nio.charset.StandardCharsets.UTF_8</span>;
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import static</span> <span style="color:#b06;font-weight:bold">org.jooq.lambda.Unchecked.intFunction</span>;
+<p><code>src/main/java/it/unibo/sampleapp/RateAMovie.java</code></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">final</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">RateAMovie</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#080;font-weight:bold">final</span> String DEFAULT_MOVIE = <span style="color:#d20;background-color:#fff0f0">&#34;Breaking Bad&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#080;font-weight:bold">final</span> String OMDB_API_KEY = System.<span style="color:#369">getenv</span>(<span style="color:#d20;background-color:#fff0f0">&#34;OMDB_API_KEY&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#080;font-weight:bold">final</span> Logger LOGGER = LoggerFactory.<span style="color:#369">getLogger</span>(RateAMovie.<span style="color:#369">class</span>);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">final</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">PrintBreakingBad</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#06b;font-weight:bold">RateAMovie</span>() {
+</span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#06b;font-weight:bold">PrintBreakingBad</span>() { }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#888;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">main</span>(String... args) <span style="color:#080;font-weight:bold">throws</span> IOException {
-</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">final</span> TheTvdb api = <span style="color:#080;font-weight:bold">new</span> TheTvdb(IOUtils.<span style="color:#369">toString</span>(ClassLoader.<span style="color:#369">getSystemResource</span>(<span style="color:#d20;background-color:#fff0f0">&#34;APIKey&#34;</span>), UTF_8));
-</span></span><span style="display:flex;"><span>        Optional.<span style="color:#369">of</span>(api.<span style="color:#369">search</span>().<span style="color:#369">series</span>(<span style="color:#d20;background-color:#fff0f0">&#34;Breaking Bad&#34;</span>, <span style="color:#080;font-weight:bold">null</span>, <span style="color:#080;font-weight:bold">null</span>, <span style="color:#080;font-weight:bold">null</span>, <span style="color:#d20;background-color:#fff0f0">&#34;it&#34;</span>).<span style="color:#369">execute</span>())
-</span></span><span style="display:flex;"><span>            .<span style="color:#369">filter</span>(Response::isSuccessful)
-</span></span><span style="display:flex;"><span>            .<span style="color:#369">flatMap</span>(response -&gt; response.<span style="color:#369">body</span>().<span style="color:#369">data</span>.<span style="color:#369">stream</span>().<span style="color:#369">findFirst</span>())
-</span></span><span style="display:flex;"><span>            .<span style="color:#369">stream</span>()
-</span></span><span style="display:flex;"><span>            .<span style="color:#369">flatMap</span>(serie -&gt; <span style="color:#888">// Every serie becomes a stream of pages
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>                IntStream.<span style="color:#369">iterate</span>(1, it -&gt; it + 1)
-</span></span><span style="display:flex;"><span>                    .<span style="color:#369">mapToObj</span>(intFunction(page -&gt; api.<span style="color:#369">series</span>().<span style="color:#369">episodes</span>(serie.<span style="color:#369">id</span>, page, <span style="color:#d20;background-color:#fff0f0">&#34;it&#34;</span>).<span style="color:#369">execute</span>()))
-</span></span><span style="display:flex;"><span>                    .<span style="color:#369">takeWhile</span>(Response::isSuccessful)
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#888;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">main</span>(<span style="color:#080;font-weight:bold">final</span> String[] args) {
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">if</span> (OMDB_API_KEY == <span style="color:#080;font-weight:bold">null</span> || OMDB_API_KEY.<span style="color:#369">isBlank</span>()) {
+</span></span><span style="display:flex;"><span>            LOGGER.<span style="color:#369">error</span>(
+</span></span><span style="display:flex;"><span>                <span style="color:#d20;background-color:#fff0f0">&#34;Invalid OMDB API Key {}, please set a valid API Key as the environment variable OMDB_API_KEY&#34;</span>,
+</span></span><span style="display:flex;"><span>                OMDB_API_KEY
+</span></span><span style="display:flex;"><span>            );
+</span></span><span style="display:flex;"><span>            System.<span style="color:#369">exit</span>(1);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">final</span> String[] titles = args.<span style="color:#369">length</span> == 0 ? <span style="color:#080;font-weight:bold">new</span> String[] { DEFAULT_MOVIE } : args;
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">final</span> OmdbApi omdb = <span style="color:#080;font-weight:bold">new</span> OmdbApi(OMDB_API_KEY);
+</span></span><span style="display:flex;"><span>        Arrays.<span style="color:#369">stream</span>(titles)
+</span></span><span style="display:flex;"><span>            .<span style="color:#369">map</span>(Unchecked.<span style="color:#369">function</span>(omdb::search)) <span style="color:#888">// Exceptions become RuntimeExceptions
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>            .<span style="color:#369">map</span>(SearchResults::getResults) <span style="color:#888">// get all results
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>            .<span style="color:#369">flatMap</span>(List::stream) <span style="color:#888">// as a flat stream
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>            <span style="color:#888">// then get more details
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>            .<span style="color:#369">map</span>(Unchecked.<span style="color:#369">function</span>(movie -&gt;
+</span></span><span style="display:flex;"><span>                <span style="color:#080;font-weight:bold">new</span> OmdbBuilder().<span style="color:#369">setApiKey</span>(OMDB_API_KEY).<span style="color:#369">setPlotFull</span>().<span style="color:#369">setImdbId</span>(movie.<span style="color:#369">getImdbID</span>()).<span style="color:#369">build</span>())
 </span></span><span style="display:flex;"><span>            )
-</span></span><span style="display:flex;"><span>            .<span style="color:#369">flatMap</span>(it -&gt; it.<span style="color:#369">body</span>().<span style="color:#369">data</span>.<span style="color:#369">stream</span>()) <span style="color:#888">// every page becomes a stream of episodes
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>            .<span style="color:#369">map</span>(it -&gt; it.<span style="color:#369">episodeName</span>)
-</span></span><span style="display:flex;"><span>            .<span style="color:#369">filter</span>(Objects::nonNull)
-</span></span><span style="display:flex;"><span>            .<span style="color:#369">forEach</span>(System.<span style="color:#369">out</span>::println);
-</span></span><span style="display:flex;"><span>        System.<span style="color:#369">exit</span>(0);
+</span></span><span style="display:flex;"><span>            .<span style="color:#369">map</span>(Unchecked.<span style="color:#369">function</span>(omdb::getInfo))
+</span></span><span style="display:flex;"><span>            .<span style="color:#369">forEach</span>(movie -&gt;
+</span></span><span style="display:flex;"><span>                LOGGER.<span style="color:#369">info</span>(
+</span></span><span style="display:flex;"><span>                    <span style="color:#d20;background-color:#fff0f0">&#34;\n=========================\n{}\n&#34;</span>
+</span></span></code></pre></div><p>&hellip;</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>                )
+</span></span><span style="display:flex;"><span>            );
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div>
-</section><section>
+</span></span></code></pre></div></section><section>
 <h2 id="gradle-our-toy-example-1">Gradle: our toy example</h2>
 <p><code>build.gradle.kts</code></p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>plugins {
 </span></span><span style="display:flex;"><span>    java
 </span></span><span style="display:flex;"><span>    application
 </span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>repositories {
 </span></span><span style="display:flex;"><span>    mavenCentral()
 </span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>dependencies {
-</span></span><span style="display:flex;"><span>    implementation(<span style="color:#d20;background-color:#fff0f0">&#34;commons-io:commons-io:+&#34;</span>)
-</span></span><span style="display:flex;"><span>    implementation(<span style="color:#d20;background-color:#fff0f0">&#34;com.uwetrottmann.thetvdb-java:thetvdb-java:+&#34;</span>)
-</span></span><span style="display:flex;"><span>    implementation(<span style="color:#d20;background-color:#fff0f0">&#34;org.jooq:jool-java-8:+&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#888">// Maven dependencies are composed by a group name, a name and a version, separated by colons
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    implementation(<span style="color:#d20;background-color:#fff0f0">&#34;com.omertron:API-OMDB:1.5&#34;</span>)
+</span></span><span style="display:flex;"><span>    implementation(<span style="color:#d20;background-color:#fff0f0">&#34;org.jooq:jool:0.9.14&#34;</span>)
+</span></span><span style="display:flex;"><span>    implementation(<span style="color:#d20;background-color:#fff0f0">&#34;org.slf4j:slf4j-api:1.7.36&#34;</span>)
+</span></span><span style="display:flex;"><span>    runtimeOnly(<span style="color:#d20;background-color:#fff0f0">&#34;ch.qos.logback:logback-classic:1.2.11&#34;</span>)
 </span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>application {
-</span></span><span style="display:flex;"><span>    mainClassName = <span style="color:#d20;background-color:#fff0f0">&#34;it.unibo.ci.PrintBreakingBad&#34;</span> 
+</span></span><span style="display:flex;"><span>    mainClass.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;it.unibo.sampleapp.RateAMovie&#34;</span>)
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div>
-<p><code>settings.gradle.kts</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>rootProject.name = <span style="color:#d20;background-color:#fff0f0">&#34;dependency-management&#34;</span>
-</span></span></code></pre></div>
-</section><section>
+</span></span></code></pre></div><p><code>settings.gradle.kts</code></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>rootProject.name = <span style="color:#d20;background-color:#fff0f0">&#34;sample-gradle-project&#34;</span>
+</span></span></code></pre></div></section><section>
 <h2 id="gradle-toy-example-execution">Gradle: toy example execution</h2>
 <ul>
 <li>The <code>application</code> plugin introduces a <code>run</code> task:
@@ -1173,9 +1197,7 @@ from code to artifacts</p>
 <h2 id="gradle-multi-language-projects">Gradle: multi-language projects</h2>
 <p><code>src/main/groovy/HelloGroovy.groovy</code></p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>println <span style="color:#d20;background-color:#fff0f0">&#34;Hello, Groovy&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span></code></pre></div>
-<p><code>src/main/java/HelloWorld.java</code></p>
+</span></span></code></pre></div><p><code>src/main/java/HelloWorld.java</code></p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">HelloWorld</span> {
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#888;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">main</span>(String... args) {
@@ -1183,27 +1205,24 @@ from code to artifacts</p>
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div>
-</section><section>
+</span></span></code></pre></div></section><section>
 <h2 id="gradle-multi-language-projects-1">Gradle: multi-language projects</h2>
 <p><code>src/main/kotlin/HelloKt.kt</code></p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">main</span>() { 
 </span></span><span style="display:flex;"><span>  println(<span style="color:#d20;background-color:#fff0f0">&#34;Hello, world!&#34;</span>) 
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div>
-<p><code>src/main/scala/HelloScala.scala</code></p>
+</span></span></code></pre></div><p><code>src/main/scala/HelloScala.scala</code></p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">HelloScala</span> <span style="color:#080;font-weight:bold">extends</span> <span style="color:#b06;font-weight:bold">App</span>  {
 </span></span><span style="display:flex;"><span>    println(<span style="color:#d20;background-color:#fff0f0">&#34;Hello Scala&#34;</span>)
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div>
-</section><section>
+</span></span></code></pre></div></section><section>
 <h2 id="gradle-multi-language-projects-2">Gradle: multi-language projects</h2>
 <p><code>build.gradle.kts</code></p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>plugins {
 </span></span><span style="display:flex;"><span>    java
 </span></span><span style="display:flex;"><span>    scala
 </span></span><span style="display:flex;"><span>    groovy
-</span></span><span style="display:flex;"><span>    kotlin(<span style="color:#d20;background-color:#fff0f0">&#34;jvm&#34;</span>) version <span style="color:#d20;background-color:#fff0f0">&#34;1.3.31&#34;</span>
+</span></span><span style="display:flex;"><span>    kotlin(<span style="color:#d20;background-color:#fff0f0">&#34;jvm&#34;</span>) version <span style="color:#d20;background-color:#fff0f0">&#34;1.3.72&#34;</span>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>repositories {
 </span></span><span style="display:flex;"><span>    mavenCentral()
@@ -1213,8 +1232,7 @@ from code to artifacts</p>
 </span></span><span style="display:flex;"><span>    implementation(kotlin(<span style="color:#d20;background-color:#fff0f0">&#34;stdlib&#34;</span>))
 </span></span><span style="display:flex;"><span>    implementation(<span style="color:#d20;background-color:#fff0f0">&#34;org.scala-lang:scala-library:2.12.2&#34;</span>)
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div>
-</section><section>
+</span></span></code></pre></div></section><section>
 <h1 id="quality-assurance">Quality Assurance</h1>
 <p><em>&ldquo;It works&rdquo;</em> <strong>is <em>not</em> good enough</strong></p>
 <p>(besides, the very notion of &ldquo;it works&rdquo; is rather debatable)</p>
@@ -1230,14 +1248,25 @@ from code to artifacts</p>
 </section><section>
 <h2 id="quality-assurance-levels">Quality Assurance: levels</h2>
 <ul>
+<li><strong>Static</strong>: the project is analyzed for defects without executing it or its components
+<ul>
 <li><em>Style</em> and <em>coherence</em></li>
-<li><em>Flawed programming</em> patterns</li>
+<li><em>Flawed programming</em> patterns
+<ul>
+<li>Known bugs, suboptimal programming, security flaws, &hellip;</li>
+</ul>
+</li>
 <li>Violations of the <em>DRY</em> principle</li>
-<li><strong>Testing</strong>
+</ul>
+</li>
+<li><strong>Dynamic</strong>: the project (or some parts) are executed
+<ul>
+<li><em>Testing</em>
 <ul>
 <li>Multifaceted issue</li>
-<li>To be executed along the whole software lifecycle</li>
-<li>$\Rightarrow$ Plenty of detail in upcoming lectures</li>
+<li>$\Rightarrow$ Plenty of detail in the upcoming lectures</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -1762,7 +1791,7 @@ it should <strong>sign</strong> and then <strong>deliver</strong> the result.</p
 </li>
 <li><del>JFrog Bintray</del> <a href="https://jfrog.com/blog/into-the-sunset-bintray-jcenter-gocenter-and-chartcenter/">✝ 2021-05-01</a>
 <ul>
-<li>Maven Central + other stuff</li>
+<li><del>Maven Central + other stuff</del></li>
 </ul>
 </li>
 </ul>
@@ -1808,10 +1837,169 @@ easy to communicate your intentions to the users of your software.</p>
 </li>
 <li>First release: <code>0.1.0</code>, <code>1.0.0</code> formalizes the API</li>
 </ul>
+</section><section>
 </section>
 
   
 
+    <section><h1 id="my-pps-project">My PPS Project</h1>
+<h2 id="requirementsrequirementsmd"><a href="requirements.md">Requirements</a></h2>
+<p>&hellip;</p>
+<h2 id="domaindomain_modelmd"><a href="domain_model.md">Domain</a></h2>
+<p>&hellip;</p>
+<h2 id="architecturearchitecturemd"><a href="architecture.md">Architecture</a></h2>
+<p>&hellip;</p>
+<h2 id="designdesignmd"><a href="design.md">Design</a></h2>
+<p>&hellip;</p>
+</section><section>
+<h1 id="markdown-random-stuff">Markdown random stuff</h1>
+<p>Github Flavored Markdown (GFMD) is based on <a href="http://daringfireball.net/projects/markdown/syntax">Markdown Syntax Guide</a> with some overwriting as described at <a href="http://github.github.com/github-flavored-markdown/">Github Flavored Markdown</a></p>
+<h2 id="text-writing">Text Writing</h2>
+<p>It is easy to write in GFMD. Just write simply like text and use the below simple &ldquo;tagging&rdquo; to mark the text and you are good to go!</p>
+<p>To specify a paragraph, leave 2 spaces at the end of the line</p>
+<h2 id="headings">Headings</h2>
+<pre tabindex="0"><code># Sample H1
+## Sample H2
+### Sample H3
+</code></pre><p>will produce</p>
+<h1 id="sample-h1">Sample H1</h1>
+<h2 id="sample-h2">Sample H2</h2>
+<h3 id="sample-h3">Sample H3</h3>
+</section><section>
+<h2 id="horizontal-rules">Horizontal Rules</h2>
+<p>Horizontal rule is created using <code>---</code> on a line by itself.</p>
+</section><section>
+<h2 id="coding---block">Coding - Block</h2>
+<pre>
+```ruby
+# The Greeter class
+class Greeter
+  def initialize(name)
+    @name = name.capitalize
+  end
+
+  def salute
+    puts "Hello #{@name}!"
+  end
+end
+
+# Create a new object
+g = Greeter.new("world")
+
+# Output "Hello World!"
+g.salute
+```
+</pre>
+<p>will produce</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#888"># The Greeter class</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Greeter</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">initialize</span>(<span style="color:#038">name</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#33b">@name</span> = <span style="color:#038">name</span>.capitalize
+</span></span><span style="display:flex;"><span>  <span style="color:#080;font-weight:bold">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">salute</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#038">puts</span> <span style="color:#d20;background-color:#fff0f0">&#34;Hello </span><span style="color:#33b;background-color:#fff0f0">#{</span><span style="color:#33b">@name</span><span style="color:#33b;background-color:#fff0f0">}</span><span style="color:#d20;background-color:#fff0f0">!&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#080;font-weight:bold">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#888"># Create a new object</span>
+</span></span><span style="display:flex;"><span>g = <span style="color:#036;font-weight:bold">Greeter</span>.new(<span style="color:#d20;background-color:#fff0f0">&#34;world&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#888"># Output &#34;Hello World!&#34;</span>
+</span></span><span style="display:flex;"><span>g.salute
+</span></span></code></pre></div><p>Note: You can specify the different syntax highlighting based on the coding language eg. ruby, sh (for shell), php, etc<br>
+Note: You must leave a blank line before the <code>\</code>```</p>
+<h2 id="coding---in-line">Coding - In-line</h2>
+<p>You can produce inline-code by using only one ` to enclose the code:</p>
+<pre tabindex="0"><code>This is some code: `echo something`
+</code></pre><p>will produce</p>
+<p>This is some code: <code>echo something</code></p>
+</section><section>
+<h2 id="text-formatting">Text Formatting</h2>
+<p><strong>Bold Text</strong> is done using <code>**Bold Text**</code><br>
+<em>Italic Text</em> is done using <code>*Italic Text*</code></p>
+</section><section>
+<h2 id="hyperlinks">Hyperlinks</h2>
+<ul>
+<li>GFMD will automatically detect URL and convert them to links like this <a href="http://www.futureworkz.com">http://www.futureworkz.com</a></li>
+<li>To specify a link on a text, do this:</li>
+</ul>
+<pre tabindex="0"><code>This is [an example](http://example.com/ &#34;Title&#34;) inline link.
+[This link](http://example.net/) has no title attribute.
+</code></pre></section><section>
+<h2 id="escape-sequence">Escape sequence</h2>
+<p>You can escape using \ eg. \`</p>
+</section><section>
+<h2 id="creating-list">Creating list</h2>
+<p>Adding a <code>-</code> will change it into a list:</p>
+<pre tabindex="0"><code>- Item 1
+- Item 2
+- Item 3
+</code></pre><p>will produce</p>
+<ul>
+<li>Item 1</li>
+<li>Item 2</li>
+<li>Item 3</li>
+</ul>
+</section><section>
+<h2 id="quoting">Quoting</h2>
+<p>You can create a quote using <code>&gt;</code>:</p>
+<pre tabindex="0"><code>&gt; This is a quote
+</code></pre><p>will produce</p>
+<blockquote>
+<p>This is a quote</p>
+</blockquote>
+<h2 id="table-and-definition-list">Table and Definition list</h2>
+<p>These two can only be created via HTML:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>&lt;<span style="color:#b06;font-weight:bold">table</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#b06;font-weight:bold">tr</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#b06;font-weight:bold">th</span>&gt;ID&lt;/<span style="color:#b06;font-weight:bold">th</span>&gt;&lt;<span style="color:#b06;font-weight:bold">th</span>&gt;Name&lt;/<span style="color:#b06;font-weight:bold">th</span>&gt;&lt;<span style="color:#b06;font-weight:bold">th</span>&gt;Rank&lt;/<span style="color:#b06;font-weight:bold">th</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#b06;font-weight:bold">tr</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#b06;font-weight:bold">tr</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#b06;font-weight:bold">td</span>&gt;1&lt;/<span style="color:#b06;font-weight:bold">td</span>&gt;&lt;<span style="color:#b06;font-weight:bold">td</span>&gt;Tom Preston-Werner&lt;/<span style="color:#b06;font-weight:bold">td</span>&gt;&lt;<span style="color:#b06;font-weight:bold">td</span>&gt;Awesome&lt;/<span style="color:#b06;font-weight:bold">td</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#b06;font-weight:bold">tr</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#b06;font-weight:bold">tr</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#b06;font-weight:bold">td</span>&gt;2&lt;/<span style="color:#b06;font-weight:bold">td</span>&gt;&lt;<span style="color:#b06;font-weight:bold">td</span>&gt;Albert Einstein&lt;/<span style="color:#b06;font-weight:bold">td</span>&gt;&lt;<span style="color:#b06;font-weight:bold">td</span>&gt;Nearly as awesome&lt;/<span style="color:#b06;font-weight:bold">td</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#b06;font-weight:bold">tr</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#b06;font-weight:bold">table</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#b06;font-weight:bold">dl</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#b06;font-weight:bold">dt</span>&gt;Lower cost&lt;/<span style="color:#b06;font-weight:bold">dt</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#b06;font-weight:bold">dd</span>&gt;The new version of this product costs significantly less than the previous one!&lt;/<span style="color:#b06;font-weight:bold">dd</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#b06;font-weight:bold">dt</span>&gt;Easier to use&lt;/<span style="color:#b06;font-weight:bold">dt</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#b06;font-weight:bold">dd</span>&gt;We&#39;ve changed the product so that it&#39;s much easier to use!&lt;/<span style="color:#b06;font-weight:bold">dd</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#b06;font-weight:bold">dl</span>&gt;
+</span></span><span style="display:flex;"><span>```
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>will produce
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#b06;font-weight:bold">table</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#b06;font-weight:bold">tr</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#b06;font-weight:bold">th</span>&gt;ID&lt;/<span style="color:#b06;font-weight:bold">th</span>&gt;&lt;<span style="color:#b06;font-weight:bold">th</span>&gt;Name&lt;/<span style="color:#b06;font-weight:bold">th</span>&gt;&lt;<span style="color:#b06;font-weight:bold">th</span>&gt;Rank&lt;/<span style="color:#b06;font-weight:bold">th</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#b06;font-weight:bold">tr</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#b06;font-weight:bold">tr</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#b06;font-weight:bold">td</span>&gt;1&lt;/<span style="color:#b06;font-weight:bold">td</span>&gt;&lt;<span style="color:#b06;font-weight:bold">td</span>&gt;Tom Preston-Werner&lt;/<span style="color:#b06;font-weight:bold">td</span>&gt;&lt;<span style="color:#b06;font-weight:bold">td</span>&gt;Awesome&lt;/<span style="color:#b06;font-weight:bold">td</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#b06;font-weight:bold">tr</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#b06;font-weight:bold">tr</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#b06;font-weight:bold">td</span>&gt;2&lt;/<span style="color:#b06;font-weight:bold">td</span>&gt;&lt;<span style="color:#b06;font-weight:bold">td</span>&gt;Albert Einstein&lt;/<span style="color:#b06;font-weight:bold">td</span>&gt;&lt;<span style="color:#b06;font-weight:bold">td</span>&gt;Nearly as awesome&lt;/<span style="color:#b06;font-weight:bold">td</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#b06;font-weight:bold">tr</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#b06;font-weight:bold">table</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#b06;font-weight:bold">dl</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#b06;font-weight:bold">dt</span>&gt;Lower cost&lt;/<span style="color:#b06;font-weight:bold">dt</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#b06;font-weight:bold">dd</span>&gt;The new version of this product costs significantly less than the previous one!&lt;/<span style="color:#b06;font-weight:bold">dd</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#b06;font-weight:bold">dt</span>&gt;Easier to use&lt;/<span style="color:#b06;font-weight:bold">dt</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#b06;font-weight:bold">dd</span>&gt;We&#39;ve changed the product so that it&#39;s much easier to use!&lt;/<span style="color:#b06;font-weight:bold">dd</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#b06;font-weight:bold">dl</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>## Adding Image
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>```
+</span></span><span style="display:flex;"><span>![Branching Concepts](http://git-scm.com/figures/18333fig0319-tn.png &#34;Branching Map&#34;)
+</span></span><span style="display:flex;"><span>```
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>![Branching Concepts](http://git-scm.com/figures/18333fig0319-tn.png &#34;Branching Map&#34;)
+</span></span></code></pre></div></section>
 
 </div>
       
