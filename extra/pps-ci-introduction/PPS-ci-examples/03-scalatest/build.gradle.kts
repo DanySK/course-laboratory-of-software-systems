@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    val scalaVersion = "2.13.6"
+    val scalaVersion = "2.13.8"
     val (scalaMinor, _) = requireNotNull(Regex("^(\\d+\\.\\d+)(\\.\\d+)?$").matchEntire(scalaVersion)).destructured
     implementation("org.scala-lang:scala-library:$scalaVersion")
     testImplementation("org.scalatest:scalatest_$scalaMinor:3.3.0-SNAP3")
