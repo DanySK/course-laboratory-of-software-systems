@@ -10,5 +10,5 @@ repositories {
 dependencies {
     implementation("org.codehaus.groovy:groovy:3.0.10")
     implementation(kotlin("stdlib"))
-    implementation("org.scala-lang:scala-library:2.12.15")
+    implementation("org.scala-lang:scala-library:2.13.8")
 }
