@@ -2,7 +2,7 @@ plugins {
     java
     scala
     id("org.scoverage") version "7.0.0"
-    id("com.github.maiflai.scalatest") version "0.31"
+    id("com.github.maiflai.scalatest") version "0.32"
 }
 
 repositories {
