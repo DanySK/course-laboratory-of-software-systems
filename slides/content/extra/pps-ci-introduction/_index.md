@@ -480,12 +480,12 @@ Once done, enable GitHub pages on the repository settings:
 
 ---
 
-## Simple example: print titles
+## Simple example: rate a movie
 
 Example **requirements**:
-* *Visit TheTVDB*.org (public TV Series database)
-* *Search* for a TV series (e.g., Breaking Bad)
-* *Download* and *print* titles of all episodes
+* *Visit* IMDb.org and rottentomatoes (Movie databases)
+* *Search* for a title of a movie or series (e.g., Breaking Bad)
+* *Print* all available information (director, year, ratings, ...)
 
 ---
 
