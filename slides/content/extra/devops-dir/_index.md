@@ -59,7 +59,7 @@ enableSourceMap = true
 
 ## Forks and pull requests
 
-{{< image src="assets/fork-and-pr.svg" height=70 >}}
+{{< image src="assets/fork-and-pr.svg" height=50 >}}
 
 ---
 
@@ -131,8 +131,9 @@ enableSourceMap = true
 
 #### **Risk reduction**
 
-{{< image src="assets/integration-traditional.png" w=40 >}}
-{{< image src="assets/integration-continuous.png" w=40 >}}
+{{< image src="assets/integration-traditional.png" max-w="25" max-h="50" >}}
+$\Rightarrow$
+{{< image src="assets/integration-continuous.png" max-w="25" max-h="50" >}}
 
 ---
 
