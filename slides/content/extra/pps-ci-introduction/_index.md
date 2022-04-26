@@ -973,93 +973,11 @@ Non exhaustive list:
 
 ---
 
-# Continuous Integration
-
-The practice of integrating code with the main development line **continuously**
-<br>
-_Verifying_ that the build remains intact
-* Requires *build automation* to be in place
-* Requires *testing* to be in place
-* Pivot point of the *DevOps* practices
-* Historically introduced by the extreme programming (XP) community
-* Now widespread in the larger DevOps community
+{{< slide content="ci.intro" >}}
 
 ---
 
-# The Integration Hell
-
-* Traditional software development takes several months for *“integrating”* a couple of years of development
-* The longer there is no integrated project, the higher the **risk**
-
-{{< image src="integration-traditional.png" max-w="25" max-h="50" >}}
-$\Rightarrow$
-{{< image src="integration-continuous.png" max-w="25" max-h="50" >}}
-
----
-
-## Microreleases and protoduction
-
-* High frequency integration may lead to high frequency releases
-    * Possibly, *one per commit*
-    * Of course, *versioning* must be appropriate...
-
-Traditionally, **protoduction** is jargon for a *prototype that ends up in production*
-
-{{< image src="protoduction.jpg" max-w="24" max-h="30" >}}
-
-* Traditionally used with a *negative* meaning
-    * It implied software
-        * *unfinished*,
-        * *unpolished*,
-        * *badly designed*
-    * Very common, unfortunately
-* This si different in a continuously integrated environment
-    * *Incrementality* is fostered
-    * Partial features are *up to date* with the mainline
-
----
-
-## Intensive operations should be elsewhere
-* The build process should be *rich* and *fast*
-* Operations requiring a long time should be *automated*
-    * And run somewhere else than devs' PCs
-
-<p>
-{{< image src="compiling.png" max-h="50" >}}
-</p>
-
----
-
-## Continuous integration software
-
-Software that promotes CI practices should:
-* Provide *clean environments* for compilation/testing
-* Provide a *wide range* of environments
-    * Matching the relevant specifications of the actual targets
-* High degree of *configurability*
-* Possibly, *declarative configuration*
-* A *notification system* to alert about failures or issues
-* Support for *authentication* and deployment to external services
-
-**Plenty** of integrators on the market
-* GitHub Actions, Circle CI, Travis CI, Werker, done.io, Codefresh, Codeship, Bitbucket Pipelines...
-
----
-
-# Core concepts
-
-Naming and organization is variable across platforms, but *in general*:
-
-* One or more **pipelines** can be associated to **events**
-  * For instance, a *new commit*, an update to a *pull request*, or a *timeout*
-* Every pipeline is composed of a **sequence** of **operations** (*jobs*, *stages*, *phases*)
-* Every **operation** could be composed of sequential or parallel **sub-operations** (*jobs*, *phases*, *steps*)
-* How many hierarchical levels are available depends on the specific platform
-  * GitHub Actions: *workflow* $\Rightarrow$ *job* $\Rightarrow$ *step* 
-  * Travis CI: *build* $\Rightarrow$ *stage* $\Rightarrow$ *job*  $\Rightarrow$ *phase*
-* Execution happens in a **fresh system** (virtual machine or container)
-  * Often containers inside virtual machines
-  * The specific point of the hierarchy at which the VM/container is spawned depends on the CI platform
+{{< slide content="ci.concepts" >}}
 
 ---
 
@@ -1101,6 +1019,7 @@ Naming and organization is variable across platforms, but *in general*:
 **workflow**
 * A *named sequence of steps*
 * There can be multiple workflows per repository
+  * DRY/Reusability in {{< course_name >}}
 * Workflows are *isolated*
 
 ---

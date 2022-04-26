@@ -27,104 +27,13 @@ enableSourceMap = true
 
 ---
 
-# Continuous Integration
-
-The practice of integrating code with a main development line **continuously**
-<br>
-_Verifying_ that the build remains intact
-* Requires *build automation* to be in place
-* Requires *testing* to be in place
-* Pivot point of the *DevOps* practices
-* Historically introduced by the extreme programming (XP) community
-* Now widespread in the larger DevOps community
-
----
-
-# The Integration Hell
-
-* Traditional software development takes several months for *“integrating”* a couple of years of development
-* The longer there is no integrated project, the higher the **risk**
-
-{{< image src="integration-traditional.png" max-w="40" max-h="50" >}}
-{{< image src="integration-continuous.png" max-w="40" max-h="50" >}}
-
----
-
-## Microreleases and protoduction
-
-* High frequency integration may lead to high frequency releases
-    * Possibly, *one per commit*
-    * Of course, *versioning* must be appropriate...
-
-Traditionally, **protoduction** is jargon for a *prototype that ends up in production*
-
-{{< image src="protoduction.jpg" max-w="25" max-h="40" >}}
-
-* Traditionally used with a *negative* meaning
-    * It implied software
-        * *unfinished*,
-        * *unpolished*,
-        * *badly designed*
-    * Very common, unfortunately
-* This si different in a continuously integrated environment
-    * *Incrementality* is fostered
-    * Partial features are *up to date* with the mainline
-
----
-
-## Intensive operations should be elsewhere
-* The build process should be *rich* and *fast*
-* Operations requiring a long time should be *automated*
-    * And run somewhere else than devs' PCs
-
-<p>
-{{< image src="compiling.png" max-h="50" >}}
-</p>
-
----
-
-## Continuous integration software
-
-Software that promotes CI practices should:
-* Provide *clean environments* for compilation/testing
-* Provide a *wide range* of environments
-    * Matching the relevant specifications of the actual targets
-* High degree of *configurability*
-* Possibly, *declarative configuration*
-* A *notification system* to alert about failures or issues
-* Support for *authentication* and deployment to external services
-
-**Plenty** of integrators on the market
-
-Circle CI, Travis CI, Werker, done.io, Codefresh, Codeship, Bitbucket Pipelines, GitHub Actions, GitLab CI/CD Pipelines, JetBrains TeamCity...
+{{< slide content="ci.intro" >}}
 
 We will use GitHub actions: GitHub integration, free for FOSS, multi-os OSs supported
 
-(Travis CI was better designed, but it has been essentially killed for FOSS)
-
 ---
 
-# Core concepts
-
-Structure operations into groups of *tasks* that execute either in sequence or in parallel
-
-(not so different than Gradle tasks...)
-
-The hierarchy and naming of each *task* changes with the specific product.
-
-In **Travis CI**:
-* *builds* contain *stages* that run sequentially
-* *stages* contain *jobs* that run in parallel on separate VMs
-* *jobs* contain *phases* that run sequentially
-* *phases* are commands or sequences of commands
-
-In GitHub Actions:
-* *workflows* contain *jobs* that run in parallel on separate VMs, but can express dependencies
-* *jobs* contain *steps* that run sequentially on the same VM
-* *steps* can be either commands or sequences of commands, or application of *actions*
-* *actions* can be scripts or sequences of *actions*
-
-**No standard architecture!**
+{{< slide content="ci.concepts" >}}
 
 ---
 
@@ -148,6 +57,19 @@ with the abstractions provided by the selected provider.
 Configuration can grow complex, and is usually stored in a YAML file
 <br>
 (but there are exceptions, JetBrains TeamCity uses a Kotlin DSL).
+
+---
+
+## GitHub Actions: Structure
+
+* **Workflows** react to events, launching *jobs*
+    * Multiple workflows run in parallel, unless explicitly restricted
+* **Jobs** of the same workflow run a sequence of *steps*
+    * Multiple jobs run in parallel, unless a dependency among them is explicitly declared
+    * Concurrency limits can be imposed across workflows
+    * They can communicate via outputs
+* **Steps** of the same job run *sequentially*
+    * They can communicate via outputs
 
 ---
 
