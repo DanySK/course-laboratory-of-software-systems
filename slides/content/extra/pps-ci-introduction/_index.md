@@ -26,7 +26,17 @@ enableSourceMap = true
 
 {{< today >}}
 
-layout = "bundle" more control is usually needed
+---
+
+{{% slide content="devops.intro" %}}
+
+---
+
+# Worflow organization
+
+* Design a workflow that **fits the team**
+  * Delicate balance between *chaotic organization* and *excessive bureaucracy*
+  * The larger the team, the more control is usually needed more control is usually needed
   * Sparse teams and localized teams have different requisites
 * Project progress is marked also by progress **version control system** 
 * Select a *branching model* model that matches the organization
