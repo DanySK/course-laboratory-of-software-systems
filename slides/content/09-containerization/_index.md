@@ -76,8 +76,8 @@ Runtime **isolation** without operating system **replication**
 
 # Why containers?
 
-{{< image src="memes/works-on-my-machine.jpeg" width="36.5">}}
-{{< image src="memes/docker-born.jpeg" width="33">}}
+{{< image src="memes/works-on-my-machine.jpeg" width="23">}}
+{{< image src="memes/docker-born.jpeg" width="20.8">}}
 
 ---
 
@@ -87,9 +87,9 @@ Runtime **isolation** without operating system **replication**
 
 ---
 
-## Lightweight virtual machines?
+## More similar to well-confined processes
 
-{{< image src="memes/chroot.jpeg" >}}
+{{< image src="memes/chroot.jpeg" height="60" >}}
 
 ---
 
