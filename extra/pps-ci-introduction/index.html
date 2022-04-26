@@ -1373,9 +1373,12 @@ from code to artifacts</p>
 </ul>
 </li>
 </ul>
-</section><section>
-<h1 id="continuous-integration-1">Continuous Integration</h1>
-<p>The practice of integrating code with the main development line <strong>continuously</strong>
+</section>
+
+  
+<section data-noprocess data-shortcode-slide>
+  <h1 id="continuous-integration">Continuous Integration</h1>
+<p>The practice of integrating code with a main development line <strong>continuously</strong>
 <br>
 <em>Verifying</em> that the build remains intact</p>
 <ul>
@@ -1385,30 +1388,20 @@ from code to artifacts</p>
 <li>Historically introduced by the extreme programming (XP) community</li>
 <li>Now widespread in the larger DevOps community</li>
 </ul>
-</section><section>
+</section>
+<section data-noprocess data-shortcode-slide>
+  
 <h1 id="the-integration-hell">The Integration Hell</h1>
 <ul>
 <li>Traditional software development takes several months for <em>“integrating”</em> a couple of years of development</li>
 <li>The longer there is no integrated project, the higher the <strong>risk</strong></li>
 </ul>
-<p><img src="integration-traditional.png" style='
-    
-    
-    max-width: 25vw;
-    max-height: 50vh;
-    object-fit: contain;
-'>
-
+<img src="../assets/integration-traditional.png" onerror="this.onerror=null; this.src='../../assets/integration-traditional.png'" width=40% />
 $\Rightarrow$
-<img src="integration-continuous.png" style='
-    
-    
-    max-width: 25vw;
-    max-height: 50vh;
-    object-fit: contain;
-'>
-</p>
-</section><section>
+<img src="../assets/integration-continuous.png" onerror="this.onerror=null; this.src='../../assets/integration-continuous.png'" width=40% />
+</section>
+<section data-noprocess data-shortcode-slide>
+  
 <h2 id="microreleases-and-protoduction">Microreleases and protoduction</h2>
 <ul>
 <li>High frequency integration may lead to high frequency releases
@@ -1419,14 +1412,13 @@ $\Rightarrow$
 </li>
 </ul>
 <p>Traditionally, <strong>protoduction</strong> is jargon for a <em>prototype that ends up in production</em></p>
-<img src="protoduction.jpg" style='
-    
-    
-    max-width: 24vw;
-    max-height: 30vh;
-    object-fit: contain;
-'>
-
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <img src="../assets/protoduction.jpg" onerror="this.onerror=null; this.src='../../assets/protoduction.jpg'" width=90% />
+      <td/>
+      <td>
 <ul>
 <li>Traditionally used with a <em>negative</em> meaning
 <ul>
@@ -1442,12 +1434,22 @@ $\Rightarrow$
 </li>
 <li>This si different in a continuously integrated environment
 <ul>
-<li><em>Incrementality</em> is fostered</li>
-<li>Partial features are <em>up to date</em> with the mainline</li>
-</ul>
+<li>
+<p><em>Incrementality</em> is fostered</p>
+</li>
+<li>
+<p>Partial features are <em>up to date</em> with the mainline</p>
+<td/>
 </li>
 </ul>
-</section><section>
+  </tr>
+</tbody>
+</li>
+</ul>
+</table>
+</section>
+<section data-noprocess data-shortcode-slide>
+  
 <h2 id="intensive-operations-should-be-elsewhere">Intensive operations should be elsewhere</h2>
 <ul>
 <li>The build process should be <em>rich</em> and <em>fast</em></li>
@@ -1458,16 +1460,11 @@ $\Rightarrow$
 </li>
 </ul>
 <p>
-<img src="compiling.png" style='
-    
-    
-    max-width: 95vw;
-    max-height: 50vh;
-    object-fit: contain;
-'>
-
-</p>
-</section><section>
+<img src="../assets/compiling.png" onerror="this.onerror=null; this.src='../../assets/compiling.png'" height=100% />
+<p/>
+</section>
+<section data-noprocess data-shortcode-slide>
+  
 <h2 id="continuous-integration-software">Continuous integration software</h2>
 <p>Software that promotes CI practices should:</p>
 <ul>
@@ -1483,11 +1480,13 @@ $\Rightarrow$
 <li>Support for <em>authentication</em> and deployment to external services</li>
 </ul>
 <p><strong>Plenty</strong> of integrators on the market</p>
-<ul>
-<li>GitHub Actions, Circle CI, Travis CI, Werker, done.io, Codefresh, Codeship, Bitbucket Pipelines&hellip;</li>
-</ul>
-</section><section>
-<h1 id="core-concepts">Core concepts</h1>
+<p>Circle CI, Travis CI, Werker, done.io, Codefresh, Codeship, Bitbucket Pipelines, GitHub Actions, GitLab CI/CD Pipelines, JetBrains TeamCity&hellip;</p>
+
+</section>
+
+  
+<section data-noprocess data-shortcode-slide>
+  <h1 id="core-concepts">Core concepts</h1>
 <p>Naming and organization is variable across platforms, but <em>in general</em>:</p>
 <ul>
 <li>One or more <strong>pipelines</strong> can be associated to <strong>events</strong>
@@ -1495,8 +1494,8 @@ $\Rightarrow$
 <li>For instance, a <em>new commit</em>, an update to a <em>pull request</em>, or a <em>timeout</em></li>
 </ul>
 </li>
-<li>Every pipeline is composed of a <strong>sequence</strong> of <strong>operations</strong> (<em>jobs</em>, <em>stages</em>, <em>phases</em>)</li>
-<li>Every <strong>operation</strong> could be composed of sequential or parallel <strong>sub-operations</strong> (<em>jobs</em>, <em>phases</em>, <em>steps</em>)</li>
+<li>Every pipeline is composed of a <strong>sequence</strong> of <strong>operations</strong></li>
+<li>Every <strong>operation</strong> could be composed of sequential or parallel <strong>sub-operations</strong></li>
 <li>How many hierarchical levels are available depends on the specific platform
 <ul>
 <li>GitHub Actions: <em>workflow</em> $\Rightarrow$ <em>job</em> $\Rightarrow$ <em>step</em></li>
@@ -1510,6 +1509,7 @@ $\Rightarrow$
 </ul>
 </li>
 </ul>
+
 </section><section>
 <h2 id="ci-in-github-actions">CI in GitHub Actions</h2>
 <ul>
@@ -1560,7 +1560,11 @@ $\Rightarrow$
 <p><strong>workflow</strong></p>
 <ul>
 <li>A <em>named sequence of steps</em></li>
-<li>There can be multiple workflows per repository</li>
+<li>There can be multiple workflows per repository
+<ul>
+<li>DRY/Reusability in Laboratory of Software Systems</li>
+</ul>
+</li>
 <li>Workflows are <em>isolated</em></li>
 </ul>
 </section><section>

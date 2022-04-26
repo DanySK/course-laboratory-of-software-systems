@@ -29,8 +29,11 @@
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
 2022-04-26
 
-</section><section>
-<h1 id="continuous-integration-1">Continuous Integration</h1>
+</section>
+
+  
+<section data-noprocess data-shortcode-slide>
+  <h1 id="continuous-integration">Continuous Integration</h1>
 <p>The practice of integrating code with a main development line <strong>continuously</strong>
 <br>
 <em>Verifying</em> that the build remains intact</p>
@@ -41,29 +44,20 @@
 <li>Historically introduced by the extreme programming (XP) community</li>
 <li>Now widespread in the larger DevOps community</li>
 </ul>
-</section><section>
+</section>
+<section data-noprocess data-shortcode-slide>
+  
 <h1 id="the-integration-hell">The Integration Hell</h1>
 <ul>
 <li>Traditional software development takes several months for <em>“integrating”</em> a couple of years of development</li>
 <li>The longer there is no integrated project, the higher the <strong>risk</strong></li>
 </ul>
-<p><img src="integration-traditional.png" style='
-    
-    
-    max-width: 40vw;
-    max-height: 50vh;
-    object-fit: contain;
-'>
-
-<img src="integration-continuous.png" style='
-    
-    
-    max-width: 40vw;
-    max-height: 50vh;
-    object-fit: contain;
-'>
-</p>
-</section><section>
+<img src="../assets/integration-traditional.png" onerror="this.onerror=null; this.src='../../assets/integration-traditional.png'" width=40% />
+$\Rightarrow$
+<img src="../assets/integration-continuous.png" onerror="this.onerror=null; this.src='../../assets/integration-continuous.png'" width=40% />
+</section>
+<section data-noprocess data-shortcode-slide>
+  
 <h2 id="microreleases-and-protoduction">Microreleases and protoduction</h2>
 <ul>
 <li>High frequency integration may lead to high frequency releases
@@ -74,14 +68,13 @@
 </li>
 </ul>
 <p>Traditionally, <strong>protoduction</strong> is jargon for a <em>prototype that ends up in production</em></p>
-<img src="protoduction.jpg" style='
-    
-    
-    max-width: 25vw;
-    max-height: 40vh;
-    object-fit: contain;
-'>
-
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <img src="../assets/protoduction.jpg" onerror="this.onerror=null; this.src='../../assets/protoduction.jpg'" width=90% />
+      <td/>
+      <td>
 <ul>
 <li>Traditionally used with a <em>negative</em> meaning
 <ul>
@@ -97,12 +90,22 @@
 </li>
 <li>This si different in a continuously integrated environment
 <ul>
-<li><em>Incrementality</em> is fostered</li>
-<li>Partial features are <em>up to date</em> with the mainline</li>
-</ul>
+<li>
+<p><em>Incrementality</em> is fostered</p>
+</li>
+<li>
+<p>Partial features are <em>up to date</em> with the mainline</p>
+<td/>
 </li>
 </ul>
-</section><section>
+  </tr>
+</tbody>
+</li>
+</ul>
+</table>
+</section>
+<section data-noprocess data-shortcode-slide>
+  
 <h2 id="intensive-operations-should-be-elsewhere">Intensive operations should be elsewhere</h2>
 <ul>
 <li>The build process should be <em>rich</em> and <em>fast</em></li>
@@ -113,16 +116,11 @@
 </li>
 </ul>
 <p>
-<img src="compiling.png" style='
-    
-    
-    max-width: 95vw;
-    max-height: 50vh;
-    object-fit: contain;
-'>
-
-</p>
-</section><section>
+<img src="../assets/compiling.png" onerror="this.onerror=null; this.src='../../assets/compiling.png'" height=100% />
+<p/>
+</section>
+<section data-noprocess data-shortcode-slide>
+  
 <h2 id="continuous-integration-software">Continuous integration software</h2>
 <p>Software that promotes CI practices should:</p>
 <ul>
@@ -139,28 +137,36 @@
 </ul>
 <p><strong>Plenty</strong> of integrators on the market</p>
 <p>Circle CI, Travis CI, Werker, done.io, Codefresh, Codeship, Bitbucket Pipelines, GitHub Actions, GitLab CI/CD Pipelines, JetBrains TeamCity&hellip;</p>
+
 <p>We will use GitHub actions: GitHub integration, free for FOSS, multi-os OSs supported</p>
-<p>(Travis CI was better designed, but it has been essentially killed for FOSS)</p>
-</section><section>
-<h1 id="core-concepts">Core concepts</h1>
-<p>Structure operations into groups of <em>tasks</em> that execute either in sequence or in parallel</p>
-<p>(not so different than Gradle tasks&hellip;)</p>
-<p>The hierarchy and naming of each <em>task</em> changes with the specific product.</p>
-<p>In <strong>Travis CI</strong>:</p>
+</section>
+
+  
+<section data-noprocess data-shortcode-slide>
+  <h1 id="core-concepts">Core concepts</h1>
+<p>Naming and organization is variable across platforms, but <em>in general</em>:</p>
 <ul>
-<li><em>builds</em> contain <em>stages</em> that run sequentially</li>
-<li><em>stages</em> contain <em>jobs</em> that run in parallel on separate VMs</li>
-<li><em>jobs</em> contain <em>phases</em> that run sequentially</li>
-<li><em>phases</em> are commands or sequences of commands</li>
-</ul>
-<p>In GitHub Actions:</p>
+<li>One or more <strong>pipelines</strong> can be associated to <strong>events</strong>
 <ul>
-<li><em>workflows</em> contain <em>jobs</em> that run in parallel on separate VMs, but can express dependencies</li>
-<li><em>jobs</em> contain <em>steps</em> that run sequentially on the same VM</li>
-<li><em>steps</em> can be either commands or sequences of commands, or application of <em>actions</em></li>
-<li><em>actions</em> can be scripts or sequences of <em>actions</em></li>
+<li>For instance, a <em>new commit</em>, an update to a <em>pull request</em>, or a <em>timeout</em></li>
 </ul>
-<p><strong>No standard architecture!</strong></p>
+</li>
+<li>Every pipeline is composed of a <strong>sequence</strong> of <strong>operations</strong></li>
+<li>Every <strong>operation</strong> could be composed of sequential or parallel <strong>sub-operations</strong></li>
+<li>How many hierarchical levels are available depends on the specific platform
+<ul>
+<li>GitHub Actions: <em>workflow</em> $\Rightarrow$ <em>job</em> $\Rightarrow$ <em>step</em></li>
+<li>Travis CI: <em>build</em> $\Rightarrow$ <em>stage</em> $\Rightarrow$ <em>job</em>  $\Rightarrow$ <em>phase</em></li>
+</ul>
+</li>
+<li>Execution happens in a <strong>fresh system</strong> (virtual machine or container)
+<ul>
+<li>Often containers inside virtual machines</li>
+<li>The specific point of the hierarchy at which the VM/container is spawned depends on the CI platform</li>
+</ul>
+</li>
+</ul>
+
 </section><section>
 <h2 id="pipeline-design">Pipeline design</h2>
 <p>In essence, designing a CI system is designing a software construction, verification, and delivery <em>pipeline</em>
@@ -184,6 +190,27 @@ with the abstractions provided by the selected provider.</p>
 <p>Configuration can grow complex, and is usually stored in a YAML file
 <br>
 (but there are exceptions, JetBrains TeamCity uses a Kotlin DSL).</p>
+</section><section>
+<h2 id="github-actions-structure">GitHub Actions: Structure</h2>
+<ul>
+<li><strong>Workflows</strong> react to events, launching <em>jobs</em>
+<ul>
+<li>Multiple workflows run in parallel, unless explicitly restricted</li>
+</ul>
+</li>
+<li><strong>Jobs</strong> of the same workflow run a sequence of <em>steps</em>
+<ul>
+<li>Multiple jobs run in parallel, unless a dependency among them is explicitly declared</li>
+<li>Concurrency limits can be imposed across workflows</li>
+<li>They can communicate via outputs</li>
+</ul>
+</li>
+<li><strong>Steps</strong> of the same job run <em>sequentially</em>
+<ul>
+<li>They can communicate via outputs</li>
+</ul>
+</li>
+</ul>
 </section><section>
 <h2 id="github-actions-configuration">GitHub Actions: Configuration</h2>
 <p>Workflows are configured in YAML files located in the default branch of the repository in the <code>.github/workflows</code> folder.</p>
