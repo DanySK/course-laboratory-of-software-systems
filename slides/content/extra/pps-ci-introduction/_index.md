@@ -4,6 +4,7 @@
 title = "DevOps in a nutshell"
 description = "Make things work, keep them working, move fast"
 outputs = ["Reveal"]
+layout = "bundle"
 
 [reveal_hugo]
 transition = "slide"
@@ -25,17 +26,7 @@ enableSourceMap = true
 
 {{< today >}}
 
----
-
-{{% slide content="devops.intro" %}}
-
----
-
-# Worflow organization
-
-* Design a workflow that **fits the team**
-  * Delicate balance between *chaotic organization* and *excessive bureaucracy*
-  * The larger the team, the more control is usually needed
+layout = "bundle" more control is usually needed
   * Sparse teams and localized teams have different requisites
 * Project progress is marked also by progress **version control system** 
 * Select a *branching model* model that matches the organization
@@ -62,19 +53,19 @@ A system responsible for managing changes to the project files
 
 ## Centralized Version Control Systems
 
-{{< image src="2021-04-14-centralized-vcs.svg" max-h="65">}}
+{{< image src="2021-04-14-centralized-vcs.svg" max-h="55">}}
 
 ---
 
 ## Decentralized VCS
 
-{{< image src="2021-04-14-decentralized-vcs.svg" max-h="65">}}
+{{< image src="2021-04-14-decentralized-vcs.svg" max-h="55">}}
 
 ---
 
 ## Real-world DVCS
 
-{{< image src="2021-04-14-dvcs-sink.svg" max-h="65">}}
+{{< image src="2021-04-14-dvcs-sink.svg" max-h="55">}}
 
 ---
 
@@ -391,7 +382,7 @@ These copies are called **forks**
 * Single branch, multiple independent repository copies
 
 <p>
-{{< image src="2021-04-14-dvcs-fork.svg" max-h="55">}}
+{{< image src="2021-04-14-dvcs-fork.svg" max-h="50">}}
 </p>
 
 * *Unknown* team size, *low-complexity* projects, *sparse* teams, *low* trust
@@ -404,7 +395,7 @@ These copies are called **forks**
 * Single branch, multiple independent repository copies
 
 <p>
-{{< image src="2021-04-14-dvcs-flow-fork.svg" max-h="55">}}
+{{< image src="2021-04-14-dvcs-flow-fork.svg" max-h="50">}}
 </p>
 
 * *Unknown* team size, *high-complexity* projects, *sparse* teams, *low* trust
@@ -495,8 +486,10 @@ Example **requirements**:
 
 ## Actual result
 
-{{% code path="PPS-ci-examples/01-dependencies/src/main/java/it/unibo/sampleapp/RateAMovie.java" from="16" to="54" %}}
-...
+{{% code path="PPS-ci-examples/01-dependencies/src/main/java/it/unibo/sampleapp/RateAMovie.java" from="16" to="20" %}}
+{{% code path="PPS-ci-examples/01-dependencies/src/main/java/it/unibo/sampleapp/RateAMovie.java" from="24" to="24" %}}
+{{% code path="PPS-ci-examples/01-dependencies/src/main/java/it/unibo/sampleapp/RateAMovie.java" from="32" to="46" %}}
+{{% code path="PPS-ci-examples/01-dependencies/src/main/java/it/unibo/sampleapp/RateAMovie.java" from="53" to="53" %}}
 {{% code path="PPS-ci-examples/01-dependencies/src/main/java/it/unibo/sampleapp/RateAMovie.java" from="66" %}}
 
 ---
@@ -998,8 +991,9 @@ _Verifying_ that the build remains intact
 * Traditional software development takes several months for *“integrating”* a couple of years of development
 * The longer there is no integrated project, the higher the **risk**
 
-{{< image src="integration-traditional.png" max-w="40" max-h="50" >}}
-{{< image src="integration-continuous.png" max-w="40" max-h="50" >}}
+{{< image src="integration-traditional.png" max-w="25" max-h="50" >}}
+$\Rightarrow$
+{{< image src="integration-continuous.png" max-w="25" max-h="50" >}}
 
 ---
 
@@ -1011,7 +1005,7 @@ _Verifying_ that the build remains intact
 
 Traditionally, **protoduction** is jargon for a *prototype that ends up in production*
 
-{{< image src="protoduction.jpg" max-w="25" max-h="40" >}}
+{{< image src="protoduction.jpg" max-w="24" max-h="30" >}}
 
 * Traditionally used with a *negative* meaning
     * It implied software
@@ -1242,5 +1236,3 @@ easy to communicate your intentions to the users of your software.
   * `OTHER` — Optionally decorates the version with additional information.
   * `BUILD` — Optionally decorates the version with build information.
 * First release: `0.1.0`, `1.0.0` formalizes the API
-
----

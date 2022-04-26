@@ -17,10 +17,10 @@ isHTML = true
 
 [params.reveal_hugo]
 theme = "white"
-width = '100%'
-height = '100%'
-# width = '1440'
-#height = '900'
+#width = '100%'
+#height = '100%'
+width = '1440'
+height = '900'
 # embedded = 'true'
 # disableLayout = 'true'
 pdfSeparateFragments = false
