@@ -470,7 +470,7 @@ runs: # Content depends on the action type
 
 ---
 
-## Composite actions
+## Composite actions: structure
 
 Composite actions allow the *execution of multiple steps* that can be *scripts* or *other actions*.
 
@@ -480,15 +480,23 @@ runs:
     steps: [ <list of steps> ]
 ```
 
+---
+
+## Composite actions: example
+
 The action is contained in its metadata descriptor `action.yml`root, e.g.:
 
 {{< github repo="action-checkout" path="action.yml" >}}
 
 From: [https://github.com/DanySK/action-checkout](https://github.com/DanySK/action-checkout)
 
+---
+
+## Composite actions: usage
+
 It can be used with:
 
-{{< github path=".github/workflows/build-and-deploy.yml" from=22 to=25 >}}
+{{< github path=".github/workflows/build-and-deploy.yml" from=25 to=28 >}}
 
 ---
 
