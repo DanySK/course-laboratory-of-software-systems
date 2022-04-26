@@ -725,5 +725,3 @@ They are usually integrated with the repository hosting provider
 * Dependabot (Multiple)
 * Gemnasium (Ruby)
 * Greenkeeper (NPM)
-* UpGradle (Gradle + RefreshVersions)
-    * Experimental
