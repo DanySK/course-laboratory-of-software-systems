@@ -1,7 +1,7 @@
 plugins {
     `java-gradle-plugin`
     jacoco
-    kotlin("jvm") version "1.6.21"
+    kotlin("jvm") version "1.7.0"
     id("org.danilopianini.git-sensitive-semantic-versioning") version "0.3.0"
     id("com.gradle.plugin-publish") version "0.21.0"
     id("pl.droidsonroids.jacoco.testkit") version "1.0.9"
