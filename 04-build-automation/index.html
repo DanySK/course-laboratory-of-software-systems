@@ -27,7 +27,7 @@
     <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
 <h2 id="build-automation">Build Automation</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2022-06-09
+2022-06-16
 
 </section><section>
 <h1 id="overview">Overview</h1>
@@ -1503,9 +1503,9 @@ We want to inject our plugin into the distribution.</p>
 </span></span><span style="display:flex;"><span>gitSemVer = { id = <span style="color:#d20;background-color:#fff0f0">&#34;org.danilopianini.git-sensitive-semantic-versioning&#34;</span>, version = <span style="color:#d20;background-color:#fff0f0">&#34;0.3.0&#34;</span> }
 </span></span><span style="display:flex;"><span>gradlePluginPublish = { id = <span style="color:#d20;background-color:#fff0f0">&#34;com.gradle.plugin-publish&#34;</span>, version = <span style="color:#d20;background-color:#fff0f0">&#34;0.21.0&#34;</span> }
 </span></span><span style="display:flex;"><span>kotlin-jvm = { id = <span style="color:#d20;background-color:#fff0f0">&#34;org.jetbrains.kotlin.jvm&#34;</span>, version.ref = <span style="color:#d20;background-color:#fff0f0">&#34;kotlin&#34;</span> }
-</span></span><span style="display:flex;"><span>kotlin-qa = { id = <span style="color:#d20;background-color:#fff0f0">&#34;org.danilopianini.gradle-kotlin-qa&#34;</span>, version = <span style="color:#d20;background-color:#fff0f0">&#34;0.19.0&#34;</span> }
-</span></span><span style="display:flex;"><span>multiJvmTesting = { id = <span style="color:#d20;background-color:#fff0f0">&#34;org.danilopianini.multi-jvm-test-plugin&#34;</span>, version = <span style="color:#d20;background-color:#fff0f0">&#34;0.4.1&#34;</span> }
-</span></span><span style="display:flex;"><span>publishOnCentral = { id = <span style="color:#d20;background-color:#fff0f0">&#34;org.danilopianini.publish-on-central&#34;</span>, version = <span style="color:#d20;background-color:#fff0f0">&#34;0.8.0&#34;</span> }
+</span></span><span style="display:flex;"><span>kotlin-qa = { id = <span style="color:#d20;background-color:#fff0f0">&#34;org.danilopianini.gradle-kotlin-qa&#34;</span>, version = <span style="color:#d20;background-color:#fff0f0">&#34;0.19.1&#34;</span> }
+</span></span><span style="display:flex;"><span>multiJvmTesting = { id = <span style="color:#d20;background-color:#fff0f0">&#34;org.danilopianini.multi-jvm-test-plugin&#34;</span>, version = <span style="color:#d20;background-color:#fff0f0">&#34;0.4.3&#34;</span> }
+</span></span><span style="display:flex;"><span>publishOnCentral = { id = <span style="color:#d20;background-color:#fff0f0">&#34;org.danilopianini.publish-on-central&#34;</span>, version = <span style="color:#d20;background-color:#fff0f0">&#34;0.8.3&#34;</span> }
 </span></span><span style="display:flex;"><span>taskTree = { id = <span style="color:#d20;background-color:#fff0f0">&#34;com.dorongold.task-tree&#34;</span>, version = <span style="color:#d20;background-color:#fff0f0">&#34;2.1.0&#34;</span> }
 </span></span></code></pre></div>
 <ul>
@@ -1513,7 +1513,9 @@ We want to inject our plugin into the distribution.</p>
 </ul>
 </section><section>
 <h2 id="using-the-default-catalog">Using the default catalog</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>plugins {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#555">@Suppress</span>(<span style="color:#d20;background-color:#fff0f0">&#34;DSL_SCOPE_VIOLATION&#34;</span>)
+</span></span><span style="display:flex;"><span>plugins {
 </span></span><span style="display:flex;"><span>    <span style="color:#a61717;background-color:#e3d2d2">`</span>java-gradle-plugin<span style="color:#a61717;background-color:#e3d2d2">`</span>
 </span></span><span style="display:flex;"><span>    alias(libs.plugins.dokka)
 </span></span><span style="display:flex;"><span>    alias(libs.plugins.gitSemVer)
@@ -1521,19 +1523,17 @@ We want to inject our plugin into the distribution.</p>
 </span></span><span style="display:flex;"><span>    alias(libs.plugins.kotlin.jvm)
 </span></span><span style="display:flex;"><span>    alias(libs.plugins.kotlin.qa)
 </span></span><span style="display:flex;"><span>    alias(libs.plugins.publishOnCentral)
-</span></span><span style="display:flex;"><span>    alias(libs.plugins.multiJvmTesting)
-</span></span><span style="display:flex;"><span>    alias(libs.plugins.taskTree)
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>dependencies {
-</span></span><span style="display:flex;"><span>    api(gradleApi())
-</span></span><span style="display:flex;"><span>    api(gradleKotlinDsl())
-</span></span><span style="display:flex;"><span>    api(kotlin(<span style="color:#d20;background-color:#fff0f0">&#34;stdlib-jdk8&#34;</span>))
-</span></span><span style="display:flex;"><span>    testImplementation(gradleTestKit())
-</span></span><span style="display:flex;"><span>    testImplementation(libs.konf.yaml)
-</span></span><span style="display:flex;"><span>    testImplementation(libs.classgraph)
-</span></span><span style="display:flex;"><span>    testImplementation(libs.bundles.kotlin.testing)
-</span></span><span style="display:flex;"><span>    testRuntimeOnly(files(createClasspathManifest))
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+</span></span><span style="display:flex;"><span>    alias(libs.plugins.multiJvmTesting)</span></span></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>kotlin {
+</span></span><span style="display:flex;"><span>    target {
+</span></span><span style="display:flex;"><span>        compilations.all {
+</span></span><span style="display:flex;"><span>            kotlinOptions {
+</span></span><span style="display:flex;"><span>                allWarningsAsErrors = <span style="color:#080;font-weight:bold">true</span>
+</span></span><span style="display:flex;"><span>                freeCompilerArgs = listOf(<span style="color:#d20;background-color:#fff0f0">&#34;-XXLanguage:+InlineClasses&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;-opt-in=kotlin.RequiresOptIn&#34;</span>)</span></span></code></pre></div>
 </section><section>
 <h2 id="build-vs-compile-vs-test-toolchains">Build vs. Compile vs. Test toolchains</h2>
 <p>We now have three different runtimes at play:</p>
@@ -2036,22 +2036,7 @@ Requires some manual configuration:</p>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">fullName</span> = <span style="color:#d20;background-color:#fff0f0">&#34;Gradle Publish On Maven Central Plugin&#34;</span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">websiteUrl</span> = <span style="color:#d20;background-color:#fff0f0">&#34;https://github.com/DanySK/</span><span style="color:#33b;background-color:#fff0f0">$name</span><span style="color:#d20;background-color:#fff0f0">&#34;</span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">projectDetails</span> = <span style="color:#d20;background-color:#fff0f0">&#34;A Plugin for easily publishing artifacts on Maven Central&#34;</span></span></span></code></pre></div>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>publishOnCentral {
-</span></span><span style="display:flex;"><span>    projectDescription.<span style="color:#080;font-weight:bold">set</span>(projectDetails)
-</span></span><span style="display:flex;"><span>    projectLongName.<span style="color:#080;font-weight:bold">set</span>(fullName)
-</span></span><span style="display:flex;"><span>    projectUrl.<span style="color:#080;font-weight:bold">set</span>(websiteUrl)
-</span></span><span style="display:flex;"><span>    scmConnection.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;git:git@github.com:DanySK/</span><span style="color:#33b;background-color:#fff0f0">$name</span><span style="color:#d20;background-color:#fff0f0">&#34;</span>)
-</span></span><span style="display:flex;"><span>    repository(<span style="color:#d20;background-color:#fff0f0">&#34;https://maven.pkg.github.com/DanySK/</span><span style="color:#33b;background-color:#fff0f0">$name</span><span style="color:#d20;background-color:#fff0f0">&#34;</span>.toLowerCase()) {
-</span></span><span style="display:flex;"><span>        user.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;danysk&#34;</span>)
-</span></span><span style="display:flex;"><span>        password.<span style="color:#080;font-weight:bold">set</span>(System.getenv(<span style="color:#d20;background-color:#fff0f0">&#34;GITHUB_TOKEN&#34;</span>))
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    publishing {
-</span></span><span style="display:flex;"><span>        publications {
-</span></span><span style="display:flex;"><span>            withType&lt;MavenPublication&gt; {
-</span></span><span style="display:flex;"><span>                pom {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>                pom {
 </span></span><span style="display:flex;"><span>                    developers {
 </span></span><span style="display:flex;"><span>                        developer {
 </span></span><span style="display:flex;"><span>                            name.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;Danilo Pianini&#34;</span>)
@@ -2061,7 +2046,22 @@ Requires some manual configuration:</p>
 </span></span><span style="display:flex;"><span>                    }
 </span></span><span style="display:flex;"><span>                }
 </span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>        }</span></span></code></pre></div></p>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">if</span> (System.getenv(<span style="color:#d20;background-color:#fff0f0">&#34;CI&#34;</span>) == <span style="color:#080;font-weight:bold">true</span>.toString()) {
+</span></span><span style="display:flex;"><span>    signing {
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">signingKey</span>: String? <span style="color:#080;font-weight:bold">by</span> project
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">signingPassword</span>: String? <span style="color:#080;font-weight:bold">by</span> project
+</span></span><span style="display:flex;"><span>        useInMemoryPgpKeys(signingKey, signingPassword)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>tasks.publishJavaMavenPublicationToMavenLocal
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">registerCredentials</span> = tasks.register(<span style="color:#d20;background-color:#fff0f0">&#34;registerGradlePluginPortalCredentials&#34;</span>) {
+</span></span><span style="display:flex;"><span>    doLast {</span></span></code></pre></div></p>
 </section><section>
 <h1 id="inspecting-dependencies">Inspecting dependencies</h1>
 <p>In rich projects, most of the build-related issues are due to pesky stuff going on with <em>dependencies</em></p>
@@ -2121,7 +2121,8 @@ Requires some manual configuration:</p>
 <h2 id="automated-scans-without---scan">Automated scans without <code>--scan</code></h2>
 <p>In <code>settings.gradle.kts</code>:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>plugins {
-</span></span><span style="display:flex;"><span>    id(<span style="color:#d20;background-color:#fff0f0">&#34;com.gradle.enterprise&#34;</span>) version <span style="color:#d20;background-color:#fff0f0">&#34;3.10.1&#34;</span>
+</span></span><span style="display:flex;"><span>    id(<span style="color:#d20;background-color:#fff0f0">&#34;com.gradle.enterprise&#34;</span>) version <span style="color:#d20;background-color:#fff0f0">&#34;3.10.2&#34;</span>
+</span></span><span style="display:flex;"><span>    id(<span style="color:#d20;background-color:#fff0f0">&#34;org.danilopianini.gradle-pre-commit-git-hooks&#34;</span>) version <span style="color:#d20;background-color:#fff0f0">&#34;1.0.12&#34;</span>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>gradleEnterprise {
@@ -2129,8 +2130,7 @@ Requires some manual configuration:</p>
 </span></span><span style="display:flex;"><span>        termsOfServiceUrl = <span style="color:#d20;background-color:#fff0f0">&#34;https://gradle.com/terms-of-service&#34;</span>
 </span></span><span style="display:flex;"><span>        termsOfServiceAgree = <span style="color:#d20;background-color:#fff0f0">&#34;yes&#34;</span>
 </span></span><span style="display:flex;"><span>        publishOnFailure()
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+</span></span><span style="display:flex;"><span>    }</span></span></code></pre></div>
 </section>
 
   

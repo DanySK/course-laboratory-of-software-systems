@@ -27,7 +27,7 @@
     <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
 <h2 id="kotlin-for-scala-developers">Kotlin (for Scala developers)</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2022-06-09
+2022-06-16
 
 </section><section>
 <h1 id="why-kotlin">Why Kotlin</h1>
@@ -380,7 +380,7 @@ Consider the following Scala code:</p>
 </span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">    e li occhi non l&#39;ardiscon di guardare.
 </span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">    &#34;&#34;&#34;</span>.trimIndent() <span style="color:#888">// Indentation can be trimmed
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">finalWordsEndingInA</span> = <span style="color:#d20;background-color:#fff0f0">&#34;&#34;&#34;\W*(\w*a)\W*</span><span style="color:#33b;background-color:#fff0f0">${&#39;$&#39;}</span><span style="color:#d20;background-color:#fff0f0">&#34;&#34;&#34;</span>.toRegex(RegexOption.MULTILINE) <span style="color:#888">// See how $ must be escaped
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>finalWordsEndingInA.findAll(dante).map { <span style="color:#080;font-weight:bold">it</span>.groups[<span style="color:#00d;font-weight:bold">1</span>]?.value }.toList() <span class='fragment '  style="color: #888;"> // [saluta, muta]</span>
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>finalWordsEndingInA.findAll(dante).map { <span style="color:#080;font-weight:bold">it</span>.groups[<span style="color:#00d;font-weight:bold">1</span>]?.<span style="color:#080;font-weight:bold">value</span> }.toList() <span class='fragment '  style="color: #888;"> // [saluta, muta]</span>
 </span></span></code></pre></div></section><section>
 <h1 id="kotlin-101-19">Kotlin 101</h1>
 <h2 id="packages-and-imports">Packages and imports</h2>
@@ -611,7 +611,7 @@ and provide access only via <code>get</code>/<code>set</code> methods: the actua
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        <span style="color:#080;font-weight:bold">get</span>() = baz?.length ?: <span style="color:#00d;font-weight:bold">0</span> <span style="color:#888">// As its value will be computed every time
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">stringRepresentation</span>: String = <span style="color:#d20;background-color:#fff0f0">&#34;&#34;</span> <span style="color:#888">// Backing fields can be accessed as a keyword inside property definitions
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        <span style="color:#080;font-weight:bold">get</span>() = baz ?: <span style="color:#080;font-weight:bold">field</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">set</span>(value) {
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">set</span>(<span style="color:#080;font-weight:bold">value</span>) {
 </span></span><span style="display:flex;"><span>            <span style="color:#080;font-weight:bold">field</span> = <span style="color:#d20;background-color:#fff0f0">&#34;custom: </span><span style="color:#33b;background-color:#fff0f0">$value</span><span style="color:#d20;background-color:#fff0f0">&#34;</span>
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>
@@ -1529,7 +1529,7 @@ Useful when dealing with dynamic languages or untyped serialization (e.g. JSON o
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">operator</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">getValue</span>(thisRef: T, <span style="color:#080;font-weight:bold">property</span>: KProperty&lt;*&gt;): R
 </span></span></code></pre></div><p>where T is the &ldquo;owner&rdquo; type, and R is the type of the property</p>
 <p>A valid delegate for a <code>var</code> must also have a <code>setValue</code> method:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">operator</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">setValue</span>(thisRef: T, <span style="color:#080;font-weight:bold">property</span>: KProperty&lt;*&gt;, value: P): R
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">operator</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">setValue</span>(thisRef: T, <span style="color:#080;font-weight:bold">property</span>: KProperty&lt;*&gt;, <span style="color:#080;font-weight:bold">value</span>: P): R
 </span></span></code></pre></div><p>where T and R are the same as in <code>getValue</code>, and P is a supertype of R</p>
 </section><section>
 <h1 id="kotlin-202----functional-kotlin">Kotlin 202 &ndash; Functional Kotlin</h1>
