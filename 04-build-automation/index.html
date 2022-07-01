@@ -27,7 +27,7 @@
     <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
 <h2 id="build-automation">Build Automation</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2022-06-26
+2022-07-01
 
 </section><section>
 <h1 id="overview">Overview</h1>
@@ -1501,11 +1501,11 @@ We want to inject our plugin into the distribution.</p>
 </span></span><span style="display:flex;"><span>[plugins]
 </span></span><span style="display:flex;"><span>dokka = { id = <span style="color:#d20;background-color:#fff0f0">&#34;org.jetbrains.dokka&#34;</span>, version.ref = <span style="color:#d20;background-color:#fff0f0">&#34;dokka&#34;</span> }
 </span></span><span style="display:flex;"><span>gitSemVer = { id = <span style="color:#d20;background-color:#fff0f0">&#34;org.danilopianini.git-sensitive-semantic-versioning&#34;</span>, version = <span style="color:#d20;background-color:#fff0f0">&#34;0.3.0&#34;</span> }
-</span></span><span style="display:flex;"><span>gradlePluginPublish = { id = <span style="color:#d20;background-color:#fff0f0">&#34;com.gradle.plugin-publish&#34;</span>, version = <span style="color:#d20;background-color:#fff0f0">&#34;0.21.0&#34;</span> }
+</span></span><span style="display:flex;"><span>gradlePluginPublish = { id = <span style="color:#d20;background-color:#fff0f0">&#34;com.gradle.plugin-publish&#34;</span>, version = <span style="color:#d20;background-color:#fff0f0">&#34;1.0.0&#34;</span> }
 </span></span><span style="display:flex;"><span>kotlin-jvm = { id = <span style="color:#d20;background-color:#fff0f0">&#34;org.jetbrains.kotlin.jvm&#34;</span>, version.ref = <span style="color:#d20;background-color:#fff0f0">&#34;kotlin&#34;</span> }
 </span></span><span style="display:flex;"><span>kotlin-qa = { id = <span style="color:#d20;background-color:#fff0f0">&#34;org.danilopianini.gradle-kotlin-qa&#34;</span>, version = <span style="color:#d20;background-color:#fff0f0">&#34;0.19.1&#34;</span> }
 </span></span><span style="display:flex;"><span>multiJvmTesting = { id = <span style="color:#d20;background-color:#fff0f0">&#34;org.danilopianini.multi-jvm-test-plugin&#34;</span>, version = <span style="color:#d20;background-color:#fff0f0">&#34;0.4.3&#34;</span> }
-</span></span><span style="display:flex;"><span>publishOnCentral = { id = <span style="color:#d20;background-color:#fff0f0">&#34;org.danilopianini.publish-on-central&#34;</span>, version = <span style="color:#d20;background-color:#fff0f0">&#34;1.0.2&#34;</span> }
+</span></span><span style="display:flex;"><span>publishOnCentral = { id = <span style="color:#d20;background-color:#fff0f0">&#34;org.danilopianini.publish-on-central&#34;</span>, version = <span style="color:#d20;background-color:#fff0f0">&#34;2.0.2&#34;</span> }
 </span></span><span style="display:flex;"><span>taskTree = { id = <span style="color:#d20;background-color:#fff0f0">&#34;com.dorongold.task-tree&#34;</span>, version = <span style="color:#d20;background-color:#fff0f0">&#34;2.1.0&#34;</span> }
 </span></span></code></pre></div>
 <ul>
@@ -2031,13 +2031,12 @@ Requires some manual configuration:</p>
 <p><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>          developer {
 </span></span><span style="display:flex;"><span>            name.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;Danilo Pianini&#34;</span>)
 </span></span><span style="display:flex;"><span>            email.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;danilo.pianini@gmail.com&#34;</span>)</span></span></code></pre></div>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>group = <span style="color:#d20;background-color:#fff0f0">&#34;org.danilopianini&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">projectId</span> = <span style="color:#d20;background-color:#fff0f0">&#34;</span><span style="color:#33b;background-color:#fff0f0">$group</span><span style="color:#d20;background-color:#fff0f0">.</span><span style="color:#33b;background-color:#fff0f0">$name</span><span style="color:#d20;background-color:#fff0f0">&#34;</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">projectId</span> = <span style="color:#d20;background-color:#fff0f0">&#34;</span><span style="color:#33b;background-color:#fff0f0">$group</span><span style="color:#d20;background-color:#fff0f0">.</span><span style="color:#33b;background-color:#fff0f0">$name</span><span style="color:#d20;background-color:#fff0f0">&#34;</span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">fullName</span> = <span style="color:#d20;background-color:#fff0f0">&#34;Gradle Publish On Maven Central Plugin&#34;</span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">websiteUrl</span> = <span style="color:#d20;background-color:#fff0f0">&#34;https://github.com/DanySK/</span><span style="color:#33b;background-color:#fff0f0">$name</span><span style="color:#d20;background-color:#fff0f0">&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">projectDetails</span> = <span style="color:#d20;background-color:#fff0f0">&#34;A Plugin for easily publishing artifacts on Maven Central&#34;</span></span></span></code></pre></div>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>                pom {
-</span></span><span style="display:flex;"><span>                    developers {
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">projectDetails</span> = <span style="color:#d20;background-color:#fff0f0">&#34;A Plugin for easily publishing artifacts on Maven Central&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">pluginImplementationClass</span> = <span style="color:#d20;background-color:#fff0f0">&#34;org.danilopianini.gradle.mavencentral.PublishOnCentral&#34;</span></span></span></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>                    developers {
 </span></span><span style="display:flex;"><span>                        developer {
 </span></span><span style="display:flex;"><span>                            name.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;Danilo Pianini&#34;</span>)
 </span></span><span style="display:flex;"><span>                            email.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;danilo.pianini@gmail.com&#34;</span>)
@@ -2058,10 +2057,11 @@ Requires some manual configuration:</p>
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>tasks.publishJavaMavenPublicationToMavenLocal
-</span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">registerCredentials</span> = tasks.register(<span style="color:#d20;background-color:#fff0f0">&#34;registerGradlePluginPortalCredentials&#34;</span>) {
-</span></span><span style="display:flex;"><span>    doLast {</span></span></code></pre></div></p>
+</span></span><span style="display:flex;"><span>    doLast {
+</span></span><span style="display:flex;"><span>        listOf(<span style="color:#d20;background-color:#fff0f0">&#34;gradle.publish.key&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;gradle.publish.secret&#34;</span>).forEach {
+</span></span><span style="display:flex;"><span>            <span style="color:#080;font-weight:bold">if</span> (!(project.hasProperty(<span style="color:#080;font-weight:bold">it</span>) or System.getenv().containsKey(<span style="color:#080;font-weight:bold">it</span>))) {
+</span></span><span style="display:flex;"><span>                <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">bashName</span> = <span style="color:#080;font-weight:bold">it</span>.toUpperCase().replace(<span style="color:#d20;background-color:#fff0f0">&#34;.&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;_&#34;</span>)</span></span></code></pre></div></p>
 </section><section>
 <h1 id="inspecting-dependencies">Inspecting dependencies</h1>
 <p>In rich projects, most of the build-related issues are due to pesky stuff going on with <em>dependencies</em></p>
