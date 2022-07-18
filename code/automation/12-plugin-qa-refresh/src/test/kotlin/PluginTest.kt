@@ -8,7 +8,9 @@ import java.io.File
 
 class PluginTest : FreeSpec({
     val pluginClasspathResource = ClassLoader.getSystemClassLoader().getResource("plugin-classpath.txt")
-        ?: throw IllegalStateException("Did not find the plugin classpath descriptor.")
+    requireNotNull(ClassLoader.getSystemClassLoader().getResource("plugin-classpath.txt")) {
+        "Did not find the plugin classpath descriptor."
+    }
     val classpath = pluginClasspathResource.openStream().bufferedReader().use { reader ->
         reader.readLines().map { File(it) }
     }
