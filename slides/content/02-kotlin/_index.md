@@ -106,7 +106,7 @@ foo(b = "bar") // OK, same as foo(0, "bar")
 # Kotlin 101
 ## Top level functions
 
-Kotlin supports top level functions
+Kotlin supports top level functions as well as Scala (3)
 
 ```kotlin
 fun foo() {
@@ -114,13 +114,10 @@ fun foo() {
 }
 ```
 
-By contrast, Scala requires to put them in an `object`
 
 ```scala
-object Foo {
-    def foo() {
-        ...
-    }
+def foo() {
+    ...
 }
 ```
 
@@ -644,7 +641,7 @@ Kotlin classes have two types of members: **methods** and **properties**
 | Kotlin                 | **No** (Hidden)              | *Yes*   | *Yes*      |
 | C#                     | *Yes*                        | *Yes*   | *Yes*      |
 
-In Scala, at the caller site, methods and fields are hard to distinguish, as parentheses for 0-ary method calls are optional
+In Scala, at the caller site, methods and fields are hard to distinguish due to the Uniform Access Principle.
 
 * In Kotlin, **methods/functions** (except when defined `infix`) are invoked with *mandatory parentheses*
 * **properties** are instead invoked *without parentheses*
@@ -1045,7 +1042,7 @@ Infix() with "Foo" + "Bar" + Infix() with "Baz" {{<comment_frag " // error: unre
 
 ## Operator creation
 
-In Scala, operator names are valid method names, and prefix and infix calls are automatic:
+In Scala, operator names are valid method names, and infix calls are automatic:
 * Very much the whole language philosophy: few concepts, high scalability
 * Easy to abuse, degenerating to esoteric operators
     * Especially when software is written by people with different background
@@ -1206,10 +1203,9 @@ Kotlin's type system supports generics
 * No higher kinded types (they are in Scala)
 * No type lambdas (they are in Scala)
 * Declaration-site variance (absent in Java)
-* Generic type reification via inlining (not found in Java nor Scala)
+* Generic type reification via inlining (not found in Java, kind of Scala inlining)
 ```scala
-trait Functor[F[_]] // There is no Kotlin equivalent for these lines
-type MapFunctor = Functor[({ type T[A] = Map[Int, A] })#T]
+type MapFunctor = [A] =>> Map[Int, A] // There is no Kotlin equivalent for this line
 ```
 
 ---
