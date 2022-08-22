@@ -1200,13 +1200,15 @@ This will turn useful in future...
 Kotlin's type system supports generics
 * Handier than Java's
 * **way** less powerful than Scala's
-* No higher kinded types (they are in Scala)
-* No type lambdas (they are in Scala)
-* Declaration-site variance (absent in Java)
-* Generic type reification via inlining (not found in Java, kind of Scala inlining)
+* No higher kinded types (found in Scala)
+* No type lambdas (found in Scala)
+
 ```scala
 type MapFunctor = [A] =>> Map[Int, A] // There is no Kotlin equivalent for this line
 ```
+
+* Declaration-site variance (absent in Java)
+* Generic type reification via inlining (not found in Java, somewhat obtainable in Scala 3)
 
 ---
 
