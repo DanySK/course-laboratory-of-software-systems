@@ -1204,7 +1204,11 @@ Kotlin's type system supports generics
 * No type lambdas (found in Scala)
 
 ```scala
-type MapFunctor = [A] =>> Map[Int, A] // There is no Kotlin equivalent for this line
+trait Functor[F[_]] // Scala 2: there is no Kotlin equivalent
+type MapFunctor = Functor[({ type T[A] = Map[Int, A] })#T]
+```
+```scala
+type MapFunctor = [A] =>> Map[Int, A] // Scala 3: there is no Kotlin equivalent
 ```
 
 * Declaration-site variance (absent in Java)
