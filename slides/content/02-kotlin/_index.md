@@ -106,7 +106,7 @@ foo(b = "bar") // OK, same as foo(0, "bar")
 # Kotlin 101
 ## Top level functions
 
-Kotlin supports top level functions as well as Scala (3)
+Similar to Scala 3 (unsupported in Scala 2)
 
 ```kotlin
 fun foo() {
