@@ -27,7 +27,7 @@
     <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
 <h2 id="kotlin-for-scala-developers">Kotlin (for Scala developers)</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2022-08-11
+2022-08-22
 
 </section><section>
 <h1 id="why-kotlin">Why Kotlin</h1>
@@ -99,15 +99,12 @@
 </span></span></span></code></pre></div></section><section>
 <h1 id="kotlin-101-2">Kotlin 101</h1>
 <h2 id="top-level-functions">Top level functions</h2>
-<p>Kotlin supports top level functions</p>
+<p>Similar to Scala 3 (unsupported in Scala 2)</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">foo</span>() {
 </span></span><span style="display:flex;"><span>    ...
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>By contrast, Scala requires to put them in an <code>object</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">Foo</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> foo() {
-</span></span><span style="display:flex;"><span>        ...
-</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">def</span> foo() {
+</span></span><span style="display:flex;"><span>    ...
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>When targeting the JVM, Kotlin simply generates a <code>FileNameKt</code> class behind the scenes where the function is stored.
 The behaviour can be controlled via annotations.</p>
@@ -585,7 +582,7 @@ The base version (without subject) is a more elegant &ldquo;<code>if</code>/<cod
 </tr>
 </tbody>
 </table>
-<p>In Scala, at the caller site, methods and fields are hard to distinguish, as parentheses for 0-ary method calls are optional</p>
+<p>In Scala, at the caller site, methods and fields are hard to distinguish due to the Uniform Access Principle.</p>
 <ul>
 <li>In Kotlin, <strong>methods/functions</strong> (except when defined <code>infix</code>) are invoked with <em>mandatory parentheses</em></li>
 <li><strong>properties</strong> are instead invoked <em>without parentheses</em></li>
@@ -880,7 +877,7 @@ In Scala</p>
 </span></span></code></pre></div></section><section>
 <h1 id="kotlin-102----oop-conventions-2">Kotlin 102 &ndash; OOP Conventions</h1>
 <h2 id="operator-creation">Operator creation</h2>
-<p>In Scala, operator names are valid method names, and prefix and infix calls are automatic:</p>
+<p>In Scala, operator names are valid method names, and infix calls are automatic:</p>
 <ul>
 <li>Very much the whole language philosophy: few concepts, high scalability</li>
 <li>Easy to abuse, degenerating to esoteric operators
@@ -1208,14 +1205,17 @@ This will turn useful in future&hellip;</p>
 <ul>
 <li>Handier than Java&rsquo;s</li>
 <li><strong>way</strong> less powerful than Scala&rsquo;s</li>
-<li>No higher kinded types (they are in Scala)</li>
-<li>No type lambdas (they are in Scala)</li>
-<li>Declaration-site variance (absent in Java)</li>
-<li>Generic type reification via inlining (not found in Java nor Scala)</li>
+<li>No higher kinded types (found in Scala)</li>
+<li>No type lambdas (found in Scala)</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">trait</span> <span style="color:#b06;font-weight:bold">Functor</span>[<span style="color:#888;font-weight:bold">F</span>[<span style="color:#080;font-weight:bold">_</span>]] <span style="color:#888">// There is no Kotlin equivalent for these lines
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">trait</span> <span style="color:#b06;font-weight:bold">Functor</span>[<span style="color:#888;font-weight:bold">F</span>[<span style="color:#080;font-weight:bold">_</span>]] <span style="color:#888">// Scala 2: there is no Kotlin equivalent
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#080;font-weight:bold">type</span> <span style="color:#888;font-weight:bold">MapFunctor</span> = <span style="color:#b06;font-weight:bold">Functor</span>[({ <span style="color:#080;font-weight:bold">type</span> <span style="color:#888;font-weight:bold">T</span>[<span style="color:#888;font-weight:bold">A</span>] <span style="color:#888;font-weight:bold">=</span> <span style="color:#888;font-weight:bold">Map</span>[<span style="color:#888;font-weight:bold">Int</span>, <span style="color:#888;font-weight:bold">A</span>] })<span style="color:#080;font-weight:bold">#</span><span style="color:#888;font-weight:bold">T</span>]
-</span></span></code></pre></div></section><section>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">type</span> <span style="color:#888;font-weight:bold">MapFunctor</span> = [<span style="color:#888;font-weight:bold">A</span>] =&gt;&gt; <span style="color:#b06;font-weight:bold">Map</span>[<span style="color:#888;font-weight:bold">Int</span>, <span style="color:#888;font-weight:bold">A</span>] <span style="color:#888">// Scala 3: there is no Kotlin equivalent
+</span></span></span></code></pre></div><ul>
+<li>Declaration-site variance (absent in Java)</li>
+<li>Generic type reification via inlining (not found in Java, somewhat obtainable in Scala 3)</li>
+</ul>
+</section><section>
 <h1 id="kotlin-103----generics-1">Kotlin 103 &ndash; Generics</h1>
 <h2 id="base-syntax">Base syntax</h2>
 <p>Syntax similar to Java generics</p>
