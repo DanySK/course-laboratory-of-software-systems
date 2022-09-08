@@ -8,9 +8,9 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/css/reset.css">
-<link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/css/reveal.css">
-  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.4b470a8fc4985b83e939ad3f07ab3c576f7d488da87c2a1b71c83b122aca7bc4.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
+    <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/dist/reset.css">
+<link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/dist/reveal.css">
+  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.b1eac19d172a5211a3a8ce3c350ed3d0f54e6c9937048db41b9beab52c013d08.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
     
 <link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
 <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
@@ -189,14 +189,8 @@ Nullable types are suffixed by a <code>?</code> and require special handling
 <em>None of them has nullable types!</em></p>
 <p>Nullability is unknown for types coming from the target platform, how to deal with them?</p>
 <ol>
-<li><span class='fragment '
-  >
-  Always consider them nullable (safe, but very unpleasant)
-</span></li>
-<li><span class='fragment '
-  >
-  Always consider them non nullable (code is lightweight and nice, but unsafe)
-</span></li>
+<li><span class='fragment ' >Always consider them nullable (safe, but very unpleasant)</span></li>
+<li><span class='fragment ' >Always consider them non nullable (code is lightweight and nice, but unsafe)</span></li>
 </ol>
 </section><section>
 <h1 id="kotlin-101-9">Kotlin 101</h1>
@@ -239,10 +233,7 @@ Nullable types are suffixed by a <code>?</code> and require special handling
 </li>
 <li>In Kotlin:
 <ul>
-<li>top type: <code><span class='fragment '
-  >
-  Any
-</span></code></li>
+<li>top type: <code><span class='fragment ' >Any</span></code></li>
 <li>bottom type:</li>
 </ul>
 </li>
@@ -265,14 +256,8 @@ Nullable types are suffixed by a <code>?</code> and require special handling
 </li>
 <li>In Kotlin:
 <ul>
-<li>top type: <del><code>Any</code></del> <code><span class='fragment '
-  >
-  Any?
-</span></code></li>
-<li>bottom type: <code><span class='fragment '
-  >
-  Nothing
-</span></code></li>
+<li>top type: <del><code>Any</code></del> <code><span class='fragment ' >Any?</span></code></li>
+<li>bottom type: <code><span class='fragment ' >Nothing</span></code></li>
 </ul>
 </li>
 </ul>
@@ -309,31 +294,35 @@ Consider the following Scala code:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">Double</span>.<span style="color:#b06;font-weight:bold">NaN</span> == <span style="color:#b06;font-weight:bold">Double</span>.<span style="color:#b06;font-weight:bold">NaN</span>
 </span></span></code></pre></div>
 
-<span class='fragment ' ><p><code>false</code>, OK, as every sane language</p>
+<span class='fragment ' >
+  <p><code>false</code>, OK, as every sane language</p>
+
 </span>
 
 
 
-
-<span class='fragment ' ><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">Double</span>.<span style="color:#b06;font-weight:bold">NaN</span> equals <span style="color:#b06;font-weight:bold">Double</span>.<span style="color:#b06;font-weight:bold">NaN</span>
-</span></span></code></pre></div></span>
-
-
-
-
-<span class='fragment ' ><p><code>true</code>! Boxing + Singleton make equality inconsistent!</p>
+<span class='fragment ' >
+  <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">Double</span>.<span style="color:#b06;font-weight:bold">NaN</span> equals <span style="color:#b06;font-weight:bold">Double</span>.<span style="color:#b06;font-weight:bold">NaN</span>
+</span></span></code></pre></div>
 </span>
 
 
 
+<span class='fragment ' >
+  <p><code>true</code>! Boxing + Singleton make equality inconsistent!</p>
 
-<span class='fragment ' ><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> a<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Int</span> = <span style="color:#00d;font-weight:bold">1</span>
+</span>
+
+
+
+<span class='fragment ' >
+  <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> a<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Int</span> = <span style="color:#00d;font-weight:bold">1</span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> b<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Long</span> = a
 </span></span><span style="display:flex;"><span>a == b <span style="color:#888">// true
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>a equals b <span style="color:#888">// false
 </span></span></span></code></pre></div><p>This causes a chain of issues, as <code>==</code> and <code>equals</code> do a different job, as do <code>##</code> and <code>hashCode</code>: <code>Map</code>s can become very surprising!</p>
-</span>
 
+</span>
 
 </section><section>
 <h1 id="kotlin-101-15">Kotlin 101</h1>
@@ -1849,20 +1838,29 @@ Used to cause side effects and returning the original object</p>
     </div>
 <script type="text/javascript" src=/Course-Laboratory-of-Software-Systems/reveal-hugo/object-assign.js></script>
 
-<a href="/Course-Laboratory-of-Software-Systems/reveal-js/css/print/" id="print-location" style="display: none;"></a>
-<script type="text/javascript">
-  var printLocationElement = document.getElementById('print-location');
-  var link = document.createElement('link');
-  link.rel = 'stylesheet';
-  link.type = 'text/css';
-  link.href = printLocationElement.href + (window.location.search.match(/print-pdf/gi) ? 'pdf.css' : 'paper.css');
-  document.getElementsByTagName('head')[0].appendChild(link);
-</script>
+<a href="/Course-Laboratory-of-Software-Systems/reveal-js/dist/print/" id="print-location" style="display: none;"></a>
 
-<script type="application/json" id="reveal-hugo-site-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"height":"900","pdfseparatefragments":false,"slide_number":true,"theme":"white","transition":"slide","transition_speed":"fast","width":"1440"}</script>
+<script type="application/json" id="reveal-hugo-site-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"height":"900","history":true,"mermaid":[{"fontFamily":"Inconsolata","gitGraph":{"mainBranchName":"master","rotateCommitLabel":true},"startOnLoad":false,"theme":"default","useMaxWidth":false}],"pdfseparatefragments":false,"slide_number":true,"theme":"white","transition":"slide","transition_speed":"fast","width":"1440"}</script>
 <script type="application/json" id="reveal-hugo-page-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"custom_theme_options":{"enablesourcemap":true,"targetpath":"css/custom-theme.css"},"transition":"slide","transition_speed":"fast"}</script>
 
-<script src="/Course-Laboratory-of-Software-Systems/reveal-js/js/reveal.js"></script>
+<script src="/Course-Laboratory-of-Software-Systems/reveal-js/dist/reveal.js"></script>
+
+
+  
+  
+  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/markdown/markdown.js"></script>
+  
+  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/highlight/highlight.js"></script>
+  
+  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/zoom/zoom.js"></script>
+  
+  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/notes/notes.js"></script>
+  
+  
+  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/notes/notes.js"></script>
+
+
+
 
 <script type="text/javascript">
   
@@ -1881,30 +1879,20 @@ Used to cause side effects and returning the original object</p>
   }
   
   var revealHugoDefaults = { center: true, controls: true, history: true, progress: true, transition: "slide" };
+
+  var revealHugoPlugins = { 
+    plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom ]
+   };
   var revealHugoSiteParams = JSON.parse(document.getElementById('reveal-hugo-site-params').innerHTML);
   var revealHugoPageParams = JSON.parse(document.getElementById('reveal-hugo-page-params').innerHTML);
   
   var options = Object.assign({},
     camelize(revealHugoDefaults),
     camelize(revealHugoSiteParams),
-    camelize(revealHugoPageParams));
+    camelize(revealHugoPageParams),
+    camelize(revealHugoPlugins));
   Reveal.initialize(options);
 </script>
-
-
-  
-  
-  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/markdown/marked.js"></script>
-  
-  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/markdown/markdown.js"></script>
-  
-  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/highlight/highlight.js"></script>
-  
-  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/zoom-js/zoom.js"></script>
-  
-  
-  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/notes/notes.js"></script>
-
 
 
 
@@ -1917,7 +1905,8 @@ Used to cause side effects and returning the original object</p>
 
   <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
   <script>
-    mermaid.initialize({startOnLoad: false});
+    mermaid.initialize({"fontFamily":"Inconsolata","gitGraph":{"mainBranchName":"master","rotateCommitLabel":true},"startOnLoad":false,"theme":"default","useMaxWidth":false});
+
     let render = (event) => {
       let mermaidElems = event.currentSlide.querySelectorAll('.mermaid');
       if (!mermaidElems.length){
