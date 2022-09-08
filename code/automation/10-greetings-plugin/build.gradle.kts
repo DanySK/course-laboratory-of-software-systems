@@ -5,7 +5,7 @@ plugins {
 
 // Configuration of software sources
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
