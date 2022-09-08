@@ -5,6 +5,9 @@ title = "Introduction to Laboratory of Software Systems"
 description = "Description of the course"
 outputs = ["Reveal"]
 
+[reveal_hugo.custom_theme_options]
+targetPath = "css/custom-theme.css"
+
 +++
 
 # {{< course_name >}}
