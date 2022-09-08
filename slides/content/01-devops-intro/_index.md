@@ -27,7 +27,7 @@ enableSourceMap = true
 
 ---
 
-{{% slide content="devops.intro" %}}
+{{% import path="shared-slides/devops/devops-intro.md" %}}
 
 ---
 
@@ -41,7 +41,7 @@ measuring some metrics *before* and *after* the operation.
 
 ---
 
-<iframe width="1280" height="720" src="https://www.youtube.com/embed/6qd6GG3XQXA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{{% youtube 6qd6GG3XQXA %}}
 
 ---
 

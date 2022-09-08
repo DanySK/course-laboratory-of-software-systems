@@ -11,3 +11,6 @@
 [submodule "slides/content/extra/pps-ci-introduction/PPS-ci-examples"]
 	path = slides/content/extra/pps-ci-introduction/PPS-ci-examples
 	url = https://github.com/APICe-at-DISI/PPS-ci-examples.git
+[submodule "slides/static/shared-slides"]
+	path = slides/shared-slides
+	url = https://github.com/DanySK/shared-slides.git
