@@ -50,6 +50,15 @@ section.has-light-background {
 .reveal section img {
 	border: 0em;
 	box-shadow: none;
+    max-width: 100%;
+    max-height: 23em;
+    height: auto;
+	object-fit: contain;
+}
+
+.reveal section img {
+	border: 0em;
+	box-shadow: none;
 }
 
 .reveal div .gist .hljs-ln {
