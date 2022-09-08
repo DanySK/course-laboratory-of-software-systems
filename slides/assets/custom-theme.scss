@@ -3,7 +3,30 @@
 
 
 // Include theme-specific fonts
-@import url(reveal-js/lib/font/source-sans-pro/source-sans-pro.css);
+// Include theme-specific fonts
+
+// Sans-serif
+// @import url('reveal-js/lib/font/source-sans-pro/source-sans-pro.css');
+// @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+// @import url('https://fonts.googleapis.com/css2?family=Ubuntu');
+@import url('https://fonts.googleapis.com/css2?family=Signika+Negative');
+// @import url('https://fonts.googleapis.com/css2?family=Open+Sans');
+
+// Serif
+@import url('https://fonts.googleapis.com/css2?family=Cinzel');
+
+// Handwriting
+
+// @import url('https://fonts.googleapis.com/css2?family=Dancing+Script');
+@import url('https://fonts.googleapis.com/css2?family=Satisfy');
+
+// Display
+// @import url('https://fonts.googleapis.com/css2?family=Fredoka+One');
+
+// Monospace
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono');
+// @import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono');
 
 $backgroundColor: #fff;
 
@@ -11,8 +34,8 @@ $mainColor: #000;
 $headingColor: #111;
 
 $mainFontSize: 2em;
-$mainFont: 'Source Sans Pro', Helvetica, sans-serif;
-$headingFont: 'Source Sans Pro', Helvetica, sans-serif;
+$mainFont: 'Signika Negative', 'Source Sans Pro', Helvetica, sans-serif;
+$headingFont: 'Signika Negative', 'Source Sans Pro', Helvetica, sans-serif;
 $headingLetterSpacing: normal;
 $headingFontWeight: 600;
 $linkColor: #0000b0;
@@ -33,7 +56,16 @@ section.has-light-background {
 }
 
 .reveal pre {
-	margin: 1em auto;
+	width: min-content;
+	max-width: 113%;
+	margin: 0em;
+	padding: 0em;
+	border-radius: 1em;
+	padding-left: 1em;
+	padding-right: 1em;
+	border: #000;
+	border-width: 1em;
+	box-shadow: 0.4em 0.4em 1em .01em #888888;
 }
 
 .reveal strong,
@@ -69,13 +101,10 @@ section.has-light-background {
 
 .reveal code {
 	color: deeppink;
-	line-height: 140%;
-	// font-size: 130%;
-	font-family: "Oxygen Mono", "Roboto Mono", "Ubuntu Mono", "Courier New", Courier, monospace;
-}
-
-.reveal pre code {
-	color: black;
+	line-height: 130%;
+	font-weight: bold;
+	font-size: 110%;
+	font-family: "Inconsolata";
 }
 
 .reveal h3 {
@@ -83,7 +112,7 @@ section.has-light-background {
 }
 
 .reveal ul {
-	margin: .2em .2em .2em;
+	margin: 0em 0em .2em 0em;
 }
 
 .gist-it-gist .gist-file .gist-data pre, .gister-gist .gist-file .gist-data pre {
@@ -91,8 +120,22 @@ section.has-light-background {
 }
 
 .reveal pre code {
-	color: rgb(0, 0, 0);
+	max-width: 100%;
+	line-height: 100%;
+	font-size: 1.48em;
+	color: black;
 	max-height: none;
+	font-family: 'Inconsolata';
+	font-weight: normal;
+	margin: .2em;
+}
+
+.reveal div.highlight {
+	max-width: 120%;
+	overflow-x: visible;
+	display: flex;
+	justify-content: center;
+	margin: 0;
 }
 
 .hljs {
@@ -100,3 +143,63 @@ section.has-light-background {
 	box-shadow: 0 0 3em 0.6em rgba(255, 255, 255, 0.2);
 }
 
+
+// Nice blockquote and cite
+
+.reveal blockquote {
+	width:90%;
+	margin:0.3em auto;
+	font-family: 'Satisfy';
+	font-style: normal;
+	font-size: 1em;
+	color: #333333;
+	padding:0.1em 0.1em 0.1em 0.1em;
+	border-color: #039418;
+	border-style: solid;
+	border-width: 0.1em;
+	border-radius: 1em;
+	border-left:0.7em solid #039418 ;
+	line-height: 1.2em;
+	position: relative;
+	background:#FAFAFA;
+	text-align: center;
+}
+
+.reveal blockquote::before{
+	font-family:Arial;
+	content: "\201C";
+	color:#039418;
+	font-size: 4em;
+	position: absolute;
+	left: 0.05em;
+	top: 0.25em;
+}
+
+.reveal blockquote p::before{
+	content: "";
+	padding-left: 2em;
+}
+
+.reveal blockquote::after{
+	font-family:Arial;
+	content: "\201D";
+	color:#039418;
+	font-size: 4em;
+	position: absolute;
+	bottom: -0.2em;
+	right: 0.1em;
+}
+
+.reveal cite::before {
+	content: "— ";
+}
+
+.reveal cite {
+	display: block;
+	text-align: right;
+	padding-right: 10%;
+	padding-top: 0.5em;
+	font-weight: bolder;
+	font-family: 'Cinzel';
+	font-size: 0.7em;
+}

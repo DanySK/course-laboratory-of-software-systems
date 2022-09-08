@@ -319,10 +319,24 @@ Implicit type conversion to "bigger" types is source of nasty errors when automa
 <br/>
 Consider the following Scala code:
 ```scala
-Double.NaN == Double.NaN // false, OK, as every sane language
-Double.NaN equals Double.NaN // true! Boxing + Singleton make equality inconsistent!
+Double.NaN == Double.NaN
 ```
-Another example:
+
+{{% fragment %}}
+`false`, OK, as every sane language
+{{% /fragment %}}
+
+{{% fragment %}}
+```scala
+Double.NaN equals Double.NaN
+```
+{{% /fragment %}}
+
+{{% fragment %}}
+`true`! Boxing + Singleton make equality inconsistent!
+{{% /fragment %}}
+
+{{% fragment %}}
 ```scala
 val a: Int = 1
 val b: Long = a
@@ -330,6 +344,7 @@ a == b // true
 a equals b // false
 ```
 This causes a chain of issues, as `==` and `equals` do a different job, as do `##` and `hashCode`: `Map`s can become very surprising!
+{{% /fragment %}}
 
 
 ---
@@ -715,6 +730,7 @@ When designing with Kotlin, you must consider methods and properties, and forget
 ## Defining methods
 
 Methods are defined as `fun`ctions within the scope of a class
+* As in any OOP language, they have an implicit parameter, the **receiver** (`this`)
 
 ```kotlin
 class MutableComplex {
@@ -1207,9 +1223,13 @@ Kotlin's type system supports generics
 trait Functor[F[_]] // Scala 2: there is no Kotlin equivalent
 type MapFunctor = Functor[({ type T[A] = Map[Int, A] })#T]
 ```
+<br>
+
 ```scala
 type MapFunctor = [A] =>> Map[Int, A] // Scala 3: there is no Kotlin equivalent
 ```
+
+<br>
 
 * Declaration-site variance (absent in Java)
 * Generic type reification via inlining (not found in Java, somewhat obtainable in Scala 3)
@@ -1387,6 +1407,9 @@ val (driver1, driver2) = lineup
 driver1 // Sainz
 driver2 // Leclerc
 ```
+
+<br>
+
 ```kotlin
 class A {
     operator fun component1() = 1
@@ -1435,15 +1458,19 @@ goGetMeA(Booze.Rum())
 ```kotlin
 class Outer {
     private val readMeIfYouCan = 1
-    class Nested {
-        init { println(readMeIfYouCan) } // error: unresolved reference: readMeIfYouCan
-    }
+    class Nested { init { println(readMeIfYouCan) } } // error: unresolved reference: readMeIfYouCan
 }
 ```
+
+<br>
+
 ```kotlin
 class Outer { class Nested }
 Outer.Nested() // OK
 ```
+
+<br>
+
 ```kotlin
 class Outer {
     private val readMeIfYouCan = 1
@@ -1504,8 +1531,8 @@ val `f1 2020` = mapOf(
 
 ## Delegation
 > **Favour composition over inheritance**<br/>
-> `A` should extend `B` only if `A` truly ‘is-a’ a `B`, if not, *use composition* instead, which means A should hold a reference of B and expose a simpler API.<br/>
-> *J. Bloch, Effective Java, Item 16*
+`A` should extend `B` only if `A` truly ‘is-a’ a `B`, if not, *use composition* instead, which means `A` should hold a reference of `B` and *expose a simpler API*.<br/>
+<cite> *J. Bloch, Effective Java, Item 16*</cite>
 
 **Delegation** is one of the mechanisms to implement composition,
 see the [delegation pattern](https://en.wikipedia.org/wiki/Delegation_pattern)

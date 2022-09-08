@@ -41,7 +41,7 @@ enableSourceMap = true
 
 # Contacts
 
-#### Prioritize the forum [`https://virtuale.unibo.it/course/view.php?id=30734`](https://virtuale.unibo.it/course/view.php?id=30734):
+#### Prioritize the forum [`https://virtuale.unibo.it/mod/forum/view.php?id=970526`](https://virtuale.unibo.it/mod/forum/view.php?id=970526):
   * All technical question
   * Any other non personal question
 
@@ -53,21 +53,18 @@ enableSourceMap = true
 <p>
 
 #### Office hours
-Teachers available both physically and via Microsoft Teams
-  * Danilo Pianini $\Rightarrow$ check [the teacher webpage](https://www.unibo.it/sitoweb/danilo.pianini/en)
-  * Angelo Croatti $\Rightarrow$ check [the teacher webpage](https://www.unibo.it/sitoweb/a.croatti)
+* Danilo Pianini $\Rightarrow$ check [the teacher webpage](https://www.unibo.it/sitoweb/danilo.pianini/en)
+* Angelo Croatti $\Rightarrow$ check [the teacher webpage](https://www.unibo.it/sitoweb/a.croatti)
 
 ---
 
 # Resources
 
-These *slides* should contain everything you need
-<br>
-code examples produced during the lecture will be available right after
+* These *slides* should contain everything you need
+* code examples produced during the lecture will be available right after
+* most code is already on GitHub
 
 Slides will be produced with a *rolling release* model.
-<br>
-(of course trying to get them ready at least the day before the lecture)
 
 ## Books 
 
@@ -75,27 +72,18 @@ No mandatory books, but there are both:
 * Recommended readings
 * Additional useful books
 
-On [the course webpage](https://www.unibo.it/it/didattica/insegnamenti/insegnamento/2021/412677)
+On [the course webpage](https://www.unibo.it/it/didattica/insegnamenti/insegnamento/2022/412677)
 
 ---
 
 # Organization
 
 Lectures in lab with immediate hands-on.
-<br>
-If you are following remotely, make sure you can experiment using your local system.
-
-## Anti-coronavirus measures
-
-* **Reduced room capacity** (will be relaxed maybe if things go well)
-* **Mandatory _"certificazione verde"_ a.k.a. _green pass_**
-* **Mandatory face masks** (sorry, no way around)
-* **Immuni** app warmly recommended to all those with a compatible device
 
 ## Timetable
 
-* **Wednesday 13:00--16:00** --- Lab 3.1 --- Usually with Pianini
-* **Friday 14:00--17:00** --- Lab 3.1 --- Usually with Croatti
+* **Wednesday 13:00--16:00** --- Lab 3.3 --- Usually with Pianini
+* **Friday 14:00--17:00** --- Lab 3.3 --- Usually with Croatti
 
 Changes will be published on the forum
 
@@ -132,7 +120,10 @@ Changes will be published on the forum
   * Full-scale *automation*
     * Including *continuous integration* and delivery
 * Can be a **joint effort** with other courses
-  * Discussed on a case-by-case basis
+  * We care about the *domain modeling* and the application of *DevOps techniques*
+  * You can pick a project of another course, apply them there, and it is fine for LSS
+* Can be a project created for LSS alone
+  * If you are short on ideas, we can help :)
 
 ---
 
@@ -150,7 +141,6 @@ Changes will be published on the forum
 * IntelliJ Idea
 * Visual Studio Code
 * A decent Unix terminal
-* Ruby Gem
 
 ---
 

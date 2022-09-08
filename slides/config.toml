@@ -24,12 +24,18 @@ height = '900'
 # embedded = 'true'
 # disableLayout = 'true'
 pdfSeparateFragments = false
+slide_number = true
+transition = "slide"
+transition_speed = "fast"
+custom_theme = "custom-theme.scss"
+custom_theme_compile = true
 
 
 [markup.goldmark.renderer]
 unsafe = true
 
 [markup.highlight]
+codeFences = true
 #style = "monokailight"
 style = "pastie"
 #style = "pygments"

@@ -18,7 +18,7 @@ enableSourceMap = true
 
 +++
 
-# Development and programming paradigms
+# Programming and development paradigms
 
 ## Continuous Integration
 
