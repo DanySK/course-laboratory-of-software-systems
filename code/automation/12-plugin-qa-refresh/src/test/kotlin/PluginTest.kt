@@ -7,18 +7,11 @@ import org.gradle.testkit.runner.TaskOutcome
 import java.io.File
 
 class PluginTest : FreeSpec({
-    val pluginClasspathResource = ClassLoader.getSystemClassLoader().getResource("plugin-classpath.txt")
-    requireNotNull(ClassLoader.getSystemClassLoader().getResource("plugin-classpath.txt")) {
-        "Did not find the plugin classpath descriptor."
-    }
-    val classpath = pluginClasspathResource.openStream().bufferedReader().use { reader ->
-        reader.readLines().map { File(it) }
-    }
     val greetTask = ":greet" // Colon needed!
     fun testSetup(buildFile: () -> String) = projectSetup(buildFile).let { testFolder ->
         GradleRunner.create()
             .withProjectDir(testFolder.root)
-            .withPluginClasspath(classpath)
+            .withPluginClasspath()
             .withArguments(greetTask)
             .also {
                 ClassLoader.getSystemResourceAsStream("testkit-gradle.properties")
