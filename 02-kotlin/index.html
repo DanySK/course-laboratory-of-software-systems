@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/css/reset.css">
 <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/css/reveal.css">
-  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.9285a3918faa5652939e9128688421910d80bf31043be976f290fe6a655f63db.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
+  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.29846e09bb35ea1c4b14bcdfaa5c152249150ca43a8e38d2956da6ab0bea8c95.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
     
 <link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
 <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
@@ -306,14 +306,35 @@ Nullable types are suffixed by a <code>?</code> and require special handling
 <p>Implicit type conversion to &ldquo;bigger&rdquo; types is source of nasty errors when automatic boxing is involved.
 <br/>
 Consider the following Scala code:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">Double</span>.<span style="color:#b06;font-weight:bold">NaN</span> == <span style="color:#b06;font-weight:bold">Double</span>.<span style="color:#b06;font-weight:bold">NaN</span> <span style="color:#888">// false, OK, as every sane language
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#b06;font-weight:bold">Double</span>.<span style="color:#b06;font-weight:bold">NaN</span> equals <span style="color:#b06;font-weight:bold">Double</span>.<span style="color:#b06;font-weight:bold">NaN</span> <span style="color:#888">// true! Boxing + Singleton make equality inconsistent!
-</span></span></span></code></pre></div><p>Another example:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> a<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Int</span> = <span style="color:#00d;font-weight:bold">1</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">Double</span>.<span style="color:#b06;font-weight:bold">NaN</span> == <span style="color:#b06;font-weight:bold">Double</span>.<span style="color:#b06;font-weight:bold">NaN</span>
+</span></span></code></pre></div>
+
+<span class='fragment ' ><p><code>false</code>, OK, as every sane language</p>
+</span>
+
+
+
+
+<span class='fragment ' ><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">Double</span>.<span style="color:#b06;font-weight:bold">NaN</span> equals <span style="color:#b06;font-weight:bold">Double</span>.<span style="color:#b06;font-weight:bold">NaN</span>
+</span></span></code></pre></div></span>
+
+
+
+
+<span class='fragment ' ><p><code>true</code>! Boxing + Singleton make equality inconsistent!</p>
+</span>
+
+
+
+
+<span class='fragment ' ><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> a<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Int</span> = <span style="color:#00d;font-weight:bold">1</span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> b<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Long</span> = a
 </span></span><span style="display:flex;"><span>a == b <span style="color:#888">// true
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>a equals b <span style="color:#888">// false
 </span></span></span></code></pre></div><p>This causes a chain of issues, as <code>==</code> and <code>equals</code> do a different job, as do <code>##</code> and <code>hashCode</code>: <code>Map</code>s can become very surprising!</p>
+</span>
+
+
 </section><section>
 <h1 id="kotlin-101-15">Kotlin 101</h1>
 <h2 id="numeric-type-conversions-in-kotlin">Numeric type conversions in Kotlin</h2>
@@ -634,6 +655,9 @@ and provide access only via <code>get</code>/<code>set</code> methods: the actua
 <h1 id="kotlin-102----oop-5">Kotlin 102 &ndash; OOP</h1>
 <h2 id="defining-methods">Defining methods</h2>
 <p>Methods are defined as <code>fun</code>ctions within the scope of a class</p>
+<ul>
+<li>As in any OOP language, they have an implicit parameter, the <strong>receiver</strong> (<code>this</code>)</li>
+</ul>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MutableComplex</span> {
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">real</span>: Double = <span style="color:#00d;font-weight:bold">0.0</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">imaginary</span>: Double = <span style="color:#00d;font-weight:bold">0.0</span>
@@ -1210,8 +1234,10 @@ This will turn useful in future&hellip;</p>
 </ul>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">trait</span> <span style="color:#b06;font-weight:bold">Functor</span>[<span style="color:#888;font-weight:bold">F</span>[<span style="color:#080;font-weight:bold">_</span>]] <span style="color:#888">// Scala 2: there is no Kotlin equivalent
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#080;font-weight:bold">type</span> <span style="color:#888;font-weight:bold">MapFunctor</span> = <span style="color:#b06;font-weight:bold">Functor</span>[({ <span style="color:#080;font-weight:bold">type</span> <span style="color:#888;font-weight:bold">T</span>[<span style="color:#888;font-weight:bold">A</span>] <span style="color:#888;font-weight:bold">=</span> <span style="color:#888;font-weight:bold">Map</span>[<span style="color:#888;font-weight:bold">Int</span>, <span style="color:#888;font-weight:bold">A</span>] })<span style="color:#080;font-weight:bold">#</span><span style="color:#888;font-weight:bold">T</span>]
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">type</span> <span style="color:#888;font-weight:bold">MapFunctor</span> = [<span style="color:#888;font-weight:bold">A</span>] =&gt;&gt; <span style="color:#b06;font-weight:bold">Map</span>[<span style="color:#888;font-weight:bold">Int</span>, <span style="color:#888;font-weight:bold">A</span>] <span style="color:#888">// Scala 3: there is no Kotlin equivalent
-</span></span></span></code></pre></div><ul>
+</span></span></code></pre></div><br>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">type</span> <span style="color:#888;font-weight:bold">MapFunctor</span> = [<span style="color:#888;font-weight:bold">A</span>] =&gt;&gt; <span style="color:#b06;font-weight:bold">Map</span>[<span style="color:#888;font-weight:bold">Int</span>, <span style="color:#888;font-weight:bold">A</span>] <span style="color:#888">// Scala 3: there is no Kotlin equivalent
+</span></span></span></code></pre></div><br>
+<ul>
 <li>Declaration-site variance (absent in Java)</li>
 <li>Generic type reification via inlining (not found in Java, somewhat obtainable in Scala 3)</li>
 </ul>
@@ -1362,7 +1388,8 @@ This feature is <em>way</em> less powerful than Scala&rsquo;s pattern matching.<
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#a61717;background-color:#e3d2d2">(</span><span style="color:#369;font-weight:bold">driver1</span>, driver2) = lineup
 </span></span><span style="display:flex;"><span>driver1 <span style="color:#888">// Sainz
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>driver2 <span style="color:#888">// Leclerc
-</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">A</span> {
+</span></span></span></code></pre></div><br>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">A</span> {
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">operator</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">component1</span>() = <span style="color:#00d;font-weight:bold">1</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">operator</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">component2</span>() = <span style="color:#00d;font-weight:bold">2</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">operator</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">component3</span>() = <span style="color:#00d;font-weight:bold">3</span>
@@ -1402,13 +1429,13 @@ This feature is <em>way</em> less powerful than Scala&rsquo;s pattern matching.<
 </ul>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Outer</span> {
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">readMeIfYouCan</span> = <span style="color:#00d;font-weight:bold">1</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Nested</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">init</span> { println(readMeIfYouCan) } <span style="color:#888">// error: unresolved reference: readMeIfYouCan
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Outer</span> { <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Nested</span> }
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Nested</span> { <span style="color:#080;font-weight:bold">init</span> { println(readMeIfYouCan) } } <span style="color:#888">// error: unresolved reference: readMeIfYouCan
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
+</span></span></code></pre></div><br>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Outer</span> { <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Nested</span> }
 </span></span><span style="display:flex;"><span>Outer.Nested() <span style="color:#888">// OK
-</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Outer</span> {
+</span></span></span></code></pre></div><br>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Outer</span> {
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">readMeIfYouCan</span> = <span style="color:#00d;font-weight:bold">1</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">inner</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Inner</span> {
 </span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">init</span> { println(readMeIfYouCan) } <span style="color:#888">// ok
@@ -1453,8 +1480,8 @@ This feature is <em>way</em> less powerful than Scala&rsquo;s pattern matching.<
 <h2 id="delegation">Delegation</h2>
 <blockquote>
 <p><strong>Favour composition over inheritance</strong><br/>
-<code>A</code> should extend <code>B</code> only if <code>A</code> truly ‘is-a’ a <code>B</code>, if not, <em>use composition</em> instead, which means A should hold a reference of B and expose a simpler API.<br/>
-<em>J. Bloch, Effective Java, Item 16</em></p>
+<code>A</code> should extend <code>B</code> only if <code>A</code> truly ‘is-a’ a <code>B</code>, if not, <em>use composition</em> instead, which means <code>A</code> should hold a reference of <code>B</code> and <em>expose a simpler API</em>.<br/>
+<cite> <em>J. Bloch, Effective Java, Item 16</em></cite></p>
 </blockquote>
 <p><strong>Delegation</strong> is one of the mechanisms to implement composition,
 see the <a href="https://en.wikipedia.org/wiki/Delegation_pattern">delegation pattern</a>
@@ -1830,7 +1857,7 @@ Used to cause side effects and returning the original object</p>
   document.getElementsByTagName('head')[0].appendChild(link);
 </script>
 
-<script type="application/json" id="reveal-hugo-site-params">{"height":"900","pdfseparatefragments":false,"theme":"white","width":"1440"}</script>
+<script type="application/json" id="reveal-hugo-site-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"height":"900","pdfseparatefragments":false,"slide_number":true,"theme":"white","transition":"slide","transition_speed":"fast","width":"1440"}</script>
 <script type="application/json" id="reveal-hugo-page-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"custom_theme_options":{"enablesourcemap":true,"targetpath":"css/custom-theme.css"},"transition":"slide","transition_speed":"fast"}</script>
 
 <script src="/Course-Laboratory-of-Software-Systems/reveal-js/js/reveal.js"></script>
