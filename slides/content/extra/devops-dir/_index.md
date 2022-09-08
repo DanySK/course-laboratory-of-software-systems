@@ -24,7 +24,7 @@ enableSourceMap = true
 
 ---
 
-{{% slide content="devops.intro" %}}
+{{% import path="shared-slides/devops/devops-intro.md" %}}
 
 ---
 
