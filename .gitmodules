@@ -1,6 +1,6 @@
 [submodule "slides/themes/reveal-hugo"]
 	path = slides/themes/reveal-hugo
-	url = https://github.com/dzello/reveal-hugo.git
+	url = https://github.com/cric96/reveal-hugo.git
 	branch = master
 [submodule "code/automation/13-plugin-final"]
 	path = code/automation/13-plugin-final
