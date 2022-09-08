@@ -1,5 +1,5 @@
-@import "reveal-js/css/theme/template/mixins";
-@import "reveal-js/css/theme/template/settings";
+@import "reveal-js/dist/theme/template/mixins";
+@import "reveal-js/dist/theme/template/settings";
 
 
 // Include theme-specific fonts
@@ -48,7 +48,7 @@ $heading2Size: 1.6em;
 $heading3Size: 1.3em;
 $heading4Size: 1.0em;
 
-@import "reveal-js/css/theme/template/theme";
+@import "reveal-js/dist/theme/template/theme";
 
 section.has-light-background {
 	&, h1, h2, h3, h4, h5, h6 {
@@ -100,14 +100,6 @@ section.has-light-background {
 	line-height: 100%;
 }
 
-.reveal code {
-	color: deeppink;
-	line-height: 130%;
-	font-weight: bold;
-	font-size: 110%;
-	font-family: "Inconsolata";
-}
-
 .reveal h3 {
 	margin: .5em 0 0;
 }
@@ -118,6 +110,14 @@ section.has-light-background {
 
 .gist-it-gist .gist-file .gist-data pre, .gister-gist .gist-file .gist-data pre {
 	box-shadow: none !important;
+}
+
+.reveal code {
+	color: deeppink;
+	line-height: 130%;
+	font-weight: bold;
+	font-size: 110%;
+	font-family: "Inconsolata";
 }
 
 .reveal pre code {
