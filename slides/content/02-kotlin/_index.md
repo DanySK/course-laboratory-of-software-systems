@@ -904,8 +904,8 @@ father.son.father // OK!
 
 # Kotlin 102 -- OOP
 
-> **Design and document for inheritance or else prohibit it**<br/>
-> *J. Bloch, Effective Java, Item 17*
+> **Design and document for inheritance or else prohibit it**
+<cite>J. Bloch, Effective Java, Item 17</cite>
 
 ## Closed hierarchies and `open`
 
@@ -1531,7 +1531,9 @@ val `f1 2020` = mapOf(
 
 ## Delegation
 > **Favour composition over inheritance**<br/>
-`A` should extend `B` only if `A` truly ‘is-a’ a `B`, if not, *use composition* instead, which means `A` should hold a reference of `B` and *expose a simpler API*.<br/>
+`A` should extend `B` only if `A` truly ‘is-a’ a `B`,
+if not, *use composition* instead,
+which means `A` should hold a reference of `B` and *expose a simpler API*.
 <cite> *J. Bloch, Effective Java, Item 16*</cite>
 
 **Delegation** is one of the mechanisms to implement composition,
