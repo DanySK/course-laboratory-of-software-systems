@@ -56,19 +56,6 @@ section.has-light-background {
 	}
 }
 
-.reveal pre {
-	width: min-content;
-	max-width: 113%;
-	margin: 0em;
-	padding: 0em;
-	border-radius: 1em;
-	padding-left: 1em;
-	padding-right: 1em;
-	border: #000;
-	border-width: 1em;
-	box-shadow: 0.4em 0.4em 1em .01em #888888;
-}
-
 .reveal strong,
 .reveal b {
 	font-weight: bold;
@@ -120,6 +107,19 @@ section.has-light-background {
 	font-family: "Inconsolata";
 }
 
+.reveal pre {
+	width: min-content;
+	max-width: 113%;
+	margin: 0em;
+	padding: 0em;
+	border-radius: 1em;
+	padding-left: 1em;
+	padding-right: 1em;
+	border: #000;
+	border-width: 1em;
+	box-shadow: 0.4em 0.4em 1em .01em #888888;
+}
+
 .reveal pre code {
 	max-width: 100%;
 	line-height: 100%;
@@ -137,6 +137,7 @@ section.has-light-background {
 	display: flex;
 	justify-content: center;
 	margin: 0;
+	margin-bottom: .5em;
 }
 
 .hljs {
