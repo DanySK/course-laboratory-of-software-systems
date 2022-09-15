@@ -17,13 +17,9 @@ enableSourceMap = true
 
 +++
 
-# {{< course_name >}}
+# Kotlin (for Scala developers)
 
-## Kotlin (for Scala developers)
-
-### [Danilo Pianini](mailto:danilo.pianini@unibo.it)
-
-{{< today >}}
+{{% import path="reusable/header.md" %}}
 
 ---
 

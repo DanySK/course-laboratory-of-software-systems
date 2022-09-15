@@ -17,13 +17,9 @@ enableSourceMap = true
 
 +++
 
-# {{< course_name >}}
+# Advanced Versioning Techniques
 
-## Advanced Versioning Techniques
-
-### [Danilo Pianini](mailto:danilo.pianini@unibo.it)
-
-{{< today >}}
+{{% import path="reusable/header.md" %}}
 
 ---
 
@@ -468,9 +464,19 @@ Changes into submodules are dealt with as if they were on a *separate repository
 
 ---
 
-## Removing submodules
+## Moving and removing submodules
 
-No single built-in command {{< emoji "expressionless" >}}
+* `git mv path/to/submodule`
+* `git rm path/to/submodule`
+
+They allow, respectively, to move/remove an existing submodule
+* a *modern* version of git is required (introduced in 2022)
+
+---
+
+## Removing submodules (legacy)
+
+No single built-in command in old versions of git {{< emoji "expressionless" >}}:
 
 1. De-init the submodule
 
@@ -485,3 +491,17 @@ No single built-in command {{< emoji "expressionless" >}}
 `git rm -f sub/module/path`
 
 **Note**: Do not use a trailing slash on the submodule path when using these commands!
+
+---
+
+## Who did this? Complimenting (or blaming) people
+
+### `git blame`
+
+---
+
+## Mining lost commits
+
+### `git reflog`
+
+

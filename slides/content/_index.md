@@ -10,13 +10,9 @@ targetPath = "css/custom-theme.css"
 
 +++
 
-# {{< course_name >}}
+# Introduction to the course
 
-## Introduction to the course
-
-### [Danilo Pianini](mailto:danilo.pianini@unibo.it) -- [Angelo Croatti](a.croatti@unibo.it)
-
-{{< today >}}
+{{% import path="reusable/header.md" %}}
 
 ---
 
