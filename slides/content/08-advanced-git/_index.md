@@ -512,6 +512,201 @@ finding who did something specific
 
 ## Mining lost commits
 
+```mermaid
+flowchart RL
+  HEAD{{"HEAD"}}
+  master(master)
+
+  C10([10]) --> C9([9]) --> C8([8]) --> C7([7]) --> C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+
+  master -.-> C10
+
+  HEAD -.-> C10
+  HEAD --"fas:fa-link"--o master
+
+  class HEAD head;
+  class master branch;
+  class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10 commit;
+```
+
+{{% fragment %}}
+⬇️ `git checkout HEAD~4 && git checkout -b very-important` ⬇️
+{{% /fragment %}}
+
+
+{{% fragment %}}
+
+```mermaid
+flowchart RL
+  HEAD{{"HEAD"}}
+  master(master)
+  v(very-important)
+
+  C10([10]) --> C9([9]) --> C8([8]) --> C7([7]) --> C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+
+  master -.-> C10
+  v -.-> C6
+
+  HEAD -.-> C6
+  HEAD --"fas:fa-link"--o v
+
+  class HEAD head;
+  class master,v branch;
+  class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10 commit;
+```
+
+{{% /fragment %}}
+
+{{% fragment %}}
+⬇️ Multiple extremely important commits ⬇️
+{{% /fragment %}}
+
+{{% fragment %}}
+
+```mermaid
+flowchart RL
+  HEAD{{"HEAD"}}
+  master(master)
+  v(very-important)
+
+  C10([10]) --> C9([9]) --> C8([8]) --> C7([7]) --> C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+  C13([13]) --> C12([12]) --> C11([11]) --> C6([6])
+
+  master -.-> C10
+  v -.-> C13
+
+  HEAD -.-> C13
+  HEAD --"fas:fa-link"--o v
+
+  class HEAD head;
+  class master branch;
+  class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C10,C11,C12,C13 commit;
+```
+{{% /fragment %}}
+
+---
+
+## Mining lost commits
+
+```mermaid
+flowchart RL
+  HEAD{{"HEAD"}}
+  master(master)
+  v(very-important)
+
+  C10([10]) --> C9([9]) --> C8([8]) --> C7([7]) --> C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+  C13([13]) --> C12([12]) --> C11([11]) --> C6([6])
+
+  master -.-> C10
+  v -.-> C13
+
+  HEAD -.-> C13
+  HEAD --"fas:fa-link"--o v
+
+  class HEAD head;
+  class master branch;
+  class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C10,C11,C12,C13 commit;
+```
+
+{{% fragment %}}
+⬇️ `git checkout master` ⬇️
+{{% /fragment %}}
+
+{{% fragment %}}
+```mermaid
+flowchart RL
+  HEAD{{"HEAD"}}
+  master(master)
+  v(very-important)
+
+  C10([10]) --> C9([9]) --> C8([8]) --> C7([7]) --> C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+  C13([13]) --> C12([12]) --> C11([11]) --> C6([6])
+
+  master -.-> C10
+  v -.-> C13
+
+  HEAD -.-> C10
+  HEAD --"fas:fa-link"--o master
+
+  class HEAD head;
+  class master,v branch;
+  class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C10,C11,C12,C13 commit;
+```
+{{% /fragment %}}
+
+{{% fragment %}}
+`git branch -D very-important` ➡️
+{{% /fragment %}}
+
+---
+
+## Mining lost commits
+
+⬇️ `git branch -D very-important` ⬇️
+
+{{% fragment %}}
+
+```mermaid
+flowchart RL
+  HEAD{{"HEAD"}}
+  master(master)
+
+  C10([10]) --> C9([9]) --> C8([8]) --> C7([7]) --> C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+  C11([11]) --> C6([6])
+  subgraph How to reattach here?
+  C13([13]) --> C12([12]) --> C11
+  end
+
+  master -.-> C10
+
+  HEAD -.-> C10
+  HEAD --"fas:fa-link"--o master
+
+  class HEAD head;
+  class master branch;
+  class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C10,C11,C12,C13 commit;
+```
+
+{{% /fragment %}}
+
+{{% fragment %}}
+![](https://wompampsupport.azureedge.net/fetchimage?siteId=7575&v=2&jpgQuality=100&width=700&url=https%3A%2F%2Fi.kym-cdn.com%2Fphotos%2Fimages%2Fnewsfeed%2F001%2F623%2F463%2Fd90.jpg)
+{{% /fragment %}}
+
+---
+
+## Mining lost commits
+
 ### `git reflog`
 
+*Reference logs*: a **diary** of when branches and other references were updated
 
+`git reflog` example:
+
+```text
+c5c29c1 (HEAD -> master, origin/master, origin/HEAD) HEAD@{0}: checkout: moving from 2aa2cbd6f5cdb91a02f2061e029106878706bf49 to master
+2aa2cbd HEAD@{1}: checkout: moving from master to HEAD~1
+c5c29c1 (HEAD -> master, origin/master, origin/HEAD) HEAD@{2}: commit: add git blame
+2aa2cbd HEAD@{3}: commit: improve git slides, prepare for blame and reflog
+ae7eb17 HEAD@{4}: pull (finish): returning to refs/heads/master
+ae7eb17 HEAD@{5}: pull (pick): improve the style
+d2b71b0 HEAD@{6}: pull (start): checkout d2b71b04466d11498fdd10cc57da98dc0ab8eae2
+e77f8a0 HEAD@{7}: commit: improve the style
+5339051 (tag: 0.1.0-2022-09-08T174231) HEAD@{8}: commit: fix: forcibly set the targetPath of hugo
+e5eeecd (tag: 0.1.0-2022-09-08T173405) HEAD@{9}: commit: ci: fix JamesIves/github-pages-deploy-action parameter names
+50c5efe (tag: 0.1.0-2022-09-08T172922) HEAD@{10}: commit: fix: set up the custom css path
+ba8fae0 (tag: 0.1.0-2022-09-08T162354) HEAD@{11}: commit: fix: make the new template work
+8546a6c HEAD@{12}: commit: chore: switch to @cric96 fork of hugo-reveal
+```
+
+format: `hash (labels) reference: operation (status): details`
+
+Any of the `tree-ish`es can be used to checkout!
+
+`git checkout HEAD@{6}` would checkout commit `d2b71b0`!
+
+---
+
+### `git reflog`
+
+![](https://i.kym-cdn.com/entries/icons/facebook/000/006/077/so_good.jpg)

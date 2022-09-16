@@ -205,3 +205,21 @@ section.has-light-background {
 	font-family: 'Cinzel';
 	font-size: 0.7em;
 }
+
+// Mermaid flowcharts as git graphs
+
+.mermaid .head > polygon {
+	fill:#ff7274 !important;
+	stroke:#aa1d1f !important;
+	stroke-width: 0.1em !important;
+}
+
+.mermaid .branch > rect {
+	stroke-width: 0.1em !important;
+}
+
+.mermaid .commit > rect {
+	fill:#ceffef !important;
+	stroke:#333 !important;
+	stroke-width: 0.05em !important;
+}
