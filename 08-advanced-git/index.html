@@ -30,7 +30,7 @@
 <br>
 <h3 id="danilo-pianini-----danilopianiniuniboitmailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini &mdash; <code>danilo.pianini@unibo.it</code></a></h3>
 <br>
-<p>Compiled on: 2022-09-15
+<p>Compiled on: 2022-09-16
  &mdash; <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a>
 </section><section>
 <h1 id="annotated-tagging">Annotated Tagging</h1>
@@ -485,6 +485,25 @@
 </section><section>
 <h2 id="who-did-this-complimenting-or-blaming-people">Who did this? Complimenting (or blaming) people</h2>
 <h3 id="git-blame"><code>git blame</code></h3>
+<p>Shows what revision and author last modified each line of a file</p>
+<ul>
+<li>
+<p><code>git blame foo</code></p>
+<ul>
+<li>shows who changed file <code>foo</code>, line by line</li>
+</ul>
+</li>
+<li>
+<p><code>git blame -L 16,42 foo</code></p>
+<ul>
+<li>shows who changed lines 16 to 42 in <code>foo</code></li>
+</ul>
+</li>
+<li>
+<p>It is possible to use a regular expression as an argument to <code>-L</code>,
+finding who did something specific</p>
+</li>
+</ul>
 </section><section>
 <h2 id="mining-lost-commits">Mining lost commits</h2>
 <h3 id="git-reflog"><code>git reflog</code></h3>
