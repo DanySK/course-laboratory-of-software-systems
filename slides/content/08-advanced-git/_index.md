@@ -498,6 +498,16 @@ No single built-in command in old versions of git {{< emoji "expressionless" >}}
 
 ### `git blame`
 
+Shows what revision and author last modified each line of a file
+
+* `git blame foo`
+  * shows who changed file `foo`, line by line
+* `git blame -L 16,42 foo`
+   * shows who changed lines 16 to 42 in `foo`
+
+* It is possible to use a regular expression as an argument to `-L`,
+finding who did something specific
+
 ---
 
 ## Mining lost commits
