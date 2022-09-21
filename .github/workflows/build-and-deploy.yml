@@ -60,7 +60,7 @@ jobs:
         working-directory: slides
         run: hugo
       - name: Transform and Inline Mermaid charts
-        uses: cric96/inline-mermaid@v1.4.4
+        uses: cric96/inline-mermaid@v1.7.4
         with:
           root-folder: slides/build
           config-file: slides/config.toml
