@@ -1,5 +1,7 @@
 name: Create and deploy the PDFs
 on:
+  push:
+  pull_request:
   workflow_dispatch:
   workflow_run:
     workflows: ["pages-build-deployment"]
@@ -41,6 +43,7 @@ jobs:
       - name: Make the pdfs
         run: slides/makepdfs.rb pages
       - name: Deliver the pdfs
+        if: github.event_name == 'workflow_run'
         uses: ncipollo/release-action@v1.10.0
         with:
           allowUpdates: true
