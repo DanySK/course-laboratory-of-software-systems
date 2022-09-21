@@ -9,7 +9,7 @@ on:
       - completed
 
 jobs:
-  Build-Slides:
+  create-and-deploy-pdfs:
     runs-on: ubuntu-latest
     concurrency:
       group: pdf-slides-${{ github.event_name }}-${{ github.ref }}
