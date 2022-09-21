@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-command_base = 'google-chrome-stable --headless --run-all-compositor-stages-before-draw --disable-gpu --window-size=1920,1080 --virtual-time-budget=10000 --print-to-pdf='
+command_base = 'google-chrome-stable --headless --run-all-compositor-stages-before-draw --disable-gpu --window-size=1920,1080 --virtual-time-budget=1000000 --print-to-pdf='
 command_end = '?print-pdf&pdfSeparateFragments=false'
 
 root = ARGV[0] || raise("Bad usage, missing argument: launch as ./makepdfs.rb ROOT_OF_THE_WEBSITE")
@@ -30,7 +30,7 @@ max_attempts_format = 10
 for name, path in paths do
     puts "Working on #{name} built from #{path}"
     output = "#{name}_slides.pdf"
-    command = "time #{command_base}#{output} '#{path}'"
+    command = "timeout 2m #{command_base}#{output} '#{path}'"
     attempt = 0
     attempts_for_format = 1
     size = 0
