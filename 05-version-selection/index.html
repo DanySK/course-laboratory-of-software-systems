@@ -1,6 +1,4 @@
-<!doctype html>
-<html lang="en">
-  <head>
+<!DOCTYPE html><html lang="en"><head>
     <meta charset="utf-8">
 <title>Picking version numbers</title>
 <meta name="description" content="Assignign meaning to revisions">
@@ -13,9 +11,9 @@
   <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.03a7784ea4b53d9f4a51db94e91a0ffc5acc1773ec1b21a845c41888871b56a9.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
     
 <link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
-<link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
-<link href='https://fonts.googleapis.com/css?family=Oxygen Mono' rel='stylesheet'>
-<link href='https://fonts.googleapis.com/css?family=Ubuntu Mono' rel='stylesheet'>
+<link href="https://fonts.googleapis.com/css?family=Roboto Mono" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Oxygen Mono" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Ubuntu Mono" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 
   </head>
@@ -48,7 +46,7 @@
 <li>Fine grained</li>
 <li>Automatic</li>
 <li>Non progressive</li>
-<li>Non linear (i.e., versions can&rsquo;t be sorted)</li>
+<li>Non linear (i.e., versions can’t be sorted)</li>
 </ul>
 </li>
 <li><em>Subproject / feature version</em>
@@ -71,7 +69,7 @@
 <li><strong>Internal</strong>
 <ul>
 <li>Identifies a point in development</li>
-<li>Changes do not impact the &ldquo;outer world&rdquo;</li>
+<li>Changes do not impact the “outer world”</li>
 </ul>
 </li>
 <li><strong>External</strong>
@@ -89,7 +87,7 @@
 <ul>
 <li>With few exceptions, <em>does not provide any direct information on the project</em> (often by purpose)</li>
 <li>Very frequently used internally to refer to new features</li>
-<li>Often used to &ldquo;protect&rdquo; the corporation from information leaking</li>
+<li>Often used to “protect” the corporation from information leaking</li>
 <li>Often <em>changed to purposely create confusion</em></li>
 <li>Used to separate pre-release versions from final releases
 <ul>
@@ -183,7 +181,7 @@ same letter.</p>
 <li>But actually new versions may bring in substantial novelties, e.g. entirely new desktop environments</li>
 </ul>
 </li>
-<li>&ldquo;LTS&rdquo; can be optionally appended to identify <em>“Long Term Support”</em> versions</li>
+<li>“LTS” can be optionally appended to identify <em>“Long Term Support”</em> versions</li>
 <li>Two versions of Ubuntu can be compared by date but also by the first letter of their codename
 <ul>
 <li>“Zesty Zapus” is newer than “Utopic Unicorn”</li>
@@ -210,12 +208,12 @@ same letter.</p>
 <li>Sustainable just because $\TeX$ is now extremely stable, and development is almost frozen</li>
 </ul>
 <blockquote>
-<p>At the time of my death, it is my intention that the then-current versions of $\TeX$ [&hellip;] be forever left unchanged,
+<p>At the time of my death, it is my intention that the then-current versions of $\TeX$ […] be forever left unchanged,
 except that the final version numbers to be reported in the “banner” lines of the programs should become:
-<code>TeX, Version $\pi $</code> [&hellip;].
+<code>TeX, Version $\pi $</code> […].
 From that moment on, all “bugs” will be permanent “features”.
-<strong><div style="text-align: right"> Donald E. Knuth</span></strong></p>
-</blockquote>
+<strong></strong></p><div style="text-align: right"><strong> Donald E. Knuth</strong><p></p>
+</div></blockquote>
 </section><section>
 <h1 id="versioning-in-the-real-world-4">Versioning in the real world</h1>
 <h2 id="python-enhancement-proposal-440-pep440httpswwwpythonorgdevpepspep-0440">Python Enhancement Proposal 440 (<a href="https://www.python.org/dev/peps/pep-0440/">PEP440</a>)</h2>
@@ -362,10 +360,10 @@ The public API should not be considered stable.</li>
 <li>The command finds the most recent tag that is reachable from a commit.</li>
 <li>If the tag points to the commit, then only the tag is shown.</li>
 <li>Otherwise, it suffixes the tag name with the number of additional commits on top of the tagged object and the abbreviated object name of the most recent commit.</li>
-<li>The result is a &ldquo;human-readable&rdquo; object name which can also be used to identify the commit to other git commands.</li>
+<li>The result is a “human-readable” object name which can also be used to identify the commit to other git commands.</li>
 </ul>
 <p>In case no tag is present, <code>git describe</code> fails, but the last commit date could be used instead:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>git describe || <span style="color:#038">echo</span> <span style="color:#d20;background-color:#fff0f0">&#34;0.1.0-</span><span style="color:#080;font-weight:bold">$(</span>git log -n1 --date=format:<span style="color:#d20;background-color:#fff0f0">&#39;%Y-%m-%dT%H%M%S&#39;</span> --format=%cd<span style="color:#080;font-weight:bold">)</span><span style="color:#d20;background-color:#fff0f0">&#34;</span> 
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>git describe || <span style="color:#038">echo</span> <span style="color:#d20;background-color:#fff0f0">"0.1.0-</span><span style="color:#080;font-weight:bold">$(</span>git log -n1 --date=format:<span style="color:#d20;background-color:#fff0f0">'%Y-%m-%dT%H%M%S'</span> --format=%cd<span style="color:#080;font-weight:bold">)</span><span style="color:#d20;background-color:#fff0f0">"</span> 
 </span></span></code></pre></div></section>
 
   
@@ -375,7 +373,7 @@ The public API should not be considered stable.</li>
       
 
     </div>
-<script type="text/javascript" src=/Course-Laboratory-of-Software-Systems/reveal-hugo/object-assign.js></script>
+<script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-hugo/object-assign.js"></script>
 
 <a href="/Course-Laboratory-of-Software-Systems/reveal-js/dist/print/" id="print-location" style="display: none;"></a>
 
@@ -474,10 +472,10 @@ The public API should not be considered stable.</li>
     };
 </script>
 
-<script type="text/javascript" id="MathJax-script" async
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+<script type="text/javascript" id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
 </script>
 
     
-  </body>
-</html>
+  
+
+</body></html>

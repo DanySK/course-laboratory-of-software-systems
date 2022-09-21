@@ -1,6 +1,4 @@
-<!doctype html>
-<html lang="en">
-  <head>
+<!DOCTYPE html><html lang="en"><head>
     <meta charset="utf-8">
 <title>Containerization</title>
 <meta name="description" content="Containerization basics and CI">
@@ -13,9 +11,9 @@
   <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.03a7784ea4b53d9f4a51db94e91a0ffc5acc1773ec1b21a845c41888871b56a9.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
     
 <link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
-<link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
-<link href='https://fonts.googleapis.com/css?family=Oxygen Mono' rel='stylesheet'>
-<link href='https://fonts.googleapis.com/css?family=Ubuntu Mono' rel='stylesheet'>
+<link href="https://fonts.googleapis.com/css?family=Roboto Mono" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Oxygen Mono" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Ubuntu Mono" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 
   </head>
@@ -38,51 +36,48 @@
 
 
 <figure>
-  <img
-    src='https://g.gravizo.com/svg?%0adigraph%20structs%20%7b%0a%20%20%20%20rankdir%3dLR%0a%20%20%20%20graph%20%5bfontname%3d%22helvetica%22%2c%20layout%3dneato%5d%0a%20%20%20%20edge%20%5bfontname%3d%22helvetica%22%5d%0a%20%20%20%20node%20%5bfontname%3d%22helvetica%22%2c%20shape%3drecord%2c%20style%3d%22rounded%2c%20filled%22%2c%20fontcolor%3dwhite%2c%20fixedsize%3dtrue%2c%20width%3d3%5d%3b%0a%20%20%20%20%22Bare%20metal%22%20%5bshape%3dplaintext%2c%20style%3d%22%22%2c%20fontcolor%3dblack%20fontsize%3d20%2c%20pos%3d%220%2c0%21%22%2c%20layout%3dneato%5d%0a%20%20%20%20Physical%20%5bfillcolor%3dblack%2c%20pos%3d%220%2c0.5%21%22%5d%0a%20%20%20%20%22Operating%20System%22%20%5bfillcolor%3dgray%2c%20pos%3d%220%2c1.1%21%22%5d%0a%20%20%20%20Runtime%20%5bfillcolor%3dgreen%2c%20pos%3d%220%2c1.7%21%22%5d%0a%20%20%20%20App1%20%5bfillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%22-1.025%2c2.3%21%22%5d%0a%20%20%20%20App2%20%5bfillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%220%2c2.3%21%22%5d%0a%20%20%20%20App3%20%5bfillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%221.025%2c2.3%21%22%5d%0a%0a%20%20%20%20%22Virtual%20Machine%22%20%5bshape%3dplaintext%2c%20style%3d%22%22%2c%20fontcolor%3dblack%20fontsize%3d20%2c%20pos%3d%223.5%2c0%21%22%5d%0a%20%20%20%20VM_Phy%20%5blabel%3dPhysical%2c%20fillcolor%3dblack%2c%20pos%3d%223.5%2c0.5%21%22%5d%0a%20%20%20%20%22Host%20Operating%20System%22%20%5bfillcolor%3dgray%2c%20pos%3d%223.5%2c1.1%21%22%5d%0a%20%20%20%20Hypervisor%20%5bfillcolor%3dorange%2c%20pos%3d%223.5%2c1.7%21%22%2c%20fontcolor%3dblack%5d%0a%20%20%20%20GuestOS1%20%5bfillcolor%3dgray%2c%20width%3d0.95%2c%20pos%3d%222.475%2c2.3%21%22%5d%0a%20%20%20%20GuestOS2%20%5bfillcolor%3dgray%2c%20width%3d0.95%2c%20pos%3d%223.5%2c2.3%21%22%5d%0a%20%20%20%20GuestOS3%20%5bfillcolor%3dgray%2c%20width%3d0.95%2c%20pos%3d%224.525%2c2.3%21%22%5d%0a%20%20%20%20Runtime1%20%5bfillcolor%3dgreen%2c%20width%3d0.95%2c%20pos%3d%222.475%2c2.9%21%22%5d%0a%20%20%20%20Runtime2%20%5bfillcolor%3dgreen%2c%20width%3d0.95%2c%20pos%3d%223.5%2c2.9%21%22%5d%0a%20%20%20%20Runtime3%20%5bfillcolor%3dgreen%2c%20width%3d0.95%2c%20pos%3d%224.525%2c2.9%21%22%5d%0a%20%20%20%20VM_App1%20%5blabel%3dApp1%2c%20fillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%222.475%2c3.5%21%22%5d%0a%20%20%20%20VM_App2%20%5blabel%3dApp2%2c%20fillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%223.5%2c3.5%21%22%5d%0a%20%20%20%20VM_App3%20%5blabel%3dApp3%2c%20fillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%224.525%2c3.5%21%22%5d%0a%0a%20%20%20%20%22Container%22%20%5bshape%3dplaintext%2c%20style%3d%22%22%2c%20fontcolor%3dblack%20fontsize%3d20%2c%20pos%3d%227%2c0%21%22%5d%0a%20%20%20%20C_Phy%20%5blabel%3dPhysical%2c%20fillcolor%3dblack%2c%20pos%3d%227%2c0.5%21%22%5d%0a%20%20%20%20C_K%20%5blabel%3d%22Operating%20System%22%2c%20fillcolor%3dgray%2c%20pos%3d%227%2c1.1%21%22%5d%0a%20%20%20%20%22Container%20Service%22%20%5bfillcolor%3dblue%2c%20pos%3d%227%2c1.7%21%22%5d%0a%20%20%20%20C_Rt1%20%5blabel%3dRuntime1%2c%20fillcolor%3dgreen%2c%20width%3d0.95%2c%20pos%3d%225.975%2c2.3%21%22%5d%0a%20%20%20%20C_Rt2%20%5blabel%3dRuntime2%2c%20fillcolor%3dgreen%2c%20width%3d0.95%2c%20pos%3d%227%2c2.3%21%22%5d%0a%20%20%20%20C_Rt3%20%5blabel%3dRuntime3%2c%20fillcolor%3dgreen%2c%20width%3d0.95%2c%20pos%3d%228.025%2c2.3%21%22%5d%0a%20%20%20%20C_App1%20%5blabel%3dApp1%2c%20fillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%225.975%2c2.9%21%22%5d%0a%20%20%20%20C_App2%20%5blabel%3dApp2%2c%20fillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%227%2c2.9%21%22%5d%0a%20%20%20%20C_App3%20%5blabel%3dApp3%2c%20fillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%228.025%2c2.9%21%22%5d%0a%7d%0a'
-    alt=''
-    />
+  <img src="https://g.gravizo.com/svg?%0adigraph%20structs%20%7b%0a%20%20%20%20rankdir%3dLR%0a%20%20%20%20graph%20%5bfontname%3d%22helvetica%22%2c%20layout%3dneato%5d%0a%20%20%20%20edge%20%5bfontname%3d%22helvetica%22%5d%0a%20%20%20%20node%20%5bfontname%3d%22helvetica%22%2c%20shape%3drecord%2c%20style%3d%22rounded%2c%20filled%22%2c%20fontcolor%3dwhite%2c%20fixedsize%3dtrue%2c%20width%3d3%5d%3b%0a%20%20%20%20%22Bare%20metal%22%20%5bshape%3dplaintext%2c%20style%3d%22%22%2c%20fontcolor%3dblack%20fontsize%3d20%2c%20pos%3d%220%2c0%21%22%2c%20layout%3dneato%5d%0a%20%20%20%20Physical%20%5bfillcolor%3dblack%2c%20pos%3d%220%2c0.5%21%22%5d%0a%20%20%20%20%22Operating%20System%22%20%5bfillcolor%3dgray%2c%20pos%3d%220%2c1.1%21%22%5d%0a%20%20%20%20Runtime%20%5bfillcolor%3dgreen%2c%20pos%3d%220%2c1.7%21%22%5d%0a%20%20%20%20App1%20%5bfillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%22-1.025%2c2.3%21%22%5d%0a%20%20%20%20App2%20%5bfillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%220%2c2.3%21%22%5d%0a%20%20%20%20App3%20%5bfillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%221.025%2c2.3%21%22%5d%0a%0a%20%20%20%20%22Virtual%20Machine%22%20%5bshape%3dplaintext%2c%20style%3d%22%22%2c%20fontcolor%3dblack%20fontsize%3d20%2c%20pos%3d%223.5%2c0%21%22%5d%0a%20%20%20%20VM_Phy%20%5blabel%3dPhysical%2c%20fillcolor%3dblack%2c%20pos%3d%223.5%2c0.5%21%22%5d%0a%20%20%20%20%22Host%20Operating%20System%22%20%5bfillcolor%3dgray%2c%20pos%3d%223.5%2c1.1%21%22%5d%0a%20%20%20%20Hypervisor%20%5bfillcolor%3dorange%2c%20pos%3d%223.5%2c1.7%21%22%2c%20fontcolor%3dblack%5d%0a%20%20%20%20GuestOS1%20%5bfillcolor%3dgray%2c%20width%3d0.95%2c%20pos%3d%222.475%2c2.3%21%22%5d%0a%20%20%20%20GuestOS2%20%5bfillcolor%3dgray%2c%20width%3d0.95%2c%20pos%3d%223.5%2c2.3%21%22%5d%0a%20%20%20%20GuestOS3%20%5bfillcolor%3dgray%2c%20width%3d0.95%2c%20pos%3d%224.525%2c2.3%21%22%5d%0a%20%20%20%20Runtime1%20%5bfillcolor%3dgreen%2c%20width%3d0.95%2c%20pos%3d%222.475%2c2.9%21%22%5d%0a%20%20%20%20Runtime2%20%5bfillcolor%3dgreen%2c%20width%3d0.95%2c%20pos%3d%223.5%2c2.9%21%22%5d%0a%20%20%20%20Runtime3%20%5bfillcolor%3dgreen%2c%20width%3d0.95%2c%20pos%3d%224.525%2c2.9%21%22%5d%0a%20%20%20%20VM_App1%20%5blabel%3dApp1%2c%20fillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%222.475%2c3.5%21%22%5d%0a%20%20%20%20VM_App2%20%5blabel%3dApp2%2c%20fillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%223.5%2c3.5%21%22%5d%0a%20%20%20%20VM_App3%20%5blabel%3dApp3%2c%20fillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%224.525%2c3.5%21%22%5d%0a%0a%20%20%20%20%22Container%22%20%5bshape%3dplaintext%2c%20style%3d%22%22%2c%20fontcolor%3dblack%20fontsize%3d20%2c%20pos%3d%227%2c0%21%22%5d%0a%20%20%20%20C_Phy%20%5blabel%3dPhysical%2c%20fillcolor%3dblack%2c%20pos%3d%227%2c0.5%21%22%5d%0a%20%20%20%20C_K%20%5blabel%3d%22Operating%20System%22%2c%20fillcolor%3dgray%2c%20pos%3d%227%2c1.1%21%22%5d%0a%20%20%20%20%22Container%20Service%22%20%5bfillcolor%3dblue%2c%20pos%3d%227%2c1.7%21%22%5d%0a%20%20%20%20C_Rt1%20%5blabel%3dRuntime1%2c%20fillcolor%3dgreen%2c%20width%3d0.95%2c%20pos%3d%225.975%2c2.3%21%22%5d%0a%20%20%20%20C_Rt2%20%5blabel%3dRuntime2%2c%20fillcolor%3dgreen%2c%20width%3d0.95%2c%20pos%3d%227%2c2.3%21%22%5d%0a%20%20%20%20C_Rt3%20%5blabel%3dRuntime3%2c%20fillcolor%3dgreen%2c%20width%3d0.95%2c%20pos%3d%228.025%2c2.3%21%22%5d%0a%20%20%20%20C_App1%20%5blabel%3dApp1%2c%20fillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%225.975%2c2.9%21%22%5d%0a%20%20%20%20C_App2%20%5blabel%3dApp2%2c%20fillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%227%2c2.9%21%22%5d%0a%20%20%20%20C_App3%20%5blabel%3dApp3%2c%20fillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%228.025%2c2.9%21%22%5d%0a%7d%0a" alt="">
     <figcaption></figcaption>
 </figure>
 
 <p>Runtime <strong>isolation</strong> without operating system <strong>replication</strong></p>
 </section><section>
 <h1 id="why-containers">Why containers?</h1>
-<p><img src="memes/works-on-my-machine.jpeg" style='
+<p><img src="memes/works-on-my-machine.jpeg" style="
     width: 23vw;
     
     max-width: 95vw;
     max-height: 80vh;
     object-fit: contain;
-'>
+">
 
-<img src="memes/docker-born.jpeg" style='
+<img src="memes/docker-born.jpeg" style="
     width: 20.8vw;
     
     max-width: 95vw;
     max-height: 80vh;
     object-fit: contain;
-'>
+">
 </p>
 </section><section>
 <h2 id="lightweight-virtual-machines">Lightweight virtual machines?</h2>
-<img src="memes/lightweight-container.jpg" style='
+<img src="memes/lightweight-container.jpg" style="
     
     
     max-width: 95vw;
     max-height: 80vh;
     object-fit: contain;
-'>
+">
 
 </section><section>
 <h2 id="more-similar-to-well-confined-processes">More similar to well-confined processes</h2>
-<img src="memes/chroot.jpeg" style='
+<img src="memes/chroot.jpeg" style="
     
     height: 60vh;
     max-width: 95vw;
     max-height: 80vh;
     object-fit: contain;
-'>
+">
 
 </section><section>
 <h1 id="docker">Docker</h1>
@@ -100,7 +95,7 @@
 <li><em>Container</em>
 <ul>
 <li>a <em>runnable instance</em> of an image</li>
-<li>namely, a &ldquo;writable layer&rdquo; atop an image</li>
+<li>namely, a “writable layer” atop an image</li>
 </ul>
 </li>
 <li><em>Service</em>
@@ -162,10 +157,10 @@
 <p>The subcommand <code>images</code> lists the pulled images and their associated information</p>
 <p>The subcommand <code>image</code> allows for running maintenance tasks, e.g.</p>
 <ul>
-<li><code>docker image ls</code> &ndash; same as <code>docker images</code></li>
-<li><code>docker image prune</code> &ndash; removes unused images</li>
-<li><code>docker image rm</code> &ndash; removes images by name</li>
-<li><code>docker image tag</code> &ndash; associates a tag to an image</li>
+<li><code>docker image ls</code> – same as <code>docker images</code></li>
+<li><code>docker image prune</code> – removes unused images</li>
+<li><code>docker image rm</code> – removes images by name</li>
+<li><code>docker image tag</code> – associates a tag to an image</li>
 </ul>
 </section><section>
 <h1 id="creating-docker-images">Creating docker images</h1>
@@ -176,7 +171,7 @@
 <p>Changes to a layer do not invalidate previous layers</p>
 </section><section>
 <h1 id="dockerfile-syntax">Dockerfile syntax</h1>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#888"># Pulls an image from docker hub with this name. Alternatively, &#34;scratch&#34; can be used for an empty container</span><span style="color:#a61717;background-color:#e3d2d2">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888"># Pulls an image from docker hub with this name. Alternatively, "scratch" can be used for an empty container</span><span style="color:#a61717;background-color:#e3d2d2">
 </span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">FROM</span><span style="color:#d20;background-color:#fff0f0"> manjarolinux/base </span><span style="color:#a61717;background-color:#e3d2d2">
 </span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Runs a command</span><span style="color:#a61717;background-color:#e3d2d2">
 </span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">RUN</span> pacman -Sy --noconfirm gnupg archlinux-keyring manjaro-keyring<span style="color:#a61717;background-color:#e3d2d2">
@@ -191,7 +186,7 @@
 <p>Image naming is done via <em>tags</em></p>
 <p>The easiest way to do so is assigning tags at <em>build time</em> with the <code>-t</code> options of <code>docker build</code></p>
 <p>The option can be repeated multiple times to make multiple tags</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>docker build -t <span style="color:#d20;background-color:#fff0f0">&#34;myImage:latest&#34;</span> -t <span style="color:#d20;background-color:#fff0f0">&#34;myImage:0.1.0&#34;</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>docker build -t <span style="color:#d20;background-color:#fff0f0">"myImage:latest"</span> -t <span style="color:#d20;background-color:#fff0f0">"myImage:0.1.0"</span>
 </span></span></code></pre></div><p><code>latest</code> is usually used to identify the most recent version of some image</p>
 </section><section>
 <h1 id="publishing-docker-images">Publishing docker images</h1>
@@ -220,7 +215,7 @@
       
 
     </div>
-<script type="text/javascript" src=/Course-Laboratory-of-Software-Systems/reveal-hugo/object-assign.js></script>
+<script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-hugo/object-assign.js"></script>
 
 <a href="/Course-Laboratory-of-Software-Systems/reveal-js/dist/print/" id="print-location" style="display: none;"></a>
 
@@ -319,10 +314,10 @@
     };
 </script>
 
-<script type="text/javascript" id="MathJax-script" async
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+<script type="text/javascript" id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
 </script>
 
     
-  </body>
-</html>
+  
+
+</body></html>

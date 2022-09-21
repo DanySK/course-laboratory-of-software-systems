@@ -1,6 +1,4 @@
-<!doctype html>
-<html lang="en">
-  <head>
+<!DOCTYPE html><html lang="en"><head>
     <meta charset="utf-8">
 <title>DevOps in a nutshell</title>
 <meta name="description" content="Make things work, keep them working, move fast">
@@ -13,9 +11,9 @@
   <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.03a7784ea4b53d9f4a51db94e91a0ffc5acc1773ec1b21a845c41888871b56a9.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
     
 <link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
-<link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
-<link href='https://fonts.googleapis.com/css?family=Oxygen Mono' rel='stylesheet'>
-<link href='https://fonts.googleapis.com/css?family=Ubuntu Mono' rel='stylesheet'>
+<link href="https://fonts.googleapis.com/css?family=Roboto Mono" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Oxygen Mono" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Ubuntu Mono" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 
   </head>
@@ -174,33 +172,33 @@
 </ul>
 </section><section>
 <h2 id="centralized-version-control-systems">Centralized Version Control Systems</h2>
-<img src="2021-04-14-centralized-vcs.svg" style='
+<img src="2021-04-14-centralized-vcs.svg" style="
     
     
     max-width: 95vw;
     max-height: 55vh;
     object-fit: contain;
-'>
+">
 
 </section><section>
 <h2 id="decentralized-vcs">Decentralized VCS</h2>
-<img src="2021-04-14-decentralized-vcs.svg" style='
+<img src="2021-04-14-decentralized-vcs.svg" style="
     
     
     max-width: 95vw;
     max-height: 55vh;
     object-fit: contain;
-'>
+">
 
 </section><section>
 <h2 id="real-world-dvcs">Real-world DVCS</h2>
-<img src="2021-04-14-dvcs-sink.svg" style='
+<img src="2021-04-14-dvcs-sink.svg" style="
     
     
     max-width: 95vw;
     max-height: 55vh;
     object-fit: contain;
-'>
+">
 
 </section><section>
 <h2 id="reference-dvcs-git">Reference DVCS: Git</h2>
@@ -235,7 +233,7 @@
 <h2 id="funny-historical-introduction">Funny historical introduction</h2>
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/4XpnKHJAok8?autoplay=1" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="Linus Torvalds introduces Git at Google"></iframe>
+  <iframe src="https://www.youtube.com/embed/4XpnKHJAok8?autoplay=1" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen="" title="Linus Torvalds introduces Git at Google"></iframe>
 </div>
 
 </section><section>
@@ -268,13 +266,13 @@
 <h2 id="distributed-version-control-with-git-a-recap-4">Distributed version control with git: a recap</h2>
 <h3 id="stage"><em>Stage</em></h3>
 <p>The <strong>changes</strong> that will be saved next</p>
-<img src="staging.png" style='
+<img src="staging.png" style="
     
     
     max-width: 95vw;
     max-height: 80vh;
     object-fit: contain;
-'>
+">
 
 </section><section>
 <h2 id="distributed-version-control-with-git-a-recap-5">Distributed version control with git: a recap</h2>
@@ -330,13 +328,13 @@
 <ul>
 <li>A <strong>named</strong> development line
 <br>
-<img src="branches.svg" style='
+<img src="branches.svg" style="
     
     
     max-width: 95vw;
     max-height: 80vh;
     object-fit: contain;
-'>
+">
 </li>
 </ul>
 <h3 id="master"><code>master</code></h3>
@@ -408,7 +406,7 @@
 <h3 id="git-fetch-remote"><code>git fetch &lt;remote&gt;</code></h3>
 <ul>
 <li><strong>Updates</strong> the state of <code>&lt;remote&gt;</code></li>
-<li>If remote is omitted, updates the state of the branch <em>upstream</em>&rsquo;s <em>remote</em></li>
+<li>If remote is omitted, updates the state of the branch <em>upstream</em>’s <em>remote</em></li>
 </ul>
 <h3 id="git-pull-remote-branch"><code>git pull &lt;remote&gt; &lt;branch&gt;</code></h3>
 <ul>
@@ -444,7 +442,7 @@
 <li>Prepare an <em>ignore list</em> early
 <ul>
 <li>And <em>maintain it</em></li>
-<li>And maybe prepare it manually and don&rsquo;t copy/paste it</li>
+<li>And maybe prepare it manually and don’t copy/paste it</li>
 </ul>
 </li>
 <li>When you have untracked files, <em>decide whether you want to track them or ignore them</em></li>
@@ -485,13 +483,13 @@
 <h2 id="trunk-based-development-like">Trunk-based development(-like)</h2>
 <p>Single branch, shared truth repository, frequent merges
 <br>
-<img src="2021-04-14-dvcs-sink.svg" style='
+<img src="2021-04-14-dvcs-sink.svg" style="
     
     
     max-width: 95vw;
     max-height: 55vh;
     object-fit: contain;
-'>
+">
 </p>
 <ul>
 <li><em>Small</em> teams, <em>low-complexity</em> projects, <em>colocated</em> teams, <em>high</em> trust</li>
@@ -501,13 +499,13 @@
 <h2 id="git-flow-classic">Git flow (classic)</h2>
 <p>Multiple branches, shared truth repository
 <br>
-<img src="2021-04-14-dvcs-flow-sink.svg" style='
+<img src="2021-04-14-dvcs-flow-sink.svg" style="
     
     
     max-width: 95vw;
     max-height: 55vh;
     object-fit: contain;
-'>
+">
 </p>
 <ul>
 <li><em>Large</em> teams, <em>high-complexity</em> projects, <em>preferably colocated</em> teams, <em>high</em> trust</li>
@@ -515,13 +513,13 @@
 </ul>
 </section><section>
 <h2 id="git-flow-structure">Git flow structure</h2>
-<img src="2021-04-13-gitflow.svg" style='
+<img src="2021-04-13-gitflow.svg" style="
     
     
     max-width: 95vw;
     max-height: 55vh;
     object-fit: contain;
-'>
+">
 
 </section><section>
 <h2 id="forks-versus-branches">Forks versus branches</h2>
@@ -555,13 +553,13 @@
 <li>Single branch, multiple independent repository copies</li>
 </ul>
 <p>
-<img src="2021-04-14-dvcs-fork.svg" style='
+<img src="2021-04-14-dvcs-fork.svg" style="
     
     
     max-width: 95vw;
     max-height: 50vh;
     object-fit: contain;
-'>
+">
 
 </p>
 <ul>
@@ -574,13 +572,13 @@
 <li>Single branch, multiple independent repository copies</li>
 </ul>
 <p>
-<img src="2021-04-14-dvcs-flow-fork.svg" style='
+<img src="2021-04-14-dvcs-flow-fork.svg" style="
     
     
     max-width: 95vw;
     max-height: 50vh;
     object-fit: contain;
-'>
+">
 
 </p>
 <ul>
@@ -606,7 +604,7 @@
 <li>Supports <em>Jekyll</em> (a Ruby framework for static website generation) out of the box
 <ul>
 <li>We will not discuss it today</li>
-<li>But maybe in LSS&hellip;</li>
+<li>But maybe in LSS…</li>
 </ul>
 </li>
 </ul>
@@ -630,13 +628,13 @@
 </section><section>
 <h2 id="setting-up-a-github-pages-website-1">Setting up a GitHub Pages website</h2>
 <p>Once done, enable GitHub pages on the repository settings:</p>
-<img src="gh-pages.png" style='
+<img src="gh-pages.png" style="
     
     
     max-width: 95vw;
     max-height: 80vh;
     object-fit: contain;
-'>
+">
 
 </section><section>
 <h2 id="github-pages-urls">GitHub Pages URLs</h2>
@@ -654,11 +652,11 @@
 </li>
 </ul>
 </section>
-<section data-noprocess data-shortcode-slide>
-  <h1 id="the-build-life-cycle">The build &ldquo;life cycle&rdquo;</h1>
+<section data-noprocess="" data-shortcode-slide="">
+  <h1 id="the-build-life-cycle">The build “life cycle”</h1>
 <h4 id="not-to-be-confused-with-the-system-development-life-cycle-sdlc">(Not to be confused with the system development life cycle (SDLC))</h4>
 <p>The process of creating <em>tested deployable software artifacts</em>
-<br/>
+<br>
 from <em>source</em> code</p>
 <p>May include, depending on the system specifics:</p>
 <ul>
@@ -674,13 +672,13 @@ from <em>source</em> code</p>
 <li><em>Delivery</em></li>
 </ul>
 </section>
-<section data-noprocess data-shortcode-slide>
+<section data-noprocess="" data-shortcode-slide="">
 <h1 id="lifecycle-styles">Lifecycle styles</h1>
 <ul>
 <li>
 <p><strong>Custom</strong>: select some phases that the product needs and perform them.</p>
 <ul>
-<li><em>Flexible and configurable</em>: tailored on each project&rsquo;s needs</li>
+<li><em>Flexible and configurable</em>: tailored on each project’s needs</li>
 <li><em>Hard to adapt and port</em></li>
 </ul>
 </li>
@@ -693,7 +691,7 @@ from <em>source</em> code</p>
 </li>
 </ul>
 </section>
-<section data-noprocess data-shortcode-slide>
+<section data-noprocess="" data-shortcode-slide="">
 <h1 id="build-automation">Build automation</h1>
 <p>Automation of the build lifecycle</p>
 <ul>
@@ -702,10 +700,10 @@ from <em>source</em> code</p>
 </ul>
 <p>$\Rightarrow$ Create software that automates the building of some software!</p>
 <ul>
-<li>All those concerns that hold for sofware creation hold for build systems creation&hellip;</li>
+<li>All those concerns that hold for sofware creation hold for build systems creation…</li>
 </ul>
 </section>
-<section data-noprocess data-shortcode-slide>
+<section data-noprocess="" data-shortcode-slide="">
 <h2 id="build-automation-basics-and-styles">Build automation: basics and styles</h2>
 <p>Different lifecycle types generate different build automation <strong>styles</strong></p>
 <p><strong>Imperative</strong>: write a script that tells the system what to do to get
@@ -727,11 +725,11 @@ from code to artifacts</p>
 <li><em>Configuration limited</em> by the provided options</li>
 </ul>
 </section>
-<section data-noprocess data-shortcode-slide>
+<section data-noprocess="" data-shortcode-slide="">
 <h2 id="hybrid-automators">Hybrid automators</h2>
 <p>Create a <em>declarative infrastructure</em> upon an <em>imperative basis</em>, and
 <em>allow easy access to the underlying machinery</em></p>
-<p><strong>DSL</strong>s are helpful in this context: they can &ldquo;hide&rdquo; imperativity without ruling it out</p>
+<p><strong>DSL</strong>s are helpful in this context: they can “hide” imperativity without ruling it out</p>
 <p>Still, many challenges remain open:</p>
 <ul>
 <li>How to reuse the build logic?
@@ -748,8 +746,8 @@ from code to artifacts</p>
 <ul>
 <li>The <em>runtime environment</em> (think of the Java Virtual Machine)</li>
 <li>The <em>core libraries</em> (e.g., <code>java.*</code>, or <code>scala.*</code>, or <code>kotlin.*</code>)</li>
-<li>Possibly <em>third-party libraries</em> (e.g., Google Guava, Apache Commons&hellip;)</li>
-<li>Possibly <em>external resources</em> (e.g., images, sounds, translation files&hellip;)</li>
+<li>Possibly <em>third-party libraries</em> (e.g., Google Guava, Apache Commons…)</li>
+<li>Possibly <em>external resources</em> (e.g., images, sounds, translation files…)</li>
 </ul>
 </li>
 <li>Normally, this <em>software depends on other software</em>
@@ -758,7 +756,7 @@ from code to artifacts</p>
 <ul>
 <li>That <em>depends on other software</em>
 <ul>
-<li>That <em>depends on other software</em>, and so on&hellip;</li>
+<li>That <em>depends on other software</em>, and so on…</li>
 </ul>
 </li>
 </ul>
@@ -773,30 +771,21 @@ from code to artifacts</p>
 <ul>
 <li><em>Visit</em> IMDb.org and rottentomatoes (Movie databases)</li>
 <li><em>Search</em> for a title of a movie or series (e.g., Breaking Bad)</li>
-<li><em>Print</em> all available information (director, year, ratings, &hellip;)</li>
+<li><em>Print</em> all available information (director, year, ratings, …)</li>
 </ul>
 </section><section>
-<div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'>
-    <iframe
-        sandbox='allow-scripts allow-same-origin'
-        allowfullscreen='true'
-        allowtransparency='true'
-        frameborder='0'
-        height='315'
-        src='https://www.mentimeter.com/embed/66b4eb67105e9c1fa3916b9344d6b8ad/a62cf5c48ed8'
-        style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;'
-        width='420'
-        >
+<div style="position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;">
+    <iframe sandbox="allow-scripts allow-same-origin" allowfullscreen="true" allowtransparency="true" frameborder="0" height="315" src="https://www.mentimeter.com/embed/66b4eb67105e9c1fa3916b9344d6b8ad/a62cf5c48ed8" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" width="420">
     </iframe>
 </div>
 </section><section>
 <h2 id="actual-result">Actual result</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">final</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">RateAMovie</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#080;font-weight:bold">final</span> String DEFAULT_MOVIE = <span style="color:#d20;background-color:#fff0f0">&#34;Breaking Bad&#34;</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#080;font-weight:bold">final</span> String OMDB_API_KEY = System.<span style="color:#369">getenv</span>(<span style="color:#d20;background-color:#fff0f0">&#34;OMDB_API_KEY&#34;</span>);
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">final</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">RateAMovie</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#080;font-weight:bold">final</span> String DEFAULT_MOVIE = <span style="color:#d20;background-color:#fff0f0">"Breaking Bad"</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#080;font-weight:bold">final</span> String OMDB_API_KEY = System.<span style="color:#369">getenv</span>(<span style="color:#d20;background-color:#fff0f0">"OMDB_API_KEY"</span>);
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#080;font-weight:bold">final</span> Logger LOGGER = LoggerFactory.<span style="color:#369">getLogger</span>(RateAMovie.<span style="color:#369">class</span>);
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#888;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">main</span>(<span style="color:#080;font-weight:bold">final</span> String[] args) {
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">final</span> String[] titles = args.<span style="color:#369">length</span> == 0 ? <span style="color:#080;font-weight:bold">new</span> String[] { DEFAULT_MOVIE } : args;
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#888;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">main</span>(<span style="color:#080;font-weight:bold">final</span> String[] args) {
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">final</span> String[] titles = args.<span style="color:#369">length</span> == 0 ? <span style="color:#080;font-weight:bold">new</span> String[] { DEFAULT_MOVIE } : args;
 </span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">final</span> OmdbApi omdb = <span style="color:#080;font-weight:bold">new</span> OmdbApi(OMDB_API_KEY);
 </span></span><span style="display:flex;"><span>        Arrays.<span style="color:#369">stream</span>(titles)
 </span></span><span style="display:flex;"><span>            .<span style="color:#369">map</span>(Unchecked.<span style="color:#369">function</span>(omdb::search)) <span style="color:#888">// Exceptions become RuntimeExceptions
@@ -809,10 +798,10 @@ from code to artifacts</p>
 </span></span><span style="display:flex;"><span>            .<span style="color:#369">map</span>(Unchecked.<span style="color:#369">function</span>(omdb::getInfo))
 </span></span><span style="display:flex;"><span>            .<span style="color:#369">forEach</span>(movie -&gt;
 </span></span><span style="display:flex;"><span>                LOGGER.<span style="color:#369">info</span>(
-</span></span><span style="display:flex;"><span>                    <span style="color:#d20;background-color:#fff0f0">&#34;\n=========================\n{}\n&#34;</span>
-</span></span><span style="display:flex;"><span>                        + <span style="color:#d20;background-color:#fff0f0">&#34;Directed by {}; {}; {}\n&#34;</span>
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>                    movie.<span style="color:#369">getTitle</span>(),
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>                    movie.<span style="color:#369">getImdbID</span>()
+</span></span><span style="display:flex;"><span>                    <span style="color:#d20;background-color:#fff0f0">"\n=========================\n{}\n"</span>
+</span></span><span style="display:flex;"><span>                        + <span style="color:#d20;background-color:#fff0f0">"Directed by {}; {}; {}\n"</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>                    movie.<span style="color:#369">getTitle</span>(),
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>                    movie.<span style="color:#369">getImdbID</span>()
 </span></span><span style="display:flex;"><span>                )
 </span></span><span style="display:flex;"><span>            );
 </span></span><span style="display:flex;"><span>    }
@@ -866,7 +855,7 @@ from code to artifacts</p>
 </section><section>
 <h2 id="towards-a-dependency-hell">Towards a <strong>dependency hell</strong></h2>
 <ul>
-<li>It&rsquo;s common for non-toy projects to get past 50 dependencies</li>
+<li>It’s common for non-toy projects to get past 50 dependencies</li>
 <li><em>Searching</em>, <em>downloading</em> and <em>verifying compatibility</em> by hand is unbearable</li>
 <li><strong>Version conflicts</strong> arise soon
 <ul>
@@ -901,7 +890,7 @@ from code to artifacts</p>
 <ul>
 <li>Written mostly in Java</li>
 <li>with an outer Groovy DSL</li>
-<li>&hellip;and, more recently, a Kotlin DSL</li>
+<li>…and, more recently, a Kotlin DSL</li>
 </ul>
 <h3 id="our-approach-to-gradle">Our approach to Gradle</h3>
 <ul>
@@ -919,31 +908,31 @@ from code to artifacts</p>
 </section><section>
 <h2 id="gradle-main-concepts">Gradle: main concepts</h2>
 <ul>
-<li><strong>Project</strong> &ndash; A collection of files composing the software
+<li><strong>Project</strong> – A collection of files composing the software
 <ul>
 <li>The <em>root</em> project can contain <em>subprojects</em></li>
 </ul>
 </li>
-<li><strong>Build file</strong> &ndash; A special file, with the build information
+<li><strong>Build file</strong> – A special file, with the build information
 <ul>
 <li>situated in the root directory of a project</li>
 <li>instructs Gradle on the organization of the project</li>
 </ul>
 </li>
-<li><strong>Dependency</strong> &ndash; A resource required by some operation.
+<li><strong>Dependency</strong> – A resource required by some operation.
 <ul>
 <li>May have dependencies itself</li>
 <li>Dependencies of dependencies are called <em>transitive</em> dependencies</li>
 </ul>
 </li>
-<li><strong>Configuration</strong> &ndash; A group of dependencies with <em>three roles</em>:
+<li><strong>Configuration</strong> – A group of dependencies with <em>three roles</em>:
 <ol>
 <li><em>Declare</em> dependencies</li>
 <li><em>Resolve</em> dependency declarations to actual artifacts/resources</li>
 <li><em>Present</em> the dependencies to consumers in a suitable format</li>
 </ol>
 </li>
-<li><strong>Task</strong> &ndash; An atomic operation on the project, which can:
+<li><strong>Task</strong> – An atomic operation on the project, which can:
 <ul>
 <li>have input and output files</li>
 <li>depend on other tasks (can be executed only if those are completed)</li>
@@ -973,8 +962,8 @@ from code to artifacts</p>
 <ul>
 <li>By default, Gradle inherits the maven convention for source organization:</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>+-- src <span style="color:#888"># All sources</span>
-</span></span><span style="display:flex;"><span>    +-- main <span style="color:#888"># One folder per &#34;source set&#34;, all code in a source set shares dependencies</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>+-- src <span style="color:#888"># All sources</span>
+</span></span><span style="display:flex;"><span>    +-- main <span style="color:#888"># One folder per "source set", all code in a source set shares dependencies</span>
 </span></span><span style="display:flex;"><span>    |   +-- java <span style="color:#888"># One folder per language</span>
 </span></span><span style="display:flex;"><span>    |   +-- kotlin
 </span></span><span style="display:flex;"><span>    |   +-- resources <span style="color:#888"># Resources go here</span>
@@ -987,16 +976,16 @@ from code to artifacts</p>
 </span></span></code></pre></div></section><section>
 <h2 id="gradle-minimal-java-build-1">Gradle: minimal java build</h2>
 <p><code>src/main/java/HelloWorld.java</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">HelloWorld</span> {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">HelloWorld</span> {
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#888;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">main</span>(String... args) {
-</span></span><span style="display:flex;"><span>        System.<span style="color:#369">out</span>.<span style="color:#369">println</span>(<span style="color:#d20;background-color:#fff0f0">&#34;Hello, world!&#34;</span>);
+</span></span><span style="display:flex;"><span>        System.<span style="color:#369">out</span>.<span style="color:#369">println</span>(<span style="color:#d20;background-color:#fff0f0">"Hello, world!"</span>);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p><code>build.gradle.kts</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>plugins { java }
-</span></span></code></pre></div><p>Yes, it&rsquo;s a one-liner</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins { java }
+</span></span></code></pre></div><p>Yes, it’s a one-liner</p>
 </section><section>
 <h2 id="gradle-minimal-example-execution">Gradle: minimal example execution</h2>
 <ul>
@@ -1045,7 +1034,7 @@ from code to artifacts</p>
 </li>
 <li>Specified as <code>&lt;group&gt;:&lt;artifact&gt;:&lt;version&gt;</code>
 <ul>
-<li><code>+</code> is a special marker for &ldquo;latest&rdquo;</li>
+<li><code>+</code> is a special marker for “latest”</li>
 <li>Maven-style ranges supported (e.g., (1.2, 1.4])</li>
 </ul>
 </li>
@@ -1066,7 +1055,7 @@ from code to artifacts</p>
 <li>
 <p>Often, it becomes a <em>prerequisite expressed in natural language</em></p>
 <ul>
-<li>e.g., &ldquo;you need Maven 3.6.1 to build this software&rdquo;</li>
+<li>e.g., “you need Maven 3.6.1 to build this software”</li>
 </ul>
 </li>
 <li>
@@ -1090,13 +1079,13 @@ from code to artifacts</p>
 </ul>
 </li>
 </ul>
-<p>The Gradle wrapper is <em><strong>the</strong> correct way</em> to use gradle, and we&rsquo;ll be using it from now on.</p>
+<p>The Gradle wrapper is <em><strong>the</strong> correct way</em> to use gradle, and we’ll be using it from now on.</p>
 </section><section>
 <h2 id="gradle-our-toy-example">Gradle: our toy example</h2>
 <p><code>src/main/java/it/unibo/sampleapp/RateAMovie.java</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">final</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">RateAMovie</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#080;font-weight:bold">final</span> String DEFAULT_MOVIE = <span style="color:#d20;background-color:#fff0f0">&#34;Breaking Bad&#34;</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#080;font-weight:bold">final</span> String OMDB_API_KEY = System.<span style="color:#369">getenv</span>(<span style="color:#d20;background-color:#fff0f0">&#34;OMDB_API_KEY&#34;</span>);
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">final</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">RateAMovie</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#080;font-weight:bold">final</span> String DEFAULT_MOVIE = <span style="color:#d20;background-color:#fff0f0">"Breaking Bad"</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#080;font-weight:bold">final</span> String OMDB_API_KEY = System.<span style="color:#369">getenv</span>(<span style="color:#d20;background-color:#fff0f0">"OMDB_API_KEY"</span>);
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#080;font-weight:bold">final</span> Logger LOGGER = LoggerFactory.<span style="color:#369">getLogger</span>(RateAMovie.<span style="color:#369">class</span>);
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#06b;font-weight:bold">RateAMovie</span>() {
@@ -1105,7 +1094,7 @@ from code to artifacts</p>
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#888;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">main</span>(<span style="color:#080;font-weight:bold">final</span> String[] args) {
 </span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">if</span> (OMDB_API_KEY == <span style="color:#080;font-weight:bold">null</span> || OMDB_API_KEY.<span style="color:#369">isBlank</span>()) {
 </span></span><span style="display:flex;"><span>            LOGGER.<span style="color:#369">error</span>(
-</span></span><span style="display:flex;"><span>                <span style="color:#d20;background-color:#fff0f0">&#34;Invalid OMDB API Key {}, please set a valid API Key as the environment variable OMDB_API_KEY&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#d20;background-color:#fff0f0">"Invalid OMDB API Key {}, please set a valid API Key as the environment variable OMDB_API_KEY"</span>,
 </span></span><span style="display:flex;"><span>                OMDB_API_KEY
 </span></span><span style="display:flex;"><span>            );
 </span></span><span style="display:flex;"><span>            System.<span style="color:#369">exit</span>(1);
@@ -1123,16 +1112,16 @@ from code to artifacts</p>
 </span></span><span style="display:flex;"><span>            .<span style="color:#369">map</span>(Unchecked.<span style="color:#369">function</span>(omdb::getInfo))
 </span></span><span style="display:flex;"><span>            .<span style="color:#369">forEach</span>(movie -&gt;
 </span></span><span style="display:flex;"><span>                LOGGER.<span style="color:#369">info</span>(
-</span></span><span style="display:flex;"><span>                    <span style="color:#d20;background-color:#fff0f0">&#34;\n=========================\n{}\n&#34;</span>
-</span></span></code></pre></div><p>&hellip;</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>                )
+</span></span><span style="display:flex;"><span>                    <span style="color:#d20;background-color:#fff0f0">"\n=========================\n{}\n"</span>
+</span></span></code></pre></div><p>…</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>                )
 </span></span><span style="display:flex;"><span>            );
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div></section><section>
 <h2 id="gradle-our-toy-example-1">Gradle: our toy example</h2>
 <p><code>build.gradle.kts</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>plugins {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
 </span></span><span style="display:flex;"><span>    java
 </span></span><span style="display:flex;"><span>    application
 </span></span><span style="display:flex;"><span>}
@@ -1143,17 +1132,17 @@ from code to artifacts</p>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>dependencies {
 </span></span><span style="display:flex;"><span>    <span style="color:#888">// Maven dependencies are composed by a group name, a name and a version, separated by colons
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    implementation(<span style="color:#d20;background-color:#fff0f0">&#34;com.omertron:API-OMDB:1.5&#34;</span>)
-</span></span><span style="display:flex;"><span>    implementation(<span style="color:#d20;background-color:#fff0f0">&#34;org.jooq:jool:0.9.14&#34;</span>)
-</span></span><span style="display:flex;"><span>    implementation(<span style="color:#d20;background-color:#fff0f0">&#34;org.slf4j:slf4j-api:1.7.36&#34;</span>)
-</span></span><span style="display:flex;"><span>    runtimeOnly(<span style="color:#d20;background-color:#fff0f0">&#34;ch.qos.logback:logback-classic:1.2.11&#34;</span>)
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    implementation(<span style="color:#d20;background-color:#fff0f0">"com.omertron:API-OMDB:1.5"</span>)
+</span></span><span style="display:flex;"><span>    implementation(<span style="color:#d20;background-color:#fff0f0">"org.jooq:jool:0.9.14"</span>)
+</span></span><span style="display:flex;"><span>    implementation(<span style="color:#d20;background-color:#fff0f0">"org.slf4j:slf4j-api:1.7.36"</span>)
+</span></span><span style="display:flex;"><span>    runtimeOnly(<span style="color:#d20;background-color:#fff0f0">"ch.qos.logback:logback-classic:1.2.11"</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>application {
-</span></span><span style="display:flex;"><span>    mainClass.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">&#34;it.unibo.sampleapp.RateAMovie&#34;</span>)
+</span></span><span style="display:flex;"><span>    mainClass.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">"it.unibo.sampleapp.RateAMovie"</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p><code>settings.gradle.kts</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>rootProject.name = <span style="color:#d20;background-color:#fff0f0">&#34;sample-gradle-project&#34;</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>rootProject.name = <span style="color:#d20;background-color:#fff0f0">"sample-gradle-project"</span>
 </span></span></code></pre></div></section><section>
 <h2 id="gradle-toy-example-execution">Gradle: toy example execution</h2>
 <ul>
@@ -1169,46 +1158,46 @@ from code to artifacts</p>
 </section><section>
 <h2 id="gradle-multi-language-projects">Gradle: multi-language projects</h2>
 <p><code>src/main/groovy/HelloGroovy.groovy</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>println <span style="color:#d20;background-color:#fff0f0">&#34;Hello, Groovy&#34;</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>println <span style="color:#d20;background-color:#fff0f0">"Hello, Groovy"</span>
 </span></span></code></pre></div><p><code>src/main/java/HelloWorld.java</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">HelloWorld</span> {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">HelloWorld</span> {
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#888;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">main</span>(String... args) {
-</span></span><span style="display:flex;"><span>        System.<span style="color:#369">out</span>.<span style="color:#369">println</span>(<span style="color:#d20;background-color:#fff0f0">&#34;Hello, world!&#34;</span>);
+</span></span><span style="display:flex;"><span>        System.<span style="color:#369">out</span>.<span style="color:#369">println</span>(<span style="color:#d20;background-color:#fff0f0">"Hello, world!"</span>);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div></section><section>
 <h2 id="gradle-multi-language-projects-1">Gradle: multi-language projects</h2>
 <p><code>src/main/kotlin/HelloKt.kt</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">main</span>() { 
-</span></span><span style="display:flex;"><span>  println(<span style="color:#d20;background-color:#fff0f0">&#34;Hello, world!&#34;</span>) 
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">main</span>() { 
+</span></span><span style="display:flex;"><span>  println(<span style="color:#d20;background-color:#fff0f0">"Hello, world!"</span>) 
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p><code>src/main/scala/HelloScala.scala</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">HelloScala</span> <span style="color:#080;font-weight:bold">extends</span> <span style="color:#b06;font-weight:bold">App</span>  {
-</span></span><span style="display:flex;"><span>    println(<span style="color:#d20;background-color:#fff0f0">&#34;Hello Scala&#34;</span>)
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">HelloScala</span> <span style="color:#080;font-weight:bold">extends</span> <span style="color:#b06;font-weight:bold">App</span>  {
+</span></span><span style="display:flex;"><span>    println(<span style="color:#d20;background-color:#fff0f0">"Hello Scala"</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div></section><section>
 <h2 id="gradle-multi-language-projects-2">Gradle: multi-language projects</h2>
 <p><code>build.gradle.kts</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>plugins {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
 </span></span><span style="display:flex;"><span>    java
 </span></span><span style="display:flex;"><span>    scala
 </span></span><span style="display:flex;"><span>    groovy
-</span></span><span style="display:flex;"><span>    kotlin(<span style="color:#d20;background-color:#fff0f0">&#34;jvm&#34;</span>) version <span style="color:#d20;background-color:#fff0f0">&#34;1.7.10&#34;</span>
+</span></span><span style="display:flex;"><span>    kotlin(<span style="color:#d20;background-color:#fff0f0">"jvm"</span>) version <span style="color:#d20;background-color:#fff0f0">"1.7.10"</span>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>repositories {
 </span></span><span style="display:flex;"><span>    mavenCentral()
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>dependencies {
-</span></span><span style="display:flex;"><span>    implementation(<span style="color:#d20;background-color:#fff0f0">&#34;org.codehaus.groovy:groovy:3.0.12&#34;</span>)
-</span></span><span style="display:flex;"><span>    implementation(kotlin(<span style="color:#d20;background-color:#fff0f0">&#34;stdlib&#34;</span>))
-</span></span><span style="display:flex;"><span>    implementation(<span style="color:#d20;background-color:#fff0f0">&#34;org.scala-lang:scala-library:2.13.8&#34;</span>)
+</span></span><span style="display:flex;"><span>    implementation(<span style="color:#d20;background-color:#fff0f0">"org.codehaus.groovy:groovy:3.0.12"</span>)
+</span></span><span style="display:flex;"><span>    implementation(kotlin(<span style="color:#d20;background-color:#fff0f0">"stdlib"</span>))
+</span></span><span style="display:flex;"><span>    implementation(<span style="color:#d20;background-color:#fff0f0">"org.scala-lang:scala-library:2.13.8"</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div></section><section>
 <h1 id="quality-assurance">Quality Assurance</h1>
-<p><em>&ldquo;It works&rdquo;</em> <strong>is <em>not</em> good enough</strong></p>
-<p>(besides, the very notion of &ldquo;it works&rdquo; is rather debatable)</p>
+<p><em>“It works”</em> <strong>is <em>not</em> good enough</strong></p>
+<p>(besides, the very notion of “it works” is rather debatable)</p>
 <ul>
 <li>Software quality should be <em>continuously assessed</em></li>
 <li>The assessment should <em>automatic</em> whenever possible</li>
@@ -1226,7 +1215,7 @@ from code to artifacts</p>
 <li><em>Style</em> and <em>coherence</em></li>
 <li><em>Flawed programming</em> patterns
 <ul>
-<li>Known bugs, suboptimal programming, security flaws, &hellip;</li>
+<li>Known bugs, suboptimal programming, security flaws, …</li>
 </ul>
 </li>
 <li>Violations of the <em>DRY</em> principle</li>
@@ -1318,7 +1307,7 @@ from code to artifacts</p>
 </section><section>
 <h2 id="quality-assurance-junit--gradle">Quality Assurance: JUnit + Gradle</h2>
 <p><code>src/main/scala/it/unibo/test/Test.scala</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">package</span> <span style="color:#b06;font-weight:bold">it.unibo.test</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">package</span> <span style="color:#b06;font-weight:bold">it.unibo.test</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">trait</span> <span style="color:#b06;font-weight:bold">Sometrait</span> {
 </span></span><span style="display:flex;"><span>  <span style="color:#080;font-weight:bold">def</span> f<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Int</span>
@@ -1333,7 +1322,7 @@ from code to artifacts</p>
 </section><section>
 <h2 id="quality-assurance-junit--gradle-1">Quality Assurance: JUnit + Gradle</h2>
 <p><code>src/test/scala/MyTest.scala</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">it.unibo.test.</span>{<span style="color:#b06;font-weight:bold">Someobject</span>, <span style="color:#b06;font-weight:bold">Sometrait</span>}
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">it.unibo.test.</span>{<span style="color:#b06;font-weight:bold">Someobject</span>, <span style="color:#b06;font-weight:bold">Sometrait</span>}
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.junit.jupiter.api.Assertions._</span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.junit.jupiter.api.Test</span>
 </span></span><span style="display:flex;"><span>
@@ -1358,7 +1347,7 @@ from code to artifacts</p>
 </section><section>
 <h2 id="quality-assurance-junit--gradle-2">Quality Assurance: JUnit + Gradle</h2>
 <p><code>build.gradle.kts</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>plugins {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
 </span></span><span style="display:flex;"><span>    java
 </span></span><span style="display:flex;"><span>    scala
 </span></span><span style="display:flex;"><span>    jacoco
@@ -1369,22 +1358,22 @@ from code to artifacts</p>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>dependencies {
-</span></span><span style="display:flex;"><span>    implementation(<span style="color:#d20;background-color:#fff0f0">&#34;org.scala-lang:scala-library:2.13.8&#34;</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">junitVersion</span> = <span style="color:#d20;background-color:#fff0f0">&#34;5.9.0&#34;</span>
-</span></span><span style="display:flex;"><span>    testImplementation(<span style="color:#d20;background-color:#fff0f0">&#34;org.junit.jupiter:junit-jupiter-api:</span><span style="color:#33b;background-color:#fff0f0">$junitVersion</span><span style="color:#d20;background-color:#fff0f0">&#34;</span>)
-</span></span><span style="display:flex;"><span>    testRuntimeOnly(<span style="color:#d20;background-color:#fff0f0">&#34;org.junit.jupiter:junit-jupiter-engine:</span><span style="color:#33b;background-color:#fff0f0">$junitVersion</span><span style="color:#d20;background-color:#fff0f0">&#34;</span>)
+</span></span><span style="display:flex;"><span>    implementation(<span style="color:#d20;background-color:#fff0f0">"org.scala-lang:scala-library:2.13.8"</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">junitVersion</span> = <span style="color:#d20;background-color:#fff0f0">"5.9.0"</span>
+</span></span><span style="display:flex;"><span>    testImplementation(<span style="color:#d20;background-color:#fff0f0">"org.junit.jupiter:junit-jupiter-api:</span><span style="color:#33b;background-color:#fff0f0">$junitVersion</span><span style="color:#d20;background-color:#fff0f0">"</span>)
+</span></span><span style="display:flex;"><span>    testRuntimeOnly(<span style="color:#d20;background-color:#fff0f0">"org.junit.jupiter:junit-jupiter-engine:</span><span style="color:#33b;background-color:#fff0f0">$junitVersion</span><span style="color:#d20;background-color:#fff0f0">"</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#888">// Enables JUnit Platform (needed for JUnit 5)
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>tasks.named&lt;Test&gt;(<span style="color:#d20;background-color:#fff0f0">&#34;test&#34;</span>) {
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>tasks.named&lt;Test&gt;(<span style="color:#d20;background-color:#fff0f0">"test"</span>) {
 </span></span><span style="display:flex;"><span>    useJUnitPlatform()
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div>
 </section><section>
 <h2 id="quality-assurance-scalatest--scoverage">Quality Assurance: Scalatest + Scoverage</h2>
-<p>Let&rsquo;s switch <em>testing framework</em> and enable <em>coverage</em></p>
+<p>Let’s switch <em>testing framework</em> and enable <em>coverage</em></p>
 <p><code>src/main/scala/it/unibo/test/Test.scala</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">package</span> <span style="color:#b06;font-weight:bold">it.unibo.test</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">package</span> <span style="color:#b06;font-weight:bold">it.unibo.test</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">trait</span> <span style="color:#b06;font-weight:bold">Sometrait</span> {
 </span></span><span style="display:flex;"><span>  <span style="color:#080;font-weight:bold">def</span> f<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Int</span>
@@ -1399,17 +1388,17 @@ from code to artifacts</p>
 </section><section>
 <h2 id="quality-assurance-scalatest--scoverage-1">Quality Assurance: Scalatest + Scoverage</h2>
 <p><code>src/test/scala/Test.scala</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">it.unibo.test.Sometrait</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">it.unibo.test.Sometrait</span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.scalamock.scalatest.MockFactory</span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.scalatest.funsuite.AnyFunSuite</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyTests</span> <span style="color:#080;font-weight:bold">extends</span> <span style="color:#b06;font-weight:bold">AnyFunSuite</span> <span style="color:#080;font-weight:bold">with</span> <span style="color:#b06;font-weight:bold">MockFactory</span> {
-</span></span><span style="display:flex;"><span>  test(<span style="color:#d20;background-color:#fff0f0">&#34;An empty Set should have size 0&#34;</span>) {
-</span></span><span style="display:flex;"><span>    println(<span style="color:#d20;background-color:#fff0f0">&#34;Test1&#34;</span>)
+</span></span><span style="display:flex;"><span>  test(<span style="color:#d20;background-color:#fff0f0">"An empty Set should have size 0"</span>) {
+</span></span><span style="display:flex;"><span>    println(<span style="color:#d20;background-color:#fff0f0">"Test1"</span>)
 </span></span><span style="display:flex;"><span>    assert(<span style="color:#b06;font-weight:bold">Set</span>.empty.size == <span style="color:#00d;font-weight:bold">0</span>)
 </span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>  test(<span style="color:#d20;background-color:#fff0f0">&#34;Some useless test&#34;</span>) {
-</span></span><span style="display:flex;"><span>    println(<span style="color:#d20;background-color:#fff0f0">&#34;Test2&#34;</span>)
+</span></span><span style="display:flex;"><span>  test(<span style="color:#d20;background-color:#fff0f0">"Some useless test"</span>) {
+</span></span><span style="display:flex;"><span>    println(<span style="color:#d20;background-color:#fff0f0">"Test2"</span>)
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> someStub <span style="color:#080;font-weight:bold">=</span> stub[<span style="color:#888;font-weight:bold">Sometrait</span>]
 </span></span><span style="display:flex;"><span>    (someStub.f <span style="color:#080;font-weight:bold">_</span>).when().returns(<span style="color:#00d;font-weight:bold">42</span>)
 </span></span><span style="display:flex;"><span>    assert(someStub.f == <span style="color:#00d;font-weight:bold">42</span>)
@@ -1419,11 +1408,11 @@ from code to artifacts</p>
 </section><section>
 <h2 id="quality-assurance-scalatest--scoverage-2">Quality Assurance: Scalatest + Scoverage</h2>
 <p><code>build.gradle.kts</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>plugins {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
 </span></span><span style="display:flex;"><span>    java
 </span></span><span style="display:flex;"><span>    scala
-</span></span><span style="display:flex;"><span>    id(<span style="color:#d20;background-color:#fff0f0">&#34;org.scoverage&#34;</span>) version <span style="color:#d20;background-color:#fff0f0">&#34;7.0.1&#34;</span>
-</span></span><span style="display:flex;"><span>    id(<span style="color:#d20;background-color:#fff0f0">&#34;com.github.maiflai.scalatest&#34;</span>) version <span style="color:#d20;background-color:#fff0f0">&#34;0.32&#34;</span>
+</span></span><span style="display:flex;"><span>    id(<span style="color:#d20;background-color:#fff0f0">"org.scoverage"</span>) version <span style="color:#d20;background-color:#fff0f0">"7.0.1"</span>
+</span></span><span style="display:flex;"><span>    id(<span style="color:#d20;background-color:#fff0f0">"com.github.maiflai.scalatest"</span>) version <span style="color:#d20;background-color:#fff0f0">"0.32"</span>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>repositories {
@@ -1431,15 +1420,15 @@ from code to artifacts</p>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>dependencies {
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">scalaVersion</span> = <span style="color:#d20;background-color:#fff0f0">&#34;2.13.8&#34;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#a61717;background-color:#e3d2d2">(</span><span style="color:#369;font-weight:bold">scalaMinor</span>, _) = requireNotNull(Regex(<span style="color:#d20;background-color:#fff0f0">&#34;^(</span><span style="color:#04d;background-color:#fff0f0">\\</span><span style="color:#d20;background-color:#fff0f0">d+</span><span style="color:#04d;background-color:#fff0f0">\\</span><span style="color:#d20;background-color:#fff0f0">.</span><span style="color:#04d;background-color:#fff0f0">\\</span><span style="color:#d20;background-color:#fff0f0">d+)(</span><span style="color:#04d;background-color:#fff0f0">\\</span><span style="color:#d20;background-color:#fff0f0">.</span><span style="color:#04d;background-color:#fff0f0">\\</span><span style="color:#d20;background-color:#fff0f0">d+)?$&#34;</span>).matchEntire(scalaVersion)).destructured
-</span></span><span style="display:flex;"><span>    implementation(<span style="color:#d20;background-color:#fff0f0">&#34;org.scala-lang:scala-library:</span><span style="color:#33b;background-color:#fff0f0">$scalaVersion</span><span style="color:#d20;background-color:#fff0f0">&#34;</span>)
-</span></span><span style="display:flex;"><span>    testImplementation(<span style="color:#d20;background-color:#fff0f0">&#34;org.scalatest:scalatest_</span><span style="color:#33b;background-color:#fff0f0">$scalaMinor</span><span style="color:#d20;background-color:#fff0f0">:3.3.0-SNAP3&#34;</span>)
-</span></span><span style="display:flex;"><span>    testImplementation(<span style="color:#d20;background-color:#fff0f0">&#34;org.scalamock:scalamock_</span><span style="color:#33b;background-color:#fff0f0">$scalaMinor</span><span style="color:#d20;background-color:#fff0f0">:5.2.0&#34;</span>)
-</span></span><span style="display:flex;"><span>    testRuntimeOnly(<span style="color:#d20;background-color:#fff0f0">&#34;com.vladsch.flexmark:flexmark-profile-pegdown:0.36.8&#34;</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">scoverageVersion</span> = <span style="color:#d20;background-color:#fff0f0">&#34;1.4.11&#34;</span>
-</span></span><span style="display:flex;"><span>    scoverage(<span style="color:#d20;background-color:#fff0f0">&#34;org.scoverage:scalac-scoverage-plugin_</span><span style="color:#33b;background-color:#fff0f0">$scalaVersion</span><span style="color:#d20;background-color:#fff0f0">:</span><span style="color:#33b;background-color:#fff0f0">$scoverageVersion</span><span style="color:#d20;background-color:#fff0f0">&#34;</span>)
-</span></span><span style="display:flex;"><span>    scoverage(<span style="color:#d20;background-color:#fff0f0">&#34;org.scoverage:scalac-scoverage-runtime_</span><span style="color:#33b;background-color:#fff0f0">$scalaMinor</span><span style="color:#d20;background-color:#fff0f0">:</span><span style="color:#33b;background-color:#fff0f0">$scoverageVersion</span><span style="color:#d20;background-color:#fff0f0">&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">scalaVersion</span> = <span style="color:#d20;background-color:#fff0f0">"2.13.8"</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#a61717;background-color:#e3d2d2">(</span><span style="color:#369;font-weight:bold">scalaMinor</span>, _) = requireNotNull(Regex(<span style="color:#d20;background-color:#fff0f0">"^(</span><span style="color:#04d;background-color:#fff0f0">\\</span><span style="color:#d20;background-color:#fff0f0">d+</span><span style="color:#04d;background-color:#fff0f0">\\</span><span style="color:#d20;background-color:#fff0f0">.</span><span style="color:#04d;background-color:#fff0f0">\\</span><span style="color:#d20;background-color:#fff0f0">d+)(</span><span style="color:#04d;background-color:#fff0f0">\\</span><span style="color:#d20;background-color:#fff0f0">.</span><span style="color:#04d;background-color:#fff0f0">\\</span><span style="color:#d20;background-color:#fff0f0">d+)?$"</span>).matchEntire(scalaVersion)).destructured
+</span></span><span style="display:flex;"><span>    implementation(<span style="color:#d20;background-color:#fff0f0">"org.scala-lang:scala-library:</span><span style="color:#33b;background-color:#fff0f0">$scalaVersion</span><span style="color:#d20;background-color:#fff0f0">"</span>)
+</span></span><span style="display:flex;"><span>    testImplementation(<span style="color:#d20;background-color:#fff0f0">"org.scalatest:scalatest_</span><span style="color:#33b;background-color:#fff0f0">$scalaMinor</span><span style="color:#d20;background-color:#fff0f0">:3.3.0-SNAP3"</span>)
+</span></span><span style="display:flex;"><span>    testImplementation(<span style="color:#d20;background-color:#fff0f0">"org.scalamock:scalamock_</span><span style="color:#33b;background-color:#fff0f0">$scalaMinor</span><span style="color:#d20;background-color:#fff0f0">:5.2.0"</span>)
+</span></span><span style="display:flex;"><span>    testRuntimeOnly(<span style="color:#d20;background-color:#fff0f0">"com.vladsch.flexmark:flexmark-profile-pegdown:0.36.8"</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">scoverageVersion</span> = <span style="color:#d20;background-color:#fff0f0">"1.4.11"</span>
+</span></span><span style="display:flex;"><span>    scoverage(<span style="color:#d20;background-color:#fff0f0">"org.scoverage:scalac-scoverage-plugin_</span><span style="color:#33b;background-color:#fff0f0">$scalaVersion</span><span style="color:#d20;background-color:#fff0f0">:</span><span style="color:#33b;background-color:#fff0f0">$scoverageVersion</span><span style="color:#d20;background-color:#fff0f0">"</span>)
+</span></span><span style="display:flex;"><span>    scoverage(<span style="color:#d20;background-color:#fff0f0">"org.scoverage:scalac-scoverage-runtime_</span><span style="color:#33b;background-color:#fff0f0">$scalaMinor</span><span style="color:#d20;background-color:#fff0f0">:</span><span style="color:#33b;background-color:#fff0f0">$scoverageVersion</span><span style="color:#d20;background-color:#fff0f0">"</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#888">// Force a scoverage report if check is requested
@@ -1471,7 +1460,7 @@ from code to artifacts</p>
 </li>
 <li><a href="https://sonarcloud.io/">Sonarcloud</a>
 <ul>
-<li>Multiple measures, covering reliability, security, maintainability, duplication, complexity&hellip;</li>
+<li>Multiple measures, covering reliability, security, maintainability, duplication, complexity…</li>
 </ul>
 </li>
 <li><a href="https://www.codacy.com/">Codacy</a>
@@ -1488,7 +1477,7 @@ from code to artifacts</p>
 </section>
 
   
-<section data-noprocess data-shortcode-slide>
+<section data-noprocess="" data-shortcode-slide="">
   <h1 id="continuous-integration">Continuous Integration</h1>
 <p>The practice of integrating code with a main development line <strong>continuously</strong>
 <br>
@@ -1501,25 +1490,25 @@ from code to artifacts</p>
 <li>Now widespread in the larger DevOps community</li>
 </ul>
 </section>
-<section data-noprocess data-shortcode-slide>
+<section data-noprocess="" data-shortcode-slide="">
   
 <h1 id="the-integration-hell">The Integration Hell</h1>
 <ul>
 <li>Traditional software development takes several months for <em>“integrating”</em> a couple of years of development</li>
 <li>The longer there is no integrated project, the higher the <strong>risk</strong></li>
 </ul>
-<img src="../assets/integration-traditional.png" onerror="this.onerror=null; this.src='../../assets/integration-traditional.png'" width=40% />
+<img src="../assets/integration-traditional.png" onerror="this.onerror=null; this.src='../../assets/integration-traditional.png'" width="40%">
 $\Rightarrow$
-<img src="../assets/integration-continuous.png" onerror="this.onerror=null; this.src='../../assets/integration-continuous.png'" width=40% />
+<img src="../assets/integration-continuous.png" onerror="this.onerror=null; this.src='../../assets/integration-continuous.png'" width="40%">
 </section>
-<section data-noprocess data-shortcode-slide>
+<section data-noprocess="" data-shortcode-slide="">
   
 <h2 id="microreleases-and-protoduction">Microreleases and protoduction</h2>
 <ul>
 <li>High frequency integration may lead to high frequency releases
 <ul>
 <li>Possibly, <em>one per commit</em></li>
-<li>Of course, <em>versioning</em> must be appropriate&hellip;</li>
+<li>Of course, <em>versioning</em> must be appropriate…</li>
 </ul>
 </li>
 </ul>
@@ -1528,9 +1517,9 @@ $\Rightarrow$
   <tbody>
     <tr>
       <td>
-        <img src="../assets/protoduction.jpg" onerror="this.onerror=null; this.src='../../assets/protoduction.jpg'" width=90% />
-      <td/>
-      <td>
+        <img src="../assets/protoduction.jpg" onerror="this.onerror=null; this.src='../../assets/protoduction.jpg'" width="90%">
+      </td><td>
+      </td><td>
 <ul>
 <li>Traditionally used with a <em>negative</em> meaning
 <ul>
@@ -1551,31 +1540,31 @@ $\Rightarrow$
 </li>
 <li>
 <p>Partial features are <em>up to date</em> with the mainline</p>
-<td/>
-</li>
-</ul>
-  </tr>
+</li></ul></li></ul></td><td>
+
+
+  </td></tr>
 </tbody>
-</li>
-</ul>
+
+
 </table>
 </section>
-<section data-noprocess data-shortcode-slide>
+<section data-noprocess="" data-shortcode-slide="">
   
 <h2 id="intensive-operations-should-be-elsewhere">Intensive operations should be elsewhere</h2>
 <ul>
 <li>The build process should be <em>rich</em> and <em>fast</em></li>
 <li>Operations requiring a long time should be <em>automated</em>
 <ul>
-<li>And run somewhere else than devs&rsquo; PCs</li>
+<li>And run somewhere else than devs’ PCs</li>
 </ul>
 </li>
 </ul>
 <p>
-<img src="../assets/compiling.png" onerror="this.onerror=null; this.src='../../assets/compiling.png'" height=100% />
+<img src="../assets/compiling.png" onerror="this.onerror=null; this.src='../../assets/compiling.png'" height="100%">
 </p>
 </section>
-<section data-noprocess data-shortcode-slide>
+<section data-noprocess="" data-shortcode-slide="">
   
 <h2 id="continuous-integration-software">Continuous integration software</h2>
 <p>Software that promotes CI practices should:</p>
@@ -1592,12 +1581,12 @@ $\Rightarrow$
 <li>Support for <em>authentication</em> and deployment to external services</li>
 </ul>
 <p><strong>Plenty</strong> of integrators on the market</p>
-<p>Circle CI, Travis CI, Werker, done.io, Codefresh, Codeship, Bitbucket Pipelines, GitHub Actions, GitLab CI/CD Pipelines, JetBrains TeamCity&hellip;</p>
+<p>Circle CI, Travis CI, Werker, done.io, Codefresh, Codeship, Bitbucket Pipelines, GitHub Actions, GitLab CI/CD Pipelines, JetBrains TeamCity…</p>
 
 </section>
 
   
-<section data-noprocess data-shortcode-slide>
+<section data-noprocess="" data-shortcode-slide="">
   <h1 id="core-concepts">Core concepts</h1>
 <p>Naming and organization is variable across platforms, but <em>in general</em>:</p>
 <ul>
@@ -1629,7 +1618,7 @@ $\Rightarrow$
 <li>Integrated in GitHub</li>
 <li><em>Less mature</em> than other integrators
 <ul>
-<li>My personal feeling is that it was built <em>bottom-up</em>&hellip;</li>
+<li>My personal feeling is that it was built <em>bottom-up</em>…</li>
 </ul>
 </li>
 <li>Some questionable limitations</li>
@@ -1702,7 +1691,7 @@ $\Rightarrow$
 <ul>
 <li>Events that trigger a workflow are specified under the <code>on</code> key</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">on</span>:<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">on</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">push</span>:<span style="color:#bbb"> </span><span style="color:#888"># Trigger the workflow on push</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">branches</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- main<span style="color:#bbb"> </span><span style="color:#888"># but only for the main branch</span><span style="color:#bbb">
@@ -1714,7 +1703,7 @@ $\Rightarrow$
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">types</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- created<span style="color:#bbb"> </span><span style="color:#888"># ...created</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">schedule</span>:<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">cron</span>:<span style="color:#bbb">  </span><span style="color:#d20;background-color:#fff0f0">&#39;*/30 5,17 * * *&#39;</span><span style="color:#bbb"> </span><span style="color:#888"># Cron syntax (see crontab.guru)</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">cron</span>:<span style="color:#bbb">  </span><span style="color:#d20;background-color:#fff0f0">'*/30 5,17 * * *'</span><span style="color:#bbb"> </span><span style="color:#888"># Cron syntax (see crontab.guru)</span><span style="color:#bbb">
 </span></span></span></code></pre></div></section><section>
 <h2 id="github-actions-environment-preparation">GitHub Actions: Environment preparation</h2>
 <p>GitHub actions job run on a <em>fresh virtual machine</em></p>
@@ -1734,18 +1723,18 @@ $\Rightarrow$
 </ul>
 </section><section>
 <h2 id="github-actions-a-simple-gradle-build">GitHub Actions: a simple gradle build</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Clone Repository<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Clone Repository<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">on</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">push</span>:<span style="color:#bbb"> </span><span style="color:#888"># On every push on any branch</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">jobs</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">Build</span>:<span style="color:#bbb"> </span><span style="color:#888"># Job name</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">runs-on</span>:<span style="color:#bbb"> </span>ubuntu-latest<span style="color:#bbb"> </span><span style="color:#888"># Operating system selection</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">env</span>:<span style="color:#bbb"> </span><span style="color:#888"># Environment can be controlled at the job or step level</span><span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">TERM</span>:<span style="color:#bbb"> </span>dumb<span style="color:#bbb"> </span><span style="color:#888"># Sets the environment variable TERM to &#34;dumb&#34;</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">TERM</span>:<span style="color:#bbb"> </span>dumb<span style="color:#bbb"> </span><span style="color:#888"># Sets the environment variable TERM to "dumb"</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">steps</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Checkout<span style="color:#bbb"> </span><span style="color:#888"># custom name Checkout the repository</span><span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@v2<span style="color:#bbb"> </span><span style="color:#888"># Action implemented in this repository, tag &#34;2&#34;</span><span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>joschi/setup-jdk@v2.3.0<span style="color:#bbb"> </span><span style="color:#888"># Action implemented in repository &#34;joschi/setup-jdk&#34; tag &#34;2.3.0&#34;</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@v2<span style="color:#bbb"> </span><span style="color:#888"># Action implemented in this repository, tag "2"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>joschi/setup-jdk@v2.3.0<span style="color:#bbb"> </span><span style="color:#888"># Action implemented in repository "joschi/setup-jdk" tag "2.3.0"</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">with</span>:<span style="color:#bbb"> </span><span style="color:#888"># Actions parameters (action name omitted)</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">java-version</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">15</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Build<span style="color:#bbb">
@@ -1831,7 +1820,7 @@ easy to communicate your intentions to the users of your software.</p>
       
 
     </div>
-<script type="text/javascript" src=/Course-Laboratory-of-Software-Systems/reveal-hugo/object-assign.js></script>
+<script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-hugo/object-assign.js"></script>
 
 <a href="/Course-Laboratory-of-Software-Systems/reveal-js/dist/print/" id="print-location" style="display: none;"></a>
 
@@ -1930,10 +1919,10 @@ easy to communicate your intentions to the users of your software.</p>
     };
 </script>
 
-<script type="text/javascript" id="MathJax-script" async
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+<script type="text/javascript" id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
 </script>
 
     
-  </body>
-</html>
+  
+
+</body></html>
