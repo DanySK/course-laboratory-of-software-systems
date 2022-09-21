@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/dist/reset.css">
 <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/dist/reveal.css">
-  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.03a7784ea4b53d9f4a51db94e91a0ffc5acc1773ec1b21a845c41888871b56a9.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
+  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.21194bcec283dd396ecfed6830cb3d10ef88fc16be10f9c397b08f3aed477d35.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
     
 <link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
 <link href="https://fonts.googleapis.com/css?family=Roboto Mono" rel="stylesheet">
@@ -23,7 +23,8 @@
       <div class="slides">
   
 
-    <section><h1 id="kotlin-for-scala-developers">Kotlin (for Scala developers)</h1>
+    <section><h1 id="kotlin">Kotlin</h1>
+<h2 id="for-scala-developers"><em>(for Scala developers)</em></h2>
 <h2 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h2>
 <br>
 <h3 id="danilo-pianini-----danilopianiniuniboitmailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini — <code>danilo.pianini@unibo.it</code></a></h3>
@@ -88,7 +89,8 @@
 <li>Types are annotated after the parameter name</li>
 <li>Invocation can be positional or by name, with the rule that once a named parameter is used, subsequent parameters must be named as well</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">foo</span>(a: Int = <span style="color:#00d;font-weight:bold">0</span>, b: String = <span style="color:#d20;background-color:#fff0f0">"foo"</span>): Int = TODO() <span style="color:#888">// TODO() is a builtin function throwing a `NotImplementedError`
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">foo</span>(a: Int = <span style="color:#00d;font-weight:bold">0</span>, b: String = <span style="color:#d20;background-color:#fff0f0">"foo"</span>): Int = TODO()
+</span></span><span style="display:flex;"><span><span style="color:#888">// TODO() is a builtin function throwing a `NotImplementedError`
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>foo(<span style="color:#00d;font-weight:bold">1</span>, <span style="color:#d20;background-color:#fff0f0">"bar"</span>) <span style="color:#888">// OK, positional
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>foo(a = <span style="color:#00d;font-weight:bold">1</span>, b = <span style="color:#d20;background-color:#fff0f0">"bar"</span>) <span style="color:#888">// OK, named
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>foo(<span style="color:#00d;font-weight:bold">1</span>, b = <span style="color:#d20;background-color:#fff0f0">"bar"</span>) <span style="color:#888">// OK, hybrid
@@ -147,7 +149,7 @@ Nullable types are suffixed by a <code>?</code> and require special handling
 </ul>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">baz</span>: String? = <span style="color:#d20;background-color:#fff0f0">"foo"</span>
 </span></span><span style="display:flex;"><span>baz?.length <span style="color:#888">// returns 3, return type is "Int?", in fact...
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">bar</span>: Int = baz?.length <span style="color:#888">// ...error: type mismatch: inferred type is Int? but Int was expected
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">bar</span>: Int = baz?.length <span style="color:#888">// type mismatch: inferred type is Int? but Int was expected
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>baz = <span style="color:#080;font-weight:bold">null</span>
 </span></span><span style="display:flex;"><span>baz?.length <span style="color:#888">// returns null, return type is still "Int?"
 </span></span></span></code></pre></div></section><section>
@@ -387,7 +389,7 @@ Consider the following Scala code:</p>
 </span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">    ch'ogne lingua devèn, tremando, muta
 </span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">    e li occhi non l'ardiscon di guardare.
 </span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">    """</span>.trimIndent() <span style="color:#888">// Indentation can be trimmed
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">finalWordsEndingInA</span> = <span style="color:#d20;background-color:#fff0f0">"""\W*(\w*a)\W*</span><span style="color:#33b;background-color:#fff0f0">${'$'}</span><span style="color:#d20;background-color:#fff0f0">"""</span>.toRegex(RegexOption.MULTILINE) <span style="color:#888">// See how $ must be escaped
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">finalWordsEndingInA</span> = <span style="color:#d20;background-color:#fff0f0">"""\W*(\w*a)\W*</span><span style="color:#33b;background-color:#fff0f0">${'$'}</span><span style="color:#d20;background-color:#fff0f0">"""</span>.toRegex(RegexOption.MULTILINE) <span style="color:#888">// '$' escaped
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>finalWordsEndingInA.findAll(dante).map { <span style="color:#080;font-weight:bold">it</span>.groups[<span style="color:#00d;font-weight:bold">1</span>]?.<span style="color:#080;font-weight:bold">value</span> }.toList() <span class="fragment " style="color: #888;"> // [saluta, muta]</span>
 </span></span></code></pre></div></section><section>
 <h1 id="kotlin-101-19">Kotlin 101</h1>
@@ -400,7 +402,7 @@ Imports go at the top of file, no locally scoped imports as in Scala</p>
 </ul>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">package</span> <span style="color:#b06;font-weight:bold">it.unibo.lss.experiments</span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">it.unibo.lss.ddd.Entity</span> <span style="color:#888">// Available as Entity locally
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.company.someproduct.Entity</span> <span style="color:#080;font-weight:bold">as</span> SomeProductEntity <span style="color:#888">// Aliasing, accessible as SomeProductEntity
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.company.someproduct.Entity</span> <span style="color:#080;font-weight:bold">as</span> SomeProductEntity <span style="color:#888">// name aliasing
 </span></span></span></code></pre></div></section><section>
 <h1 id="kotlin-101-20">Kotlin 101</h1>
 <h2 id="varargs">Varargs</h2>
@@ -731,7 +733,7 @@ Primary constructor code (if any) must be in an <code>init</code> block</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Foo</span>(
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">bar</span>: String, <span style="color:#888">// This is a val property of the class
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">baz</span>: Int, <span style="color:#888">// This is a var property of the class
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    greeting: String = <span style="color:#d20;background-color:#fff0f0">"Hello from constructor"</span> <span style="color:#888">// Constructor parameter, not a property. Default values allowed.
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    greeting: String = <span style="color:#d20;background-color:#fff0f0">"Hello from constructor"</span> <span style="color:#888">// non-property constructor parameter. Default values allowed
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>) {
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">init</span> {
 </span></span><span style="display:flex;"><span>        println(greeting)
