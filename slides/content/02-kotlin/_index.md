@@ -17,7 +17,8 @@ enableSourceMap = true
 
 +++
 
-# Kotlin (for Scala developers)
+# Kotlin
+## *(for Scala developers)*
 
 {{% import path="reusable/header.md" %}}
 
@@ -86,7 +87,8 @@ Much like Scala:
 * Invocation can be positional or by name, with the rule that once a named parameter is used, subsequent parameters must be named as well
 
 ```kotlin
-fun foo(a: Int = 0, b: String = "foo"): Int = TODO() // TODO() is a builtin function throwing a `NotImplementedError`
+fun foo(a: Int = 0, b: String = "foo"): Int = TODO()
+// TODO() is a builtin function throwing a `NotImplementedError`
 foo(1, "bar") // OK, positional
 foo(a = 1, b = "bar") // OK, named
 foo(1, b = "bar") // OK, hybrid
@@ -177,7 +179,7 @@ Performs runtime access to a member of a nullable object if it's not `null`, oth
 ```kotlin
 var baz: String? = "foo"
 baz?.length // returns 3, return type is "Int?", in fact...
-val bar: Int = baz?.length // ...error: type mismatch: inferred type is Int? but Int was expected
+val bar: Int = baz?.length // type mismatch: inferred type is Int? but Int was expected
 baz = null
 baz?.length // returns null, return type is still "Int?"
 ```
@@ -420,7 +422,7 @@ val dante = """
     ch'ogne lingua devèn, tremando, muta
     e li occhi non l'ardiscon di guardare.
     """.trimIndent() // Indentation can be trimmed
-val finalWordsEndingInA = """\W*(\w*a)\W*${'$'}""".toRegex(RegexOption.MULTILINE) // See how $ must be escaped
+val finalWordsEndingInA = """\W*(\w*a)\W*${'$'}""".toRegex(RegexOption.MULTILINE) // '$' escaped
 finalWordsEndingInA.findAll(dante).map { it.groups[1]?.value }.toList() {{<comment_frag " // [saluta, muta]" >}}
 ```
 
@@ -439,7 +441,7 @@ Imports go at the top of file, no locally scoped imports as in Scala
 ```kotlin
 package it.unibo.lss.experiments
 import it.unibo.lss.ddd.Entity // Available as Entity locally
-import org.company.someproduct.Entity as SomeProductEntity // Aliasing, accessible as SomeProductEntity
+import org.company.someproduct.Entity as SomeProductEntity // name aliasing
 ```
 
 ---
@@ -831,7 +833,7 @@ Primary constructor code (if any) must be in an `init` block
 class Foo(
     val bar: String, // This is a val property of the class
     var baz: Int, // This is a var property of the class
-    greeting: String = "Hello from constructor" // Constructor parameter, not a property. Default values allowed.
+    greeting: String = "Hello from constructor" // non-property constructor parameter. Default values allowed
 ) {
     init {
         println(greeting)

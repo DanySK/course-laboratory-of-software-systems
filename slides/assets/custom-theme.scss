@@ -34,7 +34,7 @@ $backgroundColor: #fff;
 $mainColor: #000;
 $headingColor: #111;
 
-$mainFontSize: 2em;
+$mainFontSize: 2.3em;
 $mainFont: 'Signika Negative', 'Source Sans Pro', Helvetica, sans-serif;
 $headingFont: 'Signika Negative', 'Source Sans Pro', Helvetica, sans-serif;
 $headingLetterSpacing: normal;
@@ -71,7 +71,7 @@ section.has-light-background {
 	border: 0em;
 	box-shadow: none;
     max-width: 100%;
-    max-height: 23em;
+    max-height: 68vh;
     height: auto;
 	object-fit: contain;
 }
@@ -101,9 +101,9 @@ section.has-light-background {
 
 .reveal code {
 	color: deeppink;
-	line-height: 130%;
+	line-height: 100%;
 	font-weight: bold;
-	font-size: 110%;
+	font-size: 100%;
 	font-family: "Inconsolata";
 }
 
@@ -112,23 +112,35 @@ section.has-light-background {
 	max-width: 113%;
 	margin: 0em;
 	padding: 0em;
-	border-radius: 1em;
-	padding-left: 1em;
-	padding-right: 1em;
+	border-radius: .65em;
+	padding-left: .25em;
+	padding-right: .25em;
 	border: #000;
-	border-width: 1em;
-	box-shadow: 0.4em 0.4em 1em .01em #888888;
+	border-width: .5em;
+	box-shadow: 0.25em 0.25em 0.5em .01em #888888;
 }
 
 .reveal pre code {
 	max-width: 100%;
 	line-height: 100%;
-	font-size: 1.48em;
+	font-size: 1.1em;
 	color: black;
 	max-height: none;
 	font-family: 'Inconsolata';
 	font-weight: normal;
-	margin: .2em;
+	margin: .1em;
+	// line-height: 1.2em;
+	// font-size: 1.5em;
+	// font-weight: normal;
+	padding-left: .5em;
+	padding-right: .5em;
+	padding-top: .25em;
+	padding-bottom: .25em;
+	border: #000000AA;
+	border-style: solid;
+	border-width: .1em;
+	border-radius: .50em;
+	// box-sizing: border-box;
 }
 
 .reveal div.highlight {
@@ -208,18 +220,38 @@ section.has-light-background {
 
 // Mermaid flowcharts as git graphs
 
+.mermaid .cluster.repo > rect {
+	stroke-width: 0.2em !important;
+	fill: ghostwhite !important;
+	stroke: gray !important;
+}
+.mermaid .remote > path {
+	stroke-width: 0.2em !important;
+	fill: rgb(253, 189, 253) !important;
+	stroke: rgb(170, 0, 255) !important;
+}
+
 .mermaid .head > polygon {
 	fill:#ff7274 !important;
 	stroke:#aa1d1f !important;
-	stroke-width: 0.1em !important;
+	stroke-width: 0.2em !important;
 }
 
 .mermaid .branch > rect {
-	stroke-width: 0.1em !important;
+	stroke-width: 0.2em !important;
+	fill: greenyellow !important;
+	stroke: green !important;
 }
 
 .mermaid .commit > rect {
-	fill:#ceffef !important;
+	fill: white !important;
 	stroke:#333 !important;
-	stroke-width: 0.05em !important;
+	stroke-width: 0.2em !important;
 }
+
+.mermaid .tag > polygon {
+	fill: cyan !important;
+	stroke: blue !important;
+	stroke-width: 0.2em !important;
+}
+
