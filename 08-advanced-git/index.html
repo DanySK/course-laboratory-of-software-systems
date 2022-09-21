@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/dist/reset.css">
 <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/dist/reveal.css">
-  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.e0d92e8e0482419cf9429b09f4be9bbc90a17f0a33a8e3d38b2757faa3a0ed0f.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
+  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.03a7784ea4b53d9f4a51db94e91a0ffc5acc1773ec1b21a845c41888871b56a9.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
     
 <link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
 <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
@@ -506,7 +506,205 @@ finding who did something specific</p>
 </ul>
 </section><section>
 <h2 id="mining-lost-commits">Mining lost commits</h2>
+<div class="mermaid">flowchart RL
+  HEAD{{"HEAD"}}
+  master(master)
+
+  C10([10]) --> C9([9]) --> C8([8]) --> C7([7]) --> C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+
+  master -.-> C10
+
+  HEAD -.-> C10
+  HEAD --"fas:fa-link"--o master
+
+  class HEAD head;
+  class master branch;
+  class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10 commit;
+</div>
+
+
+
+<span class='fragment ' >
+  <p>⬇️ <code>git checkout HEAD~4 &amp;&amp; git checkout -b very-important</code> ⬇️</p>
+
+</span>
+
+
+
+<span class='fragment ' >
+  <div class="mermaid">flowchart RL
+  HEAD{{"HEAD"}}
+  master(master)
+  v(very-important)
+
+  C10([10]) --> C9([9]) --> C8([8]) --> C7([7]) --> C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+
+  master -.-> C10
+  v -.-> C6
+
+  HEAD -.-> C6
+  HEAD --"fas:fa-link"--o v
+
+  class HEAD head;
+  class master,v branch;
+  class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10 commit;
+</div>
+
+
+</span>
+
+
+
+<span class='fragment ' >
+  <p>⬇️ Multiple extremely important commits ⬇️</p>
+
+</span>
+
+
+
+<span class='fragment ' >
+  <div class="mermaid">flowchart RL
+  HEAD{{"HEAD"}}
+  master(master)
+  v(very-important)
+
+  C10([10]) --> C9([9]) --> C8([8]) --> C7([7]) --> C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+  C13([13]) --> C12([12]) --> C11([11]) --> C6([6])
+
+  master -.-> C10
+  v -.-> C13
+
+  HEAD -.-> C13
+  HEAD --"fas:fa-link"--o v
+
+  class HEAD head;
+  class master branch;
+  class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C10,C11,C12,C13 commit;
+</div>
+
+
+</span>
+
+</section><section>
+<h2 id="mining-lost-commits-1">Mining lost commits</h2>
+<div class="mermaid">flowchart RL
+  HEAD{{"HEAD"}}
+  master(master)
+  v(very-important)
+
+  C10([10]) --> C9([9]) --> C8([8]) --> C7([7]) --> C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+  C13([13]) --> C12([12]) --> C11([11]) --> C6([6])
+
+  master -.-> C10
+  v -.-> C13
+
+  HEAD -.-> C13
+  HEAD --"fas:fa-link"--o v
+
+  class HEAD head;
+  class master branch;
+  class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C10,C11,C12,C13 commit;
+</div>
+
+
+
+<span class='fragment ' >
+  <p>⬇️ <code>git checkout master</code> ⬇️</p>
+
+</span>
+
+
+
+<span class='fragment ' >
+  <div class="mermaid">flowchart RL
+  HEAD{{"HEAD"}}
+  master(master)
+  v(very-important)
+
+  C10([10]) --> C9([9]) --> C8([8]) --> C7([7]) --> C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+  C13([13]) --> C12([12]) --> C11([11]) --> C6([6])
+
+  master -.-> C10
+  v -.-> C13
+
+  HEAD -.-> C10
+  HEAD --"fas:fa-link"--o master
+
+  class HEAD head;
+  class master,v branch;
+  class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C10,C11,C12,C13 commit;
+</div>
+
+
+</span>
+
+
+
+<span class='fragment ' >
+  <p><code>git branch -D very-important</code> ➡️</p>
+
+</span>
+
+</section><section>
+<h2 id="mining-lost-commits-2">Mining lost commits</h2>
+<p>⬇️ <code>git branch -D very-important</code> ⬇️</p>
+
+
+<span class='fragment ' >
+  <div class="mermaid">flowchart RL
+  HEAD{{"HEAD"}}
+  master(master)
+
+  C10([10]) --> C9([9]) --> C8([8]) --> C7([7]) --> C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+  C11([11]) --> C6([6])
+  subgraph How to reattach here?
+  C13([13]) --> C12([12]) --> C11
+  end
+
+  master -.-> C10
+
+  HEAD -.-> C10
+  HEAD --"fas:fa-link"--o master
+
+  class HEAD head;
+  class master branch;
+  class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C10,C11,C12,C13 commit;
+</div>
+
+
+</span>
+
+
+
+<span class='fragment ' >
+  <p><img src="https://wompampsupport.azureedge.net/fetchimage?siteId=7575&amp;v=2&amp;jpgQuality=100&amp;width=700&amp;url=https%3A%2F%2Fi.kym-cdn.com%2Fphotos%2Fimages%2Fnewsfeed%2F001%2F623%2F463%2Fd90.jpg" alt=""></p>
+
+</span>
+
+</section><section>
+<h2 id="mining-lost-commits-3">Mining lost commits</h2>
 <h3 id="git-reflog"><code>git reflog</code></h3>
+<p><em>Reference logs</em>: a <strong>diary</strong> of when branches and other references were updated</p>
+<p><code>git reflog</code> example:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>c5c29c1 (HEAD -&gt; master, origin/master, origin/HEAD) HEAD@{0}: checkout: moving from 2aa2cbd6f5cdb91a02f2061e029106878706bf49 to master
+</span></span><span style="display:flex;"><span>2aa2cbd HEAD@{1}: checkout: moving from master to HEAD~1
+</span></span><span style="display:flex;"><span>c5c29c1 (HEAD -&gt; master, origin/master, origin/HEAD) HEAD@{2}: commit: add git blame
+</span></span><span style="display:flex;"><span>2aa2cbd HEAD@{3}: commit: improve git slides, prepare for blame and reflog
+</span></span><span style="display:flex;"><span>ae7eb17 HEAD@{4}: pull (finish): returning to refs/heads/master
+</span></span><span style="display:flex;"><span>ae7eb17 HEAD@{5}: pull (pick): improve the style
+</span></span><span style="display:flex;"><span>d2b71b0 HEAD@{6}: pull (start): checkout d2b71b04466d11498fdd10cc57da98dc0ab8eae2
+</span></span><span style="display:flex;"><span>e77f8a0 HEAD@{7}: commit: improve the style
+</span></span><span style="display:flex;"><span>5339051 (tag: 0.1.0-2022-09-08T174231) HEAD@{8}: commit: fix: forcibly set the targetPath of hugo
+</span></span><span style="display:flex;"><span>e5eeecd (tag: 0.1.0-2022-09-08T173405) HEAD@{9}: commit: ci: fix JamesIves/github-pages-deploy-action parameter names
+</span></span><span style="display:flex;"><span>50c5efe (tag: 0.1.0-2022-09-08T172922) HEAD@{10}: commit: fix: set up the custom css path
+</span></span><span style="display:flex;"><span>ba8fae0 (tag: 0.1.0-2022-09-08T162354) HEAD@{11}: commit: fix: make the new template work
+</span></span><span style="display:flex;"><span>8546a6c HEAD@{12}: commit: chore: switch to @cric96 fork of hugo-reveal
+</span></span></code></pre></div><p>format: <code>hash (labels) reference: operation (status): details</code></p>
+<p>Any of the <code>tree-ish</code>es can be used to checkout!</p>
+<p><code>git checkout HEAD@{6}</code> would checkout commit <code>d2b71b0</code>!</p>
+</section><section>
+<h3 id="git-reflog-1"><code>git reflog</code></h3>
+<p><img src="https://i.kym-cdn.com/entries/icons/facebook/000/006/077/so_good.jpg" alt=""></p>
 </section>
 
   
