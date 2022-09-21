@@ -1,0 +1,50 @@
+name: Create and deploy the PDFs
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["pages-build-deployment"]
+    types:
+      - completed
+
+jobs:
+  Build-Slides:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: pdf-slides-${{ github.ref }}
+      cancel-in-progress: false
+    steps:
+      # Checkout the repository
+      - name: Checkout the pdf creation script
+        uses: actions/checkout@v3.0.2
+      - name: Checkout gh-pages
+        uses: actions/checkout@v3.0.2
+        with:
+          fetch-depth: 0
+          path: pages
+          ref: gh-pages
+      - name: Count the commits so far
+        id: commit-counter
+        run: echo "::set-output name=commits::$(git -C pages rev-list --count HEAD)"
+      - name: Create version
+        id: version-compute
+        run: echo "::set-output name=version::${{ steps.commit-counter.outputs.commits }}.$(date +"%Y.%-m%d")"
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1.117.0
+        with:
+          working-directory: slides
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@latest
+        with:
+          chrome-version: stable
+      - name: Install pdfinfo
+        run: sudo apt-get install -y poppler-utils
+      - name: Make the pdfs
+        run: slides/makepdfs.rb pages
+      - name: Deliver the pdfs
+        uses: ncipollo/release-action@v1.10.0
+        with:
+          allowUpdates: true
+          artifacts: "*.pdf"
+          replacesArtifacts: true
+          tag: ${{ steps.version-compute.outputs.version }}
+          token: ${{ github.token }}

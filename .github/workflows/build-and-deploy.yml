@@ -1,11 +1,6 @@
 name: Build and deploy
 on:
   push:
-    tags: '*'
-    branches-ignore:
-      - 'autodelivery**'
-      - 'bump-**'
-      - 'renovate/**'
     paths-ignore:
       - '.gitignore'
       - '.mergify.yml'
@@ -13,14 +8,13 @@ on:
       - 'CHANGELOG.md'
       - 'LICENSE'
       - 'code/**'
-      - '.github/workflows/update-hugo.yml'
       - '.github/workflows/check-gradle-projects.yml'
   pull_request:
   workflow_dispatch:
 
 jobs:
   Build-Slides:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     concurrency:
       group: slides-${{ github.ref }}
       cancel-in-progress: false
@@ -28,10 +22,10 @@ jobs:
       # Checkout the repository
       - name: Checkout
         uses: danysk/action-checkout@0.2.1
-      - name: Update package list
-        run: sudo apt-get update -y
-      - name: Install Chromium
-        run: sudo apt-get install -y chromium-browser
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1.117.0
+        with:
+          working-directory: slides/shared-slides
       - name: Compute the version of Hugo
         id: hugo
         shell: bash
@@ -59,27 +53,17 @@ jobs:
       #   with:
       #     NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
       #     SSH_PASS: ${{ secrets.SSH_PASS }}
-      - name: Autotag
-        uses: DanySK/semver-autotag-action@master
+      - name: Run the preprocessor
+        working-directory: slides
+        run: shared-slides/preprocess.rb
       - name: Build slides with hugo
-        run: |
-          cd slides
-          hugo
-      - name: Make the pdfs
-        run: |
-          cd slides
-          ruby makepdf.rb
-      - name: Deploy PDFs
-        if: ${{ github.event_name != 'pull_request' }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          TAG=$(git describe --tags --exact-match HEAD)
-          hub release create -m "$(git tag -l --format='%(contents)' "$TAG")" "$TAG" || true
-          for pdf in $(ls slides/*.pdf); do
-            echo "Delivering file $pdf"
-            gh release upload "$TAG" "$pdf" --clobber
-          done
+        working-directory: slides
+        run: hugo
+      - name: Transform and Inline Mermaid charts
+        uses: cric96/inline-mermaid@v1.4.4
+        with:
+          root-folder: slides/build
+          config-file: slides/config.toml
       - name: Deploy website
         if: ${{ github.event_name != 'pull_request' && github.ref == 'refs/heads/master' }}
         uses: JamesIves/github-pages-deploy-action@v4.4.0

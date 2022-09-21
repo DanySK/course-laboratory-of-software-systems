@@ -1,92 +1,55 @@
 #!/usr/bin/env ruby
+command_base = 'google-chrome-stable --headless --run-all-compositor-stages-before-draw --disable-gpu --window-size=1440,900 --virtual-time-budget=1000000 --print-to-pdf='
+command_end = '?print-pdf&pdfSeparateFragments=false'
 
-# Configuration options
+root = ARGV[0] || raise("Bad usage, missing argument: launch as ./makepdfs.rb ROOT_OF_THE_WEBSITE")
+puts "Working inside #{root}"
+remote = `git -C '#{root}' remote get-url origin`
+puts "Detected remote: #{remote}"
+url = remote.match(/^(git@|https:\/\/)github\.com(\/|:)(?<owner>[^\/]+)\/(?<repo>[^\/]+?)(\.git)?$/)
+owner = url[:owner]
+repo = url[:repo] == "#{owner}.github.io" ? "" : "/#{url[:repo]}"
+puts "Detected repo: #{owner}/#{repo}"
+files = Dir.glob("#{root}/**/index.html")
+puts "Detected the following HTML roots:"
+puts files
+paths = Hash[
+    files.map { |path|
+        route = path.sub(root, '').gsub(/^\/?(.*)\/index.html$/) { $1 }
+        [route.nil? || route.strip.empty? ? "index" : route.gsub('/', '_'), "https://#{owner}.github.io#{repo}/#{route}#{command_end}"]
+    }
+]
 
-class Generator
-    def generate(source = '', suffix = '', base_url = 'http://localhost:1313/Course-Laboratory-of-Software-Systems', options = '')
-        pdf_name = "#{(source.empty? ? '00-introduction' : source).gsub('/', '-') || ''}_#{suffix}.pdf"
-        puts "Using #{self.class.name} to generate #{pdf_name}.pdf from /#{source}"
-        generation_command(
-            "#{base_url}/#{source}",
-            pdf_name,
-            options
-        )
+def is_letter_format(file)
+    `pdfinfo #{file} | grep 'Page size'`.include?('letter')
+end
+
+max_attempts = 100
+max_attempts_format = 10
+
+for name, path in paths do
+    puts "Working on #{name} built from #{path}"
+    output = "#{name}_slides.pdf"
+    command = "time #{command_base}#{output} '#{path}'"
+    attempt = 0
+    attempts_for_format = 1
+    size = 0
+    is_letter = true
+    while size / 1024 < 3 || is_letter && attempt < max_attempts && attempts_for_format < max_attempts_format do
+        attempt = attempt + 1
+        puts "ATTEMPT #{attempt}: launching #{command}"
+        `#{command}`
+        size = File.size?(output) || 0
+        is_letter = size > 1024 && is_letter_format(output)
+        if is_letter then attempts_for_format += 1 end
+        puts "Produced a file of #{size} bytes with the #{is_letter ? 'wrong' : 'correct'} format"
+    end
+    if attempt >= max_attempts then
+        puts "::error ::Giving up after #{max_attempts} attempts, the URL #{path} produced an invalid file too many times."
+        File.delete(output)
+    end
+    if attempts_for_format >= max_attempts_format then
+        puts "::warning ::Website at #{path} does not seem to be rendering slides, saving as other document"
+        File.rename(output, "#{name}_page_format.pdf")
     end
 end
-class DecktapeGenerator < Generator
-    def generation_command(url, file_name, options)
-        options += '-s 1440x900 -p 20'
-        puts "url: #{url}, file_name: #{file_name}, options: #{options}"
-        command = "decktape #{options} #{url} #{file_name}"
-        puts "Launching: #{command}"
-        puts `#{command}`
-    end
-end
-class ChromiumGenerator < Generator
-
-    def initialize
-        puts "Searching for the Chromium or Google Chrome executable"
-        command = `bash -c "eval compgen -c"`
-            .split(/\n/)
-            .filter { | it | /.*chrom(?:e|ium).*/ =~ it }
-            .uniq
-            .filter { | it | /.*driver.*/ !~ it }
-            .sort
-        puts "Found candidates: #{command}"    
-        if command.empty? then
-            raise RuntimeError.new 'No candidate for chrome / chromium'
-        end
-        @chromium = command.filter { | it | /.*chromium.*/ =~ it }.first || command.first
-        puts "Selected #{@chromium}"
-    end
-
-    def generation_command(url, file_name, options)
-        options += '--disable-gpu --window-size=1440,900'
-        command = "#{@chromium} --headless --run-all-compositor-stages-before-draw #{options} --print-to-pdf=#{file_name} #{url}?print-pdf"
-        puts "Launching: #{command}"
-        puts `#{command}`
-    end
-end
-
-chromium = ChromiumGenerator.new
-decktape = DecktapeGenerator.new
-
-# Workaround for decktape bug
-puts 'Working around bug: https://github.com/astefanutti/decktape/issues/220'
-puts 'By replacing max vieport relative sizes 95/80 with 120/140'
-
-log_file_name = "hugo.log"
-`touch #{log_file_name}`
-log_file = File.open(log_file_name, "r")
-log_file.seek(0, IO::SEEK_END)
-server = fork {
-    exec("hugo server --log --logFile #{log_file_name}")
-}
-contents = Dir["content/**/_index.md"].map { |f|
-    f.split('/')[1...-1].join('/')
-}
-puts "Contents will be generated for #{contents}"
-puts "Server launched, monitoring log!"
-Process.detach(server)
-until log_file.gets =~ /.*Watching for config changes in.*/
-    puts "Server is still generating..."
-    sleep(1)
-    select([log_file])
-end
-puts "Generation complete!"
-
-# Site has been generated and is being served. Launch generation
-
-for pack in [''] + contents do
-    # decktape.generate(pack, 'decktape')
-    chromium.generate(pack, 'chromium')
-end
-
-# Terminate the server
-Process.kill("TERM", server)
-begin
-    Process.wait(server)
-rescue SystemCallError
-    puts "The server terminated before I could wait for it."
-end
-File.delete(log_file)
