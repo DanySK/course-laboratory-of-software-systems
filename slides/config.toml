@@ -4,6 +4,7 @@ title = "Laboratory of Software Systems"
 disableKinds = ["sitemap", "RSS"]
 theme = "reveal-hugo"
 publishDir = "build"
+ignoreFiles = ['.*generator.md$']
 
 # relativeURLs = "true"
 # uglyURLs = "true"
