@@ -12,7 +12,7 @@ jobs:
   Build-Slides:
     runs-on: ubuntu-latest
     concurrency:
-      group: pdf-slides-${{ github.ref }}
+      group: pdf-slides-${{ github.event_name }}-${{ github.ref }}
       cancel-in-progress: false
     steps:
       # Checkout the repository
