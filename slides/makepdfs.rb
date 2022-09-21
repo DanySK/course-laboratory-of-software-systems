@@ -24,7 +24,7 @@ def is_letter_format(file)
     `pdfinfo #{file} | grep 'Page size'`.include?('letter')
 end
 
-max_attempts = 100
+max_attempts = 25
 max_attempts_format = 10
 
 for name, path in paths do
