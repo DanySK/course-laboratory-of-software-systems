@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-command_base = 'google-chrome-stable --headless --run-all-compositor-stages-before-draw --disable-gpu --window-size=1440,900 --virtual-time-budget=300000 --print-to-pdf='
+command_base = 'google-chrome-stable --headless --run-all-compositor-stages-before-draw --disable-gpu --window-size=1440,900 --virtual-time-budget=10000 --print-to-pdf='
 command_end = '?print-pdf&pdfSeparateFragments=false'
 
 root = ARGV[0] || raise("Bad usage, missing argument: launch as ./makepdfs.rb ROOT_OF_THE_WEBSITE")
@@ -35,9 +35,9 @@ for name, path in paths do
     attempts_for_format = 1
     size = 0
     is_letter = true
-    while size / 1024 < 3 || is_letter && attempt < max_attempts && attempts_for_format < max_attempts_format do
+    while (size / 1024 < 3 || is_letter) && attempt < max_attempts && attempts_for_format < max_attempts_format do
         attempt = attempt + 1
-        puts "ATTEMPT #{attempt}: launching #{command}"
+        puts "ATTEMPT #{attempt} at #{Time.now}: launching #{command}"
         `#{command}`
         size = File.size?(output) || 0
         is_letter = size > 1024 && is_letter_format(output)
