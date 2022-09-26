@@ -686,10 +686,10 @@ class Foo {
     var baz: String? = null
     val bazLength: Int // Property with no "backing field"
         get() = baz?.length ?: 0 // As its value will be computed every time
-    var stringRepresentation: String = "" // Backing fields can be accessed as a keyword inside property definitions
+    var stringRepresentation: String = "" // Backing fields is generated
         get() = baz ?: field
         set(value) {
-            field = "custom: $value"
+            field = "custom: $value" // Access to backing field via `field` keyword
         }
 
 }
@@ -1047,7 +1047,7 @@ class Infix {
 }
 Infix() with "Foo" // in... Foo ...fix!
 Infix() with "Foo" + "Bar" {{<comment_frag " // in... FooBar ...fix" >}}
-Infix() with "Foo" + "Bar" + Infix() with "Baz" {{<comment_frag " // error: unresolved reference: with (searched in String)" >}}
+Infix() with "Foo" + "Bar" + Infix() with "Baz" {{<comment_frag " // error: unresolved reference: with" >}}
 ```
 
 ---
@@ -1302,9 +1302,9 @@ Type variant in Kotlin is expressed *at declaration site*!
 ```kotlin
 interface ProduceAndConsume<in X, out Y> {
     fun consume(x: X): Any = TODO(){{<comment_frag " // OK" >}}
-    fun consume2(y: Y): Any = TODO(){{<comment_frag " // type parameter Y is declared as 'out' but occurs in 'in' position in type Y" >}}
+    fun consume2(y: Y): Any = TODO(){{<comment_frag " // Y is declared as 'out' but occurs in 'in' position" >}}
     fun produce(): Y = TODO(){{<comment_frag " // OK" >}}
-    fun produce2(): X = TODO(){{<comment_frag " // error: type parameter X is declared as 'in' but occurs in 'out' position in type X" >}}
+    fun produce2(): X = TODO(){{<comment_frag " // X is declared as 'in' but occurs in 'out' position" >}}
 }
 ```
 
@@ -1425,7 +1425,7 @@ val (a, b, c) = A()
 ## Sealed hierarchies
 
 Similar to Scala's `sealed trait`s:
-* `class`es, not supported for `interface`s
+* ~~`class`es, not supported for `interface`s~~ Supported since [Kotlin 1.5.0](https://kotlinlang.org/docs/whatsnew15.html#sealed-interfaces)
 * subtypes must be defined inside the sealed class
 * sealed hierarchies proved *exhaustive checking* inside `where` clauses
 
@@ -1435,12 +1435,12 @@ sealed class Booze {
     class Whisky : Booze()
     class Vodka : Booze()
 }
-fun goGetMeA(beverage: Booze) = when (beverage) {
+fun goGetMeSome(beverage: Booze) = when (beverage) {
     is Booze.Rum -> "Diplomatico"
     is Booze.Whisky -> "Caol Ila"
     is Booze.Vodka -> "Zubrowka"
 }
-goGetMeA(Booze.Rum())
+goGetMeSome(Booze.Rum())
 ```
 
 ---
@@ -1460,14 +1460,11 @@ class Outer {
 }
 ```
 
-<br>
 
 ```kotlin
-class Outer { class Nested }
+class Outer { class Nested() }
 Outer.Nested() // OK
 ```
-
-<br>
 
 ```kotlin
 class Outer {
@@ -1479,6 +1476,7 @@ class Outer {
 Outer.Inner() // error: constructor of inner class Inner can be called only with receiver of containing class
 Outer().Inner() // OK
 ```
+
 ---
 
 # Kotlin 201 -- Advanced OOP
@@ -1562,7 +1560,7 @@ Kotlin supports delegation at the language level
 data class Student(val name: String, val surname: String, val id: String)
 class Exam : MutableCollection<Student> by mutableListOf<Student>() {
     fun register(name: String, surname: String, id: String) = add(Student(name, surname, id))
-    override fun toString() = toList().toString() // No access to the delegate! Can't call toString on it!
+    override fun toString() = toList().toString() // No access to the delegate! `toString` unavailable!
 }
 val exam = Exam()
 exam.register("Luca", "Ghiotto", "00000025")
@@ -1686,11 +1684,11 @@ Just as Scala, Kotlin supports function type literals
 <br/>
 No need for verbose interfaces such as `Function<T, R>`, `BiConsumer<T, R>`, etc.
 
-Function type literals have parameter types between parentheses, a `->`, and the result parameter
-* `() -> Any` -- A 0-ary function returning `Any`
-* `(String) -> Any` -- A unary function taking a `String` and returning `Any`
-* `(String, Int) -> Unit` -- A binary function taking a `String` and an `Int` and returning `Unit`
-* `(String, Int?) -> Any?` -- A binary function taking a `String` and a nullable `Int?` returning a nullable `Any?`
+Function type literals have parameter types in parentheses, a `->`, and the return type
+* `() -> Any` -- 0-ary function returning `Any`
+* `(String) -> Any` -- Unary function taking a `String` and returning `Any`
+* `(String, Int) -> Unit` -- Binary function taking a `String` and an `Int` and returning `Unit`
+* `(String, Int?) -> Any?` -- Binary function taking a `String` and a nullable `Int?` returning a nullable `Any?`
 
 Function type literals allow for writing cleaner *higher-order functions*
 
