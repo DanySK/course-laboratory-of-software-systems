@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/dist/reset.css">
 <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/dist/reveal.css">
-  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.b0891f67d6087e90534b951034ac3882669ab8ddcd783f51e29b89cf24a43a3f.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
+  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.0a332d10348bd17f5fa06ffec01dfb5a1ed915c8b9591ac502e8726a42f6d52b.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
     
 <link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
 <link href="https://fonts.googleapis.com/css?family=Roboto Mono" rel="stylesheet">
@@ -619,11 +619,11 @@ and provide access only via <code>get</code>/<code>set</code> methods: the actua
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">baz</span>: String? = <span style="color:#080;font-weight:bold">null</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">bazLength</span>: Int <span style="color:#888">// Property with no "backing field"
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        <span style="color:#080;font-weight:bold">get</span>() = baz?.length ?: <span style="color:#00d;font-weight:bold">0</span> <span style="color:#888">// As its value will be computed every time
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">stringRepresentation</span>: String = <span style="color:#d20;background-color:#fff0f0">""</span> <span style="color:#888">// Backing fields can be accessed as a keyword inside property definitions
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">stringRepresentation</span>: String = <span style="color:#d20;background-color:#fff0f0">""</span> <span style="color:#888">// Backing fields is generated
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        <span style="color:#080;font-weight:bold">get</span>() = baz ?: <span style="color:#080;font-weight:bold">field</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">set</span>(<span style="color:#080;font-weight:bold">value</span>) {
-</span></span><span style="display:flex;"><span>            <span style="color:#080;font-weight:bold">field</span> = <span style="color:#d20;background-color:#fff0f0">"custom: </span><span style="color:#33b;background-color:#fff0f0">$value</span><span style="color:#d20;background-color:#fff0f0">"</span>
-</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>            <span style="color:#080;font-weight:bold">field</span> = <span style="color:#d20;background-color:#fff0f0">"custom: </span><span style="color:#33b;background-color:#fff0f0">$value</span><span style="color:#d20;background-color:#fff0f0">"</span> <span style="color:#888">// Access to backing field via `field` keyword
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">foo</span> = Foo()
@@ -889,7 +889,7 @@ In Scala</p>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>Infix() with <span style="color:#d20;background-color:#fff0f0">"Foo"</span> <span style="color:#888">// in... Foo ...fix!
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>Infix() with <span style="color:#d20;background-color:#fff0f0">"Foo"</span> + <span style="color:#d20;background-color:#fff0f0">"Bar"</span> <span class="fragment " style="color: #888;"> // in... FooBar ...fix</span>
-</span></span><span style="display:flex;"><span>Infix() with <span style="color:#d20;background-color:#fff0f0">"Foo"</span> + <span style="color:#d20;background-color:#fff0f0">"Bar"</span> + Infix() with <span style="color:#d20;background-color:#fff0f0">"Baz"</span> <span class="fragment " style="color: #888;"> // error: unresolved reference: with (searched in String)</span>
+</span></span><span style="display:flex;"><span>Infix() with <span style="color:#d20;background-color:#fff0f0">"Foo"</span> + <span style="color:#d20;background-color:#fff0f0">"Bar"</span> + Infix() with <span style="color:#d20;background-color:#fff0f0">"Baz"</span> <span class="fragment " style="color: #888;"> // error: unresolved reference: with</span>
 </span></span></code></pre></div></section><section>
 <h1 id="kotlin-102----oop-conventions-2">Kotlin 102 – OOP Conventions</h1>
 <h2 id="operator-creation">Operator creation</h2>
@@ -1286,9 +1286,9 @@ Kotlin provides a <code>where</code> keyword to specify type bounds separately f
 </ul>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">ProduceAndConsume</span>&lt;<span style="color:#080;font-weight:bold">in</span> X, <span style="color:#080;font-weight:bold">out</span> Y&gt; {
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">consume</span>(x: X): Any = TODO()<span class="fragment " style="color: #888;"> // OK</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">consume2</span>(y: Y): Any = TODO()<span class="fragment " style="color: #888;"> // type parameter Y is declared as 'out' but occurs in 'in' position in type Y</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">consume2</span>(y: Y): Any = TODO()<span class="fragment " style="color: #888;"> // Y is declared as 'out' but occurs in 'in' position</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">produce</span>(): Y = TODO()<span class="fragment " style="color: #888;"> // OK</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">produce2</span>(): X = TODO()<span class="fragment " style="color: #888;"> // error: type parameter X is declared as 'in' but occurs in 'out' position in type X</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">produce2</span>(): X = TODO()<span class="fragment " style="color: #888;"> // X is declared as 'in' but occurs in 'out' position</span>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div></section><section>
 <h1 id="kotlin-103----generics-4">Kotlin 103 – Generics</h1>
@@ -1393,7 +1393,7 @@ This feature is <em>way</em> less powerful than Scala’s pattern matching.</p>
 <h2 id="sealed-hierarchies">Sealed hierarchies</h2>
 <p>Similar to Scala’s <code>sealed trait</code>s:</p>
 <ul>
-<li><code>class</code>es, not supported for <code>interface</code>s</li>
+<li><del><code>class</code>es, not supported for <code>interface</code>s</del> Supported since <a href="https://kotlinlang.org/docs/whatsnew15.html#sealed-interfaces">Kotlin 1.5.0</a></li>
 <li>subtypes must be defined inside the sealed class</li>
 <li>sealed hierarchies proved <em>exhaustive checking</em> inside <code>where</code> clauses</li>
 </ul>
@@ -1402,12 +1402,12 @@ This feature is <em>way</em> less powerful than Scala’s pattern matching.</p>
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Whisky</span> : Booze()
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Vodka</span> : Booze()
 </span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">goGetMeA</span>(beverage: Booze) = <span style="color:#080;font-weight:bold">when</span> (beverage) {
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">goGetMeSome</span>(beverage: Booze) = <span style="color:#080;font-weight:bold">when</span> (beverage) {
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">is</span> Booze.Rum -&gt; <span style="color:#d20;background-color:#fff0f0">"Diplomatico"</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">is</span> Booze.Whisky -&gt; <span style="color:#d20;background-color:#fff0f0">"Caol Ila"</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">is</span> Booze.Vodka -&gt; <span style="color:#d20;background-color:#fff0f0">"Zubrowka"</span>
 </span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>goGetMeA(Booze.Rum())
+</span></span><span style="display:flex;"><span>goGetMeSome(Booze.Rum())
 </span></span></code></pre></div></section><section>
 <h1 id="kotlin-201----advanced-oop-3">Kotlin 201 – Advanced OOP</h1>
 <h2 id="nested-and-inner-classes">Nested and inner classes</h2>
@@ -1423,11 +1423,9 @@ This feature is <em>way</em> less powerful than Scala’s pattern matching.</p>
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">readMeIfYouCan</span> = <span style="color:#00d;font-weight:bold">1</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Nested</span> { <span style="color:#080;font-weight:bold">init</span> { println(readMeIfYouCan) } } <span style="color:#888">// error: unresolved reference: readMeIfYouCan
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
-</span></span></code></pre></div><br>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Outer</span> { <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Nested</span> }
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Outer</span> { <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Nested</span>() }
 </span></span><span style="display:flex;"><span>Outer.Nested() <span style="color:#888">// OK
-</span></span></span></code></pre></div><br>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Outer</span> {
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Outer</span> {
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">readMeIfYouCan</span> = <span style="color:#00d;font-weight:bold">1</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">inner</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Inner</span> {
 </span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">init</span> { println(readMeIfYouCan) } <span style="color:#888">// ok
@@ -1496,7 +1494,7 @@ Delegation is often verbose and very mechanic in implementation</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">data</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Student</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">name</span>: String, <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">surname</span>: String, <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">id</span>: String)
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Exam</span> : MutableCollection&lt;Student&gt; <span style="color:#080;font-weight:bold">by</span> mutableListOf&lt;Student&gt;() {
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">register</span>(name: String, surname: String, id: String) = add(Student(name, surname, id))
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">toString</span>() = toList().toString() <span style="color:#888">// No access to the delegate! Can't call toString on it!
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">toString</span>() = toList().toString() <span style="color:#888">// No access to the delegate! `toString` unavailable!
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">exam</span> = Exam()
 </span></span><span style="display:flex;"><span>exam.register(<span style="color:#d20;background-color:#fff0f0">"Luca"</span>, <span style="color:#d20;background-color:#fff0f0">"Ghiotto"</span>, <span style="color:#d20;background-color:#fff0f0">"00000025"</span>)
@@ -1580,12 +1578,12 @@ and is similar to Smalltalk / Ceylon / Xtend / Ruby as well</p>
 <p>Just as Scala, Kotlin supports function type literals
 <br>
 No need for verbose interfaces such as <code>Function&lt;T, R&gt;</code>, <code>BiConsumer&lt;T, R&gt;</code>, etc.</p>
-<p>Function type literals have parameter types between parentheses, a <code>-&gt;</code>, and the result parameter</p>
+<p>Function type literals have parameter types in parentheses, a <code>-&gt;</code>, and the return type</p>
 <ul>
-<li><code>() -&gt; Any</code> – A 0-ary function returning <code>Any</code></li>
-<li><code>(String) -&gt; Any</code> – A unary function taking a <code>String</code> and returning <code>Any</code></li>
-<li><code>(String, Int) -&gt; Unit</code> – A binary function taking a <code>String</code> and an <code>Int</code> and returning <code>Unit</code></li>
-<li><code>(String, Int?) -&gt; Any?</code> – A binary function taking a <code>String</code> and a nullable <code>Int?</code> returning a nullable <code>Any?</code></li>
+<li><code>() -&gt; Any</code> – 0-ary function returning <code>Any</code></li>
+<li><code>(String) -&gt; Any</code> – Unary function taking a <code>String</code> and returning <code>Any</code></li>
+<li><code>(String, Int) -&gt; Unit</code> – Binary function taking a <code>String</code> and an <code>Int</code> and returning <code>Unit</code></li>
+<li><code>(String, Int?) -&gt; Any?</code> – Binary function taking a <code>String</code> and a nullable <code>Int?</code> returning a nullable <code>Any?</code></li>
 </ul>
 <p>Function type literals allow for writing cleaner <em>higher-order functions</em></p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> &lt;<span style="color:#b06;font-weight:bold">T</span>, <span style="color:#b06;font-weight:bold">I</span>, <span style="color:#b06;font-weight:bold">R</span>&gt; <span style="color:#06b;font-weight:bold">compose</span>(f: (I) -&gt; R, g: (T) -&gt; I): (T) -&gt; R = { f(g(<span style="color:#080;font-weight:bold">it</span>)) }
