@@ -32,7 +32,7 @@ object HTMLDSL {
 
     // Domain implementation
 
-    const val INDENT = "\t"
+    const val INDENT = "  "
 
     data class Text(override val text: String) : TextElement
 
