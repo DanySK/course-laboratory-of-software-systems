@@ -17,13 +17,9 @@ enableSourceMap = true
 
 +++
 
-# {{< course_name >}}
+# Software licensing
 
-## Software licensing
-
-### [Danilo Pianini](mailto:danilo.pianini@unibo.it)
-
-{{< today >}}
+{{% import path="reusable/header.md" %}}
 
 ---
 
@@ -73,16 +69,16 @@ The software is not sold, but merely “licensed”, namely **permitted to be us
 
 ---
 
-# Proprietary vs. Free
+## Proprietary vs. Free
 
 {{<image src="rights.svg">}}
 
-### Proprietary
+#### Proprietary
 
 The software publisher grants the right to use *a certain number of copies under the conditions of an EULA*, but **does not transfer ownership** of the copies to the customer.
 Usage of the software may be subjected to acceptance of the EULA.
 
-### Free
+#### Free
 
 The software publisher grants *extensive rights to modify and redistribute* the software, often prohibiting rolling back such rights (strong copyleft).
 
@@ -267,9 +263,9 @@ as the name is changed.
 ---
 
 ## Creative Commons
-* Set of licenses with *increasing copyleft*
-* [**not designed for software**](https://creativecommons.org/faq/#can-i-apply-a-creative-commons-license-to-software)
-* Good for data (including databases), documentation, and resources
+* Set of licenses with *increasing copyleft* 
+* [**not designed for software**](https://creativecommons.org/faq/#can-i-apply-a-creative-commons-license-to-software),
+good for data, documentation, and resources
 
 **Available rights**
 * `BY` (Attribution) -- Derivative works must credit the original author
