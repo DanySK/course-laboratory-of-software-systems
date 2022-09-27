@@ -85,10 +85,24 @@ Usage of the software may be subjected to acceptance of the EULA.</p>
 <h4 id="free">Free</h4>
 <p>The software publisher grants <em>extensive rights to modify and redistribute</em> the software, often prohibiting rolling back such rights (strong copyleft).</p>
 </section><section>
-<div style="position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;">
-    <iframe sandbox="allow-scripts allow-same-origin" allowfullscreen="true" allowtransparency="true" frameborder="0" height="315" src="https://www.mentimeter.com/embed/266b9676f1c61f7d3791c65913e8e502" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" width="420">
+<div id="mentimeter-container-266b9676f1c61f7d3791c65913e8e502" style="position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;">
+    <iframe sandbox="allow-scripts allow-same-origin allow-presentation" allowfullscreen="true" allowtransparency="true" frameborder="0" height="315" src="https://www.mentimeter.com/app/presentation/266b9676f1c61f7d3791c65913e8e502/embed" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" width="420">
     </iframe>
 </div>
+<script>
+    if (/.*?(\?|&)print-pdf/.test(window.location.toString())) {
+        console.log("Printing detected. Disabling mentimeter.")
+        var todisable = document.getElementById("mentimeter-container-266b9676f1c61f7d3791c65913e8e502")
+        var parent = todisable.parentElement
+        todisable.remove()
+        var replacement = document.createTextNode(
+            "There was a Mentimeter pool here, but they get disabled when printing.\
+            You might be able to retrieve the results at:\
+            https://www.mentimeter.com/app/presentation/266b9676f1c61f7d3791c65913e8e502/"
+        )
+        parent.appendChild(replacement)
+    }
+</script>
 </section><section>
 <h2 id="freedom-as-in-beer-vs-as-in-speech">Freedom: as in beer vs. as in speech</h2>
 <p>Much easier for italian speakers:</p>

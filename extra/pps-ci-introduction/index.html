@@ -774,10 +774,24 @@ from code to artifacts</p>
 <li><em>Print</em> all available information (director, year, ratings, …)</li>
 </ul>
 </section><section>
-<div style="position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;">
-    <iframe sandbox="allow-scripts allow-same-origin" allowfullscreen="true" allowtransparency="true" frameborder="0" height="315" src="https://www.mentimeter.com/embed/66b4eb67105e9c1fa3916b9344d6b8ad/a62cf5c48ed8" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" width="420">
+<div id="mentimeter-container-66b4eb67105e9c1fa3916b9344d6b8ad/a62cf5c48ed8" style="position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;">
+    <iframe sandbox="allow-scripts allow-same-origin allow-presentation" allowfullscreen="true" allowtransparency="true" frameborder="0" height="315" src="https://www.mentimeter.com/app/presentation/66b4eb67105e9c1fa3916b9344d6b8ad/a62cf5c48ed8/embed" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" width="420">
     </iframe>
 </div>
+<script>
+    if (/.*?(\?|&)print-pdf/.test(window.location.toString())) {
+        console.log("Printing detected. Disabling mentimeter.")
+        var todisable = document.getElementById("mentimeter-container-66b4eb67105e9c1fa3916b9344d6b8ad\/a62cf5c48ed8")
+        var parent = todisable.parentElement
+        todisable.remove()
+        var replacement = document.createTextNode(
+            "There was a Mentimeter pool here, but they get disabled when printing.\
+            You might be able to retrieve the results at:\
+            https://www.mentimeter.com/app/presentation/66b4eb67105e9c1fa3916b9344d6b8ad\/a62cf5c48ed8/"
+        )
+        parent.appendChild(replacement)
+    }
+</script>
 
 </section><section>
 <h2 id="actual-result">Actual result</h2>
