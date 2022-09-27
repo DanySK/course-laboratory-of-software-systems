@@ -1,5 +1,14 @@
 #!/usr/bin/env ruby
-command_base = 'google-chrome-stable --headless --run-all-compositor-stages-before-draw --disable-gpu --window-size=1920,1080 --virtual-time-budget=1000000 --print-to-pdf='
+command_base = %{
+    google-chrome-stable
+        --headless
+        --run-all-compositor-stages-before-draw
+        --disable-gpu
+        --window-size=1440,900
+        --disable-web-security
+        --virtual-time-budget=1000000
+        --print-to-pdf=
+}.gsub(/\s+/, " ").strip
 command_end = '?print-pdf&pdfSeparateFragments=false'
 
 root = ARGV[0] || raise("Bad usage, missing argument: launch as ./makepdfs.rb ROOT_OF_THE_WEBSITE")
