@@ -17,14 +17,9 @@ enableSourceMap = true
 
 +++
 
-# {{< course_name >}}
+# Internal Domain-Specific Languages In Kotlin
 
-## Internal Domain-Specific Languages
-## In Kotlin
-
-### [Danilo Pianini](mailto:danilo.pianini@unibo.it)
-
-{{< today >}}
+{{% import path="reusable/header.md" %}}
 
 ---
 
@@ -351,23 +346,22 @@ class Anchor(
 
 # Kotlin 203 -- DSLs
 
-## Preventing scope leaking
+## Preventing scope leaks
 
 Right now, this is valid:
 ```kotlin
 html { head { head { title { title { } } } } }
 ```
 But it produces invalid HTML!
-<br/>
-The reason is that Kotlin's method resolution automatically searches in "outer" *implicit receivers*.
-<br/>
-The code is equivalent to:
+
+Kotlin's method resolution automatically searches in "outer" *implicit receivers*,
+making the code above equivalent to:
 ```kotlin
 html { this.head { this@html.head { this.title { this@head.title { } } } } }
 ```
 
-Inside a DSL, we usually (but not always) do not want the *implicit receiver* to "escape" its scope
-<br/>
+Inside a DSL, we commonly do not want the *implicit receiver* to "escape" its scope.
+
 Kotlin provides an annotation used to create scope-blocking annotations:
 ```kotlin
 @DslMarker // I'm defining an annotation that will prevent scope leaking
