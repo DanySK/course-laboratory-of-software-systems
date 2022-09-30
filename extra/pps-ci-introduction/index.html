@@ -26,7 +26,7 @@
     <section><h1 id="programming-and-development-paradigms">Programming and development paradigms</h1>
 <h2 id="continuous-integration">Continuous Integration</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2022-09-29
+2022-09-30
 
 </section><section>
 <h1 id="development">Development</h1>
@@ -795,33 +795,29 @@ from code to artifacts</p>
 
 </section><section>
 <h2 id="actual-result">Actual result</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">final</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">RateAMovie</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#080;font-weight:bold">final</span> String DEFAULT_MOVIE = <span style="color:#d20;background-color:#fff0f0">"Breaking Bad"</span>;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#080;font-weight:bold">final</span> String DEFAULT_MOVIE = <span style="color:#d20;background-color:#fff0f0">"Breaking Bad"</span>;
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#080;font-weight:bold">final</span> String OMDB_API_KEY = System.<span style="color:#369">getenv</span>(<span style="color:#d20;background-color:#fff0f0">"OMDB_API_KEY"</span>);
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#080;font-weight:bold">final</span> Logger LOGGER = LoggerFactory.<span style="color:#369">getLogger</span>(RateAMovie.<span style="color:#369">class</span>);
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#888;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">main</span>(<span style="color:#080;font-weight:bold">final</span> String[] args) {
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">final</span> String[] titles = args.<span style="color:#369">length</span> == 0 ? <span style="color:#080;font-weight:bold">new</span> String[] { DEFAULT_MOVIE } : args;
-</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">final</span> OmdbApi omdb = <span style="color:#080;font-weight:bold">new</span> OmdbApi(OMDB_API_KEY);
-</span></span><span style="display:flex;"><span>        Arrays.<span style="color:#369">stream</span>(titles)
-</span></span><span style="display:flex;"><span>            .<span style="color:#369">map</span>(Unchecked.<span style="color:#369">function</span>(omdb::search)) <span style="color:#888">// Exceptions become RuntimeExceptions
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>            .<span style="color:#369">map</span>(SearchResults::getResults) <span style="color:#888">// get all results
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>            .<span style="color:#369">flatMap</span>(List::stream) <span style="color:#888">// as a flat stream
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>            <span style="color:#888">// then get more details
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>            .<span style="color:#369">map</span>(Unchecked.<span style="color:#369">function</span>(movie -&gt;
-</span></span><span style="display:flex;"><span>                <span style="color:#080;font-weight:bold">new</span> OmdbBuilder().<span style="color:#369">setApiKey</span>(OMDB_API_KEY).<span style="color:#369">setPlotFull</span>().<span style="color:#369">setImdbId</span>(movie.<span style="color:#369">getImdbID</span>()).<span style="color:#369">build</span>())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#06b;font-weight:bold">RateAMovie</span>() {
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">if</span> (OMDB_API_KEY == <span style="color:#080;font-weight:bold">null</span> || OMDB_API_KEY.<span style="color:#369">isBlank</span>()) {
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>            .<span style="color:#369">flatMap</span>(searchResult -&gt; searchResult.<span style="color:#369">getResults</span>().<span style="color:#369">stream</span>()) <span style="color:#888">// get all results and flatten
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>            .<span style="color:#369">map</span>(function(movie -&gt; <span style="color:#888">// then get more details
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>                <span style="color:#080;font-weight:bold">new</span> OmdbBuilder().<span style="color:#369">setApiKey</span>(OMDB_API_KEY).<span style="color:#369">setPlotFull</span>().<span style="color:#369">setImdbId</span>(movie.<span style="color:#369">getImdbID</span>()).<span style="color:#369">build</span>())
 </span></span><span style="display:flex;"><span>            )
-</span></span><span style="display:flex;"><span>            .<span style="color:#369">map</span>(Unchecked.<span style="color:#369">function</span>(omdb::getInfo))
+</span></span><span style="display:flex;"><span>            .<span style="color:#369">map</span>(function(omdb::getInfo))
 </span></span><span style="display:flex;"><span>            .<span style="color:#369">forEach</span>(movie -&gt;
 </span></span><span style="display:flex;"><span>                LOGGER.<span style="color:#369">info</span>(
 </span></span><span style="display:flex;"><span>                    <span style="color:#d20;background-color:#fff0f0">"\n=========================\n{}\n"</span>
 </span></span><span style="display:flex;"><span>                        + <span style="color:#d20;background-color:#fff0f0">"Directed by {}; {}; {}\n"</span>
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>                    movie.<span style="color:#369">getTitle</span>(),
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>                    movie.<span style="color:#369">getImdbID</span>()
-</span></span><span style="display:flex;"><span>                )
-</span></span><span style="display:flex;"><span>            );
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div></section><section>
+</span></span><span style="display:flex;"><span>                        + <span style="color:#d20;background-color:#fff0f0">"Written by {}\n"</span>
+</span></span><span style="display:flex;"><span>                        + <span style="color:#d20;background-color:#fff0f0">"Cast: {}\n"</span>
+</span></span><span style="display:flex;"><span>                        + <span style="color:#d20;background-color:#fff0f0">"{} {}\n"</span>
+</span></span><span style="display:flex;"><span>                        + <span style="color:#d20;background-color:#fff0f0">"IMDb {} (over {} votes), Rotten Tomatoes {}. {}\n"</span>
+</span></span><span style="display:flex;"><span>                        + <span style="color:#d20;background-color:#fff0f0">"{}\n"</span>
+</span></span><span style="display:flex;"><span>                        + <span style="color:#d20;background-color:#fff0f0">"IMDb handle: {}"</span>,
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>                    movie.<span style="color:#369">getRuntime</span>(),
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""></code></pre></div></section><section>
 <h2 id="the-trick-using-a-few-libraries">The trick: using a few libraries</h2>
 <ul>
 <li><strong>Jooq Jooλ</strong>
@@ -1098,8 +1094,7 @@ from code to artifacts</p>
 </section><section>
 <h2 id="gradle-our-toy-example">Gradle: our toy example</h2>
 <p><code>src/main/java/it/unibo/sampleapp/RateAMovie.java</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">final</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">RateAMovie</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#080;font-weight:bold">final</span> String DEFAULT_MOVIE = <span style="color:#d20;background-color:#fff0f0">"Breaking Bad"</span>;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#080;font-weight:bold">final</span> String DEFAULT_MOVIE = <span style="color:#d20;background-color:#fff0f0">"Breaking Bad"</span>;
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#080;font-weight:bold">final</span> String OMDB_API_KEY = System.<span style="color:#369">getenv</span>(<span style="color:#d20;background-color:#fff0f0">"OMDB_API_KEY"</span>);
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#080;font-weight:bold">final</span> Logger LOGGER = LoggerFactory.<span style="color:#369">getLogger</span>(RateAMovie.<span style="color:#369">class</span>);
 </span></span><span style="display:flex;"><span>
@@ -1108,53 +1103,104 @@ from code to artifacts</p>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#888;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">main</span>(<span style="color:#080;font-weight:bold">final</span> String[] args) {
 </span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">if</span> (OMDB_API_KEY == <span style="color:#080;font-weight:bold">null</span> || OMDB_API_KEY.<span style="color:#369">isBlank</span>()) {
-</span></span><span style="display:flex;"><span>            LOGGER.<span style="color:#369">error</span>(
-</span></span><span style="display:flex;"><span>                <span style="color:#d20;background-color:#fff0f0">"Invalid OMDB API Key {}, please set a valid API Key as the environment variable OMDB_API_KEY"</span>,
-</span></span><span style="display:flex;"><span>                OMDB_API_KEY
-</span></span><span style="display:flex;"><span>            );
+</span></span><span style="display:flex;"><span>            LOGGER.<span style="color:#369">error</span>(<span style="color:#d20;background-color:#fff0f0">"Invalid OMDB API Key '{}', set a valid API Key as env variable OMDB_API_KEY"</span>, OMDB_API_KEY);
 </span></span><span style="display:flex;"><span>            System.<span style="color:#369">exit</span>(1);
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">final</span> String[] titles = args.<span style="color:#369">length</span> == 0 ? <span style="color:#080;font-weight:bold">new</span> String[] { DEFAULT_MOVIE } : args;
 </span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">final</span> OmdbApi omdb = <span style="color:#080;font-weight:bold">new</span> OmdbApi(OMDB_API_KEY);
 </span></span><span style="display:flex;"><span>        Arrays.<span style="color:#369">stream</span>(titles)
-</span></span><span style="display:flex;"><span>            .<span style="color:#369">map</span>(Unchecked.<span style="color:#369">function</span>(omdb::search)) <span style="color:#888">// Exceptions become RuntimeExceptions
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>            .<span style="color:#369">map</span>(SearchResults::getResults) <span style="color:#888">// get all results
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>            .<span style="color:#369">flatMap</span>(List::stream) <span style="color:#888">// as a flat stream
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>            <span style="color:#888">// then get more details
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>            .<span style="color:#369">map</span>(Unchecked.<span style="color:#369">function</span>(movie -&gt;
-</span></span><span style="display:flex;"><span>                <span style="color:#080;font-weight:bold">new</span> OmdbBuilder().<span style="color:#369">setApiKey</span>(OMDB_API_KEY).<span style="color:#369">setPlotFull</span>().<span style="color:#369">setImdbId</span>(movie.<span style="color:#369">getImdbID</span>()).<span style="color:#369">build</span>())
+</span></span><span style="display:flex;"><span>            .<span style="color:#369">map</span>(function(omdb::search)) <span style="color:#888">// Exceptions become RuntimeExceptions
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>            .<span style="color:#369">flatMap</span>(searchResult -&gt; searchResult.<span style="color:#369">getResults</span>().<span style="color:#369">stream</span>()) <span style="color:#888">// get all results and flatten
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>            .<span style="color:#369">map</span>(function(movie -&gt; <span style="color:#888">// then get more details
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>                <span style="color:#080;font-weight:bold">new</span> OmdbBuilder().<span style="color:#369">setApiKey</span>(OMDB_API_KEY).<span style="color:#369">setPlotFull</span>().<span style="color:#369">setImdbId</span>(movie.<span style="color:#369">getImdbID</span>()).<span style="color:#369">build</span>())
 </span></span><span style="display:flex;"><span>            )
-</span></span><span style="display:flex;"><span>            .<span style="color:#369">map</span>(Unchecked.<span style="color:#369">function</span>(omdb::getInfo))
+</span></span><span style="display:flex;"><span>            .<span style="color:#369">map</span>(function(omdb::getInfo))
 </span></span><span style="display:flex;"><span>            .<span style="color:#369">forEach</span>(movie -&gt;
 </span></span><span style="display:flex;"><span>                LOGGER.<span style="color:#369">info</span>(
 </span></span><span style="display:flex;"><span>                    <span style="color:#d20;background-color:#fff0f0">"\n=========================\n{}\n"</span>
+</span></span><span style="display:flex;"><span>                        + <span style="color:#d20;background-color:#fff0f0">"Directed by {}; {}; {}\n"</span>
+</span></span><span style="display:flex;"><span>                        + <span style="color:#d20;background-color:#fff0f0">"Written by {}\n"</span>
+</span></span><span style="display:flex;"><span>                        + <span style="color:#d20;background-color:#fff0f0">"Cast: {}\n"</span>
+</span></span><span style="display:flex;"><span>                        + <span style="color:#d20;background-color:#fff0f0">"{} {}\n"</span>
+</span></span><span style="display:flex;"><span>                        + <span style="color:#d20;background-color:#fff0f0">"IMDb {} (over {} votes), Rotten Tomatoes {}. {}\n"</span>
+</span></span><span style="display:flex;"><span>                        + <span style="color:#d20;background-color:#fff0f0">"{}\n"</span>
 </span></span></code></pre></div><p>…</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>                )
-</span></span><span style="display:flex;"><span>            );
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div></section><section>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""></code></pre></div></section><section>
 <h2 id="gradle-our-toy-example-1">Gradle: our toy example</h2>
 <p><code>build.gradle.kts</code></p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
-</span></span><span style="display:flex;"><span>    java
-</span></span><span style="display:flex;"><span>    application
+</span></span><span style="display:flex;"><span>    <span style="color:#888">// Apply the java plugin to add support for Java
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    java
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#888">// Apply the application plugin to add support for building a CLI application
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#888">// You can run your app via task "run": ./gradlew run
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    application
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#888">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#888">     * Adds tasks to export a runnable jar.
+</span></span></span><span style="display:flex;"><span><span style="color:#888">     * In order to create it, launch the "shadowJar" task.
+</span></span></span><span style="display:flex;"><span><span style="color:#888">     * The runnable jar will be found in build/libs/projectname-all.jar
+</span></span></span><span style="display:flex;"><span><span style="color:#888">     */</span>
+</span></span><span style="display:flex;"><span>    id(<span style="color:#d20;background-color:#fff0f0">"com.github.johnrengelman.shadow"</span>) version <span style="color:#d20;background-color:#fff0f0">"7.1.2"</span>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>repositories {
-</span></span><span style="display:flex;"><span>    mavenCentral()
+</span></span><span style="display:flex;"><span>repositories { <span style="color:#888">// Where to search for dependencies
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    mavenCentral()
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>dependencies {
 </span></span><span style="display:flex;"><span>    <span style="color:#888">// Maven dependencies are composed by a group name, a name and a version, separated by colons
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    implementation(<span style="color:#d20;background-color:#fff0f0">"com.omertron:API-OMDB:1.5"</span>)
 </span></span><span style="display:flex;"><span>    implementation(<span style="color:#d20;background-color:#fff0f0">"org.jooq:jool:0.9.14"</span>)
-</span></span><span style="display:flex;"><span>    implementation(<span style="color:#d20;background-color:#fff0f0">"org.slf4j:slf4j-api:1.7.36"</span>)
-</span></span><span style="display:flex;"><span>    runtimeOnly(<span style="color:#d20;background-color:#fff0f0">"ch.qos.logback:logback-classic:1.2.11"</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#888">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#888">     * Simple Logging Facade for Java (SLF4J) with Apache Log4j
+</span></span></span><span style="display:flex;"><span><span style="color:#888">     * See: http://www.slf4j.org/
+</span></span></span><span style="display:flex;"><span><span style="color:#888">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">slf4jVersion</span> = <span style="color:#d20;background-color:#fff0f0">"2.0.2"</span>
+</span></span><span style="display:flex;"><span>    implementation(<span style="color:#d20;background-color:#fff0f0">"org.slf4j:slf4j-api:</span><span style="color:#33b;background-color:#fff0f0">$slf4jVersion</span><span style="color:#d20;background-color:#fff0f0">"</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#888">// Logback backend for SLF4J
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    runtimeOnly(<span style="color:#d20;background-color:#fff0f0">"ch.qos.logback:logback-classic:1.4.1"</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#888">// JUnit API and testing engine
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">jUnitVersion</span> = <span style="color:#d20;background-color:#fff0f0">"5.9.1"</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#888">// when dependencies share the same version, grouping in a val helps to keep them in sync
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    testImplementation(<span style="color:#d20;background-color:#fff0f0">"org.junit.jupiter:junit-jupiter-api:</span><span style="color:#33b;background-color:#fff0f0">$jUnitVersion</span><span style="color:#d20;background-color:#fff0f0">"</span>)
+</span></span><span style="display:flex;"><span>    testRuntimeOnly(<span style="color:#d20;background-color:#fff0f0">"org.junit.jupiter:junit-jupiter-engine:</span><span style="color:#33b;background-color:#fff0f0">$jUnitVersion</span><span style="color:#d20;background-color:#fff0f0">"</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>application {
-</span></span><span style="display:flex;"><span>    mainClass.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">"it.unibo.sampleapp.RateAMovie"</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#888">// Define the main class for the application.
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    mainClass.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">"it.unibo.sampleapp.RateAMovie"</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>java {
+</span></span><span style="display:flex;"><span>    sourceCompatibility = JavaVersion.VERSION_11
+</span></span><span style="display:flex;"><span>    targetCompatibility = JavaVersion.VERSION_11
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>tasks {
+</span></span><span style="display:flex;"><span>    withType&lt;JavaCompile&gt; {
+</span></span><span style="display:flex;"><span>        options.encoding = <span style="color:#d20;background-color:#fff0f0">"UTF-8"</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    withType&lt;Test&gt; {
+</span></span><span style="display:flex;"><span>        <span style="color:#888">// Enables JUnit 5 Jupiter module
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        useJUnitPlatform()
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#888">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#888"> * Custom task
+</span></span></span><span style="display:flex;"><span><span style="color:#888"> */</span>
+</span></span><span style="display:flex;"><span>tasks.register(<span style="color:#d20;background-color:#fff0f0">"printClasspath"</span>) {
+</span></span><span style="display:flex;"><span>    doLast {
+</span></span><span style="display:flex;"><span>        sourceSets {
+</span></span><span style="display:flex;"><span>            main {
+</span></span><span style="display:flex;"><span>                println(runtimeClasspath.joinToString(File.pathSeparator) { <span style="color:#080;font-weight:bold">it</span>.absolutePath })
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p><code>settings.gradle.kts</code></p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>rootProject.name = <span style="color:#d20;background-color:#fff0f0">"sample-gradle-project"</span>
