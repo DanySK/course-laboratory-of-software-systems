@@ -27,7 +27,7 @@ dependencies {
      * Simple Logging Facade for Java (SLF4J) with Apache Log4j
      * See: http://www.slf4j.org/
      */
-    val slf4jVersion = "2.0.2"
+    val slf4jVersion = "2.0.3"
     implementation("org.slf4j:slf4j-api:$slf4jVersion")
     // Logback backend for SLF4J
     runtimeOnly("ch.qos.logback:logback-classic:1.4.1")
