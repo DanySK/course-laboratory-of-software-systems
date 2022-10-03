@@ -1088,12 +1088,12 @@ This will turn useful in future…</p>
 <tr>
 <td><code>x == y</code></td>
 <td style="text-align:center"><code>equals</code></td>
-<td><code>x?.equals(y) ?: (b === null)</code></td>
+<td><code>x?.equals(y) ?: (y === null)</code></td>
 </tr>
 <tr>
 <td><code>x != y</code></td>
 <td style="text-align:center"><code>equals</code></td>
-<td><code>!(x?.equals(y) ?: (b === null))</code></td>
+<td><code>!(x?.equals(y) ?: (y === null))</code></td>
 </tr>
 <tr>
 <td><code>x &gt; y</code></td>
