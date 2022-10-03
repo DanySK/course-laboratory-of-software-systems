@@ -1160,8 +1160,8 @@ This will turn useful in future...
 
 | Expression | Method Name | Translation |
 |------------|:-----------:|-------------|
-| `x == y` | `equals` | `x?.equals(y) ?: (b === null)` |
-| `x != y` | `equals` | `!(x?.equals(y) ?: (b === null))` |
+| `x == y` | `equals` | `x?.equals(y) ?: (y === null)` |
+| `x != y` | `equals` | `!(x?.equals(y) ?: (y === null))` |
 | `x > y` | `compareTo` | `x.compareTo(y) > 0` |
 | `x < y` | `compareTo` | `x.compareTo(y) < 0` |
 | `x >= y` | `compareTo` | `x.compareTo(y) >= 0` |
