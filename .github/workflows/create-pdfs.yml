@@ -44,7 +44,7 @@ jobs:
         run: slides/makepdfs.rb pages
       - name: Deliver the pdfs
         if: github.event_name == 'workflow_run'
-        uses: ncipollo/release-action@1.10.1
+        uses: ncipollo/release-action@v1.11.0
         with:
           allowUpdates: true
           artifacts: "*.pdf"
