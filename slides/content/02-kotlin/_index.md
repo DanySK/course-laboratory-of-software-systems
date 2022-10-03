@@ -1336,7 +1336,7 @@ Local monomorphization is expressed with the `reified` keyword.
 ## Type reification example
 
 ```kotlin
-inline fun <reified T> checkIsType(a: Any): T = a is T // instance check on a generic!
+inline fun <reified T> checkIsType(a: Any): Boolean = a is T // instance check on a generic!
 checkIsType<Long>(1) // false
 checkIsType<Long>(1L) // true
 ```
