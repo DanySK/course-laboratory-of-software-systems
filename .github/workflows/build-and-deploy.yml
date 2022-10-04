@@ -21,7 +21,7 @@ jobs:
     steps:
       # Checkout the repository
       - name: Checkout
-        uses: danysk/action-checkout@0.2.2
+        uses: danysk/action-checkout@0.2.3
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1.117.0
         with:
