@@ -26,7 +26,7 @@
     <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
 <h2 id="build-automation">Build Automation</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2022-10-04
+2022-10-05
 
 </section><section>
 <h1 id="overview">Overview</h1>
@@ -140,7 +140,7 @@ from code to artifacts</p>
 <li>How to structure multiple logical and interdependent parts?</li>
 </ul>
 </section><section>
-<h1 id="the-apache-maven-build-lifecycle">The Apache Maven build lifecycle</h1>
+<h2 id="the-apache-maven-build-lifecycle">The Apache Maven build lifecycle</h2>
 <ol>
 <li><code>validate</code> - validate the project is correct and all necessary information is available</li>
 <li><code>compile</code> - compile the source code of the project</li>
@@ -157,7 +157,7 @@ from code to artifacts</p>
 </ul>
 <p>What if there is no plugin for something peculiar of the project?</p>
 </section><section>
-<h1 id="a-lifecycle-for-build-lifecycles">A lifecycle for build lifecycles</h1>
+<h2 id="a-lifecycle-for-build-lifecycles">A lifecycle for build lifecycles</h2>
 <ol>
 <li><strong>Initialization</strong>: understand what is part of a build</li>
 <li><strong>Configuration</strong>: create the necessary phases / goals and configure them
@@ -176,7 +176,7 @@ from code to artifacts</p>
 <p>Rather than declaratively fit the build into a predefined lifecycle, declaratively define a build lifecycle</p>
 <p>$\Rightarrow$ Typical of <em>hybrid automators</em></p>
 </section><section>
-<h1 id="gradle">Gradle</h1>
+<h2 id="gradle">Gradle</h2>
 <p>A paradigmatic example of a hybrid automator:</p>
 <ul>
 <li>Written mostly in Java</li>
@@ -185,8 +185,12 @@ from code to artifacts</p>
 </ul>
 <h3 id="our-approach-to-gradle">Our approach to Gradle</h3>
 <ul>
-<li>We are <strong>not</strong> going to learn “how to use Gradle”</li>
-<li>We are going to <em>learn Gradle</em></li>
+<li>We are <strong>not</strong> going to learn “how to <em>use</em> Gradle”</li>
+<li>We are going to <em>learn how to Gradle</em>
+<ul>
+<li>Other automation systems can be driven similarly once the basics are understood</li>
+</ul>
+</li>
 </ul>
 </section><section>
 <h2 id="gradle-main-concepts">Gradle: main concepts</h2>
@@ -334,9 +338,8 @@ Only later, when a task is invoked, the block gets <em>actually executed</em></p
 </ul>
 </li>
 </ul>
-<p>Delaying the actual execution allows for a more <em>delayed configuration</em>
-<br>
-This will be especially useful when <em>modifying existing behavior</em></p>
+<p>Delaying the execution allows for <em>more flexible configuration</em></p>
+<p>This will be especially useful when <em>modifying existing behavior</em></p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>tasks.<span style="color:#369">register</span>(<span style="color:#d20;background-color:#fff0f0">"helloWorld"</span>) {
 </span></span><span style="display:flex;"><span>    doLast { println(<span style="color:#d20;background-color:#fff0f0">"Hello, World!"</span>) }
 </span></span><span style="display:flex;"><span>}
@@ -371,13 +374,13 @@ Any <code>open class</code> implementing <a href="https://docs.gradle.org/curren
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    doLast { println(<span style="color:#d20;background-color:#fff0f0">"$javaExecutable invocation complete"</span>) }
 </span></span><span style="display:flex;"><span>    doFirst { println(<span style="color:#d20;background-color:#fff0f0">"Ready to invoke $javaExecutable"</span>) }
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><pre tabindex="0"><code>&gt; Task :printJavaVersion
-Ready to invoke /usr/lib/jvm/java-11-openjdk/bin/java
-openjdk version "11.0.8" 2020-07-14
-OpenJDK Runtime Environment (build 11.0.8+10)
-OpenJDK 64-Bit Server VM (build 11.0.8+10, mixed mode)
-/usr/lib/jvm/java-11-openjdk/bin/java invocation complete
-</code></pre></section><section>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>&gt; Task :printJavaVersion
+</span></span><span style="display:flex;"><span>Ready to invoke /usr/lib/jvm/java-11-openjdk/bin/java
+</span></span><span style="display:flex;"><span>openjdk version <span style="color:#d20;background-color:#fff0f0">"11.0.8"</span> 2020-07-14
+</span></span><span style="display:flex;"><span>OpenJDK Runtime Environment (build 11.0.8+10)
+</span></span><span style="display:flex;"><span>OpenJDK 64-Bit Server VM (build 11.0.8+10, mixed mode)
+</span></span><span style="display:flex;"><span>/usr/lib/jvm/java-11-openjdk/bin/java invocation <span style="color:#038">complete</span>
+</span></span></code></pre></div></section><section>
 <h2 id="gradle-principle-of-automation">Gradle: principle of automation</h2>
 <p>Let’s try something more involved: compiling some Java source located in <code>src</code>.
 <br></p>
@@ -710,10 +713,10 @@ Some build tasks of some module may require build tasks <em>of other modules</em
 <li>A stand-alone application using the library</li>
 </ul>
 <p>We need to reorganize the build logic to something similar to</p>
-<pre tabindex="0"><code>hierarchial-project
-|__:library
-\__:app
-</code></pre><p>Desiderata:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>hierarchial-project
+</span></span><span style="display:flex;"><span>|__:library
+</span></span><span style="display:flex;"><span>\__:app
+</span></span></code></pre></div><p>Desiderata:</p>
 <ul>
 <li>We can compile any of the two projects from the root</li>
 <li>We can run the app from the root</li>
