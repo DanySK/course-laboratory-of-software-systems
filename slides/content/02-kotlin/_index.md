@@ -1953,7 +1953,7 @@ Kotlin provides a number of built-in functions that run a lambda expression in a
 
 ## Scope functions
 
-#### `let` : `T.((T) -> R) R`
+#### `let` : `T.((T) -> R) -> R`
 
 Can be invoked on an object, passing a lambda expression.
 <br/>
@@ -2029,7 +2029,7 @@ mutableListOf<Int>().apply {
 
 ## Scope functions
 
-#### `also` : `T.(() -> Unit) -> T`
+#### `also` : `T.((T) -> Unit) -> T`
 
 Similar to `apply`, but does not change the context,
 <br/>
