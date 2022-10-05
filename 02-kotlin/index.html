@@ -1763,7 +1763,7 @@ This enables a powerful form of <em>scope control</em></p>
 </section><section>
 <h1 id="kotlin-202----functional-kotlin-13">Kotlin 202 – Functional Kotlin</h1>
 <h2 id="scope-functions-1">Scope functions</h2>
-<h4 id="let--tt---r-r"><code>let</code> : <code>T.((T) -&gt; R) R</code></h4>
+<h4 id="let--tt---r---r"><code>let</code> : <code>T.((T) -&gt; R) -&gt; R</code></h4>
 <p>Can be invoked on an object, passing a lambda expression.
 <br>
 The method receiver is bound to the lambda parameter
@@ -1808,7 +1808,7 @@ and returning the original object</p>
 </span></span></span></code></pre></div></section><section>
 <h1 id="kotlin-202----functional-kotlin-17">Kotlin 202 – Functional Kotlin</h1>
 <h2 id="scope-functions-5">Scope functions</h2>
-<h4 id="also--t---unit---t"><code>also</code> : <code>T.(() -&gt; Unit) -&gt; T</code></h4>
+<h4 id="also--tt---unit---t"><code>also</code> : <code>T.((T) -&gt; Unit) -&gt; T</code></h4>
 <p>Similar to <code>apply</code>, but does not change the context,
 <br>
 the context object is bound to the first lambda parameter
