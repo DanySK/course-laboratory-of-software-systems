@@ -50,7 +50,7 @@ enableSourceMap = true
 
 ---
 
-# The Apache Maven build lifecycle
+## The Apache Maven build lifecycle
 
 1. `validate` - validate the project is correct and all necessary information is available
 2. `compile` - compile the source code of the project
@@ -68,7 +68,7 @@ What if there is no plugin for something peculiar of the project?
 
 ---
 
-# A lifecycle for build lifecycles
+## A lifecycle for build lifecycles
 
 1. **Initialization**: understand what is part of a build
 2. **Configuration**: create the necessary phases / goals and configure them
@@ -84,7 +84,7 @@ $\Rightarrow$ Typical of *hybrid automators*
 
 ---
 
-# Gradle
+## Gradle
 
 A paradigmatic example of a hybrid automator:
 * Written mostly in Java
@@ -93,8 +93,9 @@ A paradigmatic example of a hybrid automator:
 
 ### Our approach to Gradle
 
-* We are **not** going to learn "how to use Gradle"
-* We are going to *learn Gradle*
+* We are **not** going to learn "how to *use* Gradle"
+* We are going to *learn how to Gradle*
+    * Other automation systems can be driven similarly once the basics are understood
 
 ---
 
@@ -270,8 +271,8 @@ Hello, World!
 * The *task execution* happens **later**
     * As per the "meta-lifecycle" discussed before
 
-Delaying the actual execution allows for a more *delayed configuration*
-<br>
+Delaying the execution allows for *more flexible configuration*
+
 This will be especially useful when *modifying existing behavior*
 
 ```gradle
@@ -321,7 +322,7 @@ tasks.register<Exec>("printJavaVersion") { // Do you Recognize this? inline func
 }
 ```
 
-```
+```bash
 > Task :printJavaVersion
 Ready to invoke /usr/lib/jvm/java-11-openjdk/bin/java
 openjdk version "11.0.8" 2020-07-14
@@ -688,7 +689,8 @@ Let us split our project into two components:
 * A stand-alone application using the library
 
 We need to reorganize the build logic to something similar to
-```
+
+```text
 hierarchial-project
 |__:library
 \__:app
