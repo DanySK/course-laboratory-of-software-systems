@@ -208,8 +208,8 @@ abstract class AbstractTag(override val name: String, vararg attributes: Attribu
         private set(value) { field = value } // Write access only from this class
     final override val attributes: Map<String, String> = attributes.associate { it }
     fun registerElement(element: Element) {
-        if (element is RepeatableElement || members.none { it::class == element::class }) {
-            members = members + element
+        if (element is RepeatableElement || children.none { it::class == element::class }) {
+            children = children + element
         } else {
             throw IllegalStateException("cannot repeat tag ${element::class.simpleName} multiple times:\n$element")
         }
