@@ -28,7 +28,7 @@
 <br>
 <h3 id="danilo-pianini-----danilopianiniuniboitmailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini — <code>danilo.pianini@unibo.it</code></a></h3>
 <br>
-<p>Compiled on: 2022-10-09
+<p>Compiled on: 2022-10-10
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a>
 </p></section><section>
 <h1 id="dsls">DSLs</h1>
@@ -204,8 +204,8 @@ we convey a better meaning to what we are doing by relying on a <code>typealias 
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">set</span>(<span style="color:#080;font-weight:bold">value</span>) { <span style="color:#080;font-weight:bold">field</span> = <span style="color:#080;font-weight:bold">value</span> } <span style="color:#888">// Write access only from this class
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">final</span> <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">attributes</span>: Map&lt;String, String&gt; = attributes.associate { <span style="color:#080;font-weight:bold">it</span> }
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">registerElement</span>(element: Element) {
-</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">if</span> (element <span style="color:#080;font-weight:bold">is</span> RepeatableElement || members.none { <span style="color:#080;font-weight:bold">it</span>::<span style="color:#080;font-weight:bold">class</span> <span style="color:#a61717;background-color:#e3d2d2">== </span><span style="color:#b06;font-weight:bold">element</span>::<span style="color:#080;font-weight:bold">class</span> <span style="color:#a61717;background-color:#e3d2d2">}) {</span>
-</span></span><span style="display:flex;"><span>            members = members + element
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">if</span> (element <span style="color:#080;font-weight:bold">is</span> RepeatableElement || children.none { <span style="color:#080;font-weight:bold">it</span>::<span style="color:#080;font-weight:bold">class</span> <span style="color:#a61717;background-color:#e3d2d2">== </span><span style="color:#b06;font-weight:bold">element</span>::<span style="color:#080;font-weight:bold">class</span> <span style="color:#a61717;background-color:#e3d2d2">}) {</span>
+</span></span><span style="display:flex;"><span>            children = children + element
 </span></span><span style="display:flex;"><span>        } <span style="color:#080;font-weight:bold">else</span> {
 </span></span><span style="display:flex;"><span>            <span style="color:#080;font-weight:bold">throw</span> IllegalStateException(<span style="color:#d20;background-color:#fff0f0">"cannot repeat tag </span><span style="color:#33b;background-color:#fff0f0">${element::class.simpleName}</span><span style="color:#d20;background-color:#fff0f0"> multiple times:</span><span style="color:#04d;background-color:#fff0f0">\n</span><span style="color:#33b;background-color:#fff0f0">$element</span><span style="color:#d20;background-color:#fff0f0">"</span>)
 </span></span><span style="display:flex;"><span>        }
