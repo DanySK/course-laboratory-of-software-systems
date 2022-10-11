@@ -725,3 +725,97 @@ They are usually integrated with the repository hosting provider
 * Dependabot (Multiple)
 * Gemnasium (Ruby)
 * Greenkeeper (NPM)
+
+---
+
+# Issue and PR templating
+
+---
+
+## Helping humans helping you helping them
+
+Some tasks *do* require humans:
+* Reporting bugs
+* Explaining the contents of a human-made pull request
+
+However, we may still want these documents to follow a **template**
+
+* Remind contributors to enter all the information needed to tackle the issue correctly
+    * for instance, instructions on how to reproduce a bug
+* Pre-fill common information
+* Enforce or propose a structure
+    * For instance, semantic PR titles
+
+Most Git hosting services allow to specify a **template**.
+
+---
+
+## Repo templates in GitHub
+
+Templates in GitHub are special files found in the `.github` folder,
+written in *YAML* or *Markdown*, and *stored on the default branch*.
+
+The descriptor generates a form that users must fill.
+
+They are available for both **issues** and **pull requests**,
+and share most of the syntax.
+
+---
+
+## Location of templates in GitHub
+
+```text
+.github
+├── PULL_REQUEST_TEMPLATE
+│    ├── config.yml
+│    ├── example.yml
+│    └── another-example.md
+└── ISSUE_TEMPLATE
+     ├── config.yml
+     ├── example.yml
+     └── another-example.md
+```
+
+Any `md` or `yml` file located in `.github/ISSUE_TEMPLATE`
+is considered as a template for *issues*
+
+Any `md` or `yml` file located in `.github/PULL_REQUEST_TEMPLATE`
+is considered as a template for *pull requests*
+
+If a single template is necessary,
+a single `.github/ISSUE_TEMPLATE.md` or `.github/PULL_REQUEST_TEMPLATE.md` file
+replaces the content of the whole directory
+
+---
+
+## Forms and templates in GitHub
+
+* Plain markdown documents are used to pre-populate the content of the PR message (*templates*)
+    * A YAML *front-matter* can be used to specify options
+
+```markdown
+---
+name: 🐞 Bug
+about: File a bug/issue
+title: '[BUG] <title>'
+labels: bug, to-triage
+assignees: someone, someoneelse
+
+---
+
+### Current Behavior:
+<!-- A concise description of what you're experiencing. -->
+
+### Expected Behavior:
+<!-- A concise description of what you expected to happen. -->
+
+### Steps to reproduce:
+1. first do...
+2. and then...
+```
+
+* YAML documents are used to build richer documents as *forms*
+    * YAML documents can be used to build the same forms as markdown ones,
+    with a pre-populated text area
+    * They can also be used to build *forms* with checkboxes and some forms of validation
+    * Reference syntax: https://bit.ly/3yvrXqE
