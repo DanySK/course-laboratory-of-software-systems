@@ -650,7 +650,7 @@ This usually involves cleaning up the build directory - not so hard in our examp
 tasks.register("clean") { // A generic task is fine
     doLast {
         if (!buildDir.deleteRecursively()) {
-            throw IllegalStateException("Cannot delete $buildDir")
+            error("Cannot delete $buildDir")
         }
     }
 }
@@ -739,7 +739,7 @@ include(":app") // There must be a folder named "app"
 allprojects {
     tasks.register("clean") { // A generic task is fine
         if (!buildDir.deleteRecursively()) {
-            throw IllegalStateException("Cannot delete $buildDir")
+            error("Cannot delete $buildDir")
         }
     }
 }
@@ -839,21 +839,22 @@ Let's begin our operation of isolation of imperativity by refactoring our hierar
 * One has an output directory
 * One has a "main class"
 
-{{< gravizo "We can use Kotlin to extend the base Gradle API and impleent our own stuff" >}}
-@startuml
-interface Exec
-interface JavaTask extends Exec {
-    classpath : Set<File>
-    javaExecutable : File
-}
-interface JavaCompile extends JavaTask {
-    outputDirectory : File
-}
-interface JavaExecute extends JavaTask {
-    mainClass : String
-}
-@enduml
-{{< /gravizo >}}
+```mermaid
+classDiagram
+    Exec <|-- JavaTask
+    JavaTask <|-- JavaCompile
+    JavaTask <|-- JavaExecute
+    class JavaTask {
+        Set~File~ classpath
+        File javaExecutable
+    }
+    class JavaCompile {
+        File outputDirectory
+    }
+    class JavaExecute {
+        String mainClass
+    }
+```
 
 ---
 
@@ -873,7 +874,7 @@ open class Clean @Inject constructor() : DefaultTask() {
     @TaskAction
     fun clean() {
         if (!project.buildDir.deleteRecursively()) {
-            throw IllegalStateException("Cannot delete ${project.buildDir}")
+            error("Cannot delete ${project.buildDir}")
         }
     }
 }
@@ -997,7 +998,7 @@ allprojects {
     tasks.register("clean") { // A generic task is fine
         doLast {
             if (!buildDir.deleteRecursively()) {
-                throw IllegalStateException("Cannot delete $buildDir")
+                error("Cannot delete $buildDir")
             }
         }
     }
@@ -1336,7 +1337,6 @@ First step is: *testing it to see if it works*
 1. The **Gradle test kit**, for programmatically launching Gradle and ispecting the execution results
 2. [Kotest](https://github.com/kotest/kotest), a test framework for Kotlin
     * could be done with JUnit or other systems, but Kotest is more idiomatic
-3. A pinch of *manual Gradle automation* to prepare the classpath
 
 ---
 
@@ -1404,34 +1404,6 @@ We want to inject our plugin into the distribution.
 
 ---
 
-## Plugin Classpath preparation
-
-It's easy enough to write a task writing our classpath in output:
-```kotlin
-// This task creates a file with a classpath descriptor, to be used in tests
-val createClasspathManifest by tasks.registering { // This delegate uses the variable name as task name
-    val outputDir = file("$buildDir/$name") // We will write in this folder
-    inputs.files(sourceSets.main.get().runtimeClasspath) // Our input is a ready runtime classpath
-    // Note: due to the line above, this task implicitly requires our plugin to be compiled!
-    outputs.dir(outputDir) // we register the output directory as an output of the task
-    doLast { // This is the task the action will execute
-        outputDir.mkdirs() // Create the directory infrastructure
-        // Write a file with one classpath entry per line
-        file("$outputDir/plugin-classpath.txt").writeText(sourceSets.main.get().runtimeClasspath.joinToString("\n"))
-    }
-}
-```
-Finally, we say that for tests to run all files from `createClasspathManifest` must be ready
-```kotlin
-dependencies {
-    // This way "createClasspathManifest" is always executed before the tests!
-    // Gradle auto-resolves dependencies if there are dependencies on inputs/outputs
-    testRuntimeOnly(files(createClasspathManifest))
-}
-```
-
----
-
 ## Kotest
 
 Kotest is a testing framework fro Kotlin, inspired by [Scalatest](https://www.scalatest.org/) and [Cucumber](https://cucumber.io/)
@@ -1464,20 +1436,11 @@ class PluginTest : FreeSpec({
 
 ## Preparing the test infrastructure
 
-We now need to read the classpath configuration from our file, and feed it to the Gradle runner
-
 ```kotlin
-// Find the file
-val pluginClasspathResource = ClassLoader.getSystemClassLoader().getResource("plugin-classpath.txt")
-    ?: throw IllegalStateException("Did not find the plugin classpath descriptor.")
-// Extract the content
-val classpath = pluginClasspathResource.openStream().bufferedReader().use { reader ->
-    reader.readLines().map { File(it) } // Convert each line to a file
-}
 // Configure a Gradle runner
 val runner = GradleRunner.create()
-    .withProjectDir(testFolder.root)
-    .withPluginClasspath(classpath)
+    .withProjectDir()
+    .withPluginClasspath(classpath) // we need Gradle **and** our plugin
     .withArguments(":tasks", ":you", ":need", ":to", ":run:", "--and", "--cli", "--options")
     .build() // This actually runs Gradle
 // Inspect results
@@ -1542,7 +1505,7 @@ Uhmm...
 
 ## Declaring dependencies in a *catalog*
 
-Gradle 7 introduced the *catalogs*, a standardized way to collect dependencies and bundle them.
+Gradle 7 introduced the *catalogs*, a standardized way to collect and bundle dependencies.
 
 Catalogs can be declared in:
 * the `build.gradle.kts` file (they are API, of course)
@@ -1556,9 +1519,9 @@ Catalogs can be declared in:
 
 ## Using the default catalog
 
-{{< github repo="Template-for-Gradle-Plugins" path="build.gradle.kts" from=4 to=14 >}}
+{{< github repo="Template-for-Gradle-Plugins" path="build.gradle.kts" from=6 to=16 >}}
 
-{{< github repo="Template-for-Gradle-Plugins" path="build.gradle.kts" from=60 to=69 >}}
+{{< github repo="Template-for-Gradle-Plugins" path="build.gradle.kts" from=44 to=52 >}}
 
 ---
 
