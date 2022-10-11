@@ -211,7 +211,7 @@ abstract class AbstractTag(override val name: String, vararg attributes: Attribu
         if (element is RepeatableElement || children.none { it::class == element::class }) {
             children = children + element
         } else {
-            throw IllegalStateException("cannot repeat tag ${element::class.simpleName} multiple times:\n$element")
+            error("cannot repeat tag ${element::class.simpleName} multiple times:\n$element")
         }
     }
 }
