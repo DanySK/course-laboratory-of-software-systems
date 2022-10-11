@@ -309,3 +309,60 @@ In case no tag is present, `git describe` fails, but the last commit date could 
 ```bash
 git describe || echo "0.1.0-$(git log -n1 --date=format:'%Y-%m-%dT%H%M%S' --format=%cd)" 
 ```
+
+---
+
+## Commit message-based versioning
+
+What do we need commit messages for?
+
+{{% fragment %}}
+Identify what is *different between changes*
+{{% /fragment %}}
+
+{{% fragment %}}
+But this is what **semantic versioning is about**!
+{{% /fragment %}}
+
+{{% fragment %}}
+### Idea
+
+find a way to write *conventional* commit messages such that some automatic tool can understand whether a new version should be released
+{{% /fragment %}}
+
+{{% fragment %}}
+Put humans and sentiments out of the loop
+{{% /fragment %}}
+
+---
+
+## Conventional commits
+
+One of the possible ways to write standardized commits https://www.conventionalcommits.org/
+
+Heavily inspired by *the Angular convention* https://bit.ly/3VnAp4T
+
+Format (optional parts in square brackets):
+
+```text
+type[(scope)][!]: description
+
+[body]
+
+[BREAKING CHANGE: <breaking change description>]
+```
+
+`type`: *what the commit introduces*
+* Can differ among projects
+* `fix` (bug fix, no API change) and `feat` (new feature) always present
+* common optional types: `build`, `chore`, `ci`, `docs`, `style`, `refactor`, `perf`, `test`
+* Optionally, the `scope` identifies the *module* of the software that was changed
+* Breaking changes are identified by a `!` before the `:` and/or by a description in the footer of the commit after `BREAKING CHANGE: `
+
+---
+
+Semantic commits can be leveraged to produce releases automatically
+
+Meet semantic release
+
+Example with semantic release
