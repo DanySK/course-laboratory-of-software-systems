@@ -364,7 +364,61 @@ The public API should not be considered stable.</li>
 </ul>
 <p>In case no tag is present, <code>git describe</code> fails, but the last commit date could be used instead:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>git describe || <span style="color:#038">echo</span> <span style="color:#d20;background-color:#fff0f0">"0.1.0-</span><span style="color:#080;font-weight:bold">$(</span>git log -n1 --date=format:<span style="color:#d20;background-color:#fff0f0">'%Y-%m-%dT%H%M%S'</span> --format=%cd<span style="color:#080;font-weight:bold">)</span><span style="color:#d20;background-color:#fff0f0">"</span> 
-</span></span></code></pre></div></section>
+</span></span></code></pre></div></section><section>
+<h2 id="commit-message-based-versioning">Commit message-based versioning</h2>
+<p>What do we need commit messages for?</p>
+
+
+<span class="fragment ">
+  <p>Identify what is <em>different between changes</em></p>
+
+</span>
+
+
+
+<span class="fragment ">
+  <p>But this is what <strong>semantic versioning is about</strong>!</p>
+
+</span>
+
+
+
+<span class="fragment ">
+  <h3 id="idea">Idea</h3>
+<p>find a way to write <em>conventional</em> commit messages such that some automatic tool can understand whether a new version should be released</p>
+
+</span>
+
+
+
+<span class="fragment ">
+  <p>Put humans and sentiments out of the loop</p>
+
+</span>
+
+</section><section>
+<h2 id="conventional-commits">Conventional commits</h2>
+<p>One of the possible ways to write standardized commits <a href="https://www.conventionalcommits.org/">https://www.conventionalcommits.org/</a></p>
+<p>Heavily inspired by <em>the Angular convention</em> <a href="https://bit.ly/3VnAp4T">https://bit.ly/3VnAp4T</a></p>
+<p>Format (optional parts in square brackets):</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>type[(scope)][!]: description
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[body]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[BREAKING CHANGE: &lt;breaking change description&gt;]
+</span></span></code></pre></div><p><code>type</code>: <em>what the commit introduces</em></p>
+<ul>
+<li>Can differ among projects</li>
+<li><code>fix</code> (bug fix, no API change) and <code>feat</code> (new feature) always present</li>
+<li>common optional types: <code>build</code>, <code>chore</code>, <code>ci</code>, <code>docs</code>, <code>style</code>, <code>refactor</code>, <code>perf</code>, <code>test</code></li>
+<li>Optionally, the <code>scope</code> identifies the <em>module</em> of the software that was changed</li>
+<li>Breaking changes are identified by a <code>!</code> before the <code>:</code> and/or by a description in the footer of the commit after <code>BREAKING CHANGE: </code></li>
+</ul>
+</section><section>
+<p>Semantic commits can be leveraged to produce releases automatically</p>
+<p>Meet semantic release</p>
+<p>Example with semantic release</p>
+</section>
 
   
 
