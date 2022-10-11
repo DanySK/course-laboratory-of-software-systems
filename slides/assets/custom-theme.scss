@@ -106,6 +106,12 @@ section.has-light-background {
 }
 
 .reveal ul {
+	display: block;
+	margin: 0px 0px .5em 2vw;
+}
+
+.reveal ol {
+	display: block;
 	margin: 0px 0px .5em 2vw;
 }
 
