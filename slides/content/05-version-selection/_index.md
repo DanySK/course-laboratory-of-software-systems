@@ -338,11 +338,11 @@ Put humans and sentiments out of the loop
 
 ## Conventional commits
 
-One of the possible ways to write standardized commits https://www.conventionalcommits.org/
+One of the possible ways to write standardized commits -- https://www.conventionalcommits.org/
 
-Heavily inspired by *the Angular convention* https://bit.ly/3VnAp4T
+Heavily inspired by *the Angular convention*: https://bit.ly/3VnAp4T
 
-Format (optional parts in square brackets):
+Format (optional parts in `[`square brackets`]`):
 
 ```text
 type[(scope)][!]: description
@@ -352,17 +352,46 @@ type[(scope)][!]: description
 [BREAKING CHANGE: <breaking change description>]
 ```
 
-`type`: *what the commit introduces*
-* Can differ among projects
-* `fix` (bug fix, no API change) and `feat` (new feature) always present
-* common optional types: `build`, `chore`, `ci`, `docs`, `style`, `refactor`, `perf`, `test`
+* `type`: *what the commit introduces*
+    * Can differ among projects
+    * `fix` (bug fix, no API change) and `feat` (new feature) always present
+    * common optional types: `build`, `chore`, `ci`, `docs`, `style`, `refactor`, `perf`, `test`
 * Optionally, the `scope` identifies the *module* of the software that was changed
-* Breaking changes are identified by a `!` before the `:` and/or by a description in the footer of the commit after `BREAKING CHANGE: `
+* **Breaking changes** are identified by a `!` before the `:` and/or by a description in the footer of the commit after `BREAKING CHANGE: `
 
 ---
 
-Semantic commits can be leveraged to produce releases automatically
+## Semantic release
 
-Meet semantic release
+### Idea
 
-Example with semantic release
+Assuming a conventional way to commit, use the information to understand *when* and *how* to release
+
+### Practice
+
+1. Decide *which branch* should be looked at for triggering releases
+2. Define which *kind of release should be associated with which kind of commit*
+    * Rules can be custom per-project, as far as they are consistent
+    * e.g., `fix` and `docs` are `PATCH`, `feat` are `MINOR`, **Breaking changes** are `MAJOR`
+    * Usually the commit *type* is relied upon, but the *scope* may be used as well
+3. Scan all commits from the *last tag*, searching for the "largest" version change
+4. If *at least one* version change was found, and this is still the *last commit* on the branch triggering releases,
+create a release tag and perform the release procedure
+
+---
+
+## semantic-release
+
+An implementation of Semantic release:
+
+https://github.com/semantic-release/semantic-release
+
+* Based on the Angular convention and Javascript, but configurable
+* Determines the version number
+* Generates commit-based release notes
+* Runs the publishing steps
+
+### Example with semantic release
+
+* Configuration for conventional commits: https://www.npmjs.com/package/semantic-release-preconfigured-conventional-commits
+* Usage with a non-JS software: https://github.com/AlchemistSimulator/Alchemist/blob/master/release.config.js
