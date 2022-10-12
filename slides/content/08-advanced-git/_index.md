@@ -710,3 +710,27 @@ Any of the `tree-ish`es can be used to checkout!
 ### `git reflog`
 
 ![](https://i.kym-cdn.com/entries/icons/facebook/000/006/077/so_good.jpg)
+
+---
+
+## Git Hooks
+
+Scripts that execute when some events happen, stored in `.git/hooks`
+
+They are **not part of the repository code**, and hence **they cannot get commited and pushed**
+
+Events also dictate the file names:
+* `applypatch-msg`
+* `commit-msg` $\LeftArrow$ particularly useful to enforce a commit message format!
+* `fsmonitor-watchman`
+* `pre-applypatch`
+* `pre-commit`
+* `pre-merge-commit`
+* `pre-push`
+* `pre-rebase`
+* `pre-receive`
+* `prepare-commit-msg`
+* `post-update`
+* `push-to-checkout`
+* `update`                                                                  
+
