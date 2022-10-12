@@ -398,26 +398,58 @@ The public API should not be considered stable.</li>
 
 </section><section>
 <h2 id="conventional-commits">Conventional commits</h2>
-<p>One of the possible ways to write standardized commits <a href="https://www.conventionalcommits.org/">https://www.conventionalcommits.org/</a></p>
-<p>Heavily inspired by <em>the Angular convention</em> <a href="https://bit.ly/3VnAp4T">https://bit.ly/3VnAp4T</a></p>
-<p>Format (optional parts in square brackets):</p>
+<p>One of the possible ways to write standardized commits – <a href="https://www.conventionalcommits.org/">https://www.conventionalcommits.org/</a></p>
+<p>Heavily inspired by <em>the Angular convention</em>: <a href="https://bit.ly/3VnAp4T">https://bit.ly/3VnAp4T</a></p>
+<p>Format (optional parts in <code>[</code>square brackets<code>]</code>):</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>type[(scope)][!]: description
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>[body]
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>[BREAKING CHANGE: &lt;breaking change description&gt;]
-</span></span></code></pre></div><p><code>type</code>: <em>what the commit introduces</em></p>
+</span></span></code></pre></div><ul>
+<li><code>type</code>: <em>what the commit introduces</em>
 <ul>
 <li>Can differ among projects</li>
 <li><code>fix</code> (bug fix, no API change) and <code>feat</code> (new feature) always present</li>
 <li>common optional types: <code>build</code>, <code>chore</code>, <code>ci</code>, <code>docs</code>, <code>style</code>, <code>refactor</code>, <code>perf</code>, <code>test</code></li>
+</ul>
+</li>
 <li>Optionally, the <code>scope</code> identifies the <em>module</em> of the software that was changed</li>
-<li>Breaking changes are identified by a <code>!</code> before the <code>:</code> and/or by a description in the footer of the commit after <code>BREAKING CHANGE: </code></li>
+<li><strong>Breaking changes</strong> are identified by a <code>!</code> before the <code>:</code> and/or by a description in the footer of the commit after <code>BREAKING CHANGE: </code></li>
 </ul>
 </section><section>
-<p>Semantic commits can be leveraged to produce releases automatically</p>
-<p>Meet semantic release</p>
-<p>Example with semantic release</p>
+<h2 id="semantic-release">Semantic release</h2>
+<h3 id="idea">Idea</h3>
+<p>Assuming a conventional way to commit, use the information to understand <em>when</em> and <em>how</em> to release</p>
+<h3 id="practice">Practice</h3>
+<ol>
+<li>Decide <em>which branch</em> should be looked at for triggering releases</li>
+<li>Define which <em>kind of release should be associated with which kind of commit</em>
+<ul>
+<li>Rules can be custom per-project, as far as they are consistent</li>
+<li>e.g., <code>fix</code> and <code>docs</code> are <code>PATCH</code>, <code>feat</code> are <code>MINOR</code>, <strong>Breaking changes</strong> are <code>MAJOR</code></li>
+<li>Usually the commit <em>type</em> is relied upon, but the <em>scope</em> may be used as well</li>
+</ul>
+</li>
+<li>Scan all commits from the <em>last tag</em>, searching for the “largest” version change</li>
+<li>If <em>at least one</em> version change was found, and this is still the <em>last commit</em> on the branch triggering releases,
+create a release tag and perform the release procedure</li>
+</ol>
+</section><section>
+<h2 id="semantic-release-1">semantic-release</h2>
+<p>An implementation of Semantic release:</p>
+<p><a href="https://github.com/semantic-release/semantic-release">https://github.com/semantic-release/semantic-release</a></p>
+<ul>
+<li>Based on the Angular convention and Javascript, but configurable</li>
+<li>Determines the version number</li>
+<li>Generates commit-based release notes</li>
+<li>Runs the publishing steps</li>
+</ul>
+<h3 id="example-with-semantic-release">Example with semantic release</h3>
+<ul>
+<li>Configuration for conventional commits: <a href="https://www.npmjs.com/package/semantic-release-preconfigured-conventional-commits">https://www.npmjs.com/package/semantic-release-preconfigured-conventional-commits</a></li>
+<li>Usage with a non-JS software: <a href="https://github.com/AlchemistSimulator/Alchemist/blob/master/release.config.js">https://github.com/AlchemistSimulator/Alchemist/blob/master/release.config.js</a></li>
+</ul>
 </section>
 
   
