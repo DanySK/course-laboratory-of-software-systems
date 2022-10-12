@@ -1,0 +1,297 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8">
+<title>Introduction to Laboratory of Software Systems</title>
+<meta name="description" content="Description of the course">
+<meta name="author" content="Danilo Pianini">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/dist/reset.css">
+<link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/dist/reveal.css">
+  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.ca0bc818bc80eba5d9f1c5d495c02fa7e452553d5110e53b13f09bc1d4ac069d.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
+    
+<link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
+<link href="https://fonts.googleapis.com/css?family=Roboto Mono" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Oxygen Mono" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Ubuntu Mono" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
+  </head>
+  <body>
+    
+    <div class="reveal">
+      <div class="slides">
+  
+
+    <section><h1 id="introduction-to-the-course">Introduction to the course</h1>
+<h2 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h2>
+<br>
+<h3 id="danilo-pianini-----danilopianiniuniboitmailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini — <code>danilo.pianini@unibo.it</code></a></h3>
+<br>
+<p>Compiled on: 2022-10-12
+ — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
+<p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
+</section><section>
+<h1 id="professors">Professors</h1>
+<h3 id="danilo-pianini">Danilo Pianini</h3>
+<ul>
+<li>email: <a href="mailto:danilo.pianini@unibo.it"><code>danilo.pianini@unibo.it</code></a></li>
+<li>homepage: <a href="https://www.unibo.it/sitoweb/danilo.pianini/en"><code>https://www.unibo.it/sitoweb/danilo.pianini/en</code></a></li>
+</ul>
+<h3 id="angelo-croatti">Angelo Croatti</h3>
+<ul>
+<li>email: <a href="mailto:a.croatti@unibo.it"><code>a.croatti@unibo.it</code></a></li>
+<li>homepage: <a href="https://www.unibo.it/sitoweb/a.croatti/en"><code>https://www.unibo.it/sitoweb/a.croatti/en</code></a></li>
+</ul>
+</section><section>
+<h1 id="contacts">Contacts</h1>
+<h4 id="prioritize-the-forum-httpsvirtualeuniboitmodforumviewphpid970526httpsvirtualeuniboitmodforumviewphpid970526">Prioritize the forum <a href="https://virtuale.unibo.it/mod/forum/view.php?id=970526"><code>https://virtuale.unibo.it/mod/forum/view.php?id=970526</code></a>:</h4>
+<ul>
+<li>All technical question</li>
+<li>Any other non personal question</li>
+</ul>
+<p>
+</p><h4 id="when-using-the-email">When using the email</h4>
+<ul>
+<li>Include <em>both</em> teachers, <em>always</em></li>
+</ul>
+<p>
+</p><h4 id="office-hours">Office hours</h4>
+<ul>
+<li>Danilo Pianini $\Rightarrow$ check <a href="https://www.unibo.it/sitoweb/danilo.pianini/en">the teacher webpage</a></li>
+<li>Angelo Croatti $\Rightarrow$ check <a href="https://www.unibo.it/sitoweb/a.croatti">the teacher webpage</a></li>
+</ul>
+</section><section>
+<h1 id="resources">Resources</h1>
+<ul>
+<li>These <em>slides</em> should contain everything you need</li>
+<li>code examples produced during the lecture will be available right after</li>
+<li>most code is already on GitHub</li>
+</ul>
+<p>Slides will be produced with a <em>rolling release</em> model.</p>
+<h2 id="books">Books</h2>
+<p>No mandatory books, but there are both:</p>
+<ul>
+<li>Recommended readings</li>
+<li>Additional useful books</li>
+</ul>
+<p>On <a href="https://www.unibo.it/it/didattica/insegnamenti/insegnamento/2022/412677">the course webpage</a></p>
+</section><section>
+<h1 id="organization">Organization</h1>
+<p>Lectures in lab with immediate hands-on.</p>
+<h2 id="timetable">Timetable</h2>
+<ul>
+<li><strong>Wednesday 13:00–16:00</strong> — Lab 3.3 — Usually with Pianini</li>
+<li><strong>Friday 14:00–17:00</strong> — Lab 3.3 — Usually with Croatti</li>
+</ul>
+<p>Changes will be published on the forum</p>
+</section><section>
+<h1 id="goals">Goals</h1>
+<ol>
+<li>Design systems top-down, from the <strong>domain</strong></li>
+<li>Zero-overhead from <em>domain definition</em> to <em>executable code</em></li>
+<li><em>Agile</em> development practices, <em>DevOps</em> philosophy</li>
+<li><em>High automation</em> + <em>technical excellence</em></li>
+</ol>
+</section><section>
+<h1 id="prerequisites">Prerequisites</h1>
+<ul>
+<li>Knowledge of <em>Java</em> and <em>Scala</em></li>
+<li>Minimal ability with <code>git</code>
+<ul>
+<li>initializing and managing the repository options</li>
+<li>committing</li>
+<li>branching and merging</li>
+<li>fetching and pushing</li>
+</ul>
+</li>
+<li>A <em>curious mindset</em>
+<ul>
+<li>Never stop when it works, stop when you know <em>why</em> it does</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h1 id="exam">Exam</h1>
+<h3 id="discussion-of-a-group-project"><strong>Discussion</strong> of a <strong>group project</strong></h3>
+<ul>
+<li>Must feature:
+<ul>
+<li><em>Domain-driven</em> design</li>
+<li>Clear development process and <em>DevOps</em> practices</li>
+<li>Full-scale <em>automation</em>
+<ul>
+<li>Including <em>continuous integration</em> and delivery</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Can be a <strong>joint effort</strong> with other courses
+<ul>
+<li>We care about the <em>domain modeling</em> and the application of <em>DevOps techniques</em></li>
+<li>You can pick a project of another course, apply them there, and it is fine for LSS</li>
+</ul>
+</li>
+<li>Can be a project created for LSS alone
+<ul>
+<li>If you are short on ideas, we can help :)</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h1 id="software">Software</h1>
+<h2 id="required">Required</h2>
+<ul>
+<li>A working internet connection</li>
+<li>A working JDK installation
+<ul>
+<li>Consider using <a href="https://github.com/shyiko/jabba">Jabba</a></li>
+</ul>
+</li>
+<li>Kotlin (kotlinc REPL working)</li>
+<li>Gradle</li>
+<li>Docker</li>
+</ul>
+<h2 id="recommended">Recommended</h2>
+<ul>
+<li>IntelliJ Idea</li>
+<li>Visual Studio Code</li>
+<li>A decent Unix terminal</li>
+</ul>
+</section><section>
+<h1 id="course-container">Course Container</h1>
+<h3 id="feeling-lazy">Feeling lazy?</h3>
+<p>We prepared a container with all the course’s software:</p>
+<ul>
+<li><a href="https://hub.docker.com/repository/docker/danysk/linux-didattica">https://hub.docker.com/repository/docker/danysk/linux-didattica</a></li>
+</ul>
+<p>Follow the instructions at <a href="https://github.com/DanySK/docker-linux-didattica">https://github.com/DanySK/docker-linux-didattica</a></p>
+<h3 id="feeling-windows-y">Feeling Windows-y?</h3>
+<p>The container can be converted into a WSL2 Linux distribution.</p>
+<p>(Instructions available in the same repository as above)</p>
+</section><section>
+<h1 id="software-in-lab">Software in lab</h1>
+<p>The PCs are equipped with the WSL2 image</p>
+<ul>
+<li>There should be a link on the Desktop</li>
+<li>Double-clicking it should pop up a zsh shell
+<ul>
+<li>Wait for the first terminal to show before starting others</li>
+</ul>
+</li>
+</ul>
+</section>
+
+  
+
+
+</div>
+      
+
+    </div>
+<script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-hugo/object-assign.js"></script>
+
+<a href="/Course-Laboratory-of-Software-Systems/reveal-js/dist/print/" id="print-location" style="display: none;"></a>
+
+<script type="application/json" id="reveal-hugo-site-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"height":"900","history":true,"mermaid":[{"fontFamily":"Inconsolata","gitGraph":{"mainBranchName":"master","rotateCommitLabel":true},"startOnLoad":false,"theme":"default","useMaxWidth":false}],"pdfseparatefragments":false,"slide_number":true,"theme":"white","transition":"slide","transition_speed":"fast","width":"1440"}</script>
+<script type="application/json" id="reveal-hugo-page-params">{"custom_theme_options":{"targetpath":"css/custom-theme.css"}}</script>
+
+<script src="/Course-Laboratory-of-Software-Systems/reveal-js/dist/reveal.js"></script>
+
+
+  
+  
+  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/markdown/markdown.js"></script>
+  
+  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/highlight/highlight.js"></script>
+  
+  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/zoom/zoom.js"></script>
+  
+  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/notes/notes.js"></script>
+  
+  
+  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/notes/notes.js"></script>
+
+
+
+
+<script type="text/javascript">
+  
+  
+  function camelize(map) {
+    if (map) {
+      Object.keys(map).forEach(function(k) {
+        newK = k.replace(/(\_\w)/g, function(m) { return m[1].toUpperCase() });
+        if (newK != k) {
+          map[newK] = map[k];
+          delete map[k];
+        }
+      });
+    }
+    return map;
+  }
+  
+  var revealHugoDefaults = { center: true, controls: true, history: true, progress: true, transition: "slide" };
+
+  var revealHugoPlugins = { 
+    plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom ]
+   };
+  var revealHugoSiteParams = JSON.parse(document.getElementById('reveal-hugo-site-params').innerHTML);
+  var revealHugoPageParams = JSON.parse(document.getElementById('reveal-hugo-page-params').innerHTML);
+  
+  var options = Object.assign({},
+    camelize(revealHugoDefaults),
+    camelize(revealHugoSiteParams),
+    camelize(revealHugoPageParams),
+    camelize(revealHugoPlugins));
+  Reveal.initialize(options);
+</script>
+
+
+
+
+
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@9.1.6/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({"fontFamily":"Inconsolata","gitGraph":{"mainBranchName":"master","rotateCommitLabel":true},"startOnLoad":false,"theme":"default","useMaxWidth":false});
+
+    let render = (event) => {
+      let mermaidElems = event.currentSlide.querySelectorAll('.mermaid');
+      if (!mermaidElems.length){
+          return
+      }
+      mermaidElems.forEach(mermaidElem => {
+          let processed = mermaidElem.getAttribute('data-processed');
+          if (!processed){
+              
+              mermaid.init(undefined, mermaidElem);
+          }
+      });
+    };
+    Reveal.addEventListener('slidechanged', render);
+    Reveal.addEventListener('ready', render);
+  </script>
+
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+</script>
+
+<script type="text/javascript" id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+
+    
+  
+
+</body></html>
