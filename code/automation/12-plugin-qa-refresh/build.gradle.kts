@@ -1,3 +1,5 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
 plugins {
     `java-gradle-plugin`
     jacoco
@@ -9,7 +11,7 @@ plugins {
     id("io.gitlab.arturbosch.detekt") version "1.21.0"
 }
 
-group = "it.unibo.lss"
+group = "it.unibo.firstplugin"
 
 repositories {
     mavenCentral()
@@ -48,7 +50,7 @@ gradlePlugin {
             id = "${project.group}.${project.name}"
             displayName = "LSS Greeting plugin"
             description = "Example plugin for the LSS course"
-            implementationClass = "it.unibo.lss.firstplugin.GreetingPlugin"
+            implementationClass = "it.unibo.firstplugin.GreetingPlugin"
         }
     }
 }
@@ -62,9 +64,7 @@ tasks.jacocoTestReport {
 
 // Disable JaCoCo on Windows, see: https://issueexplorer.com/issue/koral--/jacoco-gradle-testkit-plugin/9
 tasks.jacocoTestCoverageVerification {
-    enabled = !org.apache.tools.ant.taskdefs.condition.Os.isFamily(
-        org.apache.tools.ant.taskdefs.condition.Os.FAMILY_WINDOWS
-    )
+    enabled = !Os.isFamily(Os.FAMILY_WINDOWS)
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {

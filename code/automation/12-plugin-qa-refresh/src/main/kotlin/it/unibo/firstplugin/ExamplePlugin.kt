@@ -1,4 +1,4 @@
-package it.unibo.lss.firstplugin
+package it.unibo.firstplugin
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
