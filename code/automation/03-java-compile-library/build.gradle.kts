@@ -40,14 +40,12 @@ tasks.register<Exec>("compileJava") {
     if (sources.isNotEmpty())  {
         // Use the current JVM's javac
         val javacExecutable = Jvm.current().javacExecutable.absolutePath
-        val separator = if (Os.isFamily(Os.FAMILY_WINDOWS)) ";" else ":"
         commandLine(
-            "$javacExecutable",
-            "-cp", classpathFiles.joinToString(separator = separator),
+            javacExecutable,
+            "-cp", classpathFiles.joinToString(separator = File.pathSeparator),
             "-d", "$buildDir/bin",
             *sources
         )
     }
     // the task's doLast is inherited from Exec
 }
-
