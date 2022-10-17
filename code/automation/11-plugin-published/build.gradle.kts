@@ -6,7 +6,7 @@ plugins {
     id("com.gradle.plugin-publish") version "1.0.0"
 }
 
-group = "it.unibo.lss"
+group = "it.unibo.firstplugin"
 
 repositories {
     mavenCentral()
