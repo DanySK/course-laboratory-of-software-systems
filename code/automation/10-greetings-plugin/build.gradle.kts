@@ -1,6 +1,6 @@
 plugins {
-    // No magic: calls a method calling id("org.jetbrains.kotlin-" + "jvm")
-    kotlin("jvm") version "1.7.20" // version is necessary
+    `java-gradle-plugin` // Loads the plugin in the test classpath
+    kotlin("jvm") version "1.7.20"
 }
 
 // Configuration of software sources
@@ -31,20 +31,13 @@ tasks.withType<Test> {
     }
 }
 
-// This task creates a file with a classpath descriptor, to be used in tests
-val createClasspathManifest by tasks.registering {
-    val outputDir = file("$buildDir/$name")
-    inputs.files(sourceSets.main.get().runtimeClasspath)
-    outputs.dir(outputDir)
-    doLast {
-        outputDir.mkdirs()
-        file("$outputDir/plugin-classpath.txt").writeText(sourceSets.main.get().runtimeClasspath.joinToString("\n"))
+gradlePlugin {
+    plugins {
+        create("") { // One entry per plugin
+            id = "${project.group}.${project.name}"
+            displayName = "LSS Greeting plugin"
+            description = "Example plugin for the LSS course"
+            implementationClass = "it.unibo.firstplugin.GreetingPlugin"
+        }
     }
-}
-
-// Add the classpath file to the test runtime classpath
-dependencies {
-    // This way "createClasspathManifest" is always executed before the tests!
-    // Gradle auto-resolves dependencies if there are dependencies on inputs/outputs
-    testRuntimeOnly(files(createClasspathManifest))
 }
