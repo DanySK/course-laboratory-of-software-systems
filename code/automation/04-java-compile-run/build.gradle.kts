@@ -20,7 +20,7 @@ fun DependencyHandlerScope.forEachLibrary(todo: DependencyHandlerScope.(String) 
         todo(it)
     }
 }
-val separator = if (Os.isFamily(Os.FAMILY_WINDOWS)) ";" else ":"
+fun Iterable<File>.asClasspathString() = joinToString(separator = File.pathSeparator)
 
 val compileClasspath by configurations.creating
 val runtimeClasspath by configurations.creating {
@@ -38,12 +38,12 @@ val compileJava = tasks.register<Exec>("compileJava") {
     val classpathFiles = compileClasspath.resolve()
     // Build the command
     val sources = findSources()
-    if (sources != null)  {
+    if (sources.isNotEmpty())  {
         // Use the current JVM's javac
         val javacExecutable = Jvm.current().javacExecutable.absolutePath
         commandLine(
-            "$javacExecutable",
-            "-cp", classpathFiles.joinToString(separator = separator),
+            javacExecutable,
+            "-cp", classpathFiles.asClasspathString(),
             "-d", "$buildDir/bin/",
             *sources
         )
@@ -55,8 +55,8 @@ tasks.register<Exec>("runJava") {
     val mainClass = "PrintException" // Horribly hardcoded, we must do something
     val javaExecutable = Jvm.current().javaExecutable.absolutePath
     commandLine(
-            "$javaExecutable",
-            "-cp", classpathFiles.joinToString(separator = separator),
+            javaExecutable,
+            "-cp", classpathFiles.asClasspathString(),
             mainClass
     )
     dependsOn(compileJava)
