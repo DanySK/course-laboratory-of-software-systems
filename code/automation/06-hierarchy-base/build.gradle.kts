@@ -1,13 +1,10 @@
-import org.apache.tools.ant.taskdefs.condition.Os
 import org.gradle.internal.jvm.Jvm
-
-val separator = if (Os.isFamily(Os.FAMILY_WINDOWS)) ";" else ":"
 
 allprojects {
     tasks.register("clean") { // A generic task is fine
         doLast {
             if (!buildDir.deleteRecursively()) {
-                throw IllegalStateException("Cannot delete $buildDir")
+                error("Cannot delete $buildDir")
             }
         }
     }
@@ -19,14 +16,14 @@ subprojects {
      */
     data class FinderInFolder(val directory: String) {
         fun withExtension(extension: String): Array<String> = projectDir
-                .listFiles { it: File -> it.isDirectory && it.name == directory }
-                ?.firstOrNull()
-                ?.walk()
-                ?.filter { it.extension == extension }
-                ?.map { it.absolutePath }
-                ?.toList()
-                ?.toTypedArray()
-                ?: emptyArray()
+            .listFiles { it: File -> it.isDirectory && it.name == directory }
+            ?.firstOrNull()
+            ?.walk()
+            ?.filter { it.extension == extension }
+            ?.map { it.absolutePath }
+            ?.toList()
+            ?.toTypedArray()
+            ?: emptyArray()
     }
     fun findFilesIn(directory: String) = FinderInFolder(directory)
     fun findSources() = findFilesIn("src").withExtension("java")
@@ -56,12 +53,13 @@ subprojects {
             val javacExecutable = Jvm.current().javacExecutable.absolutePath
             commandLine(
                 javacExecutable,
-                "-cp", classpathFiles.joinToString(separator = separator),
+                "-cp", classpathFiles.joinToString(separator = File.pathSeparator),
                 "-d", "$buildDir/bin/",
                 *sources
             )
         } else {
             commandLine("echo", "No sources")
         }
+        mustRunAfter(tasks.named("clean"))
     }
 }

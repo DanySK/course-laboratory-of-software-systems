@@ -1,8 +1,5 @@
 import org.apache.tools.ant.taskdefs.condition.Os
 import org.gradle.internal.jvm.Jvm
-import org.gradle.kotlin.dsl.accessors.runtime.addDependencyTo
-
-val separator = if (Os.isFamily(Os.FAMILY_WINDOWS)) ";" else ":"
 
 dependencies {
     compileClasspath(project(":library")) {
@@ -19,9 +16,11 @@ tasks.register<Exec>("runJava") {
     val mainClass = "PrintException" // Horribly hardcoded, we must do something
     val javaExecutable = Jvm.current().javaExecutable.absolutePath
     commandLine(
-            javaExecutable,
-            "-cp", "$separator${classpathFiles.joinToString(separator = separator)}",
-            mainClass
+        javaExecutable,
+        "-cp",
+        classpathFiles.joinToString(separator = File.pathSeparator),
+        mainClass
     )
     dependsOn(tasks.compileJava)
+    mustRunAfter(tasks.named("clean"))
 }
