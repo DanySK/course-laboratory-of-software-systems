@@ -1,16 +1,14 @@
-import org.apache.tools.ant.taskdefs.condition.Os
 import org.gradle.internal.jvm.Jvm
 
 /*
  * Imperative logic
  */
 
-// Inject annotation is required!
-open class Clean @javax.inject.Inject constructor() : DefaultTask() { // Must be open: Gradle generates subclasses at runtime
-    @org.gradle.api.tasks.TaskAction
+open class Clean @Inject constructor() : DefaultTask() { // Must be open: Gradle generates subclasses at runtime
+    @TaskAction
     fun clean() {
-        if (!project.buildDir.deleteRecursively()) {
-            throw IllegalStateException("Cannot delete ${project.buildDir}")
+        check(project.buildDir.deleteRecursively()) {
+            "Cannot delete ${project.buildDir}"
         }
     }
 }
@@ -36,7 +34,9 @@ fun Project.findLibraries() = this.findFilesIn("lib").withExtension("jar")
  */
 abstract class JavaTask(javaExecutable: File = Jvm.current().javaExecutable) : Exec() {
 
-    init { executable = javaExecutable.absolutePath }
+    init {
+        executable = javaExecutable.absolutePath
+    }
 
     @Internal
     var classPath: Set<File> = FinderInFolder(project, "lib")
@@ -45,7 +45,7 @@ abstract class JavaTask(javaExecutable: File = Jvm.current().javaExecutable) : E
             .toSet()
         protected set
 
-    private val classPathDescriptor get() = classPath.joinToString(separator = separator)
+    private val classPathDescriptor get() = classPath.joinToString(separator = File.pathSeparator)
 
     fun fromConfiguration(configuration: Configuration) {
         classPath = configuration.resolve()
@@ -58,23 +58,23 @@ abstract class JavaTask(javaExecutable: File = Jvm.current().javaExecutable) : E
         *arguments
     )
 
-    abstract fun update(): Unit
-
-    companion object {
-        val separator = if (Os.isFamily(Os.FAMILY_WINDOWS)) ";" else ":"
+    final override fun mustRunAfter(vararg paths: Any?): Task {
+        return super.mustRunAfter(*paths)
     }
+
+    abstract fun update()
 }
 
-open class CompileJava @javax.inject.Inject constructor() : JavaTask(Jvm.current().javacExecutable) {
+open class CompileJava @Inject constructor() : JavaTask(Jvm.current().javacExecutable) {
 
-    @org.gradle.api.tasks.OutputDirectory
+    @OutputDirectory
     var outputFolder: String = "${project.buildDir}/bin/"
         set(value) {
             field = value
             update()
         }
 
-    @org.gradle.api.tasks.Input
+    @Input
     // The shorter version does not work due to a Gradle/Kotlin bug
     var sources: Set<String> = FinderInFolder(project, "src").withExtension("java").toSet()
         set(value) {
@@ -91,24 +91,22 @@ open class CompileJava @javax.inject.Inject constructor() : JavaTask(Jvm.current
 /*
  * Declarative configuration
  */
-
 allprojects {
-    tasks.register<Clean>("clean")
+    val clean by tasks.registering(Clean::class)
+    tasks.withType<JavaCompile> { mustRunAfter(clean) }
+    tasks.withType<JavaExec> { mustRunAfter(clean) }
 }
 
 subprojects {
-
     val compileClasspath by configurations.creating
     val runtimeClasspath by configurations.creating {
         extendsFrom(compileClasspath)
     }
-
     dependencies {
         findLibraries().forEach {
             compileClasspath(files(it))
         }
         runtimeClasspath(files("$buildDir/bin"))
     }
-
     tasks.register<CompileJava>("compileJava")
 }
