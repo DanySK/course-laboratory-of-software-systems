@@ -44,7 +44,7 @@ gradlePlugin {
             id = "${project.group}.${project.name}"
             displayName = "LSS Greeting plugin"
             description = "Example plugin for the LSS course"
-            implementationClass = "it.unibo.lss.firstplugin.GreetingPlugin"
+            implementationClass = "it.unibo.firstplugin.GreetingPlugin"
         }
     }
 }

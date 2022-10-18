@@ -18,7 +18,7 @@ class PluginTest : FreeSpec({
             val runner = testSetup {
                 """
                     plugins {
-                        id("it.unibo.lss.greetings")
+                        id("it.unibo.firstplugin.greetings")
                     }
                 """.trimIndent()
             }.build()
@@ -33,7 +33,7 @@ class PluginTest : FreeSpec({
             val runner = testSetup {
                 """
                     plugins {
-                        id("it.unibo.lss.greetings")
+                        id("it.unibo.firstplugin.greetings")
                     }
                     greetings {
                         greetWith { "Ciao da" }

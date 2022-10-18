@@ -31,13 +31,13 @@ tasks.withType<Test> {
     }
 }
 
-gradlePlugin {
-    plugins {
-        create("") { // One entry per plugin
-            id = "${project.group}.${project.name}"
-            displayName = "LSS Greeting plugin"
-            description = "Example plugin for the LSS course"
-            implementationClass = "it.unibo.firstplugin.GreetingPlugin"
-        }
-    }
-}
+//gradlePlugin {
+//    plugins {
+//        create("") { // One entry per plugin
+//            id = "${project.group}.${project.name}"
+//            displayName = "LSS Greeting plugin"
+//            description = "Example plugin for the LSS course"
+//            implementationClass = "it.unibo.firstplugin.GreetingPlugin"
+//        }
+//    }
+//}
