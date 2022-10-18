@@ -1726,7 +1726,7 @@ the de-facto convention is *inherited from Maven*:
 
 In order to create Maven-compatible artifacts, we need first to set the **groupId**:
 ```kotlin
-group = "it.unibo.lss2020"
+group = "it.unibo.firstplugin"
 ```
 Many repositories require to register the group and associate developer identities to it
 
@@ -1754,7 +1754,7 @@ pluginBundle { // These settings are set for the whole plugin bundle
 ```kotlin
 gradlePlugin {
     plugins {
-        create("GradleLatex") { // One entry per plugin
+        create("") { // One entry per plugin
             id = "${project.group}.${project.name}"
             displayName = "LSS Greeting plugin"
             description = "Example plugin for the LSS course"
@@ -1869,7 +1869,8 @@ Note: Jacoco does not work with the Gradle test kit, but [there are plugins](htt
 ## Aggressive compiler settings
 
 Can be configured for every `KotlinCompile` task
-```kotlin
+
+```groovy
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions {
         allWarningsAsErrors = true
@@ -1932,7 +1933,7 @@ You know how to build and publish Gradle plugins: **factorize the common part!**
 
 ### Example: Preconfigured Kotlin QA
 
-```kotlin
+```groovy
 plugins {
     // Just applies and pre-configures jacoco, detekt, and ktlint
     id("org.danilopianini.gradle-kotlin-qa") version "0.2.1"
@@ -2039,7 +2040,7 @@ Other notable repositories:
 # The Gradle publish plugin
 
 Gradle provides a `maven-publish` *plugin for automated delivery* to Maven repositories
-<br>
+
 Requires some manual configuration:
 * Generation of sources and javadoc jars
 * Configuration of the `pom.xml` metadata
@@ -2047,7 +2048,7 @@ Requires some manual configuration:
 ```kotlin
 plugins { `maven-publish` }
 publishing {
-    repositories { maven { url = uri("https://s01.oss.sonatype.org" } }
+    repositories { maven { url = uri("https://s01.oss.sonatype.org") } }
     publications {
         create<MavenPublication>("publicationName") {
             from(components["java"])
@@ -2061,6 +2062,7 @@ publishing {
     }
 }
 ```
+
 Adds:
 * `publish<PubName>PublicationTo<RepoName>Repository` 
 * `publish<PubName>PublicationToMavenLocal` 
@@ -2083,9 +2085,8 @@ I produced a plugin that pre-configures `maven-publish` to point to Maven Centra
 
 ## Preconfigured Central publication
 
-{{< github repo="publish-on-central" from=43 to=45 language="kotlin" >}}
-{{< github repo="publish-on-central" path="build.gradle.kts" from=21 to=25 >}}
-{{< github repo="publish-on-central" path="build.gradle.kts" from=92 to=117 >}}
+{{< github repo="publish-on-central" path="build.gradle.kts" from=20 to=24 >}}
+{{< github repo="publish-on-central" path="build.gradle.kts" from=79 to=103 >}}
 
 ---
 
@@ -2141,4 +2142,4 @@ Example scans:
 
 In `settings.gradle.kts`:
 
-{{< github repo="Template-for-Gradle-Plugins" path="settings.gradle.kts" to=11 >}}
+{{< github repo="Template-for-Gradle-Plugins" path="settings.gradle.kts" from=6 to=12 >}}
