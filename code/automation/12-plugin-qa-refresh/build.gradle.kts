@@ -22,7 +22,7 @@ dependencies {
     testImplementation(gradleTestKit()) // Test implementation: available for testing compile and runtime
     testImplementation("io.kotest:kotest-runner-junit5:5.5.2") // for kotest framework
     testImplementation("io.kotest:kotest-assertions-core:5.5.2") // for kotest core assertions
-    testImplementation("io.kotest:kotest-assertions-core-jvm:5.5.1") // for kotest core jvm assertions
+    testImplementation("io.kotest:kotest-assertions-core-jvm:5.5.2") // for kotest core jvm assertions
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
 }
 
