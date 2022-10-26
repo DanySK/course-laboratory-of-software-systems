@@ -17,23 +17,23 @@ enableSourceMap = true
 
 +++
 
-# {{< course_name >}}
+# Continuous Integration
 
-## Continuous Integration
+<!-- write-here "reusable/header.md" -->
 
-### [Danilo Pianini](mailto:danilo.pianini@unibo.it)
-
-{{< today >}}
+<!-- end-write -->
 
 ---
 
-{{< slide content="ci.intro" >}}
+<!-- write-here "shared-slides/ci/intro.md" -->
 
-We will use GitHub actions: GitHub integration, free for FOSS, multi-os OSs supported
+<!-- end-write -->
 
 ---
 
-{{< slide content="ci.concepts" >}}
+<!-- write-here "shared-slides/ci/core-concepts.md" -->
+
+<!-- end-write -->
 
 ---
 

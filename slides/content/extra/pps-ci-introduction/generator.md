@@ -983,11 +983,15 @@ Non exhaustive list:
 
 ---
 
-{{< slide content="ci.intro" >}}
+<!-- write-here "shared-slides/ci/intro.md" -->
+
+<!-- end-write -->
 
 ---
 
-{{< slide content="ci.concepts" >}}
+<!-- write-here "shared-slides/ci/core-concepts.md" -->
+
+<!-- end-write -->
 
 ---
 
