@@ -1535,11 +1535,9 @@ from code to artifacts</p>
 </ul>
 </li>
 </ul>
-</section>
-
-  
-<section data-noprocess="" data-shortcode-slide="">
-  <h1 id="continuous-integration">Continuous Integration</h1>
+</section><section>
+<!-- this file includes generated content. Do not edit. Edit content/extra/pps-ci-introduction/generator.md, instead. -->
+<h1 id="continuous-integration-1">Continuous Integration</h1>
 <p>The practice of integrating code with a main development line <strong>continuously</strong>
 <br>
 <em>Verifying</em> that the build remains intact</p>
@@ -1550,20 +1548,19 @@ from code to artifacts</p>
 <li>Historically introduced by the extreme programming (XP) community</li>
 <li>Now widespread in the larger DevOps community</li>
 </ul>
-</section>
-<section data-noprocess="" data-shortcode-slide="">
-  
+</section><section>
+<h1 id="traditional-integration">Traditional integration</h1>
+<p><img src="https://raw.githubusercontent.com/DanySK/shared-slides/84eadfe2c2fb7da050763d60d05c549b953e18fe/ci/integration-traditional.png" alt="integration-traditional"></p>
+</section><section>
 <h1 id="the-integration-hell">The Integration Hell</h1>
 <ul>
 <li>Traditional software development takes several months for <em>“integrating”</em> a couple of years of development</li>
 <li>The longer there is no integrated project, the higher the <strong>risk</strong></li>
 </ul>
-<img src="../assets/integration-traditional.png" onerror="this.onerror=null; this.src='../../assets/integration-traditional.png'" width="40%">
-$\Rightarrow$
-<img src="../assets/integration-continuous.png" onerror="this.onerror=null; this.src='../../assets/integration-continuous.png'" width="40%">
-</section>
-<section data-noprocess="" data-shortcode-slide="">
-  
+</section><section>
+<h1 id="continuous-integration-2">Continuous integration</h1>
+<p><img src="https://raw.githubusercontent.com/DanySK/shared-slides/84eadfe2c2fb7da050763d60d05c549b953e18fe/ci/integration-continuous.png" alt="integration-traditional"></p>
+</section><section>
 <h2 id="microreleases-and-protoduction">Microreleases and protoduction</h2>
 <ul>
 <li>High frequency integration may lead to high frequency releases
@@ -1574,13 +1571,10 @@ $\Rightarrow$
 </li>
 </ul>
 <p>Traditionally, <strong>protoduction</strong> is jargon for a <em>prototype that ends up in production</em></p>
-<table>
-  <tbody>
-    <tr>
-      <td>
-        <img src="../assets/protoduction.jpg" onerror="this.onerror=null; this.src='../../assets/protoduction.jpg'" width="90%">
-      </td><td>
-      </td><td>
+<div style="display:inline-block;vertical-align:top;">
+<p><img src="https://raw.githubusercontent.com/DanySK/shared-slides/84eadfe2c2fb7da050763d60d05c549b953e18fe/ci/protoduction.jpg" alt=""></p>
+</div>
+<div style="display:inline-block;">
 <ul>
 <li>Traditionally used with a <em>negative</em> meaning
 <ul>
@@ -1596,22 +1590,13 @@ $\Rightarrow$
 </li>
 <li>This si different in a continuously integrated environment
 <ul>
-<li>
-<p><em>Incrementality</em> is fostered</p>
+<li><em>Incrementality</em> is fostered</li>
+<li>Partial features are <em>up to date</em> with the mainline</li>
+</ul>
 </li>
-<li>
-<p>Partial features are <em>up to date</em> with the mainline</p>
-</li></ul></li></ul></td><td>
-
-
-  </td></tr>
-</tbody>
-
-
-</table>
-</section>
-<section data-noprocess="" data-shortcode-slide="">
-  
+</ul>
+</div>
+</section><section>
 <h2 id="intensive-operations-should-be-elsewhere">Intensive operations should be elsewhere</h2>
 <ul>
 <li>The build process should be <em>rich</em> and <em>fast</em></li>
@@ -1621,12 +1606,8 @@ $\Rightarrow$
 </ul>
 </li>
 </ul>
-<p>
-<img src="../assets/compiling.png" onerror="this.onerror=null; this.src='../../assets/compiling.png'" height="100%">
-</p>
-</section>
-<section data-noprocess="" data-shortcode-slide="">
-  
+<p><img src="https://raw.githubusercontent.com/DanySK/shared-slides/84eadfe2c2fb7da050763d60d05c549b953e18fe/ci/compiling.png" alt=""></p>
+</section><section>
 <h2 id="continuous-integration-software">Continuous integration software</h2>
 <p>Software that promotes CI practices should:</p>
 <ul>
@@ -1643,12 +1624,9 @@ $\Rightarrow$
 </ul>
 <p><strong>Plenty</strong> of integrators on the market</p>
 <p>Circle CI, Travis CI, Werker, done.io, Codefresh, Codeship, Bitbucket Pipelines, GitHub Actions, GitLab CI/CD Pipelines, JetBrains TeamCity…</p>
-
-</section>
-
-  
-<section data-noprocess="" data-shortcode-slide="">
-  <h1 id="core-concepts">Core concepts</h1>
+</section><section>
+<!-- this file includes generated content. Do not edit. Edit content/extra/pps-ci-introduction/generator.md, instead. -->
+<h1 id="core-concepts">Core concepts</h1>
 <p>Naming and organization is variable across platforms, but <em>in general</em>:</p>
 <ul>
 <li>One or more <strong>pipelines</strong> can be associated to <strong>events</strong>
@@ -1671,7 +1649,6 @@ $\Rightarrow$
 </ul>
 </li>
 </ul>
-
 </section><section>
 <h2 id="ci-in-github-actions">CI in GitHub Actions</h2>
 <ul>
