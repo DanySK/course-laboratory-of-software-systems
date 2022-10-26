@@ -17,13 +17,9 @@ enableSourceMap = true
 
 +++
 
-# {{< course_name >}}
+# Selecting a version number
 
-## Selecting a version number
-
-### [Danilo Pianini](mailto:danilo.pianini@unibo.it)
-
-{{< today >}}
+{{% import path="reusable/header.md" %}}
 
 ---
 

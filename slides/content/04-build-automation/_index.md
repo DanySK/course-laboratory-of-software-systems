@@ -17,14 +17,9 @@ enableSourceMap = true
 
 +++
 
-# {{< course_name >}}
+# Build Automation
 
-## Build Automation
-
-### [Danilo Pianini](mailto:danilo.pianini@unibo.it)
-
-{{< today >}}
-
+{{% import path="reusable/header.md" %}}
 
 ---
 
