@@ -17,13 +17,9 @@ enableSourceMap=true
 
 +++
 
-# {{< course_name >}}
+# Containerization: Basics and CI
 
-## Containerization: Basics and CI
-
-### [Danilo Pianini](mailto:danilo.pianini@unibo.it)
-
-{{< today >}}
+{{% import path="reusable/header.md" %}}
 
 ---
 
