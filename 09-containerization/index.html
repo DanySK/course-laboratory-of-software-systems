@@ -32,7 +32,7 @@
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section><section>
-<h1 id="containers">Containers</h1>
+<h2 id="bare-metal-vs-vms-vs-containers">Bare metal vs. VMs vs. Containers</h2>
 
 
   
@@ -45,23 +45,9 @@
 
 <p>Runtime <strong>isolation</strong> without operating system <strong>replication</strong></p>
 </section><section>
-<h1 id="why-containers">Why containers?</h1>
-<p><img src="memes/works-on-my-machine.jpeg" style="
-    width: 23vw;
-    
-    max-width: 95vw;
-    max-height: 80vh;
-    object-fit: contain;
-">
-
-<img src="memes/docker-born.jpeg" style="
-    width: 20.8vw;
-    
-    max-width: 95vw;
-    max-height: 80vh;
-    object-fit: contain;
-">
-</p>
+<h2 id="why-containers">Why containers?</h2>
+<p><img src="memes/works-on-my-machine.jpeg" alt="">
+<img src="memes/docker-born.jpeg" alt=""></p>
 </section><section>
 <h2 id="lightweight-virtual-machines">Lightweight virtual machines?</h2>
 <img src="memes/lightweight-container.jpg" style="
@@ -73,7 +59,7 @@
 ">
 
 </section><section>
-<h2 id="more-similar-to-well-confined-processes">More similar to well-confined processes</h2>
+<h2 id="closer-to-confined-processes">Closer to confined processes</h2>
 <img src="memes/chroot.jpeg" style="
     
     height: 60vh;
@@ -83,7 +69,7 @@
 ">
 
 </section><section>
-<h1 id="docker">Docker</h1>
+<h2 id="docker">Docker</h2>
 <p>Docker is a containerization platform</p>
 <p><em>Standard de-facto</em> in industry</p>
 <p><strong>Base concepts</strong></p>
@@ -108,7 +94,7 @@
 </li>
 </ul>
 </section><section>
-<h1 id="docker-architecture">Docker architecture</h1>
+<h2 id="docker-architecture">Docker architecture</h2>
 <ul>
 <li><em>Registry</em>: repository of images</li>
 <li><em>Daemon</em>: service pulling images from registries and instancing containers</li>
@@ -116,7 +102,7 @@
 </ul>
 <p><img src="architecture.svg" alt=""></p>
 </section><section>
-<h1 id="running-docker-containers">Running docker containers</h1>
+<h2 id="running-docker-containers">Running docker containers</h2>
 <ol>
 <li>Install docker</li>
 <li>Add your user to the <code>docker</code> group</li>
@@ -134,7 +120,7 @@
 <li>use the <code>--rm</code> to remove the container after use</li>
 </ul>
 </section><section>
-<h1 id="interaction-with-the-outside-world">Interaction with the outside world</h1>
+<h2 id="interaction-with-the-outside-world">Interaction with the outside world</h2>
 <p>A docker container runs <em>in isolation</em>.</p>
 <p>Environment variables, network ports, and file system folders are <strong>not</strong> shared.</p>
 <p>Sharing must be explicit and requires options to be specified</p>
@@ -155,7 +141,7 @@
 </li>
 </ul>
 </section><section>
-<h1 id="managing-images">Managing images</h1>
+<h2 id="managing-images">Managing images</h2>
 <p>Every image has a unique <strong>ID</strong>, and may have an associated <strong>tag</strong></p>
 <p>The subcommand <code>images</code> lists the pulled images and their associated information</p>
 <p>The subcommand <code>image</code> allows for running maintenance tasks, e.g.</p>
@@ -166,14 +152,14 @@
 <li><code>docker image tag</code> – associates a tag to an image</li>
 </ul>
 </section><section>
-<h1 id="creating-docker-images">Creating docker images</h1>
+<h2 id="creating-docker-images">Creating docker images</h2>
 <p>Docker images are written in a <em>Dockerfile</em></p>
 <p>Every command inside a Dockerfile generates a new <em>layer</em></p>
 <p>The final stack of layers creates the final <em>image</em></p>
 <p>The <code>docker build</code> command interprets the Dockerfile commands to produce a sequence of layers</p>
 <p>Changes to a layer do not invalidate previous layers</p>
 </section><section>
-<h1 id="dockerfile-syntax">Dockerfile syntax</h1>
+<h2 id="dockerfile-syntax">Dockerfile syntax</h2>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888"># Pulls an image from docker hub with this name. Alternatively, "scratch" can be used for an empty container</span><span style="color:#a61717;background-color:#e3d2d2">
 </span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">FROM</span><span style="color:#d20;background-color:#fff0f0"> manjarolinux/base </span><span style="color:#a61717;background-color:#e3d2d2">
 </span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Runs a command</span><span style="color:#a61717;background-color:#e3d2d2">
@@ -185,14 +171,14 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Configures the default command to execute</span><span style="color:#a61717;background-color:#e3d2d2">
 </span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">CMD</span> bash<span style="color:#a61717;background-color:#e3d2d2">
 </span></span></span></code></pre></div></section><section>
-<h1 id="naming-images">Naming images</h1>
+<h2 id="naming-images">Naming images</h2>
 <p>Image naming is done via <em>tags</em></p>
 <p>The easiest way to do so is assigning tags at <em>build time</em> with the <code>-t</code> options of <code>docker build</code></p>
 <p>The option can be repeated multiple times to make multiple tags</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>docker build -t <span style="color:#d20;background-color:#fff0f0">"myImage:latest"</span> -t <span style="color:#d20;background-color:#fff0f0">"myImage:0.1.0"</span>
 </span></span></code></pre></div><p><code>latest</code> is usually used to identify the most recent version of some image</p>
 </section><section>
-<h1 id="publishing-docker-images">Publishing docker images</h1>
+<h2 id="publishing-docker-images">Publishing docker images</h2>
 <p>Images get published in <em>registries</em></p>
 <p>The most famous, free for publicly available images, is <em>Docker Hub</em></p>
 <p>By default, Docker uses Docker Hub as registry (both for <code>pull</code> and <code>push</code> operations)</p>
@@ -205,7 +191,7 @@
 <li><code>docker push &lt;image name&gt;</code></li>
 </ul>
 </section><section>
-<h1 id="building-docker-images-in-ci">Building docker images in CI</h1>
+<h2 id="building-docker-images-in-ci">Building docker images in CI</h2>
 <p>Of course, as any other software, <em>custom docker images should get built in CI</em></p>
 <p>Several integrators use containers as build environments: it is possible to <em>build a container using a container</em></p>
 <p>More in general, there is <em>no inherent limit to nesting containers</em></p>
