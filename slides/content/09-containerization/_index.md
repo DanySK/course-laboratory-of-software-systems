@@ -23,7 +23,7 @@ enableSourceMap=true
 
 ---
 
-# Containers
+## Bare metal vs. VMs vs. Containers
 
 {{< gravizo >}}
 digraph structs {
@@ -70,10 +70,10 @@ Runtime **isolation** without operating system **replication**
 
 ---
 
-# Why containers?
+## Why containers?
 
-{{< image src="memes/works-on-my-machine.jpeg" width="23">}}
-{{< image src="memes/docker-born.jpeg" width="20.8">}}
+![](memes/works-on-my-machine.jpeg)
+![](memes/docker-born.jpeg)
 
 ---
 
@@ -83,13 +83,13 @@ Runtime **isolation** without operating system **replication**
 
 ---
 
-## More similar to well-confined processes
+## Closer to confined processes
 
 {{< image src="memes/chroot.jpeg" height="60" >}}
 
 ---
 
-# Docker
+## Docker
 
 Docker is a containerization platform
 
@@ -108,7 +108,7 @@ Docker is a containerization platform
 
 ---
 
-# Docker architecture
+## Docker architecture
 
 - *Registry*: repository of images
 - *Daemon*: service pulling images from registries and instancing containers
@@ -118,7 +118,7 @@ Docker is a containerization platform
 
 ---
 
-# Running docker containers
+## Running docker containers
 
 1. Install docker
 2. Add your user to the `docker` group
@@ -138,7 +138,7 @@ Running a custom command can be achieved with writing the command after the imag
 
 ---
 
-# Interaction with the outside world
+## Interaction with the outside world
 
 A docker container runs *in isolation*.
 
@@ -157,7 +157,7 @@ Sharing must be explicit and requires options to be specified
 
 ---
 
-# Managing images
+## Managing images
 
 Every image has a unique **ID**, and may have an associated **tag**
 
@@ -171,7 +171,7 @@ The subcommand `image` allows for running maintenance tasks, e.g.
 
 ---
 
-# Creating docker images
+## Creating docker images
 
 Docker images are written in a *Dockerfile*
 
@@ -185,7 +185,7 @@ Changes to a layer do not invalidate previous layers
 
 ---
 
-# Dockerfile syntax
+## Dockerfile syntax
 
 ```dockerfile
 # Pulls an image from docker hub with this name. Alternatively, "scratch" can be used for an empty container
@@ -202,7 +202,7 @@ CMD bash
 
 ---
 
-# Naming images
+## Naming images
 
 Image naming is done via *tags*
 
@@ -218,7 +218,7 @@ docker build -t "myImage:latest" -t "myImage:0.1.0"
 
 ---
 
-# Publishing docker images
+## Publishing docker images
 
 Images get published in *registries* 
 
@@ -234,7 +234,7 @@ Once done, publication is performed via `push`:
 
 ---
 
-# Building docker images in CI
+## Building docker images in CI
 
 Of course, as any other software, *custom docker images should get built in CI*
 
