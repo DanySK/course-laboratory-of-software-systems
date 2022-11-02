@@ -579,7 +579,7 @@ flowchart RL
   HEAD --"fas:fa-link"--o v
 
   class HEAD head;
-  class master branch;
+  class master,v branch;
   class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C10,C11,C12,C13 commit;
 ```
 {{% /fragment %}}
@@ -721,7 +721,7 @@ They are **not part of the repository code**, and hence **they cannot get commit
 
 Events also dictate the file names:
 * `applypatch-msg`
-* `commit-msg` $\LeftArrow$ particularly useful to enforce a commit message format!
+* `commit-msg` $\Leftarrow$ particularly useful to enforce a commit message format!
 * `fsmonitor-watchman`
 * `pre-applypatch`
 * `pre-commit`
