@@ -240,6 +240,18 @@ section.has-light-background {
 	font-size: 0.7em;
 }
 
+// Mermaid graph resizing
+
+.mermaid svg {
+	max-width: 100% !important;
+	max-height: 43vh !important;
+	height: 20%;
+	width: 100vw;
+	transition: transform 0.3s ease;
+	border-width: 0.1em;
+	border-style: none;
+}
+
 // Mermaid flowcharts as git graphs
 
 .mermaid .cluster.repo > rect {

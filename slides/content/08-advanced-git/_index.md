@@ -89,29 +89,64 @@ Stashing takes the dirty state of the working directory and saves it on a **st
 
 ---
 
-# Advanced merging
+## Merging
 
-* In classic merging, diverging branches are reunited through a **merge commit**
+* In classic merging, diverging branches are reconciled through a **merge commit**
 
-![](basic-rebase-1.png)
+```mermaid
+flowchart RL
+  HEAD{{"HEAD"}}
+  master(master)
+  experiment(experiment)
+  C3([3]) --> C2([2]) --> C1([1])
+  C4([4]) --> C2
+
+  master -.-> C3
+  experiment -.-> C4
+
+  HEAD -.-> C3
+  HEAD --"fas:fa-link"--o master
+
+  class HEAD head;
+  class master,experiment branch;
+  class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10 commit;
+```
 
 ---
 
-# Advanced merging
+## Merging
 
-```bash
-git checkout master
-git merge experiment
+`git merge experiment`
+
+{{% fragment %}}
+
+```mermaid
+flowchart RL
+  HEAD{{"HEAD"}}
+  master(master)
+  experiment(experiment)
+  C5([5]) --> C3([3]) --> C2([2]) --> C1([1])
+  C5 --> C4([4]) --> C2
+
+  master -.-> C5
+  experiment -.-> C4
+
+  HEAD -.-> C5
+  HEAD --"fas:fa-link"--o master
+
+  class HEAD head;
+  class master,experiment branch;
+  class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10 commit;
 ```
 
-![](basic-rebase-2.png)
+{{% /fragment %}}
 
 ---
 
 # Advanced merging: rebase
 
 * Merging is not the only way to reunite diverging branches
-* We may want, for instance, to simulate that `C4` was developed after `C3`
+* We may want, for instance, to simulate that `4` was developed after `3`
     * For instance, because it was on a separate part of the codebase
 * Merging *forces* to record the creation and reunion of a development line, but in some cases it may be undesirable
     * Project history *hard to understand* because of too many merges
@@ -121,57 +156,165 @@ git merge experiment
 
 ---
 
-# Advanced merging: rebase
-![](basic-rebase-1.png)
+## Rebase merge
 
-```bash
-git checkout experiment
-git rebase master
+```mermaid 
+flowchart RL
+  HEAD{{"HEAD"}}
+  master(master)
+  experiment(experiment)
+  C3([3]) --> C2([2]) --> C1([1])
+  C4([4]) --> C2
+
+  master -.-> C3
+  experiment -.-> C4
+
+  HEAD -.-> C3
+  HEAD --"fas:fa-link"--o master
+
+  class HEAD head;
+  class master,experiment branch;
+  class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10 commit;
 ```
+
+{{% fragment %}}
+
+`git checkout experiment && git rebase master`
+
+{{% /fragment %}}
+
 ---
 
-# Advanced merging: rebase
+## Rebase merge
 
-```bash
-git checkout experiment
-git rebase master
+`git checkout experiment && git rebase master`
+
+{{% fragment %}}
+
+```mermaid
+flowchart RL
+  HEAD{{"HEAD"}}
+  master(master)
+  experiment(experiment)
+  C3([3]) --> C2([2]) --> C1([1])
+  C4([4']) --> C3
+
+  master -.-> C3
+  experiment -.-> C4
+
+  HEAD -.-> C4
+  HEAD --"fas:fa-link"--o experiment
+
+  class HEAD head;
+  class master,experiment branch;
+  class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10 commit;
 ```
 
-![](basic-rebase-3.png)
+{{% /fragment %}}
 
+{{% fragment %}}
 
-```bash
-git checkout master
-git merge experiment # Fast forward!
-```
+`git checkout master && git merge`
 
-![](basic-rebase-4.png)
+{{% /fragment %}}
 
 ---
 
-# Advanced rebasing
+## Fast-forwarding after a rebase
 
+`git checkout master && git merge`
 
-![](interesting-rebase-1.png)
+```mermaid
+flowchart RL
+  HEAD{{"HEAD"}}
+  master(master)
+  experiment(experiment)
+  C3([3]) --> C2([2]) --> C1([1])
+  C4([4']) --> C3
+
+  master -.-> C4
+  experiment -.-> C4
+
+  HEAD -.-> C4
+  HEAD --"fas:fa-link"--o master
+
+  class HEAD head;
+  class master,experiment branch;
+  class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10 commit;
+```
+
+*fast-forward!*
+
+---
+
+## Advanced rebasing
+
+```mermaid
+flowchart RL
+  HEAD{{"HEAD"}}
+  master(master)
+  server(server)
+  client(client)
+
+  C10([10]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+  C6([6]) --> C5([5]) --> C2
+  C9([9]) --> C8([8]) --> C3
+
+  master -.-> C6
+  server -.-> C10
+  client -.-> C9
+
+  HEAD -.-> C6
+  HEAD --"fas:fa-link"--o master
+
+  class HEAD head;
+  class master,experiment,client,server branch;
+  class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10 commit;
+```
 
 We want to leave `server` as is, but rebase `client` onto `master`
 
----
-
-# Advanced rebasing
+{{% fragment %}}
 
 Option `--onto` can be used to transplant entire branches
 * `git rebase --onto destination start end`
     * pick commits from `start` to `end`
     * reply them starting from `destination`
 
-```bash
-git rebase --onto master server client
+{{% /fragment %}}
+
+---
+
+## Advanced rebasing
+
+`git rebase --onto master server client`
+
+```mermaid
+flowchart RL
+  HEAD{{"HEAD"}}
+  master(master)
+  server(server)
+  client(client)
+
+  C10([10]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+  C6([6]) --> C5([5]) --> C2
+  C9([9']) --> C8([8']) --> C6
+
+  master -.-> C6
+  server -.-> C10
+  client -.-> C9
+
+  HEAD -.-> C6
+  HEAD --"fas:fa-link"--o master
+
+  class HEAD head;
+  class master,experiment,client,server branch;
+  class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10 commit;
 ```
 
-![](interesting-rebase-2.png)
-
 Reads: *pick all commits from `server` (excluded) to `client` (included), remove them and reply them starting from `master`*
+
+Or: *pick all commits from `client`, remove all those in `server`, then and reply them starting from `master`*
 
 ---
 
