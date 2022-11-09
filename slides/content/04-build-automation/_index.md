@@ -1989,7 +1989,15 @@ If you do not have a signature yet, [time to create one](https://central.sonatyp
 * List: `gpg --list-keys`
 * Distribution: `gpg --keyserver keyserver.ubuntu.com --send-keys <KEY-ID>`
 
-Once you have a key, you can use the `signing` plugin to have Gradle generate artifact signatures
+Once you have a key, you can use the `signing` plugin to have Gradle generate signatures
+
+To set a default signatory, add to your `~/.gradle/gradle.properties`:
+
+```properties
+signing.keyId = <your key id>
+signing.password = <redacted>
+signing.secretKeyRingFile = <your user home>/.gnupg/secring.gpg
+```
 
 ---
 
@@ -2032,35 +2040,61 @@ Other notable repositories:
 
 ---
 
-# The Gradle publish plugin
+## The Gradle publish plugin
 
 Gradle provides a `maven-publish` *plugin for automated delivery* to Maven repositories
 
 Requires some manual configuration:
-* Generation of sources and javadoc jars
+* Explicit creation of a publication task
+* Generation and attachment of sources and javadoc jars
+* Configuration of the repository credentials
 * Configuration of the `pom.xml` metadata
+* Configuration of the signature
+
+If a publication `pubName` is created for a repository `RepoName`, then these tasks get created:
+* `publish<PubName>PublicationTo<RepoName>Repository` 
+* `publish<PubName>PublicationToMavenLocal` 
+
+
+---
+
+## The Gradle publish plugin: Maven Central example
 
 ```kotlin
 plugins { `maven-publish` }
+val javadocJar by ...
+val sourceJar by ...
 publishing {
-    repositories { maven { url = uri("https://s01.oss.sonatype.org") } }
-    publications {
-        create<MavenPublication>("publicationName") {
-            from(components["java"])
-            name.set("My Library")
-            description.set("A concise description of my library")
-            url.set("http://www.example.com/library")
-            licenses { ... }
-            developers { ... }
-            scm { ... }
+    maven {
+        url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+        val mavenCentralPwd: String? by project // Pass the pwd via -PmavenCentralPwd='yourPassword'
+        credentials {
+            username = "danysk"
+            password = mavenCentralPwd
         }
+    }
+    publications {
+        val publicationName by creating(MavenPublication::class) {
+            from(components["java"]) // add the jar produced by the java plugin
+            // Warning: the gradle plugin-publish plugin already adds them to the java SoftwareComponent
+            artifact(javadocJar) // add the javadoc jar to this publication
+            artifact(sourceJar) // add the source jar to this publication
+            pom {
+                name.set("My Library")
+                description.set("A concise description of my library")
+                url.set("http://www.example.com/library")
+                licenses { license { name.set("...") } }
+                developers { developer { name.set("...") } }
+                scm {
+                    url.set("...")
+                    url.set("...")
+                }
+            }
+        }
+        signing { sign(publicationName) }
     }
 }
 ```
-
-Adds:
-* `publish<PubName>PublicationTo<RepoName>Repository` 
-* `publish<PubName>PublicationToMavenLocal` 
 
 ---
 
