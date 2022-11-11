@@ -1,4 +1,4 @@
- 
+
 +++
 
 title = "Advanced Versioning Techniques"
@@ -158,7 +158,7 @@ flowchart RL
 
 ## Rebase merge
 
-```mermaid 
+```mermaid
 flowchart RL
   HEAD{{"HEAD"}}
   master(master)
@@ -318,23 +318,23 @@ Or: *pick all commits from `client`, remove all those in `server`, then and repl
 
 ---
 
-# Rebase pull
+## Pull with rebase
 
-`pull` is a non-atomic operation:
-1. `git fetch`
-2. `git merge FETCH_HEAD`
+`pull` is a non-atomic operation equivalent to `git fetch && git merge FETCH_HEAD`
 
-There is no reason why the operation of branch joining must be `merge`: it could well be `rebase`!
+There is no reason for the operation of reconciliation to be `merge`: it could well be `rebase`!
 
-1. `git fetch`
-2. `git rebase FETCH_HEAD`
+`git fetch && git rebase FETCH_HEAD`
 
 *Both operations* are actually supported! The full commands would be:
 * `git pull --merge` $\Rightarrow$ default behaviour (in old `git` versions)
 * `git pull --rebase` $\Rightarrow$ reunite using rebase!
 
-**Note:** new versions of git require configuration and do not start with merge as default!
-* `git config --global pull.rebase [true/false]`
+* **Note:** new versions of git require explicit configuration!
+  * `git config --global pull.rebase [true/false]`
+* **Note:** rebase is more sensitive to modified files in the worktree!
+  * Typical solution: `git stash && git pull --rebase=true && git stash pop`
+  * Shortcut: `git pull --rebase=true --autostash`
 
 ---
 
@@ -371,7 +371,7 @@ They tell two stories:
 
 Squashing is the practice of *reassembling multiple commits into a single one*
 * Allows to forget "experimental" commits
-* Allows to merge temporary changes into a single one 
+* Allows to merge temporary changes into a single one
 * *Simplifies* history
 * *Alters* history
 * Can be performed via `merge` or manually
@@ -875,5 +875,5 @@ Events also dictate the file names:
 * `prepare-commit-msg`
 * `post-update`
 * `push-to-checkout`
-* `update`                                                                  
+* `update`
 
