@@ -327,8 +327,8 @@ There is no reason for the operation of reconciliation to be `merge`: it could w
 `git fetch && git rebase FETCH_HEAD`
 
 *Both operations* are actually supported! The full commands would be:
-* `git pull --merge` $\Rightarrow$ default behaviour (in old `git` versions)
-* `git pull --rebase` $\Rightarrow$ reunite using rebase!
+* `git pull --rebase=false` $\Rightarrow$ default behaviour (in old `git` versions)
+* `git pull --rebase=true` $\Rightarrow$ reunite using rebase!
 
 * **Note:** new versions of git require explicit configuration!
   * `git config --global pull.rebase [true/false]`
@@ -338,7 +338,7 @@ There is no reason for the operation of reconciliation to be `merge`: it could w
 
 ---
 
-# Perils of rebasing
+## Perils of rebase
 
 > **Do not rebase commits that exist outside your repository**
 
@@ -351,7 +351,7 @@ Rebasing *rewrites the project history* and as such generates *incompatible hist
 
 ---
 
-# Rebasing or merging?
+## Rebasing or merging?
 
 Select depending on what you *conceptually* want:
 * I want to **record of what actually happened**: then **merge**
@@ -367,7 +367,7 @@ They tell two stories:
 
 ---
 
-# Squashing
+## Squashing
 
 Squashing is the practice of *reassembling multiple commits into a single one*
 * Allows to forget "experimental" commits
@@ -378,150 +378,202 @@ Squashing is the practice of *reassembling multiple commits into a single one*
 
 ---
 
-# Squashing manually
+## Squashing manually
 
-{{< gravizo >}}
-  digraph G {
-    rankdir=LR;
-    rankdir=LR;
-    C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
-    HEAD [style="filled,solid", shape=box, fillcolor=orange];
-    C6 -> HEAD [dir=back, penwidth=4, color=orange];
-  }
-{{< /gravizo >}}
+```mermaid
+flowchart RL
+  HEAD{{"HEAD"}}
+  master(master)
+
+  C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+
+  master -.-> C6
+
+  HEAD -.-> C6
+  HEAD --"fas:fa-link"--o master
+
+  class HEAD head;
+  class master,experiment,client,server branch;
+  class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10 commit;
+```
+
 `git reset --soft HEAD~4`
-{{< gravizo >}}
-  digraph G {
-    graph[splines=ortho]
-    rankdir=LR;
-    C1
-    C1 -> C2  [dir=back]
-    {rank=same; C2, HEAD}
-    HEAD [style="filled,solid", shape=box, fillcolor=orange];
-    C3 [style=dashed];
-    C4 [style=dashed];
-    C5 [style=dashed];
-    C6 [style=dashed];
-    C2 -> C3 -> C4 -> C5 -> C6 [style=dashed, dir=back];
-    rankdir=LR;
-    C2 -> HEAD [dir=back, weight=0, penwidth=4, color=orange];
-  }
-{{< /gravizo >}}
+
+```mermaid
+flowchart RL
+  HEAD{{"HEAD"}}
+  master(master)
+
+  C3([3]) --> C2([2]) --> C1([1])
+  subgraph "lost forever?"
+  C6([6]) --> C5([5]) --> C4([4]) --> C3([3])
+  end
+  master -.-> C2
+
+  HEAD -.-> C2
+  HEAD --"fas:fa-link"--o master
+
+  class HEAD head;
+  class master,experiment,client,server branch;
+  class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10 commit;
+```
+
+The worktree still has all changes from `6`! What if we `commit`?
+
+---
+
+## Squashing manually
+
 `git commit`
-{{< gravizo >}}
-  digraph G {
-    rankdir=LR;
-    C1 -> C2 -> "C3'" [dir=back];
-    HEAD [style="filled,solid", shape=box, fillcolor=orange];
-    "C3'" [style=filled, fillcolor=red]
-    "C3'" -> HEAD [dir=back, penwidth=4, color=orange];
-  }
-{{< /gravizo >}}
+
+```mermaid
+flowchart RL
+  HEAD{{"HEAD"}}
+  master(master)
+
+  C3([3']) --> C2([2]) --> C1([1])
+
+  subgraph "lost forever?"
+  C6([6]) --> C5([5]) --> C4([4]) --> C3a([3])
+  end
+  C3a --> C2
+
+  master -.-> C3
+
+  HEAD -.-> C3
+  HEAD --"fas:fa-link"--o master
+
+  class HEAD head;
+  class master,experiment,client,server branch;
+  class C1,C2,C3,C3a,C4,C5,C6,C7,C8,C9,C10 commit;
+```
+
+Commits `3` to `6` have been *squashed* into a single commit `3'`!
 
 ---
 
-# Squashing with merge
+## Squash with branches (squash-merge)
 
-{{< gravizo >}}
-  digraph G {
-    rankdir=LR;
-    C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
-    HEAD [style="filled,solid", shape=box, fillcolor=orange];
-    master [style="filled,solid", shape=box, fillcolor=orange];
-    {rank=same; master, HEAD}
-    C6 -> HEAD [dir=back, penwidth=4, color=orange];
-    C6 -> master [dir=back, penwidth=4, color=orange];
-  }
-{{< /gravizo >}}
+```mermaid
+flowchart RL
+  HEAD{{"HEAD"}}
+  master(master)
+
+  C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+
+  master -.-> C6
+
+  HEAD -.-> C6
+  HEAD --"fas:fa-link"--o master
+
+  class HEAD head;
+  class master,experiment,client,server branch;
+  class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10 commit;
+```
+
+Use a branch to "keep alive" the commit discarded by the `reset`
+
 `git branch target`
-{{< gravizo >}}
-  digraph G {
-    rankdir=LR;
-    C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
-    HEAD [style="filled,solid", shape=box, fillcolor=orange];
-    master [style="filled,solid", shape=box, fillcolor=orange];
-    target [style="filled,solid", shape=box, fillcolor=orange];
-    {rank=same; master, target, HEAD}
-    C6 -> HEAD [dir=back, penwidth=4, color=orange];
-    C6 -> master [dir=back, penwidth=4, color=orange];
-    C6 -> target [dir=back, penwidth=4, color=orange];
-  }
-{{< /gravizo >}}
+
+```mermaid
+flowchart RL
+  HEAD{{"HEAD"}}
+  master(master)
+  target(target)
+
+  C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+
+  master -.-> C6
+  target -.-> C6
+
+  HEAD -.-> C6
+  HEAD --"fas:fa-link"--o master
+
+  class HEAD head;
+  class master,experiment,client,server,target branch;
+  class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10 commit;
+```
+
+now move `master` back to the last commit to preserve
+
+---
+
+## Squash with branches (squash-merge)
+
+now move `master` back to the last commit to preserve
+
 `git reset --hard HEAD~4`
-{{< gravizo >}}
-  digraph G {
-    rankdir=LR;
-    master [style="filled,solid", shape=box, fillcolor=orange];
-    C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
-    HEAD [style="filled,solid", shape=box, fillcolor=orange];
-    target [style="filled,solid", shape=box, fillcolor=orange];
-    {rank=same; C2, master}
-    {rank=same; C3, HEAD}
-    C2 -> HEAD [dir=back, penwidth=4, color=orange];
-    C2 -> master [dir=back, penwidth=4, color=orange];
-    C6 -> target [dir=back, penwidth=4, color=orange];
-  }
-{{< /gravizo >}}
+
+```mermaid
+flowchart RL
+  HEAD{{"HEAD"}}
+  master(master)
+  target(target)
+
+  C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+
+  master -.-> C2
+  target -.-> C6
+
+  HEAD -.-> C2
+  HEAD --"fas:fa-link"--o master
+
+  class HEAD head;
+  class master,experiment,client,server,target branch;
+  class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10 commit;
+```
+
+Ready: merge all changes in `target`, creating a single commit!
 
 ---
 
-# Squashing with merge
+## Squash with branches (squash-merge)
 
-{{< gravizo >}}
-  digraph G {
-    rankdir=LR;
-    master [style="filled,solid", shape=box, fillcolor=orange];
-    C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
-    HEAD [style="filled,solid", shape=box, fillcolor=orange];
-    target [style="filled,solid", shape=box, fillcolor=orange];
-    {rank=same; C2, master}
-    {rank=same; C3, HEAD}
-    C2 -> HEAD [dir=back, penwidth=4, color=orange];
-    C2 -> master [dir=back, penwidth=4, color=orange];
-    C6 -> target [dir=back, penwidth=4, color=orange];
-  }
-{{< /gravizo >}}
 `git merge --squash target`
-{{< gravizo >}}
-  digraph G {
-    compound=true;
-    rankdir=LR;
-    master [style="filled,solid", shape=box, fillcolor=orange];
-    C1 -> C2 [dir=back]
-    C2 -> C3 [weight=2, dir=back]
-    C2 -> "C3'" [weight=1]
-    "C3'" [style=filled, fillcolor=red]
-    subgraph cluster_0 {
-        C3 -> C4 -> C5 -> C6 [dir=back];
-        color=red
-        style=dashed
-    }
-    "C3'" -> C4 [lhead=cluster_0, style="dashed", dir=back, color=red]
-    HEAD [style="filled,solid", shape=box, fillcolor=orange];
-    target [style="filled,solid", shape=box, fillcolor=orange];
-    "C3'" -> HEAD [dir=back, penwidth=4, color=orange];
-    "C3'" -> master [dir=back, penwidth=4, color=orange];
-    C6 -> target [dir=back, penwidth=4, color=orange];
-    {rank=same; C2, master}
-    {rank=same; "C3'", HEAD}
-  }
-{{< /gravizo >}}
-`git branch -d target`
-{{< gravizo >}}
-  digraph G {
-    rankdir=LR;
-    C1 -> C2 -> "C3'" [dir=back];
-    HEAD [style="filled,solid", shape=box, fillcolor=orange];
-    "C3'" [style=filled, fillcolor=red]
-    "C3'" -> HEAD [dir=back, penwidth=4, color=orange];
-    master [style="filled,solid", shape=box, fillcolor=orange];
-    "C3'" -> master [dir=back, penwidth=4, color=orange];
-  }
-{{< /gravizo >}}
+
+```mermaid
+flowchart RL
+  HEAD{{"HEAD"}}
+  master(master)
+  target(target)
+
+  C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+  C3a([3']) --> C2
+
+  master -.-> C3a
+  target -.-> C6
+
+  HEAD -.-> C3a
+  HEAD --"fas:fa-link"--o master
+
+  class HEAD head;
+  class master,experiment,client,server,target branch;
+  class C1,C2,C3,C3a,C4,C5,C6,C7,C8,C9,C10 commit;
+```
+
+Remove the old branch: `git branch -D target`
+
+```mermaid
+flowchart RL
+  HEAD{{"HEAD"}}
+  master(master)
+
+  C2([2]) --> C1([1])
+  C3a([3']) --> C2
+
+  master -.-> C3a
+
+  HEAD -.-> C3a
+  HEAD --"fas:fa-link"--o master
+
+  class HEAD head;
+  class master,experiment,client,server,target branch;
+  class C1,C2,C3,C3a,C4,C5,C6,C7,C8,C9,C10 commit;
+```
 
 ---
 
-# Squash, merge, or rebase?
+## Squash, merge, or rebase?
 
 Squashing results in *further alteration* than rebase
 
@@ -533,7 +585,7 @@ Squashing results in *further alteration* than rebase
 
 ---
 
-# Cherry picking
+## Cherry picking
 
 Selecting and importing a single commit (or commit range) from another branch
 
@@ -548,7 +600,7 @@ Cherry picking is often useful for applying *fixes* or *patches* which are in de
 
 ---
 
-# Submodules
+## Submodules
 
 Using *a repository within another repository*
 
@@ -564,7 +616,7 @@ Typical use:
 
 ---
 
-# Git Submodule
+## Git Submodule
 
 Adding an external submodule:
 * `git submodule add <REPO_URL> <DESTINATION>`
@@ -617,7 +669,7 @@ They allow, respectively, to move/remove an existing submodule
 
 ---
 
-## Removing submodules (legacy)
+## Removing submodules (legacy versions of git)
 
 No single built-in command in old versions of git {{< emoji "expressionless" >}}:
 
@@ -747,7 +799,7 @@ flowchart RL
   HEAD --"fas:fa-link"--o v
 
   class HEAD head;
-  class master branch;
+  class master,v branch;
   class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C10,C11,C12,C13 commit;
 ```
 
@@ -796,7 +848,7 @@ flowchart RL
 
   C10([10]) --> C9([9]) --> C8([8]) --> C7([7]) --> C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
   C11([11]) --> C6([6])
-  subgraph How to reattach here?
+  subgraph "How to reattach here???"
   C13([13]) --> C12([12]) --> C11
   end
 
