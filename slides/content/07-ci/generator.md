@@ -1,4 +1,4 @@
- 
+
 +++
 
 title = "Continuous Integration"
@@ -311,7 +311,9 @@ Also, *__tags__ don't get checked out*
 
 ## Checking out the whole history
 
-{{< github repo="action-checkout" path="action.yml" from=6 >}}
+{{< github repo="action-checkout" path="action.yml" from=19 >}}
+
+(code from a custom action, ignore the `if`)
 
 * Check out the repo with the maximum *depth*
 * Recursively check out all *submodules*
@@ -342,7 +344,7 @@ Most software products are meant to be *portable*
 * Across different frameworks and languages
 * Across runtime configuration
 
-A good continuous integration pipeline should test *all the supported combinations**
+A good continuous integration pipeline should test *all the supported combinations*
 * or a sample, if the performance is otherwise unbearable
 
 The solution is the adoption of a **build matrix**
@@ -407,11 +409,65 @@ client.create_or_update_secret(repo_slug, name, payload)
 
 ---
 
-## In-memory signatures with Gradle
+## In-memory signatures
 
 Signing in CI is easier if the key can be *stored in memory*
 <br>
 the alternative is to *install a private key in the runner*
+
+To do so we need to:
+1. Find a way to write our key in memory
+2. Export it safely into the CI environment (via a secret)
+3. Configure the build system to use the key in-memory when a CI environment is detected
+
+---
+
+### Step 1: exporting GPG *private* keys
+
+`gpg --armor --export-secret-key <key id>`
+
+Exports a [base64](https://en.wikipedia.org/wiki/Base64)-encoded version of your *binary* key, with a header and a footer.
+
+```sh
+-----BEGIN PGP PRIVATE KEY BLOCK-----
+
+M4ATvaZBpT5QjAvOUm09rKsvouXYQE1AFlmMfJQTUlmOA_R6b-SolgYFOx_cKAAL
+Vz1BIv8nvzg9vFkAFhB7N7QGwYfzbKVAKhS0IDQutDISutMTS3ujJlvKuQRdoE2z
+...
+WjEW1UmgYOXLawcaXE2xaDxoXz1FLVxxqZx-LZg_Y/0tsB==
+=IN7o
+-----END PGP PRIVATE KEY BLOCK-----
+
+```
+
+Note: *armoring* is **not** encryption
+* it is meant for readability and processing with text-based tools
+
+---
+
+### Step 2: export the key as a CI secret
+
+* In most CI systems, secrets allow **enough space** for an armored GPG private keys to fit in
+    * It is the case for GHA
+* In this case, *just export the armored version as a secret*
+
+* Otherwise:
+    * Encrypt your secret with a (much shorter) *symmetric* key into a file
+    * Store the *key as a secret* (it will fit as it is much smaller than an asymmetric key)
+    * *Track the encrypted file* in your repo
+    * Before signing (and *only if needed*), unencrypt the file and load it in-memory
+        * then delete the unencrypted version
+        * you want to reduce the probability that the file gets delivered...
+
+---
+
+### Step 3: tell the build system to use in-memory keys when in CI
+
+How to tell if you are in CI or not?
+* The `CI` environment variable is automatically set to `"true"` on most CI environments
+    * Including GitHub Actions
+
+#### In Gradle
 
 ```kotlin
 if (System.getenv("CI") == true.toString()) {
@@ -422,13 +478,12 @@ if (System.getenv("CI") == true.toString()) {
     }
 }
 ```
-* The `CI` environment variable is automatically set to `"true"` on most CI environments
-    * Including GitHub Actions
 * The `signingKey` and `signingPassword` properties must get *passed* to Gradle
     * One way is to pass them on the command line:
         * `./gradlew -PsignigngKey=... -PsigningPassword=... <tasks>`
     * Alternatively, they can be stored into environment variables
         * Gradle auto-imports properties named `ORG_GRADLE_PROJECT_<variableName>`
+        * So, in GitHub actions:
 
 ```yaml
 env:
@@ -496,13 +551,15 @@ From: [https://github.com/DanySK/action-checkout](https://github.com/DanySK/acti
 
 It can be used with:
 
-{{< github path=".github/workflows/build-and-deploy.yml" from=25 to=28 >}}
+{{< github path=".github/workflows/build-and-deploy.yml" from=21 to=24 >}}
 
 ---
 
 ## Composite actions: limitations
 
 * No support for secrets, they must be passed *as inputs*
+
+For instance this way:
 
 ```yaml
 name: 'Composite action with a secret'
@@ -611,7 +668,7 @@ on:
         required: true
 jobs:
   Job-1:
-    ... # It can use a matrix, different OSs, and 
+    ... # It can use a matrix, different OSs, and
   Job-2:
     ... # Multiple jobs are okay!
 ```
@@ -707,7 +764,7 @@ here is a possible workflow for **automatic** dependency updates:
 
 1. *Check* if there are new updates
 2. *Apply* the update in a new branch
-3. *Open* a pull request 
+3. *Open* a pull request
 4. *Verify* if changes break anything
     * If they do, manual intervention is required
 5. *Merge* (or rebase, or squash)
