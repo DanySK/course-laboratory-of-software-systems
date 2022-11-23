@@ -103,11 +103,35 @@ section.has-light-background {
 
 .reveal p {
 	margin: .2em 0 0 .2em;
+	text-align: justify;
 }
 
 .reveal ul {
 	display: block;
-	margin: 0px 0px .5em 2vw;
+	margin-left: 3vw;
+}
+
+.reveal li ul {
+	margin-left: 1vw;
+	list-style: none;
+}
+
+.reveal li ul li ul {
+	list-style: none;
+	content: '▶';
+}
+
+.reveal li li {
+	margin-left: 0.5em;
+	font-size: 90%;
+}
+
+.reveal ul li ul > li:before {
+	font-size: 75%;
+	line-height: 100%;
+	content: '▶';
+	position: relative;
+	right: 1em;
 }
 
 .reveal ol {
