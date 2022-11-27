@@ -671,7 +671,7 @@ The simplest way to send commands is to print on standard output a message in th
 <p>Signing in CI is easier if the key can be <em>stored in memory</em>
 <br>
 the alternative is to <em>install a private key in the runner</em></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">if</span> (System.getenv(<span style="color:#d20;background-color:#fff0f0">"CI"</span>) == <span style="color:#080;font-weight:bold">true</span>.toString()) {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">if</span> (<span style="color:#b06;font-weight:bold">System</span>.getenv(<span style="color:#d20;background-color:#fff0f0">"CI"</span>) == <span style="color:#080;font-weight:bold">true</span>.toString()) {
 </span></span><span style="display:flex;"><span>    signing {
 </span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">signingKey</span>: String? <span style="color:#080;font-weight:bold">by</span> project
 </span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">signingPassword</span>: String? <span style="color:#080;font-weight:bold">by</span> project

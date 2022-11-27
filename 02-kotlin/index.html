@@ -390,7 +390,7 @@ Consider the following Scala code:</p>
 </span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">    ch'ogne lingua devèn, tremando, muta
 </span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">    e li occhi non l'ardiscon di guardare.
 </span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">    """</span>.trimIndent() <span style="color:#888">// Indentation can be trimmed
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">finalWordsEndingInA</span> = <span style="color:#d20;background-color:#fff0f0">"""\W*(\w*a)\W*</span><span style="color:#33b;background-color:#fff0f0">${'$'}</span><span style="color:#d20;background-color:#fff0f0">"""</span>.toRegex(RegexOption.MULTILINE) <span style="color:#888">// '$' escaped
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">finalWordsEndingInA</span> = <span style="color:#d20;background-color:#fff0f0">"""\W*(\w*a)\W*</span><span style="color:#33b;background-color:#fff0f0">${'$'}</span><span style="color:#d20;background-color:#fff0f0">"""</span>.toRegex(<span style="color:#b06;font-weight:bold">RegexOption</span>.MULTILINE) <span style="color:#888">// '$' escaped
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>finalWordsEndingInA.findAll(dante).map { <span style="color:#080;font-weight:bold">it</span>.groups[<span style="color:#00d;font-weight:bold">1</span>]?.<span style="color:#080;font-weight:bold">value</span> }.toList() <span class="fragment " style="color: #888;"> // [saluta, muta]</span>
 </span></span></code></pre></div></section><section>
 <h1 id="kotlin-101-19">Kotlin 101</h1>
@@ -478,7 +478,7 @@ Imports go at the top of file, no locally scoped imports as in Scala</p>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">lucky</span> = <span style="color:#00d;font-weight:bold">6</span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">attempts</span> = <span style="color:#00d;font-weight:bold">0</span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">do</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">draw</span> = Random.nextInt(lucky + <span style="color:#00d;font-weight:bold">1</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">draw</span> = <span style="color:#b06;font-weight:bold">Random</span>.nextInt(lucky + <span style="color:#00d;font-weight:bold">1</span>)
 </span></span><span style="display:flex;"><span>    attempts++
 </span></span><span style="display:flex;"><span>} <span style="color:#080;font-weight:bold">while</span> (draw != lucky) <span style="color:#888">// draw is visible here
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>println(<span style="color:#d20;background-color:#fff0f0">"Launched </span><span style="color:#33b;background-color:#fff0f0">$attempts</span><span style="color:#d20;background-color:#fff0f0"> dice before a lucky shot"</span>)
@@ -704,9 +704,9 @@ and provide access only via <code>get</code>/<code>set</code> methods: the actua
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MutableCircle</span> : Shape, Shrinkable {
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">radius</span> = <span style="color:#00d;font-weight:bold">1.0</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">area</span> <span style="color:#080;font-weight:bold">get</span>() = Math.PI * radius * radius
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">area</span> <span style="color:#080;font-weight:bold">get</span>() = <span style="color:#b06;font-weight:bold">Math</span>.PI * radius * radius
 </span></span><span style="display:flex;"><span>    <span style="color:#888">// What if we remove "get()"?
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">perimeter</span> <span style="color:#080;font-weight:bold">get</span>() = <span style="color:#00d;font-weight:bold">2</span> * Math.PI * radius
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">perimeter</span> <span style="color:#080;font-weight:bold">get</span>() = <span style="color:#00d;font-weight:bold">2</span> * <span style="color:#b06;font-weight:bold">Math</span>.PI * radius
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">shrink</span>() {
 </span></span><span style="display:flex;"><span>        radius /= <span style="color:#00d;font-weight:bold">2</span>
 </span></span><span style="display:flex;"><span>    }
@@ -1404,11 +1404,11 @@ This feature is <em>way</em> less powerful than Scala’s pattern matching.</p>
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Vodka</span> : Booze()
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">goGetMeSome</span>(beverage: Booze) = <span style="color:#080;font-weight:bold">when</span> (beverage) {
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">is</span> Booze.Rum -&gt; <span style="color:#d20;background-color:#fff0f0">"Diplomatico"</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">is</span> Booze.Whisky -&gt; <span style="color:#d20;background-color:#fff0f0">"Caol Ila"</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">is</span> Booze.Vodka -&gt; <span style="color:#d20;background-color:#fff0f0">"Zubrowka"</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">is</span> <span style="color:#b06;font-weight:bold">Booze</span>.Rum -&gt; <span style="color:#d20;background-color:#fff0f0">"Diplomatico"</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">is</span> <span style="color:#b06;font-weight:bold">Booze</span>.Whisky -&gt; <span style="color:#d20;background-color:#fff0f0">"Caol Ila"</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">is</span> <span style="color:#b06;font-weight:bold">Booze</span>.Vodka -&gt; <span style="color:#d20;background-color:#fff0f0">"Zubrowka"</span>
 </span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>goGetMeSome(Booze.Rum())
+</span></span><span style="display:flex;"><span>goGetMeSome(<span style="color:#b06;font-weight:bold">Booze</span>.Rum())
 </span></span></code></pre></div></section><section>
 <h1 id="kotlin-201----advanced-oop-3">Kotlin 201 – Advanced OOP</h1>
 <h2 id="nested-and-inner-classes">Nested and inner classes</h2>
@@ -1425,14 +1425,14 @@ This feature is <em>way</em> less powerful than Scala’s pattern matching.</p>
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Nested</span> { <span style="color:#080;font-weight:bold">init</span> { println(readMeIfYouCan) } } <span style="color:#888">// error: unresolved reference: readMeIfYouCan
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Outer</span> { <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Nested</span>() }
-</span></span><span style="display:flex;"><span>Outer.Nested() <span style="color:#888">// OK
+</span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">Outer</span>.Nested() <span style="color:#888">// OK
 </span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Outer</span> {
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">readMeIfYouCan</span> = <span style="color:#00d;font-weight:bold">1</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">inner</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Inner</span> {
 </span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">init</span> { println(readMeIfYouCan) } <span style="color:#888">// ok
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    }
 </span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>Outer.Inner() <span style="color:#888">// error: constructor of inner class Inner can be called only with receiver of containing class
+</span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">Outer</span>.Inner() <span style="color:#888">// error: constructor of inner class Inner can be called only with receiver of containing class
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>Outer().Inner() <span style="color:#888">// OK
 </span></span></span></code></pre></div></section><section>
 <h1 id="kotlin-201----advanced-oop-4">Kotlin 201 – Advanced OOP</h1>
@@ -1612,7 +1612,7 @@ the right operand is the function name</p>
 <p>If used correctly, feels like adding custom blocks to a language</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span> <span style="color:#888">// Java's thread + trailing lambda + SAM conversion
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">delayed</span>(delay: Long = <span style="color:#00d;font-weight:bold">1000L</span>, operation: () -&gt; Unit) = Thread {
-</span></span><span style="display:flex;"><span>    Thread.sleep(delay)
+</span></span><span style="display:flex;"><span>    <span style="color:#b06;font-weight:bold">Thread</span>.sleep(delay)
 </span></span><span style="display:flex;"><span>    operation()
 </span></span><span style="display:flex;"><span>}.start()
 </span></span><span style="display:flex;"><span>println(<span style="color:#d20;background-color:#fff0f0">"Start"</span>)
@@ -1728,7 +1728,7 @@ as such, their type can be legally expressed by:</p>
 <br></p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">Batman</span> { <span style="color:#888">// the Batman object is the dispatch receiver
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">name</span> = <span style="color:#d20;background-color:#fff0f0">"Batman"</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">String</span>.Companion.intro <span style="color:#080;font-weight:bold">get</span>() = generateSequence { Double.NaN } <span style="color:#888">// String.Companion is extension receiver
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">String</span>.<span style="color:#b06;font-weight:bold">Companion</span>.intro <span style="color:#080;font-weight:bold">get</span>() = generateSequence { <span style="color:#b06;font-weight:bold">Double</span>.NaN } <span style="color:#888">// String.Companion is extension receiver
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        .take(<span style="color:#00d;font-weight:bold">10</span>)
 </span></span><span style="display:flex;"><span>        .joinToString(separator = <span style="color:#d20;background-color:#fff0f0">""</span>)
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">String</span>.withBatman() = <span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#33b;background-color:#fff0f0">$this</span><span style="color:#d20;background-color:#fff0f0"> </span><span style="color:#33b;background-color:#fff0f0">${this@Batman.name}</span><span style="color:#d20;background-color:#fff0f0">!"</span> <span style="color:#888">// Qualified this access to the dispatch receiver
@@ -1741,16 +1741,16 @@ as such, their type can be legally expressed by:</p>
 This enables a powerful form of <em>scope control</em></p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">Batman</span> { <span style="color:#888">// Batman is the dispatch receiver
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">name</span> = <span style="color:#d20;background-color:#fff0f0">"Batman"</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">String</span>.Companion.intro <span style="color:#080;font-weight:bold">get</span>() = generateSequence { Double.NaN } <span style="color:#888">// String is extension receiver
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">String</span>.<span style="color:#b06;font-weight:bold">Companion</span>.intro <span style="color:#080;font-weight:bold">get</span>() = generateSequence { <span style="color:#b06;font-weight:bold">Double</span>.NaN } <span style="color:#888">// String is extension receiver
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        .take(<span style="color:#00d;font-weight:bold">10</span>)
 </span></span><span style="display:flex;"><span>        .joinToString(separator = <span style="color:#d20;background-color:#fff0f0">""</span>)
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">String</span>.withBatman() = <span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#33b;background-color:#fff0f0">$this</span><span style="color:#d20;background-color:#fff0f0"> </span><span style="color:#33b;background-color:#fff0f0">${this@Batman.name}</span><span style="color:#d20;background-color:#fff0f0">!"</span> <span style="color:#888">// Qualified this access to the dispatch receiver
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
 </span></span><span style="display:flex;"><span><span style="color:#888">// Extension members are actual members! They require a receiver!
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>String.intro.withBatman() <span style="color:#888">// error: unresolved reference: intro
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#080;font-weight:bold">fun</span> &lt;<span style="color:#b06;font-weight:bold">T</span>, <span style="color:#b06;font-weight:bold">R</span>&gt; <span style="color:#06b;font-weight:bold">insideTheScopeOf</span>(<span style="color:#080;font-weight:bold">receiver</span>: T, method: T.() -&gt; R): R = <span style="color:#080;font-weight:bold">receiver</span>.method() 
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#b06;font-weight:bold">String</span>.intro.withBatman() <span style="color:#888">// error: unresolved reference: intro
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#080;font-weight:bold">fun</span> &lt;<span style="color:#b06;font-weight:bold">T</span>, <span style="color:#b06;font-weight:bold">R</span>&gt; <span style="color:#06b;font-weight:bold">insideTheScopeOf</span>(<span style="color:#080;font-weight:bold">receiver</span>: T, method: <span style="color:#b06;font-weight:bold">T</span>.() -&gt; R): R = <span style="color:#080;font-weight:bold">receiver</span>.method() 
 </span></span><span style="display:flex;"><span>insideTheScopeOf(Batman) { <span style="color:#888">// inside this function, Batman is the dispatch receiver!
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    String.intro.withBatman() <span style="color:#888">// OK!
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#b06;font-weight:bold">String</span>.intro.withBatman() <span style="color:#888">// OK!
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
 </span></span></code></pre></div></section><section>
 <h1 id="kotlin-202----functional-kotlin-12">Kotlin 202 – Functional Kotlin</h1>

@@ -1104,9 +1104,9 @@ from code to artifacts</p>
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#888;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">main</span>(<span style="color:#080;font-weight:bold">final</span> String[] args) {
 </span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">if</span> (OMDB_API_KEY == <span style="color:#080;font-weight:bold">null</span> || OMDB_API_KEY.<span style="color:#369">isBlank</span>()) {
 </span></span><span style="display:flex;"><span>            LOGGER.<span style="color:#369">error</span>(<span style="color:#d20;background-color:#fff0f0">"Invalid OMDB API Key '{}', set a valid API Key as env variable OMDB_API_KEY"</span>, OMDB_API_KEY);
-</span></span><span style="display:flex;"><span>            System.<span style="color:#369">exit</span>(1);
+</span></span><span style="display:flex;"><span>            System.<span style="color:#369">exit</span>(<span style="color:#00d;font-weight:bold">1</span>);
 </span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">final</span> String[] titles = args.<span style="color:#369">length</span> == 0 ? <span style="color:#080;font-weight:bold">new</span> String[] { DEFAULT_MOVIE } : args;
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">final</span> String[] titles = args.<span style="color:#369">length</span> == <span style="color:#00d;font-weight:bold">0</span> ? <span style="color:#080;font-weight:bold">new</span> String[] { DEFAULT_MOVIE } : args;
 </span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">final</span> OmdbApi omdb = <span style="color:#080;font-weight:bold">new</span> OmdbApi(OMDB_API_KEY);
 </span></span><span style="display:flex;"><span>        Arrays.<span style="color:#369">stream</span>(titles)
 </span></span><span style="display:flex;"><span>            .<span style="color:#369">map</span>(function(omdb::search)) <span style="color:#888">// Exceptions become RuntimeExceptions
@@ -1175,8 +1175,8 @@ from code to artifacts</p>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>java {
-</span></span><span style="display:flex;"><span>    sourceCompatibility = JavaVersion.VERSION_11
-</span></span><span style="display:flex;"><span>    targetCompatibility = JavaVersion.VERSION_11
+</span></span><span style="display:flex;"><span>    sourceCompatibility = <span style="color:#b06;font-weight:bold">JavaVersion</span>.VERSION_11
+</span></span><span style="display:flex;"><span>    targetCompatibility = <span style="color:#b06;font-weight:bold">JavaVersion</span>.VERSION_11
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>tasks {
@@ -1197,7 +1197,7 @@ from code to artifacts</p>
 </span></span><span style="display:flex;"><span>    doLast {
 </span></span><span style="display:flex;"><span>        sourceSets {
 </span></span><span style="display:flex;"><span>            main {
-</span></span><span style="display:flex;"><span>                println(runtimeClasspath.joinToString(File.pathSeparator) { <span style="color:#080;font-weight:bold">it</span>.absolutePath })
+</span></span><span style="display:flex;"><span>                println(runtimeClasspath.joinToString(<span style="color:#b06;font-weight:bold">File</span>.pathSeparator) { <span style="color:#080;font-weight:bold">it</span>.absolutePath })
 </span></span><span style="display:flex;"><span>            }
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>    }
