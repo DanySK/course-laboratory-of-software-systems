@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/dist/reset.css">
 <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/dist/reveal.css">
-  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.2b337b97356af289d655ec6d921ec8c522f26f0898d902ae2b6c6092cbc1c652.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
+  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.f528c44ce51b86b314f7a0ebdd69b3768ef13692993c5c88aa6ec4e2e061ef67.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
     
 <link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
 <link href="https://fonts.googleapis.com/css?family=Roboto Mono" rel="stylesheet">
@@ -29,7 +29,7 @@
 <br>
 <h3 id="danilo-pianini-----danilopianiniuniboitmailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini — <code>danilo.pianini@unibo.it</code></a></h3>
 <br>
-<p>Compiled on: 2022-12-01
+<p>Compiled on: 2022-12-07
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section><section>
@@ -512,20 +512,7 @@ and many are developed by the community.</p>
 <p>Also, <em><strong>tags</strong> don’t get checked out</em></p>
 </section><section>
 <h2 id="checking-out-the-whole-history">Checking out the whole history</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">required</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">false</span><span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">default</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">''</span><span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">runs</span>:<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">using</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"composite"</span><span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">steps</span>:<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Checkout with custom token<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@v3.1.0<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">if</span>:<span style="color:#bbb"> </span>inputs.token != ''<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">with</span>:<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">fetch-depth</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">0</span><span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">submodules</span>:<span style="color:#bbb"> </span>recursive<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">token</span>:<span style="color:#bbb"> </span>${{ inputs.token }}<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Checkout with default token<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Checkout with default token<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@v3.1.0<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">if</span>:<span style="color:#bbb"> </span>inputs.token == ''<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">with</span>:<span style="color:#bbb">
@@ -535,6 +522,7 @@ and many are developed by the community.</p>
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">shell</span>:<span style="color:#bbb"> </span>bash<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>git fetch --tags -f<span style="color:#bbb">
 </span></span></span></code></pre></div>
+<p>(code from a custom action, ignore the <code>if</code>)</p>
 <ul>
 <li>Check out the repo with the maximum <em>depth</em></li>
 <li>Recursively check out all <em>submodules</em></li>
@@ -577,7 +565,7 @@ The simplest way to send commands is to print on standard output a message in th
 <li>Across different frameworks and languages</li>
 <li>Across runtime configuration</li>
 </ul>
-<p>A good continuous integration pipeline should test <em>all the supported combinations</em>*</p>
+<p>A good continuous integration pipeline should test <em>all the supported combinations</em></p>
 <ul>
 <li>or a sample, if the performance is otherwise unbearable</li>
 </ul>
@@ -667,10 +655,70 @@ The simplest way to send commands is to print on standard output a message in th
 </span></span><span style="display:flex;"><span>payload = { <span style="color:#d20;background-color:#fff0f0">'key_id'</span> =&gt; pubkey.key_id, <span style="color:#d20;background-color:#fff0f0">'encrypted_value'</span> =&gt; encrypted_value }
 </span></span><span style="display:flex;"><span>client.create_or_update_secret(repo_slug, <span style="color:#038">name</span>, payload)
 </span></span></code></pre></div></section><section>
-<h2 id="in-memory-signatures-with-gradle">In-memory signatures with Gradle</h2>
+<h2 id="in-memory-signatures">In-memory signatures</h2>
 <p>Signing in CI is easier if the key can be <em>stored in memory</em>
 <br>
 the alternative is to <em>install a private key in the runner</em></p>
+<p>To do so we need to:</p>
+<ol>
+<li>Find a way to write our key in memory</li>
+<li>Export it safely into the CI environment (via a secret)</li>
+<li>Configure the build system to use the key in-memory when a CI environment is detected</li>
+</ol>
+</section><section>
+<h3 id="step-1-exporting-gpg-private-keys">Step 1: exporting GPG <em>private</em> keys</h3>
+<p><code>gpg --armor --export-secret-key &lt;key id&gt;</code></p>
+<p>Exports a <a href="https://en.wikipedia.org/wiki/Base64">base64</a>-encoded version of your <em>binary</em> key, with a header and a footer.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>-----BEGIN PGP PRIVATE KEY BLOCK-----
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>M4ATvaZBpT5QjAvOUm09rKsvouXYQE1AFlmMfJQTUlmOA_R6b-SolgYFOx_cKAAL
+</span></span><span style="display:flex;"><span>Vz1BIv8nvzg9vFkAFhB7N7QGwYfzbKVAKhS0IDQutDISutMTS3ujJlvKuQRdoE2z
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>WjEW1UmgYOXLawcaXE2xaDxoXz1FLVxxqZx-LZg_Y/0tsB==
+</span></span><span style="display:flex;"><span>=IN7o
+</span></span><span style="display:flex;"><span>-----END PGP PRIVATE KEY BLOCK-----
+</span></span></code></pre></div><p>Note: <em>armoring</em> is <strong>not</strong> encryption</p>
+<ul>
+<li>it is meant for readability and processing with text-based tools</li>
+</ul>
+</section><section>
+<h3 id="step-2-export-the-key-as-a-ci-secret">Step 2: export the key as a CI secret</h3>
+<ul>
+<li>
+<p>In most CI systems, secrets allow <strong>enough space</strong> for an armored GPG private keys to fit in</p>
+<ul>
+<li>It is the case for GHA</li>
+</ul>
+</li>
+<li>
+<p>In this case, <em>just export the armored version as a secret</em></p>
+</li>
+<li>
+<p>Otherwise:</p>
+<ul>
+<li>Encrypt your secret with a (much shorter) <em>symmetric</em> key into a file</li>
+<li>Store the <em>key as a secret</em> (it will fit as it is much smaller than an asymmetric key)</li>
+<li><em>Track the encrypted file</em> in your repo</li>
+<li>Before signing (and <em>only if needed</em>), unencrypt the file and load it in-memory
+<ul>
+<li>then delete the unencrypted version</li>
+<li>you want to reduce the probability that the file gets delivered…</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h3 id="step-3-tell-the-build-system-to-use-in-memory-keys-when-in-ci">Step 3: tell the build system to use in-memory keys when in CI</h3>
+<p>How to tell if you are in CI or not?</p>
+<ul>
+<li>The <code>CI</code> environment variable is automatically set to <code>"true"</code> on most CI environments
+<ul>
+<li>Including GitHub Actions</li>
+</ul>
+</li>
+</ul>
+<h4 id="in-gradle">In Gradle</h4>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">if</span> (<span style="color:#b06;font-weight:bold">System</span>.getenv(<span style="color:#d20;background-color:#fff0f0">"CI"</span>) == <span style="color:#080;font-weight:bold">true</span>.toString()) {
 </span></span><span style="display:flex;"><span>    signing {
 </span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">signingKey</span>: String? <span style="color:#080;font-weight:bold">by</span> project
@@ -679,11 +727,6 @@ the alternative is to <em>install a private key in the runner</em></p>
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><ul>
-<li>The <code>CI</code> environment variable is automatically set to <code>"true"</code> on most CI environments
-<ul>
-<li>Including GitHub Actions</li>
-</ul>
-</li>
 <li>The <code>signingKey</code> and <code>signingPassword</code> properties must get <em>passed</em> to Gradle
 <ul>
 <li>One way is to pass them on the command line:
@@ -694,6 +737,7 @@ the alternative is to <em>install a private key in the runner</em></p>
 <li>Alternatively, they can be stored into environment variables
 <ul>
 <li>Gradle auto-imports properties named <code>ORG_GRADLE_PROJECT_&lt;variableName&gt;</code></li>
+<li>So, in GitHub actions:</li>
 </ul>
 </li>
 </ul>
@@ -766,15 +810,16 @@ the alternative is to <em>install a private key in the runner</em></p>
 </section><section>
 <h2 id="composite-actions-usage">Composite actions: usage</h2>
 <p>It can be used with:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Setup Ruby<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>ruby/setup-ruby@v1.126.0<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">with</span>:<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">working-directory</span>:<span style="color:#bbb"> </span>slides/shared-slides</span></span></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">steps</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#888"># Checkout the repository</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Checkout<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>danysk/action-checkout@0.2.3</span></span></code></pre></div>
 </section><section>
 <h2 id="composite-actions-limitations">Composite actions: limitations</h2>
 <ul>
 <li>No support for secrets, they must be passed <em>as inputs</em></li>
 </ul>
+<p>For instance this way:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">'Composite action with a secret'</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">description</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">'For teaching purposes'</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">inputs</span>:<span style="color:#bbb">
@@ -880,7 +925,7 @@ the alternative is to <em>install a private key in the runner</em></p>
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">required</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">jobs</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">Job-1</span>:<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>...<span style="color:#bbb"> </span><span style="color:#888"># It can use a matrix, different OSs, and </span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>...<span style="color:#bbb"> </span><span style="color:#888"># It can use a matrix, different OSs, and</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">Job-2</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>...<span style="color:#bbb"> </span><span style="color:#888"># Multiple jobs are okay!</span><span style="color:#bbb">
 </span></span></span></code></pre></div></section><section>
