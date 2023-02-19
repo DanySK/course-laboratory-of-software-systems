@@ -5,7 +5,7 @@ plugins {
     jacoco
     kotlin("jvm") version "1.8.10"
     id("org.danilopianini.git-sensitive-semantic-versioning") version "0.3.0"
-    id("com.gradle.plugin-publish") version "1.0.0"
+    id("com.gradle.plugin-publish") version "1.1.0"
     id("pl.droidsonroids.jacoco.testkit") version "1.0.9"
     id("org.jlleitschuh.gradle.ktlint") version "11.2.0"
     id("io.gitlab.arturbosch.detekt") version "1.22.0"

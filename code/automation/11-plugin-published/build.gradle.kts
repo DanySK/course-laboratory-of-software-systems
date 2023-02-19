@@ -3,7 +3,7 @@ plugins {
     kotlin("jvm") version "1.8.10"
     id ("org.danilopianini.git-sensitive-semantic-versioning") version "0.3.0"
     // Generates the classpath manifest for us!
-    id("com.gradle.plugin-publish") version "1.0.0"
+    id("com.gradle.plugin-publish") version "1.1.0"
 }
 
 group = "it.unibo.firstplugin"
