@@ -32,19 +32,16 @@ tasks.withType<Test> {
     }
 }
 
-pluginBundle { // These settings are set for the whole plugin bundle
-    website = "https://danysk.github.io/Course-Laboratory-of-Software-Systems/"
-    vcsUrl = "https://github.com/DanySK/Course-Laboratory-of-Software-Systems"
-    tags = listOf("example", "greetings", "lss", "unibo")
-}
-
 gradlePlugin {
     plugins {
+        website.set("https://danysk.github.io/Course-Laboratory-of-Software-Systems")
+        vcsUrl.set("https://github.com/DanySK/Course-Laboratory-of-Software-Systems.git")
         create("") { // One entry per plugin
             id = "${project.group}.${project.name}"
             displayName = "LSS Greeting plugin"
             description = "Example plugin for the LSS course"
             implementationClass = "it.unibo.firstplugin.GreetingPlugin"
+            listOf("example", "greetings", "unibo")
         }
     }
 }
