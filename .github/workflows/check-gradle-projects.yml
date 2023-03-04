@@ -17,7 +17,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  Check-Projects:
+  check-projects:
     strategy:
       matrix:
         os: [ windows-2022, macos-12, ubuntu-22.04 ]
@@ -62,3 +62,15 @@ jobs:
                 fi
             fi
           done
+  success:
+    runs-on: ubuntu-22.04
+    needs:
+      - check-projects
+    if: >-
+      always() && (
+        contains(join(needs.*.result, ','), 'failure')
+        || !contains(join(needs.*.result, ','), 'cancelled')
+      )
+    steps:
+      - name: Verify that there were no failures
+        run: ${{ !contains(join(needs.*.result, ','), 'failure') }}
