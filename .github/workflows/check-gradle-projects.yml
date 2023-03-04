@@ -20,8 +20,11 @@ jobs:
   Check-Projects:
     strategy:
       matrix:
-        os: [windows, macos, ubuntu]
-    runs-on: ${{ matrix.os }}-latest
+        os: [ windows-2022, macos-12, ubuntu-22.04 ]
+    runs-on: ${{ matrix.os }}
+    concurrency:
+      group: ${{ github.workflow }}-check-${{ matrix.os }}-${{ github.event.number || github.ref }}
+      cancel-in-progress: true
     env:
       TERM: dumb
     steps:
