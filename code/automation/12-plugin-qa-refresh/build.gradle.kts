@@ -38,12 +38,6 @@ tasks.withType<Test> {
     }
 }
 
-pluginBundle { // These settings are set for the whole plugin bundle
-    website = "https://danysk.github.io/Course-Laboratory-of-Software-Systems/"
-    vcsUrl = "https://github.com/DanySK/Course-Laboratory-of-Software-Systems"
-    tags = listOf("example", "greetings", "lss", "unibo")
-}
-
 gradlePlugin {
     plugins {
         create("") { // One entry per plugin
