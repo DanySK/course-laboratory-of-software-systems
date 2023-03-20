@@ -41,7 +41,7 @@ jobs:
       - name: Install pdfinfo
         run: sudo apt-get install -y poppler-utils
       - name: Make the pdfs
-        run: slides/makepdfs.rb pages
+        run: slides/shared-slides/makepdfs.rb pages
       - name: Deliver the pdfs
         if: github.event_name == 'workflow_run'
         uses: ncipollo/release-action@v1.12.0
