@@ -29,7 +29,7 @@ jobs:
       TERM: dumb
     steps:
       - name: Checkout
-        uses: danysk/action-checkout@0.2.5
+        uses: danysk/action-checkout@0.2.6
       - uses: actions/setup-java@v3
         with:
           distribution: adopt
