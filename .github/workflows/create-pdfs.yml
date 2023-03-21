@@ -33,7 +33,7 @@ jobs:
         id: version-compute
         run: echo "::set-output name=version::${{ steps.commit-counter.outputs.commits }}.$(date +"%Y.%-m%d")"
       - name: Setup Ruby
-        uses: ruby/setup-ruby@v1.144.0
+        uses: ruby/setup-ruby@v1.144.2
         with:
           working-directory: slides
       - name: Setup Chrome
