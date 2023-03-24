@@ -17,11 +17,11 @@ jobs:
     steps:
       # Checkout the repository
       - name: Checkout the pdf creation script
-        uses: actions/checkout@v3.4.0
+        uses: actions/checkout@v3.5.0
         with:
           submodules: recursive
       - name: Checkout gh-pages
-        uses: actions/checkout@v3.4.0
+        uses: actions/checkout@v3.5.0
         with:
           fetch-depth: 0
           path: pages
