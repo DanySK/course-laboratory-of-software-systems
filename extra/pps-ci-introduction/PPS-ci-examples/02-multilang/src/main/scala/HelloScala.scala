@@ -1,3 +1,1 @@
-object HelloScala extends App  {
-    println("Hello Scala")
-}
+@main def main(): Unit = println("Hello Scala")
