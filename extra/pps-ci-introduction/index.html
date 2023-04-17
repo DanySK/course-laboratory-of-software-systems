@@ -26,7 +26,7 @@
     <section><h1 id="programming-and-development-paradigms">Programming and development paradigms</h1>
 <h2 id="continuous-integration">Continuous Integration</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2023-04-14
+2023-04-17
 
 </section><section>
 <h1 id="development">Development</h1>
@@ -1370,15 +1370,14 @@ from code to artifacts</p>
 <p><code>src/main/scala/it/unibo/test/Test.scala</code></p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">package</span> <span style="color:#b06;font-weight:bold">it.unibo.test</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">trait</span> <span style="color:#b06;font-weight:bold">Sometrait</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#080;font-weight:bold">def</span> f<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Int</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">trait</span> <span style="color:#b06;font-weight:bold">Sometrait</span><span style="color:#080;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#888;font-weight:bold">def</span> <span style="color:#888;font-weight:bold">f:</span> <span style="color:#888;font-weight:bold">Int</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#080;font-weight:bold">def</span> g<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Int</span>
-</span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">Someobject</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#080;font-weight:bold">def</span> f <span style="color:#080;font-weight:bold">=</span> <span style="color:#00d;font-weight:bold">10</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">Someobject</span><span style="color:#080;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#888;font-weight:bold">def</span> <span style="color:#888;font-weight:bold">f</span> = <span style="color:#00d;font-weight:bold">10</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#080;font-weight:bold">def</span> g <span style="color:#080;font-weight:bold">=</span> <span style="color:#00d;font-weight:bold">77</span>
-</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
 </span></span></code></pre></div>
 </section><section>
 <h2 id="quality-assurance-junit--gradle-1">Quality Assurance: JUnit + Gradle</h2>
@@ -1387,23 +1386,21 @@ from code to artifacts</p>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.junit.jupiter.api.Assertions._</span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.junit.jupiter.api.Test</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyTest</span> {
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyTest</span><span style="color:#080;font-weight:bold">:</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#555">@Test</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#080;font-weight:bold">def</span> emptySetShouldHaveSizeZero()<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Unit</span> = {
+</span></span><span style="display:flex;"><span>  <span style="color:#888;font-weight:bold">@Test</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#080;font-weight:bold">def</span> emptySetShouldHaveSizeZero()<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Unit</span> =
 </span></span><span style="display:flex;"><span>    assertEquals(<span style="color:#00d;font-weight:bold">0</span>, <span style="color:#b06;font-weight:bold">Set</span>.empty.size)
-</span></span><span style="display:flex;"><span>  }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>  <span style="color:#555">@Test</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#080;font-weight:bold">def</span> thisTestIsActuallyUseless()<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Unit</span> = {
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> someStub <span style="color:#080;font-weight:bold">=</span> <span style="color:#080;font-weight:bold">new</span> <span style="color:#b06;font-weight:bold">Sometrait</span> {
-</span></span><span style="display:flex;"><span>      <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">def</span> f<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Int</span> = <span style="color:#00d;font-weight:bold">42</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#080;font-weight:bold">def</span> thisTestIsActuallyUseless()<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Unit</span> =
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> someStub <span style="color:#080;font-weight:bold">=</span> <span style="color:#080;font-weight:bold">new</span> <span style="color:#b06;font-weight:bold">Sometrait</span><span style="color:#080;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#888;font-weight:bold">override</span> <span style="color:#888;font-weight:bold">def</span> <span style="color:#888;font-weight:bold">f:</span> <span style="color:#888;font-weight:bold">Int</span> = <span style="color:#00d;font-weight:bold">42</span>
 </span></span><span style="display:flex;"><span>      <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">def</span> g<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Int</span> = ???
-</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    assertEquals(<span style="color:#00d;font-weight:bold">42</span>, someStub.f)
 </span></span><span style="display:flex;"><span>    assertNotEquals(<span style="color:#b06;font-weight:bold">Someobject</span>.f, someStub.f)
-</span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
 </span></span></code></pre></div>
 </section><section>
 <h2 id="quality-assurance-junit--gradle-2">Quality Assurance: JUnit + Gradle</h2>
@@ -1419,7 +1416,7 @@ from code to artifacts</p>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>dependencies {
-</span></span><span style="display:flex;"><span>    implementation(<span style="color:#d20;background-color:#fff0f0">"org.scala-lang:scala-library:2.13.10"</span>)
+</span></span><span style="display:flex;"><span>    implementation(<span style="color:#d20;background-color:#fff0f0">"org.scala-lang:scala3-library_3:3.2.2"</span>)
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">junitVersion</span> = <span style="color:#d20;background-color:#fff0f0">"5.9.2"</span>
 </span></span><span style="display:flex;"><span>    testImplementation(<span style="color:#d20;background-color:#fff0f0">"org.junit.jupiter:junit-jupiter-api:</span><span style="color:#33b;background-color:#fff0f0">$junitVersion</span><span style="color:#d20;background-color:#fff0f0">"</span>)
 </span></span><span style="display:flex;"><span>    testRuntimeOnly(<span style="color:#d20;background-color:#fff0f0">"org.junit.jupiter:junit-jupiter-engine:</span><span style="color:#33b;background-color:#fff0f0">$junitVersion</span><span style="color:#d20;background-color:#fff0f0">"</span>)
@@ -1436,35 +1433,25 @@ from code to artifacts</p>
 <p><code>src/main/scala/it/unibo/test/Test.scala</code></p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">package</span> <span style="color:#b06;font-weight:bold">it.unibo.test</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">trait</span> <span style="color:#b06;font-weight:bold">Sometrait</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#080;font-weight:bold">def</span> f<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Int</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">trait</span> <span style="color:#b06;font-weight:bold">Sometrait</span><span style="color:#080;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#888;font-weight:bold">def</span> <span style="color:#888;font-weight:bold">f:</span> <span style="color:#888;font-weight:bold">Int</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#080;font-weight:bold">def</span> g<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Int</span>
-</span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">Someobject</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#080;font-weight:bold">def</span> f <span style="color:#080;font-weight:bold">=</span> <span style="color:#00d;font-weight:bold">10</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#080;font-weight:bold">def</span> g <span style="color:#080;font-weight:bold">=</span> <span style="color:#00d;font-weight:bold">77</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">Someobject</span><span style="color:#080;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#888;font-weight:bold">def</span> <span style="color:#888;font-weight:bold">f</span> = <span style="color:#00d;font-weight:bold">10</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#080;font-weight:bold">def</span> g <span style="color:#080;font-weight:bold">=</span> <span style="color:#00d;font-weight:bold">77</span></span></span></code></pre></div>
 </section><section>
 <h2 id="quality-assurance-scalatest--scoverage-1">Quality Assurance: Scalatest + Scoverage</h2>
 <p><code>src/test/scala/Test.scala</code></p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">it.unibo.test.Sometrait</span>
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.scalamock.scalatest.MockFactory</span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.scalatest.funsuite.AnyFunSuite</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyTests</span> <span style="color:#080;font-weight:bold">extends</span> <span style="color:#b06;font-weight:bold">AnyFunSuite</span> <span style="color:#080;font-weight:bold">with</span> <span style="color:#b06;font-weight:bold">MockFactory</span> {
-</span></span><span style="display:flex;"><span>  test(<span style="color:#d20;background-color:#fff0f0">"An empty Set should have size 0"</span>) {
-</span></span><span style="display:flex;"><span>    println(<span style="color:#d20;background-color:#fff0f0">"Test1"</span>)
-</span></span><span style="display:flex;"><span>    assert(<span style="color:#b06;font-weight:bold">Set</span>.empty.size == <span style="color:#00d;font-weight:bold">0</span>)
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyTests</span> <span style="color:#080;font-weight:bold">extends</span> <span style="color:#b06;font-weight:bold">AnyFunSuite</span><span style="color:#080;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#888;font-weight:bold">test</span>(<span style="color:#a61717;background-color:#e3d2d2">"</span><span style="color:#888;font-weight:bold">An</span> <span style="color:#888;font-weight:bold">empty</span> <span style="color:#888;font-weight:bold">Set</span> <span style="color:#888;font-weight:bold">should</span> <span style="color:#888;font-weight:bold">have</span> <span style="color:#888;font-weight:bold">size</span> <span style="color:#a61717;background-color:#e3d2d2">0"</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#888;font-weight:bold">println</span>(<span style="color:#a61717;background-color:#e3d2d2">"</span><span style="color:#888;font-weight:bold">Test1</span><span style="color:#a61717;background-color:#e3d2d2">"</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#888;font-weight:bold">assert</span>(<span style="color:#888;font-weight:bold">Set.empty.isEmpty</span>)
 </span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>  test(<span style="color:#d20;background-color:#fff0f0">"Some useless test"</span>) {
-</span></span><span style="display:flex;"><span>    println(<span style="color:#d20;background-color:#fff0f0">"Test2"</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> someStub <span style="color:#080;font-weight:bold">=</span> stub[<span style="color:#888;font-weight:bold">Sometrait</span>]
-</span></span><span style="display:flex;"><span>    (someStub.f <span style="color:#080;font-weight:bold">_</span>).when().returns(<span style="color:#00d;font-weight:bold">42</span>)
-</span></span><span style="display:flex;"><span>    assert(someStub.f == <span style="color:#00d;font-weight:bold">42</span>)
-</span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
 </span></span></code></pre></div>
 </section><section>
 <h2 id="quality-assurance-scalatest--scoverage-2">Quality Assurance: Scalatest + Scoverage</h2>
@@ -1472,7 +1459,6 @@ from code to artifacts</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
 </span></span><span style="display:flex;"><span>    java
 </span></span><span style="display:flex;"><span>    scala
-</span></span><span style="display:flex;"><span>    id(<span style="color:#d20;background-color:#fff0f0">"org.scoverage"</span>) version <span style="color:#d20;background-color:#fff0f0">"7.0.1"</span>
 </span></span><span style="display:flex;"><span>    id(<span style="color:#d20;background-color:#fff0f0">"com.github.maiflai.scalatest"</span>) version <span style="color:#d20;background-color:#fff0f0">"0.32"</span>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
@@ -1481,20 +1467,12 @@ from code to artifacts</p>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>dependencies {
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">scalaVersion</span> = <span style="color:#d20;background-color:#fff0f0">"2.13.8"</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#a61717;background-color:#e3d2d2">(</span><span style="color:#369;font-weight:bold">scalaMinor</span>, _) = requireNotNull(Regex(<span style="color:#d20;background-color:#fff0f0">"^(</span><span style="color:#04d;background-color:#fff0f0">\\</span><span style="color:#d20;background-color:#fff0f0">d+</span><span style="color:#04d;background-color:#fff0f0">\\</span><span style="color:#d20;background-color:#fff0f0">.</span><span style="color:#04d;background-color:#fff0f0">\\</span><span style="color:#d20;background-color:#fff0f0">d+)(</span><span style="color:#04d;background-color:#fff0f0">\\</span><span style="color:#d20;background-color:#fff0f0">.</span><span style="color:#04d;background-color:#fff0f0">\\</span><span style="color:#d20;background-color:#fff0f0">d+)?$"</span>).matchEntire(scalaVersion)).destructured
-</span></span><span style="display:flex;"><span>    implementation(<span style="color:#d20;background-color:#fff0f0">"org.scala-lang:scala-library:</span><span style="color:#33b;background-color:#fff0f0">$scalaVersion</span><span style="color:#d20;background-color:#fff0f0">"</span>)
-</span></span><span style="display:flex;"><span>    testImplementation(<span style="color:#d20;background-color:#fff0f0">"org.scalatest:scalatest_</span><span style="color:#33b;background-color:#fff0f0">$scalaMinor</span><span style="color:#d20;background-color:#fff0f0">:3.3.0-SNAP3"</span>)
-</span></span><span style="display:flex;"><span>    testImplementation(<span style="color:#d20;background-color:#fff0f0">"org.scalamock:scalamock_</span><span style="color:#33b;background-color:#fff0f0">$scalaMinor</span><span style="color:#d20;background-color:#fff0f0">:5.2.0"</span>)
-</span></span><span style="display:flex;"><span>    testRuntimeOnly(<span style="color:#d20;background-color:#fff0f0">"com.vladsch.flexmark:flexmark-profile-pegdown:0.36.8"</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">scoverageVersion</span> = <span style="color:#d20;background-color:#fff0f0">"1.4.11"</span>
-</span></span><span style="display:flex;"><span>    scoverage(<span style="color:#d20;background-color:#fff0f0">"org.scoverage:scalac-scoverage-plugin_</span><span style="color:#33b;background-color:#fff0f0">$scalaVersion</span><span style="color:#d20;background-color:#fff0f0">:</span><span style="color:#33b;background-color:#fff0f0">$scoverageVersion</span><span style="color:#d20;background-color:#fff0f0">"</span>)
-</span></span><span style="display:flex;"><span>    scoverage(<span style="color:#d20;background-color:#fff0f0">"org.scoverage:scalac-scoverage-runtime_</span><span style="color:#33b;background-color:#fff0f0">$scalaMinor</span><span style="color:#d20;background-color:#fff0f0">:</span><span style="color:#33b;background-color:#fff0f0">$scoverageVersion</span><span style="color:#d20;background-color:#fff0f0">"</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#888">// Force a scoverage report if check is requested
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>tasks.check {
-</span></span><span style="display:flex;"><span>    dependsOn(tasks.reportScoverage)
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">scalaVersion</span> = <span style="color:#d20;background-color:#fff0f0">"3.2.2"</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#a61717;background-color:#e3d2d2">(</span><span style="color:#369;font-weight:bold">scalaMinor</span>, _) = requireNotNull(Regex(<span style="color:#d20;background-color:#fff0f0">"^(</span><span style="color:#04d;background-color:#fff0f0">\\</span><span style="color:#d20;background-color:#fff0f0">d+)(</span><span style="color:#04d;background-color:#fff0f0">\\</span><span style="color:#d20;background-color:#fff0f0">.</span><span style="color:#04d;background-color:#fff0f0">\\</span><span style="color:#d20;background-color:#fff0f0">d+)(</span><span style="color:#04d;background-color:#fff0f0">\\</span><span style="color:#d20;background-color:#fff0f0">.</span><span style="color:#04d;background-color:#fff0f0">\\</span><span style="color:#d20;background-color:#fff0f0">d+)?$"</span>).matchEntire(scalaVersion)).destructured
+</span></span><span style="display:flex;"><span>    <span style="color:#888">// https://mvnrepository.com/artifact/org.scala-lang/scala3-library
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    implementation(<span style="color:#d20;background-color:#fff0f0">"org.scala-lang:scala3-library_3:</span><span style="color:#33b;background-color:#fff0f0">${scalaVersion}</span><span style="color:#d20;background-color:#fff0f0">"</span>)
+</span></span><span style="display:flex;"><span>    testImplementation(<span style="color:#d20;background-color:#fff0f0">"org.scalatest:scalatest_</span><span style="color:#33b;background-color:#fff0f0">$scalaMinor</span><span style="color:#d20;background-color:#fff0f0">:3.2.12"</span>)
+</span></span><span style="display:flex;"><span>    testRuntimeOnly(<span style="color:#d20;background-color:#fff0f0">"com.vladsch.flexmark:flexmark-all:0.64.0"</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div>
 </section><section>
