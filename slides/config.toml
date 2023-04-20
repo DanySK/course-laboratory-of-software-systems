@@ -1,4 +1,4 @@
-baseURL = "https://danysk.github.io/Course-Laboratory-of-Software-Systems"
+baseURL = "https://danysk.github.io/course-laboratory-of-software-systems"
 languageCode = "en-us"
 title = "Laboratory of Software Systems"
 disableKinds = ["sitemap", "RSS"]
