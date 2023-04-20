@@ -6,9 +6,9 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/dist/reset.css">
-<link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/dist/reveal.css">
-  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.f528c44ce51b86b314f7a0ebdd69b3768ef13692993c5c88aa6ec4e2e061ef67.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
+    <link rel="stylesheet" href="/course-laboratory-of-software-systems/reveal-js/dist/reset.css">
+<link rel="stylesheet" href="/course-laboratory-of-software-systems/reveal-js/dist/reveal.css">
+  <link rel="stylesheet" href="/course-laboratory-of-software-systems/css/custom-theme.min.f528c44ce51b86b314f7a0ebdd69b3768ef13692993c5c88aa6ec4e2e061ef67.css" id="theme"><link rel="stylesheet" href="/course-laboratory-of-software-systems/highlight-js/default.min.css">
     
 <link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
 <link href="https://fonts.googleapis.com/css?family=Roboto Mono" rel="stylesheet">
@@ -29,7 +29,7 @@
 <br>
 <h3 id="danilo-pianini-----danilopianiniuniboitmailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini — <code>danilo.pianini@unibo.it</code></a></h3>
 <br>
-<p>Compiled on: 2023-04-17
+<p>Compiled on: 2023-04-20
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section><section>
@@ -304,7 +304,7 @@ and many are developed by the community.</p>
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#888"># Steps represent a sequence of tasks that will be executed as part of the job</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">steps</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#888"># Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it</span><span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@47fbe2df0ad0e27efb67a70beac3555f192b062f<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@f095bcc56b7c2baf48f3ac70d6d6782f4f553222<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#888"># Runs a single command using the runners shell</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Run a one-line script<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>echo Hello from a ${{ runner.os }} machine!<span style="color:#bbb">
@@ -547,7 +547,7 @@ The simplest way to send commands is to print on standard output a message in th
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">id</span>:<span style="color:#bbb"> </span>branch-name<span style="color:#bbb"> </span><span style="color:#888"># Custom id</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>tj-actions/branch-names@v6<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">id</span>:<span style="color:#bbb"> </span>output-from-shell<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>ruby -e 'puts "::set-output name=dice::#{rand(1..6)}"'<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>ruby -e 'puts "dice=#{rand(1..6)}"' &gt;&gt; $GITHUB_OUTPUT<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>|<span style="color:#d20;background-color:#fff0f0">
 </span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">          echo "The dice roll resulted in number ${{ steps.output-from-shell.outputs.dice }}"
 </span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">          if ${{ steps.branch-name.outputs.is_tag }} ; then
@@ -1136,28 +1136,28 @@ with a pre-populated text area</li>
       
 
     </div>
-<script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-hugo/object-assign.js"></script>
+<script type="text/javascript" src="/course-laboratory-of-software-systems/reveal-hugo/object-assign.js"></script>
 
-<a href="/Course-Laboratory-of-Software-Systems/reveal-js/dist/print/" id="print-location" style="display: none;"></a>
+<a href="/course-laboratory-of-software-systems/reveal-js/dist/print/" id="print-location" style="display: none;"></a>
 
 <script type="application/json" id="reveal-hugo-site-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"height":"900","history":true,"mermaid":[{"fontFamily":"Inconsolata","gitGraph":{"mainBranchName":"master","rotateCommitLabel":true},"startOnLoad":false,"theme":"default","useMaxWidth":false}],"pdfseparatefragments":false,"slide_number":true,"theme":"white","transition":"slide","transition_speed":"fast","width":"1440"}</script>
 <script type="application/json" id="reveal-hugo-page-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"custom_theme_options":{"enablesourcemap":true,"targetpath":"css/custom-theme.css"},"transition":"slide","transition_speed":"fast"}</script>
 
-<script src="/Course-Laboratory-of-Software-Systems/reveal-js/dist/reveal.js"></script>
+<script src="/course-laboratory-of-software-systems/reveal-js/dist/reveal.js"></script>
 
 
   
   
-  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/markdown/markdown.js"></script>
+  <script type="text/javascript" src="/course-laboratory-of-software-systems/reveal-js/plugin/markdown/markdown.js"></script>
   
-  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/highlight/highlight.js"></script>
+  <script type="text/javascript" src="/course-laboratory-of-software-systems/reveal-js/plugin/highlight/highlight.js"></script>
   
-  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/zoom/zoom.js"></script>
+  <script type="text/javascript" src="/course-laboratory-of-software-systems/reveal-js/plugin/zoom/zoom.js"></script>
   
-  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/notes/notes.js"></script>
+  <script type="text/javascript" src="/course-laboratory-of-software-systems/reveal-js/plugin/notes/notes.js"></script>
   
   
-  <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/notes/notes.js"></script>
+  <script type="text/javascript" src="/course-laboratory-of-software-systems/reveal-js/plugin/notes/notes.js"></script>
 
 
 
