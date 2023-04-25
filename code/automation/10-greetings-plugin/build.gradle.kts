@@ -1,6 +1,6 @@
 plugins {
     `java-gradle-plugin` // Loads the plugin in the test classpath
-    kotlin("jvm") version "1.8.20"
+    kotlin("jvm") version "1.8.21"
 }
 
 // Configuration of software sources
