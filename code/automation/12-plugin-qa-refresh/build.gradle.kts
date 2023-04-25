@@ -7,7 +7,7 @@ plugins {
     id("org.danilopianini.git-sensitive-semantic-versioning") version "1.1.9"
     id("com.gradle.plugin-publish") version "1.2.0"
     id("pl.droidsonroids.jacoco.testkit") version "1.0.9"
-    id("org.jlleitschuh.gradle.ktlint") version "11.3.1"
+    id("org.jlleitschuh.gradle.ktlint") version "11.3.2"
     id("io.gitlab.arturbosch.detekt") version "1.22.0"
 }
 
