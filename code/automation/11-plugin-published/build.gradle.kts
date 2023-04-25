@@ -1,6 +1,6 @@
 plugins {
     `java-gradle-plugin`
-    kotlin("jvm") version "1.8.20"
+    kotlin("jvm") version "1.8.21"
     id ("org.danilopianini.git-sensitive-semantic-versioning") version "1.1.9"
     // Generates the classpath manifest for us!
     id("com.gradle.plugin-publish") version "1.2.0"
