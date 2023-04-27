@@ -298,7 +298,7 @@
 <li>Can provide ways to diff binary file (by conversion to text, needs configuration)</li>
 <li>Example:</li>
 </ul>
-<pre tabindex="0"><code class="language-.gitattributes" data-lang=".gitattributes">* text=auto eol=lf
+<pre tabindex="0"><code>* text=auto eol=lf
 *.[cC][mM][dD] text eol=crlf
 *.[bB][aA][tT] text eol=crlf
 *.[pP][sS]1 text eol=crlf
@@ -313,6 +313,7 @@
 <h3 id="head"><em>HEAD</em></h3>
 <ul>
 <li>Pointer to the current commit</li>
+<li>Can be <strong>attached</strong> to a <em>branch</em> or <strong>detached</strong></li>
 </ul>
 </section><section>
 <h2 id="distributed-version-control-with-git-a-recap-8">Distributed version control with git: a recap</h2>
@@ -389,9 +390,10 @@
 <ul>
 <li>Configures the <em>remotes</em></li>
 </ul>
-<h3 id="upstream"><em>upstream</em></h3>
+<h3 id="upstream-branch"><em>upstream branch</em></h3>
 <ul>
-<li>The default <em>remote</em> for network operations.</li>
+<li>The default <em>remote branch</em> for network operations</li>
+<li>At most one per local branch</li>
 </ul>
 </section><section>
 <h2 id="distributed-version-control-with-git-a-recap-13">Distributed version control with git: a recap</h2>
@@ -399,6 +401,7 @@
 <ul>
 <li>Copies a repository from a possibly remote location.</li>
 <li>Alternative to <code>init</code></li>
+<li>Only imports the remote <em>default branch</em> (where the <code>HEAD</code> is)</li>
 <li>Automatically sets the local branch <em>upstream</em> to the cloned location.</li>
 </ul>
 </section><section>
@@ -422,14 +425,16 @@
 <h2 id="advanced-git">Advanced git</h2>
 <p>Discussed in <strong>Laboratory of Software Systems</strong></p>
 <ul>
-<li>Lightweight vs. annotated tagging</li>
-<li>Stashing</li>
-<li>Rebasing</li>
-<li>Rebased pulling</li>
-<li>Squashing</li>
-<li>Cherry picking</li>
+<li>Lightweight tags</li>
+<li>Signed commits</li>
+<li>Stash</li>
 <li>Submodules</li>
+<li>Bisection</li>
+<li>Rebase</li>
+<li>Squash</li>
+<li>Cherry-pick</li>
 <li>Hooks</li>
+<li>Custom git subcommands</li>
 </ul>
 </section><section>
 <h2 id="best-practices">Best practices</h2>
@@ -464,6 +469,7 @@
 </li>
 </ul>
 </section><section>
+<!-- this file includes generated content. Do not edit. Edit content/extra/pps-ci-introduction/generator.md, instead. -->
 <h1 id="dvcs-workflows">DVCS: Workflows</h1>
 <blockquote>
 <p>with great power comes great responsibility</p>
@@ -480,47 +486,100 @@
 <li>Do team members <em>trust</em> each other?</li>
 </ul>
 </section><section>
-<h2 id="trunk-based-development-like">Trunk-based development(-like)</h2>
-<p>Single branch, shared truth repository, frequent merges
-<br>
-<img src="2021-04-14-dvcs-sink.svg" style="
-    
-    
-    max-width: 95vw;
-    max-height: 55vh;
-    object-fit: contain;
-">
-</p>
+<h2 id="trunk-based-like-development">Trunk-based(-like) development</h2>
+<p><img src="https://raw.githubusercontent.com/DanySK/shared-slides/84eadfe2c2fb7da050763d60d05c549b953e18fe/git/dvcs-sink.svg" alt="Trunk-based development (like)"></p>
+</section><section>
+<h2 id="trunk-based-like-development-1">Trunk-based(-like) development</h2>
+<p>Single branch, shared truth repository, frequent merges</p>
 <ul>
 <li><em>Small</em> teams, <em>low-complexity</em> projects, <em>colocated</em> teams, <em>high</em> trust</li>
 <li>Typical of small company projects</li>
 </ul>
 </section><section>
 <h2 id="git-flow-classic">Git flow (classic)</h2>
-<p>Multiple branches, shared truth repository
-<br>
-<img src="2021-04-14-dvcs-flow-sink.svg" style="
-    
-    
-    max-width: 95vw;
-    max-height: 55vh;
-    object-fit: contain;
-">
-</p>
+<p><img src="https://raw.githubusercontent.com/DanySK/shared-slides/84eadfe2c2fb7da050763d60d05c549b953e18fe/git/dvcs-flow-sink.svg" alt="Git flow"></p>
+</section><section>
+<h2 id="git-flow-classic-1">Git flow (classic)</h2>
+<p>Multiple branches, shared truth repository</p>
 <ul>
 <li><em>Large</em> teams, <em>high-complexity</em> projects, <em>preferably colocated</em> teams, <em>high</em> trust</li>
 <li>Typical of large company projects</li>
 </ul>
 </section><section>
 <h2 id="git-flow-structure">Git flow structure</h2>
-<img src="2021-04-13-gitflow.svg" style="
-    
-    
-    max-width: 95vw;
-    max-height: 55vh;
-    object-fit: contain;
-">
-
+<div class="mermaid" data-processed="true" pre-rendered="true"><svg viewBox="-183.609375 -34.70000076293945 1861.609375 594.7000122070312" aria-labelledby="chart-title-mermaid-1682594269764 chart-desc-mermaid-1682594269764" role="img" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="1861.609375" id="mermaid-1682594269764"><title id="chart-title-mermaid-1682594269764"></title><desc id="chart-desc-mermaid-1682594269764"></desc><style>#mermaid-1682594269764 {font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}#mermaid-1682594269764 .error-icon{fill:#552222;}#mermaid-1682594269764 .error-text{fill:#552222;stroke:#552222;}#mermaid-1682594269764 .edge-thickness-normal{stroke-width:2px;}#mermaid-1682594269764 .edge-thickness-thick{stroke-width:3.5px;}#mermaid-1682594269764 .edge-pattern-solid{stroke-dasharray:0;}#mermaid-1682594269764 .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-1682594269764 .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-1682594269764 .marker{fill:#333333;stroke:#333333;}#mermaid-1682594269764 .marker.cross{stroke:#333333;}#mermaid-1682594269764 svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-1682594269764 .commit-id,#mermaid-1682594269764 .commit-msg,#mermaid-1682594269764 .branch-label{fill:lightgrey;color:lightgrey;font-family:'trebuchet ms',verdana,arial,sans-serif;font-family:var(--mermaid-font-family);}#mermaid-1682594269764 .branch-label0{fill:#ffffff;}#mermaid-1682594269764 .commit0{stroke:hsl(240, 100%, 46.2745098039%);fill:hsl(240, 100%, 46.2745098039%);}#mermaid-1682594269764 .commit-highlight0{stroke:hsl(60, 100%, 3.7254901961%);fill:hsl(60, 100%, 3.7254901961%);}#mermaid-1682594269764 .label0{fill:hsl(240, 100%, 46.2745098039%);}#mermaid-1682594269764 .arrow0{stroke:hsl(240, 100%, 46.2745098039%);}#mermaid-1682594269764 .branch-label1{fill:black;}#mermaid-1682594269764 .commit1{stroke:hsl(60, 100%, 43.5294117647%);fill:hsl(60, 100%, 43.5294117647%);}#mermaid-1682594269764 .commit-highlight1{stroke:rgb(0, 0, 160.5);fill:rgb(0, 0, 160.5);}#mermaid-1682594269764 .label1{fill:hsl(60, 100%, 43.5294117647%);}#mermaid-1682594269764 .arrow1{stroke:hsl(60, 100%, 43.5294117647%);}#mermaid-1682594269764 .branch-label2{fill:black;}#mermaid-1682594269764 .commit2{stroke:hsl(80, 100%, 46.2745098039%);fill:hsl(80, 100%, 46.2745098039%);}#mermaid-1682594269764 .commit-highlight2{stroke:rgb(48.8333333334, 0, 146.5000000001);fill:rgb(48.8333333334, 0, 146.5000000001);}#mermaid-1682594269764 .label2{fill:hsl(80, 100%, 46.2745098039%);}#mermaid-1682594269764 .arrow2{stroke:hsl(80, 100%, 46.2745098039%);}#mermaid-1682594269764 .branch-label3{fill:#ffffff;}#mermaid-1682594269764 .commit3{stroke:hsl(210, 100%, 46.2745098039%);fill:hsl(210, 100%, 46.2745098039%);}#mermaid-1682594269764 .commit-highlight3{stroke:rgb(146.5000000001, 73.2500000001, 0);fill:rgb(146.5000000001, 73.2500000001, 0);}#mermaid-1682594269764 .label3{fill:hsl(210, 100%, 46.2745098039%);}#mermaid-1682594269764 .arrow3{stroke:hsl(210, 100%, 46.2745098039%);}#mermaid-1682594269764 .branch-label4{fill:black;}#mermaid-1682594269764 .commit4{stroke:hsl(180, 100%, 46.2745098039%);fill:hsl(180, 100%, 46.2745098039%);}#mermaid-1682594269764 .commit-highlight4{stroke:rgb(146.5000000001, 0, 0);fill:rgb(146.5000000001, 0, 0);}#mermaid-1682594269764 .label4{fill:hsl(180, 100%, 46.2745098039%);}#mermaid-1682594269764 .arrow4{stroke:hsl(180, 100%, 46.2745098039%);}#mermaid-1682594269764 .branch-label5{fill:black;}#mermaid-1682594269764 .commit5{stroke:hsl(150, 100%, 46.2745098039%);fill:hsl(150, 100%, 46.2745098039%);}#mermaid-1682594269764 .commit-highlight5{stroke:rgb(146.5000000001, 0, 73.2500000001);fill:rgb(146.5000000001, 0, 73.2500000001);}#mermaid-1682594269764 .label5{fill:hsl(150, 100%, 46.2745098039%);}#mermaid-1682594269764 .arrow5{stroke:hsl(150, 100%, 46.2745098039%);}#mermaid-1682594269764 .branch-label6{fill:black;}#mermaid-1682594269764 .commit6{stroke:hsl(300, 100%, 46.2745098039%);fill:hsl(300, 100%, 46.2745098039%);}#mermaid-1682594269764 .commit-highlight6{stroke:rgb(0, 146.5000000001, 0);fill:rgb(0, 146.5000000001, 0);}#mermaid-1682594269764 .label6{fill:hsl(300, 100%, 46.2745098039%);}#mermaid-1682594269764 .arrow6{stroke:hsl(300, 100%, 46.2745098039%);}#mermaid-1682594269764 .branch-label7{fill:black;}#mermaid-1682594269764 .commit7{stroke:hsl(0, 100%, 46.2745098039%);fill:hsl(0, 100%, 46.2745098039%);}#mermaid-1682594269764 .commit-highlight7{stroke:rgb(0, 146.5000000001, 146.5000000001);fill:rgb(0, 146.5000000001, 146.5000000001);}#mermaid-1682594269764 .label7{fill:hsl(0, 100%, 46.2745098039%);}#mermaid-1682594269764 .arrow7{stroke:hsl(0, 100%, 46.2745098039%);}#mermaid-1682594269764 .branch{stroke-width:1;stroke:#333333;stroke-dasharray:2;}#mermaid-1682594269764 .commit-label{font-size:10px;fill:#000021;}#mermaid-1682594269764 .commit-label-bkg{font-size:10px;fill:#ffffde;opacity:0.5;}#mermaid-1682594269764 .tag-label{font-size:10px;fill:#131300;}#mermaid-1682594269764 .tag-label-bkg{fill:#ECECFF;stroke:hsl(240, 60%, 86.2745098039%);}#mermaid-1682594269764 .tag-hole{fill:#333;}#mermaid-1682594269764 .commit-merge{stroke:#ECECFF;fill:#ECECFF;}#mermaid-1682594269764 .commit-reverse{stroke:#ECECFF;fill:#ECECFF;stroke-width:3;}#mermaid-1682594269764 .commit-highlight-inner{stroke:#ECECFF;fill:#ECECFF;}#mermaid-1682594269764 .arrow{stroke-width:8;stroke-linecap:round;fill:none;}:root{--mermaid-font-family:Inconsolata;}</style><g></g><g class="commit-bullets"></g><g class="commit-labels"></g><g><line class="branch branch0" y2="0" x2="1700" y1="0" x1="0"></line><rect transform="translate(-19, -8.5)" height="21" width="67.5703125" y="-0.5" x="-83.5703125" ry="4" rx="4" class="branchLabelBkg label0"></rect><g class="branchLabel"><g transform="translate(-93.5703125, -9.5)" class="label branch-label0"><text><tspan class="row" x="0" dy="1em" xml:space="preserve">master</tspan></text></g></g><line class="branch branch1" y2="90" x2="1700" y1="90" x1="0"></line><rect transform="translate(-19, 81.5)" height="21" width="74.1484375" y="-0.5" x="-90.1484375" ry="4" rx="4" class="branchLabelBkg label1"></rect><g class="branchLabel"><g transform="translate(-100.1484375, 80.5)" class="label branch-label1"><text><tspan class="row" x="0" dy="1em" xml:space="preserve">develop</tspan></text></g></g><line class="branch branch2" y2="180" x2="1700" y1="180" x1="0"></line><rect transform="translate(-19, 171.5)" height="21" width="110.609375" y="-0.5" x="-126.609375" ry="4" rx="4" class="branchLabelBkg label2"></rect><g class="branchLabel"><g transform="translate(-136.609375, 170.5)" class="label branch-label2"><text><tspan class="row" x="0" dy="1em" xml:space="preserve">release/1.0.0</tspan></text></g></g><line class="branch branch3" y2="270" x2="1700" y1="270" x1="0"></line><rect transform="translate(-19, 261.5)" height="21" width="94.6015625" y="-0.5" x="-110.6015625" ry="4" rx="4" class="branchLabelBkg label3"></rect><g class="branchLabel"><g transform="translate(-120.6015625, 260.5)" class="label branch-label3"><text><tspan class="row" x="0" dy="1em" xml:space="preserve">feature/foo</tspan></text></g></g><line class="branch branch4" y2="360" x2="1700" y1="360" x1="0"></line><rect transform="translate(-19, 351.5)" height="21" width="96.375" y="-0.5" x="-112.375" ry="4" rx="4" class="branchLabelBkg label4"></rect><g class="branchLabel"><g transform="translate(-122.375, 350.5)" class="label branch-label4"><text><tspan class="row" x="0" dy="1em" xml:space="preserve">hotfix/1.0.1</tspan></text></g></g><line class="branch branch5" y2="450" x2="1700" y1="450" x1="0"></line><rect transform="translate(-19, 441.5)" height="21" width="96.0546875" y="-0.5" x="-112.0546875" ry="4" rx="4" class="branchLabelBkg label5"></rect><g class="branchLabel"><g transform="translate(-122.0546875, 440.5)" class="label branch-label5"><text><tspan class="row" x="0" dy="1em" xml:space="preserve">feature/bar</tspan></text></g></g><line class="branch branch6" y2="540" x2="1700" y1="540" x1="0"></line><rect transform="translate(-19, 531.5)" height="21" width="110.609375" y="-0.5" x="-126.609375" ry="4" rx="4" class="branchLabelBkg label6"></rect><g class="branchLabel"><g transform="translate(-136.609375, 530.5)" class="label branch-label6"><text><tspan class="row" x="0" dy="1em" xml:space="preserve">release/1.1.0</tspan></text></g></g></g><g class="commit-arrows"><path class="arrow arrow1" d="M 10 0 L 10 70 A 20 20, 0, 0, 0, 30 90 L 60 90"></path><path class="arrow arrow1" d="M 60 90 L 60 90  60 90 L 110 90"></path><path class="arrow arrow1" d="M 110 90 L 110 90  110 90 L 160 90"></path><path class="arrow arrow2" d="M 110 90 L 110 160 A 20 20, 0, 0, 0, 130 180 L 210 180"></path><path class="arrow arrow0" d="M 10 0 L 10 0  10 0 L 260 0"></path><path class="arrow arrow2" d="M 210 180 L 240 180 A 20 20, 0, 0, 0, 260 160 L 260 0"></path><path class="arrow arrow1" d="M 160 90 L 160 90  160 90 L 310 90"></path><path class="arrow arrow2" d="M 210 180 L 290 180 A 20 20, 0, 0, 0, 310 160 L 310 90"></path><path class="arrow arrow1" d="M 310 90 L 310 90  310 90 L 360 90"></path><path class="arrow arrow4" d="M 260 0 L 260 340 A 20 20, 0, 0, 0, 280 360 L 410 360"></path><path class="arrow arrow4" d="M 410 360 L 410 360  410 360 L 460 360"></path><path class="arrow arrow0" d="M 260 0 L 260 0  260 0 L 510 0"></path><path class="arrow arrow4" d="M 460 360 L 490 360 A 20 20, 0, 0, 0, 510 340 L 510 0"></path><path class="arrow arrow1" d="M 360 90 L 360 90  360 90 L 560 90"></path><path class="arrow arrow4" d="M 460 360 L 540 360 A 20 20, 0, 0, 0, 560 340 L 560 90"></path><path class="arrow arrow1" d="M 560 90 L 560 90  560 90 L 610 90"></path><path class="arrow arrow3" d="M 360 90 L 360 250 A 20 20, 0, 0, 0, 380 270 L 660 270"></path><path class="arrow arrow1" d="M 610 90 L 610 90  610 90 L 710 90"></path><path class="arrow arrow1" d="M 710 90 L 710 90  710 90 L 760 90"></path><path class="arrow arrow3" d="M 660 270 L 660 270  660 270 L 810 270"></path><path class="arrow arrow3" d="M 760 90 L 760 250 A 20 20, 0, 0, 0, 780 270 L 810 270"></path><path class="arrow arrow1" d="M 760 90 L 760 90  760 90 L 860 90"></path><path class="arrow arrow5" d="M 710 90 L 710 430 A 20 20, 0, 0, 0, 730 450 L 910 450"></path><path class="arrow arrow5" d="M 910 450 L 910 450  910 450 L 960 450"></path><path class="arrow arrow5" d="M 860 90 L 860 224 A 10 10, 0, 0, 0, 870 234 L 950 234 A 10 10, 0, 0, 1, 960 244 L 960 450"></path><path class="arrow arrow5" d="M 960 450 L 960 450  960 450 L 1010 450"></path><path class="arrow arrow1" d="M 860 90 L 860 90  860 90 L 1060 90"></path><path class="arrow arrow5" d="M 1010 450 L 1040 450 A 20 20, 0, 0, 0, 1060 430 L 1060 90"></path><path class="arrow arrow1" d="M 1060 90 L 1060 90  1060 90 L 1110 90"></path><path class="arrow arrow3" d="M 810 270 L 810 270  810 270 L 1160 270"></path><path class="arrow arrow3" d="M 1160 270 L 1160 270  1160 270 L 1210 270"></path><path class="arrow arrow3" d="M 1110 90 L 1110 152 A 10 10, 0, 0, 0, 1120 162 L 1200 162 A 10 10, 0, 0, 1, 1210 172 L 1210 270"></path><path class="arrow arrow3" d="M 1210 270 L 1210 270  1210 270 L 1260 270"></path><path class="arrow arrow1" d="M 1110 90 L 1110 90  1110 90 L 1310 90"></path><path class="arrow arrow3" d="M 1260 270 L 1290 270 A 20 20, 0, 0, 0, 1310 250 L 1310 90"></path><path class="arrow arrow1" d="M 1310 90 L 1310 90  1310 90 L 1360 90"></path><path class="arrow arrow6" d="M 1360 90 L 1360 520 A 20 20, 0, 0, 0, 1380 540 L 1410 540"></path><path class="arrow arrow1" d="M 1360 90 L 1360 90  1360 90 L 1460 90"></path><path class="arrow arrow6" d="M 1410 540 L 1410 540  1410 540 L 1510 540"></path><path class="arrow arrow0" d="M 510 0 L 510 0  510 0 L 1560 0"></path><path class="arrow arrow6" d="M 1510 540 L 1540 540 A 20 20, 0, 0, 0, 1560 520 L 1560 0"></path><path class="arrow arrow1" d="M 1460 90 L 1460 90  1460 90 L 1610 90"></path><path class="arrow arrow6" d="M 1510 540 L 1590 540 A 20 20, 0, 0, 0, 1610 520 L 1610 90"></path><path class="arrow arrow1" d="M 1610 90 L 1610 90  1610 90 L 1660 90"></path></g><g class="commit-bullets"><circle class="commit 0-ff7622f commit0" r="10" cy="0" cx="10"></circle><circle class="commit 1-2157e0e commit1" r="10" cy="90" cx="60"></circle><circle class="commit 2-aa070bf commit1" r="10" cy="90" cx="110"></circle><circle class="commit 3-f00c3a1 commit1" r="10" cy="90" cx="160"></circle><circle class="commit 4-a01eefb commit2" r="10" cy="180" cx="210"></circle><circle class="commit 5-ee744b2 commit0" r="9" cy="0" cx="260"></circle><circle class="commit commit-merge 5-ee744b2 commit0" r="6" cy="0" cx="260"></circle><circle class="commit 6-e4f0d23 commit1" r="9" cy="90" cx="310"></circle><circle class="commit commit-merge 6-e4f0d23 commit1" r="6" cy="90" cx="310"></circle><circle class="commit 7-9c2d1f4 commit1" r="10" cy="90" cx="360"></circle><circle class="commit 8-2644815 commit4" r="10" cy="360" cx="410"></circle><circle class="commit 9-befae50 commit4" r="10" cy="360" cx="460"></circle><circle class="commit 10-0e0e62b commit0" r="9" cy="0" cx="510"></circle><circle class="commit commit-merge 10-0e0e62b commit0" r="6" cy="0" cx="510"></circle><circle class="commit 11-9c5ed3a commit1" r="9" cy="90" cx="560"></circle><circle class="commit commit-merge 11-9c5ed3a commit1" r="6" cy="90" cx="560"></circle><circle class="commit 12-eb609fc commit1" r="10" cy="90" cx="610"></circle><circle class="commit 13-431908c commit3" r="10" cy="270" cx="660"></circle><circle class="commit 14-a4ec3a0 commit1" r="10" cy="90" cx="710"></circle><circle class="commit 15-d264a34 commit1" r="10" cy="90" cx="760"></circle><circle class="commit 16-0665b46 commit3" r="9" cy="270" cx="810"></circle><circle class="commit commit-merge 16-0665b46 commit3" r="6" cy="270" cx="810"></circle><circle class="commit 17-eae720e commit1" r="10" cy="90" cx="860"></circle><circle class="commit 18-cb8cefa commit5" r="10" cy="450" cx="910"></circle><circle class="commit 19-1ab0f52 commit5" r="9" cy="450" cx="960"></circle><circle class="commit commit-merge 19-1ab0f52 commit5" r="6" cy="450" cx="960"></circle><circle class="commit 20-af6332f commit5" r="10" cy="450" cx="1010"></circle><circle class="commit 21-eee7fc1 commit1" r="9" cy="90" cx="1060"></circle><circle class="commit commit-merge 21-eee7fc1 commit1" r="6" cy="90" cx="1060"></circle><circle class="commit 22-0e20d01 commit1" r="10" cy="90" cx="1110"></circle><circle class="commit 23-22abc65 commit3" r="10" cy="270" cx="1160"></circle><circle class="commit 24-4f33e4a commit3" r="9" cy="270" cx="1210"></circle><circle class="commit commit-merge 24-4f33e4a commit3" r="6" cy="270" cx="1210"></circle><circle class="commit 25-952b3ba commit3" r="10" cy="270" cx="1260"></circle><circle class="commit 26-9ad8c42 commit1" r="9" cy="90" cx="1310"></circle><circle class="commit commit-merge 26-9ad8c42 commit1" r="6" cy="90" cx="1310"></circle><circle class="commit 27-ef069e4 commit1" r="10" cy="90" cx="1360"></circle><circle class="commit 28-0e5c7bd commit6" r="10" cy="540" cx="1410"></circle><circle class="commit 29-102a3a1 commit1" r="10" cy="90" cx="1460"></circle><circle class="commit 30-35b8d04 commit6" r="10" cy="540" cx="1510"></circle><circle class="commit 31-2a23fbc commit0" r="9" cy="0" cx="1560"></circle><circle class="commit commit-merge 31-2a23fbc commit0" r="6" cy="0" cx="1560"></circle><circle class="commit 32-d3d527b commit1" r="9" cy="90" cx="1610"></circle><circle class="commit commit-merge 32-d3d527b commit1" r="6" cy="90" cx="1610"></circle><circle class="commit 33-8342139 commit1" r="10" cy="90" cx="1660"></circle></g><g class="commit-labels"><polygon points="-31.0048828125,-17.2
+          -31.0048828125,-21.2
+          -23.0048828125,-26.7
+          43.0048828125,-26.7
+          43.0048828125,-11.7
+          -23.0048828125,-11.7" class="tag-label-bkg"></polygon><circle class="tag-hole" r="1.5" cy="-19.2" cx="-27.0048828125"></circle><text x="-19.0048828125" class="tag-label" y="-16">initial commit</text><polygon points="236.66015625,-17.2
+          236.66015625,-21.2
+          244.66015625,-26.7
+          275.33984375,-26.7
+          275.33984375,-11.7
+          244.66015625,-11.7" class="tag-label-bkg"></polygon><circle class="tag-hole" r="1.5" cy="-19.2" cx="240.66015625"></circle><text x="248.66015625" class="tag-label" y="-16">1.0.0</text><polygon points="486.66015625,-17.2
+          486.66015625,-21.2
+          494.66015625,-26.7
+          525.33984375,-26.7
+          525.33984375,-11.7
+          494.66015625,-11.7" class="tag-label-bkg"></polygon><circle class="tag-hole" r="1.5" cy="-19.2" cx="490.66015625"></circle><text x="498.66015625" class="tag-label" y="-16">1.0.1</text><polygon points="1536.66015625,-17.2
+          1536.66015625,-21.2
+          1544.66015625,-26.7
+          1575.33984375,-26.7
+          1575.33984375,-11.7
+          1544.66015625,-11.7" class="tag-label-bkg"></polygon><circle class="tag-hole" r="1.5" cy="-19.2" cx="1540.66015625"></circle><text x="1548.66015625" class="tag-label" y="-16">1.1.0</text></g></svg></div>
+</section><section>
+<h2 id="git-flow-feature-branches">Git flow: feature branches</h2>
+<p>sprouts from <code>develop</code> $\Rightarrow$ dies in <code>develop</code></p>
+<ul>
+<li>Should remain up-to-date with develop</li>
+<li>There can be multiple ongoing feature branches</li>
+</ul>
+<div class="mermaid" data-processed="true" pre-rendered="true"><svg viewBox="-167.6015625 -34.70000076293945 1145.6015625 234.6999969482422" aria-labelledby="chart-title-mermaid-1682594270338 chart-desc-mermaid-1682594270338" role="img" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="1145.6015625" id="mermaid-1682594270338"><title id="chart-title-mermaid-1682594270338"></title><desc id="chart-desc-mermaid-1682594270338"></desc><style>#mermaid-1682594270338 {font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}#mermaid-1682594270338 .error-icon{fill:#552222;}#mermaid-1682594270338 .error-text{fill:#552222;stroke:#552222;}#mermaid-1682594270338 .edge-thickness-normal{stroke-width:2px;}#mermaid-1682594270338 .edge-thickness-thick{stroke-width:3.5px;}#mermaid-1682594270338 .edge-pattern-solid{stroke-dasharray:0;}#mermaid-1682594270338 .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-1682594270338 .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-1682594270338 .marker{fill:#333333;stroke:#333333;}#mermaid-1682594270338 .marker.cross{stroke:#333333;}#mermaid-1682594270338 svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-1682594270338 .commit-id,#mermaid-1682594270338 .commit-msg,#mermaid-1682594270338 .branch-label{fill:lightgrey;color:lightgrey;font-family:'trebuchet ms',verdana,arial,sans-serif;font-family:var(--mermaid-font-family);}#mermaid-1682594270338 .branch-label0{fill:#ffffff;}#mermaid-1682594270338 .commit0{stroke:hsl(240, 100%, 46.2745098039%);fill:hsl(240, 100%, 46.2745098039%);}#mermaid-1682594270338 .commit-highlight0{stroke:hsl(60, 100%, 3.7254901961%);fill:hsl(60, 100%, 3.7254901961%);}#mermaid-1682594270338 .label0{fill:hsl(240, 100%, 46.2745098039%);}#mermaid-1682594270338 .arrow0{stroke:hsl(240, 100%, 46.2745098039%);}#mermaid-1682594270338 .branch-label1{fill:black;}#mermaid-1682594270338 .commit1{stroke:hsl(60, 100%, 43.5294117647%);fill:hsl(60, 100%, 43.5294117647%);}#mermaid-1682594270338 .commit-highlight1{stroke:rgb(0, 0, 160.5);fill:rgb(0, 0, 160.5);}#mermaid-1682594270338 .label1{fill:hsl(60, 100%, 43.5294117647%);}#mermaid-1682594270338 .arrow1{stroke:hsl(60, 100%, 43.5294117647%);}#mermaid-1682594270338 .branch-label2{fill:black;}#mermaid-1682594270338 .commit2{stroke:hsl(80, 100%, 46.2745098039%);fill:hsl(80, 100%, 46.2745098039%);}#mermaid-1682594270338 .commit-highlight2{stroke:rgb(48.8333333334, 0, 146.5000000001);fill:rgb(48.8333333334, 0, 146.5000000001);}#mermaid-1682594270338 .label2{fill:hsl(80, 100%, 46.2745098039%);}#mermaid-1682594270338 .arrow2{stroke:hsl(80, 100%, 46.2745098039%);}#mermaid-1682594270338 .branch-label3{fill:#ffffff;}#mermaid-1682594270338 .commit3{stroke:hsl(210, 100%, 46.2745098039%);fill:hsl(210, 100%, 46.2745098039%);}#mermaid-1682594270338 .commit-highlight3{stroke:rgb(146.5000000001, 73.2500000001, 0);fill:rgb(146.5000000001, 73.2500000001, 0);}#mermaid-1682594270338 .label3{fill:hsl(210, 100%, 46.2745098039%);}#mermaid-1682594270338 .arrow3{stroke:hsl(210, 100%, 46.2745098039%);}#mermaid-1682594270338 .branch-label4{fill:black;}#mermaid-1682594270338 .commit4{stroke:hsl(180, 100%, 46.2745098039%);fill:hsl(180, 100%, 46.2745098039%);}#mermaid-1682594270338 .commit-highlight4{stroke:rgb(146.5000000001, 0, 0);fill:rgb(146.5000000001, 0, 0);}#mermaid-1682594270338 .label4{fill:hsl(180, 100%, 46.2745098039%);}#mermaid-1682594270338 .arrow4{stroke:hsl(180, 100%, 46.2745098039%);}#mermaid-1682594270338 .branch-label5{fill:black;}#mermaid-1682594270338 .commit5{stroke:hsl(150, 100%, 46.2745098039%);fill:hsl(150, 100%, 46.2745098039%);}#mermaid-1682594270338 .commit-highlight5{stroke:rgb(146.5000000001, 0, 73.2500000001);fill:rgb(146.5000000001, 0, 73.2500000001);}#mermaid-1682594270338 .label5{fill:hsl(150, 100%, 46.2745098039%);}#mermaid-1682594270338 .arrow5{stroke:hsl(150, 100%, 46.2745098039%);}#mermaid-1682594270338 .branch-label6{fill:black;}#mermaid-1682594270338 .commit6{stroke:hsl(300, 100%, 46.2745098039%);fill:hsl(300, 100%, 46.2745098039%);}#mermaid-1682594270338 .commit-highlight6{stroke:rgb(0, 146.5000000001, 0);fill:rgb(0, 146.5000000001, 0);}#mermaid-1682594270338 .label6{fill:hsl(300, 100%, 46.2745098039%);}#mermaid-1682594270338 .arrow6{stroke:hsl(300, 100%, 46.2745098039%);}#mermaid-1682594270338 .branch-label7{fill:black;}#mermaid-1682594270338 .commit7{stroke:hsl(0, 100%, 46.2745098039%);fill:hsl(0, 100%, 46.2745098039%);}#mermaid-1682594270338 .commit-highlight7{stroke:rgb(0, 146.5000000001, 146.5000000001);fill:rgb(0, 146.5000000001, 146.5000000001);}#mermaid-1682594270338 .label7{fill:hsl(0, 100%, 46.2745098039%);}#mermaid-1682594270338 .arrow7{stroke:hsl(0, 100%, 46.2745098039%);}#mermaid-1682594270338 .branch{stroke-width:1;stroke:#333333;stroke-dasharray:2;}#mermaid-1682594270338 .commit-label{font-size:10px;fill:#000021;}#mermaid-1682594270338 .commit-label-bkg{font-size:10px;fill:#ffffde;opacity:0.5;}#mermaid-1682594270338 .tag-label{font-size:10px;fill:#131300;}#mermaid-1682594270338 .tag-label-bkg{fill:#ECECFF;stroke:hsl(240, 60%, 86.2745098039%);}#mermaid-1682594270338 .tag-hole{fill:#333;}#mermaid-1682594270338 .commit-merge{stroke:#ECECFF;fill:#ECECFF;}#mermaid-1682594270338 .commit-reverse{stroke:#ECECFF;fill:#ECECFF;stroke-width:3;}#mermaid-1682594270338 .commit-highlight-inner{stroke:#ECECFF;fill:#ECECFF;}#mermaid-1682594270338 .arrow{stroke-width:8;stroke-linecap:round;fill:none;}:root{--mermaid-font-family:Inconsolata;}</style><g></g><g class="commit-bullets"></g><g class="commit-labels"></g><g><line class="branch branch0" y2="0" x2="1000" y1="0" x1="0"></line><rect transform="translate(-19, -8.5)" height="21" width="67.5703125" y="-0.5" x="-83.5703125" ry="4" rx="4" class="branchLabelBkg label0"></rect><g class="branchLabel"><g transform="translate(-93.5703125, -9.5)" class="label branch-label0"><text><tspan class="row" x="0" dy="1em" xml:space="preserve">master</tspan></text></g></g><line class="branch branch1" y2="90" x2="1000" y1="90" x1="0"></line><rect transform="translate(-19, 81.5)" height="21" width="74.1484375" y="-0.5" x="-90.1484375" ry="4" rx="4" class="branchLabelBkg label1"></rect><g class="branchLabel"><g transform="translate(-100.1484375, 80.5)" class="label branch-label1"><text><tspan class="row" x="0" dy="1em" xml:space="preserve">develop</tspan></text></g></g><line class="branch branch2" y2="180" x2="1000" y1="180" x1="0"></line><rect transform="translate(-19, 171.5)" height="21" width="94.6015625" y="-0.5" x="-110.6015625" ry="4" rx="4" class="branchLabelBkg label2"></rect><g class="branchLabel"><g transform="translate(-120.6015625, 170.5)" class="label branch-label2"><text><tspan class="row" x="0" dy="1em" xml:space="preserve">feature/foo</tspan></text></g></g></g><g class="commit-arrows"><path class="arrow arrow1" d="M 10 0 L 10 70 A 20 20, 0, 0, 0, 30 90 L 60 90"></path><path class="arrow arrow0" d="M 10 0 L 10 0  10 0 L 110 0"></path><path class="arrow arrow1" d="M 60 90 L 60 90  60 90 L 160 90"></path><path class="arrow arrow1" d="M 160 90 L 160 90  160 90 L 210 90"></path><path class="arrow arrow2" d="M 210 90 L 210 160 A 20 20, 0, 0, 0, 230 180 L 260 180"></path><path class="arrow arrow1" d="M 210 90 L 210 90  210 90 L 310 90"></path><path class="arrow arrow1" d="M 310 90 L 310 90  310 90 L 360 90"></path><path class="arrow arrow2" d="M 260 180 L 260 180  260 180 L 410 180"></path><path class="arrow arrow2" d="M 360 90 L 360 160 A 20 20, 0, 0, 0, 380 180 L 410 180"></path><path class="arrow arrow1" d="M 360 90 L 360 90  360 90 L 460 90"></path><path class="arrow arrow1" d="M 460 90 L 460 90  460 90 L 510 90"></path><path class="arrow arrow1" d="M 510 90 L 510 90  510 90 L 560 90"></path><path class="arrow arrow1" d="M 560 90 L 560 90  560 90 L 610 90"></path><path class="arrow arrow2" d="M 410 180 L 410 180  410 180 L 660 180"></path><path class="arrow arrow2" d="M 660 180 L 660 180  660 180 L 710 180"></path><path class="arrow arrow2" d="M 610 90 L 610 125 A 10 10, 0, 0, 0, 620 135 L 700 135 A 10 10, 0, 0, 1, 710 145 L 710 180"></path><path class="arrow arrow2" d="M 710 180 L 710 180  710 180 L 760 180"></path><path class="arrow arrow1" d="M 610 90 L 610 90  610 90 L 810 90"></path><path class="arrow arrow2" d="M 760 180 L 790 180 A 20 20, 0, 0, 0, 810 160 L 810 90"></path><path class="arrow arrow1" d="M 810 90 L 810 90  810 90 L 860 90"></path><path class="arrow arrow0" d="M 110 0 L 110 0  110 0 L 910 0"></path><path class="arrow arrow1" d="M 860 90 L 860 90  860 90 L 960 90"></path></g><g class="commit-bullets"><circle class="commit 0-5ecf8e5 commit0" r="10" cy="0" cx="10"></circle><circle class="commit 1-8c99e9e commit1" r="10" cy="90" cx="60"></circle><rect class="commit 2-de13c19 commit-highlight0 commit-highlight-outer" width="20" height="20" y="-10" x="100"></rect><rect class="commit 2-de13c19 commit0 commit-highlight-inner" width="12" height="12" y="-6" x="104"></rect><rect class="commit 3-3691cb4 commit-highlight1 commit-highlight-outer" width="20" height="20" y="80" x="150"></rect><rect class="commit 3-3691cb4 commit1 commit-highlight-inner" width="12" height="12" y="84" x="154"></rect><circle class="commit 4-5652c80 commit1" r="10" cy="90" cx="210"></circle><circle class="commit 5-972ec75 commit2" r="10" cy="180" cx="260"></circle><circle class="commit 6-ceac3d6 commit1" r="10" cy="90" cx="310"></circle><circle class="commit 7-47bc47e commit1" r="10" cy="90" cx="360"></circle><circle class="commit 8-30ea646 commit2" r="9" cy="180" cx="410"></circle><circle class="commit commit-merge 8-30ea646 commit2" r="6" cy="180" cx="410"></circle><circle class="commit 9-f0279cf commit1" r="10" cy="90" cx="460"></circle><circle class="commit 10-26b668c commit1" r="10" cy="90" cx="510"></circle><circle class="commit 11-04bb606 commit1" r="10" cy="90" cx="560"></circle><circle class="commit 12-09e6a91 commit1" r="10" cy="90" cx="610"></circle><circle class="commit 13-a65c44e commit2" r="10" cy="180" cx="660"></circle><circle class="commit 14-2d3e83c commit2" r="9" cy="180" cx="710"></circle><circle class="commit commit-merge 14-2d3e83c commit2" r="6" cy="180" cx="710"></circle><circle class="commit 15-15cbbfe commit2" r="10" cy="180" cx="760"></circle><circle class="commit 16-8f33dc1 commit1" r="9" cy="90" cx="810"></circle><circle class="commit commit-merge 16-8f33dc1 commit1" r="6" cy="90" cx="810"></circle><circle class="commit 17-3cf14d3 commit1" r="10" cy="90" cx="860"></circle><rect class="commit 18-11f5f93 commit-highlight0 commit-highlight-outer" width="20" height="20" y="-10" x="900"></rect><rect class="commit 18-11f5f93 commit0 commit-highlight-inner" width="12" height="12" y="-6" x="904"></rect><rect class="commit 19-01a4c7a commit-highlight1 commit-highlight-outer" width="20" height="20" y="80" x="950"></rect><rect class="commit 19-01a4c7a commit1 commit-highlight-inner" width="12" height="12" y="84" x="954"></rect></g><g class="commit-labels"><polygon points="-31.0048828125,-17.2
+          -31.0048828125,-21.2
+          -23.0048828125,-26.7
+          43.0048828125,-26.7
+          43.0048828125,-11.7
+          -23.0048828125,-11.7" class="tag-label-bkg"></polygon><circle class="tag-hole" r="1.5" cy="-19.2" cx="-27.0048828125"></circle><text x="-19.0048828125" class="tag-label" y="-16">initial commit</text></g></svg></div>
+</section><section>
+<h2 id="git-flow-release-branches">Git flow: release branches</h2>
+<p>sprouts from <code>develop</code> $\Rightarrow$ dies in <code>master</code> and <code>develop</code></p>
+<ul>
+<li>Pre-release changes (fixing hardcoded version numbers, changelogs, etc)</li>
+</ul>
+<div class="mermaid" data-processed="true" pre-rendered="true"><svg viewBox="-183.609375 -34.70000076293945 911.609375 234.6999969482422" aria-labelledby="chart-title-mermaid-1682594270912 chart-desc-mermaid-1682594270912" role="img" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="911.609375" id="mermaid-1682594270912"><title id="chart-title-mermaid-1682594270912"></title><desc id="chart-desc-mermaid-1682594270912"></desc><style>#mermaid-1682594270912 {font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}#mermaid-1682594270912 .error-icon{fill:#552222;}#mermaid-1682594270912 .error-text{fill:#552222;stroke:#552222;}#mermaid-1682594270912 .edge-thickness-normal{stroke-width:2px;}#mermaid-1682594270912 .edge-thickness-thick{stroke-width:3.5px;}#mermaid-1682594270912 .edge-pattern-solid{stroke-dasharray:0;}#mermaid-1682594270912 .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-1682594270912 .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-1682594270912 .marker{fill:#333333;stroke:#333333;}#mermaid-1682594270912 .marker.cross{stroke:#333333;}#mermaid-1682594270912 svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-1682594270912 .commit-id,#mermaid-1682594270912 .commit-msg,#mermaid-1682594270912 .branch-label{fill:lightgrey;color:lightgrey;font-family:'trebuchet ms',verdana,arial,sans-serif;font-family:var(--mermaid-font-family);}#mermaid-1682594270912 .branch-label0{fill:#ffffff;}#mermaid-1682594270912 .commit0{stroke:hsl(240, 100%, 46.2745098039%);fill:hsl(240, 100%, 46.2745098039%);}#mermaid-1682594270912 .commit-highlight0{stroke:hsl(60, 100%, 3.7254901961%);fill:hsl(60, 100%, 3.7254901961%);}#mermaid-1682594270912 .label0{fill:hsl(240, 100%, 46.2745098039%);}#mermaid-1682594270912 .arrow0{stroke:hsl(240, 100%, 46.2745098039%);}#mermaid-1682594270912 .branch-label1{fill:black;}#mermaid-1682594270912 .commit1{stroke:hsl(60, 100%, 43.5294117647%);fill:hsl(60, 100%, 43.5294117647%);}#mermaid-1682594270912 .commit-highlight1{stroke:rgb(0, 0, 160.5);fill:rgb(0, 0, 160.5);}#mermaid-1682594270912 .label1{fill:hsl(60, 100%, 43.5294117647%);}#mermaid-1682594270912 .arrow1{stroke:hsl(60, 100%, 43.5294117647%);}#mermaid-1682594270912 .branch-label2{fill:black;}#mermaid-1682594270912 .commit2{stroke:hsl(80, 100%, 46.2745098039%);fill:hsl(80, 100%, 46.2745098039%);}#mermaid-1682594270912 .commit-highlight2{stroke:rgb(48.8333333334, 0, 146.5000000001);fill:rgb(48.8333333334, 0, 146.5000000001);}#mermaid-1682594270912 .label2{fill:hsl(80, 100%, 46.2745098039%);}#mermaid-1682594270912 .arrow2{stroke:hsl(80, 100%, 46.2745098039%);}#mermaid-1682594270912 .branch-label3{fill:#ffffff;}#mermaid-1682594270912 .commit3{stroke:hsl(210, 100%, 46.2745098039%);fill:hsl(210, 100%, 46.2745098039%);}#mermaid-1682594270912 .commit-highlight3{stroke:rgb(146.5000000001, 73.2500000001, 0);fill:rgb(146.5000000001, 73.2500000001, 0);}#mermaid-1682594270912 .label3{fill:hsl(210, 100%, 46.2745098039%);}#mermaid-1682594270912 .arrow3{stroke:hsl(210, 100%, 46.2745098039%);}#mermaid-1682594270912 .branch-label4{fill:black;}#mermaid-1682594270912 .commit4{stroke:hsl(180, 100%, 46.2745098039%);fill:hsl(180, 100%, 46.2745098039%);}#mermaid-1682594270912 .commit-highlight4{stroke:rgb(146.5000000001, 0, 0);fill:rgb(146.5000000001, 0, 0);}#mermaid-1682594270912 .label4{fill:hsl(180, 100%, 46.2745098039%);}#mermaid-1682594270912 .arrow4{stroke:hsl(180, 100%, 46.2745098039%);}#mermaid-1682594270912 .branch-label5{fill:black;}#mermaid-1682594270912 .commit5{stroke:hsl(150, 100%, 46.2745098039%);fill:hsl(150, 100%, 46.2745098039%);}#mermaid-1682594270912 .commit-highlight5{stroke:rgb(146.5000000001, 0, 73.2500000001);fill:rgb(146.5000000001, 0, 73.2500000001);}#mermaid-1682594270912 .label5{fill:hsl(150, 100%, 46.2745098039%);}#mermaid-1682594270912 .arrow5{stroke:hsl(150, 100%, 46.2745098039%);}#mermaid-1682594270912 .branch-label6{fill:black;}#mermaid-1682594270912 .commit6{stroke:hsl(300, 100%, 46.2745098039%);fill:hsl(300, 100%, 46.2745098039%);}#mermaid-1682594270912 .commit-highlight6{stroke:rgb(0, 146.5000000001, 0);fill:rgb(0, 146.5000000001, 0);}#mermaid-1682594270912 .label6{fill:hsl(300, 100%, 46.2745098039%);}#mermaid-1682594270912 .arrow6{stroke:hsl(300, 100%, 46.2745098039%);}#mermaid-1682594270912 .branch-label7{fill:black;}#mermaid-1682594270912 .commit7{stroke:hsl(0, 100%, 46.2745098039%);fill:hsl(0, 100%, 46.2745098039%);}#mermaid-1682594270912 .commit-highlight7{stroke:rgb(0, 146.5000000001, 146.5000000001);fill:rgb(0, 146.5000000001, 146.5000000001);}#mermaid-1682594270912 .label7{fill:hsl(0, 100%, 46.2745098039%);}#mermaid-1682594270912 .arrow7{stroke:hsl(0, 100%, 46.2745098039%);}#mermaid-1682594270912 .branch{stroke-width:1;stroke:#333333;stroke-dasharray:2;}#mermaid-1682594270912 .commit-label{font-size:10px;fill:#000021;}#mermaid-1682594270912 .commit-label-bkg{font-size:10px;fill:#ffffde;opacity:0.5;}#mermaid-1682594270912 .tag-label{font-size:10px;fill:#131300;}#mermaid-1682594270912 .tag-label-bkg{fill:#ECECFF;stroke:hsl(240, 60%, 86.2745098039%);}#mermaid-1682594270912 .tag-hole{fill:#333;}#mermaid-1682594270912 .commit-merge{stroke:#ECECFF;fill:#ECECFF;}#mermaid-1682594270912 .commit-reverse{stroke:#ECECFF;fill:#ECECFF;stroke-width:3;}#mermaid-1682594270912 .commit-highlight-inner{stroke:#ECECFF;fill:#ECECFF;}#mermaid-1682594270912 .arrow{stroke-width:8;stroke-linecap:round;fill:none;}:root{--mermaid-font-family:Inconsolata;}</style><g></g><g class="commit-bullets"></g><g class="commit-labels"></g><g><line class="branch branch0" y2="0" x2="750" y1="0" x1="0"></line><rect transform="translate(-19, -8.5)" height="21" width="67.5703125" y="-0.5" x="-83.5703125" ry="4" rx="4" class="branchLabelBkg label0"></rect><g class="branchLabel"><g transform="translate(-93.5703125, -9.5)" class="label branch-label0"><text><tspan class="row" x="0" dy="1em" xml:space="preserve">master</tspan></text></g></g><line class="branch branch1" y2="90" x2="750" y1="90" x1="0"></line><rect transform="translate(-19, 81.5)" height="21" width="74.1484375" y="-0.5" x="-90.1484375" ry="4" rx="4" class="branchLabelBkg label1"></rect><g class="branchLabel"><g transform="translate(-100.1484375, 80.5)" class="label branch-label1"><text><tspan class="row" x="0" dy="1em" xml:space="preserve">develop</tspan></text></g></g><line class="branch branch2" y2="180" x2="750" y1="180" x1="0"></line><rect transform="translate(-19, 171.5)" height="21" width="110.609375" y="-0.5" x="-126.609375" ry="4" rx="4" class="branchLabelBkg label2"></rect><g class="branchLabel"><g transform="translate(-136.609375, 170.5)" class="label branch-label2"><text><tspan class="row" x="0" dy="1em" xml:space="preserve">release/1.2.3</tspan></text></g></g></g><g class="commit-arrows"><path class="arrow arrow1" d="M 10 0 L 10 70 A 20 20, 0, 0, 0, 30 90 L 60 90"></path><path class="arrow arrow0" d="M 10 0 L 10 0  10 0 L 110 0"></path><path class="arrow arrow1" d="M 60 90 L 60 90  60 90 L 160 90"></path><path class="arrow arrow1" d="M 160 90 L 160 90  160 90 L 210 90"></path><path class="arrow arrow2" d="M 210 90 L 210 160 A 20 20, 0, 0, 0, 230 180 L 260 180"></path><path class="arrow arrow2" d="M 260 180 L 260 180  260 180 L 310 180"></path><path class="arrow arrow1" d="M 210 90 L 210 90  210 90 L 360 90"></path><path class="arrow arrow1" d="M 360 90 L 360 90  360 90 L 410 90"></path><path class="arrow arrow2" d="M 310 180 L 310 180  310 180 L 460 180"></path><path class="arrow arrow0" d="M 110 0 L 110 0  110 0 L 510 0"></path><path class="arrow arrow2" d="M 460 180 L 490 180 A 20 20, 0, 0, 0, 510 160 L 510 0"></path><path class="arrow arrow1" d="M 410 90 L 410 90  410 90 L 560 90"></path><path class="arrow arrow2" d="M 460 180 L 540 180 A 20 20, 0, 0, 0, 560 160 L 560 90"></path><path class="arrow arrow1" d="M 560 90 L 560 90  560 90 L 610 90"></path><path class="arrow arrow1" d="M 610 90 L 610 90  610 90 L 660 90"></path><path class="arrow arrow1" d="M 660 90 L 660 90  660 90 L 710 90"></path></g><g class="commit-bullets"><circle class="commit 0-54907d5 commit0" r="10" cy="0" cx="10"></circle><circle class="commit 1-9a49163 commit1" r="10" cy="90" cx="60"></circle><rect class="commit 2-1a63e62 commit-highlight0 commit-highlight-outer" width="20" height="20" y="-10" x="100"></rect><rect class="commit 2-1a63e62 commit0 commit-highlight-inner" width="12" height="12" y="-6" x="104"></rect><rect class="commit 3-13d61cd commit-highlight1 commit-highlight-outer" width="20" height="20" y="80" x="150"></rect><rect class="commit 3-13d61cd commit1 commit-highlight-inner" width="12" height="12" y="84" x="154"></rect><circle class="commit 4-438fc4b commit1" r="10" cy="90" cx="210"></circle><circle class="commit 5-e702e50 commit2" r="10" cy="180" cx="260"></circle><circle class="commit 6-3cfd1aa commit2" r="10" cy="180" cx="310"></circle><circle class="commit 7-4165d3f commit1" r="10" cy="90" cx="360"></circle><circle class="commit 8-d3e2a23 commit1" r="10" cy="90" cx="410"></circle><circle class="commit 9-1fed986 commit2" r="10" cy="180" cx="460"></circle><circle class="commit 10-f090f45 commit0" r="9" cy="0" cx="510"></circle><circle class="commit commit-merge 10-f090f45 commit0" r="6" cy="0" cx="510"></circle><circle class="commit 11-de02c1d commit1" r="9" cy="90" cx="560"></circle><circle class="commit commit-merge 11-de02c1d commit1" r="6" cy="90" cx="560"></circle><circle class="commit 12-df53d4b commit1" r="10" cy="90" cx="610"></circle><circle class="commit 13-a9d4e30 commit1" r="10" cy="90" cx="660"></circle><circle class="commit 14-18abbdc commit1" r="10" cy="90" cx="710"></circle></g><g class="commit-labels"><polygon points="-31.0048828125,-17.2
+          -31.0048828125,-21.2
+          -23.0048828125,-26.7
+          43.0048828125,-26.7
+          43.0048828125,-11.7
+          -23.0048828125,-11.7" class="tag-label-bkg"></polygon><circle class="tag-hole" r="1.5" cy="-19.2" cx="-27.0048828125"></circle><text x="-19.0048828125" class="tag-label" y="-16">initial commit</text><polygon points="486.66015625,-17.2
+          486.66015625,-21.2
+          494.66015625,-26.7
+          525.33984375,-26.7
+          525.33984375,-11.7
+          494.66015625,-11.7" class="tag-label-bkg"></polygon><circle class="tag-hole" r="1.5" cy="-19.2" cx="490.66015625"></circle><text x="498.66015625" class="tag-label" y="-16">1.2.3</text></g></svg></div>
+</section><section>
+<h2 id="git-flow-hotfix-branches">Git flow: hotfix branches</h2>
+<p>sprouts from <code>master</code> $\Rightarrow$ dies in <code>master</code> and <code>develop</code></p>
+<ul>
+<li>Fix errors that reached the mainline</li>
+</ul>
+<div class="mermaid" data-processed="true" pre-rendered="true"><svg viewBox="-169.375 -34.70000076293945 847.375 234.6999969482422" aria-labelledby="chart-title-mermaid-1682594271456 chart-desc-mermaid-1682594271456" role="img" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="847.375" id="mermaid-1682594271456"><title id="chart-title-mermaid-1682594271456"></title><desc id="chart-desc-mermaid-1682594271456"></desc><style>#mermaid-1682594271456 {font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}#mermaid-1682594271456 .error-icon{fill:#552222;}#mermaid-1682594271456 .error-text{fill:#552222;stroke:#552222;}#mermaid-1682594271456 .edge-thickness-normal{stroke-width:2px;}#mermaid-1682594271456 .edge-thickness-thick{stroke-width:3.5px;}#mermaid-1682594271456 .edge-pattern-solid{stroke-dasharray:0;}#mermaid-1682594271456 .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-1682594271456 .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-1682594271456 .marker{fill:#333333;stroke:#333333;}#mermaid-1682594271456 .marker.cross{stroke:#333333;}#mermaid-1682594271456 svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-1682594271456 .commit-id,#mermaid-1682594271456 .commit-msg,#mermaid-1682594271456 .branch-label{fill:lightgrey;color:lightgrey;font-family:'trebuchet ms',verdana,arial,sans-serif;font-family:var(--mermaid-font-family);}#mermaid-1682594271456 .branch-label0{fill:#ffffff;}#mermaid-1682594271456 .commit0{stroke:hsl(240, 100%, 46.2745098039%);fill:hsl(240, 100%, 46.2745098039%);}#mermaid-1682594271456 .commit-highlight0{stroke:hsl(60, 100%, 3.7254901961%);fill:hsl(60, 100%, 3.7254901961%);}#mermaid-1682594271456 .label0{fill:hsl(240, 100%, 46.2745098039%);}#mermaid-1682594271456 .arrow0{stroke:hsl(240, 100%, 46.2745098039%);}#mermaid-1682594271456 .branch-label1{fill:black;}#mermaid-1682594271456 .commit1{stroke:hsl(60, 100%, 43.5294117647%);fill:hsl(60, 100%, 43.5294117647%);}#mermaid-1682594271456 .commit-highlight1{stroke:rgb(0, 0, 160.5);fill:rgb(0, 0, 160.5);}#mermaid-1682594271456 .label1{fill:hsl(60, 100%, 43.5294117647%);}#mermaid-1682594271456 .arrow1{stroke:hsl(60, 100%, 43.5294117647%);}#mermaid-1682594271456 .branch-label2{fill:black;}#mermaid-1682594271456 .commit2{stroke:hsl(80, 100%, 46.2745098039%);fill:hsl(80, 100%, 46.2745098039%);}#mermaid-1682594271456 .commit-highlight2{stroke:rgb(48.8333333334, 0, 146.5000000001);fill:rgb(48.8333333334, 0, 146.5000000001);}#mermaid-1682594271456 .label2{fill:hsl(80, 100%, 46.2745098039%);}#mermaid-1682594271456 .arrow2{stroke:hsl(80, 100%, 46.2745098039%);}#mermaid-1682594271456 .branch-label3{fill:#ffffff;}#mermaid-1682594271456 .commit3{stroke:hsl(210, 100%, 46.2745098039%);fill:hsl(210, 100%, 46.2745098039%);}#mermaid-1682594271456 .commit-highlight3{stroke:rgb(146.5000000001, 73.2500000001, 0);fill:rgb(146.5000000001, 73.2500000001, 0);}#mermaid-1682594271456 .label3{fill:hsl(210, 100%, 46.2745098039%);}#mermaid-1682594271456 .arrow3{stroke:hsl(210, 100%, 46.2745098039%);}#mermaid-1682594271456 .branch-label4{fill:black;}#mermaid-1682594271456 .commit4{stroke:hsl(180, 100%, 46.2745098039%);fill:hsl(180, 100%, 46.2745098039%);}#mermaid-1682594271456 .commit-highlight4{stroke:rgb(146.5000000001, 0, 0);fill:rgb(146.5000000001, 0, 0);}#mermaid-1682594271456 .label4{fill:hsl(180, 100%, 46.2745098039%);}#mermaid-1682594271456 .arrow4{stroke:hsl(180, 100%, 46.2745098039%);}#mermaid-1682594271456 .branch-label5{fill:black;}#mermaid-1682594271456 .commit5{stroke:hsl(150, 100%, 46.2745098039%);fill:hsl(150, 100%, 46.2745098039%);}#mermaid-1682594271456 .commit-highlight5{stroke:rgb(146.5000000001, 0, 73.2500000001);fill:rgb(146.5000000001, 0, 73.2500000001);}#mermaid-1682594271456 .label5{fill:hsl(150, 100%, 46.2745098039%);}#mermaid-1682594271456 .arrow5{stroke:hsl(150, 100%, 46.2745098039%);}#mermaid-1682594271456 .branch-label6{fill:black;}#mermaid-1682594271456 .commit6{stroke:hsl(300, 100%, 46.2745098039%);fill:hsl(300, 100%, 46.2745098039%);}#mermaid-1682594271456 .commit-highlight6{stroke:rgb(0, 146.5000000001, 0);fill:rgb(0, 146.5000000001, 0);}#mermaid-1682594271456 .label6{fill:hsl(300, 100%, 46.2745098039%);}#mermaid-1682594271456 .arrow6{stroke:hsl(300, 100%, 46.2745098039%);}#mermaid-1682594271456 .branch-label7{fill:black;}#mermaid-1682594271456 .commit7{stroke:hsl(0, 100%, 46.2745098039%);fill:hsl(0, 100%, 46.2745098039%);}#mermaid-1682594271456 .commit-highlight7{stroke:rgb(0, 146.5000000001, 146.5000000001);fill:rgb(0, 146.5000000001, 146.5000000001);}#mermaid-1682594271456 .label7{fill:hsl(0, 100%, 46.2745098039%);}#mermaid-1682594271456 .arrow7{stroke:hsl(0, 100%, 46.2745098039%);}#mermaid-1682594271456 .branch{stroke-width:1;stroke:#333333;stroke-dasharray:2;}#mermaid-1682594271456 .commit-label{font-size:10px;fill:#000021;}#mermaid-1682594271456 .commit-label-bkg{font-size:10px;fill:#ffffde;opacity:0.5;}#mermaid-1682594271456 .tag-label{font-size:10px;fill:#131300;}#mermaid-1682594271456 .tag-label-bkg{fill:#ECECFF;stroke:hsl(240, 60%, 86.2745098039%);}#mermaid-1682594271456 .tag-hole{fill:#333;}#mermaid-1682594271456 .commit-merge{stroke:#ECECFF;fill:#ECECFF;}#mermaid-1682594271456 .commit-reverse{stroke:#ECECFF;fill:#ECECFF;stroke-width:3;}#mermaid-1682594271456 .commit-highlight-inner{stroke:#ECECFF;fill:#ECECFF;}#mermaid-1682594271456 .arrow{stroke-width:8;stroke-linecap:round;fill:none;}:root{--mermaid-font-family:Inconsolata;}</style><g></g><g class="commit-bullets"></g><g class="commit-labels"></g><g><line class="branch branch0" y2="0" x2="700" y1="0" x1="0"></line><rect transform="translate(-19, -8.5)" height="21" width="67.5703125" y="-0.5" x="-83.5703125" ry="4" rx="4" class="branchLabelBkg label0"></rect><g class="branchLabel"><g transform="translate(-93.5703125, -9.5)" class="label branch-label0"><text><tspan class="row" x="0" dy="1em" xml:space="preserve">master</tspan></text></g></g><line class="branch branch1" y2="90" x2="700" y1="90" x1="0"></line><rect transform="translate(-19, 81.5)" height="21" width="74.1484375" y="-0.5" x="-90.1484375" ry="4" rx="4" class="branchLabelBkg label1"></rect><g class="branchLabel"><g transform="translate(-100.1484375, 80.5)" class="label branch-label1"><text><tspan class="row" x="0" dy="1em" xml:space="preserve">develop</tspan></text></g></g><line class="branch branch2" y2="180" x2="700" y1="180" x1="0"></line><rect transform="translate(-19, 171.5)" height="21" width="96.375" y="-0.5" x="-112.375" ry="4" rx="4" class="branchLabelBkg label2"></rect><g class="branchLabel"><g transform="translate(-122.375, 170.5)" class="label branch-label2"><text><tspan class="row" x="0" dy="1em" xml:space="preserve">hotfix/1.2.4</tspan></text></g></g></g><g class="commit-arrows"><path class="arrow arrow1" d="M 10 0 L 10 70 A 20 20, 0, 0, 0, 30 90 L 60 90"></path><path class="arrow arrow0" d="M 10 0 L 10 0  10 0 L 110 0"></path><path class="arrow arrow1" d="M 60 90 L 60 90  60 90 L 160 90"></path><path class="arrow arrow0" d="M 110 0 L 110 0  110 0 L 210 0"></path><path class="arrow arrow2" d="M 210 0 L 210 160 A 20 20, 0, 0, 0, 230 180 L 260 180"></path><path class="arrow arrow2" d="M 260 180 L 260 180  260 180 L 310 180"></path><path class="arrow arrow2" d="M 310 180 L 310 180  310 180 L 360 180"></path><path class="arrow arrow1" d="M 160 90 L 160 90  160 90 L 410 90"></path><path class="arrow arrow1" d="M 410 90 L 410 90  410 90 L 460 90"></path><path class="arrow arrow2" d="M 360 180 L 360 180  360 180 L 510 180"></path><path class="arrow arrow0" d="M 210 0 L 210 0  210 0 L 560 0"></path><path class="arrow arrow2" d="M 510 180 L 540 180 A 20 20, 0, 0, 0, 560 160 L 560 0"></path><path class="arrow arrow1" d="M 460 90 L 460 90  460 90 L 610 90"></path><path class="arrow arrow2" d="M 510 180 L 590 180 A 20 20, 0, 0, 0, 610 160 L 610 90"></path><path class="arrow arrow1" d="M 610 90 L 610 90  610 90 L 660 90"></path></g><g class="commit-bullets"><circle class="commit 0-29c1511 commit0" r="10" cy="0" cx="10"></circle><circle class="commit 1-e9d8c3a commit1" r="10" cy="90" cx="60"></circle><rect class="commit 2-47ddaf1 commit-highlight0 commit-highlight-outer" width="20" height="20" y="-10" x="100"></rect><rect class="commit 2-47ddaf1 commit0 commit-highlight-inner" width="12" height="12" y="-6" x="104"></rect><rect class="commit 3-ce54f77 commit-highlight1 commit-highlight-outer" width="20" height="20" y="80" x="150"></rect><rect class="commit 3-ce54f77 commit1 commit-highlight-inner" width="12" height="12" y="84" x="154"></rect><circle class="commit 4-68ddd83 commit0" r="10" cy="0" cx="210"></circle><circle class="commit 5-271d714 commit2" r="10" cy="180" cx="260"></circle><circle class="commit 6-c70e4ee commit2" r="10" cy="180" cx="310"></circle><circle class="commit 7-888fcf2 commit2" r="10" cy="180" cx="360"></circle><circle class="commit 8-1782b1b commit1" r="10" cy="90" cx="410"></circle><circle class="commit 9-4e92934 commit1" r="10" cy="90" cx="460"></circle><circle class="commit 10-c86cff8 commit2" r="10" cy="180" cx="510"></circle><circle class="commit 11-fcb2901 commit0" r="9" cy="0" cx="560"></circle><circle class="commit commit-merge 11-fcb2901 commit0" r="6" cy="0" cx="560"></circle><circle class="commit 12-a7922ae commit1" r="9" cy="90" cx="610"></circle><circle class="commit commit-merge 12-a7922ae commit1" r="6" cy="90" cx="610"></circle><circle class="commit 13-6c7c62f commit1" r="10" cy="90" cx="660"></circle></g><g class="commit-labels"><polygon points="-31.0048828125,-17.2
+          -31.0048828125,-21.2
+          -23.0048828125,-26.7
+          43.0048828125,-26.7
+          43.0048828125,-11.7
+          -23.0048828125,-11.7" class="tag-label-bkg"></polygon><circle class="tag-hole" r="1.5" cy="-19.2" cx="-27.0048828125"></circle><text x="-19.0048828125" class="tag-label" y="-16">initial commit</text><polygon points="186.66015625,-17.2
+          186.66015625,-21.2
+          194.66015625,-26.7
+          225.33984375,-26.7
+          225.33984375,-11.7
+          194.66015625,-11.7" class="tag-label-bkg"></polygon><circle class="tag-hole" r="1.5" cy="-19.2" cx="190.66015625"></circle><text x="198.66015625" class="tag-label" y="-16">1.2.3</text><polygon points="536.66015625,-17.2
+          536.66015625,-21.2
+          544.66015625,-26.7
+          575.33984375,-26.7
+          575.33984375,-11.7
+          544.66015625,-11.7" class="tag-label-bkg"></polygon><circle class="tag-hole" r="1.5" cy="-19.2" cx="540.66015625"></circle><text x="548.66015625" class="tag-label" y="-16">1.2.4</text></g></svg></div>
 </section><section>
 <h2 id="forks-versus-branches">Forks versus branches</h2>
 <ul>
@@ -549,41 +608,23 @@
 </ul>
 </section><section>
 <h2 id="single-branch-multiple-forks">Single branch, multiple forks</h2>
+<p><img src="https://raw.githubusercontent.com/DanySK/shared-slides/84eadfe2c2fb7da050763d60d05c549b953e18fe/git/dvcs-fork.svg" alt="Trunk-based development (like)"></p>
+</section><section>
+<h2 id="single-branch-multiple-forks-1">Single branch, multiple forks</h2>
 <ul>
 <li>Single branch, multiple independent repository copies</li>
-</ul>
-<p>
-<img src="2021-04-14-dvcs-fork.svg" style="
-    
-    
-    max-width: 95vw;
-    max-height: 50vh;
-    object-fit: contain;
-">
-
-</p>
-<ul>
 <li><em>Unknown</em> team size, <em>low-complexity</em> projects, <em>sparse</em> teams, <em>low</em> trust</li>
-<li>Typical of small open-source projects</li>
+<li>Typical of <strong>small open-source projects</strong></li>
 </ul>
 </section><section>
 <h2 id="git-flow-over-multiple-forks">Git flow over multiple forks</h2>
+<p><img src="https://raw.githubusercontent.com/DanySK/shared-slides/84eadfe2c2fb7da050763d60d05c549b953e18fe/git/dvcs-flow-fork.svg" alt="Trunk-based development (like)"></p>
+</section><section>
+<h2 id="git-flow-over-multiple-forks-1">Git flow over multiple forks</h2>
 <ul>
-<li>Single branch, multiple independent repository copies</li>
-</ul>
-<p>
-<img src="2021-04-14-dvcs-flow-fork.svg" style="
-    
-    
-    max-width: 95vw;
-    max-height: 50vh;
-    object-fit: contain;
-">
-
-</p>
-<ul>
+<li>Multiple branches, multiple independent repository copies</li>
 <li><em>Unknown</em> team size, <em>high-complexity</em> projects, <em>sparse</em> teams, <em>low</em> trust</li>
-<li>Typical of complex open-source projects</li>
+<li>Typical of <strong>complex open-source projects</strong></li>
 </ul>
 </section><section>
 <h1 id="documenting-projects-using-github">Documenting projects using GitHub</h1>
@@ -795,13 +836,24 @@ from code to artifacts</p>
 
 </section><section>
 <h2 id="actual-result">Actual result</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#080;font-weight:bold">final</span> String DEFAULT_MOVIE = <span style="color:#d20;background-color:#fff0f0">"Breaking Bad"</span>;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">final</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">RateAMovie</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#080;font-weight:bold">final</span> String DEFAULT_MOVIE = <span style="color:#d20;background-color:#fff0f0">"Breaking Bad"</span>;
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#080;font-weight:bold">final</span> String OMDB_API_KEY = System.<span style="color:#369">getenv</span>(<span style="color:#d20;background-color:#fff0f0">"OMDB_API_KEY"</span>);
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#080;font-weight:bold">final</span> Logger LOGGER = LoggerFactory.<span style="color:#369">getLogger</span>(RateAMovie.<span style="color:#369">class</span>);
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#06b;font-weight:bold">RateAMovie</span>() { }
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>     *
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">final</span> String[] titles = args.<span style="color:#369">length</span> == <span style="color:#00d;font-weight:bold">0</span> ? <span style="color:#080;font-weight:bold">new</span> String[] { DEFAULT_MOVIE } : args;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#888">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#888">     * Launches the application. Expects {@code OMDB_API_KEY} to be a valid environment variable.
+</span></span></span><span style="display:flex;"><span><span style="color:#888">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#888">     * @param args a string with the movie/series name.
+</span></span></span><span style="display:flex;"><span><span style="color:#888">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#888;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">main</span>(<span style="color:#080;font-weight:bold">final</span> String[] args) {
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">if</span> (OMDB_API_KEY == <span style="color:#080;font-weight:bold">null</span> || OMDB_API_KEY.<span style="color:#369">isBlank</span>()) {
+</span></span><span style="display:flex;"><span>            LOGGER.<span style="color:#369">error</span>(<span style="color:#d20;background-color:#fff0f0">"Invalid OMDB API Key '{}', set a valid API Key as env variable OMDB_API_KEY"</span>, OMDB_API_KEY);
+</span></span><span style="display:flex;"><span>            System.<span style="color:#369">exit</span>(<span style="color:#00d;font-weight:bold">1</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">final</span> String[] titles = args.<span style="color:#369">length</span> == <span style="color:#00d;font-weight:bold">0</span> ? <span style="color:#080;font-weight:bold">new</span> String[] { DEFAULT_MOVIE } : args;
 </span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">final</span> OmdbApi omdb = <span style="color:#080;font-weight:bold">new</span> OmdbApi(OMDB_API_KEY);
 </span></span><span style="display:flex;"><span>        Arrays.<span style="color:#369">stream</span>(titles)
 </span></span><span style="display:flex;"><span>            .<span style="color:#369">map</span>(function(omdb::search)) <span style="color:#888">// Exceptions become RuntimeExceptions
@@ -812,17 +864,18 @@ from code to artifacts</p>
 </span></span><span style="display:flex;"><span>            .<span style="color:#369">map</span>(function(omdb::getInfo))
 </span></span><span style="display:flex;"><span>            .<span style="color:#369">forEach</span>(movie -&gt;
 </span></span><span style="display:flex;"><span>                LOGGER.<span style="color:#369">info</span>(
-</span></span><span style="display:flex;"><span>                    <span style="color:#d20;background-color:#fff0f0">""</span><span style="color:#a61717;background-color:#e3d2d2">"</span>
-</span></span><span style="display:flex;"><span>                    {}
-</span></span><span style="display:flex;"><span>                    Directed by {}; {}; {}
-</span></span><span style="display:flex;"><span>                    Written by {}
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>                    movie.<span style="color:#369">getTitle</span>(),
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>                    movie.<span style="color:#369">getImdbID</span>()
-</span></span><span style="display:flex;"><span>                )
-</span></span><span style="display:flex;"><span>            );
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div></section><section>
+</span></span><span style="display:flex;"><span>                    <span style="color:#d20;background-color:#fff0f0">"""
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">                    {}
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">                    Directed by {}; {}; {}
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">                    Written by {}
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">                    Cast: {}
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">                    {} {}
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">                    IMDb {} (over {} votes), Rotten Tomatoes {}. {}
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">                    {}
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">                    IMDb handle: {}
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">                    """</span>,
+</span></span></code></pre></div><p>…</p>
+</section><section>
 <h2 id="the-trick-using-a-few-libraries">The trick: using a few libraries</h2>
 <ul>
 <li><strong>Jooq Jooλ</strong>
@@ -917,7 +970,7 @@ from code to artifacts</p>
 </li>
 <li>We are <strong>not</strong> going to <em>learn Gradle</em>
 <ul>
-<li>Again, this is done in LSS for those interested</li>
+<li>Again, this is done in Laboratory of Software Systems for those interested</li>
 </ul>
 </li>
 </ul>
@@ -958,7 +1011,11 @@ from code to artifacts</p>
 </section><section>
 <h2 id="gradle-under-the-hood">Gradle: under the hood</h2>
 <ul>
-<li>The Gradle build script is <em>a valid Kotlin script</em> (using the Gradle API)</li>
+<li>The Gradle build script is <em>a valid Kotlin script</em> (using the Gradle API)
+<ul>
+<li>(There is actually a kludge concerning the <code>plugins</code> and <code>buildscript</code> blocks)</li>
+</ul>
+</li>
 <li>Anything that has not a valid <em>Kotlin syntax</em> is not a valid Gradle build script</li>
 <li><em>Kotlin</em> and <em>Groovy</em> picked as they allow <em>easy DSL creation</em></li>
 <li>The <em>feeling</em> is to just have <em>to configure</em> an existing software
@@ -1099,7 +1156,8 @@ from code to artifacts</p>
 </section><section>
 <h2 id="gradle-our-toy-example">Gradle: our toy example</h2>
 <p><code>src/main/java/it/unibo/sampleapp/RateAMovie.java</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#080;font-weight:bold">final</span> String DEFAULT_MOVIE = <span style="color:#d20;background-color:#fff0f0">"Breaking Bad"</span>;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">final</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">RateAMovie</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#080;font-weight:bold">final</span> String DEFAULT_MOVIE = <span style="color:#d20;background-color:#fff0f0">"Breaking Bad"</span>;
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#080;font-weight:bold">final</span> String OMDB_API_KEY = System.<span style="color:#369">getenv</span>(<span style="color:#d20;background-color:#fff0f0">"OMDB_API_KEY"</span>);
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#080;font-weight:bold">final</span> Logger LOGGER = LoggerFactory.<span style="color:#369">getLogger</span>(RateAMovie.<span style="color:#369">class</span>);
 </span></span><span style="display:flex;"><span>
@@ -1126,17 +1184,15 @@ from code to artifacts</p>
 </span></span><span style="display:flex;"><span>            .<span style="color:#369">map</span>(function(omdb::getInfo))
 </span></span><span style="display:flex;"><span>            .<span style="color:#369">forEach</span>(movie -&gt;
 </span></span><span style="display:flex;"><span>                LOGGER.<span style="color:#369">info</span>(
-</span></span><span style="display:flex;"><span>                    <span style="color:#d20;background-color:#fff0f0">""</span><span style="color:#a61717;background-color:#e3d2d2">"</span>
-</span></span><span style="display:flex;"><span>                    {}
-</span></span><span style="display:flex;"><span>                    Directed by {}; {}; {}
 </span></span></code></pre></div><p>…</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>                )
-</span></span><span style="display:flex;"><span>            );
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div></section><section>
+</section><section>
 <h2 id="gradle-our-toy-example-1">Gradle: our toy example</h2>
-<p><code>build.gradle.kts</code></p>
+<p><code>settings.gradle.kts</code></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>rootProject.name = <span style="color:#d20;background-color:#fff0f0">"sample-gradle-project"</span>
+</span></span></code></pre></div><p>(one-liner)</p>
+</section><section>
+<h2 id="gradle-our-toy-example-2">Gradle: our toy example</h2>
+<p><code>build.gradle.kts</code>: plugins</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
 </span></span><span style="display:flex;"><span>    <span style="color:#888">// Apply the java plugin to add support for Java
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    java
@@ -1153,8 +1209,10 @@ from code to artifacts</p>
 </span></span><span style="display:flex;"><span>    id(<span style="color:#d20;background-color:#fff0f0">"com.github.johnrengelman.shadow"</span>) version <span style="color:#d20;background-color:#fff0f0">"8.1.1"</span>
 </span></span><span style="display:flex;"><span>    id(<span style="color:#d20;background-color:#fff0f0">"org.danilopianini.gradle-java-qa"</span>) version <span style="color:#d20;background-color:#fff0f0">"1.8.0"</span>
 </span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>repositories { <span style="color:#888">// Where to search for dependencies
+</span></span></code></pre></div></section><section>
+<h2 id="gradle-our-toy-example-3">Gradle: our toy example</h2>
+<p><code>build.gradle.kts</code>: dependencies and repositories</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>repositories { <span style="color:#888">// Where to search for dependencies
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    mavenCentral()
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
@@ -1181,8 +1239,10 @@ from code to artifacts</p>
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    testImplementation(<span style="color:#d20;background-color:#fff0f0">"org.junit.jupiter:junit-jupiter-api:</span><span style="color:#33b;background-color:#fff0f0">$jUnitVersion</span><span style="color:#d20;background-color:#fff0f0">"</span>)
 </span></span><span style="display:flex;"><span>    testRuntimeOnly(<span style="color:#d20;background-color:#fff0f0">"org.junit.jupiter:junit-jupiter-engine:</span><span style="color:#33b;background-color:#fff0f0">$jUnitVersion</span><span style="color:#d20;background-color:#fff0f0">"</span>)
 </span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>application {
+</span></span></code></pre></div></section><section>
+<h2 id="gradle-our-toy-example-4">Gradle: our toy example</h2>
+<p><code>build.gradle.kts</code>: execution and tests</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>application {
 </span></span><span style="display:flex;"><span>    <span style="color:#888">// Define the main class for the application.
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    mainClass.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">"it.unibo.sampleapp.RateAMovie"</span>)
 </span></span><span style="display:flex;"><span>}
@@ -1194,8 +1254,6 @@ from code to artifacts</p>
 </span></span><span style="display:flex;"><span>        showStandardStreams = <span style="color:#080;font-weight:bold">true</span>
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p><code>settings.gradle.kts</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>rootProject.name = <span style="color:#d20;background-color:#fff0f0">"sample-gradle-project"</span>
 </span></span></code></pre></div></section><section>
 <h2 id="gradle-toy-example-execution">Gradle: toy example execution</h2>
 <ul>
@@ -1207,7 +1265,7 @@ from code to artifacts</p>
 </ul>
 </li>
 </ul>
-<p><strong>Note</strong>: exectution requires a valid TheTVDB API Key in a plain text file <code>src/main/resources/APIKey</code></p>
+<p><strong>Note</strong>: exectution requires a valid OMDB API Key stored as an environment variable <code>OMDB_API_KEY</code></p>
 </section><section>
 <h2 id="gradle-multi-language-projects">Gradle: multi-language projects</h2>
 <p><code>src/main/groovy/HelloGroovy.groovy</code></p>
@@ -1299,10 +1357,12 @@ from code to artifacts</p>
 <a href="https://pmd.github.io/">PMD</a></p>
 <p>In <em>Kotlin</em>:
 <a href="https://github.com/JetBrains/inspection-plugin">IDEA Inspection</a>,
-<a href="https://ktlint.github.io/">Ktlint</a></p>
+<a href="https://ktlint.github.io/">Ktlint</a>,
+<a href="https://detekt.dev/">Detekt</a></p>
 <p>In <em>Scala</em>:
 <a href="https://scalameta.org/scalafmt/">Scalafmt</a>,
-<a href="http://www.scalastyle.org/rules-1.0.0.html">Scalastyle</a></p>
+<a href="http://www.scalastyle.org/rules-1.0.0.html">Scalastyle</a>,
+<a href="https://www.wartremover.org/">Wartremover</a>,</p>
 </section><section>
 <h2 id="quality-assurance-flawed-programming-patterns">Quality Assurance: flawed programming patterns</h2>
 <p>Identification and reporting of <em>patterns</em> known to be <em>problematic</em></p>
