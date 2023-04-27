@@ -172,7 +172,8 @@ The **changes** that will be saved next
 * Can enforce the correct line ending
 * Can provide ways to diff binary file (by conversion to text, needs configuration)
 * Example: 
-```.gitattributes
+
+```
 * text=auto eol=lf
 *.[cC][mM][dD] text eol=crlf
 *.[bB][aA][tT] text eol=crlf
@@ -189,6 +190,7 @@ The **changes** that will be saved next
 
 ### *HEAD*
 * Pointer to the current commit
+* Can be **attached** to a *branch* or **detached**
 
 ---
 
@@ -255,8 +257,9 @@ The **changes** that will be saved next
 ### `git remote`
 * Configures the *remotes*
 
-### *upstream*
-* The default *remote* for network operations.
+### *upstream branch*
+* The default *remote branch* for network operations
+* At most one per local branch
 
 ---
 
@@ -265,6 +268,7 @@ The **changes** that will be saved next
 ### `git clone`
 * Copies a repository from a possibly remote location.
 * Alternative to `init`
+* Only imports the remote *default branch* (where the `HEAD` is)
 * Automatically sets the local branch *upstream* to the cloned location.
 
 ---
@@ -289,14 +293,16 @@ The **changes** that will be saved next
 
 Discussed in **{{< course_name >}}**
 
-* Lightweight vs. annotated tagging
-* Stashing
-* Rebasing
-* Rebased pulling
-* Squashing
-* Cherry picking
+* Lightweight tags
+* Signed commits
+* Stash
 * Submodules
+* Bisection
+* Rebase
+* Squash
+* Cherry-pick
 * Hooks
+* Custom git subcommands
 
 ---
 
@@ -325,91 +331,9 @@ Discussed in **{{< course_name >}}**
 
 ---
 
-# DVCS: Workflows
+<!-- write-here "shared-slides/git/workflows-flow-fork.md" -->
 
-> with great power comes great responsibility
-
-and also
-
-> power is nothing without control
-
-Elements to consider:
-* How *large* is the team?
-* How *complex* is the project?
-* Do team members work *together* (in spacetime)?
-* Do team members *trust* each other?
-
----
-
-## Trunk-based development(-like)
-
-Single branch, shared truth repository, frequent merges
-<br>
-{{< image src="2021-04-14-dvcs-sink.svg" max-h="55">}}
-
-* *Small* teams, *low-complexity* projects, *colocated* teams, *high* trust
-* Typical of small company projects
-
----
-
-## Git flow (classic)
-
-Multiple branches, shared truth repository
-<br>
-{{< image src="2021-04-14-dvcs-flow-sink.svg" max-h="55">}}
-
-* *Large* teams, *high-complexity* projects, *preferably colocated* teams, *high* trust
-* Typical of large company projects
-
----
-
-## Git flow structure
-
-{{< image src="2021-04-13-gitflow.svg" max-h="55">}}
-
----
-
-## Forks versus branches
-
-* In Git, separate *development lines* are separate *branches*
-* However, everyone has a *copy* of the *same repository*
-* Git *hosting services* can *identify copies* of the same project belonging to different users
-
-These copies are called **forks**
-
-* Branches on one fork can be requested to be merged on another fork
-  * With **merge request** (also called **pull request**, depending on the host)
-* Pull requests enable easier code review
-  * Necessary when the developer *does not trust* the contributor
-  * But very useful anyway
-* Working with pull requests is **not part of git** and *requires host support*
-  * GitHub, GitLab, and Bitbucket all support pull requests
-
----
-
-## Single branch, multiple forks
-
-* Single branch, multiple independent repository copies
-
-<p>
-{{< image src="2021-04-14-dvcs-fork.svg" max-h="50">}}
-</p>
-
-* *Unknown* team size, *low-complexity* projects, *sparse* teams, *low* trust
-* Typical of small open-source projects
-
----
-
-## Git flow over multiple forks
-
-* Single branch, multiple independent repository copies
-
-<p>
-{{< image src="2021-04-14-dvcs-flow-fork.svg" max-h="50">}}
-</p>
-
-* *Unknown* team size, *high-complexity* projects, *sparse* teams, *low* trust
-* Typical of complex open-source projects
+<!-- end-write -->
 
 ---
 
@@ -496,11 +420,8 @@ Example **requirements**:
 
 ## Actual result
 
-{{% code path="PPS-ci-examples/01-dependencies/src/main/java/it/unibo/sampleapp/RateAMovie.java" from="16" to="20" %}}
-{{% code path="PPS-ci-examples/01-dependencies/src/main/java/it/unibo/sampleapp/RateAMovie.java" from="24" to="24" %}}
-{{% code path="PPS-ci-examples/01-dependencies/src/main/java/it/unibo/sampleapp/RateAMovie.java" from="32" to="46" %}}
-{{% code path="PPS-ci-examples/01-dependencies/src/main/java/it/unibo/sampleapp/RateAMovie.java" from="53" to="53" %}}
-{{% code path="PPS-ci-examples/01-dependencies/src/main/java/it/unibo/sampleapp/RateAMovie.java" from="66" %}}
+{{% code path="PPS-ci-examples/01-dependencies/src/main/java/it/unibo/sampleapp/RateAMovie.java" from=15 to=52 %}}
+...
 
 ---
 
@@ -592,7 +513,7 @@ A paradigmatic example of a hybrid automator:
 * We are going to learn *a bit of how to use* Gradle for *simple JVM projects*
     * Mostly by example
 * We are **not** going to *learn Gradle*
-    * Again, this is done in LSS for those interested
+    * Again, this is done in {{< course_name >}} for those interested
 
 ---
 
@@ -619,6 +540,7 @@ A paradigmatic example of a hybrid automator:
 ## Gradle: under the hood
 
 * The Gradle build script is *a valid Kotlin script* (using the Gradle API)
+  * (There is actually a kludge concerning the `plugins` and `buildscript` blocks)
 * Anything that has not a valid *Kotlin syntax* is not a valid Gradle build script
 * *Kotlin* and *Groovy* picked as they allow *easy DSL creation*
 * The *feeling* is to just have *to configure* an existing software
@@ -735,21 +657,42 @@ The Gradle wrapper is *__the__ correct way* to use gradle, and we'll be using it
 
 `src/main/java/it/unibo/sampleapp/RateAMovie.java`
 
-{{% code path="PPS-ci-examples/01-dependencies/src/main/java/it/unibo/sampleapp/RateAMovie.java" from="16" to="45" %}}
+{{% code path="PPS-ci-examples/01-dependencies/src/main/java/it/unibo/sampleapp/RateAMovie.java" from="15" to="42" %}}
 ...
-{{% code path="PPS-ci-examples/01-dependencies/src/main/java/it/unibo/sampleapp/RateAMovie.java" from="67" %}}
 
 ---
 
 ## Gradle: our toy example
 
-`build.gradle.kts`
-
-{{% code path="PPS-ci-examples/01-dependencies/build.gradle.kts" %}}
-
 `settings.gradle.kts`
 
 {{% code path="PPS-ci-examples/01-dependencies/settings.gradle.kts" %}}
+
+(one-liner)
+
+---
+
+## Gradle: our toy example
+
+`build.gradle.kts`: plugins
+
+{{% code path="PPS-ci-examples/01-dependencies/build.gradle.kts" to=16 %}}
+
+---
+
+## Gradle: our toy example
+
+`build.gradle.kts`: dependencies and repositories
+
+{{% code path="PPS-ci-examples/01-dependencies/build.gradle.kts" from=18 to=45 %}}
+
+---
+
+## Gradle: our toy example
+
+`build.gradle.kts`: execution and tests
+
+{{% code path="PPS-ci-examples/01-dependencies/build.gradle.kts" from=46  %}}
 
 ---
 
@@ -760,7 +703,7 @@ The Gradle wrapper is *__the__ correct way* to use gradle, and we'll be using it
   * runs the specified main class passing the `runtimeClasspath` to the `-cp` option of `java`
   * `./gradlew` run
 
-**Note**: exectution requires a valid TheTVDB API Key in a plain text file `src/main/resources/APIKey`
+**Note**: exectution requires a valid OMDB API Key stored as an environment variable `OMDB_API_KEY`
 
 ---
 
@@ -840,11 +783,13 @@ In *Java*:
 
 In *Kotlin*:
 [IDEA Inspection](https://github.com/JetBrains/inspection-plugin),
-[Ktlint](https://ktlint.github.io/)
+[Ktlint](https://ktlint.github.io/),
+[Detekt](https://detekt.dev/)
 
 In *Scala*:
 [Scalafmt](https://scalameta.org/scalafmt/),
-[Scalastyle](http://www.scalastyle.org/rules-1.0.0.html)
+[Scalastyle](http://www.scalastyle.org/rules-1.0.0.html),
+[Wartremover](https://www.wartremover.org/),
 
 ---
 
