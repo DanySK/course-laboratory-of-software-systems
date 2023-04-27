@@ -74,6 +74,9 @@ section.has-light-background {
     max-height: 730px;
     height: auto;
 	object-fit: contain;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .reveal section img {
