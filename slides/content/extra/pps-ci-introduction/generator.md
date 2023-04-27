@@ -876,7 +876,7 @@ Several frameworks, recommended ones:
 
 ---
 
-## Quality Assurance: Scalatest + Scoverage
+## Quality Assurance: Scalatest ~~+ Scoverage~~
 
 Let's switch *testing framework* and enable *coverage*
 
@@ -886,7 +886,7 @@ Let's switch *testing framework* and enable *coverage*
 
 ---
 
-## Quality Assurance: Scalatest + Scoverage
+## Quality Assurance: Scalatest ~~+ Scoverage~~
 
 `src/test/scala/Test.scala`
 
@@ -894,7 +894,7 @@ Let's switch *testing framework* and enable *coverage*
 
 ---
 
-## Quality Assurance: Scalatest + Scoverage
+## Quality Assurance: Scalatest ~~+ Scoverage~~
 
 `build.gradle.kts`
 
