@@ -170,6 +170,29 @@ with the abstractions provided by the selected provider.</p>
 <br>
 (but there are exceptions, JetBrains TeamCity uses a Kotlin DSL).</p>
 </section><section>
+<h2 id="pipeline-design-1">Pipeline design</h2>
+<p>In essence, designing a CI system is designing a software construction, verification, and delivery <em>pipeline</em>
+with the abstractions provided by the selected provider.</p>
+<ol>
+<li><strong>Think</strong> of all the operations required starting from one or more <em>blank</em> VMs
+<ul>
+<li>OS configuration</li>
+<li>Software installation</li>
+<li>Project checkout</li>
+<li>Compilation</li>
+<li>Testing</li>
+<li>Secrets configuration</li>
+<li>Delivery</li>
+<li>…</li>
+</ul>
+</li>
+<li><strong>Organize</strong> them in a dependency graph</li>
+<li><strong>Model</strong> the graph with the provided CI tooling</li>
+</ol>
+<p>Configuration can grow complex, and is usually stored in a YAML file
+<br>
+(but there are exceptions, JetBrains TeamCity uses a Kotlin DSL).</p>
+</section><section>
 <h2 id="github-actions-structure">GitHub Actions: Structure</h2>
 <ul>
 <li><strong>Workflows</strong> react to events, launching <em>jobs</em>
