@@ -5,11 +5,9 @@
 <meta name="author" content="Danilo Pianini">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="/course-laboratory-of-software-systems/reveal-js/dist/reset.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><link rel="stylesheet" href="/course-laboratory-of-software-systems/reveal-js/dist/reset.css">
 <link rel="stylesheet" href="/course-laboratory-of-software-systems/reveal-js/dist/reveal.css">
   <link rel="stylesheet" href="/course-laboratory-of-software-systems/css/custom-theme.min.039d4fc68d969e2925568e1aa7cc960bbfd481c396410a31508d9131455be55f.css" id="theme"><link rel="stylesheet" href="/course-laboratory-of-software-systems/highlight-js/default.min.css">
-    
 <link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
 <link href="https://fonts.googleapis.com/css?family=Roboto Mono" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Oxygen Mono" rel="stylesheet">
@@ -245,7 +243,7 @@
     }
     return map;
   }
-  
+
   var revealHugoDefaults = { center: true, controls: true, history: true, progress: true, transition: "slide" };
 
   var revealHugoPlugins = { 
@@ -267,9 +265,45 @@
 
 
 
+  
 
+  
 
+  
+    
+  
 
+  
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
 
 
 
@@ -290,8 +324,11 @@
           }
       });
     };
-    Reveal.addEventListener('slidechanged', render);
-    Reveal.addEventListener('ready', render);
+    
+    render({currentSlide: Reveal.getCurrentSlide()});
+
+    Reveal.on('slidechanged', render);
+    Reveal.on('ready', render);
   </script>
 
     <script>
