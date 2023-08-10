@@ -7,7 +7,8 @@
 import { marked } from 'marked';
 
 const DEFAULT_SLIDE_SEPARATOR = '\r?\n---\r?\n',
-	  DEFAULT_NOTES_SEPARATOR = 'notes?:',
+	  DEFAULT_VERTICAL_SEPARATOR = null,
+	  DEFAULT_NOTES_SEPARATOR = '^\s*notes?:',
 	  DEFAULT_ELEMENT_ATTRIBUTES_SEPARATOR = '\\\.element\\\s*?(.+?)$',
 	  DEFAULT_SLIDE_ATTRIBUTES_SEPARATOR = '\\\.slide:\\\s*?(\\\S.+?)$';
 
@@ -94,10 +95,12 @@ const Plugin = () => {
 	 * values for what's not defined.
 	 */
 	function getSlidifyOptions( options ) {
+		const markdownConfig = deck.getConfig().markdown;
 
 		options = options || {};
-		options.separator = options.separator || DEFAULT_SLIDE_SEPARATOR;
-		options.notesSeparator = options.notesSeparator || DEFAULT_NOTES_SEPARATOR;
+		options.separator = options.separator || markdownConfig?.separator || DEFAULT_SLIDE_SEPARATOR;
+		options.verticalSeparator = options.verticalSeparator || markdownConfig?.verticalSeparator || DEFAULT_VERTICAL_SEPARATOR;
+		options.notesSeparator = options.notesSeparator || markdownConfig?.notesSeparator || DEFAULT_NOTES_SEPARATOR;
 		options.attributes = options.attributes || '';
 
 		return options;
@@ -458,7 +461,7 @@ const Plugin = () => {
 					code = escapeForHTML( code );
 
 					// return `<pre><code ${lineNumbers} class="${language}">${code}</code></pre>`;
-					
+
 					return `<pre><code ${lineNumbers} ${lineNumberOffset} class="${language}">${code}</code></pre>`;
 				};
 			}
